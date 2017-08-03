@@ -765,7 +765,6 @@ public class FavouriteAllResponse {
 
     private String SearchLikeStatus;
 
-
     private String SearchCategory;
 
     private String SearchBrand;
@@ -882,10 +881,6 @@ public class FavouriteAllResponse {
     public void setSearchLeads(int searchLeads) {
         SearchLeads = searchLeads;
     }
-
-
-
-
 
 
 

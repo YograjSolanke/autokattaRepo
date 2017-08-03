@@ -619,7 +619,7 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
         TextView mCategory, mBrand, mModel, mPrice, mYear, mSearchDate, mLeads, mStopdate;
         ImageView editImg, deleteImg, favImg, unfavImg, share, mAutokattaShare;
         Button Stopsearch, Startsearch;
-        RelativeLayout relativeLayout;
+        RelativeLayout relativeLayout, relativeSearchTitle;
         CardView cardView;
 
         private MySearch(View searchView) {
@@ -641,7 +641,8 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
             Stopsearch = (Button) itemView.findViewById(R.id.stopsearch);
             Startsearch = (Button) itemView.findViewById(R.id.startsearch);
 
-            relativeLayout = (RelativeLayout) itemView.findViewById(R.id.relnote);
+            relativeLayout = (RelativeLayout) itemView.findViewById(R.id.relbutton);
+            relativeSearchTitle = (RelativeLayout) itemView.findViewById(R.id.reltitlerow);
             mStopdate = (TextView) itemView.findViewById(R.id.txtdate);
             cardView = (CardView) itemView.findViewById(R.id.card_view);
 
@@ -693,7 +694,7 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
                 return new PostNotifications(mView);
 
             case 8:
-                mView = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_wall_profile_notifications, parent, false);
+                mView = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_wall_search_notifications, parent, false);
                 return new SearchNotifications(mView);
 
             case 9:
@@ -741,7 +742,7 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
 //                    mProfileHolder.mCall.setVisibility(View.GONE);
 //                else
 //                    mProfileHolder.mCall.setVisibility(View.VISIBLE);
-                mProfileHolder.mDelete.setBackgroundResource(R.drawable.ic_delete);
+                mProfileHolder.mDelete.setImageResource(R.drawable.ic_delete);
 
                 mProfileHolder.mProfileAction.setText(notificationList.get(position).getSendername() + " "
                         + notificationList.get(position).getAction() + " " + notificationList.get(position).getReceivername() + " " + "Profile");
@@ -935,8 +936,7 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
                 break;
 
             case 2:
-                final String allDetails;
-                final int store_id;
+
 
                 final StoreNotifications mStoreHolder = (StoreNotifications) holder;
                 /*Log.i("Wall", "Store-LayType ->" + notificationList.get(position).getLayoutType());
@@ -949,6 +949,8 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
                     mStoreHolder.mCall.setVisibility(View.VISIBLE);
                     mStoreHolder.mRelativeLike.setVisibility(View.VISIBLE);
                 }*/
+
+                mStoreHolder.mStoreUnfav.setImageResource(R.drawable.ic_delete);
 
                 mStoreHolder.mStoreActionName.setText(notificationList.get(position).getSendername() + " "
                         + notificationList.get(position).getAction() + " " + notificationList.get(position).getReceivername() + " "
@@ -1093,6 +1095,18 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
                     }
                 });
 
+                mStoreHolder.mStoreUnfav.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //Unfavorite web service
+                        int notiId = notificationList.get(mStoreHolder.getAdapterPosition()).getId();
+                        mApiCall.removeFromFavorite(mLoginContact, "", 0, "", notiId);
+                        notificationList.remove(mStoreHolder.getAdapterPosition());
+                        notifyItemRemoved(mStoreHolder.getAdapterPosition());
+                        notifyItemRangeChanged(mStoreHolder.getAdapterPosition(), notificationList.size());
+                    }
+                });
+
                 mStoreHolder.mStoreAutokattaShare.setOnClickListener(new View.OnClickListener() {
                     String imageFilePath = "", imagename;
                     Intent intent = new Intent(Intent.ACTION_SEND);
@@ -1209,6 +1223,8 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
             case 3:
                 final GroupNotifications mGroupHolder = (GroupNotifications) holder;
 
+                mGroupHolder.mDelete.setImageResource(R.drawable.ic_delete);
+
                 mGroupHolder.mActionName.setText(notificationList.get(position).getSendername() + " " +
                         notificationList.get(position).getAction() + " " + notificationList.get(position).getReceivername() +
                         " in " + notificationList.get(position).getGroupName()
@@ -1249,10 +1265,7 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
                     public void onClick(View v) {
                         //Unfavorite web service
                         int notiId = notificationList.get(mGroupHolder.getAdapterPosition()).getId();
-                        /*mGroupHolder.mGroupFavourite.setVisibility(View.GONE);
-                        mGroupHolder.mGroupUnFav.setVisibility(View.VISIBLE);*/
                         mApiCall.removeFromFavorite(mLoginContact, "", 0, "", notiId);
-                        //notificationList.get(mGroupHolder.getAdapterPosition()).setMyFavStatus("no");
                         notificationList.remove(mGroupHolder.getAdapterPosition());
                         notifyItemRemoved(mGroupHolder.getAdapterPosition());
                         notifyItemRangeChanged(mGroupHolder.getAdapterPosition(), notificationList.size());
@@ -1263,16 +1276,113 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
                 break;
 
             case 4:
-                VehicleNotifications mVehicleHolder = (VehicleNotifications) holder;
+                final VehicleNotifications mVehicleHolder = (VehicleNotifications) holder;
 
-                //mVehicleHolder.mDelete.setBackgroundResource(R.drawable.ic_delete);
+                /*mVehicleHolder.mVehicleUnfav.setImageResource(R.drawable.ic_delete);
+
+                mVehicleHolder.mActionName.setText(notificationList.get(position).getSendername() + " "
+                        + notificationList.get(position).getAction() + " " + notificationList.get(position).getReceivername() + " "
+                        + notificationList.get(position).getTitle() + " " + "Vehicle");
+
+                mVehicleHolder.mActionTime.setText(notificationList.get(position).getDatetime());
+                mVehicleHolder.mVehicleName.setText(notificationList.get(position).getTitle());
+                mVehicleHolder.mVehicleRegistration.setText(notificationList.get(position).getUpVehicleRegNo());
+                mVehicleHolder.mVehiclePrice.setText(notificationList.get(position).getUpVehiclePrice());
+                mVehicleHolder.mVehicleBrand.setText(notificationList.get(position).getUpVehicleBrand());
+                mVehicleHolder.mVehicleModel.setText(notificationList.get(position).getUpVehicleModel());
+                mVehicleHolder.mVehicleYearOfMfg.setText(notificationList.get(position).getUpVehicleManfYear());
+                mVehicleHolder.mVehicleLocation.setText(notificationList.get(position).getUpVehicleLocationCity());
+                mVehicleHolder.mRtoCity.setText(notificationList.get(position).getUpVehicleRtoCity());
+                mVehicleHolder.mFollowCount.setText("Followers(" + notificationList.get(position).getUpVehicleFollowCount() + ")");
+                mVehicleHolder.mLikes.setText("Likes(" + notificationList.get(position).getUpVehicleLikeCount() + ")");
+                mVehicleHolder.mShares.setText("Shares(" + notificationList.get(position).getUpVehicleShareCount() + ")");
+                mVehicleHolder.mVehicleKmsHrs.setText(notificationList.get(position).getUpVehicleKmsRun());
+
+         *//* Sender Profile Pic *//*
+
+                if (notificationList.get(position).getSenderPic() == null ||
+                        notificationList.get(position).getSenderPic().equals("") ||
+                        notificationList.get(position).getSenderPic().equals("null")) {
+                    mVehicleHolder.mUserPic.setBackgroundResource(R.drawable.logo48x48);
+                } else {
+                    *//*Glide.with(mActivity)
+                            .load("http://autokatta.com/mobile/profile_profile_pics/" + notificationList.get(position).getSenderPic())
+                            .diskCacheStrategy(DiskCacheStrategy.ALL) //For caching diff versions of image.
+                            .into(mProfileHolder.mProfileImage);*//*
+                }
+
+        *//* Vehicle pic *//*
+
+                if (notificationList.get(position).getUpVehicleImage() == null ||
+                        notificationList.get(position).getUpVehicleImage().equals("") ||
+                        notificationList.get(position).getUpVehicleImage().equals("null")) {
+                    mVehicleHolder.mVehicleImage.setBackgroundResource(R.drawable.vehiimg);
+                } else {
+                    *//*Glide.with(mActivity)
+                            .load("http://autokatta.com/mobile/profile_profile_pics/" + notificationList.get(position).getUpVehicleImage())
+                            .diskCacheStrategy(DiskCacheStrategy.ALL) //For caching diff versions of image.
+                            .into(mVehicleHolder.mVehicleImage);*//*
+                }
+
+                mVehicleHolder.mCall.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String otherContact = notificationList.get(mVehicleHolder.getAdapterPosition()).getSender();
+                        call(otherContact);
+                    }
+                });
+
+        *//* Like & Unlike Functionality *//*
+
+                if (notificationList.get(position).getUpVehicleLikeStatus().equalsIgnoreCase("yes")) {
+                    mVehicleHolder.mVehicleLike.setVisibility(View.VISIBLE);
+                    mVehicleHolder.mVehicleUnlike.setVisibility(View.GONE);
+                } else {
+                    mVehicleHolder.mVehicleUnlike.setVisibility(View.VISIBLE);
+                    mVehicleHolder.mVehicleLike.setVisibility(View.GONE);
+                }
+
+                mVehicleHolder.mVehicleLike.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //Unlike web service
+                        String otherContact = notificationList.get(mVehicleHolder.getAdapterPosition()).getUpVehicleContact();
+                        int vehicleId = notificationList.get(mVehicleHolder.getAdapterPosition()).getUploadVehicleID();
+                        mVehicleHolder.mVehicleLike.setVisibility(View.GONE);
+                        mVehicleHolder.mVehicleUnlike.setVisibility(View.VISIBLE);
+                        mApiCall.UnLike(mLoginContact, otherContact, "4", 0, 0, vehicleId, 0, 0, 0, 0);
+                        vehicle_likecountint = notificationList.get(mVehicleHolder.getAdapterPosition()).getUpVehicleLikeCount();
+                        vehicle_likecountint = vehicle_likecountint - 1;
+                        mVehicleHolder.mLikes.setText("Likes(" + vehicle_likecountint + ")");
+                        notificationList.get(mVehicleHolder.getAdapterPosition()).setUpVehicleLikeCount(vehicle_likecountint);
+                        notificationList.get(mVehicleHolder.getAdapterPosition()).setUpVehicleLikeStatus("no");
+                    }
+                });
+
+                mVehicleHolder.mVehicleUnlike.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //Like web service
+                        String otherContact = notificationList.get(mVehicleHolder.getAdapterPosition()).getUpVehicleContact();
+                        int vehicleId = notificationList.get(mVehicleHolder.getAdapterPosition()).getUploadVehicleID();
+                        mVehicleHolder.mVehicleUnlike.setVisibility(View.GONE);
+                        mVehicleHolder.mVehicleLike.setVisibility(View.VISIBLE);
+                        mApiCall.Like(mLoginContact, otherContact, "4", 0, 0, vehicleId, 0, 0, 0, 0);
+                        vehicle_likecountint = notificationList.get(mVehicleHolder.getAdapterPosition()).getUpVehicleLikeCount();
+                        vehicle_likecountint = vehicle_likecountint + 1;
+                        mVehicleHolder.mLikes.setText("Likes(" + vehicle_likecountint + ")");
+                        notificationList.get(mVehicleHolder.getAdapterPosition()).setUpVehicleLikeCount(vehicle_likecountint);
+                        notificationList.get(mVehicleHolder.getAdapterPosition()).setUpVehicleLikeStatus("yes");
+                    }
+                });*/
+
 
                 break;
 
             case 5:
                 final ProductNotifications mProductHolder = (ProductNotifications) holder;
 
-                mProductHolder.mDelete.setBackgroundResource(R.drawable.ic_delete);
+                mProductHolder.mDelete.setImageResource(R.drawable.ic_delete);
 
                 /*Log.i("Favorite", "Product-LayType ->" + notificationList.get(position).getLayoutType());
                 if (notificationList.get(position).getLayoutType().equalsIgnoreCase("MyAction")) {
@@ -1381,10 +1491,9 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
                 mProductHolder.mDelete.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        //Favorite web service
+                        //Un Favorite web service
                         int notiId = notificationList.get(mProductHolder.getAdapterPosition()).getId();
                         mApiCall.removeFromFavorite(mLoginContact, "", 0, "", notiId);
-                        //notificationList.get(mProductHolder.getAdapterPosition()).setMyFavStatus("yes");
                         notificationList.remove(mProductHolder.getAdapterPosition());
                         notifyItemRemoved(mProductHolder.getAdapterPosition());
                         notifyItemRangeChanged(mProductHolder.getAdapterPosition(), notificationList.size());
@@ -1499,7 +1608,7 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
             case 6:
                 final ServiceNotifications mServiceHolder = (ServiceNotifications) holder;
 
-                mServiceHolder.mDelete.setBackgroundResource(R.drawable.ic_delete);
+                mServiceHolder.mDelete.setImageResource(R.drawable.ic_delete);
 
                 /*Log.i("Wall", "Service-LayType ->" + notificationList.get(position).getLayoutType());
                 if (notificationList.get(position).getLayoutType().equalsIgnoreCase("MyAction")) {
@@ -1607,10 +1716,9 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
                 mServiceHolder.mDelete.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        //Favorite web service
+                        //un Favorite web service
                         int notiId = notificationList.get(mServiceHolder.getAdapterPosition()).getId();
                         mApiCall.removeFromFavorite(mLoginContact, "", 0, "", notiId);
-                        //notificationList.get(mProductHolder.getAdapterPosition()).setMyFavStatus("yes");
                         notificationList.remove(mServiceHolder.getAdapterPosition());
                         notifyItemRemoved(mServiceHolder.getAdapterPosition());
                         notifyItemRangeChanged(mServiceHolder.getAdapterPosition(), notificationList.size());
@@ -1725,30 +1833,194 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
 
             case 7:
                 PostNotifications mPostHolder = (PostNotifications) holder;
+                //mPostHolder.fav.setImageResource(R.drawable.ic_delete);
 
                 break;
 
 
             case 8:
-                SearchNotifications search = (SearchNotifications) holder;
+
+                final SearchNotifications mSearchHolder = (SearchNotifications) holder;
+                mSearchHolder.mSearchUnfav.setImageResource(R.drawable.ic_delete);
+
+                mSearchHolder.mSearchActionName.setText(notificationList.get(position).getSendername() + " " +
+                        notificationList.get(position).getAction() + " " + "search");
+
+                mSearchHolder.mSearchActionTime.setText(notificationList.get(position).getDatetime());
+                mSearchHolder.mSearchCategory.setText(notificationList.get(position).getSearchCategory());
+                mSearchHolder.mSearchBrand.setText(notificationList.get(position).getSearchBrand());
+                mSearchHolder.mSearchModel.setText(notificationList.get(position).getSearchModel());
+                mSearchHolder.mSearchPrice.setText(notificationList.get(position).getSearchPrice());
+                mSearchHolder.mSearchYear.setText(notificationList.get(position).getSearchManfYear());
+                mSearchHolder.mSearchDate.setText(notificationList.get(position).getSearchDate());
+                mSearchHolder.mSearchLeads.setText(String.valueOf(notificationList.get(position).getSearchLeads()));
+
+            /* Sender Profile Pic */
+
+                if (notificationList.get(position).getSenderPic() == null ||
+                        notificationList.get(position).getSenderPic().equals("") ||
+                        notificationList.get(position).getSenderPic().equals("null")) {
+                    mSearchHolder.mUserPic.setBackgroundResource(R.drawable.logo48x48);
+                } else {
+                    /*Glide.with(mActivity)
+                            .load("http://autokatta.com/mobile/profile_profile_pics/" + notificationList.get(position).getSenderPic())
+                            .diskCacheStrategy(DiskCacheStrategy.ALL) //For caching diff versions of image.
+                            .into(mProfileHolder.mProfileImage);*/
+                }
+
+                mSearchHolder.mCall.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String otherContact = notificationList.get(mSearchHolder.getAdapterPosition()).getSender();
+                        call(otherContact);
+                    }
+                });
+
+                /* Like & Unlike Functionality */
+
+                if (notificationList.get(position).getSearchLikeStatus().equalsIgnoreCase("yes")) {
+                    mSearchHolder.mSearchLike.setVisibility(View.VISIBLE);
+                    mSearchHolder.mSearchUnlike.setVisibility(View.GONE);
+                } else {
+                    mSearchHolder.mSearchUnlike.setVisibility(View.VISIBLE);
+                    mSearchHolder.mSearchLike.setVisibility(View.GONE);
+                }
+
+                mSearchHolder.mSearchLike.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //Unlike web service
+                        String otherContact = notificationList.get(mSearchHolder.getAdapterPosition()).getSender();
+                        int searchId = notificationList.get(mSearchHolder.getAdapterPosition()).getSearchId();
+                        mSearchHolder.mSearchLike.setVisibility(View.GONE);
+                        mSearchHolder.mSearchUnlike.setVisibility(View.VISIBLE);
+                        mApiCall.UnLike(mLoginContact, otherContact, "8", 0, 0, 0, 0, 0, 0, searchId);
+                        notificationList.get(mSearchHolder.getAdapterPosition()).setSearchLikeStatus("no");
+                    }
+                });
+
+                mSearchHolder.mSearchUnlike.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //Like web service
+                        String otherContact = notificationList.get(mSearchHolder.getAdapterPosition()).getSender();
+                        int searchId = notificationList.get(mSearchHolder.getAdapterPosition()).getSearchId();
+                        mSearchHolder.mSearchUnlike.setVisibility(View.GONE);
+                        mSearchHolder.mSearchLike.setVisibility(View.VISIBLE);
+                        mApiCall.Like(mLoginContact, otherContact, "8", 0, 0, 0, 0, 0, 0, searchId);
+                        notificationList.get(mSearchHolder.getAdapterPosition()).setSearchLikeStatus("yes");
+                    }
+                });
+
+                mSearchHolder.mSearchUnfav.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //Remove Favorite web service
+                        int SearchId = notificationList.get(mSearchHolder.getAdapterPosition()).getSearchId();
+                        mApiCall.removeFromFavorite(mLoginContact, "", SearchId, "", 0);
+                        notificationList.remove(mSearchHolder.getAdapterPosition());
+                        notifyItemRemoved(mSearchHolder.getAdapterPosition());
+                        notifyItemRangeChanged(mSearchHolder.getAdapterPosition(), notificationList.size());
+                    }
+                });
+
+                mSearchHolder.mSearchAutokattaShare.setOnClickListener(new View.OnClickListener() {
+                    Intent intent = new Intent(Intent.ACTION_SEND);
+
+                    @Override
+                    public void onClick(View v) {
+                        //shareProfileData();
+                        android.support.v7.app.AlertDialog.Builder alert = new android.support.v7.app.AlertDialog.Builder(mActivity);
+                        alert.setTitle("Share");
+                        alert.setMessage("with Autokatta or to other?");
+                        alert.setIconAttribute(android.R.attr.alertDialogIcon);
+
+                        alert.setPositiveButton("Autokatta", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                String allSearchDetails = mSearchHolder.mSearchCategory.getText().toString() + "=" +
+                                        mSearchHolder.mSearchBrand.getText().toString() + "=" +
+                                        mSearchHolder.mSearchModel.getText().toString() + "=" +
+                                        mSearchHolder.mSearchPrice.getText().toString() + "=" +
+                                        mSearchHolder.mSearchYear.getText().toString() + "=" +
+                                        mSearchHolder.mSearchDate.getText().toString() + "=" +
+                                        mSearchHolder.mSearchLeads.getText().toString();
+
+
+                                System.out.println("all search detailssss======Auto " + allSearchDetails);
+
+                                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                                        putString("Share_sharedata", allSearchDetails).apply();
+                                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                                        putInt("Share_search_id", notificationList.get(mSearchHolder.getAdapterPosition()).getSearchId()).apply();
+                                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                                        putString("Share_keyword", "mysearch").apply();
+
+
+                                Intent i = new Intent(mActivity, ShareWithinAppActivity.class);
+                                mActivity.startActivity(i);
+                                dialog.dismiss();
+                            }
+                        });
+
+                        alert.setNegativeButton("Other", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+
+                                String allSearchDetails = "Search Category : " + mSearchHolder.mSearchCategory.getText().toString() + "\n" +
+                                        "Search Brand : " + mSearchHolder.mSearchBrand.getText().toString() + "\n" +
+                                        "Search Model : " + mSearchHolder.mSearchModel.getText().toString() + "\n" +
+                                        "Year Of Mfg : " + mSearchHolder.mSearchYear.getText().toString() + "\n" +
+                                        "Price : " + mSearchHolder.mSearchPrice.getText().toString() + "\n" +
+                                        "Leads : " + mSearchHolder.mSearchLeads.getText().toString() + "\n" +
+                                        "Date : " + mSearchHolder.mSearchDate.getText().toString();
+
+                                System.out.println("all search detailssss======Other " + allSearchDetails);
+
+                                intent.setType("text/plain");
+                                /*intent.putExtra(Intent.EXTRA_TEXT, "Please visit and Follow my vehicle on Autokatta. Stay connected for Product and Service updates and enquiries"
+                                        + "\n" + "http://autokatta.com/vehicle/main/" + notificationList.get(mSearchHolder.getAdapterPosition()).getSearchId() + "/" + mLoginContact
+                                        + "\n" + "\n" + allSearchDetails);*/
+                                intent.putExtra(Intent.EXTRA_TEXT, allSearchDetails);
+                                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                                intent.putExtra(Intent.EXTRA_SUBJECT, "Search list from Autokatta User");
+                                mActivity.startActivity(Intent.createChooser(intent, "Autokatta"));
+
+                                /*intent.setType("text/plain");
+                                intent.putExtra(Intent.EXTRA_SUBJECT, "Please Find Below Attachments");
+                                intent.putExtra(Intent.EXTRA_TEXT, allSearchDetails);
+                                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                                mActivity.startActivity(intent);*/
+
+                                dialog.dismiss();
+                            }
+
+                        });
+                        alert.create();
+                        alert.show();
+                    }
+                });
+
 
                 break;
 
             case 9:
-                ActiveNotifications active = (ActiveNotifications) holder;
-
+                ActiveNotifications mActiveHolder = (ActiveNotifications) holder;
+                //mActiveHolder.mAuctionUnfav.setImageResource(R.drawable.ic_delete);
                 break;
 
             case 10:
                 UploadVehicleNotifications mUpVehicleHolder = (UploadVehicleNotifications) holder;
 
-                //mUpVehicleHolder.mDelete.setBackgroundResource(R.drawable.ic_delete);
+                //mUpVehicleHolder.mVehicleUnfav.setImageResource(R.drawable.ic_delete);
 
                 break;
 
             case 11:
                 ShareNotifications mShareHolder = (ShareNotifications) holder;
-
+                //mShareHolder.mShareUnfav.setImageResource(R.drawable.ic_delete);
                 break;
 
             case 111:
@@ -1918,15 +2190,9 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
                     @Override
                     public void onClick(View v) {
 
-                                        /*deleteFromFavourite("",mBuyerHolder.getAdapterPosition(),
-                                                notificationList.get(mBuyerHolder.getAdapterPosition()).getSsearchId(),
-                                                notificationList.get(mBuyerHolder.getAdapterPosition()).getVvehicleId(),
-                                                "buyer");*/
-                        //int notiId = notificationList.get(mBuyerHolder.getAdapterPosition()).getId();
                         String BuyerId = notificationList.get(mBuyerHolder.getAdapterPosition()).getVvehicleId()
                                 + "," + notificationList.get(mBuyerHolder.getAdapterPosition()).getSsearchId();
                         mApiCall.removeFromFavorite(mLoginContact, BuyerId, 0, "", 0);
-                        //notificationList.get(mGroupHolder.getAdapterPosition()).setMyFavStatus("no");
                         notificationList.remove(mBuyerHolder.getAdapterPosition());
                         notifyItemRemoved(mBuyerHolder.getAdapterPosition());
                         notifyItemRangeChanged(mBuyerHolder.getAdapterPosition(), notificationList.size());
@@ -2168,7 +2434,6 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
                         String SellerId = notificationList.get(mSellerHolder.getAdapterPosition()).getSsearchId()
                                 + "," + notificationList.get(mSellerHolder.getAdapterPosition()).getVvehicleId();
                         mApiCall.removeFromFavorite(mLoginContact, "", 0, SellerId, 0);
-                        //notificationList.get(mGroupHolder.getAdapterPosition()).setMyFavStatus("no");
                         notificationList.remove(mSellerHolder.getAdapterPosition());
                         notifyItemRemoved(mSellerHolder.getAdapterPosition());
                         notifyItemRangeChanged(mSellerHolder.getAdapterPosition(), notificationList.size());
@@ -2178,13 +2443,115 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
                 break;
 
             case 113:
-                MySearch mmySearchHolder = (MySearch) holder;
+                final MySearch mySearchHolder = (MySearch) holder;
 
-                TextView mCategory, mBrand, mModel, mPrice, mYear, mSearchDate, mLeads, mStopdate;
-                ImageView editImg, deleteImg, favImg, unfavImg, share, mAutokattaShare;
-                Button Stopsearch, Startsearch;
-                RelativeLayout relativeLayout;
-                CardView cardView;
+                mySearchHolder.relativeSearchTitle.setVisibility(View.VISIBLE);
+                mySearchHolder.mCategory.setText(notificationList.get(position).getSearchCategory());
+                mySearchHolder.mBrand.setText(notificationList.get(position).getSearchBrand());
+                mySearchHolder.mModel.setText(notificationList.get(position).getSearchModel());
+                mySearchHolder.mPrice.setText(notificationList.get(position).getSearchPrice());
+                mySearchHolder.mYear.setText(notificationList.get(position).getSearchManfYear());
+                mySearchHolder.mSearchDate.setText(notificationList.get(position).getSearchDate());
+                mySearchHolder.mLeads.setText(String.valueOf(notificationList.get(position).getSearchLeads()));
+
+                mySearchHolder.editImg.setImageResource(R.drawable.ic_delete);
+                mySearchHolder.deleteImg.setVisibility(View.GONE);
+                // mySearchHolder.sharevehi.setVisibility(View.GONE);
+                mySearchHolder.unfavImg.setVisibility(View.GONE);
+                mySearchHolder.favImg.setVisibility(View.GONE);
+                mySearchHolder.relativeLayout.setVisibility(View.GONE);
+
+                mySearchHolder.editImg.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //unfavorite service
+                        int SearchId = notificationList.get(mySearchHolder.getAdapterPosition()).getSearchId();
+                        mApiCall.removeFromFavorite(mLoginContact, "", SearchId, "", 0);
+                        notificationList.remove(mySearchHolder.getAdapterPosition());
+                        notifyItemRemoved(mySearchHolder.getAdapterPosition());
+                        notifyItemRangeChanged(mySearchHolder.getAdapterPosition(), notificationList.size());
+                    }
+                });
+
+                mySearchHolder.mAutokattaShare.setOnClickListener(new View.OnClickListener() {
+                    Intent intent = new Intent(Intent.ACTION_SEND);
+
+                    @Override
+                    public void onClick(View v) {
+                        //shareProfileData();
+                        android.support.v7.app.AlertDialog.Builder alert = new android.support.v7.app.AlertDialog.Builder(mActivity);
+                        alert.setTitle("Share");
+                        alert.setMessage("with Autokatta or to other?");
+                        alert.setIconAttribute(android.R.attr.alertDialogIcon);
+
+                        alert.setPositiveButton("Autokatta", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                String allSearchDetails = mySearchHolder.mCategory.getText().toString() + "=" +
+                                        mySearchHolder.mBrand.getText().toString() + "=" +
+                                        mySearchHolder.mModel.getText().toString() + "=" +
+                                        mySearchHolder.mPrice.getText().toString() + "=" +
+                                        mySearchHolder.mYear.getText().toString() + "=" +
+                                        mySearchHolder.mSearchDate.getText().toString() + "=" +
+                                        mySearchHolder.mLeads.getText().toString();
+
+
+                                System.out.println("all search detailssss======Auto " + allSearchDetails);
+
+                                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                                        putString("Share_sharedata", allSearchDetails).apply();
+                                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                                        putInt("Share_search_id", notificationList.get(mySearchHolder.getAdapterPosition()).getSearchId()).apply();
+                                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                                        putString("Share_keyword", "mysearch").apply();
+
+
+                                Intent i = new Intent(mActivity, ShareWithinAppActivity.class);
+                                mActivity.startActivity(i);
+                                dialog.dismiss();
+                            }
+                        });
+
+                        alert.setNegativeButton("Other", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+
+                                String allSearchDetails = "Search Category : " + mySearchHolder.mCategory.getText().toString() + "\n" +
+                                        "Search Brand : " + mySearchHolder.mBrand.getText().toString() + "\n" +
+                                        "Search Model : " + mySearchHolder.mModel.getText().toString() + "\n" +
+                                        "Year Of Mfg : " + mySearchHolder.mYear.getText().toString() + "\n" +
+                                        "Price : " + mySearchHolder.mPrice.getText().toString() + "\n" +
+                                        "Leads : " + mySearchHolder.mLeads.getText().toString() + "\n" +
+                                        "Date : " + mySearchHolder.mSearchDate.getText().toString();
+
+                                System.out.println("all search detailssss======Other " + allSearchDetails);
+
+                                intent.setType("text/plain");
+                                /*intent.putExtra(Intent.EXTRA_TEXT, "Please visit and Follow my vehicle on Autokatta. Stay connected for Product and Service updates and enquiries"
+                                        + "\n" + "http://autokatta.com/vehicle/main/" + notificationList.get(mySearchHolder.getAdapterPosition()).getSearchId() + "/" + mLoginContact
+                                        + "\n" + "\n" + allSearchDetails);*/
+                                intent.putExtra(Intent.EXTRA_TEXT, allSearchDetails);
+                                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                                intent.putExtra(Intent.EXTRA_SUBJECT, "Search list from Autokatta User");
+                                mActivity.startActivity(Intent.createChooser(intent, "Autokatta"));
+
+                                /*intent.setType("text/plain");
+                                intent.putExtra(Intent.EXTRA_SUBJECT, "Please Find Below Attachments");
+                                intent.putExtra(Intent.EXTRA_TEXT, allSearchDetails);
+                                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                                mActivity.startActivity(intent);*/
+
+                                dialog.dismiss();
+                            }
+
+                        });
+                        alert.create();
+                        alert.show();
+                    }
+                });
+
 
                 break;
 

@@ -106,7 +106,7 @@
                     android:layout_below="@+id/sharesearch1"
                     android:contentDescription="@string/app_name"
                     android:padding="7dp"
-                    android:src="@drawable/fav1"
+                    android:src="@mipmap/heart_liked"
                     android:visibility="gone" />
 
                 <ImageView
@@ -117,7 +117,7 @@
                     android:layout_below="@+id/sharesearch1"
                     android:contentDescription="@string/app_name"
                     android:padding="7dp"
-                    android:src="@drawable/fav2"
+                    android:src="@mipmap/ic_heart_like"
                     android:visibility="visible" />
 
                 <TextView

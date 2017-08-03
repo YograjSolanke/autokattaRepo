@@ -262,6 +262,8 @@ public class FavoriteNotificationFragment extends Fragment implements SwipeRefre
                         favouriteAllResponse.setSearchManfYear(successNotification.getSearchManfYear());
                         favouriteAllResponse.setSearchDate(successNotification.getSearchDate());
                         favouriteAllResponse.setSearchLeads(successNotification.getSearchLeads());
+                        favouriteAllResponse.setFavid(successNotification.getFavid());
+                        favouriteAllResponse.setDate(successNotification.getDate());
 
 
                         mainList.add(favouriteAllResponse);
@@ -537,6 +539,8 @@ public class FavoriteNotificationFragment extends Fragment implements SwipeRefre
                         favouriteAllResponse.setSearchManfYear(successSearch.getSearchManfYear());
                         favouriteAllResponse.setSearchDate(successSearch.getSearchDate());
                         favouriteAllResponse.setSearchLeads(successSearch.getSearchLeads());
+                        favouriteAllResponse.setFavid(successSearch.getFavid());
+                        favouriteAllResponse.setDate(successSearch.getDate());
                         mainList.add(favouriteAllResponse);
                     }
                 }

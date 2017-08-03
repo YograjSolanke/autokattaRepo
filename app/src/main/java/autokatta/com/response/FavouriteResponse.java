@@ -473,6 +473,8 @@ public class FavouriteResponse {
             @SerializedName("serviceimages")
             @Expose
             private String serviceimages;
+
+
             @SerializedName("vehiclelikestatus")
             @Expose
             private String vehiclelikestatus;
@@ -506,6 +508,63 @@ public class FavouriteResponse {
             @SerializedName("year")
             @Expose
             private String year;
+/*
+            @SerializedName("UpVehicleLikeStatus")
+            @Expose
+            private String upVehicleLikeStatus;
+            @SerializedName("UpVehicleFollowStatus")
+            @Expose
+            private String upVehicleFollowStatus;
+            @SerializedName("UploadVehicleID")
+            @Expose
+            private int uploadVehicleID;
+            @SerializedName("UpVehicleLikeCount")
+            @Expose
+            private int upVehicleLikeCount;
+            @SerializedName("UpVehicleFollowCount")
+            @Expose
+            private int upVehicleFollowCount;
+            @SerializedName("UpVehicleContact")
+            @Expose
+            private String upVehicleContact;
+            @SerializedName("UpVehicleTitle")
+            @Expose
+            private String upVehicleTitle;
+            @SerializedName("UpVehicleImage")
+            @Expose
+            private String upVehicleImage;
+            @SerializedName("UpVehiclePrice")
+            @Expose
+            private String upVehiclePrice;
+            @SerializedName("UpVehicleModel")
+            @Expose
+            private String upVehicleModel;
+            @SerializedName("UpVehicleBrand")
+            @Expose
+            private String upVehicleBrand;
+            @SerializedName("UpVehicleManfYear")
+            @Expose
+            private String upVehicleManfYear;
+            @SerializedName("UpVehicleRegNo")
+            @Expose
+            private String upVehicleRegNo;
+            @SerializedName("UpVehicleKmsRun")
+            @Expose
+            private String upVehicleKmsRun;
+            @SerializedName("UpVehicleHrsRun")
+            @Expose
+            private String upVehicleHrsRun;
+            @SerializedName("UpVehicleRtoCity")
+            @Expose
+            private String upVehicleRtoCity;
+            @SerializedName("UpVehicleLocationCity")
+            @Expose
+            private String upVehicleLocationCity;
+
+            @SerializedName("UpVehicleShareCount")
+            @Expose
+            private int UpVehicleShareCount;
+*/
 
             public int getId() {
                 return id;
@@ -3684,6 +3743,14 @@ public class FavouriteResponse {
             @Expose
             private int SearchLeads;
 
+            @SerializedName("favid")
+            @Expose
+            private int favid;
+
+            @SerializedName("date")
+            @Expose
+            private String date;
+
 
             public int getSearchID() {
                 return SearchID;
@@ -3781,7 +3848,21 @@ public class FavouriteResponse {
                 SearchLeads = searchLeads;
             }
 
+            public int getFavid() {
+                return favid;
+            }
 
+            public void setFavid(int favid) {
+                this.favid = favid;
+            }
+
+            public String getDate() {
+                return date;
+            }
+
+            public void setDate(String date) {
+                this.date = date;
+            }
         }
 
     }

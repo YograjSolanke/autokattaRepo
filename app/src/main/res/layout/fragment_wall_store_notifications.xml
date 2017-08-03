@@ -91,7 +91,7 @@
                         android:layout_marginEnd="@dimen/layout_top"
                         android:contentDescription="@string/app_name"
                         android:visibility="gone"
-                        app:srcCompat="@mipmap/heart_liked" />
+                        android:src="@mipmap/heart_liked" />
 
                     <ImageButton
                         android:id="@+id/store_unfavourite"
@@ -101,9 +101,8 @@
                         android:layout_centerVertical="true"
                         android:layout_marginEnd="@dimen/layout_top"
                         android:contentDescription="@string/app_name"
-                        android:tint="@color/button_grey"
                         android:visibility="visible"
-                        app:srcCompat="@mipmap/ic_heart_like" />
+                        android:src="@mipmap/ic_heart_like" />
 
                 </RelativeLayout>
 
