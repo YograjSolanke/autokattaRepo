@@ -250,6 +250,20 @@ public class FavoriteNotificationFragment extends Fragment implements SwipeRefre
                         }
 
 
+                        favouriteAllResponse.setSearchId(successNotification.getSearchID());
+                        favouriteAllResponse.setSearchLikeStatus(successNotification.getSearchLikeStatus());
+                        favouriteAllResponse.setSearchCategory(successNotification.getSearchCategory());
+                        favouriteAllResponse.setSearchBrand(successNotification.getSearchBrand());
+                        favouriteAllResponse.setSearchModel(successNotification.getSearchModel());
+                        favouriteAllResponse.setSearchRtoCity(successNotification.getSearchRtoCity());
+                        favouriteAllResponse.setSearchLocationCity(successNotification.getSearchLocationCity());
+                        favouriteAllResponse.setSearchColor(successNotification.getSearchColor());
+                        favouriteAllResponse.setSearchPrice(successNotification.getSearchPrice());
+                        favouriteAllResponse.setSearchManfYear(successNotification.getSearchManfYear());
+                        favouriteAllResponse.setSearchDate(successNotification.getSearchDate());
+                        favouriteAllResponse.setSearchLeads(successNotification.getSearchLeads());
+
+
                         mainList.add(favouriteAllResponse);
                     }
                 }
@@ -511,19 +525,18 @@ public class FavoriteNotificationFragment extends Fragment implements SwipeRefre
                         FavouriteAllResponse favouriteAllResponse = new FavouriteAllResponse();
                         favouriteAllResponse.setLayoutNo("113");
 
-                        favouriteAllResponse.setSearchId(successSearch.getSearchId());
-                        favouriteAllResponse.setDate(successSearch.getDate());
-                        favouriteAllResponse.setDatetime(successSearch.getDatetime());
-                        favouriteAllResponse.setCategory(successSearch.getCategory());
-                        favouriteAllResponse.setBrand(successSearch.getBrand());
-                        favouriteAllResponse.setModel(successSearch.getModel());
-                        favouriteAllResponse.setRtoCity(successSearch.getRtoCity());
-                        favouriteAllResponse.setLocationCity(successSearch.getLocationCity());
-                        favouriteAllResponse.setColor(successSearch.getColor());
-                        favouriteAllResponse.setPrice(successSearch.getPrice());
-                        favouriteAllResponse.setYearOfManufactur(successSearch.getYearOfManufactur());
-                        favouriteAllResponse.setFavid(successSearch.getFavid());
-
+                        favouriteAllResponse.setSearchId(successSearch.getSearchID());
+                        favouriteAllResponse.setSearchLikeStatus(successSearch.getSearchLikeStatus());
+                        favouriteAllResponse.setSearchCategory(successSearch.getSearchCategory());
+                        favouriteAllResponse.setSearchBrand(successSearch.getSearchBrand());
+                        favouriteAllResponse.setSearchModel(successSearch.getSearchModel());
+                        favouriteAllResponse.setSearchRtoCity(successSearch.getSearchRtoCity());
+                        favouriteAllResponse.setSearchLocationCity(successSearch.getSearchLocationCity());
+                        favouriteAllResponse.setSearchColor(successSearch.getSearchColor());
+                        favouriteAllResponse.setSearchPrice(successSearch.getSearchPrice());
+                        favouriteAllResponse.setSearchManfYear(successSearch.getSearchManfYear());
+                        favouriteAllResponse.setSearchDate(successSearch.getSearchDate());
+                        favouriteAllResponse.setSearchLeads(successSearch.getSearchLeads());
                         mainList.add(favouriteAllResponse);
                     }
                 }

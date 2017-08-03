@@ -761,6 +761,134 @@ public class FavouriteAllResponse {
         VehicleShareCount = vehicleShareCount;
     }
 
+    private int SearchID;
+
+    private String SearchLikeStatus;
+
+
+    private String SearchCategory;
+
+    private String SearchBrand;
+
+    private String SearchModel;
+
+    private String SearchRtoCity;
+
+    private String SearchLocationCity;
+
+    private String SearchColor;
+
+    private String SearchPrice;
+
+    private String SearchManfYear;
+
+    private String SearchDate;
+
+    private int SearchLeads;
+
+
+    public int getSearchID() {
+        return SearchID;
+    }
+
+    public void setSearchID(int searchID) {
+        SearchID = searchID;
+    }
+
+    public String getSearchLikeStatus() {
+        return SearchLikeStatus;
+    }
+
+    public void setSearchLikeStatus(String searchLikeStatus) {
+        SearchLikeStatus = searchLikeStatus;
+    }
+
+    public String getSearchCategory() {
+        return SearchCategory;
+    }
+
+    public void setSearchCategory(String searchCategory) {
+        SearchCategory = searchCategory;
+    }
+
+    public String getSearchBrand() {
+        return SearchBrand;
+    }
+
+    public void setSearchBrand(String searchBrand) {
+        SearchBrand = searchBrand;
+    }
+
+    public String getSearchModel() {
+        return SearchModel;
+    }
+
+    public void setSearchModel(String searchModel) {
+        SearchModel = searchModel;
+    }
+
+    public String getSearchRtoCity() {
+        return SearchRtoCity;
+    }
+
+    public void setSearchRtoCity(String searchRtoCity) {
+        SearchRtoCity = searchRtoCity;
+    }
+
+    public String getSearchLocationCity() {
+        return SearchLocationCity;
+    }
+
+    public void setSearchLocationCity(String searchLocationCity) {
+        SearchLocationCity = searchLocationCity;
+    }
+
+    public String getSearchColor() {
+        return SearchColor;
+    }
+
+    public void setSearchColor(String searchColor) {
+        SearchColor = searchColor;
+    }
+
+    public String getSearchPrice() {
+        return SearchPrice;
+    }
+
+    public void setSearchPrice(String searchPrice) {
+        SearchPrice = searchPrice;
+    }
+
+    public String getSearchManfYear() {
+        return SearchManfYear;
+    }
+
+    public void setSearchManfYear(String searchManfYear) {
+        SearchManfYear = searchManfYear;
+    }
+
+    public String getSearchDate() {
+        return SearchDate;
+    }
+
+    public void setSearchDate(String searchDate) {
+        SearchDate = searchDate;
+    }
+
+    public int getSearchLeads() {
+        return SearchLeads;
+    }
+
+    public void setSearchLeads(int searchLeads) {
+        SearchLeads = searchLeads;
+    }
+
+
+
+
+
+
+
     /*
     Buyer Search
      */

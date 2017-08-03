@@ -130,38 +130,159 @@ public class FavouriteResponse {
             private int VehicleShareCount;
 
 
+            @SerializedName("SearchID")
+            @Expose
+            private int SearchID;
+
+            @SerializedName("SearchLikeStatus")
+            @Expose
+            private String SearchLikeStatus;
+
+            @SerializedName("SearchCategory")
+            @Expose
+            private String SearchCategory;
 
 
+            @SerializedName("SearchBrand")
+            @Expose
+            private String SearchBrand;
 
 
+            @SerializedName("SearchModel")
+            @Expose
+            private String SearchModel;
 
 
+            @SerializedName("SearchRtoCity")
+            @Expose
+            private String SearchRtoCity;
 
 
+            @SerializedName("SearchLocationCity")
+            @Expose
+            private String SearchLocationCity;
 
 
+            @SerializedName("SearchColor")
+            @Expose
+            private String SearchColor;
 
 
+            @SerializedName("SearchPrice")
+            @Expose
+            private String SearchPrice;
 
 
+            @SerializedName("SearchManfYear")
+            @Expose
+            private String SearchManfYear;
 
 
+            @SerializedName("SearchDate")
+            @Expose
+            private String SearchDate;
 
 
+            @SerializedName("SearchLeads")
+            @Expose
+            private int SearchLeads;
 
 
+            public int getSearchID() {
+                return SearchID;
+            }
 
+            public void setSearchID(int searchID) {
+                SearchID = searchID;
+            }
 
+            public String getSearchLikeStatus() {
+                return SearchLikeStatus;
+            }
 
+            public void setSearchLikeStatus(String searchLikeStatus) {
+                SearchLikeStatus = searchLikeStatus;
+            }
 
+            public String getSearchCategory() {
+                return SearchCategory;
+            }
 
+            public void setSearchCategory(String searchCategory) {
+                SearchCategory = searchCategory;
+            }
 
+            public String getSearchBrand() {
+                return SearchBrand;
+            }
 
+            public void setSearchBrand(String searchBrand) {
+                SearchBrand = searchBrand;
+            }
 
+            public String getSearchModel() {
+                return SearchModel;
+            }
 
+            public void setSearchModel(String searchModel) {
+                SearchModel = searchModel;
+            }
 
+            public String getSearchRtoCity() {
+                return SearchRtoCity;
+            }
 
+            public void setSearchRtoCity(String searchRtoCity) {
+                SearchRtoCity = searchRtoCity;
+            }
 
+            public String getSearchLocationCity() {
+                return SearchLocationCity;
+            }
+
+            public void setSearchLocationCity(String searchLocationCity) {
+                SearchLocationCity = searchLocationCity;
+            }
+
+            public String getSearchColor() {
+                return SearchColor;
+            }
+
+            public void setSearchColor(String searchColor) {
+                SearchColor = searchColor;
+            }
+
+            public String getSearchPrice() {
+                return SearchPrice;
+            }
+
+            public void setSearchPrice(String searchPrice) {
+                SearchPrice = searchPrice;
+            }
+
+            public String getSearchManfYear() {
+                return SearchManfYear;
+            }
+
+            public void setSearchManfYear(String searchManfYear) {
+                SearchManfYear = searchManfYear;
+            }
+
+            public String getSearchDate() {
+                return SearchDate;
+            }
+
+            public void setSearchDate(String searchDate) {
+                SearchDate = searchDate;
+            }
+
+            public int getSearchLeads() {
+                return SearchLeads;
+            }
+
+            public void setSearchLeads(int searchLeads) {
+                SearchLeads = searchLeads;
+            }
 
             @SerializedName("id")
             @Expose
@@ -3505,152 +3626,163 @@ public class FavouriteResponse {
 
         public class Search {
 
-            @SerializedName("search_id")
+
+            @SerializedName("SearchID")
             @Expose
-            private int searchId;
-            @SerializedName("date")
+            private int SearchID;
+
+            @SerializedName("SearchLikeStatus")
             @Expose
-            private String date;
-            @SerializedName("datetime")
+            private String SearchLikeStatus;
+
+            @SerializedName("SearchCategory")
             @Expose
-            private String datetime;
-            @SerializedName("category")
+            private String SearchCategory;
+
+
+            @SerializedName("SearchBrand")
             @Expose
-            private String category;
-            @SerializedName("Brand")
+            private String SearchBrand;
+
+
+            @SerializedName("SearchModel")
             @Expose
-            private String brand;
-            @SerializedName("model")
+            private String SearchModel;
+
+
+            @SerializedName("SearchRtoCity")
             @Expose
-            private String model;
-            @SerializedName("rto_city")
+            private String SearchRtoCity;
+
+
+            @SerializedName("SearchLocationCity")
             @Expose
-            private String rtoCity;
-            @SerializedName("location_city")
+            private String SearchLocationCity;
+
+
+            @SerializedName("SearchColor")
             @Expose
-            private String locationCity;
-            @SerializedName("color")
+            private String SearchColor;
+
+
+            @SerializedName("SearchPrice")
             @Expose
-            private String color;
-            @SerializedName("price")
+            private String SearchPrice;
+
+
+            @SerializedName("SearchManfYear")
             @Expose
-            private String price;
-            @SerializedName("year_of_manufactur")
+            private String SearchManfYear;
+
+
+            @SerializedName("SearchDate")
             @Expose
-            private String yearOfManufactur;
-            @SerializedName("favid")
+            private String SearchDate;
+
+
+            @SerializedName("SearchLeads")
             @Expose
-            private int favid;
-            @SerializedName("images")
-            @Expose
-            private String images;
+            private int SearchLeads;
 
-            public int getSearchId() {
-                return searchId;
+
+            public int getSearchID() {
+                return SearchID;
             }
 
-            public void setSearchId(int searchId) {
-                this.searchId = searchId;
+            public void setSearchID(int searchID) {
+                SearchID = searchID;
             }
 
-            public String getDate() {
-                return date;
+            public String getSearchLikeStatus() {
+                return SearchLikeStatus;
             }
 
-            public void setDate(String date) {
-                this.date = date;
+            public void setSearchLikeStatus(String searchLikeStatus) {
+                SearchLikeStatus = searchLikeStatus;
             }
 
-            public String getDatetime() {
-                return datetime;
+            public String getSearchCategory() {
+                return SearchCategory;
             }
 
-            public void setDatetime(String datetime) {
-                this.datetime = datetime;
+            public void setSearchCategory(String searchCategory) {
+                SearchCategory = searchCategory;
             }
 
-            public String getCategory() {
-                return category;
+            public String getSearchBrand() {
+                return SearchBrand;
             }
 
-            public void setCategory(String category) {
-                this.category = category;
+            public void setSearchBrand(String searchBrand) {
+                SearchBrand = searchBrand;
             }
 
-            public String getBrand() {
-                return brand;
+            public String getSearchModel() {
+                return SearchModel;
             }
 
-            public void setBrand(String brand) {
-                this.brand = brand;
+            public void setSearchModel(String searchModel) {
+                SearchModel = searchModel;
             }
 
-            public String getModel() {
-                return model;
+            public String getSearchRtoCity() {
+                return SearchRtoCity;
             }
 
-            public void setModel(String model) {
-                this.model = model;
+            public void setSearchRtoCity(String searchRtoCity) {
+                SearchRtoCity = searchRtoCity;
             }
 
-            public String getRtoCity() {
-                return rtoCity;
+            public String getSearchLocationCity() {
+                return SearchLocationCity;
             }
 
-            public void setRtoCity(String rtoCity) {
-                this.rtoCity = rtoCity;
+            public void setSearchLocationCity(String searchLocationCity) {
+                SearchLocationCity = searchLocationCity;
             }
 
-            public String getLocationCity() {
-                return locationCity;
+            public String getSearchColor() {
+                return SearchColor;
             }
 
-            public void setLocationCity(String locationCity) {
-                this.locationCity = locationCity;
+            public void setSearchColor(String searchColor) {
+                SearchColor = searchColor;
             }
 
-            public String getColor() {
-                return color;
+            public String getSearchPrice() {
+                return SearchPrice;
             }
 
-            public void setColor(String color) {
-                this.color = color;
+            public void setSearchPrice(String searchPrice) {
+                SearchPrice = searchPrice;
             }
 
-            public String getPrice() {
-                return price;
+            public String getSearchManfYear() {
+                return SearchManfYear;
             }
 
-            public void setPrice(String price) {
-                this.price = price;
+            public void setSearchManfYear(String searchManfYear) {
+                SearchManfYear = searchManfYear;
             }
 
-            public String getYearOfManufactur() {
-                return yearOfManufactur;
+            public String getSearchDate() {
+                return SearchDate;
             }
 
-            public void setYearOfManufactur(String yearOfManufactur) {
-                this.yearOfManufactur = yearOfManufactur;
+            public void setSearchDate(String searchDate) {
+                SearchDate = searchDate;
             }
 
-            public int getFavid() {
-                return favid;
+            public int getSearchLeads() {
+                return SearchLeads;
             }
 
-            public void setFavid(int favid) {
-                this.favid = favid;
+            public void setSearchLeads(int searchLeads) {
+                SearchLeads = searchLeads;
             }
 
-            public String getImages() {
-                return images;
-            }
-
-            public void setImages(String images) {
-                this.images = images;
-            }
 
         }
-
 
     }
 }
