@@ -29,10 +29,10 @@ public class getBussinessChatResponse {
 
         @SerializedName("product_id")
         @Expose
-        private String productId;
+        private int productId;
         @SerializedName("store_id")
         @Expose
-        private String storeId;
+        private int storeId;
         @SerializedName("product_type")
         @Expose
         private String productType;
@@ -83,7 +83,7 @@ public class getBussinessChatResponse {
         private String keyword;
         @SerializedName("id")
         @Expose
-        private String id;
+        private int id;
         @SerializedName("type")
         @Expose
         private String type;
@@ -98,7 +98,7 @@ public class getBussinessChatResponse {
         private String tags;
         @SerializedName("vehicle_id")
         @Expose
-        private String vehicleId;
+        private int vehicleId;
         @SerializedName("title")
         @Expose
         private String title;
@@ -298,19 +298,19 @@ public class getBussinessChatResponse {
         @Expose
         private String steering;
 
-        public String getProductId() {
+        public int getProductId() {
             return productId;
         }
 
-        public void setProductId(String productId) {
+        public void setProductId(int productId) {
             this.productId = productId;
         }
 
-        public String getStoreId() {
+        public int getStoreId() {
             return storeId;
         }
 
-        public void setStoreId(String storeId) {
+        public void setStoreId(int storeId) {
             this.storeId = storeId;
         }
 
@@ -442,11 +442,11 @@ public class getBussinessChatResponse {
             this.keyword = keyword;
         }
 
-        public String getId() {
+        public int getId() {
             return id;
         }
 
-        public void setId(String id) {
+        public void setId(int id) {
             this.id = id;
         }
 
@@ -482,11 +482,11 @@ public class getBussinessChatResponse {
             this.tags = tags;
         }
 
-        public String getVehicleId() {
+        public int getVehicleId() {
             return vehicleId;
         }
 
-        public void setVehicleId(String vehicleId) {
+        public void setVehicleId(int vehicleId) {
             this.vehicleId = vehicleId;
         }
 

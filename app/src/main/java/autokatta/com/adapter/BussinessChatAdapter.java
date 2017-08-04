@@ -68,9 +68,9 @@ public class BussinessChatAdapter extends RecyclerView.Adapter<BussinessChatAdap
             Bundle b = new Bundle();
 
             if (mKeyword.getText().toString().equals("Product")) {
-                b.putString("product_id", mItemList.get(getAdapterPosition()).getProductId());
-                b.putString("service_id", "");
-                b.putString("vehicle_id", "");
+                b.putInt("product_id", mItemList.get(getAdapterPosition()).getProductId());
+                b.putInt("service_id", 0);
+                b.putInt("vehicle_id", 0);
                 b.putString("keyword", "Product");
                 b.putString("title", mItemList.get(getAdapterPosition()).getProductName());
                 b.putString("price", mItemList.get(getAdapterPosition()).getPrice());
@@ -80,9 +80,9 @@ public class BussinessChatAdapter extends RecyclerView.Adapter<BussinessChatAdap
                 b.putString("image", mItemList.get(getAdapterPosition()).getImages());
             }
             if (mKeyword.getText().toString().equals("Service")) {
-                b.putString("product_id", "");
-                b.putString("service_id", mItemList.get(getAdapterPosition()).getId());
-                b.putString("vehicle_id", "");
+                b.putInt("product_id", 0);
+                b.putInt("service_id", mItemList.get(getAdapterPosition()).getId());
+                b.putInt("vehicle_id", 0);
                 b.putString("keyword", "Service");
                 b.putString("title", mItemList.get(getAdapterPosition()).getName());
                 b.putString("price", mItemList.get(getAdapterPosition()).getPrice());
@@ -93,9 +93,9 @@ public class BussinessChatAdapter extends RecyclerView.Adapter<BussinessChatAdap
             }
 
             if (mKeyword.getText().toString().equals("Vehicle")) {
-                b.putString("product_id", "");
-                b.putString("service_id", "");
-                b.putString("vehicle_id", mItemList.get(getAdapterPosition()).getVehicleId());
+                b.putInt("product_id", 0);
+                b.putInt("service_id", 0);
+                b.putInt("vehicle_id", mItemList.get(getAdapterPosition()).getVehicleId());
                 b.putString("keyword", "Vehicle");
                 b.putString("title", mItemList.get(getAdapterPosition()).getTitle());
                 b.putString("price", mItemList.get(getAdapterPosition()).getPrice());

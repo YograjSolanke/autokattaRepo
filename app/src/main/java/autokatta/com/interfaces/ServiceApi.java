@@ -303,7 +303,7 @@ public interface ServiceApi {
                                                               @Query("City") String city, @Query("RTOcity") String rtoCity,
                                                               @Query("Price") String price, @Query("RegistrationYear") String regYear,
                                                               @Query("ManufactureYear") String mgfYear, @Query("Kms") String kms,
-                                                              @Query("Owners") int owners);
+                                                              @Query("Owners") int owners,@Query("Contact") String contact);
 
     //Get My Uploaded Vehicle...
     @GET("GetMyUploadedVehicles")

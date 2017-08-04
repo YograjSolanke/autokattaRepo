@@ -2200,7 +2200,7 @@ Upload Vehicle
     Get Group Vehicles...
      */
     public void getGroupVehicles(int groupId, String brand, String model, String version, String city, String rtoCity,
-                                 String price, String regYear, String mgfYear, String kms, int owners) {
+                                 String price, String regYear, String mgfYear, String kms, int owners,String contact) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 Retrofit mRetrofit = new Retrofit.Builder()
@@ -2210,7 +2210,7 @@ Upload Vehicle
                         .build();
                 ServiceApi mServiceApi = mRetrofit.create(ServiceApi.class);
                 Call<GetGroupVehiclesResponse> mVehiclesResponse = mServiceApi._autokattaGetGroupVehicles(groupId, brand, model,
-                        version, city, rtoCity, price, regYear, mgfYear, kms, owners);
+                        version, city, rtoCity, price, regYear, mgfYear, kms, owners,contact);
                 mVehiclesResponse.enqueue(new Callback<GetGroupVehiclesResponse>() {
                     @Override
                     public void onResponse(Call<GetGroupVehiclesResponse> call, Response<GetGroupVehiclesResponse> response) {

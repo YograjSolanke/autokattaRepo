@@ -96,11 +96,12 @@ public class GroupVehicleList extends Fragment implements SwipeRefreshLayout.OnR
 
     /*
     Group Vehicle List...
+    rcontact is used to get user vehicles in group
      */
-    private void getGroupVehicles() {
+    private void getGroupVehicles(String rcontact) {
         try {
             if (mTestConnection.isConnectedToInternet()) {
-                mApiCall.getGroupVehicles(mGroupId, brand, model, version, city, RTOcity, price, reg_year, mgf_year, kmsrunning, no_of_owner);
+                mApiCall.getGroupVehicles(mGroupId, brand, model, version, city, RTOcity, price, reg_year, mgf_year, kmsrunning, no_of_owner,rcontact);
             } else {
                 CustomToast.customToast(getActivity(), getString(R.string.no_internet));
             }
@@ -258,10 +259,10 @@ public class GroupVehicleList extends Fragment implements SwipeRefreshLayout.OnR
     public void onRefresh() {
         mSuccesses.clear();
         if (className != null && !className.equalsIgnoreCase("MemberListRefreshAdapter")) {
-            getGroupVehicles();
+            getGroupVehicles("");
         } else if (className != null && className.equalsIgnoreCase("MemberListRefreshAdapter")) {
             String Rcontact = getBundle.getString("Rcontact");
-            getMyVehicles(Rcontact);
+            getGroupVehicles(Rcontact);
         }
     }
 
@@ -271,10 +272,10 @@ public class GroupVehicleList extends Fragment implements SwipeRefreshLayout.OnR
         if (this.isVisible()) {
             if (isVisibleToUser && !_hasLoadedOnce) {
                 if (className != null && !className.equalsIgnoreCase("MemberListRefreshAdapter")) {
-                    getGroupVehicles();
+                    getGroupVehicles("");
                 } else if (className != null && className.equalsIgnoreCase("MemberListRefreshAdapter")) {
                     String Rcontact = getBundle.getString("Rcontact");
-                    getMyVehicles(Rcontact);
+                    getGroupVehicles(Rcontact);
                 }
                 _hasLoadedOnce = true;
             }
@@ -322,10 +323,10 @@ public class GroupVehicleList extends Fragment implements SwipeRefreshLayout.OnR
                         mSwipeRefreshLayout.setRefreshing(true);
                         //getGroupVehicles();
                         if (className != null && !className.equalsIgnoreCase("MemberListRefreshAdapter")) {
-                            getGroupVehicles();
+                            getGroupVehicles("");
                         } else if (className != null && className.equalsIgnoreCase("MemberListRefreshAdapter")) {
                             String Rcontact = getBundle.getString("Rcontact");
-                            getMyVehicles(Rcontact);
+                            getGroupVehicles(Rcontact);
                         }
                     }
                 });
@@ -335,10 +336,10 @@ public class GroupVehicleList extends Fragment implements SwipeRefreshLayout.OnR
                     className = getBundle.getString("className");
                     mGroupId = getBundle.getInt("bundle_GroupId");
                     if (className != null && !className.equalsIgnoreCase("MemberListRefreshAdapter")) {
-                        getGroupVehicles();
+                        getGroupVehicles("");
                     } else if (className != null && className.equalsIgnoreCase("MemberListRefreshAdapter")) {
                         String Rcontact = getBundle.getString("Rcontact");
-                        getMyVehicles(Rcontact);
+                        getGroupVehicles(Rcontact);
                     }
                     getRtoCity();
 
@@ -396,7 +397,7 @@ public class GroupVehicleList extends Fragment implements SwipeRefreshLayout.OnR
                                 && no_of_owner == 0) {
                             CustomToast.customToast(getActivity(), "Enter value to search");
                         } else {
-                            getGroupVehicles();
+                            getGroupVehicles("");
                         }
 
                     }

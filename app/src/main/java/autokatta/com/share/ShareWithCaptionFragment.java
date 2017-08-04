@@ -32,8 +32,8 @@ public class ShareWithCaptionFragment extends Fragment implements RequestNotifie
     ListView sharelist;
     String editdata = "";
     String sharedata, storecontact, contactnumber, profile_contact,
-            keyword, tab, groupname, number, name;
-    Integer store_id, vehicle_id, product_id, service_id, broadcastgroupid = 0, groupid = 0,
+            keyword, tab, groupname, number = "", name;
+    int store_id, vehicle_id, product_id, service_id, broadcastgroupid = 0, groupid = 0,
             layoutNumber, search_id, status_id, auction_id, loan_id, exchange_id;
     Button sharebutton;
     ApiCall mApiCall;
@@ -66,7 +66,7 @@ public class ShareWithCaptionFragment extends Fragment implements RequestNotifie
         auction_id = b.getInt("auction_id");
         loan_id = b.getInt("loan_id");
         exchange_id = b.getInt("exchange_id");
-        number = b.getString("number");
+        number = b.getString("number","");
         name = b.getString("name");
         keyword = b.getString("keyword");
         tab = b.getString("tab");

@@ -118,10 +118,10 @@ public class MemberVehicleListFragment extends Fragment implements SwipeRefreshL
                         mTestConnection = new ConnectionDetector(getActivity());
                         //getGroupVehicles();
                         if (className != null && !className.equalsIgnoreCase("MemberListRefreshAdapter")) {
-                            getGroupVehicles();
+                            getGroupVehicles("");
                         } else if (className != null && className.equalsIgnoreCase("MemberListRefreshAdapter")) {
                             Rcontact = getBundle.getString("Rcontact");
-                            getMyVehicles(Rcontact);
+                            getGroupVehicles(Rcontact);
                         }
                     }
                 });
@@ -133,10 +133,10 @@ public class MemberVehicleListFragment extends Fragment implements SwipeRefreshL
                             className = getBundle.getString("className");
                             mGroupId = getBundle.getInt("bundle_GroupId");
                             if (className != null && !className.equalsIgnoreCase("MemberListRefreshAdapter")) {
-                                getGroupVehicles();
+                                getGroupVehicles("");
                             } else if (className != null && className.equalsIgnoreCase("MemberListRefreshAdapter")) {
                                 String Rcontact = getBundle.getString("Rcontact");
-                                getMyVehicles(Rcontact);
+                                getGroupVehicles(Rcontact);
                             }
                             getRtoCity();
 
@@ -195,7 +195,7 @@ public class MemberVehicleListFragment extends Fragment implements SwipeRefreshL
                                 && no_of_owner==0) {
                             Snackbar.make(v, "Enter value to search", Snackbar.LENGTH_SHORT).show();
                         } else {
-                            getGroupVehicles();
+                            getGroupVehicles("");
                         }
                     }
                 });
@@ -210,10 +210,10 @@ public class MemberVehicleListFragment extends Fragment implements SwipeRefreshL
         if (this.isVisible()) {
             if (isVisibleToUser && !hasVisible) {
                 if (className != null && !className.equalsIgnoreCase("MemberListRefreshAdapter")) {
-                    getGroupVehicles();
+                    getGroupVehicles("");
                 } else if (className != null && className.equalsIgnoreCase("MemberListRefreshAdapter")) {
                     Rcontact = getBundle.getString("Rcontact");
-                    getMyVehicles(Rcontact);
+                    getGroupVehicles(Rcontact);
                 }
             }
         }
@@ -250,10 +250,12 @@ public class MemberVehicleListFragment extends Fragment implements SwipeRefreshL
 
     /*
     Group Vehicle List...
+    rcontact is used for geting vehicles of rcontact in group
+    if rcontact is empty group vehicles comes
      */
-    private void getGroupVehicles() {
+    private void getGroupVehicles(String rcontact) {
         if (mTestConnection.isConnectedToInternet()) {
-            mApiCall.getGroupVehicles(mGroupId, brand, model, version, city, RTOcity, price, reg_year, mgf_year, kmsrunning, no_of_owner);
+            mApiCall.getGroupVehicles(mGroupId, brand, model, version, city, RTOcity, price, reg_year, mgf_year, kmsrunning, no_of_owner,rcontact);
         } else {
             CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         }
@@ -397,10 +399,10 @@ public class MemberVehicleListFragment extends Fragment implements SwipeRefreshL
     @Override
     public void onRefresh() {
         if (className != null && !className.equalsIgnoreCase("MemberListRefreshAdapter")) {
-            getGroupVehicles();
+            getGroupVehicles("");
         } else if (className != null && className.equalsIgnoreCase("MemberListRefreshAdapter")) {
             String Rcontact = getBundle.getString("Rcontact");
-            getMyVehicles(Rcontact);
+            getGroupVehicles(Rcontact);
         }
     }
 
