@@ -794,7 +794,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:layout_below="@+id/linearcategory"
-                        android:visibility="gone">
+                        android:visibility="visible">
 
                         <LinearLayout
                             android:id="@+id/linearrateservice"
@@ -893,7 +893,7 @@
                                 android:id="@+id/tmbar"
                                 style="?android:attr/ratingBarStyleSmall"
                                 android:layout_width="wrap_content"
-                                android:layout_height="24dp"
+                                android:layout_height="wrap_content"
                                 android:layout_alignParentEnd="true"
                                 android:layout_centerVertical="true"
                                 android:isIndicator="false"

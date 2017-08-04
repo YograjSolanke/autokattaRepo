@@ -207,4 +207,10 @@ public class MySearchfragment extends Fragment implements SwipeRefreshLayout.OnR
     public void notifyString(String str) {
 
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getMySearch(myContact);
+    }
 }

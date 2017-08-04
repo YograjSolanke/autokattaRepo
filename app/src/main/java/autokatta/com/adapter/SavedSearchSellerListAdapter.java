@@ -43,11 +43,12 @@ public class SavedSearchSellerListAdapter extends RecyclerView.Adapter<SavedSear
     List<SellerResponse.Success.MatchedResult> matchedResultList = new ArrayList<>();
     Activity activity;
     ApiCall apiCall;
-    String search_id, category, brand, model, rto_city, manufacture_year, myContact;
+    String category, brand, model, rto_city, manufacture_year, myContact;
     String recieverContact, SenderContact, SellerId, VehiId, calldate;
+    int search_id;
 
 
-    public SavedSearchSellerListAdapter(Activity activity, List<SellerResponse.Success.MatchedResult> matchedResults, String search_id,
+    public SavedSearchSellerListAdapter(Activity activity, List<SellerResponse.Success.MatchedResult> matchedResults, int search_id,
                                         String category, String brand, String model, String manufacture_year, String rto_city) {
         this.activity = activity;
         this.matchedResultList = matchedResults;

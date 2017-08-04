@@ -56,8 +56,9 @@ public class SavedSearchSellerListFragment extends Fragment implements RequestNo
     View myVehicles;
     SavedSearchSellerListAdapter adapter;
     SharedPreferences mSharedPreferences;
-    String b_search_id, b_category, b_brand, b_model, b_version, b_manu_year, b_rto_city, b_price;
+    String b_category, b_brand, b_model, b_version, b_manu_year, b_rto_city, b_price;
     TextView textcategory, textbrand, textmodel, textprice, textyear, textsearchdate, BuyerLeads, Stopdate;
+    int b_search_id;
     ImageView editImg, deleteData, favImg, unfavImg, share, autoshare;
     Button Stopsearch, Startsearch;
     RelativeLayout relativeLayout1, relativeLayout2;
@@ -119,7 +120,7 @@ public class SavedSearchSellerListFragment extends Fragment implements RequestNo
         try {
 
             Bundle b = getArguments();
-            b_search_id = b.getString("search_id");
+            b_search_id = b.getInt("search_id");
             b_category = b.getString("category");
             b_brand = b.getString("brand");
             b_model = b.getString("model");

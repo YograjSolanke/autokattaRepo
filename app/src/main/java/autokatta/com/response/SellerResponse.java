@@ -56,7 +56,7 @@ public class SellerResponse {
 
             @SerializedName("search_id")
             @Expose
-            private String searchId;
+            private Integer searchId;
             @SerializedName("category")
             @Expose
             private String category;
@@ -80,13 +80,7 @@ public class SellerResponse {
             private String rcAvailable;
             @SerializedName("no_of_owners")
             @Expose
-            private String noOfOwners;
-            @SerializedName("query")
-            @Expose
-            private String query;
-            @SerializedName("matchedResultCommand")
-            @Expose
-            private String matchedResultCommand;
+            private Integer noOfOwners;
             @SerializedName("air_condition")
             @Expose
             private String airCondition;
@@ -207,31 +201,15 @@ public class SellerResponse {
             @SerializedName("year_of_registration")
             @Expose
             private String yearOfRegistration;
-            @SerializedName("count")
-            @Expose
-            private Integer count;
             @SerializedName("hpcapacity")
             @Expose
             private String hpcapacity;
 
-            @Expose
-            private List<MatchedResult> matchedResult = null;
-
-
-            public List<MatchedResult> getMatchedResult() {
-                return matchedResult;
-            }
-
-            public void setMatchedResult(List<MatchedResult> matchedResult) {
-                this.matchedResult = matchedResult;
-            }
-
-
-            public String getSearchId() {
+            public Integer getSearchId() {
                 return searchId;
             }
 
-            public void setSearchId(String searchId) {
+            public void setSearchId(Integer searchId) {
                 this.searchId = searchId;
             }
 
@@ -291,28 +269,12 @@ public class SellerResponse {
                 this.rcAvailable = rcAvailable;
             }
 
-            public String getNoOfOwners() {
+            public Integer getNoOfOwners() {
                 return noOfOwners;
             }
 
-            public void setNoOfOwners(String noOfOwners) {
+            public void setNoOfOwners(Integer noOfOwners) {
                 this.noOfOwners = noOfOwners;
-            }
-
-            public String getQuery() {
-                return query;
-            }
-
-            public void setQuery(String query) {
-                this.query = query;
-            }
-
-            public String getMatchedResultCommand() {
-                return matchedResultCommand;
-            }
-
-            public void setMatchedResultCommand(String matchedResultCommand) {
-                this.matchedResultCommand = matchedResultCommand;
             }
 
             public String getAirCondition() {
@@ -635,14 +597,6 @@ public class SellerResponse {
                 this.yearOfRegistration = yearOfRegistration;
             }
 
-            public Integer getCount() {
-                return count;
-            }
-
-            public void setCount(Integer count) {
-                this.count = count;
-            }
-
             public String getHpcapacity() {
                 return hpcapacity;
             }
@@ -650,6 +604,19 @@ public class SellerResponse {
             public void setHpcapacity(String hpcapacity) {
                 this.hpcapacity = hpcapacity;
             }
+
+            @Expose
+            private List<MatchedResult> matchedResult = null;
+
+
+            public List<MatchedResult> getMatchedResult() {
+                return matchedResult;
+            }
+
+            public void setMatchedResult(List<MatchedResult> matchedResult) {
+                this.matchedResult = matchedResult;
+            }
+
 
         }
 
@@ -719,7 +686,7 @@ public class SellerResponse {
             private String bodyType;
             @SerializedName("bus_type")
             @Expose
-            private Object busType;
+            private String busType;
             @SerializedName("callcount")
             @Expose
             private String callcount;
@@ -971,11 +938,11 @@ public class SellerResponse {
                 this.bodyType = bodyType;
             }
 
-            public Object getBusType() {
+            public String getBusType() {
                 return busType;
             }
 
-            public void setBusType(Object busType) {
+            public void setBusType(String busType) {
                 this.busType = busType;
             }
 

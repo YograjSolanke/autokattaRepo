@@ -214,7 +214,7 @@ public class ViewSearchedStoreAdapter extends RecyclerView.Adapter<ViewSearchedS
 
                 followcountint++;
                 object.setFollowcount(followcountint);
-                holder.btnfollow.setText("Follow(" + String.valueOf(followcountint) + ")");
+                holder.btnfollow.setText("Follow(" + followcountint + ")");
                 object.setFollowstatus("yes");
             }
         });
