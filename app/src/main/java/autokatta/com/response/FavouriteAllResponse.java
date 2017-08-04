@@ -76,14 +76,14 @@ public class FavouriteAllResponse {
     private String serviceName;
     private String serviceType;
     private String serviceimages;
-    private String vehiclelikestatus;
+    /*private String vehiclelikestatus;
     private String vehiclefollowstatus;
     private int vehiclelikecount;
     private int vehiclefollowcount;
     private String vehicleContact;
     private String title;
     private String image;
-    private String year;
+    private String year;*/
 
     private int ServiceRating;
 
@@ -103,6 +103,28 @@ public class FavouriteAllResponse {
 
     private int VehicleShareCount;
 
+
+    private String upVehicleLikeStatus;
+
+    private String upVehicleFollowStatus;
+    /*@SerializedName("UploadVehicleID")
+    @Expose
+    private int uploadVehicleID;*/
+    private int upVehicleLikeCount;
+    private int upVehicleFollowCount;
+    private String upVehicleContact;
+    private String upVehicleTitle;
+    private String upVehicleImage;
+    private String upVehiclePrice;
+    private String upVehicleModel;
+    private String upVehicleBrand;
+    private String upVehicleManfYear;
+    private String upVehicleRegNo;
+    private String upVehicleKmsRun;
+    private String upVehicleHrsRun;
+    private String upVehicleRtoCity;
+    private String upVehicleLocationCity;
+    private int UpVehicleShareCount;
 
     public int getFavid() {
         return favid;
@@ -600,95 +622,6 @@ public class FavouriteAllResponse {
         this.serviceimages = serviceimages;
     }
 
-    public String getVehiclelikestatus() {
-        return vehiclelikestatus;
-    }
-
-    public void setVehiclelikestatus(String vehiclelikestatus) {
-        this.vehiclelikestatus = vehiclelikestatus;
-    }
-
-    public String getVehiclefollowstatus() {
-        return vehiclefollowstatus;
-    }
-
-    public void setVehiclefollowstatus(String vehiclefollowstatus) {
-        this.vehiclefollowstatus = vehiclefollowstatus;
-    }
-
-    public int getVehiclelikecount() {
-        return vehiclelikecount;
-    }
-
-    public void setVehiclelikecount(int vehiclelikecount) {
-        this.vehiclelikecount = vehiclelikecount;
-    }
-
-    public int getVehiclefollowcount() {
-        return vehiclefollowcount;
-    }
-
-    public void setVehiclefollowcount(int vehiclefollowcount) {
-        this.vehiclefollowcount = vehiclefollowcount;
-    }
-
-    public String getVehicleContact() {
-        return vehicleContact;
-    }
-
-    public void setVehicleContact(String vehicleContact) {
-        this.vehicleContact = vehicleContact;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
-
-    public String getPrice() {
-        return price;
-    }
-
-    public void setPrice(String price) {
-        this.price = price;
-    }
-
-    public String getModel() {
-        return model;
-    }
-
-    public void setModel(String model) {
-        this.model = model;
-    }
-
-    public String getBrand() {
-        return brand;
-    }
-
-    public void setBrand(String brand) {
-        this.brand = brand;
-    }
-
-    public String getYear() {
-        return year;
-    }
-
-    public void setYear(String year) {
-        this.year = year;
-    }
-
-
     public int getServiceRating() {
         return ServiceRating;
     }
@@ -759,6 +692,166 @@ public class FavouriteAllResponse {
 
     public void setVehicleShareCount(int vehicleShareCount) {
         VehicleShareCount = vehicleShareCount;
+    }
+
+    public String getUpVehicleLikeStatus() {
+        return upVehicleLikeStatus;
+    }
+
+    public void setUpVehicleLikeStatus(String upVehicleLikeStatus) {
+        this.upVehicleLikeStatus = upVehicleLikeStatus;
+    }
+
+    public String getUpVehicleFollowStatus() {
+        return upVehicleFollowStatus;
+    }
+
+    public void setUpVehicleFollowStatus(String upVehicleFollowStatus) {
+        this.upVehicleFollowStatus = upVehicleFollowStatus;
+    }
+
+    public int getUpVehicleLikeCount() {
+        return upVehicleLikeCount;
+    }
+
+    public void setUpVehicleLikeCount(int upVehicleLikeCount) {
+        this.upVehicleLikeCount = upVehicleLikeCount;
+    }
+
+    public int getUpVehicleFollowCount() {
+        return upVehicleFollowCount;
+    }
+
+    public void setUpVehicleFollowCount(int upVehicleFollowCount) {
+        this.upVehicleFollowCount = upVehicleFollowCount;
+    }
+
+    public String getUpVehicleContact() {
+        return upVehicleContact;
+    }
+
+    public void setUpVehicleContact(String upVehicleContact) {
+        this.upVehicleContact = upVehicleContact;
+    }
+
+    public String getUpVehicleTitle() {
+        return upVehicleTitle;
+    }
+
+    public void setUpVehicleTitle(String upVehicleTitle) {
+        this.upVehicleTitle = upVehicleTitle;
+    }
+
+    public String getUpVehicleImage() {
+        return upVehicleImage;
+    }
+
+    public void setUpVehicleImage(String upVehicleImage) {
+        this.upVehicleImage = upVehicleImage;
+    }
+
+    public String getUpVehiclePrice() {
+        return upVehiclePrice;
+    }
+
+    public void setUpVehiclePrice(String upVehiclePrice) {
+        this.upVehiclePrice = upVehiclePrice;
+    }
+
+    public String getUpVehicleModel() {
+        return upVehicleModel;
+    }
+
+    public void setUpVehicleModel(String upVehicleModel) {
+        this.upVehicleModel = upVehicleModel;
+    }
+
+    public String getUpVehicleBrand() {
+        return upVehicleBrand;
+    }
+
+    public void setUpVehicleBrand(String upVehicleBrand) {
+        this.upVehicleBrand = upVehicleBrand;
+    }
+
+    public String getUpVehicleManfYear() {
+        return upVehicleManfYear;
+    }
+
+    public void setUpVehicleManfYear(String upVehicleManfYear) {
+        this.upVehicleManfYear = upVehicleManfYear;
+    }
+
+    public String getUpVehicleRegNo() {
+        return upVehicleRegNo;
+    }
+
+    public void setUpVehicleRegNo(String upVehicleRegNo) {
+        this.upVehicleRegNo = upVehicleRegNo;
+    }
+
+    public String getUpVehicleKmsRun() {
+        return upVehicleKmsRun;
+    }
+
+    public void setUpVehicleKmsRun(String upVehicleKmsRun) {
+        this.upVehicleKmsRun = upVehicleKmsRun;
+    }
+
+    public String getUpVehicleHrsRun() {
+        return upVehicleHrsRun;
+    }
+
+    public void setUpVehicleHrsRun(String upVehicleHrsRun) {
+        this.upVehicleHrsRun = upVehicleHrsRun;
+    }
+
+    public String getUpVehicleRtoCity() {
+        return upVehicleRtoCity;
+    }
+
+    public void setUpVehicleRtoCity(String upVehicleRtoCity) {
+        this.upVehicleRtoCity = upVehicleRtoCity;
+    }
+
+    public String getUpVehicleLocationCity() {
+        return upVehicleLocationCity;
+    }
+
+    public void setUpVehicleLocationCity(String upVehicleLocationCity) {
+        this.upVehicleLocationCity = upVehicleLocationCity;
+    }
+
+    public int getUpVehicleShareCount() {
+        return UpVehicleShareCount;
+    }
+
+    public void setUpVehicleShareCount(int upVehicleShareCount) {
+        UpVehicleShareCount = upVehicleShareCount;
+    }
+
+    public String getBrand() {
+        return brand;
+    }
+
+    public void setBrand(String brand) {
+        this.brand = brand;
+    }
+
+    public String getModel() {
+        return model;
+    }
+
+    public void setModel(String model) {
+        this.model = model;
+    }
+
+    public String getPrice() {
+        return price;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
     }
 
     private int SearchID;

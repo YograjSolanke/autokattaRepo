@@ -1275,7 +1275,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                 mVehicleHolder.mCall.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        String otherContact = notificationList.get(mVehicleHolder.getAdapterPosition()).getSender();
+                        String otherContact = notificationList.get(mVehicleHolder.getAdapterPosition()).getUpVehicleContact();
                         call(otherContact);
                     }
                 });
@@ -2297,7 +2297,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                 mUpVehicleHolder.mCall.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        String otherContact = notificationList.get(mUpVehicleHolder.getAdapterPosition()).getSender();
+                        String otherContact = notificationList.get(mUpVehicleHolder.getAdapterPosition()).getUpVehicleContact();
                         call(otherContact);
                     }
                 });

@@ -18,11 +18,7 @@ import android.widget.TextView;
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import autokatta.com.R;
@@ -109,7 +105,7 @@ public class MySearchfragment extends Fragment implements SwipeRefreshLayout.OnR
 
     @Override
     public void notifySuccess(Response<?> response) {
-        DateFormat f = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        //DateFormat f = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         if (response != null) {
             if (response.isSuccessful()) {
                 MySearchResponse mySearchResponse = (MySearchResponse) response.body();
@@ -127,10 +123,10 @@ public class MySearchfragment extends Fragment implements SwipeRefreshLayout.OnR
                         mySearchSuccess.setSearchstatus(mySearchSuccess.getSearchstatus());
                         mySearchSuccess.setBuyerLeads(mySearchSuccess.getBuyerLeads());
                         mySearchSuccess.setMysearchstatus(mySearchSuccess.getMysearchstatus());
-//                        mySearchSuccess.setSearchdate(mySearchSuccess.getSearchdate());
-//                        mySearchSuccess.setStopdate(mySearchSuccess.getStopdate());
+                        mySearchSuccess.setSearchdate(mySearchSuccess.getSearchdate().replaceAll("T", " "));
+                        mySearchSuccess.setStopdate(mySearchSuccess.getStopdate());
 
-
+/*
                         Date d = null, d1 = null;
                         try {
                             d = f.parse(mySearchSuccess.getSearchdate().replace("T"," "));
@@ -140,7 +136,7 @@ public class MySearchfragment extends Fragment implements SwipeRefreshLayout.OnR
                         }
 
                         mySearchSuccess.setSearchDateNew(d);
-                        mySearchSuccess.setStopDateNew(d1);
+                        mySearchSuccess.setStopDateNew(d1);*/
 
                         mySearchResponseList.add(mySearchSuccess);
                     }
@@ -170,21 +166,16 @@ public class MySearchfragment extends Fragment implements SwipeRefreshLayout.OnR
     public void notifyError(Throwable error) {
         mSwipeRefreshLayout.setRefreshing(false);
         if (error instanceof SocketTimeoutException) {
-            CustomToast.customToast(getActivity(),getString(R.string._404_));
-            //   showMessage(getActivity(), getString(R.string._404_));
+            CustomToast.customToast(getActivity(), getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
-            CustomToast.customToast(getActivity(),getString(R.string.no_response));
-            // showMessage(getActivity(), getString(R.string.no_response));
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            CustomToast.customToast(getActivity(),getString(R.string.no_response));
-            //   showMessage(getActivity(), getString(R.string.no_response));
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
-            CustomToast.customToast(getActivity(),getString(R.string.no_internet));
-            //   errorMessage(getActivity(), getString(R.string.no_internet));
+            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
-            CustomToast.customToast(getActivity(),getString(R.string.no_internet));
-            //   errorMessage(getActivity(), getString(R.string.no_internet));
-        }  else {
+            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
+        } else {
             Log.i("Check Class-"
                     , "MySearchActivity");
             error.printStackTrace();

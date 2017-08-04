@@ -1,10 +1,10 @@
 package autokatta.com.adapter;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -23,7 +23,10 @@ import android.widget.TextView;
 import java.net.SocketTimeoutException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 
 import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
@@ -44,16 +47,14 @@ import static android.content.Context.MODE_PRIVATE;
 public class MySearchAdapter extends RecyclerView.Adapter<MySearchAdapter.SearchHolder> implements RequestNotifier {
 
     Activity activity;
-    private String  keyword, allDetails;
+    private String keyword;
     private int SearchId;
     List<MySearchResponse.Success> mMainlist;
-    private int flag = 0;
     ApiCall apiCall;
     String myContact;
 
-
-    public MySearchAdapter(Activity activity, List<MySearchResponse.Success> successList) {
-        this.activity = activity;
+    public MySearchAdapter(Activity activity1, List<MySearchResponse.Success> successList) {
+        this.activity = activity1;
         this.mMainlist = successList;
         apiCall = new ApiCall(activity, this);
         myContact = activity.getSharedPreferences(activity.getString(R.string.my_preference), MODE_PRIVATE)
@@ -67,15 +68,15 @@ public class MySearchAdapter extends RecyclerView.Adapter<MySearchAdapter.Search
     }
 
     @Override
-    public void onBindViewHolder(final SearchHolder holder, final int position) {
+    public void onBindViewHolder(final SearchHolder holder, int position) {
         //To Check Search Status
-        if (mMainlist.get(position).getSearchstatus().equalsIgnoreCase("stop")) {
+        if (mMainlist.get(position).getMysearchstatus().equalsIgnoreCase("stop")) {
             holder.Stopsearch.setVisibility(View.GONE);
             holder.Startsearch.setVisibility(View.VISIBLE);
             holder.relativeLayout.setVisibility(View.VISIBLE);
         }
 
-        if (mMainlist.get(position).getMysearchstatus()==null ||
+        if (mMainlist.get(position).getMysearchstatus() == null ||
                 mMainlist.get(position).getMysearchstatus().isEmpty() ||
                 mMainlist.get(position).getMysearchstatus().equalsIgnoreCase("start")) {
             holder.Stopsearch.setVisibility(View.VISIBLE);
@@ -102,7 +103,7 @@ public class MySearchAdapter extends RecyclerView.Adapter<MySearchAdapter.Search
         holder.BuyerLeads.setText(mMainlist.get(position).getBuyerLeads());
 
         //To set Date
-        try {
+        /*try {
             DateFormat date = new SimpleDateFormat(" MMM dd ");
             DateFormat time = new SimpleDateFormat(" hh:mm a");
             holder.textsearchdate.setText(date.format(mMainlist.get(position).getSearchDateNew()) +
@@ -111,14 +112,52 @@ public class MySearchAdapter extends RecyclerView.Adapter<MySearchAdapter.Search
         } catch (Exception e) {
             e.printStackTrace();
         }
+*/
+        try {
+            TimeZone utc = TimeZone.getTimeZone("etc/UTC");
+            //format of date coming from services
+            DateFormat inputFormat = new SimpleDateFormat("yyyy-mm-dd HH:mm:ss",
+                    Locale.US);
+            inputFormat.setTimeZone(utc);
+            //format of date which want to show
+            DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy hh:mm aa",
+                    Locale.US);
+            outputFormat.setTimeZone(utc);
+
+            Date date = inputFormat.parse(mMainlist.get(position).getSearchdate());
+            String output = outputFormat.format(date);
+            System.out.println("jjj" + output);
+            holder.textsearchdate.setText(output);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         //To set LastDate
-        try {
+        /*try {
             DateFormat date1 = new SimpleDateFormat(" MMM dd ");
             DateFormat time1 = new SimpleDateFormat(" hh:mm a");
             holder.Stopdate.setText(date1.format(mMainlist.get(position).getStopDateNew()) +
                     time1.format(mMainlist.get(position).getStopDateNew()));
 
+        } catch (Exception e) {
+            e.printStackTrace();
+        }*/
+
+        try {
+            TimeZone utc = TimeZone.getTimeZone("etc/UTC");
+            //format of date coming from services
+            DateFormat inputFormat = new SimpleDateFormat("yyyy-mm-dd HH:mm:ss",
+                    Locale.US);
+            inputFormat.setTimeZone(utc);
+            //format of date which want to show
+            DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy hh:mm aa",
+                    Locale.US);
+            outputFormat.setTimeZone(utc);
+
+            Date date = inputFormat.parse(mMainlist.get(position).getStopdate());
+            String output = outputFormat.format(date);
+            System.out.println("jjj" + output);
+            holder.Stopdate.setText(output);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -156,9 +195,9 @@ public class MySearchAdapter extends RecyclerView.Adapter<MySearchAdapter.Search
                                 keyword = "delete";
                                 //new deleteData().execute();
                                 apiCall.deleteMySearch(SearchId, keyword);
-                                mMainlist.remove(position);
-                                notifyItemRemoved(position);
-                                notifyItemRangeChanged(position, mMainlist.size());
+                                mMainlist.remove(holder.getAdapterPosition());
+                                notifyItemRemoved(holder.getAdapterPosition());
+                                notifyItemRangeChanged(holder.getAdapterPosition(), mMainlist.size());
                             }
                         })
 
@@ -182,7 +221,7 @@ public class MySearchAdapter extends RecyclerView.Adapter<MySearchAdapter.Search
                 holder.favImg.setVisibility(View.INVISIBLE);
                 holder.unfavImg.setVisibility(View.VISIBLE);
                 mMainlist.get(holder.getAdapterPosition()).setSearchstatus("yes");
-                mMainlist.set(position, mMainlist.get(holder.getAdapterPosition()));
+                mMainlist.set(holder.getAdapterPosition(), mMainlist.get(holder.getAdapterPosition()));
                 // obj.searchFavouritestatus.set(position, "yes");
 
             }
@@ -256,45 +295,32 @@ public class MySearchAdapter extends RecyclerView.Adapter<MySearchAdapter.Search
             @Override
             public void onClick(View v) {
 
-                SearchId = mMainlist.get(holder.getAdapterPosition()).getSearchId();
+                Intent intent = new Intent(Intent.ACTION_SEND);
 
-                allDetails = mMainlist.get(holder.getAdapterPosition()).getCategory() + "=" +
-                        mMainlist.get(holder.getAdapterPosition()).getBrand() + "=" +
-                        mMainlist.get(holder.getAdapterPosition()).getModel() + "=" +
-                        mMainlist.get(holder.getAdapterPosition()).getPrice() + "=" +
-                        mMainlist.get(holder.getAdapterPosition()).getYearOfManufactur() + "=" +
-                        mMainlist.get(holder.getAdapterPosition()).getSearchdate() + "=" +
-                        mMainlist.get(holder.getAdapterPosition()).getBuyerLeads();
+                String allSearchDetails = "Search Category : " + holder.textcategory.getText().toString() + "\n" +
+                        "Search Brand : " + holder.textbrand.getText().toString() + "\n" +
+                        "Search Model : " + holder.textmodel.getText().toString() + "\n" +
+                        "Year Of Mfg : " + holder.textyear.getText().toString() + "\n" +
+                        "Price : " + holder.textprice.getText().toString() + "\n" +
+                        "Leads : " + holder.BuyerLeads.getText().toString() + "\n" +
+                        "Date : " + holder.textsearchdate.getText().toString();
 
-                activity.getSharedPreferences(activity.getString(R.string.my_preference), MODE_PRIVATE).edit().
-                        putString("Share_sharedata", allDetails).apply();
-                activity.getSharedPreferences(activity.getString(R.string.my_preference), MODE_PRIVATE).edit().
-                        putInt("Share_search_id", mMainlist.get(holder.getAdapterPosition()).getSearchId()).apply();
-                activity.getSharedPreferences(activity.getString(R.string.my_preference), MODE_PRIVATE).edit().
-                        putString("Share_keyword", "mysearch").apply();
+                System.out.println("all search detailssss======Other " + allSearchDetails);
 
+                intent.setType("text/plain");
+                                /*intent.putExtra(Intent.EXTRA_TEXT, "Please visit and Follow my vehicle on Autokatta. Stay connected for Product and Service updates and enquiries"
+                                        + "\n" + "http://autokatta.com/vehicle/main/" + notificationList.get(holder.getAdapterPosition()).getSearchId() + "/" + mLoginContact
+                                        + "\n" + "\n" + allSearchDetails);*/
+                intent.putExtra(Intent.EXTRA_TEXT, allSearchDetails);
+                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                intent.putExtra(Intent.EXTRA_SUBJECT, "Search list from Autokatta User");
+                activity.startActivity(Intent.createChooser(intent, "Autokatta"));
 
-                Intent intent1 = new Intent();
-                intent1.setAction(Intent.ACTION_SEND);
-                intent1.setType("image/*");
-
-                intent1.putExtra(Intent.EXTRA_TEXT, allDetails);
-                activity.startActivity(Intent.createChooser(intent1, "Share via"));
-
-                if (intent1.getAction().equals(Intent.ACTION_SEND)) {
-                    System.out.println("Send Complete From Text Apps");
-                    flag = 1;
-                }
-//via Email:
-
-                Intent intent2 = new Intent();
-                intent2.setAction(Intent.ACTION_SEND);
-                intent2.setType("message/rfc822");
-                //intent2.putExtra(Intent.EXTRA_EMAIL, new String[]{EMAIL1, EMAIL2});
-                intent2.putExtra(Intent.EXTRA_SUBJECT, "Search list from Autokatta User");
-                //intent2.putExtra(Intent.EXTRA_TEXT, Html.fromHtml(allDetails));
-                intent2.putExtra(Intent.EXTRA_TEXT, allDetails);
-                activity.startActivity(intent2);
+                                /*intent.setType("text/plain");
+                                intent.putExtra(Intent.EXTRA_SUBJECT, "Please Find Below Attachments");
+                                intent.putExtra(Intent.EXTRA_TEXT, allSearchDetails);
+                                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                                mActivity.startActivity(intent);*/
 
 
             }
@@ -304,25 +330,27 @@ public class MySearchAdapter extends RecyclerView.Adapter<MySearchAdapter.Search
             @Override
             public void onClick(View v) {
 
-                SearchId = mMainlist.get(holder.getAdapterPosition()).getSearchId();
-                allDetails = mMainlist.get(holder.getAdapterPosition()).getCategory() + "=" +
-                        mMainlist.get(holder.getAdapterPosition()).getBrand() + "=" +
-                        mMainlist.get(holder.getAdapterPosition()).getModel() + "=" +
-                        mMainlist.get(holder.getAdapterPosition()).getPrice() + "=" +
-                        mMainlist.get(holder.getAdapterPosition()).getYearOfManufactur() + "=" +
-                        mMainlist.get(holder.getAdapterPosition()).getSearchdate() + "=" +
-                        mMainlist.get(holder.getAdapterPosition()).getBuyerLeads();
+                String allSearchDetails = holder.textcategory.getText().toString() + "=" +
+                        holder.textbrand.getText().toString() + "=" +
+                        holder.textmodel.getText().toString() + "=" +
+                        holder.textprice.getText().toString() + "=" +
+                        holder.textyear.getText().toString() + "=" +
+                        holder.textsearchdate.getText().toString() + "=" +
+                        holder.BuyerLeads.getText().toString();
 
-                activity.getSharedPreferences(activity.getString(R.string.my_preference), MODE_PRIVATE).edit().
-                        putString("Share_sharedata", allDetails).apply();
-                activity.getSharedPreferences(activity.getString(R.string.my_preference), MODE_PRIVATE).edit().
+
+                System.out.println("all search detailssss======Auto " + allSearchDetails);
+
+                activity.getSharedPreferences(activity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                        putString("Share_sharedata", allSearchDetails).apply();
+                activity.getSharedPreferences(activity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
                         putInt("Share_search_id", mMainlist.get(holder.getAdapterPosition()).getSearchId()).apply();
-                activity.getSharedPreferences(activity.getString(R.string.my_preference), MODE_PRIVATE).edit().
+                activity.getSharedPreferences(activity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
                         putString("Share_keyword", "mysearch").apply();
+
 
                 Intent i = new Intent(activity, ShareWithinAppActivity.class);
                 activity.startActivity(i);
-                //activity.finish();
             }
         });
 
@@ -331,8 +359,8 @@ public class MySearchAdapter extends RecyclerView.Adapter<MySearchAdapter.Search
             @Override
             public void onClick(View v) {
                 if (holder.BuyerLeads.getText().toString().equalsIgnoreCase("0")) {
-                    // Toast.makeText(activity, "No leads found", Toast.LENGTH_SHORT).show();
-                    Snackbar.make(v, "No leads found", Snackbar.LENGTH_SHORT).show();
+                    CustomToast.customToast(activity, "No leads found");
+                    //Snackbar.make(v, "No leads found", Snackbar.LENGTH_SHORT).show();
                 } else {
                     SearchId = mMainlist.get(holder.getAdapterPosition()).getSearchId();
                     Bundle b = new Bundle();
@@ -349,7 +377,6 @@ public class MySearchAdapter extends RecyclerView.Adapter<MySearchAdapter.Search
                     FragmentManager fragmentManager = ((FragmentActivity) activity).getSupportFragmentManager();
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                     fragmentTransaction.replace(R.id.mysearchFrame, frag2);
-                    //content_frame is a Id  of Frame Layout
                     fragmentTransaction.addToBackStack("mysearchsellerlist");
                     fragmentTransaction.commit(); //
                 }
@@ -367,23 +394,10 @@ public class MySearchAdapter extends RecyclerView.Adapter<MySearchAdapter.Search
 
     static class SearchHolder extends RecyclerView.ViewHolder {
 
-        TextView textcategory;
-        TextView textbrand;
-        TextView textmodel;
-        TextView textprice;
-        TextView textyear;
-        TextView textsearchdate;
-        TextView BuyerLeads;
-        ImageView editImg;
-        ImageView deleteData;
-        ImageView favImg;
-        ImageView unfavImg;
-        ImageView share;
-        ImageView share1;
-        Button Stopsearch;
-        Button Startsearch;
+        TextView textcategory, textbrand, textmodel, textprice, textyear, textsearchdate, BuyerLeads, Stopdate;
+        ImageView editImg, deleteData, favImg, unfavImg, share, share1;
+        Button Stopsearch, Startsearch;
         RelativeLayout relativeLayout;
-        TextView Stopdate;
         CardView cardView;
 
         SearchHolder(View itemView) {

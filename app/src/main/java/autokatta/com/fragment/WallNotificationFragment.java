@@ -171,7 +171,7 @@ public class WallNotificationFragment extends Fragment implements SwipeRefreshLa
                         notification.setUpVehicleLikeCount(notification.getUpVehicleLikeCount());
                         notification.setUpVehicleFollowCount(notification.getUpVehicleFollowCount());
                         notification.setUpVehicleContact(notification.getUpVehicleContact());
-                        notification.setUpVehicleContact(notification.getUpVehicleTitle());
+                        notification.setUpVehicleTitle(notification.getUpVehicleTitle());
                         notification.setUpVehicleShareCount(notification.getUpVehicleShareCount());
                         notification.setUpVehiclePrice(notification.getUpVehiclePrice());
                         notification.setUpVehicleModel(notification.getUpVehicleModel());

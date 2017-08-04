@@ -228,25 +228,31 @@ public class FavoriteNotificationFragment extends Fragment implements SwipeRefre
                             favouriteAllResponse.setServiceimages(serviceImage);
                         }
 
-                        favouriteAllResponse.setVehiclelikestatus(successNotification.getVehiclelikestatus());
-                        favouriteAllResponse.setVehiclefollowstatus(successNotification.getVehiclefollowstatus());
-                        favouriteAllResponse.setVehiclelikecount(successNotification.getVehiclelikecount());
-                        favouriteAllResponse.setVehiclefollowcount(successNotification.getVehiclefollowcount());
-                        favouriteAllResponse.setVehicleContact(successNotification.getVehicleContact());
-                        favouriteAllResponse.setTitle(successNotification.getTitle());
-                        favouriteAllResponse.setImage(successNotification.getImage());
-                        favouriteAllResponse.setYear(successNotification.getYear());
-                        favouriteAllResponse.setVehicleShareCount(successNotification.getVehicleShareCount());
-
-                        String vehicleImage = successNotification.getImage();
+                        favouriteAllResponse.setUpVehicleLikeStatus(successNotification.getUpVehicleLikeStatus());
+                        favouriteAllResponse.setUpVehicleFollowStatus(successNotification.getUpVehicleFollowStatus());
+                        favouriteAllResponse.setUpVehicleLikeCount(successNotification.getUpVehicleLikeCount());
+                        favouriteAllResponse.setUpVehicleFollowCount(successNotification.getUpVehicleFollowCount());
+                        favouriteAllResponse.setUpVehicleContact(successNotification.getUpVehicleContact());
+                        favouriteAllResponse.setUpVehicleTitle(successNotification.getUpVehicleTitle());
+                        favouriteAllResponse.setUpVehicleShareCount(successNotification.getUpVehicleShareCount());
+                        favouriteAllResponse.setUpVehiclePrice(successNotification.getUpVehiclePrice());
+                        favouriteAllResponse.setUpVehicleModel(successNotification.getUpVehicleModel());
+                        favouriteAllResponse.setUpVehicleBrand(successNotification.getUpVehicleBrand());
+                        favouriteAllResponse.setUpVehicleManfYear(successNotification.getUpVehicleManfYear());
+                        favouriteAllResponse.setUpVehicleRegNo(successNotification.getUpVehicleRegNo());
+                        favouriteAllResponse.setUpVehicleKmsRun(successNotification.getUpVehicleKmsRun());
+                        favouriteAllResponse.setUpVehicleHrsRun(successNotification.getUpVehicleHrsRun());
+                        favouriteAllResponse.setUpVehicleRtoCity(successNotification.getUpVehicleRtoCity());
+                        favouriteAllResponse.setUpVehicleLocationCity(successNotification.getUpVehicleLocationCity());
+                        String vehicleImage = successNotification.getUpVehicleImage();
                         if (vehicleImage.contains(",")) {
                             String[] items = vehicleImage.split(",");
-                            favouriteAllResponse.setImage(items[0]);
+                            favouriteAllResponse.setUpVehicleImage(items[0]);
                             /*for (String item : items) {
-                                notification.setServiceImage(item);
+                                notification.setUpVehicleImage(item);
                             }*/
                         } else {
-                            favouriteAllResponse.setImage(vehicleImage);
+                            favouriteAllResponse.setUpVehicleImage(vehicleImage);
                         }
 
 
