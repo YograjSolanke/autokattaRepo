@@ -278,7 +278,7 @@ public class MyEndedAuctionAboveReservedFragment extends Fragment implements Req
                             if ((mVehicleLists.get(i).getImage() == null) || mVehicleLists.get(i).getImage().equals("") || mVehicleLists.get(i).getImage().equals("null")) {
 
                                 Vehicleimage.setBackgroundResource(R.drawable.vehiimg);
-                                vehicleSingleImg = "http://autokatta.com/mobile/uploads/amitkamble.jpg";
+                                vehicleSingleImg = getActivity().getString(R.string.base_image_url) + "logo48x48";
 
                             } else {
 
@@ -294,7 +294,7 @@ public class MyEndedAuctionAboveReservedFragment extends Fragment implements Req
 
 
                                 Glide.with(getActivity())
-                                        .load("http://autokatta.com/mobile/uploads/" + vehicleSingleImg)
+                                        .load(getActivity().getString(R.string.base_image_url) + vehicleSingleImg)
                                         .diskCacheStrategy(DiskCacheStrategy.ALL)
                                         .override(100, 100)
                                         .into(Vehicleimage);

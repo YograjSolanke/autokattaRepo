@@ -242,7 +242,7 @@ public class AdminVehicleDetails extends AppCompatActivity implements RequestNot
                 }
                 if ((image == null) || image.equals("") || image.equals("null")) {
                     vehicleImage.setBackgroundResource(R.drawable.vehiimg);
-                    sendImage = "http://autokatta.com/mobile/uploads/amitkamble.jpg";
+                    sendImage = getApplicationContext().getString(R.string.base_image_url) + "logo48x48";
                 } else {
                     String[] imagenamecame = image.split(",");
                     for (int z = 0; z < imagenamecame.length; z++) {
@@ -250,7 +250,7 @@ public class AdminVehicleDetails extends AppCompatActivity implements RequestNot
                     }
                     sendImage = iname.get(0);
                     Glide.with(getApplicationContext())
-                            .load("http://autokatta.com/mobile/uploads/" + sendImage)
+                            .load(getApplicationContext().getString(R.string.base_image_url) + sendImage)
                             .override(100, 100)
                             .diskCacheStrategy(DiskCacheStrategy.ALL)
                             .into(vehicleImage);

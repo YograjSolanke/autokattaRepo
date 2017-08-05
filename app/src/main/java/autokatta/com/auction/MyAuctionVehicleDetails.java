@@ -190,7 +190,7 @@ public class MyAuctionVehicleDetails extends AppCompatActivity implements Reques
                     }*/
 
                     Hash_file_maps = new HashMap<>();
-                    String dp_path = "http://autokatta.com/mobile/uploads/";
+                    String dp_path = getApplicationContext().getString(R.string.base_image_url);
                     String dp = "";
                     dp = auction.getImage();
                     if (dp.contains(",")) {

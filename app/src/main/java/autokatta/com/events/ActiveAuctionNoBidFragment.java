@@ -303,7 +303,7 @@ public class ActiveAuctionNoBidFragment extends Fragment implements SwipeRefresh
             } else {
                 String images[] = mItemList.get(position).getVehicleSingleImage().split(",");
                 Glide.with(mActivity)
-                        .load("http://autokatta.com/mobile/uploads/" + images[0].replaceAll(" ", "%20"))
+                        .load(mActivity.getString(R.string.base_image_url) + images[0].replaceAll(" ", "%20"))
                         //.bitmapTransform(new CropCircleTransformation(activity)) //To display image in Circular form.
                         .diskCacheStrategy(DiskCacheStrategy.ALL) //For caching diff versions of image.
                         //.placeholder(R.drawable.logo) //To show image before loading an original image.

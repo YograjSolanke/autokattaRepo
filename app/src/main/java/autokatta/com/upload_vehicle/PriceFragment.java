@@ -70,6 +70,7 @@ public class PriceFragment extends Fragment implements RequestNotifier, View.OnC
     int strOwner, strCategoryId, vehicle_id;
 
     String myContact;
+    String imageNames = "";
 
 
     @Nullable
@@ -178,16 +179,22 @@ public class PriceFragment extends Fragment implements RequestNotifier, View.OnC
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btnUpload:
-//                String pricestr = edtPrice.getText().toString();
-//                getActivity().getSharedPreferences(getString(R.string.my_preference),MODE_PRIVATE).edit().putString("uploadPrice",pricestr).apply();
-//
-//
-//                ConfirmationFragment fragment2 = new ConfirmationFragment();
-//                fragment2.setArguments(b);
-//                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-//                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//                fragmentTransaction.replace(R.id.containerView, fragment2);
-//                fragmentTransaction.commit();
+
+                String selectImages = "";
+                String allimg = "";
+                List<String> ImgData2 = Arrays.asList(strImages.split(","));
+                for (int i1 = 0; i1 < ImgData2.size(); i1++) {
+                    selectImages = ImgData2.get(i1);
+                    String lastWord = selectImages.substring(selectImages.lastIndexOf("/") + 1);
+                    if (allimg.equalsIgnoreCase("") && imageNames.equalsIgnoreCase("")) {
+                        allimg = "" + ImgData2.get(i1);
+                        imageNames = "" + lastWord;
+                    } else {
+                        allimg = allimg + "," + ImgData2.get(i1);
+                        imageNames = imageNames + "," + lastWord;
+                    }
+                    System.out.println(ImgData2.get(i1));
+                }
                 uploadVehicle();
                 break;
         }
@@ -210,7 +217,7 @@ public class PriceFragment extends Fragment implements RequestNotifier, View.OnC
                 strPermit, strFitnessvalid, strFuel, strSeatcap,
                 strPermitDate, strFinancestatus, strKms, strHrs,
                 strOwner, strBodyMfg, strSeatMfg,
-                strHypo, strEngine, strChasis, edtPrice.getText().toString(), strImages,
+                strHypo, strEngine, strChasis, edtPrice.getText().toString(), imageNames,
                 strDrive, strTrans, strBodytype, "", "",
                 strApp, strTyreContext, strBustype, strAir,
                 strInvoice, strImplement, strGroupprivacy, strHp, strJib,
@@ -300,7 +307,7 @@ public class PriceFragment extends Fragment implements RequestNotifier, View.OnC
                     if (vehicleResponse.getSuccess() != null) {
                         vehicle_id = vehicleResponse.getSuccess().getVehicleID();
 
-                        uploadImage(strImages);
+                        uploadImage(imageNames);
 
                         if (!strGroupids.equals("") || !strStoreids.equals("")) {
 
@@ -385,7 +392,6 @@ public class PriceFragment extends Fragment implements RequestNotifier, View.OnC
     private void uploadImage(String picturePath) {
         Log.i("PAth", "->" + picturePath);
         List<String> imgList = Arrays.asList(picturePath.split(","));
-        int s = imgList.size();
         for (int i = 0; i < imgList.size(); i++) {
 
 

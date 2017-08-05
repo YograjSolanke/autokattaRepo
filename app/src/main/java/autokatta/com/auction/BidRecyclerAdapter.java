@@ -107,8 +107,7 @@ class BidRecyclerAdapter extends RecyclerView.Adapter<BidRecyclerAdapter.MyViewH
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.custom_your_bid_recycle_list, parent, false);
         // set the view's size, margins, paddings and layout parameters
-        BidRecyclerAdapter.MyViewHolder vh = new BidRecyclerAdapter.MyViewHolder(v);
-        return vh;
+        return new MyViewHolder(v);
     }
 
     @Override
@@ -167,7 +166,7 @@ class BidRecyclerAdapter extends RecyclerView.Adapter<BidRecyclerAdapter.MyViewH
         } else {
             String images[] = mItemList.get(position).getImage().split(",");
             Glide.with(mActivity)
-                    .load("http://autokatta.com/mobile/uploads/" + images[0].replaceAll(" ", "%20"))
+                    .load(mActivity.getString(R.string.base_image_url) + images[0].replaceAll(" ", "%20"))
                     .diskCacheStrategy(DiskCacheStrategy.ALL) //For caching diff versions of image.
                     //.placeholder(R.drawable.logo) //To show image before loading an original image.
                     //.error(R.drawable.blocked) //To show error image if problem in loading.

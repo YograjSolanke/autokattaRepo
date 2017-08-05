@@ -266,7 +266,7 @@ public class ActiveAuctionAboveReservedFragment extends Fragment implements Requ
                             vehicleSingleImg = vehiImgList.get(0);
 
                             Glide.with(getActivity())
-                                    .load("http://autokatta.com/mobile/uploads/" + vehicleSingleImg)
+                                    .load(getActivity().getString(R.string.base_image_url) + vehicleSingleImg)
                                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                                     .override(100, 100)
                                     .into(Vehicleimage);

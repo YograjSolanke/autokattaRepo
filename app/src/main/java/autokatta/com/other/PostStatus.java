@@ -1,5 +1,6 @@
 package autokatta.com.other;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -29,6 +30,7 @@ public class PostStatus extends AppCompatActivity implements RequestNotifier {
     int SELECT_GALLERY_KITKAT = 1;
     private ApiCall mApiCall;
     private String mLoginContact;
+    private ProgressDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +39,9 @@ public class PostStatus extends AppCompatActivity implements RequestNotifier {
         mApiCall = new ApiCall(this, this);
         mLoginContact = getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
                 .getString("loginContact", "");
+
+        dialog = new ProgressDialog(this);
+        dialog.setMessage("Loading...");
 
         setTitle("Post Status");
         if (getSupportActionBar() != null) {
@@ -91,14 +96,19 @@ public class PostStatus extends AppCompatActivity implements RequestNotifier {
             case R.id.post_status:
                 String statusText = mStatusText.getText().toString();
                 Log.i("status", statusText);
-                PostData(statusText);
+                if (statusText.equals("") || statusText.startsWith(" ") && statusText.endsWith(" ")) {
+                    mStatusText.setError("Enter auction title");
+                    mStatusText.requestFocus();
+                } else
+                    PostData(statusText);
                 break;
         }
         return super.onOptionsItemSelected(item);
     }
 
     private void PostData(String statusText) {
-        // mApiCall.PostStatus(mLoginContact, statusText, "", "");
+        dialog.show();
+        mApiCall.PostStatus(mLoginContact, statusText, "", "");
     }
 
     @Override
@@ -114,7 +124,9 @@ public class PostStatus extends AppCompatActivity implements RequestNotifier {
 
     @Override
     public void notifyError(Throwable error) {
-
+        if (dialog.isShowing()) {
+            dialog.dismiss();
+        }
         if (error instanceof SocketTimeoutException) {
             CustomToast.customToast(getApplicationContext(), getString(R.string._404));
         } else if (error instanceof NullPointerException) {
@@ -135,6 +147,9 @@ public class PostStatus extends AppCompatActivity implements RequestNotifier {
     @Override
     public void notifyString(String str) {
         if (str != null) {
+            if (dialog.isShowing()) {
+                dialog.dismiss();
+            }
             if (str.equals("success")) {
                 CustomToast.customToast(getApplicationContext(), "Status posted successfully");
             } else
