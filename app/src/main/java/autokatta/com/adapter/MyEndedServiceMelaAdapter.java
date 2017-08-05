@@ -75,7 +75,7 @@ public class MyEndedServiceMelaAdapter extends RecyclerView.Adapter<MyEndedServi
             holder.image.setImageResource(R.mipmap.service);
         } else {
             //mItemList.get(position).getImage() = mItemList.get(position).getImage().replaceAll(" ", "%20");
-            String dppath = "http://autokatta.com/mobile/loan_exchange_events_pics/" + mMainList.get(position).getImage().trim();
+            String dppath = mActivity.getString(R.string.base_image_url) + mMainList.get(position).getImage().trim();
             Glide.with(mActivity)
                     .load(dppath)
                     .bitmapTransform(new CropCircleTransformation(mActivity)) //To display image in Circular form.

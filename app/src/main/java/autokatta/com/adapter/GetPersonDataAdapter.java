@@ -88,7 +88,7 @@ public class GetPersonDataAdapter extends RecyclerView.Adapter<GetPersonDataAdap
                 || list.get(position).getProfilePic().equals(null)) {
             holder.mProfilePic.setBackgroundResource(R.drawable.hdlogo);
         } else {
-            String used_pic = "http://autokatta.com/mobile/profile_profile_pics/" + list.get(position).getProfilePic();
+            String used_pic = mActivity.getString(R.string.base_image_url) + list.get(position).getProfilePic();
             Glide.with(mActivity)
                     .load(used_pic)
                     .centerCrop()

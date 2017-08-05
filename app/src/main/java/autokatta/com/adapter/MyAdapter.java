@@ -204,7 +204,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> impl
             holder.mGroupIcon.setBackgroundResource(R.mipmap.ic_launcher);
         } else {
             //mItemList.get(position).getImage() = mItemList.get(position).getImage().replaceAll(" ", "%20");
-            String dppath = "http://autokatta.com/mobile/group_profile_pics/" + mItemList.get(position).getImage();
+            String dppath = mActivity.getString(R.string.base_image_url) + mItemList.get(position).getImage();
             Glide.with(mActivity)
                     .load(dppath)
                     .bitmapTransform(new CropSquareTransformation(mActivity)) //To display image in Circular form.

@@ -155,7 +155,7 @@ public class VehicleBuyerListAdapter extends RecyclerView.Adapter<VehicleBuyerLi
             try {
 
                 Glide.with(activity)
-                        .load("http://autokatta.com/mobile/profile_profile_pics/" + object.getReceiverPic())
+                        .load(activity.getString(R.string.base_image_url) + object.getReceiverPic())
                         .diskCacheStrategy(DiskCacheStrategy.ALL)
                         .placeholder(R.drawable.logo)
                         .into(holder.buyer_lead_image);

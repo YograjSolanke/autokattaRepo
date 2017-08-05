@@ -102,7 +102,7 @@ public class AuctionConfirmRecycler extends RecyclerView.Adapter<AuctionConfirmR
         if (obj.getVehicleSingleImage() != null || !obj.getVehicleSingleImage().equals("")) {
 
             Glide.with(mActivity)
-                    .load("http://autokatta.com/mobile/uploads/" + obj.getVehicleSingleImage().replaceAll(" ", "%20"))
+                    .load(mActivity.getString(R.string.base_image_url) + obj.getVehicleSingleImage().replaceAll(" ", "%20"))
                     .diskCacheStrategy(DiskCacheStrategy.ALL) //For caching diff versions of image.
                     .into(holder.image);
         } else

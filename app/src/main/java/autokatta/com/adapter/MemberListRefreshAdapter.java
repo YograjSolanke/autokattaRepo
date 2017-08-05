@@ -117,7 +117,7 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
             holder.mProfilePic.setBackgroundResource(R.drawable.hdlogo);
         } else {
             Glide.with(mActivity)
-                    .load("http://autokatta.com/mobile/profile_profile_pics/" + mItemList.get(position).getDp())
+                    .load(mActivity.getString(R.string.base_image_url) + mItemList.get(position).getDp())
                     .bitmapTransform(new CropCircleTransformation(mActivity)) //To display image in Circular form.
                     .diskCacheStrategy(DiskCacheStrategy.ALL) //For caching diff versions of image.
                     .override(110, 100)

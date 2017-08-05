@@ -143,15 +143,15 @@ public class BussinessChatAdapter extends RecyclerView.Adapter<BussinessChatAdap
         holder.mModel.setText(mItemList.get(position).getModel());
         holder.mPrice.setText(mItemList.get(position).getPrice());
 
-        String vehi_img_url = "http://autokatta.com/mobile/uploads/";
+        String vehi_img_url = mActivity.getString(R.string.base_image_url);
         if (mItemList.get(position).getKeyword().equalsIgnoreCase("Vehicle"))
             fullpath = vehi_img_url + mItemList.get(position).getImage();
 
-        String prduct_img_url = "http://autokatta.com/mobile/Product_pics/";
+        String prduct_img_url = mActivity.getString(R.string.base_image_url);
         if (mItemList.get(position).getKeyword().equalsIgnoreCase("Product"))
             fullpath = prduct_img_url + mItemList.get(position).getImages();
 
-        String service_img_url = "http://autokatta.com/mobile/Service_pics/";
+        String service_img_url = mActivity.getString(R.string.base_image_url);
         if (mItemList.get(position).getKeyword().equalsIgnoreCase("Service"))
             fullpath = service_img_url + mItemList.get(position).getImages();
 

@@ -23,6 +23,9 @@ import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+
 import java.io.File;
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
@@ -627,10 +630,10 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                         notificationList.get(position).getSenderPicture().equals("null")) {
                     mProfileHolder.mProfileImage.setBackgroundResource(R.drawable.logo48x48);
                 } else {
-                    /*Glide.with(mActivity)
-                            .load("http://autokatta.com/mobile/profile_profile_pics/" + notificationList.get(position).getSenderPicture())
+                    Glide.with(mActivity)
+                            .load(mActivity.getString(R.string.base_image_url) + notificationList.get(position).getSenderPicture())
                             .diskCacheStrategy(DiskCacheStrategy.ALL) //For caching diff versions of image.
-                            .into(mProfileHolder.mProfileImage);*/
+                            .into(mProfileHolder.mProfileImage);
                 }
 
                 mProfileHolder.mCall.setOnClickListener(new View.OnClickListener() {
@@ -866,10 +869,10 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                         notificationList.get(position).getSenderPicture().equals("null")) {
                     mStoreHolder.mProfilePic.setBackgroundResource(R.drawable.logo48x48);
                 } else {
-                    /*Glide.with(mActivity)
-                            .load("http://autokatta.com/mobile/profile_profile_pics/" + notificationList.get(position).getSenderPicture())
+                    Glide.with(mActivity)
+                            .load(mActivity.getString(R.string.base_image_url) + notificationList.get(position).getSenderPicture())
                             .diskCacheStrategy(DiskCacheStrategy.ALL) //For caching diff versions of image.
-                            .into(mProfileHolder.mProfileImage);*/
+                            .into(mStoreHolder.mProfilePic);
                 }
 
         /* Store pic */
@@ -879,10 +882,10 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                         notificationList.get(position).getStoreImage().equals("null")) {
                     mStoreHolder.mStoreImage.setBackgroundResource(R.drawable.store);
                 } else {
-                    /*Glide.with(mActivity)
-                            .load("http://autokatta.com/mobile/profile_profile_pics/" + notificationList.get(position).getStoreImage())
+                    Glide.with(mActivity)
+                            .load(mActivity.getString(R.string.base_image_url) + notificationList.get(position).getStoreImage())
                             .diskCacheStrategy(DiskCacheStrategy.ALL) //For caching diff versions of image.
-                            .into(mProfileHolder.mProfileImage);*/
+                            .into(mStoreHolder.mStoreImage);
                 }
 
                 mStoreHolder.mCall.setOnClickListener(new View.OnClickListener() {
@@ -1156,10 +1159,10 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                         notificationList.get(position).getSenderPicture().equals("null")) {
                     mGroupHolder.mUserPic.setBackgroundResource(R.mipmap.profile);
                 } else {
-                    /*Glide.with(mActivity)
-                            .load("http://autokatta.com/mobile/profile_profile_pics/" + notificationList.get(position).getSenderPicture())
+                    Glide.with(mActivity)
+                            .load(mActivity.getString(R.string.base_image_url) + notificationList.get(position).getSenderPicture())
                             .diskCacheStrategy(DiskCacheStrategy.ALL) //For caching diff versions of image.
-                            .into(mGroupHolder.mUserPic);*/
+                            .into(mGroupHolder.mUserPic);
                 }
 
                /* Group pic */
@@ -1168,10 +1171,10 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                         notificationList.get(position).getGroupImage().equals("null")) {
                     mGroupHolder.mGroupImage.setBackgroundResource(R.drawable.group);
                 } else {
-                    /*Glide.with(mActivity)
-                            .load("http://autokatta.com/mobile/profile_profile_pics/" + notificationList.get(position).getGroupImage())
+                    Glide.with(mActivity)
+                            .load(mActivity.getString(R.string.base_image_url) + notificationList.get(position).getGroupImage())
                             .diskCacheStrategy(DiskCacheStrategy.ALL) //For caching diff versions of image.
-                            .into(mGroupHolder.mGroupImage);*/
+                            .into(mGroupHolder.mGroupImage);
                 }
 
                 /* Fav & Unfav Functionality */
@@ -1253,10 +1256,10 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                         notificationList.get(position).getSenderPicture().equals("null")) {
                     mVehicleHolder.mUserPic.setBackgroundResource(R.drawable.logo48x48);
                 } else {
-                    /*Glide.with(mActivity)
-                            .load("http://autokatta.com/mobile/profile_profile_pics/" + notificationList.get(position).getSenderPicture())
+                    Glide.with(mActivity)
+                            .load(mActivity.getString(R.string.base_image_url) + notificationList.get(position).getSenderPicture())
                             .diskCacheStrategy(DiskCacheStrategy.ALL) //For caching diff versions of image.
-                            .into(mProfileHolder.mProfileImage);*/
+                            .into(mVehicleHolder.mUserPic);
                 }
 
         /* Vehicle pic */
@@ -1266,10 +1269,10 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                         notificationList.get(position).getUpVehicleImage().equals("null")) {
                     mVehicleHolder.mVehicleImage.setBackgroundResource(R.drawable.vehiimg);
                 } else {
-                    /*Glide.with(mActivity)
-                            .load("http://autokatta.com/mobile/profile_profile_pics/" + notificationList.get(position).getUpVehicleImage())
+                    Glide.with(mActivity)
+                            .load(mActivity.getString(R.string.base_image_url) + notificationList.get(position).getUpVehicleImage())
                             .diskCacheStrategy(DiskCacheStrategy.ALL) //For caching diff versions of image.
-                            .into(mVehicleHolder.mVehicleImage);*/
+                            .into(mVehicleHolder.mVehicleImage);
                 }
 
                 mVehicleHolder.mCall.setOnClickListener(new View.OnClickListener() {
@@ -1566,10 +1569,10 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                         notificationList.get(position).getSenderPicture().equals("null")) {
                     mProductHolder.mUserPic.setBackgroundResource(R.drawable.profile);
                 } else {
-                    /*Glide.with(mActivity)
-                            .load("http://autokatta.com/mobile/profile_profile_pics/" + notificationList.get(position).getSenderPicture())
+                    Glide.with(mActivity)
+                            .load(mActivity.getString(R.string.base_image_url)+ notificationList.get(position).getSenderPicture())
                             .diskCacheStrategy(DiskCacheStrategy.ALL) //For caching diff versions of image.
-                            .into(mProductHolder.mUserPic);*/
+                            .into(mProductHolder.mUserPic);
                 }
 
                 /* Product pic */
@@ -1578,10 +1581,10 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                         notificationList.get(position).getProductImage().equals("null")) {
                     mProductHolder.mProductImage.setBackgroundResource(R.drawable.logo48x48);
                 } else {
-                    /*Glide.with(mActivity)
-                            .load("http://autokatta.com/mobile/profile_profile_pics/" + notificationList.get(position).getProductImage())
+                    Glide.with(mActivity)
+                            .load(mActivity.getString(R.string.base_image_url) + notificationList.get(position).getProductImage())
                             .diskCacheStrategy(DiskCacheStrategy.ALL) //For caching diff versions of image.
-                            .into(mProductHolder.mProductImage);*/
+                            .into(mProductHolder.mProductImage);
                 }
 
                 /* Like & Unlike Functionality */
@@ -1814,10 +1817,10 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                         notificationList.get(position).getSenderPicture().equals("null")) {
                     mServiceHolder.mUserPic.setBackgroundResource(R.drawable.profile);
                 } else {
-                    /*Glide.with(mActivity)
-                            .load("http://autokatta.com/mobile/profile_profile_pics/" + notificationList.get(position).getSenderPicture())
+                    Glide.with(mActivity)
+                            .load(mActivity.getString(R.string.base_image_url) + notificationList.get(position).getSenderPicture())
                             .diskCacheStrategy(DiskCacheStrategy.ALL) //For caching diff versions of image.
-                            .into(mServiceHolder.mUserPic);*/
+                            .into(mServiceHolder.mUserPic);
                 }
 
                 /* Product pic */
@@ -1826,10 +1829,10 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                         notificationList.get(position).getServiceImage().equals("null")) {
                     mServiceHolder.mServiceImage.setBackgroundResource(R.drawable.logo48x48);
                 } else {
-                    /*Glide.with(mActivity)
-                            .load("http://autokatta.com/mobile/profile_profile_pics/" + notificationList.get(position).getServiceImage())
+                    Glide.with(mActivity)
+                            .load(mActivity.getString(R.string.base_image_url)+ notificationList.get(position).getServiceImage())
                             .diskCacheStrategy(DiskCacheStrategy.ALL) //For caching diff versions of image.
-                            .into(mServiceHolder.mServiceImage);*/
+                            .into(mServiceHolder.mServiceImage);
                 }
 
                 /* Like & Unlike Functionality */
@@ -2057,10 +2060,10 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                         notificationList.get(position).getSenderPicture().equals("null")) {
                     mSearchHolder.mUserPic.setBackgroundResource(R.drawable.logo48x48);
                 } else {
-                    /*Glide.with(mActivity)
-                            .load("http://autokatta.com/mobile/profile_profile_pics/" + notificationList.get(position).getSenderPicture())
+                    Glide.with(mActivity)
+                            .load(mActivity.getString(R.string.base_image_url) + notificationList.get(position).getSenderPicture())
                             .diskCacheStrategy(DiskCacheStrategy.ALL) //For caching diff versions of image.
-                            .into(mProfileHolder.mProfileImage);*/
+                            .into(mSearchHolder.mUserPic);
                 }
 
                 mSearchHolder.mCall.setOnClickListener(new View.OnClickListener() {
@@ -2275,10 +2278,10 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                         notificationList.get(position).getSenderPicture().equals("null")) {
                     mUpVehicleHolder.mUserPic.setBackgroundResource(R.drawable.logo48x48);
                 } else {
-                    /*Glide.with(mActivity)
-                            .load("http://autokatta.com/mobile/profile_profile_pics/" + notificationList.get(position).getSenderPicture())
+                    Glide.with(mActivity)
+                            .load(mActivity.getString(R.string.base_image_url) + notificationList.get(position).getSenderPicture())
                             .diskCacheStrategy(DiskCacheStrategy.ALL) //For caching diff versions of image.
-                            .into(mProfileHolder.mProfileImage);*/
+                            .into(mUpVehicleHolder.mUserPic);
                 }
 
         /* Vehicle pic */
@@ -2288,10 +2291,10 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                         notificationList.get(position).getUpVehicleImage().equals("null")) {
                     mUpVehicleHolder.mVehicleImage.setBackgroundResource(R.drawable.vehiimg);
                 } else {
-                    /*Glide.with(mActivity)
-                            .load("http://autokatta.com/mobile/profile_profile_pics/" + notificationList.get(position).getUpVehicleImage())
+                    Glide.with(mActivity)
+                            .load(mActivity.getString(R.string.base_image_url)+ notificationList.get(position).getUpVehicleImage())
                             .diskCacheStrategy(DiskCacheStrategy.ALL) //For caching diff versions of image.
-                            .into(mUpVehicleHolder.mVehicleImage);*/
+                            .into(mUpVehicleHolder.mVehicleImage);
                 }
 
                 mUpVehicleHolder.mCall.setOnClickListener(new View.OnClickListener() {

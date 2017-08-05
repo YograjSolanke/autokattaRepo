@@ -15,6 +15,9 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -77,11 +80,11 @@ public class MyEndedSaleMelaAdapter extends RecyclerView.Adapter<MyEndedSaleMela
 //                    .resize(100,100)
 //                    .into(holder.imageView);
 
-//            Glide.with(mActivity)
-//                    .load("http://autokatta.com/mobile/uploads/" + mMainList.get(position).getImage().replaceAll(" ","%20"))
-//                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-//                    .override(100,100)
-//                    .into(holder.image);
+            Glide.with(mActivity)
+                    .load(mActivity.getString(R.string.base_image_url) + mMainList.get(position).getImage().replaceAll(" ","%20"))
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .override(100,100)
+                    .into(holder.image);
 
         }
 

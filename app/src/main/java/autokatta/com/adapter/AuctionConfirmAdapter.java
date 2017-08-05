@@ -172,7 +172,7 @@ public class AuctionConfirmAdapter extends BaseAdapter implements RequestNotifie
         if (obj.getVehicleSingleImage() != null || !obj.getVehicleSingleImage().equals("")) {
 
             Glide.with(activity)
-                    .load("http://autokatta.com/mobile/uploads/" + obj.getVehicleSingleImage().replaceAll(" ", "%20"))
+                    .load(activity.getString(R.string.base_image_url)+ obj.getVehicleSingleImage().replaceAll(" ", "%20"))
                     .diskCacheStrategy(DiskCacheStrategy.ALL) //For caching diff versions of image.
                     .into(holder.image);
         } else

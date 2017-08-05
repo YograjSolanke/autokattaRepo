@@ -21,6 +21,9 @@ import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+
 import java.io.File;
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
@@ -159,10 +162,10 @@ public class StoreNotificationAdapter extends RecyclerView.Adapter<RecyclerView.
                 notificationList.get(position).getSenderPicture().equals("null")) {
             mStoreHolder.mProfilePic.setBackgroundResource(R.drawable.logo48x48);
         } else {
-                    /*Glide.with(mActivity)
-                            .load("http://autokatta.com/mobile/profile_profile_pics/" + notificationList.get(position).getSenderPicture())
+                    Glide.with(mActivity)
+                            .load(mActivity.getString(R.string.base_image_url) + notificationList.get(position).getSenderPicture())
                             .diskCacheStrategy(DiskCacheStrategy.ALL) //For caching diff versions of image.
-                            .into(mProfileHolder.mProfileImage);*/
+                            .into(mStoreHolder.mProfilePic);
         }
 
         /* Store pic */
@@ -172,10 +175,10 @@ public class StoreNotificationAdapter extends RecyclerView.Adapter<RecyclerView.
                 notificationList.get(position).getStoreImage().equals("null")) {
             mStoreHolder.mStoreImage.setBackgroundResource(R.drawable.store);
         } else {
-                    /*Glide.with(mActivity)
-                            .load("http://autokatta.com/mobile/profile_profile_pics/" + notificationList.get(position).getStoreImage())
+                    Glide.with(mActivity)
+                            .load(mActivity.getString(R.string.base_image_url) + notificationList.get(position).getStoreImage())
                             .diskCacheStrategy(DiskCacheStrategy.ALL) //For caching diff versions of image.
-                            .into(mProfileHolder.mProfileImage);*/
+                            .into(mStoreHolder.mStoreImage);
         }
 
         mStoreHolder.mCall.setOnClickListener(new View.OnClickListener() {

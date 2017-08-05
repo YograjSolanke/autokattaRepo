@@ -299,7 +299,7 @@ public class MyStoreListAdapter extends RecyclerView.Adapter<MyStoreListAdapter.
             holder.img.setBackgroundResource(R.drawable.logo);
         } else {
             //mItemList.get(position).getImage() = mItemList.get(position).getImage().replaceAll(" ", "%20");
-            String dppath = "http://autokatta.com/mobile/store_profiles/" + mStoreList.get(position).getStoreImage().trim();
+            String dppath = mActivity.getString(R.string.base_image_url) + mStoreList.get(position).getStoreImage().trim();
             Glide.with(mActivity)
                     .load(dppath)
                     .bitmapTransform(new CropCircleTransformation(mActivity)) //To display image in Circular form.

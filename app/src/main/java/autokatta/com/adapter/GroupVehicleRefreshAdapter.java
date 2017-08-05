@@ -168,7 +168,7 @@ public class GroupVehicleRefreshAdapter extends RecyclerView.Adapter<GroupVehicl
             holder.mCardImage.setBackgroundResource(R.drawable.vehiimg);
         } else {
             //mItemList.get(position).getImage() = mItemList.get(position).getImage().replaceAll(" ", "%20");
-            String dppath = "http://autokatta.com/mobile/uploads/" + mItemList.get(position).getSingleImage();
+            String dppath = mActivity.getString(R.string.base_image_url) + mItemList.get(position).getSingleImage();
             Glide.with(mActivity)
                     .load(dppath)
                     //.bitmapTransform(new CropCircleTransformation(mActivity)) //To display image in Circular form.

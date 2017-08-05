@@ -178,12 +178,12 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
                 }
                 System.out.println("http://autokatta.com/mobile/uploads/" + vimages.get(0));
 
-                String vimagename = "http://autokatta.com/mobile/uploads/" + vimages.get(0);
+                String vimagename = activity.getString(R.string.base_image_url)+ vimages.get(0);
                 vimagename = vimagename.replaceAll(" ", "%20");
                 try {
 
                     Glide.with(activity)
-                            .load("http://autokatta.com/mobile/uploads/" + vimages.get(0))
+                            .load(activity.getString(R.string.base_image_url) + vimages.get(0))
                             .diskCacheStrategy(DiskCacheStrategy.ALL)
                             .placeholder(R.drawable.logo)
                             .into(holder.vehicleimage);

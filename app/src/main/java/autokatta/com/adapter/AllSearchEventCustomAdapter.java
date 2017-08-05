@@ -469,7 +469,7 @@ public class AllSearchEventCustomAdapter extends BaseAdapter {
                     holder.image.setImageResource(R.mipmap.exchange_event);
                 } else {
                     //mItemList.get(position).getImage() = mItemList.get(position).getImage().replaceAll(" ", "%20");
-                    String dppath = "http://autokatta.com/mobile/loan_exchange_events_pics/" + object.getImage().trim();
+                    String dppath = activity.getString(R.string.base_image_url) + object.getImage().trim();
                     Glide.with(activity)
                             .load(dppath)
                             //.bitmapTransform(new CropCircleTransformation(activity)) //To display image in Circular form.
@@ -495,7 +495,7 @@ public class AllSearchEventCustomAdapter extends BaseAdapter {
                     holder.image.setImageResource(R.mipmap.exchange_event);
                 } else {
                     //mItemList.get(position).getImage() = mItemList.get(position).getImage().replaceAll(" ", "%20");
-                    String dppath = "http://autokatta.com/mobile/loan_exchange_events_pics/" + object.getImage().trim();
+                    String dppath = activity.getString(R.string.base_image_url) + object.getImage().trim();
                     Glide.with(activity)
                             .load(dppath)
                             //.bitmapTransform(new CropCircleTransformation(activity)) //To display image in Circular form.
@@ -521,7 +521,7 @@ public class AllSearchEventCustomAdapter extends BaseAdapter {
                     holder.image.setImageResource(R.mipmap.loan_mela);
                 } else {
                     //mItemList.get(position).getImage() = mItemList.get(position).getImage().replaceAll(" ", "%20");
-                    String dppath = "http://autokatta.com/mobile/loan_exchange_events_pics/" + object.getImage().trim();
+                    String dppath =activity.getString(R.string.base_image_url) + object.getImage().trim();
                     Glide.with(activity)
                             .load(dppath)
                             //.bitmapTransform(new CropCircleTransformation(activity)) //To display image in Circular form.
@@ -547,7 +547,7 @@ public class AllSearchEventCustomAdapter extends BaseAdapter {
                     holder.image.setImageResource(R.mipmap.loan_mela);
                 } else {
                     //mItemList.get(position).getImage() = mItemList.get(position).getImage().replaceAll(" ", "%20");
-                    String dppath = "http://autokatta.com/mobile/loan_exchange_events_pics/" + object.getImage().trim();
+                    String dppath = activity.getString(R.string.base_image_url) + object.getImage().trim();
                     Glide.with(activity)
                             .load(dppath)
                             //.bitmapTransform(new CropCircleTransformation(activity)) //To display image in Circular form.

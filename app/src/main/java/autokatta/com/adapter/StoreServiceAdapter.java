@@ -92,9 +92,9 @@ public class StoreServiceAdapter extends RecyclerView.Adapter<StoreServiceAdapte
                     images.add(parts[l]);
                     System.out.println(parts[l]);
                 }
-                System.out.println("http://autokatta.com/mobile/Service_pics/" + images.get(0));
+                System.out.println(activity.getString(R.string.base_image_url) + images.get(0));
 
-                pimagename = "http://autokatta.com/mobile/Service_pics/" + images.get(0);
+                pimagename = activity.getString(R.string.base_image_url) + images.get(0);
                 pimagename = pimagename.replaceAll(" ", "%20");
                 try {
                     Glide.with(activity)

@@ -121,7 +121,7 @@ public class SearchPersonAdapter extends RecyclerView.Adapter<SearchPersonAdapte
 
              */
             Glide.with(mActivity)
-                    .load("http://autokatta.com/mobile/profile_profile_pics/" + contactdata.get(position).getProfilePhoto())
+                    .load(mActivity.getString(R.string.base_image_url) + contactdata.get(position).getProfilePhoto())
                     .bitmapTransform(new CropCircleTransformation(mActivity)) //To display image in Circular form.
                     .diskCacheStrategy(DiskCacheStrategy.ALL) //For caching diff versions of image.
                     .placeholder(R.drawable.logo) //To show image before loading an original image.

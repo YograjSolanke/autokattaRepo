@@ -67,7 +67,7 @@ public class SaleParticipantsAdapter extends RecyclerView.Adapter<SaleParticipan
         if (!obj.getProfilePhoto().equals(null) || !obj.getProfilePhoto().equals("") || !obj.getProfilePhoto().equals("null")) {
 
             Glide.with(mActivity)
-                    .load("http://autokatta.com/mobile/profile_profile_pics/" + obj.getProfilePhoto())
+                    .load(mActivity.getString(R.string.base_image_url) + obj.getProfilePhoto())
                     .bitmapTransform(new CropCircleTransformation(mActivity))
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(holder.Profilepic);

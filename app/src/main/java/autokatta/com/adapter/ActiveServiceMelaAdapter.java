@@ -72,7 +72,7 @@ public class ActiveServiceMelaAdapter extends RecyclerView.Adapter<ActiveService
             holder.image.setImageResource(R.mipmap.service);
         } else {
             //mItemList.get(position).getImage() = mItemList.get(position).getImage().replaceAll(" ", "%20");
-            String dppath = "http://autokatta.com/mobile/loan_exchange_events_pics/" + mMainlist.get(position).getImage().trim();
+            String dppath = mActivity.getString(R.string.base_image_url) + mMainlist.get(position).getImage().trim();
             Glide.with(mActivity)
                     .load(dppath)
                     .bitmapTransform(new CropCircleTransformation(mActivity)) //To display image in Circular form.

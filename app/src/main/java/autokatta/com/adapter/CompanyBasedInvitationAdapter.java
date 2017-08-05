@@ -82,7 +82,7 @@ public class CompanyBasedInvitationAdapter extends BaseAdapter {
 
         else {
             Glide.with(mContext)
-                    .load("http://autokatta.com/mobile/profile_profile_pics/" + success.getProfilePic())
+                    .load(mContext.getString(R.string.base_image_url) + success.getProfilePic())
                     .bitmapTransform(new CropCircleTransformation(mContext)) //To display image in Circular form.
                     .diskCacheStrategy(DiskCacheStrategy.ALL) //For caching diff versions of image.
                     .override(110, 100)

@@ -129,7 +129,7 @@ public class InventoryAdapter extends BaseAdapter {
                     holder.mVehicleImage.setBackgroundResource(R.mipmap.ic_launcher);
                 } else {
                     //mItemList.get(position).getImage() = mItemList.get(position).getImage().replaceAll(" ", "%20");
-                    String dppath = "http://autokatta.com/mobile/uploads/" + mItemList.get(position).getImage();
+                    String dppath = mActivity + mItemList.get(position).getImage();
                     Glide.with(mActivity)
                             .load(dppath)
                             .bitmapTransform(new CropCircleTransformation(mActivity)) //To display image in Circular form.

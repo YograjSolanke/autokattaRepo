@@ -151,7 +151,7 @@ public class VehicleSearchAdapter extends BaseAdapter {
                     vimages.add(parts[l]);
                     System.out.println(parts[l]);
                 }
-                String vimagename = "http://autokatta.com/mobile/uploads/" + vimages.get(0);
+                String vimagename = activity.getString(R.string.base_image_url) + vimages.get(0);
                 Log.i("vehiii", "--" + vimagename);
                 vimagename = vimagename.replaceAll(" ", "%20");
                 try {

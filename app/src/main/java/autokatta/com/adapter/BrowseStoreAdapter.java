@@ -128,7 +128,7 @@ public class BrowseStoreAdapter extends RecyclerView.Adapter<BrowseStoreAdapter.
             holder.storerating.setRating(Float.parseFloat(String.valueOf(success.getRating())));
         }
 
-        image = "http://autokatta.com/mobile/store_profiles/" + success.getStoreImage();
+        image = activity.getString(R.string.base_image_url) + success.getStoreImage();
 
         if (success.getStoreImage() == null || success.getStoreImage().isEmpty() || success.getStoreImage().equals("null")) {
             holder.store_image.setBackgroundResource(R.mipmap.ic_launcher);
@@ -329,9 +329,9 @@ public class BrowseStoreAdapter extends RecyclerView.Adapter<BrowseStoreAdapter.
             public void onClick(View v) {
                 if (success.getStoreImage().equalsIgnoreCase("") || success.getStoreImage().equalsIgnoreCase(null) ||
                         success.getStoreImage().equalsIgnoreCase("null")) {
-                    image = "http://autokatta.com/mobile/store_profiles/" + "a.jpg";
+                    image = activity.getString(R.string.base_image_url) + "logo48x48.png";
                 } else {
-                    image = "http://autokatta.com/mobile/store_profiles/" + success.getStoreImage();
+                    image = activity.getString(R.string.base_image_url) + success.getStoreImage();
                 }
                 Log.e("TAG", "img : " + image);
 

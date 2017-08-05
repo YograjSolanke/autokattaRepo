@@ -132,7 +132,7 @@ public class AuctionAdminVehiclesAdapter extends BaseAdapter {
         if (obj.getVehicleSingleImage() != null || !obj.getVehicleSingleImage().isEmpty() || !obj.getVehicleSingleImage().equals("")) {
 
             Glide.with(activity)
-                    .load("http://autokatta.com/mobile/uploads/" + obj.getVehicleSingleImage().replaceAll(" ", "%20"))
+                    .load(activity.getString(R.string.base_image_url) + obj.getVehicleSingleImage().replaceAll(" ", "%20"))
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(holder.image);
 

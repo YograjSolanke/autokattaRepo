@@ -163,7 +163,7 @@ public class ChatAdapter extends BaseAdapter implements View.OnClickListener {
             imagelayout.setVisibility(View.GONE);
         } else {
             Glide.with(activity)
-                    .load("http://autokatta.com/mobile/uploaded_broadcast_images/" + chatMessageObj.getImage())
+                    .load(activity.getString(R.string.base_image_url) + chatMessageObj.getImage())
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .placeholder(R.drawable.logo)
                     //.animate(R.anim.zoomin)

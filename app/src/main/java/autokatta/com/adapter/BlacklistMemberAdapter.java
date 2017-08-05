@@ -61,7 +61,7 @@ public class BlacklistMemberAdapter extends RecyclerView.Adapter<BlacklistMember
         if (!mMainlist.get(position).getUserimage().equals("null") || !mMainlist.get(position).getUserimage().equals(null) ||
                 !mMainlist.get(position).getUserimage().equals("")) {
             Glide.with(activity)
-                    .load("http://autokatta.com/mobile/profile_profile_pics/" + mMainlist.get(position).getUserimage())
+                    .load(activity.getString(R.string.base_image_url) + mMainlist.get(position).getUserimage())
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .override(100, 100)
                     .into(holder.UserPic);

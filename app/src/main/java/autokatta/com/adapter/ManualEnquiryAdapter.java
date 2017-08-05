@@ -185,7 +185,7 @@ public class ManualEnquiryAdapter extends RecyclerView.Adapter<RecyclerView.View
                         || mItemList.get(position).getVehicleImage().equals(null)) {
                     vehicleDetails.mVehiclePic.setBackgroundResource(R.drawable.hdlogo);
                 } else {
-                    String used_pic = "http://autokatta.com/mobile/uploads/" + mItemList.get(position).getVehicleImage();
+                    String used_pic = mActivity.getString(R.string.base_image_url)+ mItemList.get(position).getVehicleImage();
                     Glide.with(mActivity)
                             .load(used_pic)
                             .centerCrop()
@@ -217,7 +217,7 @@ public class ManualEnquiryAdapter extends RecyclerView.Adapter<RecyclerView.View
                         || mItemList.get(position).getProductImage().equals(null)) {
                     productDetails.mProductPic.setBackgroundResource(R.drawable.hdlogo);
                 } else {
-                    String product_pic = "http://autokatta.com/mobile/Product_pics/" + mItemList.get(position).getProductImage();
+                    String product_pic = mActivity.getString(R.string.base_image_url)+ mItemList.get(position).getProductImage();
                     Glide.with(mActivity)
                             .load(product_pic)
                             .centerCrop()
@@ -249,7 +249,7 @@ public class ManualEnquiryAdapter extends RecyclerView.Adapter<RecyclerView.View
                         || mItemList.get(position).getServiceImage().equals(null)) {
                     serviceDetails.mServicePic.setBackgroundResource(R.drawable.hdlogo);
                 } else {
-                    String service_pic = "http://autokatta.com/mobile/Service_pics/" + mItemList.get(position).getServiceImage();
+                    String service_pic = mActivity.getString(R.string.base_image_url) + mItemList.get(position).getServiceImage();
                     Glide.with(mActivity)
                             .load(service_pic)
                             .centerCrop()

@@ -129,7 +129,7 @@ public class AutokattaContactAdapter extends RecyclerView.Adapter<AutokattaConta
 
              */
             Glide.with(mActivity)
-                    .load("http://autokatta.com/mobile/profile_profile_pics/" + contactdata.get(position).getUserprofile())
+                    .load(mActivity.getString(R.string.base_image_url) + contactdata.get(position).getUserprofile())
                     .bitmapTransform(new CropCircleTransformation(mActivity)) //To display image in Circular form.
                     .diskCacheStrategy(DiskCacheStrategy.ALL) //For caching diff versions of image.
                     .placeholder(R.drawable.hdlogo) //To show image before loading an original image.

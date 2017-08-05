@@ -189,7 +189,7 @@ public class SavedSearchSellerListAdapter extends RecyclerView.Adapter<SavedSear
 
                      *****************/
                     Glide.with(activity)
-                            .load("http://autokatta.com/mobile/uploads/" + iname.get(l).replaceAll(" ", "%20"))
+                            .load(activity.getString(R.string.base_image_url) + iname.get(l).replaceAll(" ", "%20"))
                             .diskCacheStrategy(DiskCacheStrategy.ALL) //For caching diff versions of image.
                             .into(imageView[l]);
 

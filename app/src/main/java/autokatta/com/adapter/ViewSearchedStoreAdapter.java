@@ -127,7 +127,7 @@ public class ViewSearchedStoreAdapter extends RecyclerView.Adapter<ViewSearchedS
             }
         });
 
-        image = "http://autokatta.com/mobile/store_profiles/" + object.getStoreImage();
+        image = activity.getString(R.string.base_image_url) + object.getStoreImage();
 
         if (object.getStoreImage() == null || object.getStoreImage().equals("") || object.getStoreImage().equals("null")) {
             holder.store_image.setBackgroundResource(R.mipmap.ic_launcher);
