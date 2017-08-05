@@ -646,6 +646,7 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
     public void notifyString(String str) {
         if (str != null) {
             if (str.equals("Product_updated_successfully")) {
+                hud.dismiss();
                 CustomToast.customToast(ProductViewActivity.this, "Product Updated");
                 updatetagids();
             } else if (str.equals("success_tag_updation")) {
@@ -855,6 +856,13 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                     producttags.clearFocus();
                     producttype.clearFocus();
                     spinCategory.clearFocus();
+
+
+                    hud = KProgressHUD.create(ProductViewActivity.this)
+                            .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                            .setLabel("Please wait")
+                            .setMaxProgress(100)
+                            .show();
 
                     updateProduct(product_id, upname, upprice, updetails, uptags, uptype, upimgs, upcat, finalbrandtags);
                 }

@@ -455,7 +455,13 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
 //                    brandSpinner.requestFocus();
 //                }
                 else {
-                    if (create.getText().toString().equalsIgnoreCase("next")) {
+                    if (!callFrom.equals("StoreViewActivity")) {
+
+                        hud = KProgressHUD.create(getActivity())
+                                .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                                .setLabel("Please wait")
+                                .setMaxProgress(100)
+                                .show();
                         createStore(name, contact, location, website, storetype, lastWord, workdays, stropen, strclose, category, address, coverlastWord, storeDescription
                                 , finalbrandtags, "");
                     } else {
@@ -463,6 +469,13 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
                             lastWord = preLastWord;
                         if (coverlastWord.equals(""))
                             coverlastWord = preCoverLastWord;
+
+
+                        hud = KProgressHUD.create(getActivity())
+                                .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                                .setLabel("Please wait")
+                                .setMaxProgress(100)
+                                .show();
                         updateStore(name, store_id, location, website, stropen, strclose, lastWord, category, workdays, storeDescription, storetype, address,
                                 coverlastWord, finalbrandtags, "");
                     }
@@ -851,6 +864,7 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
                     CreateStoreResponse createStoreResponse = (CreateStoreResponse) response.body();
                     if (createStoreResponse.getSuccess() != null) {
                         int id = createStoreResponse.getSuccess().getStoreID();
+                        hud.dismiss();
                         Toast.makeText(getActivity(), "Store created", Toast.LENGTH_SHORT).show();
                         if (!lastWord.equals(""))
                         uploadImage(mediaPath);
@@ -1003,6 +1017,10 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
                 CustomToast.customToast(getActivity(), "No  Brand Tags Added");
 
             } else if (str.equals("store_updated")) {
+
+                hud.dismiss();
+
+
                 CustomToast.customToast(getActivity(), "Store updated");
                 if (!lastWord.equals(preLastWord) && !lastWord.equals(""))
                     uploadImage(mediaPath);

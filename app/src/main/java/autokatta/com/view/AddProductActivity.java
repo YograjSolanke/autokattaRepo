@@ -19,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.MultiAutoCompleteTextView;
 import android.widget.Toast;
 
+import com.kaopiz.kprogresshud.KProgressHUD;
 import com.nguyenhoanglam.imagepicker.activity.ImagePicker;
 import com.nguyenhoanglam.imagepicker.activity.ImagePickerActivity;
 import com.nguyenhoanglam.imagepicker.model.Image;
@@ -53,7 +54,7 @@ import retrofit2.Response;
 
 public class AddProductActivity extends AppCompatActivity implements RequestNotifier, View.OnClickListener {
 
-
+    KProgressHUD hud;
     String myContact;
     int store_id;
     EditText productname, productprice, productdetails, producttype;
@@ -319,6 +320,11 @@ public class AddProductActivity extends AppCompatActivity implements RequestNoti
 
                                 .setNegativeButton("No", new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int which) {
+                                        hud = KProgressHUD.create(AddProductActivity.this)
+                                                .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                                                .setLabel("Please wait")
+                                                .setMaxProgress(100)
+                                                .show();
 
                                         createProduct(store_id, name, price, details, "", type, allimg, category, finalbrandtags, "");
                                     }
@@ -430,6 +436,7 @@ public class AddProductActivity extends AppCompatActivity implements RequestNoti
 
                     ProductAddedResponse productAddedResponse = (ProductAddedResponse) response.body();
                     int product_id = productAddedResponse.getSuccess().getProductId();
+                    hud.dismiss();
                     sendTags(product_id);
                     uploadImage(allimgpath);
 
@@ -709,6 +716,12 @@ public class AddProductActivity extends AppCompatActivity implements RequestNoti
 
 
                             System.out.println("newwwwwwwwwwwwwwwwwwwwwwwww id=" + stringgroupids);
+
+                            hud = KProgressHUD.create(AddProductActivity.this)
+                                    .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                                    .setLabel("Please wait")
+                                    .setMaxProgress(100)
+                                    .show();
                             createProduct(store_id, name, price, details, "", type, allimg, category, finalbrandtags, stringgroupids);
                         } else {
                             CustomToast.customToast(AddProductActivity.this, "Please Select Atleast One Group");
