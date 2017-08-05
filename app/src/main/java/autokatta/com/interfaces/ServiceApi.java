@@ -750,17 +750,17 @@ public interface ServiceApi {
 
     //Group Profile
     @Multipart
-    @POST("upload_profile.php")
+    @POST("UploadProfile")
     Call<String> uploaGroupProfilePic(@Part MultipartBody.Part file, @Part("file") RequestBody name);
 
 
     @Multipart
-    @POST("upload_profile_profile_pics.php")
+    @POST("UploadProfilePics")
     Call<String> uploadFile(@Part MultipartBody.Part file, @Part("file") RequestBody name);
 
     //Broadcast Groups
     @Multipart
-    @POST("upload_broadcastimages.php")
+    @POST("UploadBroadCastImages")
     Call<String> uploadImageBroadcast(@Part MultipartBody.Part file, @Part("file") RequestBody name);
 
     @Multipart
@@ -769,7 +769,7 @@ public interface ServiceApi {
 
     //Upload Loan and Exchange image
     @Multipart
-    @POST("upload_loanExchangepics.php")
+    @POST("UploadLoanExchangePics")
     Call<String> uploadEventsPic(@Part MultipartBody.Part file, @Part("file") RequestBody name);
 
 
@@ -1129,16 +1129,16 @@ public interface ServiceApi {
 
 
     @Multipart
-    @POST("upload_product_pics.php")
+    @POST("UploadProductPics")
     Call<String> uploadProductPic(@Part MultipartBody.Part file, @Part("file") RequestBody name);
 
 
     @Multipart
-    @POST("upload_service_pics.php")
+    @POST("UploadServicePics")
     Call<String> uploadServicePic(@Part MultipartBody.Part file, @Part("file") RequestBody name);
 
     @Multipart
-    @POST("savetofile.php")
+    @POST("SaveToFile")
     Call<String> uploadVehiclePic(@Part MultipartBody.Part file, @Part("file") RequestBody name);
 
 

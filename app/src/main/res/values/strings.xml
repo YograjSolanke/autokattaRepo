@@ -268,4 +268,6 @@
     <string name="title_activity_manual_enquiry_vehicle_list">ManualEnquiryVehicleList</string>
     <string name="title_activity_edit_tags">EditTags</string>
 
+    <string name="base_image_url">http://autokatta.acquiscent.com/UploadedFiles/</string>
+
 </resources>

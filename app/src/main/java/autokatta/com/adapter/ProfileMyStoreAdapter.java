@@ -80,7 +80,7 @@ public class ProfileMyStoreAdapter extends BaseAdapter {
         if (!mItemList.get(position).getStoreLogo().equals("") || !mItemList.get(position).getStoreLogo().equals("null")
                 || mItemList.get(position).getStoreLogo() != null) {
             Glide.with(mActivity)
-                    .load("http://autokatta.com/mobile/store_profiles/" + mItemList.get(position).getStoreLogo())
+                    .load(mActivity.getString(R.string.base_image_url) + mItemList.get(position).getStoreLogo())
                     .bitmapTransform(new CropCircleTransformation(mActivity)) //To display image in Circular form.
                     .diskCacheStrategy(DiskCacheStrategy.ALL) //For caching diff versions of image.
                     .placeholder(R.drawable.logo)
