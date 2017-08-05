@@ -2200,7 +2200,7 @@ Upload Vehicle
     Get Group Vehicles...
      */
     public void getGroupVehicles(int groupId, String brand, String model, String version, String city, String rtoCity,
-                                 String price, String regYear, String mgfYear, String kms, int owners,String contact) {
+                                 String price, String regYear, String mgfYear, String kms, int owners, String contact) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 Retrofit mRetrofit = new Retrofit.Builder()
@@ -2210,7 +2210,7 @@ Upload Vehicle
                         .build();
                 ServiceApi mServiceApi = mRetrofit.create(ServiceApi.class);
                 Call<GetGroupVehiclesResponse> mVehiclesResponse = mServiceApi._autokattaGetGroupVehicles(groupId, brand, model,
-                        version, city, rtoCity, price, regYear, mgfYear, kms, owners,contact);
+                        version, city, rtoCity, price, regYear, mgfYear, kms, owners, contact);
                 mVehiclesResponse.enqueue(new Callback<GetGroupVehiclesResponse>() {
                     @Override
                     public void onResponse(Call<GetGroupVehiclesResponse> call, Response<GetGroupVehiclesResponse> response) {
@@ -8094,6 +8094,48 @@ get ExchangeMela Analytics Data
             e.printStackTrace();
         }
     }
+    
+    /*
+       Post a status
+     */
+
+    public void PostStatus(String myContact, String statusText, String statusImage, String statusVideo) {
+
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+
+                //JSON to Gson conversion
+                Gson gson = new GsonBuilder()
+                        .setLenient()
+                        .create();
+
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create(gson))
+                        .client(initLog().build())
+                        .build();
+
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<String> mPostResponse = serviceApi._autokattaUploadStatus(myContact, statusText, statusImage,
+                        statusVideo);
+                mPostResponse.enqueue(new Callback<String>() {
+                    @Override
+                    public void onResponse(Call<String> call, Response<String> response) {
+                        mNotifier.notifyString(response.body());
+                    }
+
+                    @Override
+                    public void onFailure(Call<String> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+            } else
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
     /***
      * Retrofit Logs

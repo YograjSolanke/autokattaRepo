@@ -1264,4 +1264,9 @@ public interface ServiceApi {
     //Post Used Vehicle Data
     @POST("UploadUsedVehicle")
     Call<UploadUsedVehicleResponse> _autokattaUploadUsedVehicle(@Body UploadUsedVehicleRequest usedVehicleRequest);
+
+    //Post a status
+    @POST("AddYourStatus")
+    Call<String> _autokattaUploadStatus(@Query("SenderContact") String myContact, @Query("StatusText") String statusText,
+                                        @Query("StatusImage") String statusImage, @Query("StatusVideo") String statusVideo);
 }
