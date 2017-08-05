@@ -19,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.MultiAutoCompleteTextView;
 import android.widget.Toast;
 
+import com.kaopiz.kprogresshud.KProgressHUD;
 import com.nguyenhoanglam.imagepicker.activity.ImagePicker;
 import com.nguyenhoanglam.imagepicker.activity.ImagePickerActivity;
 import com.nguyenhoanglam.imagepicker.model.Image;
@@ -53,7 +54,7 @@ import retrofit2.Response;
 
 public class AddServiceActivity extends AppCompatActivity implements RequestNotifier, View.OnClickListener {
 
-
+    KProgressHUD hud;
     String myContact;
     int store_id;
     EditText servicename, serviceprice, servicedetails, servicetype;
@@ -338,6 +339,12 @@ public class AddServiceActivity extends AppCompatActivity implements RequestNoti
                                 .setNegativeButton("No", new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int which) {
 
+                                        hud = KProgressHUD.create(AddServiceActivity.this)
+                                                .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                                                .setLabel("Please wait")
+                                                .setMaxProgress(100)
+                                                .show();
+
                                         createService(store_id, name, price, details, "", type, allimg, category, finalbrandtags, "");
                                     }
                                 })
@@ -448,6 +455,7 @@ public class AddServiceActivity extends AppCompatActivity implements RequestNoti
                     CustomToast.customToast(AddServiceActivity.this, "Service added successfully");
                     ServiceAddedResponse productAddedResponse = (ServiceAddedResponse) response.body();
                     int service_id = productAddedResponse.getSuccess().getServiceId();
+                    hud.dismiss();
                     sendTags(service_id);
 
                     uploadImage(allimgpath);
@@ -709,6 +717,12 @@ public class AddServiceActivity extends AppCompatActivity implements RequestNoti
 
 
                             System.out.println("newwwwwwwwwwwwwwwwwwwwwwwww id=" + stringgroupids);
+
+                            hud = KProgressHUD.create(AddServiceActivity.this)
+                                    .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                                    .setLabel("Please wait")
+                                    .setMaxProgress(100)
+                                    .show();
                             createService(store_id, name, price, details, "", type, allimg, category, finalbrandtags, stringgroupids);
                         } else {
                             CustomToast.customToast(AddServiceActivity.this, "Please Select Atleast One Group");

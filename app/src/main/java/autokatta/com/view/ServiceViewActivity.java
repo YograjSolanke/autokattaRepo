@@ -34,6 +34,7 @@ import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.daimajia.slider.library.Tricks.ViewPagerEx;
+import com.kaopiz.kprogresshud.KProgressHUD;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -119,7 +120,7 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
     String simagename = "";
     TextView photocount, no_of_enquiries;
     final ArrayList<String> brandTags = new ArrayList<>();
-
+    KProgressHUD hud;
     String tagpart = "", tagid = "";
     String idlist = "";
     int service_id;
@@ -631,6 +632,7 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
     public void notifyString(String str) {
         if (str != null) {
             if (str.equals("Service_updated_successfully")) {
+
                 CustomToast.customToast(ServiceViewActivity.this, "Service Updated");
                 updatetagids();
             } else if (str.equals("success_tag_updation")) {
@@ -820,6 +822,12 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
                     servicetags.clearFocus();
                     servicetype.clearFocus();
                     spinCategory.clearFocus();
+
+                    hud = KProgressHUD.create(ServiceViewActivity.this)
+                            .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                            .setLabel("Please wait")
+                            .setMaxProgress(100)
+                            .show();
                     updateService(service_id, upname, upprice, updetails, "", uptype, "", upcat, finalbrandtags);
                 }
                 break;
