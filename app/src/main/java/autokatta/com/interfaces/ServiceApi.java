@@ -764,7 +764,7 @@ public interface ServiceApi {
     Call<String> uploadImageBroadcast(@Part MultipartBody.Part file, @Part("file") RequestBody name);
 
     @Multipart
-    @POST("upload_store_profile.php")
+    @POST("UploadStoreProfile")
     Call<String> uploadStorePic(@Part MultipartBody.Part file, @Part("file") RequestBody name);
 
     //Upload Loan and Exchange image
