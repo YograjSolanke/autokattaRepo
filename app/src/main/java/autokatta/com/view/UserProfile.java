@@ -177,7 +177,7 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
                 mProfilePicture.setEnabled(true);
                 mfab_done.setVisibility(View.VISIBLE);
                 mfab_edit.setVisibility(View.GONE);*/
-                String dp_path = "http://autokatta.com/mobile/profile_profile_pics/" + dp;
+                String dp_path = getString(R.string.base_image_url) + dp;
                 LayoutInflater layoutInflater = LayoutInflater.from(UserProfile.this);
                 View mViewDialogOtp = layoutInflater.inflate(R.layout.custom_alert_my_profile_edit, null);
                 img = (ImageView) mViewDialogOtp.findViewById(R.id.img);
@@ -376,7 +376,7 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
                     dp = mProfileAboutResponse.getSuccess().get(0).getProfilePic();
                     mUserName = mProfileAboutResponse.getSuccess().get(0).getUsername();
                     RegID = mProfileAboutResponse.getSuccess().get(0).getRegId();
-                    String dp_path = "http://autokatta.com/mobile/profile_profile_pics/" + dp;
+                    String dp_path = getString(R.string.base_image_url)+ dp;
                     Glide.with(this)
                             .load(dp_path)
                             .centerCrop()

@@ -116,7 +116,7 @@ public class ShareWithGroupAdapter extends BaseAdapter {
             holder.profile_pic.setBackgroundResource(R.drawable.workers);
         } else {
             Glide.with(activity)
-                    .load("http://autokatta.com/mobile/group_profile_pics/" + image_array.get(position))
+                    .load(activity.getString(R.string.base_image_url) + image_array.get(position))
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .bitmapTransform(new CropCircleTransformation(activity))
                     .override(100, 100)

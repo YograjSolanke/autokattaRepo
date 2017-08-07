@@ -141,14 +141,14 @@ public class UploadedVehicleBuyerList extends Fragment implements RequestNotifie
                 vimages.add(parts[l]);
                 System.out.println(parts[l]);
             }
-            System.out.println("http://autokatta.com/mobile/uploads/" + vimages.get(0));
+            System.out.println(getString(R.string.base_image_url) + vimages.get(0));
 
-            vimagename = "http://autokatta.com/mobile/uploads/" + vimages.get(0);
+            vimagename =getString(R.string.base_image_url) + vimages.get(0);
             vimagename = vimagename.replaceAll(" ", "%20");
             try {
 
                 Glide.with(getActivity())
-                        .load("http://autokatta.com/mobile/uploads/" + vimages.get(0))
+                        .load(getString(R.string.base_image_url) + vimages.get(0))
                         .diskCacheStrategy(DiskCacheStrategy.ALL)
                         .placeholder(R.drawable.logo)
                         .override(75, 75)

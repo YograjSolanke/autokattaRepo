@@ -267,7 +267,7 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
                             for (int l = 0; l < imageView.length; l++) {
                                 imageView[l] = new ImageView(getActivity());
                                 Glide.with(getActivity())
-                                        .load("http://autokatta.com/mobile/uploads/" + iname.get(l).replaceAll(" ", "%20"))
+                                        .load(getString(R.string.base_image_url) + iname.get(l).replaceAll(" ", "%20"))
                                         .into(imageView[l]);
                                 mViewFlipperbuyer.addView(imageView[l]);
                             }
@@ -328,7 +328,7 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
                             try {
 
                                 Glide.with(getActivity())
-                                        .load("http://autokatta.com/mobile/profile_profile_pics/" + image_buyer)
+                                        .load(getString(R.string.base_image_url)+ image_buyer)
                                         //.bitmapTransform(new CropCircleTransformation(getActivity()))
                                         .into(buyer_lead_image);
                             } catch (Exception e) {

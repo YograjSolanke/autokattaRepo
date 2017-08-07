@@ -208,7 +208,7 @@ public class VehicleDetails extends AppCompatActivity implements RequestNotifier
 
                     Hash_file_maps = new HashMap<String, String>();
                     sliderLayout = (SliderLayout) findViewById(R.id.slider);
-                    String dp_path = "http://autokatta.com/mobile/uploads/";// + dp;
+                    String dp_path = getString(R.string.base_image_url);// + dp;
                     /*Glide.with(this)
                             .load(dp_path)
                             .centerCrop()

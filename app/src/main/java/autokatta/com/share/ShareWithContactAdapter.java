@@ -112,7 +112,7 @@ private int store_id ,vehicle_id, product_id,
             holder.profile_pic.setBackgroundResource(R.drawable.profile);
         } else {
             Glide.with(activity)
-                    .load("http://autokatta.com/mobile/profile_profile_pics/" + obj.getUserprofile())
+                    .load(activity.getString(R.string.base_image_url) + obj.getUserprofile())
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .bitmapTransform(new CropCircleTransformation(activity))
                     .override(100, 100)

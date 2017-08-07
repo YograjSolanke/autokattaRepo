@@ -106,7 +106,7 @@ public class GroupEditFragment extends Fragment implements RequestNotifier {
             } else {
                 try {
                     Glide.with(getActivity())
-                            .load("http://autokatta.com/mobile/group_profile_pics/" + bundle_image)
+                            .load(getString(R.string.base_image_url) + bundle_image)
                             .bitmapTransform(new CropSquareTransformation(getActivity()))
                             .diskCacheStrategy(DiskCacheStrategy.ALL) //For caching diff versions of image.
                             .into(mGroup_image);
@@ -350,7 +350,7 @@ public class GroupEditFragment extends Fragment implements RequestNotifier {
         } else if (str.equals("ProfileUpdated")) {
             try {
                 Glide.with(getActivity())
-                        .load("http://autokatta.com/mobile/group_profile_pics/" + str)
+                        .load(getString(R.string.base_image_url) + str)
                         .bitmapTransform(new CropCircleTransformation(getActivity()))
                         .diskCacheStrategy(DiskCacheStrategy.ALL) //For caching diff versions of image.
                         .into(mGroup_image);

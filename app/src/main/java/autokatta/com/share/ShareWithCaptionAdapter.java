@@ -340,7 +340,7 @@ private int store_id ,vehicle_id, product_id, search_id, status_id, auction_id, 
                 if (data10[4] != null || !data10[4].equals("")) {
 
                     Glide.with(activity)
-                            .load("http://autokatta.com/mobile/profile_profile_pics/" + data10[4])
+                            .load(activity.getString(R.string.base_image_url) + data10[4])
                             .diskCacheStrategy(DiskCacheStrategy.ALL)
                             .bitmapTransform(new CropCircleTransformation(activity))
                             .override(100, 100)
@@ -373,7 +373,7 @@ private int store_id ,vehicle_id, product_id, search_id, status_id, auction_id, 
 
                 try {
                     Glide.with(activity)
-                            .load("http://autokatta.com/mobile/store_profiles/" + data[6])
+                            .load(activity.getString(R.string.base_image_url)+ data[6])
                             .diskCacheStrategy(DiskCacheStrategy.ALL)
                             .bitmapTransform(new CropCircleTransformation(activity))
                             .override(100, 100)
@@ -401,7 +401,7 @@ private int store_id ,vehicle_id, product_id, search_id, status_id, auction_id, 
 
                 try {
                     Glide.with(activity)
-                            .load("http://autokatta.com/mobile/Product_pics/" + data1[4])
+                            .load(activity.getString(R.string.base_image_url)+ data1[4])
                             .diskCacheStrategy(DiskCacheStrategy.ALL)
                             .bitmapTransform(new CropCircleTransformation(activity))
                             .override(100, 100)
@@ -458,7 +458,7 @@ private int store_id ,vehicle_id, product_id, search_id, status_id, auction_id, 
                 holder.servicelikecnt.setText("Like(" + data2[3] + ")");
                 try {
                     Glide.with(activity)
-                            .load("http://autokatta.com/mobile/Service_pics/" + data2[4])
+                            .load(activity.getString(R.string.base_image_url) + data2[4])
                             .diskCacheStrategy(DiskCacheStrategy.ALL)
                             .bitmapTransform(new CropCircleTransformation(activity))
                             .override(100, 100)
@@ -533,7 +533,7 @@ private int store_id ,vehicle_id, product_id, search_id, status_id, auction_id, 
                     try {
 
                         Glide.with(activity)
-                                .load("http://autokatta.com/mobile/uploads/" + data3[9])
+                                .load(activity.getString(R.string.base_image_url)+ data3[9])
                                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                                 .bitmapTransform(new CropCircleTransformation(activity))
                                 .override(100, 100)
@@ -600,7 +600,7 @@ private int store_id ,vehicle_id, product_id, search_id, status_id, auction_id, 
                 if (data6[9] != null || !data6[9].equals(""))
                     try {
                         Glide.with(activity)
-                                .load("http://autokatta.com/mobile/uploads/" + data6[9])
+                                .load(activity.getString(R.string.base_image_url) + data6[9])
                                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                                 .bitmapTransform(new CropCircleTransformation(activity))
                                 .override(100, 100)
@@ -658,7 +658,7 @@ private int store_id ,vehicle_id, product_id, search_id, status_id, auction_id, 
 
                     if (!data8[9].equals("") || !data8[9].equals("null") || !data8[9].equals(null)) {
 
-                        String imagename = "http://autokatta.com/mobile/loan_exchange_events_pics/" + data8[9];
+                        String imagename =activity.getString(R.string.base_image_url) + data8[9];
 
                         imagename = imagename.replaceAll(" ", "%20");
 
@@ -708,7 +708,7 @@ private int store_id ,vehicle_id, product_id, search_id, status_id, auction_id, 
 
                     if (!data9[9].equals("") || !data9[9].equals("null") || !data9[9].equals(null)) {
 
-                        String imagename = "http://autokatta.com/mobile/loan_exchange_events_pics/" + data9[9];
+                        String imagename = activity.getString(R.string.base_image_url) + data9[9];
 
                         imagename = imagename.replaceAll(" ", "%20");
 

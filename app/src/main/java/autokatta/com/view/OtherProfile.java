@@ -171,7 +171,7 @@ public class OtherProfile extends AppCompatActivity implements RequestNotifier, 
                         menuRed.setClosedOnTouchOutside(true);
                     }
                 }
-                String dp_path = "http://autokatta.com/mobile/profile_profile_pics/" + dp;
+                String dp_path = getString(R.string.base_image_url) + dp;
                 Glide.with(this)
                         .load(dp_path)
                         .centerCrop()

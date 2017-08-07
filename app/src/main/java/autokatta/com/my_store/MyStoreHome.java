@@ -342,7 +342,7 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
                     //  mBundle.putString("StoreContact", mOtherContact);
 
                     if (!storeImage.equals("")) {
-                        String dp_path = "http://autokatta.com/mobile/store_profiles/" + storeImage;
+                        String dp_path = getString(R.string.base_image_url) + storeImage;
                         Glide.with(this)
                                 .load(dp_path)
                                 .centerCrop()
@@ -353,7 +353,7 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
                         mStoreImage.setImageResource(R.drawable.logo);
                     }
                     if (!storeCoverImage.equals("")) {
-                        String dp_paths = "http://autokatta.com/mobile/store_profiles/" + storeCoverImage;
+                        String dp_paths = getString(R.string.base_image_url) + storeCoverImage;
                         Glide.with(this)
                                 .load(dp_paths)
                                 .centerCrop()

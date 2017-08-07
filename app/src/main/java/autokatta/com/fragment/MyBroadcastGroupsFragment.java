@@ -537,7 +537,7 @@ public class MyBroadcastGroupsFragment extends Fragment implements View.OnClickL
                     try {
 
                         Glide.with(getActivity())
-                                .load("http://autokatta.com/mobile/uploads/" + vimages.get(0))
+                                .load(getString(R.string.base_image_url)+ vimages.get(0))
                                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                                 .placeholder(R.drawable.logo)
                                 .into(uploadImage);

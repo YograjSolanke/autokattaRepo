@@ -499,7 +499,7 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
                             for (int l = 0; l < imageView.length; l++) {
                                 imageView[l] = new ImageView(getActivity());
                                 Glide.with(getActivity())
-                                        .load("http://autokatta.com/mobile/uploads/" + iname.get(l).replaceAll(" ", "%20"))
+                                        .load(getString(R.string.base_image_url) + iname.get(l).replaceAll(" ", "%20"))
                                         .into(imageView[l]);
                                 mViewFlippersell.addView(imageView[l]);
                             }

@@ -750,7 +750,7 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
                 storerating.setRating(storeRating);
                 //  mBundle.putString("StoreContact", mOtherContact);
 
-                String dp_path = "http://autokatta.com/mobile/store_profiles/" + storeImage;
+                String dp_path = getString(R.string.base_image_url) + storeImage;
                 Glide.with(StoreViewActivity.this)
                         .load(dp_path)
                         .centerCrop()

@@ -55,13 +55,13 @@ public class ProductImageSlider extends Fragment {
             if (all_img.contains(",")) {
                 String arr[] = all_img.split(",");
                 for (int i = 0; i < arr.length; i++) {
-                    String url = "http://autokatta.com/mobile/Product_pics/";
+                    String url = getString(R.string.base_image_url);
                     String imageName = arr[i];
                     String fullurl = url + imageName;
                     image.add(fullurl);
                 }
             } else {
-                String url = "http://autokatta.com/mobile/Product_pics/";
+                String url = getString(R.string.base_image_url);
                 String fullurl = url + all_img;
                 image.add(fullurl);
             }

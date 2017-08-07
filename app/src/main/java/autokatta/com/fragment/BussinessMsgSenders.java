@@ -50,9 +50,9 @@ public class BussinessMsgSenders extends Fragment implements SwipeRefreshLayout.
     SwipeRefreshLayout mSwipeRefreshLayout;
     TextView Title, Category, Brand, Model, Keyword, price;
     RelativeLayout relCategory, relBrand, relModel, relPrice, MainRel;
-    String vehi_img_url = "http://autokatta.com/mobile/uploads/";
-    String prduct_img_url = "http://autokatta.com/mobile/Product_pics/";
-    String service_img_url = "http://autokatta.com/mobile/Service_pics/";
+    String vehi_img_url = getString(R.string.base_image_url);
+    String prduct_img_url = getString(R.string.base_image_url);
+    String service_img_url = getString(R.string.base_image_url);
     String fullpath = "";
     ImageView Image;
     ApiCall mApiCall;
