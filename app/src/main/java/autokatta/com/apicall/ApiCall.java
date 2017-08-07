@@ -3463,7 +3463,7 @@ Upload Vehicle
     /*
 remove contact from blacklist contact
 */
-    public void removeFromBlacklist(String myContact, String contact, String keyword) {
+    public void addRemoveFromBlacklist(String myContact, String contact, String keyword,String EventType) {
         //JSON to Gson conversion
         Gson gson = new GsonBuilder()
                 .setLenient()
@@ -3476,7 +3476,7 @@ remove contact from blacklist contact
                         .client(initLog().build())
                         .build();
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<String> mUpdateRegistration = serviceApi.removeContactFromBlacklist(myContact, "", contact, keyword, "");
+                Call<String> mUpdateRegistration = serviceApi.removeContactFromBlacklist(myContact, contact, keyword,EventType);
                 mUpdateRegistration.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
@@ -4201,7 +4201,7 @@ params.put("auction_id", bundleAuctionId);
         }
     }
 
-    //Add remove a blacklist contact in auction
+/*    //Add remove a blacklist contact in auction
     public void Add_RemoveBlacklistContact(String myContact, int strAuctionId, String rContact, String keyword,
                                            String eventType) {
 
@@ -4237,7 +4237,7 @@ params.put("auction_id", bundleAuctionId);
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
     /*
   Get Auction Analytics

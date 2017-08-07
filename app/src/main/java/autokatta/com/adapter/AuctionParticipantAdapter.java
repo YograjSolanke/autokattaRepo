@@ -204,8 +204,8 @@ public class AuctionParticipantAdapter extends RecyclerView.Adapter<AuctionParti
 
     private void addToBlacklist(String rContact) {
         ApiCall mApiCall = new ApiCall(mActivity, this);
-        mApiCall.Add_RemoveBlacklistContact(mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), MODE_PRIVATE)
-                .getString("loginContact", ""), strAuctionId, rContact, keyword, "Auction");
+        mApiCall.addRemoveFromBlacklist(mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), MODE_PRIVATE)
+                .getString("loginContact", "")/*, strAuctionId*/, rContact, keyword, "Auction");
     }
 
     @Override

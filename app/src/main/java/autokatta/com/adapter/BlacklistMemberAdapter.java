@@ -80,7 +80,7 @@ public class BlacklistMemberAdapter extends RecyclerView.Adapter<BlacklistMember
             @Override
             public void onClick(View v) {
                 String myContact = activity.getSharedPreferences(activity.getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "");
-                apicall.removeFromBlacklist(myContact, mMainlist.get(holder.getAdapterPosition()).getBlacklistContact(), "remove");
+                apicall.addRemoveFromBlacklist(myContact, mMainlist.get(holder.getAdapterPosition()).getBlacklistContact(), "remove","Auction");
                 mMainlist.remove(holder.getAdapterPosition());
                 notifyDataSetChanged();
             }

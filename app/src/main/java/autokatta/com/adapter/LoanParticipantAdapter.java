@@ -174,8 +174,8 @@ public class LoanParticipantAdapter extends RecyclerView.Adapter<LoanParticipant
 
     private void addToBlacklist(String rContact) {
         ApiCall mApiCall = new ApiCall(mActivity, this);
-        mApiCall.Add_RemoveBlacklistContact(mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), MODE_PRIVATE)
-                .getString("loginContact", ""), strLoanId, rContact, keyword, "Loan");
+        mApiCall.addRemoveFromBlacklist(mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), MODE_PRIVATE)
+                .getString("loginContact", "")/*, strLoanId*/, rContact, keyword, "Loan");
     }
 
     @Override

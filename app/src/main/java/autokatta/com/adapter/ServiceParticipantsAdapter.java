@@ -182,8 +182,8 @@ public class ServiceParticipantsAdapter extends RecyclerView.Adapter<ServicePart
 
     private void addToBlacklist(String rContact) {
         ApiCall mApiCall = new ApiCall(mActivity, this);
-        mApiCall.Add_RemoveBlacklistContact(mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), MODE_PRIVATE)
-                .getString("loginContact", ""), strServiceId, rContact, keyword, "Service");
+        mApiCall.addRemoveFromBlacklist(mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), MODE_PRIVATE)
+                .getString("loginContact", "")/*, strServiceId*/, rContact, keyword, "Service");
     }
 
     @Override

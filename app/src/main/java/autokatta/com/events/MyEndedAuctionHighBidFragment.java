@@ -588,7 +588,7 @@ public class MyEndedAuctionHighBidFragment extends Fragment implements RequestNo
     private void addToBlacklist(String rContact) {
 
         if (mTestConnection.isConnectedToInternet()) {
-            mApiCall.Add_RemoveBlacklistContact(myContact, mAuctionId, rContact, keyword, "Auction");
+            mApiCall.addRemoveFromBlacklist(myContact/*, mAuctionId*/, rContact, keyword, "Auction");
         } else {
             CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         }

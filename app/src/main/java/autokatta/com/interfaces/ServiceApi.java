@@ -467,10 +467,10 @@ public interface ServiceApi {
                                     @Query("VehicleID") int vid, @Query("ProductID") int pid, @Query("ServiceID") int sid);
 
 
-    //remove Contact From blacklist
+    // add/remove Contact From blacklist
     @POST("AddRemoveToBlacklist")
-    Call<String> removeContactFromBlacklist(@Query("MyContact") String myContact, @Query("AuctionID") String strAuctionId,
-                                            @Query("Contact") String rContact, @Query("Keyword") String keyword,
+    Call<String> removeContactFromBlacklist(@Query("MyContact") String myContact, @Query("Contact") String rContact,
+                                            @Query("Keyword") String keyword,
                                             @Query("EventType") String eventType);
 
 
@@ -598,11 +598,11 @@ public interface ServiceApi {
     Call<AuctionParticipantsResponse> _autokattaGetAuctionParticipants(@Query("MyContact") String myContact, @Query("AuctionID")
             int strAuctionId);
 
-    //Add/remove blacklist contact
+/*    //Add/remove blacklist contact
     @POST("AddRemoveToBlacklist")
     Call<String> _autokattaAddRemoveBlacklist(@Query("MyContact") String myContact, @Query("AuctionID") int strAuctionId,
                                               @Query("Contact") String rContact, @Query("Keyword") String keyword,
-                                              @Query("EventType") String eventType);
+                                              @Query("EventType") String eventType);*/
 
     // Get Auction Analytics
     @GET("GetAnalyticsCount")
