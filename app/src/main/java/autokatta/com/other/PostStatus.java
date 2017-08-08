@@ -1,10 +1,7 @@
 package autokatta.com.other;
 
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -69,7 +66,7 @@ public class PostStatus extends AppCompatActivity implements RequestNotifier {
         mPictureVideo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final CharSequence[] options = {"Images", "Videos", "Cancel"};
+                /*final CharSequence[] options = {"Images", "Videos", "Cancel"};
                 AlertDialog.Builder builder = new AlertDialog.Builder(PostStatus.this);
                 builder.setTitle("Select From...");
                 builder.setItems(options, new DialogInterface.OnClickListener() {
@@ -89,7 +86,9 @@ public class PostStatus extends AppCompatActivity implements RequestNotifier {
                         dialog.dismiss();
                     }
                 });
-                builder.show();
+                builder.show();*/
+
+                CustomToast.customToast(getApplicationContext(), "Coming soon... please be connected for update..");
             }
         });
     }
