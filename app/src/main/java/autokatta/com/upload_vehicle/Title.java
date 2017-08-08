@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.text.InputType;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -169,6 +170,9 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
         mMakeYear = (EditText) mTitle.findViewById(R.id.make_year);
         mRegisterMonth = (EditText) mTitle.findViewById(R.id.register_month);
         mRegisterYear = (EditText) mTitle.findViewById(R.id.register_year);
+
+        mMakeMonth.setInputType(InputType.TYPE_NULL);
+        mRegisterMonth.setInputType(InputType.TYPE_NULL);
 
         mMakePick.setOnClickListener(new View.OnClickListener() {
             @Override
