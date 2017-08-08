@@ -83,7 +83,7 @@ public class ProfileMyStoreAdapter extends BaseAdapter {
                     .load(mActivity.getString(R.string.base_image_url) + mItemList.get(position).getStoreLogo())
                     .bitmapTransform(new CropCircleTransformation(mActivity)) //To display image in Circular form.
                     .diskCacheStrategy(DiskCacheStrategy.ALL) //For caching diff versions of image.
-                    .placeholder(R.drawable.logo)
+                    .placeholder(R.drawable.logo48x48)
                     .override(110, 100)
                     .into(mViewHolder.imageView);
         } else {

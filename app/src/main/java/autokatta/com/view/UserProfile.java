@@ -381,6 +381,7 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
                             .load(dp_path)
                             .centerCrop()
                             .diskCacheStrategy(DiskCacheStrategy.ALL)
+                            .placeholder(R.drawable.logo48x48)
                             .into(mProfilePicture);
                     collapsingToolbar.setTitle(mUserName);
                     collapsingToolbar.setCollapsedTitleTextColor(Color.WHITE);

@@ -322,8 +322,26 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
     Post Notification Class...
      */
     private static class PostNotifications extends RecyclerView.ViewHolder {
+        CardView mPostCardView;
+        ImageView mProfile_pic;
+        TextView mAction, mActionTime, mStatusText;
+        ImageButton mPostAutokattaShare, mCall, mLike, mUnlike;
+        RelativeLayout mRelativeLike;
+        //Preview mPreview;
+
         private PostNotifications(View postView) {
             super(postView);
+
+            mPostCardView = (CardView) postView.findViewById(R.id.post_card_view);
+            mProfile_pic = (ImageView) postView.findViewById(R.id.profile_pro_pic);
+            mAction = (TextView) postView.findViewById(R.id.post_action_names);
+            mActionTime = (TextView) postView.findViewById(R.id.post_action_time);
+            mStatusText = (TextView) postView.findViewById(R.id.statustxt);
+            mPostAutokattaShare = (ImageButton) postView.findViewById(R.id.share_autokatta);
+            mCall = (ImageButton) postView.findViewById(R.id.call);
+            mLike = (ImageButton) postView.findViewById(R.id.like);
+            mUnlike = (ImageButton) postView.findViewById(R.id.unlike);
+            mRelativeLike = (RelativeLayout) postView.findViewById(R.id.rlLike);
         }
     }
 
@@ -575,7 +593,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                 return new ServiceNotifications(mView);
 
             case 7:
-                mView = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_wall_profile_notifications, parent, false);
+                mView = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_wall_post_notification, parent, false);
                 return new PostNotifications(mView);
 
             case 8:
@@ -2019,6 +2037,92 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                 break;
 
             case 7:
+
+                final PostNotifications mPostHolder = (PostNotifications) holder;
+
+                Log.i("Wall", "Post-LayType ->" + notificationList.get(position).getLayoutType());
+
+                if (notificationList.get(position).getLayoutType().equalsIgnoreCase("MyAction")) {
+                    mPostHolder.mRelativeLike.setVisibility(View.GONE);
+
+                } else {
+                    mPostHolder.mRelativeLike.setVisibility(View.VISIBLE);
+                }
+
+                mPostHolder.mAction.setText(notificationList.get(position).getSenderName() + " "
+                        + notificationList.get(position).getAction() + " " + "status");
+
+                /*if (notificationList.get(position).getStatus().startsWith("http://")||notificationList.get(position).getStatus().startsWith("https://")){
+                    mPreview.setVisibility(View.VISIBLE);
+                    mPostHolder.mStatusText.setVisibility(View.GONE);
+                    mPreview.setData(obj.statusld.toString());
+                    Log.i("SetData","->"+obj.statusld.toString());
+                    sid = obj.status_idld.toString();
+                }else{
+                    mPreview.setVisibility(View.GONE);
+                    mPostHolder.mStatusText.setVisibility(View.VISIBLE);
+                    mPostHolder.mStatusText.setText(notificationList.get(position).getStatus());
+                }*/
+
+                mPostHolder.mActionTime.setText(notificationList.get(position).getDateTime());
+                mPostHolder.mStatusText.setText(notificationList.get(position).getStatus());
+                
+                 /* Sender Profile Pic */
+
+                if (notificationList.get(position).getSenderPicture() == null ||
+                        notificationList.get(position).getSenderPicture().equals("") ||
+                        notificationList.get(position).getSenderPicture().equals("null")) {
+                    mPostHolder.mProfile_pic.setBackgroundResource(R.drawable.logo48x48);
+                } else {
+                    Glide.with(mActivity)
+                            .load(mActivity.getString(R.string.base_image_url) + notificationList.get(position).getSenderPicture())
+                            .diskCacheStrategy(DiskCacheStrategy.ALL) //For caching diff versions of image.
+                            .into(mPostHolder.mProfile_pic);
+                }
+
+                mPostHolder.mCall.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String otherContact = notificationList.get(mPostHolder.getAdapterPosition()).getSender();
+                        call(otherContact);
+                    }
+                });
+                
+                /* Like & Unlike Functionality */
+
+                if (notificationList.get(position).getStatusLikeStatus().equalsIgnoreCase("yes")) {
+                    mPostHolder.mLike.setVisibility(View.VISIBLE);
+                    mPostHolder.mUnlike.setVisibility(View.GONE);
+                } else {
+                    mPostHolder.mUnlike.setVisibility(View.VISIBLE);
+                    mPostHolder.mLike.setVisibility(View.GONE);
+                }
+
+                mPostHolder.mLike.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //Unlike web service
+                        String otherContact = notificationList.get(mPostHolder.getAdapterPosition()).getSender();
+                        int statusId = notificationList.get(mPostHolder.getAdapterPosition()).getStatusID();
+                        mPostHolder.mLike.setVisibility(View.GONE);
+                        mPostHolder.mUnlike.setVisibility(View.VISIBLE);
+                        mApiCall.UnLike(mLoginContact, otherContact, "7", 0, 0, 0, 0, 0, statusId, 0);
+                        notificationList.get(mPostHolder.getAdapterPosition()).setStatusLikeStatus("no");
+                    }
+                });
+
+                mPostHolder.mUnlike.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //Like web service
+                        String otherContact = notificationList.get(mPostHolder.getAdapterPosition()).getSender();
+                        int statusId = notificationList.get(mPostHolder.getAdapterPosition()).getStatusID();
+                        mPostHolder.mUnlike.setVisibility(View.GONE);
+                        mPostHolder.mLike.setVisibility(View.VISIBLE);
+                        mApiCall.Like(mLoginContact, otherContact, "7", 0, 0, 0, 0, 0, statusId, 0);
+                        notificationList.get(mPostHolder.getAdapterPosition()).setStatusLikeStatus("yes");
+                    }
+                });
 
                 break;
 

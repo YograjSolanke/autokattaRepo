@@ -31,11 +31,20 @@
             android:layout_marginTop="5dp"
             android:layout_toEndOf="@+id/profile_image"
             android:text="Profile Name"
+            android:layout_marginStart="20dp"
             android:textColor="#2C3343"
             android:textSize="16sp"
             android:textStyle="bold" />
 
     </RelativeLayout>
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/profile"
+        android:layout_marginTop="5dp"
+        android:background="#cccccc" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -49,7 +58,7 @@
             android:layout_height="@dimen/status_height"
             android:background="@android:color/transparent"
             android:gravity="top"
-            android:hint="What's on your mind"
+            android:hint="What's on your mind ??"
             android:paddingEnd="@dimen/margin_small"
             android:paddingStart="@dimen/margin_small"
             android:paddingTop="@dimen/margin_small" />

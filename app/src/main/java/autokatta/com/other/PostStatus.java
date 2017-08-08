@@ -11,7 +11,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
@@ -20,6 +24,7 @@ import java.net.UnknownHostException;
 import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
+import autokatta.com.response.ProfileAboutResponse;
 import retrofit2.Response;
 
 public class PostStatus extends AppCompatActivity implements RequestNotifier {
@@ -31,6 +36,8 @@ public class PostStatus extends AppCompatActivity implements RequestNotifier {
     private ApiCall mApiCall;
     private String mLoginContact;
     private ProgressDialog dialog;
+    ImageView mProfile_image;
+    TextView mProfile_name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +56,15 @@ public class PostStatus extends AppCompatActivity implements RequestNotifier {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
+        /*
+            Get Profile Data
+             */
+        getProfileData();
+
+
         mStatusText = (EditText) findViewById(R.id.status);
+        mProfile_image = (ImageView) findViewById(R.id.profile_image);
+        mProfile_name = (TextView) findViewById(R.id.profile_name);
         mPictureVideo = (TextView) findViewById(R.id.picture_video);
         mPictureVideo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,7 +112,7 @@ public class PostStatus extends AppCompatActivity implements RequestNotifier {
                 String statusText = mStatusText.getText().toString();
                 Log.i("status", statusText);
                 if (statusText.equals("") || statusText.startsWith(" ") && statusText.endsWith(" ")) {
-                    mStatusText.setError("Enter auction title");
+                    mStatusText.setError("Enter data");
                     mStatusText.requestFocus();
                 } else
                     PostData(statusText);
@@ -111,6 +126,17 @@ public class PostStatus extends AppCompatActivity implements RequestNotifier {
         mApiCall.PostStatus(mLoginContact, statusText, "", "");
     }
 
+    /*
+    API Call for get profile data...
+     */
+    private void getProfileData() {
+        ApiCall mApiCall = new ApiCall(PostStatus.this, this);
+
+        dialog.show();
+        mApiCall.profileAbout(mLoginContact, mLoginContact);
+    }
+
+
     @Override
     public void onBackPressed() {
         finish();
@@ -119,7 +145,39 @@ public class PostStatus extends AppCompatActivity implements RequestNotifier {
 
     @Override
     public void notifySuccess(Response<?> response) {
+        if (dialog.isShowing()) {
+            dialog.dismiss();
+        }
+        if (response != null) {
+            if (response.isSuccessful()) {
+                //hud.dismiss();
+                ProfileAboutResponse mProfileAboutResponse = (ProfileAboutResponse) response.body();
+                if (!mProfileAboutResponse.getSuccess().isEmpty()) {
+                    String dp = mProfileAboutResponse.getSuccess().get(0).getProfilePic();
+                    mProfile_name.setText(mProfileAboutResponse.getSuccess().get(0).getUsername());
+                    int RegID = mProfileAboutResponse.getSuccess().get(0).getRegId();
+                    String dp_path = getApplicationContext().getString(R.string.base_image_url) + dp;
 
+                    if (!dp.equals("")) {
+                        Glide.with(this)
+                                .load(dp_path)
+                                .centerCrop()
+                                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                .into(mProfile_image);
+                    } else {
+                        mProfile_image.setBackgroundResource(R.drawable.profile);
+                    }
+                } else {
+
+                }
+            } else {
+                //hud.dismiss();
+                CustomToast.customToast(getApplicationContext(), getString(R.string._404));
+            }
+        } else {
+            //hud.dismiss();
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
+        }
     }
 
     @Override
@@ -152,6 +210,8 @@ public class PostStatus extends AppCompatActivity implements RequestNotifier {
             }
             if (str.equals("success")) {
                 CustomToast.customToast(getApplicationContext(), "Status posted successfully");
+                finish();
+                overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
             } else
                 CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
 
