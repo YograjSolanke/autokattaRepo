@@ -55,6 +55,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
     private int visibleThreshold = 5;
     private OnLoadMoreListener mOnLoadMoreListener;
     private String mLoginContact = "";
+    String shareKey = "";
     private ApiCall mApiCall;
     private int profile_likecountint, profile_followcountint, product_likecountint, service_likecountint, store_likecountint,
             store_followcountint, store_sharecountint, vehicle_likecountint, vehicle_followcountint, vehicle_sharecountint;
@@ -2330,11 +2331,155 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                 break;
 
             case 9:
+
+
+                final ActiveNotifications mActiveHolder = (ActiveNotifications) holder;
+                Log.i("Wall", "Search-LayType ->" + notificationList.get(position).getLayoutType());
+
+                if (notificationList.get(position).getLayoutType().equalsIgnoreCase("MyAction")) {
+                    shareKey = "myauction";
+
+                } else {
+                    shareKey = "auction";
+                }
+
+                mActiveHolder.mAuctionTitle.setText(notificationList.get(position).getActionTitle());
+                mActiveHolder.mAuctionNoOfVehicles.setText(notificationList.get(position).getNoOfVehicles());
+                mActiveHolder.mAuctionEndDate.setText(notificationList.get(position).getEndDate());
+                mActiveHolder.mAuctionEndTime.setText(notificationList.get(position).getEndTime());
+                mActiveHolder.mAuctionType.setText(notificationList.get(position).getAuctionType());
+                mActiveHolder.mAuctionGoingCount.setText(notificationList.get(position).getGoingCount());
+                mActiveHolder.mAuctionIgnoreCount.setText(notificationList.get(position).getIgnoreCount());
+
+                mActiveHolder.mAuctionIgnore.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        // new ignoreAuction().execute();
+
+                    }
+                });
+
+                mActiveHolder.mAuctionGoing.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        // new goingAuction().execute();
+
+                    }
+                });
+                mActiveHolder.mAuctionAutokattaShare.setOnClickListener(new View.OnClickListener() {
+                    String imageFilePath = "", imagename;
+                    Intent intent = new Intent(Intent.ACTION_SEND);
+
+                    @Override
+                    public void onClick(View v) {
+                        //shareProfileData();
+                        android.support.v7.app.AlertDialog.Builder alert = new android.support.v7.app.AlertDialog.Builder(mActivity);
+                        alert.setTitle("Share");
+                        alert.setMessage("with Autokatta or to other?");
+                        alert.setIconAttribute(android.R.attr.alertDialogIcon);
+
+                        alert.setPositiveButton("Autokatta", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                String allVehicleDetails = mActiveHolder.mAuctionTitle.getText().toString() + "=" +
+                                        mActiveHolder.mAuctionNoOfVehicles.getText().toString() + "=" +
+                                        mActiveHolder.mAuctionEndDate.getText().toString() + "=" +
+                                        mActiveHolder.mAuctionEndTime.getText().toString() + "=" +
+                                        mActiveHolder.mAuctionType.getText().toString() + "=" +
+                                        mActiveHolder.mAuctionGoingCount.getText().toString() + "=" +
+                                        mActiveHolder.mAuctionIgnoreCount.getText().toString() + "=" +
+                                        shareKey;
+
+
+                                System.out.println("all vehicle detailssss======Auto " + allVehicleDetails);
+
+                                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                                        putString("Share_sharedata", allVehicleDetails).apply();
+                                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                                        putInt("Share_auction_id", notificationList.get(mActiveHolder.getAdapterPosition()).getAuctionID()).apply();
+                                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                                        putString("Share_keyword", "auction").apply();
+
+
+                                Intent i = new Intent(mActivity, ShareWithinAppActivity.class);
+                                mActivity.startActivity(i);
+                                dialog.dismiss();
+                            }
+                        });
+
+                        alert.setNegativeButton("Other", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+//                                if (notificationList.get(mUpVehicleHolder.getAdapterPosition()).getUpVehicleImage().equalsIgnoreCase("") ||
+//                                        notificationList.get(mUpVehicleHolder.getAdapterPosition()).getUpVehicleImage().equalsIgnoreCase(null) ||
+//                                        notificationList.get(mUpVehicleHolder.getAdapterPosition()).getUpVehicleImage().equalsIgnoreCase("null")) {
+//                                    imagename = "http://autokatta.com/mobile/store_profiles/" + "a.jpg";
+//                                } else {
+//                                    imagename = "http://autokatta.com/mobile/store_profiles/" + notificationList.get(mUpVehicleHolder.getAdapterPosition()).getUpVehicleImage();
+//                                }
+//                                Log.e("TAG", "img : " + imagename);
+//
+//                                DownloadManager.Request request = new DownloadManager.Request(
+//                                        Uri.parse(imagename));
+//                                request.allowScanningByMediaScanner();
+//                                String filename = URLUtil.guessFileName(imagename, null, MimeTypeMap.getFileExtensionFromUrl(imagename));
+//                                request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, filename);
+//                                Log.e("ShareImagePath :", filename);
+//                                Log.e("TAG", "img : " + imagename);
+//
+//                                DownloadManager manager = (DownloadManager) mActivity.getApplication()
+//                                        .getSystemService(Context.DOWNLOAD_SERVICE);
+//
+//                                Log.e("TAG", "img URL: " + imagename);
+//
+//                                manager.enqueue(request);
+//
+//                                imageFilePath = "/storage/emulated/0/Download/" + filename;
+//                                System.out.println("ImageFilePath:" + imageFilePath);
+
+                                String allVehicleDetails = "Auction Title : " + mActiveHolder.mAuctionTitle.getText().toString() + "\n" +
+                                        "No.of Vehicles : " + mActiveHolder.mAuctionNoOfVehicles.getText().toString() + "\n" +
+                                        "Auction End Date : " + mActiveHolder.mAuctionEndDate.getText().toString() + "\n" +
+                                        "Auction End Time : " + mActiveHolder.mAuctionEndTime.getText().toString() + "\n" +
+                                        "Auction Type : " + mActiveHolder.mAuctionType.getText().toString() + "\n" +
+                                        "Auction Going Count : " + mActiveHolder.mAuctionGoingCount.getText().toString() + "\n" +
+                                        "Auction Ignore Count : " + mActiveHolder.mAuctionIgnoreCount.getText().toString();
+
+
+                                System.out.println("all vehicle detailssss======Other " + allVehicleDetails);
+
+                                intent.setType("text/plain");
+                                intent.putExtra(Intent.EXTRA_TEXT, "Please visit and Follow my vehicle on Autokatta. Stay connected for Product and Service updates and enquiries"
+                                        + "\n" + "http://autokatta.com/vehicle/main/" + notificationList.get(mActiveHolder.getAdapterPosition()).getActionID() + "/" + mLoginContact
+                                        + "\n" + "\n" + allVehicleDetails);
+//                                intent.setType("image/jpeg");
+//                                intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(imageFilePath)));
+                                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                                intent.putExtra(Intent.EXTRA_SUBJECT, "Please Find Below Attachments");
+                                mActivity.startActivity(Intent.createChooser(intent, "Autokatta"));
+
+                                /*intent.setType("text/plain");
+                                intent.putExtra(Intent.EXTRA_SUBJECT, "Please Find Below Attachments");
+                                intent.putExtra(Intent.EXTRA_TEXT, allVehicleDetails);
+                                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                                mActivity.startActivity(intent);*/
+
+                                dialog.dismiss();
+                            }
+
+                        });
+                        alert.create();
+                        alert.show();
+                    }
+                });
+
+
                 ImageView mAuctionPic;
                 ImageButton mAuctionAutokatta, mAuctionOther, mAuctionFavourite;
-                Button mAuctionGoing, mAuctionIgnore;
-                TextView mAuctionActionName, mAuctionActionTime, mAuctionTitle, mAuctionNoOfVehicles, mAuctionEndDate, mAuctionEndTime,
-                        mAuctionType, mAuctionGoingCount, mAuctionIgnoreCount;
+
                 break;
 
             case 10:
