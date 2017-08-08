@@ -50,9 +50,9 @@ public class BussinessMsgSenders extends Fragment implements SwipeRefreshLayout.
     SwipeRefreshLayout mSwipeRefreshLayout;
     TextView Title, Category, Brand, Model, Keyword, price;
     RelativeLayout relCategory, relBrand, relModel, relPrice, MainRel;
-    String vehi_img_url = getString(R.string.base_image_url);
-    String prduct_img_url = getString(R.string.base_image_url);
-    String service_img_url = getString(R.string.base_image_url);
+   /* String vehi_img_url;// = getActivity().getString(R.string.base_image_url);
+    String prduct_img_url = getActivity().getString(R.string.base_image_url);
+    String service_img_url = getActivity().getString(R.string.base_image_url);*/
     String fullpath = "";
     ImageView Image;
     ApiCall mApiCall;
@@ -123,7 +123,7 @@ public class BussinessMsgSenders extends Fragment implements SwipeRefreshLayout.
                         relBrand.setVisibility(View.GONE);
                         relModel.setVisibility(View.GONE);
                         if (!image.equals("") && !image.equals("null")) {
-                            fullpath = prduct_img_url + image;
+                            fullpath = getString(R.string.base_image_url) + image;
                             fullpath = fullpath.replaceAll(" ", "%20");
                             Glide.with(getActivity())
                                     .load(fullpath)
@@ -139,7 +139,7 @@ public class BussinessMsgSenders extends Fragment implements SwipeRefreshLayout.
                         relBrand.setVisibility(View.GONE);
                         relModel.setVisibility(View.GONE);
                         if (!image.equals("") && !image.equals("null")) {
-                            fullpath = service_img_url + image;
+                            fullpath = getString(R.string.base_image_url) + image;
                             fullpath = fullpath.replaceAll(" ", "%20");
                             Glide.with(getActivity())
                                     .load(fullpath)
@@ -152,7 +152,7 @@ public class BussinessMsgSenders extends Fragment implements SwipeRefreshLayout.
                         }
                     } else if (b.getString("keyword").equalsIgnoreCase("Vehicle")) {
                         if (!image.equals("") && !image.equals("null")) {
-                            fullpath = vehi_img_url + image;
+                            fullpath = getString(R.string.base_image_url) + image;
                             fullpath = fullpath.replaceAll(" ", "%20");
                             Glide.with(getActivity())
                                     .load(fullpath)

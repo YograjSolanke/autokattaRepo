@@ -84,9 +84,9 @@ public class ChatActivity extends AppCompatActivity implements RequestNotifier, 
     TextView Title, Category, Brand, Model, Keyword, price, chatwithtext;
     ImageView Image;
     RelativeLayout relCategory, relBrand, relModel, relPrice, MainRel, relativeprofile;
-    String vehi_img_url = getString(R.string.base_image_url);
+   /* String vehi_img_url = getString(R.string.base_image_url);
     String prduct_img_url = getString(R.string.base_image_url);
-    String service_img_url = getString(R.string.base_image_url);
+    String service_img_url = getString(R.string.base_image_url);*/
     String fullpath = "";
 
     @Override
@@ -212,7 +212,7 @@ public class ChatActivity extends AppCompatActivity implements RequestNotifier, 
                                 Keyword.setText(product.getKeyword());
                                 Title.setText(product.getProductName());
                                 price.setText(product.getPrice());
-                                fullpath = prduct_img_url + product.getImages();
+                                fullpath =  getString(R.string.base_image_url) + product.getImages();
                                 fullpath = fullpath.replaceAll(" ", "%20");
                                 Glide.with(ChatActivity.this)
                                         .load(fullpath)
@@ -229,7 +229,7 @@ public class ChatActivity extends AppCompatActivity implements RequestNotifier, 
                                 Keyword.setText(service.getKeyword());
                                 Title.setText(service.getName());
                                 price.setText(service.getPrice());
-                                fullpath = service_img_url + service.getImages();
+                                fullpath =  getString(R.string.base_image_url) + service.getImages();
                                 fullpath = fullpath.replaceAll(" ", "%20");
                                 Glide.with(ChatActivity.this)
                                         .load(fullpath)
@@ -249,7 +249,7 @@ public class ChatActivity extends AppCompatActivity implements RequestNotifier, 
                                 Category.setText(vehicle.getCategory());
                                 Brand.setText(vehicle.getManufacturer());
                                 Model.setText(vehicle.getModel());
-                                fullpath = vehi_img_url + vehicle.getImage();
+                                fullpath =  getString(R.string.base_image_url) + vehicle.getImage();
                                 fullpath = fullpath.replaceAll(" ", "%20");
                                 Glide.with(ChatActivity.this)
                                         .load(fullpath)

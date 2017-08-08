@@ -80,8 +80,8 @@ public class BussinessMsgSendersAdapter extends RecyclerView.Adapter<BussinessMs
             public void onClick(View view) {
 
                 Bundle b = new Bundle();
-                b.putString("sender", msender);
-                b.putString("sendername", msendername);
+                b.putString("sender", holder.msgFromCnt.getText().toString());
+                b.putString("sendername",holder.msgFrom.getText().toString());
                 b.putInt("product_id", product_id);
                 b.putInt("service_id", service_id);
                 b.putInt("vehicle_id", vehicle_id);
