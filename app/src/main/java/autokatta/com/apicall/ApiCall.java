@@ -3533,7 +3533,7 @@ get Admin Excel file Names for auction
     /*
 delete uploaded vehicle
 */
-    public void deleteUploadedVehicle(String vehicle_id, String keyword) {
+    public void deleteUploadedVehicle(int vehicle_id, String keyword) {
         //JSON to Gson conversion
         Gson gson = new GsonBuilder()
                 .setLenient()
@@ -3673,7 +3673,7 @@ get All Vehicles for auction
     /*
     send uploaded vehicle start and stop notification
     */
-    public void sendNotificationOfUploadedVehicle(String vehicle_id, String keyword) {
+    public void sendNotificationOfUploadedVehicle(int vehicle_id, String keyword) {
         //JSON to Gson conversion
         Gson gson = new GsonBuilder()
                 .setLenient()

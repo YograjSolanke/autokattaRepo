@@ -290,7 +290,7 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
                 Bundle bundle = new Bundle();
                 ActivityOptions options = ActivityOptions.makeCustomAnimation(activity, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
                 Intent i = new Intent(activity, VehicleDetails.class);
-                bundle.putString("vehicle_id", mMainList.get(holder.getAdapterPosition()).getVehicleId());
+                bundle.putInt("vehicle_id", mMainList.get(holder.getAdapterPosition()).getVehicleId());
                 i.putExtras(bundle);
                 activity.startActivity(i, options.toBundle());
             }
@@ -303,7 +303,7 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
                 } else {
 
                     Bundle b = new Bundle();
-                    b.putString("vehicle_id", mMainList.get(holder.getAdapterPosition()).getVehicleId());
+                    b.putInt("vehicle_id", mMainList.get(holder.getAdapterPosition()).getVehicleId());
                     b.putString("title", mMainList.get(holder.getAdapterPosition()).getTitle());
                     b.putString("price", mMainList.get(holder.getAdapterPosition()).getPrice());
                     b.putString("category", mMainList.get(holder.getAdapterPosition()).getCategory());

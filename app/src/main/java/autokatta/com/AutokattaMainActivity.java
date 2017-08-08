@@ -466,7 +466,7 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
 
     private void setupSearchView() {
         ActivityOptions options = ActivityOptions.makeCustomAnimation(AutokattaMainActivity.this, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
-        startActivity(new Intent(getApplicationContext(), SearchActivity.class), options.toBundle());
+        startActivity(new Intent(getApplicationContext(), SearchActivity.class));
     }
 
     private void fcmRegister() {

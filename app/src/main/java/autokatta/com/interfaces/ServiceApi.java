@@ -476,7 +476,7 @@ public interface ServiceApi {
 
     //delete uploaded vehicle
     @POST("DeleteMyUploadedVehicles")
-    Call<String> deleteUploadedVehicles(@Query("VehicleID") String vehicle_id, @Query("Keyword") String keyword);
+    Call<String> deleteUploadedVehicles(@Query("VehicleID") int vehicle_id, @Query("Keyword") String keyword);
 
 
     //create Excel sheet names from admin
@@ -500,7 +500,7 @@ public interface ServiceApi {
 
     //send notification of upload vehicle
     @POST("UploadedVehicleNotification")
-    Call<String> sendNotificationOfUploadedVehicle(@Query("VehicleID") String vehicle_id, @Query("Keyword") String keyword);
+    Call<String> sendNotificationOfUploadedVehicle(@Query("VehicleID") int vehicle_id, @Query("Keyword") String keyword);
 
 
     //Edit Group
