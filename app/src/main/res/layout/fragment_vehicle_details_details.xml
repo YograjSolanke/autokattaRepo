@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-                                            android:id="@+id/relative2"
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:padding="5dp">
+    android:id="@+id/relative2"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="5dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -31,21 +31,20 @@
                     android:text="Owner:"
                     android:textColor="#2C3343"
                     android:textSize="16sp"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/title_str"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
                     android:layout_alignParentStart="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_toEndOf="@+id/title"
                     android:layout_weight="1.5"
                     android:text="----- "
-                    android:layout_marginStart="10dp"
-                    android:layout_toEndOf="@+id/title"
                     android:textColor="#2C3343"
-                    android:textSize="16sp"
-                    />
+                    android:textSize="16sp" />
             </LinearLayout>
 
             <View
@@ -70,20 +69,19 @@
                     android:text="Price : "
                     android:textColor="#2C3343"
                     android:textSize="16sp"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/price_str"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1.5"
+                    android:layout_alignParentStart="true"
                     android:layout_marginStart="10dp"
                     android:layout_toEndOf="@+id/price"
-                    android:layout_alignParentStart="true"
+                    android:layout_weight="1.5"
                     android:text="----- "
                     android:textColor="#2C3343"
-                    android:textSize="16sp"
-                    />
+                    android:textSize="16sp" />
             </LinearLayout>
 
             <View
@@ -108,21 +106,20 @@
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="#2C3343"
                     android:textSize="16sp"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/views_str"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1.5"
-                    android:text="-----"
                     android:layout_alignParentStart="true"
                     android:layout_marginStart="10dp"
                     android:layout_toEndOf="@+id/textView18"
+                    android:layout_weight="1.5"
+                    android:text="-----"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="#2C3343"
-                    android:textSize="16sp"
-                    />
+                    android:textSize="16sp" />
             </LinearLayout>
 
             <View
@@ -149,21 +146,20 @@
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="#2C3343"
                     android:textSize="16sp"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/call_str"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1.5"
                     android:layout_alignParentStart="true"
-                    android:text="-----"
                     android:layout_marginStart="10dp"
                     android:layout_toEndOf="@+id/textView20"
+                    android:layout_weight="1.5"
+                    android:text="-----"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="#2C3343"
-                    android:textSize="16sp"
-                    />
+                    android:textSize="16sp" />
             </LinearLayout>
 
             <View
@@ -189,21 +185,20 @@
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="#2C3343"
                     android:textSize="16sp"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/enquiry_str"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1.5"
-                    android:text="-----"
                     android:layout_alignParentStart="true"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textColor="#2C3343"
                     android:layout_marginStart="10dp"
                     android:layout_toEndOf="@+id/textView21"
-                    android:textSize="16sp"
-                    />
+                    android:layout_weight="1.5"
+                    android:text="-----"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="#2C3343"
+                    android:textSize="16sp" />
             </LinearLayout>
 
 
@@ -215,33 +210,34 @@
                 android:background="#cccccc" />
 
             <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:weightSum="2">
-
-            <TextView
-                android:id="@+id/addresstext"
-                android:layout_width="90dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="Location :"
-                android:textColor="#2C3343"
-                android:textSize="16sp"
-                android:textStyle="bold"/>
+                android:weightSum="2">
 
-            <TextView
-                android:id="@+id/addressdetails"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1.5"
-                android:layout_alignParentStart="true"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="-----"
-                android:layout_marginStart="10dp"
-                android:layout_toEndOf="@+id/addresstext"
-                android:textColor="#2C3343"/>
-        </LinearLayout>
+                <TextView
+                    android:id="@+id/addresstext"
+                    android:layout_width="90dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:text="Location :"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="#2C3343"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/addressdetails"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@+id/addresstext"
+                    android:layout_weight="1.5"
+                    android:text="-----"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="#2C3343" />
+            </LinearLayout>
+
             <View
                 android:id="@+id/v6"
                 android:layout_width="match_parent"
@@ -249,36 +245,35 @@
                 android:layout_marginTop="5dp"
                 android:background="#cccccc" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:weightSum="2">
-
-            <TextView
-                android:id="@+id/categorytxt"
-                android:layout_width="90dp"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.5"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:text="Category :"
-                android:textColor="#2C3343"/>
+                android:weightSum="2">
 
-            <TextView
-                android:id="@+id/categorydetails"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:layout_weight="1.5"
-                android:layout_alignParentStart="true"
-                android:text="-----"
-                android:layout_marginStart="10dp"
-                android:layout_toEndOf="@+id/categorytxt"
-                android:textColor="#2C3343"
-                android:textSize="16sp"
-               />
-        </LinearLayout>
+                <TextView
+                    android:id="@+id/categorytxt"
+                    android:layout_width="90dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:text="Category :"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="#2C3343"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/categorydetails"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@+id/categorytxt"
+                    android:layout_weight="1.5"
+                    android:text="-----"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="#2C3343"
+                    android:textSize="16sp" />
+            </LinearLayout>
 
             <View
                 android:id="@+id/v7"
@@ -286,34 +281,35 @@
                 android:layout_height="1dp"
                 android:layout_marginTop="5dp"
                 android:background="#cccccc" />
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:weightSum="2">
 
-            <TextView
-                android:id="@+id/subcategorytxt"
-                android:layout_width="90dp"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="SubCategory :"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:layout_weight="0.5"
-                android:textColor="#2C3343"/>
+                android:weightSum="2">
 
-            <TextView
-                android:id="@+id/subcategorydetails"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_weight="1.5"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="-----"
-                android:layout_marginStart="10dp"
-                android:layout_toEndOf="@+id/subcategorytxt"
-                android:textColor="#2C3343"/>
-        </LinearLayout>
+                <TextView
+                    android:id="@+id/subcategorytxt"
+                    android:layout_width="90dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:text="SubCategory :"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="#2C3343"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/subcategorydetails"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@+id/subcategorytxt"
+                    android:layout_weight="1.5"
+                    android:text="-----"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="#2C3343" />
+            </LinearLayout>
 
             <View
                 android:id="@+id/v8"
@@ -322,34 +318,34 @@
                 android:layout_marginTop="5dp"
                 android:background="#cccccc" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/brandtxt"
-                android:layout_width="90dp"
-                android:layout_height="wrap_content"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:layout_weight="0.5"
-                android:text="Brand :"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="#2C3343"/>
+                <TextView
+                    android:id="@+id/brandtxt"
+                    android:layout_width="90dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:text="Brand :"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="#2C3343"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/branddetails"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="16sp"
-                android:layout_weight="1.5"
-                android:layout_alignParentStart="true"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="-----"
-                android:layout_marginStart="10dp"
-                android:layout_toEndOf="@+id/brandtxt"
-                android:textColor="#2C3343"/>
-        </LinearLayout>
+                <TextView
+                    android:id="@+id/branddetails"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@+id/brandtxt"
+                    android:layout_weight="1.5"
+                    android:text="-----"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="#2C3343"
+                    android:textSize="16sp" />
+            </LinearLayout>
 
             <View
                 android:id="@+id/v9"
@@ -358,36 +354,36 @@
                 android:layout_marginTop="5dp"
                 android:background="#cccccc" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:weightSum="2">
-
-            <TextView
-                android:id="@+id/textmodel"
-                android:layout_width="90dp"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="Model :"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:layout_weight="0.5"
-                android:textColor="#2C3343"/>
+                android:weightSum="2">
 
-            <TextView
-                android:id="@+id/modeldetails"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="16sp"
-                android:layout_alignParentStart="true"
-                android:layout_weight="1.5"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="-----"
-                android:layout_marginStart="10dp"
-                android:layout_toEndOf="@+id/textmodel"
-                android:textColor="#2C3343"/>
+                <TextView
+                    android:id="@+id/textmodel"
+                    android:layout_width="90dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:text="Model :"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="#2C3343"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
 
-        </LinearLayout>
+                <TextView
+                    android:id="@+id/modeldetails"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@+id/textmodel"
+                    android:layout_weight="1.5"
+                    android:text="-----"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="#2C3343"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
 
             <View
                 android:id="@+id/v10"
@@ -396,35 +392,35 @@
                 android:layout_marginTop="5dp"
                 android:background="#cccccc" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:weightSum="2">
-
-            <TextView
-                android:id="@+id/textversion"
-                android:layout_width="90dp"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="Version :"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:layout_weight="0.5"
-                android:textColor="#2C3343"/>
+                android:weightSum="2">
 
-            <TextView
-                android:id="@+id/versiondetails"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="16sp"
-                android:layout_weight="1.5"
-                android:layout_alignParentStart="true"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="-----"
-                android:layout_marginStart="10dp"
-                android:layout_toEndOf="@+id/textversion"
-                android:textColor="#2C3343"/>
-        </LinearLayout>
+                <TextView
+                    android:id="@+id/textversion"
+                    android:layout_width="90dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:text="Version :"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="#2C3343"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/versiondetails"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@+id/textversion"
+                    android:layout_weight="1.5"
+                    android:text="-----"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="#2C3343"
+                    android:textSize="16sp" />
+            </LinearLayout>
 
             <View
                 android:id="@+id/v11"
@@ -432,33 +428,34 @@
                 android:layout_height="1dp"
                 android:layout_marginTop="5dp"
                 android:background="#cccccc" />
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:weightSum="2">
 
-            <TextView
-                android:id="@+id/myear"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Year of mfg :"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:layout_weight="0.5"
-                android:textColor="#2C3343"/>
+                android:weightSum="2">
 
-            <TextView
-                android:id="@+id/yeardetails"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="-----"
-                android:textSize="16sp"
-                android:layout_weight="1.5"
-                android:layout_alignParentStart="true"
-                android:layout_marginStart="10dp"
-                android:layout_toEndOf="@+id/myear"
-                android:textColor="#2C3343"/>
-        </LinearLayout>
+                <TextView
+                    android:id="@+id/myear"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:text="Year of mfg :"
+                    android:textColor="#2C3343"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/yeardetails"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@+id/myear"
+                    android:layout_weight="1.5"
+                    android:text="-----"
+                    android:textColor="#2C3343"
+                    android:textSize="16sp" />
+            </LinearLayout>
 
             <View
                 android:id="@+id/v12"

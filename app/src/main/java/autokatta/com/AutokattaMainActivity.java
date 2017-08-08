@@ -73,6 +73,7 @@ import autokatta.com.view.SearchStoreActivity;
 import autokatta.com.view.SearchVehicleActivity;
 import autokatta.com.view.StoreViewActivity;
 import autokatta.com.view.UserProfile;
+import autokatta.com.view.VehicleDetails;
 import autokatta.com.view.VehicleUpload;
 import retrofit2.Response;
 
@@ -145,11 +146,12 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
         if (data != null) {
             Log.i("URI", "->" + data.toString());
             String[] commaSplit = data.toString().split("/");
+            int storeId = Integer.parseInt(commaSplit[5]);
             if (commaSplit[3].equals("store")) {
                 Log.i("store", "->" + commaSplit[3]);
                 Bundle mBundle = new Bundle();
                 mBundle.putString("action", commaSplit[4]);
-                mBundle.putString("store_id", commaSplit[5]);
+                mBundle.putInt("store_id", storeId);
                 mBundle.putString("StoreContact", commaSplit[6]);
                 Intent store = new Intent(getApplicationContext(), StoreViewActivity.class);
                 store.putExtras(mBundle);
@@ -164,17 +166,16 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
                 FragmentManager mFragmentManager = getSupportFragmentManager();
                 FragmentTransaction mFragmentTransaction = mFragmentManager.beginTransaction();
                 mFragmentTransaction.replace(R.id.containerView, mOtherProfile).commit();
-            } else if (commaSplit[3].equals("vehicle")) {
+            } */ else if (commaSplit[3].equals("vehicle")) {
                 Log.i("vehicle", "->" + commaSplit[3]);
-                Vehical_Details mVehical_details = new Vehical_Details();
+                int vehicleId = Integer.parseInt(commaSplit[5]);
                 Bundle mBundle = new Bundle();
                 mBundle.putString("uri", data.toString());
-                mBundle.putString("Vehical_id", commaSplit[4]);
-                mVehical_details.setArguments(mBundle);
-                FragmentManager mFragmentManager = getSupportFragmentManager();
-                FragmentTransaction mFragmentTransaction = mFragmentManager.beginTransaction();
-                mFragmentTransaction.replace(R.id.containerView, mVehical_details).commit();
-            } else if (commaSplit[3].equals("upvehicle")) {
+                mBundle.putInt("vehicle_id", vehicleId);
+                Intent vehicle = new Intent(getApplicationContext(), VehicleDetails.class);
+                vehicle.putExtras(mBundle);
+                startActivity(vehicle);
+            } /*else if (commaSplit[3].equals("upvehicle")) {
                 Log.i("up", "->" + commaSplit[3]);
                 Vehical_Details mVehical_details = new Vehical_Details();
                 Bundle mBundle = new Bundle();
