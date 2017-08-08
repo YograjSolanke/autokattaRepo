@@ -257,7 +257,7 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
 
 
         holder.mOption.setOnClickListener(new View.OnClickListener() {
-            String nextContact, rmContact;
+            String nextContact = "", rmContact;
 
             @Override
             public void onClick(final View v) {
@@ -337,6 +337,7 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
 
     private void DeleteMembers(int position, String nextContact, String rmContact) {
         if (mTestConnection.isConnectedToInternet()) {
+            Log.i("next", "->" + nextContact);
             mApiCall.DeleteGroupMembers(mGroupId, mCallFrom, rmContact, myContact, nextContact, String.valueOf(mItemList.size()));
             /*mItemList.remove(position);
             notifyDataSetChanged();*/

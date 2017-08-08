@@ -87,7 +87,8 @@
                         android:layout_height="wrap_content"
                         android:src="@mipmap/ic_file_chart"
                         app:fab_label="Report"
-                        app:fab_size="mini" />
+                        app:fab_size="mini"
+                        android:visibility="gone" />
 
                 </com.github.clans.fab.FloatingActionMenu>
             </RelativeLayout>
