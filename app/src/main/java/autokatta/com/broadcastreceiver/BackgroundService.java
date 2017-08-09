@@ -106,7 +106,7 @@ public class BackgroundService extends Service {
                 System.out.println("numberString=" + namestring);
 
             }
-            getAutokattaContacts();
+            // getAutokattaContacts();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -120,7 +120,7 @@ public class BackgroundService extends Service {
                 handler.post(new Runnable() {
                     public void run() {
                         try {
-                            getAutokattaContacts();
+                            //getAutokattaContacts();
                             Log.i("Background", "call webservice");
                         } catch (Exception e) {
                             Log.e("background", e.getMessage());

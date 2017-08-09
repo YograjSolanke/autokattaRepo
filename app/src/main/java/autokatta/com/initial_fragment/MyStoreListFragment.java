@@ -95,9 +95,22 @@ public class MyStoreListFragment extends Fragment implements View.OnClickListene
                     adapter = new MyStoreListAdapter(getActivity(), storeResponseArrayList);
                     mRecyclerView.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
+
                 } else {
                     mSwipeRefreshLayout.setRefreshing(false);
                     mNoData.setVisibility(View.VISIBLE);
+
+
+                    Bundle bundle = new Bundle();
+                    bundle.putString("className", "MyStoreListFragment");
+                    CreateStoreFragment createStoreFragment = new CreateStoreFragment();
+                    createStoreFragment.setArguments(bundle);
+
+                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.myStoreListFrame, createStoreFragment, "createStoreFragment")
+                            .addToBackStack("createStoreFragment")
+                            .commit();
                 }
             } else {
                 mSwipeRefreshLayout.setRefreshing(false);

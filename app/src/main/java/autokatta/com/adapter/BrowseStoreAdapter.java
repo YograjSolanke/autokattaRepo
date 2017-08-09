@@ -353,11 +353,26 @@ public class BrowseStoreAdapter extends RecyclerView.Adapter<BrowseStoreAdapter.
                 imageFilePath = "/storage/emulated/0/Download/" + filename;
                 System.out.println("ImageFilePath:" + imageFilePath);
 
+                String allStoreDetails = "Store name : " + holder.storename.getText().toString() + "\n" +
+                        "Store type : " + holder.storetype.getText().toString() + "\n" +
+                        "Ratings : " + holder.storerating.getRating() + "\n" +
+                        "Likes : " + success.getLikecount() + "\n" +
+                        "Website : " + holder.storewebsite.getText().toString() + "\n" +
+                        "Timing : " + holder.storetiming.getText().toString() + "\n" +
+                        "Working Days : " + holder.storeworkingdays.getText().toString() + "\n" +
+                        "Location : " + holder.storelocation.getText().toString();
+
+                System.out.println("all store detailssss======Other " + allStoreDetails);
+
                 intent.setType("text/plain");
                 intent.putExtra(Intent.EXTRA_TEXT, "Please visit and Follow my store on Autokatta. Stay connected for Product and Service updates and enquiries"
-                        + "\n" + "http://autokatta.com/store/" + success.getStoreImage());
+                        + "\n" + "http://autokatta.com/store/main/" + success.getStoreId()
+                        + "/" + success.getContactNo()
+                        + "\n" + "\n" + allStoreDetails);
                 intent.setType("image/jpeg");
                 intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(imageFilePath)));
+                intent.putExtra(Intent.EXTRA_SUBJECT, "Please Find Below Attachments");
+                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                 activity.startActivity(Intent.createChooser(intent, "Autokatta"));
             }
         });
