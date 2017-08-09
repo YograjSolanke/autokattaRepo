@@ -10,7 +10,6 @@ import android.view.MenuItem;
 
 import autokatta.com.R;
 import autokatta.com.app_info.UploadVehicleAppIntro;
-import autokatta.com.upload_vehicle.VehicleList;
 
 public class VehicleUpload extends AppCompatActivity {
 
@@ -30,14 +29,14 @@ public class VehicleUpload extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             //    getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
         }
-
+        startActivity(new Intent(getApplicationContext(), UploadVehicleAppIntro.class));
        /* FragmentManager mFragmentManager = getSupportFragmentManager();
         FragmentTransaction mFragmentTransaction = mFragmentManager.beginTransaction();
         mFragmentTransaction.replace(R.id.vehicle_upload_container, new VehicleList()).commit();*/
-        getSupportFragmentManager().beginTransaction()
+        /*getSupportFragmentManager().beginTransaction()
                 .replace(R.id.vehicle_upload_container, new VehicleList(), "VehicleUpload")
                 .addToBackStack("VehicleUpload")
-                .commit();
+                .commit();*/
     }
 
     @Override
