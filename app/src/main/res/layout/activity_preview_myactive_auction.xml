@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                                 xmlns:app="http://schemas.android.com/apk/res-auto"
-                                                 xmlns:fab="http://schemas.android.com/apk/res-auto"
-                                                 xmlns:tools="http://schemas.android.com/tools"
-                                                 android:layout_width="match_parent"
-                                                 android:layout_height="match_parent"
-                                                 android:fitsSystemWindows="true"
-                                                 tools:context="autokatta.com.events.PreviewMyActiveAuctionActivity">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context="autokatta.com.events.PreviewMyActiveAuctionActivity">
 
     <android.support.v4.view.ViewPager
         android:id="@+id/preview_myactive_auction_viewpager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="15dp"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
 
     <android.support.design.widget.TabLayout
@@ -29,7 +29,7 @@
         app:tabIndicatorColor="@color/white"
         app:tabMode="fixed"
         app:tabSelectedTextColor="@color/white"
-        app:tabTextColor="#B0C4DE"/>
+        app:tabTextColor="#B0C4DE" />
 
 
     <android.support.design.widget.AppBarLayout
@@ -67,7 +67,7 @@
                     android:layout_gravity="center"
                     android:text="Active Auction"
                     android:textColor="@color/white"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/category"
@@ -78,7 +78,7 @@
                     android:layout_marginTop="5dp"
                     android:text="category"
                     android:textColor="@color/white"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/live_timer"
@@ -92,7 +92,7 @@
                     android:textColor="@color/red"
                     android:textSize="15sp"
                     android:textStyle="bold"
-                    android:visibility="visible"/>
+                    android:visibility="visible" />
 
                 <RelativeLayout
                     android:id="@+id/rl3"
@@ -107,7 +107,7 @@
                         android:layout_marginStart="10dp"
                         android:text="Start:"
                         android:textColor="@color/white"
-                        android:textStyle="bold"/>
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/start_date"
@@ -117,7 +117,7 @@
                         android:layout_marginStart="10dp"
                         android:layout_toEndOf="@+id/start"
                         android:text="Date"
-                        android:textColor="@color/white"/>
+                        android:textColor="@color/white" />
 
                     <TextView
                         android:id="@+id/and"
@@ -126,7 +126,7 @@
                         android:layout_marginStart="5dp"
                         android:layout_toEndOf="@+id/start_date"
                         android:text="&amp;"
-                        android:textColor="@color/white"/>
+                        android:textColor="@color/white" />
 
                     <TextView
                         android:id="@+id/start_time"
@@ -135,7 +135,7 @@
                         android:layout_marginStart="5dp"
                         android:layout_toEndOf="@+id/and"
                         android:text="Time"
-                        android:textColor="@color/white"/>
+                        android:textColor="@color/white" />
 
                     <TextView
                         android:id="@+id/end2"
@@ -145,7 +145,7 @@
                         android:layout_marginStart="10dp"
                         android:text="End:"
                         android:textColor="@color/white"
-                        android:textStyle="bold"/>
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/end_date"
@@ -155,7 +155,7 @@
                         android:layout_below="@+id/start_date"
                         android:layout_toEndOf="@+id/end2"
                         android:text="Date"
-                        android:textColor="@color/white"/>
+                        android:textColor="@color/white" />
 
                     <TextView
                         android:id="@+id/and2"
@@ -165,7 +165,7 @@
                         android:layout_marginStart="5dp"
                         android:layout_toEndOf="@+id/end_date"
                         android:text="&amp;"
-                        android:textColor="@color/white"/>
+                        android:textColor="@color/white" />
 
                     <TextView
                         android:id="@+id/end_time"
@@ -175,7 +175,7 @@
                         android:layout_marginStart="5dp"
                         android:layout_toEndOf="@+id/and2"
                         android:text="Time"
-                        android:textColor="@color/white"/>
+                        android:textColor="@color/white" />
 
                     <!--                    <RelativeLayout
                                             android:layout_width="match_parent"
@@ -209,7 +209,7 @@
                         android:layout_marginTop="5dp"
                         android:text="No.of vehicle :"
                         android:textColor="@color/white"
-                        android:textStyle="bold"/>
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/editvehicle"
@@ -220,7 +220,7 @@
                         android:layout_toEndOf="@+id/noofvehicle"
                         android:enabled="false"
                         android:hint="0"
-                        android:textColor="@color/white"/>
+                        android:textColor="@color/white" />
 
                     <RelativeLayout
                         android:id="@+id/rl22"
@@ -236,7 +236,7 @@
                             android:layout_marginTop="5dp"
                             android:text="Participants:"
                             android:textColor="@color/white"
-                            android:textStyle="bold"/>
+                            android:textStyle="bold" />
 
                         <TextView
                             android:id="@+id/editparticipants"
@@ -247,7 +247,7 @@
                             android:layout_toEndOf="@+id/confirmparticipants"
                             android:enabled="false"
                             android:hint="0"
-                            android:textColor="@color/white"/>
+                            android:textColor="@color/white" />
                     </RelativeLayout>
                 </RelativeLayout>
 
@@ -264,7 +264,7 @@
                         android:layout_marginStart="10dp"
                         android:text="Location:"
                         android:textColor="@color/white"
-                        android:textStyle="bold"/>
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/location"
@@ -274,7 +274,7 @@
                         android:layout_marginStart="10dp"
                         android:layout_toEndOf="@+id/txtLocation"
                         android:text="location"
-                        android:textColor="@color/white"/>
+                        android:textColor="@color/white" />
                 </RelativeLayout>
 
 
@@ -287,7 +287,7 @@
                 android:layout_marginTop="@dimen/margin_small"
                 app:layout_collapseMode="pin"
                 app:layout_scrollFlags="scroll|enterAlways|snap"
-                app:popupTheme="@style/AppTheme.PopupOverlay"/>
+                app:popupTheme="@style/AppTheme.PopupOverlay" />
 
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
@@ -310,7 +310,7 @@
             android:layout_height="wrap_content"
             android:src="@mipmap/auctionwhite"
             fab:fab_label="Go Live"
-            fab:fab_size="mini"/>
+            fab:fab_size="mini" />
 
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/clauses"
@@ -318,7 +318,7 @@
             android:layout_height="wrap_content"
             android:src="@mipmap/clause"
             fab:fab_label="Clauses"
-            fab:fab_size="mini"/>
+            fab:fab_size="mini" />
 
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/mail"
@@ -326,7 +326,7 @@
             android:layout_height="wrap_content"
             android:src="@android:drawable/ic_dialog_email"
             fab:fab_label="Mail"
-            fab:fab_size="mini"/>
+            fab:fab_size="mini" />
 
     </com.github.clans.fab.FloatingActionMenu>
 

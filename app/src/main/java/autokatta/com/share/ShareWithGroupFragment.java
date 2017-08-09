@@ -29,7 +29,7 @@ import retrofit2.Response;
 public class ShareWithGroupFragment extends Fragment implements RequestNotifier {
     String contactnumber, storecontact, profile_contact;
     String sharedata, keyword;
-    int store_id, vehicle_id, product_id, service_id,search_id, status_id, auction_id, loan_id,
+    int store_id, vehicle_id, product_id, service_id, search_id, status_id, auction_id, loan_id,
             exchange_id;
     ListView grouplist;
 
@@ -119,10 +119,12 @@ public class ShareWithGroupFragment extends Fragment implements RequestNotifier 
                         vehicle_id, product_id, service_id, profile_contact, search_id, status_id, auction_id, loan_id, exchange_id, keyword);
                 grouplist.setAdapter(adapter);
             } else {
-                CustomToast.customToast(getActivity(), getString(R.string._404_));
+                if (isAdded())
+                    CustomToast.customToast(getActivity(), getString(R.string._404_));
             }
         } else {
-            CustomToast.customToast(getActivity(), getString(R.string._404_));
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string._404_));
         }
 
     }
@@ -130,45 +132,20 @@ public class ShareWithGroupFragment extends Fragment implements RequestNotifier 
     @Override
     public void notifyError(Throwable error) {
         if (error instanceof SocketTimeoutException) {
-            CustomToast.customToast(getActivity(), getString(R.string._404_));
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            CustomToast.customToast(getActivity(), getString(R.string._404_));
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string._404_));
         } else if (error instanceof ConnectException) {
-            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
-            //mNoInternetIcon.setVisibility(View.VISIBLE);
-//            Snackbar snackbar = Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
-//                    .setAction("Go Online", new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View view) {
-//                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
-//                        }
-//                    });
-//            // Changing message text color
-//            snackbar.setActionTextColor(Color.RED);
-//            // Changing action button text color
-//            View sbView = snackbar.getView();
-//            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
-//            textView.setTextColor(Color.YELLOW);
-//            snackbar.show();
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
-            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
-            //mNoInternetIcon.setVisibility(View.VISIBLE);
-//            Snackbar snackbar = Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
-//                    .setAction("Go Online", new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View view) {
-//                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
-//                        }
-//                    });
-//            // Changing message text color
-//            snackbar.setActionTextColor(Color.RED);
-//            // Changing action button text color
-//            View sbView = snackbar.getView();
-//            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
-//            textView.setTextColor(Color.YELLOW);
-//            snackbar.show();
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         } else {
             Log.i("Check Class-"
                     , "Share With Group");

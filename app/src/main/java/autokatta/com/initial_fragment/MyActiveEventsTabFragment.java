@@ -59,7 +59,7 @@ public class MyActiveEventsTabFragment extends Fragment {
         tabAdapterName.addFragment(new MyActiveAuctionFragment(), "Auction");
         tabAdapterName.addFragment(new MyActiveLoanMelaFragment(), "Loan Mela");
         tabAdapterName.addFragment(new MyActiveExchangeMelaFrament(), "Exchange Mela");
-        tabAdapterName.addFragment(new MyActiveServiceFragment(), "Service ");
+        tabAdapterName.addFragment(new MyActiveServiceFragment(), "Service");
         tabAdapterName.addFragment(new MyActiveSaleMelaFragment(), "Sale Mela");
         viewPager.setAdapter(tabAdapterName);
     }

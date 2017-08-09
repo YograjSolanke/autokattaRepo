@@ -89,6 +89,7 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
     //qr code scanner object
     private IntentIntegrator qrScan;
     private ViewPager viewPager;
+    TabLayout tabLayout;
 
     private boolean isBackgroundServiceRunning(Class<?> serviceClass) {
         ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
@@ -242,7 +243,7 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
             }
         });
 
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+        tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.getTabAt(0).setIcon(R.mipmap.ic_web);
         tabLayout.getTabAt(1).setIcon(R.mipmap.ic_bell);
@@ -274,6 +275,83 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
 
             }
         });
+
+        try {
+            tabLayout.getTabAt(0).getIcon().setAlpha(255);
+            tabLayout.getTabAt(1).getIcon().setAlpha(128);
+            tabLayout.getTabAt(2).getIcon().setAlpha(128);
+            tabLayout.getTabAt(3).getIcon().setAlpha(128);
+            tabLayout.getTabAt(4).getIcon().setAlpha(128);
+            tabLayout.getTabAt(5).getIcon().setAlpha(128);
+
+            viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+                @Override
+                public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+                }
+
+                @Override
+                public void onPageSelected(int position) {
+                    switch (position) {
+                        case 0:
+                            tabLayout.getTabAt(0).getIcon().setAlpha(255);
+                            tabLayout.getTabAt(1).getIcon().setAlpha(128);
+                            tabLayout.getTabAt(2).getIcon().setAlpha(128);
+                            tabLayout.getTabAt(3).getIcon().setAlpha(128);
+                            tabLayout.getTabAt(4).getIcon().setAlpha(128);
+                            tabLayout.getTabAt(5).getIcon().setAlpha(128);
+                            break;
+                        case 1:
+                            tabLayout.getTabAt(0).getIcon().setAlpha(128);
+                            tabLayout.getTabAt(1).getIcon().setAlpha(255);
+                            tabLayout.getTabAt(2).getIcon().setAlpha(128);
+                            tabLayout.getTabAt(3).getIcon().setAlpha(128);
+                            tabLayout.getTabAt(4).getIcon().setAlpha(128);
+                            tabLayout.getTabAt(5).getIcon().setAlpha(128);
+                            break;
+                        case 2:
+                            tabLayout.getTabAt(0).getIcon().setAlpha(128);
+                            tabLayout.getTabAt(1).getIcon().setAlpha(128);
+                            tabLayout.getTabAt(2).getIcon().setAlpha(255);
+                            tabLayout.getTabAt(3).getIcon().setAlpha(128);
+                            tabLayout.getTabAt(4).getIcon().setAlpha(128);
+                            tabLayout.getTabAt(5).getIcon().setAlpha(128);
+                            break;
+                        case 3:
+                            tabLayout.getTabAt(0).getIcon().setAlpha(128);
+                            tabLayout.getTabAt(1).getIcon().setAlpha(128);
+                            tabLayout.getTabAt(2).getIcon().setAlpha(128);
+                            tabLayout.getTabAt(3).getIcon().setAlpha(255);
+                            tabLayout.getTabAt(4).getIcon().setAlpha(128);
+                            tabLayout.getTabAt(5).getIcon().setAlpha(128);
+                            break;
+                        case 4:
+                            tabLayout.getTabAt(0).getIcon().setAlpha(128);
+                            tabLayout.getTabAt(1).getIcon().setAlpha(128);
+                            tabLayout.getTabAt(2).getIcon().setAlpha(128);
+                            tabLayout.getTabAt(3).getIcon().setAlpha(128);
+                            tabLayout.getTabAt(4).getIcon().setAlpha(255);
+                            tabLayout.getTabAt(5).getIcon().setAlpha(128);
+                            break;
+                        case 5:
+                            tabLayout.getTabAt(0).getIcon().setAlpha(128);
+                            tabLayout.getTabAt(1).getIcon().setAlpha(128);
+                            tabLayout.getTabAt(2).getIcon().setAlpha(128);
+                            tabLayout.getTabAt(3).getIcon().setAlpha(128);
+                            tabLayout.getTabAt(4).getIcon().setAlpha(128);
+                            tabLayout.getTabAt(5).getIcon().setAlpha(255);
+                            break;
+                    }
+                }
+
+                @Override
+                public void onPageScrollStateChanged(int state) {
+
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 
