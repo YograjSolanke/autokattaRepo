@@ -27,7 +27,7 @@
                     android:id="@+id/auto_category"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Type Category Here"
+                    android:hint="category of store (Ex.Auto Accesories)"
                     android:textColor="#2C3343"
                     android:textColorHint="#848484" />
 
@@ -45,7 +45,7 @@
                     android:id="@+id/brand_tags"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Type brand tags Here"
+                    android:hint="brand tags (Ex. tata)"
                     android:textColor="#2C3343"
                     android:textColorHint="#848484" />
 
@@ -72,7 +72,7 @@
                         android:layout_alignStart="@+id/spinner_category"
                         android:layout_below="@+id/catlinear"
                         android:ems="10"
-                        android:hint="Type phrase to search"
+                        android:hint="phrase to search"
                         android:paddingEnd="10dp"
                         android:paddingStart="10dp"
                         android:textColor="#2C3343"
@@ -115,7 +115,7 @@
                             android:layout_alignStart="@+id/spinner_category"
                             android:layout_below="@+id/catlinear"
                             android:ems="10"
-                            android:hint="Type contact to search "
+                            android:hint="contact to search "
                             android:inputType="phone"
                             android:maxLength="10"
                             android:paddingEnd="10dp"
@@ -156,7 +156,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/phraselinear"
-                        android:hint="Location"
+                        android:hint="Location (Ex.pune)"
                         android:paddingEnd="10dp"
                         android:paddingStart="10dp"
                         android:textColor="#2C3343"

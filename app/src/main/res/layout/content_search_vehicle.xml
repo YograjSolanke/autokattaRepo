@@ -1863,6 +1863,7 @@
                         android:layout_marginStart="150dp"
                         android:background="@drawable/spinner_background"
                         android:ems="10"
+                        android:hint="Seating Capacity :"
                         android:inputType="number"
                         android:padding="5dp"
                         android:textAlignment="textStart"
@@ -2113,8 +2114,8 @@
                 android:weightSum="1">
 
                 <Button
-                    style="?android:attr/buttonBarButtonStyle"
                     android:id="@+id/BtnRefresh"
+                    style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
                     android:layout_weight="0.50"
@@ -2125,8 +2126,8 @@
                     android:textSize="15sp" />
 
                 <Button
-                    style="?android:attr/buttonBarButtonStyle"
                     android:id="@+id/BtnApplySearch"
+                    style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
                     android:layout_marginBottom="5dip"

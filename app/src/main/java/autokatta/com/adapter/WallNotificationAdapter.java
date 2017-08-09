@@ -1762,9 +1762,11 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                                 System.out.println("all product detailssss======Other " + allProductDetails);
 
                                 intent.setType("text/plain");
-                                intent.putExtra(Intent.EXTRA_TEXT, "Please visit and Follow my profile on Autokatta. Stay connected for Product and Service updates and enquiries"
-                                        + "\n" + "http://autokatta.com/profile/other/" + notificationList.get(mProductHolder.getAdapterPosition()).getStoreContact()
+                                intent.putExtra(Intent.EXTRA_TEXT, "Please visit and Follow my store on Autokatta. Stay connected for Product and Service updates and enquiries"
+                                        + "\n" + "http://autokatta.com/store/main/" + notificationList.get(mProductHolder.getAdapterPosition()).getStoreID()
+                                        + "/" + notificationList.get(mProductHolder.getAdapterPosition()).getStoreContact()
                                         + "\n" + "\n" + allProductDetails);
+
                                 intent.setType("image/jpeg");
                                 intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(imageFilePath)));
                                 intent.putExtra(Intent.EXTRA_SUBJECT, "Please Find Below Attachments");
@@ -2011,9 +2013,12 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                                 System.out.println("all service detailssss======Other " + allServiceDetails);
 
                                 intent.setType("text/plain");
-                                intent.putExtra(Intent.EXTRA_TEXT, "Please visit and Follow my profile on Autokatta. Stay connected for Product and Service updates and enquiries"
-                                        + "\n" + "http://autokatta.com/profile/other/" + notificationList.get(mServiceHolder.getAdapterPosition()).getStoreContact()
+
+                                intent.putExtra(Intent.EXTRA_TEXT, "Please visit and Follow my store on Autokatta. Stay connected for Product and Service updates and enquiries"
+                                        + "\n" + "http://autokatta.com/store/main/" + notificationList.get(mServiceHolder.getAdapterPosition()).getStoreID()
+                                        + "/" + notificationList.get(mServiceHolder.getAdapterPosition()).getStoreContact()
                                         + "\n" + "\n" + allServiceDetails);
+
                                 intent.setType("image/jpeg");
                                 intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(imageFilePath)));
                                 intent.putExtra(Intent.EXTRA_SUBJECT, "Please Find Below Attachments");
