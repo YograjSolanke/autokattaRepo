@@ -2508,8 +2508,11 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                 }
 
                 mUpVehicleHolder.mActionName.setText(notificationList.get(position).getSenderName() + " "
-                        + notificationList.get(position).getAction() + " " + notificationList.get(position).getReceiverName() + " "
-                        + notificationList.get(position).getUpVehicleTitle() + " " + "Vehicle");
+                        + notificationList.get(position).getAction() + " "
+                        + "'" + notificationList.get(position).getUpVehicleTitle() + "'"
+                        + " Vehicle In"
+                        + "'" + notificationList.get(position).getGroupName() + "'"
+                        + " Group");
 
                 mUpVehicleHolder.mActionTime.setText(notificationList.get(position).getDateTime());
                 mUpVehicleHolder.mVehicleName.setText(notificationList.get(position).getUpVehicleTitle());

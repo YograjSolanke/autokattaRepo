@@ -2193,8 +2193,11 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
                 mUpVehicleHolder.mVehicleUnfav.setImageResource(R.drawable.ic_delete);
 
                 mUpVehicleHolder.mActionName.setText(notificationList.get(position).getSendername() + " "
-                        + notificationList.get(position).getAction() + " " + notificationList.get(position).getReceivername() + " "
-                        + notificationList.get(position).getUpVehicleTitle() + " " + "Vehicle");
+                        + notificationList.get(position).getAction() + " "
+                        + "'" + notificationList.get(position).getUpVehicleTitle() + "'"
+                        + " Vehicle In"
+                        + "'" + notificationList.get(position).getGroupName() + "'"
+                        + " Group");
 
                 mUpVehicleHolder.mActionTime.setText(notificationList.get(position).getDatetime());
                 mUpVehicleHolder.mVehicleName.setText(notificationList.get(position).getUpVehicleTitle());
