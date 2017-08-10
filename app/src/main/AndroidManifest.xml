@@ -575,7 +575,9 @@
         <activity android:name=".app_info.GradientBackgroundExampleActivity" />
         <activity android:name=".app_info.ManualAppIntro" />
         <activity android:name=".app_info.MyInventoryAppIntro" />
-        <activity android:name=".app_info.UploadVehicleAppIntro" />
+        <activity
+            android:name=".app_info.UploadVehicleAppIntro"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".app_info.SearchVehicleAppIntro" />
         <activity android:name=".app_info.SearchStoreAppIntro" />
         <activity android:name=".app_info.BrowseStoreAppIntro" />
@@ -583,7 +585,7 @@
             android:name=".fragment_profile.EditTags"
             android:label="@string/title_activity_edit_tags"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".other.PostStatus"></activity>
+        <activity android:name=".other.PostStatus" />
     </application>
 
 </manifest>
