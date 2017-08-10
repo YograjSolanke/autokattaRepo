@@ -89,6 +89,8 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
     private int likecountint, followcountint;
     private ProgressDialog dialog;
     LikeUnlike likeUnlike = new LikeUnlike();
+    String[] items = new String[0];
+    ;
 
     @Nullable
     @Override
@@ -238,11 +240,13 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
             case R.id.call:
                 if (!storeAdmins.equals("")) {
                     // createCotactsList();
-                    final String[] items;
                     // @Here are the list of items to be shown in the list
                     if (storeAdmins.contains(",")) {
-                        storeAdmins = storeAdmins + "," + mOtherContact + "-" + "owner";
-                        items = storeAdmins.split(",");
+
+                        if (!storeAdmins.contains(mOtherContact)) {
+                            storeAdmins = storeAdmins + "," + mOtherContact + "-" + "owner";
+                            items = storeAdmins.split(",");
+                        }
 
                     } else {
                         items = new String[]{storeAdmins, mOtherContact + "-" + "Owner"};
