@@ -981,10 +981,16 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
 
                 imageFilePath = "/storage/emulated/0/Download/" + filename;
                 System.out.println("ImageFilePath:" + imageFilePath);
+                String allStoreDetails = "Service name : " + sname + "\n" +
+                        "Service type : " + stype + "\n" +
+                        "Ratings : " + srating + "\n" +
+                        "Likes : " + slikecnt;
 
+                //  allDetails = sname + "=" + stype + "=" + srating + "=" + slikecnt + "=" + imageslist;
                 intent.setType("text/plain");
                 intent.putExtra(Intent.EXTRA_TEXT, "Please visit and Follow my Services on Autokatta. Stay connected for Product and Service updates and enquiries"
-                        + "\n" + "http://autokatta.com/service/" + id);
+                        + "\n" + "http://autokatta.com/service/" + id
+                        + "\n" + "\n" + allStoreDetails);
                 intent.setType("image/jpeg");
                 intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(imageFilePath)));
                 startActivity(Intent.createChooser(intent, "Autokatta"));

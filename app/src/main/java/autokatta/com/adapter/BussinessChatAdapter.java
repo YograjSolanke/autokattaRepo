@@ -97,7 +97,7 @@ public class BussinessChatAdapter extends RecyclerView.Adapter<BussinessChatAdap
                 b.putInt("service_id", 0);
                 b.putInt("vehicle_id", mItemList.get(getAdapterPosition()).getVehicleId());
                 b.putString("keyword", "Vehicle");
-                b.putString("title", mItemList.get(getAdapterPosition()).getTitle());
+                b.putString("title", mItemList.get(getAdapterPosition()).getVeihicletitle());
                 b.putString("price", mItemList.get(getAdapterPosition()).getPrice());
                 b.putString("category", mItemList.get(getAdapterPosition()).getCategory());
                 b.putString("brand", mItemList.get(getAdapterPosition()).getManufacturer());
@@ -131,7 +131,7 @@ public class BussinessChatAdapter extends RecyclerView.Adapter<BussinessChatAdap
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
         holder.mKeyword.setText(mItemList.get(position).getKeyword());
-        holder.mTitle.setText(mItemList.get(position).getTitle());
+        holder.mTitle.setText(mItemList.get(position).getVeihicletitle());
         if (holder.mKeyword.getText().toString().equalsIgnoreCase("Product")) {
             holder.mTitle.setText(mItemList.get(position).getProductName());
         }
@@ -139,7 +139,7 @@ public class BussinessChatAdapter extends RecyclerView.Adapter<BussinessChatAdap
             holder.mTitle.setText(mItemList.get(position).getName());
         }
         holder.mCategory.setText(mItemList.get(position).getCategory());
-        holder.mBrand.setText(mItemList.get(position).getSubCategory());
+        holder.mBrand.setText(mItemList.get(position).getSubcategory());
         holder.mModel.setText(mItemList.get(position).getModel());
         holder.mPrice.setText(mItemList.get(position).getPrice());
 

@@ -1055,9 +1055,18 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                 imageFilePath = "/storage/emulated/0/Download/" + filename;
                 System.out.println("ImageFilePath:" + imageFilePath);
 
+                String allStoreDetails = "Product name : " + pname + "\n" +
+                        "Product type : " + ptype + "\n" +
+                        "Ratings : " + prating + "\n" +
+                        "Likes : " + plikecnt;
+
+
+                //    allDetails = pname + "=" + ptype + "=" + prating + "=" + plikecnt + "=" + imageslist;
+
                 intent.setType("text/plain");
                 intent.putExtra(Intent.EXTRA_TEXT, "Please visit and Follow my product on Autokatta. Stay connected for Product and Service updates and enquiries"
-                        + "\n" + "http://autokatta.com/product/" + product_id);
+                        + "\n" + "http://autokatta.com/product/" + product_id
+                        + "\n" + "\n" + allStoreDetails);
                 intent.setType("image/jpeg");
                 intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(imageFilePath)));
                 startActivity(Intent.createChooser(intent, "Autokatta"));
