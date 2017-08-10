@@ -41,12 +41,13 @@ public class VehicleBuyerListAdapter extends RecyclerView.Adapter<VehicleBuyerLi
     Activity activity;
     List<BuyerResponse.Success.Found> foundList;
     String vcategory, brand, vmodel, manufacture_year, rto_city;
-    String vehicle_id, recieverContact, srchid, BuyerId;
+    String recieverContact, srchid, BuyerId;
     String calldate;
+    int vehicle_id;
     String myContact;
     ApiCall apicall;
 
-    public VehicleBuyerListAdapter(Activity activity, List<BuyerResponse.Success.Found> foundList, String vehicle_id,
+    public VehicleBuyerListAdapter(Activity activity, List<BuyerResponse.Success.Found> foundList, int vehicle_id,
                                    String vcategory, String brand, String vmodel, String manufacture_year, String rto_city) {
         this.activity = activity;
         this.foundList = foundList;

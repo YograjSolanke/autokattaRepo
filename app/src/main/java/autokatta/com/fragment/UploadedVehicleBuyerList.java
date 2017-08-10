@@ -56,8 +56,9 @@ public class UploadedVehicleBuyerList extends Fragment implements RequestNotifie
     View myVehicles;
     String vimagename = "";
     ArrayList<String> vimages = new ArrayList<>();
-    String vehicle_id, title, price, vcategory, brand, vmodel, image, noofleads, uploaddate, rto_city, manufacture_year;
+    String  title, price, vcategory, brand, vmodel, image, noofleads, uploaddate, rto_city, manufacture_year;
     ImageView vehicleimage;
+    int vehicle_id;
     TextView edittitles, editprices, editcategorys, editbrands, editmodels, editleads, edituploadedon;
     String myContact;
 
@@ -93,7 +94,7 @@ public class UploadedVehicleBuyerList extends Fragment implements RequestNotifie
 
 
         Bundle b = getArguments();
-        vehicle_id = b.getString("vehicle_id");
+        vehicle_id = b.getInt("vehicle_id");
         title = b.getString("title");
         price = b.getString("price");
         vcategory = b.getString("category");
