@@ -1,6 +1,7 @@
 package autokatta.com.interfaces;
 
 import autokatta.com.request.AddOwnVehicle;
+import autokatta.com.request.AutokattaContactRequest;
 import autokatta.com.request.CreateAuctionRequest;
 import autokatta.com.request.CreateExchangeMelaRequest;
 import autokatta.com.request.CreateLoanMelaRequest;
@@ -441,9 +442,8 @@ public interface ServiceApi {
     Call<GetStoreProfileInfoResponse> _autokattaGetProfileInfo(@Query("Contact") String contact);
 
     //Get My Autokatta Contacts...
-    @GET("GetAutokattaContact")
-    Call<GetAutokattaContactResponse> getAutokattaContact(@Query("Contacts") String contact, @Query("MyContact") String number,
-                                                          @Query("Names") String name);
+    @POST("GetAutokattaContact")
+    Call<GetAutokattaContactResponse> getAutokattaContact(@Body AutokattaContactRequest autokattaContactRequest);
 
     //Get My Registered Contacts...
     @GET("GetAllContactResistered")
@@ -714,8 +714,8 @@ public interface ServiceApi {
 
     //Get Ignore Going me...
     @POST("AddIgnoreGoingMe")
-    Call<String> addIgnoreGoingMe(@Query("Contact") String contact, @Query("AuctionID") int auctionId, @Query("LoanID") String loanId,
-                                  @Query("ExchangeID") int exchangeId, @Query("SaleID") String saleId, @Query("ServiceID") String serviceId,
+    Call<String> addIgnoreGoingMe(@Query("Contact") String contact, @Query("AuctionID") int auctionId, @Query("LoanID") int loanId,
+                                  @Query("ExchangeID") int exchangeId, @Query("SaleID") int saleId, @Query("ServiceID") int serviceId,
                                   @Query("Action") String action);
 
     //send Chat Message

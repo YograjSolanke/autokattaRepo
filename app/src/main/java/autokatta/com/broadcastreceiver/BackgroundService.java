@@ -20,6 +20,7 @@ import java.util.concurrent.TimeUnit;
 import autokatta.com.R;
 import autokatta.com.database.DbOperation;
 import autokatta.com.interfaces.ServiceApi;
+import autokatta.com.request.AutokattaContactRequest;
 import autokatta.com.response.GetAutokattaContactResponse;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -106,7 +107,7 @@ public class BackgroundService extends Service {
                 System.out.println("numberString=" + namestring);
 
             }
-            // getAutokattaContacts();
+             getAutokattaContacts();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -120,7 +121,7 @@ public class BackgroundService extends Service {
                 handler.post(new Runnable() {
                     public void run() {
                         try {
-                            //getAutokattaContacts();
+                            getAutokattaContacts();
                             Log.i("Background", "call webservice");
                         } catch (Exception e) {
                             Log.e("background", e.getMessage());
@@ -155,9 +156,10 @@ public class BackgroundService extends Service {
                     .client(initLog().build())
                     .build();
             ServiceApi mServiceApi = mRetrofit.create(ServiceApi.class);
-            Call<GetAutokattaContactResponse> mAutokattaContact = mServiceApi
-                    .getAutokattaContact(numberstring, getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
-                            .getString("loginContact", ""), namestring);
+
+            AutokattaContactRequest autokattaContactRequest = new AutokattaContactRequest(numberstring,namestring,getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
+                    .getString("loginContact", ""));
+            Call<GetAutokattaContactResponse> mAutokattaContact = mServiceApi.getAutokattaContact(autokattaContactRequest);
             mAutokattaContact.enqueue(new Callback<GetAutokattaContactResponse>() {
                 @Override
                 public void onResponse(Call<GetAutokattaContactResponse> call, Response<GetAutokattaContactResponse> response) {
