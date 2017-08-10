@@ -368,7 +368,7 @@ public class LiveFragment extends Fragment implements RequestNotifier {
                     GetLiveSaleEventsResponse mGetLiveSaleEventsResponse = (GetLiveSaleEventsResponse) response.body();
                     for (GetLiveSaleEventsResponse.Success success : mGetLiveSaleEventsResponse.getSuccess()) {
                         ModelLiveFragment model = new ModelLiveFragment();
-                        model.setSale_id(String.valueOf(success.getId()));
+                        model.setSale_id(success.getId());
                         model.setContact(success.getContact());
                         model.setName(success.getName());
                         model.setStartDate(success.getStartDate());

@@ -1,6 +1,7 @@
 package autokatta.com.adapter;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.DownloadManager;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -25,6 +26,8 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.io.File;
 import java.net.ConnectException;
@@ -32,16 +35,25 @@ import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.fragment.WallNotificationFragment;
 import autokatta.com.interfaces.OnLoadMoreListener;
 import autokatta.com.interfaces.RequestNotifier;
+import autokatta.com.interfaces.ServiceApi;
+import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.WallResponse;
 import autokatta.com.view.ShareWithinAppActivity;
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Call;
+import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by ak-001 on 1/4/17.
@@ -54,11 +66,11 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
     private boolean isLoading;
     private int visibleThreshold = 5;
     private OnLoadMoreListener mOnLoadMoreListener;
-    private String mLoginContact = "";
-    String shareKey = "";
+    private String mLoginContact = "", shareKey = "";
     private ApiCall mApiCall;
-    private int profile_likecountint, profile_followcountint, product_likecountint, service_likecountint, store_likecountint,
+    private int mAuctionId, profile_likecountint, profile_followcountint, product_likecountint, service_likecountint, store_likecountint,
             store_followcountint, store_sharecountint, vehicle_likecountint, vehicle_followcountint, vehicle_sharecountint;
+    private ConnectionDetector mConnectionDetector;
 
     public WallNotificationAdapter(Activity mActivity1, List<WallResponse.Success.WallNotification> notificationList) {
         this.mActivity = mActivity1;
@@ -66,6 +78,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
         this.mApiCall = new ApiCall(mActivity, this);
         mLoginContact = mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).
                 getString("loginContact", "");
+        mConnectionDetector = new ConnectionDetector(mActivity);
     }
 
     public WallNotificationAdapter() {
@@ -2339,13 +2352,17 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
 
 
                 final ActiveNotifications mActiveHolder = (ActiveNotifications) holder;
-                Log.i("Wall", "Search-LayType ->" + notificationList.get(position).getLayoutType());
+                Log.i("Wall", "Auction-LayType ->" + notificationList.get(position).getLayoutType());
 
                 if (notificationList.get(position).getLayoutType().equalsIgnoreCase("MyAction")) {
                     shareKey = "myauction";
+                    mActiveHolder.mAuctionGoing.setVisibility(View.GONE);
+                    mActiveHolder.mAuctionIgnore.setVisibility(View.GONE);
 
                 } else {
                     shareKey = "auction";
+                    mActiveHolder.mAuctionGoing.setVisibility(View.VISIBLE);
+                    mActiveHolder.mAuctionIgnore.setVisibility(View.VISIBLE);
                 }
 
                 mActiveHolder.mAuctionTitle.setText(notificationList.get(position).getActionTitle());
@@ -2359,18 +2376,152 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                 mActiveHolder.mAuctionIgnore.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        if (mConnectionDetector.isConnectedToInternet()) {
+                            //JSON to Gson conversion
+                            Gson gson = new GsonBuilder()
+                                    .setLenient()
+                                    .create();
+                            Retrofit retrofit = new Retrofit.Builder()
+                                    .baseUrl(mActivity.getString(R.string.base_url))
+                                    .addConverterFactory(GsonConverterFactory.create(gson))
+                                    .client(initLog().build())
+                                    .build();
 
-                        // new ignoreAuction().execute();
+                            ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                            Call<String> add = serviceApi.addIgnoreGoingMe(mLoginContact, mAuctionId, 0, 0, 0, 0, "ignore");
+                            add.enqueue(new Callback<String>() {
+                                @Override
+                                public void onResponse(Call<String> call, Response<String> response) {
+                                    if (response.isSuccessful()) {
+                                        if (response.body() != null) {
+                                            if (response.body().equals("success")) {
+                                                mActiveHolder.mAuctionIgnore.setEnabled(false);
+                                                mActiveHolder.mAuctionGoing.setEnabled(true);
+                                                //mGoLive.setEnabled(false);
+                                            }
+                                        }
+                                    } else {
+                                        Log.e("No", "Response");
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Call<String> call, Throwable t) {
+                                    t.printStackTrace();
+                                }
+                            });
+                        } else
+                            CustomToast.customToast(mActivity.getApplicationContext(), mActivity.getString(R.string.no_internet));
 
                     }
+
                 });
 
                 mActiveHolder.mAuctionGoing.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(mActivity);
+                        alertDialogBuilder
+                                .setMessage("Pay EMD or auction platform fees")
+                                .setCancelable(false)
+                                .setPositiveButton("Now",
+                                        new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog,
+                                                                int id) {
+                                                try {
+                                                    if (mConnectionDetector.isConnectedToInternet()) {
+                                                        //JSON to Gson conversion
+                                                        Gson gson = new GsonBuilder()
+                                                                .setLenient()
+                                                                .create();
+                                                        Retrofit retrofit = new Retrofit.Builder()
+                                                                .baseUrl(mActivity.getString(R.string.base_url))
+                                                                .addConverterFactory(GsonConverterFactory.create(gson))
+                                                                .client(initLog().build())
+                                                                .build();
 
-                        // new goingAuction().execute();
+                                                        ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                                                        Call<String> add = serviceApi.addIgnoreGoingMe(mLoginContact, mAuctionId, 0, 0, 0, 0, "going");
+                                                        add.enqueue(new Callback<String>() {
+                                                            @Override
+                                                            public void onResponse(Call<String> call, Response<String> response) {
+                                                                if (response.isSuccessful()) {
+                                                                    if (response.body() != null) {
+                                                                        if (response.body().equals("success")) {
+                                                                            mActiveHolder.mAuctionGoing.setVisibility(View.GONE);
+                                                                            mActiveHolder.mAuctionIgnore.setVisibility(View.GONE);
 
+                                                                            //paymentMethodCall(null, null, "");
+                                                                        }
+                                                                    }
+                                                                } else {
+                                                                    Log.e("No", "Response");
+                                                                }
+                                                            }
+
+                                                            @Override
+                                                            public void onFailure(Call<String> call, Throwable t) {
+                                                                t.printStackTrace();
+                                                            }
+                                                        });
+                                                    } else
+                                                        CustomToast.customToast(mActivity, mActivity.getString(R.string.no_internet));
+                                                } catch (Exception e) {
+                                                    e.printStackTrace();
+                                                }
+                                            }
+                                        })
+                                .setNegativeButton("Later",
+                                        new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog,
+                                                                int id) {
+                                                // if this button is clicked, just close
+                                                // the dialog box and do nothing
+                                                //dialog.cancel();
+                                                //boolGoing = false;
+                                                try {
+                                                    if (mConnectionDetector.isConnectedToInternet()) {
+                                                        //JSON to Gson conversion
+                                                        Gson gson = new GsonBuilder()
+                                                                .setLenient()
+                                                                .create();
+                                                        Retrofit retrofit = new Retrofit.Builder()
+                                                                .baseUrl(mActivity.getString(R.string.base_url))
+                                                                .addConverterFactory(GsonConverterFactory.create(gson))
+                                                                .client(initLog().build())
+                                                                .build();
+
+                                                        ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                                                        Call<String> add = serviceApi.addIgnoreGoingMe(mLoginContact, mAuctionId, 0, 0, 0, 0, "going");
+                                                        add.enqueue(new Callback<String>() {
+                                                            @Override
+                                                            public void onResponse(Call<String> call, Response<String> response) {
+                                                                if (response.isSuccessful()) {
+                                                                    if (response.body() != null) {
+                                                                        if (response.body().equals("success")) {
+                                                                            mActiveHolder.mAuctionGoing.setVisibility(View.GONE);
+                                                                            mActiveHolder.mAuctionIgnore.setVisibility(View.GONE);
+                                                                        }
+                                                                    }
+                                                                } else {
+                                                                    Log.e("No", "Response");
+                                                                }
+                                                            }
+
+                                                            @Override
+                                                            public void onFailure(Call<String> call, Throwable t) {
+                                                                t.printStackTrace();
+                                                            }
+                                                        });
+                                                    } else
+                                                        CustomToast.customToast(mActivity.getApplicationContext(), mActivity.getString(R.string.no_internet));
+                                                } catch (Exception e) {
+                                                    e.printStackTrace();
+                                                }
+                                            }
+                                        });
+                        AlertDialog alertDialog = alertDialogBuilder.create();
+                        alertDialog.show();
                     }
                 });
                 mActiveHolder.mAuctionAutokattaShare.setOnClickListener(new View.OnClickListener() {
@@ -2838,7 +2989,6 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
         }
     }
 
-
     private void call(String otherContact) {
         Intent in = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + otherContact));
         try {
@@ -2925,5 +3075,19 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
 
     public void setLoaded() {
         isLoading = false;
+    }
+
+    /***
+     * Retrofit Logs
+     ***/
+    private OkHttpClient.Builder initLog() {
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        // set your desired log level
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        // add your other interceptors …
+        // add logging as last interceptor
+        httpClient.addInterceptor(logging).readTimeout(90, TimeUnit.SECONDS);
+        return httpClient;
     }
 }

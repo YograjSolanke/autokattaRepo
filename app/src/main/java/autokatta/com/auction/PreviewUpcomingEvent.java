@@ -386,7 +386,7 @@ int auction_id;
 
                                                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
                                                 Call<String> add = serviceApi.addIgnoreGoingMe(getSharedPreferences(getString(R.string.my_preference),
-                                                        Context.MODE_PRIVATE).getString("loginContact", ""), auction_id, "", 0, "", "", "going");
+                                                        Context.MODE_PRIVATE).getString("loginContact", ""), auction_id, 0, 0, 0, 0, "going");
                                                 add.enqueue(new Callback<String>() {
                                                     @Override
                                                     public void onResponse(Call<String> call, Response<String> response) {
@@ -438,7 +438,7 @@ int auction_id;
 
                                                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
                                                 Call<String> add = serviceApi.addIgnoreGoingMe(getSharedPreferences(getString(R.string.my_preference),
-                                                        Context.MODE_PRIVATE).getString("loginContact", ""), auction_id, "", 0, "", "", "going");
+                                                        Context.MODE_PRIVATE).getString("loginContact", ""), auction_id, 0, 0, 0, 0, "going");
                                                 add.enqueue(new Callback<String>() {
                                                     @Override
                                                     public void onResponse(Call<String> call, Response<String> response) {
@@ -486,7 +486,7 @@ int auction_id;
 
                         ServiceApi serviceApi = retrofit.create(ServiceApi.class);
                         Call<String> add = serviceApi.addIgnoreGoingMe(getSharedPreferences(getString(R.string.my_preference),
-                                Context.MODE_PRIVATE).getString("loginContact", ""), auction_id, "", 0, "", "", "going");
+                                Context.MODE_PRIVATE).getString("loginContact", ""), auction_id, 0, 0, 0, 0, "ignore");
                         add.enqueue(new Callback<String>() {
                             @Override
                             public void onResponse(Call<String> call, Response<String> response) {

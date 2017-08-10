@@ -70,9 +70,8 @@ public class AuctionNotificationAdapter extends RecyclerView.Adapter<AuctionNoti
 
     Activity mActivity;
     private List<ModelLiveFragment> mItemList = new ArrayList<>();
-    private String auctionType, whoseAuction = "", special_clause, loan_id = "",
-            sale_id = "", service_id = "";
-    private int  auction_id = 0,exchange_id = 0;
+    private String auctionType, whoseAuction = "", special_clause;
+    private int auction_id = 0, exchange_id = 0, loan_id = 0, sale_id = 0, service_id = 0;
     private String allDetails, mContact;
     private HashMap<TextView, CountDownTimer> counters;
     private ConnectionDetector mConnectionDetector;
@@ -586,7 +585,7 @@ public class AuctionNotificationAdapter extends RecyclerView.Adapter<AuctionNoti
                     mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
                             putString("Share_sharedata", allDetails).apply();
                     mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                            putString("Share_loan_id", mItemList.get(position).getLoan_id()).apply();
+                            putInt("Share_loan_id", mItemList.get(position).getLoan_id()).apply();
                     mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
                             putString("Share_keyword", mAuction).apply();
                 }

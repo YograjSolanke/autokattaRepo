@@ -224,7 +224,7 @@ public class GoingFragment extends Fragment implements RequestNotifier {
                 mLiveSaleEventList.clear();
                 for (GetLiveSaleEventsResponse.Success success : serviceEventsResponse.getSuccess()) {
                     ModelLiveFragment model = new ModelLiveFragment();
-                    model.setSale_id(String.valueOf(success.getId()));
+                    model.setSale_id(success.getId());
                     model.setContact(success.getContact());
                     model.setName(success.getName());
                     model.setStartDate(success.getStartDate());
@@ -272,7 +272,7 @@ public class GoingFragment extends Fragment implements RequestNotifier {
                 mLiveServiceEventList.clear();
                 for (GetLiveSaleEventsResponse.Success success : serviceEventsResponse.getSuccess()) {
                     ModelLiveFragment model = new ModelLiveFragment();
-                    model.setService_id(String.valueOf(success.getId()));
+                    model.setService_id(success.getId());
                     model.setContact(success.getContact());
                     model.setName(success.getName());
                     model.setStartDate(success.getStartDate());
@@ -368,7 +368,7 @@ public class GoingFragment extends Fragment implements RequestNotifier {
                 mLiveLoanEventList.clear();
                 for (GetLiveSaleEventsResponse.Success success : serviceEventsResponse.getSuccess()) {
                     ModelLiveFragment model = new ModelLiveFragment();
-                    model.setLoan_id(String.valueOf(success.getId()));
+                    model.setLoan_id(success.getId());
                     model.setContact(success.getContact());
                     model.setName(success.getName());
                     model.setStartDate(success.getStartDate());

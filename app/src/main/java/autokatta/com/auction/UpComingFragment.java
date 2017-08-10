@@ -223,12 +223,12 @@ public class UpComingFragment extends Fragment implements RequestNotifier {
                 mLiveServiceEventList.clear();
                 for (GetLiveSaleEventsResponse.Success success : serviceEventsResponse.getSuccess()) {
                     ModelLiveFragment model = new ModelLiveFragment();
-                    model.setService_id(String.valueOf(success.getId()));
+                    model.setService_id(success.getId());
                     model.setContact(success.getContact());
                     model.setName(success.getName());
-                    model.setStartDate(success.getStartDate().replace("T00:00:00",""));
+                    model.setStartDate(success.getStartDate().replace("T00:00:00", ""));
                     model.setStartTime(success.getStartTime());
-                    model.setEndDate(success.getEndDate().replace("T00:00:00",""));
+                    model.setEndDate(success.getEndDate().replace("T00:00:00", ""));
                     model.setEndTime(success.getEndTime());
                     model.setLocation(success.getLocation());
                     model.setAddress(success.getAddress());
@@ -274,10 +274,10 @@ public class UpComingFragment extends Fragment implements RequestNotifier {
                     model.setExchange_id(success.getId());
                     model.setContact(success.getContact());
                     model.setName(success.getName());
-                    model.setStartDate(success.getStartDate().replace("T00:00:00",""));
+                    model.setStartDate(success.getStartDate().replace("T00:00:00", ""));
                     model.setStartTime(success.getStartTime());
                     model.setEndDate(success.getEndDate());
-                    model.setEndTime(success.getEndTime().replace("T00:00:00",""));
+                    model.setEndTime(success.getEndTime().replace("T00:00:00", ""));
                     model.setLocation(success.getLocation());
                     model.setAddress(success.getAddress());
                     model.setImage(success.getImage());
@@ -319,12 +319,12 @@ public class UpComingFragment extends Fragment implements RequestNotifier {
                 mLiveLoanEventList.clear();
                 for (GetLiveSaleEventsResponse.Success success : serviceEventsResponse.getSuccess()) {
                     ModelLiveFragment model = new ModelLiveFragment();
-                    model.setLoan_id(String.valueOf(success.getId()));
+                    model.setLoan_id(success.getId());
                     model.setContact(success.getContact());
                     model.setName(success.getName());
-                    model.setStartDate(success.getStartDate().replace("T00:00:00",""));
+                    model.setStartDate(success.getStartDate().replace("T00:00:00", ""));
                     model.setStartTime(success.getStartTime());
-                    model.setEndDate(success.getEndDate().replace("T00:00:00",""));
+                    model.setEndDate(success.getEndDate().replace("T00:00:00", ""));
                     model.setEndTime(success.getEndTime());
                     model.setLocation(success.getLocation());
                     model.setAddress(success.getAddress());
@@ -367,12 +367,12 @@ public class UpComingFragment extends Fragment implements RequestNotifier {
                 mLiveSaleEventList.clear();
                 for (GetLiveSaleEventsResponse.Success success : serviceEventsResponse.getSuccess()) {
                     ModelLiveFragment model = new ModelLiveFragment();
-                    model.setSale_id(String.valueOf(success.getId()));
+                    model.setSale_id(success.getId());
                     model.setContact(success.getContact());
                     model.setName(success.getName());
-                    model.setStartDate(success.getStartDate().replace("T00:00:00",""));
+                    model.setStartDate(success.getStartDate().replace("T00:00:00", ""));
                     model.setStartTime(success.getStartTime());
-                    model.setEndDate(success.getEndDate().replace("T00:00:00",""));
+                    model.setEndDate(success.getEndDate().replace("T00:00:00", ""));
                     model.setEndTime(success.getEndTime());
                     model.setLocation(success.getLocation());
                     model.setAddress(success.getAddress());
@@ -423,9 +423,9 @@ public class UpComingFragment extends Fragment implements RequestNotifier {
                         model.setUsername(success.getAuctioneer());
                         model.setName(success.getActionTitle());
                         model.setContact(success.getContact());
-                        model.setStartDate(success.getStartDate().replace("T00:00:00",""));
+                        model.setStartDate(success.getStartDate().replace("T00:00:00", ""));
                         model.setStartTime(success.getStartTime());
-                        model.setEndDate(success.getEndDate().replace("T00:00:00",""));
+                        model.setEndDate(success.getEndDate().replace("T00:00:00", ""));
                         model.setEndTime(success.getEndTime());
                         model.setAuctionType(success.getAuctionType());
                         model.setLocation(success.getLocation());

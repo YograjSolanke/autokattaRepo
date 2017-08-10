@@ -34,7 +34,7 @@ public class ModelLiveFragment {
     /*
     Live Loan Events
      */
-    private String loan_id;
+    private int loan_id;
     private String loanOwnerName;
 
     /*
@@ -46,13 +46,13 @@ public class ModelLiveFragment {
     /*
     Live Sale Event
      */
-    private String sale_id;
+    private int sale_id;
     private String saleOwnerName;
 
     /*
     Live Service Event
      */
-    private String service_id;
+    private int service_id;
     private String contact;
     private String name;
     private String startDate;
@@ -79,11 +79,11 @@ public class ModelLiveFragment {
         this.auctionId = auctionId;
     }
 
-    public String getLoan_id() {
+    public int getLoan_id() {
         return loan_id;
     }
 
-    public void setLoan_id(String loan_id) {
+    public void setLoan_id(int loan_id) {
         this.loan_id = loan_id;
     }
 
@@ -95,19 +95,19 @@ public class ModelLiveFragment {
         this.exchange_id = exchange_id;
     }
 
-    public String getSale_id() {
+    public int getSale_id() {
         return sale_id;
     }
 
-    public void setSale_id(String sale_id) {
+    public void setSale_id(int sale_id) {
         this.sale_id = sale_id;
     }
 
-    public String getService_id() {
+    public int getService_id() {
         return service_id;
     }
 
-    public void setService_id(String service_id) {
+    public void setService_id(int service_id) {
         this.service_id = service_id;
     }
 
