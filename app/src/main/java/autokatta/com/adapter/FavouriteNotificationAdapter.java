@@ -1751,8 +1751,8 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
                                 intent.setType("text/plain");
 
                                 intent.putExtra(Intent.EXTRA_TEXT, "Please visit and Follow my store on Autokatta. Stay connected for Product and Service updates and enquiries"
-                                        + "\n" + "http://autokatta.com/store/main/" + notificationList.get(mProductHolder.getAdapterPosition()).getStoreId()
-                                        + "/" + notificationList.get(mProductHolder.getAdapterPosition()).getStoreContact()
+                                        + "\n" + "http://autokatta.com/product/" + notificationList.get(mProductHolder.getAdapterPosition()).getProductId()
+                                        //  + "/" + notificationList.get(mProductHolder.getAdapterPosition()).getStoreContact()
                                         + "\n" + "\n" + allProductDetails);
 
                                 intent.setType("image/jpeg");
@@ -1981,8 +1981,8 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
                                 intent.setType("text/plain");
 
                                 intent.putExtra(Intent.EXTRA_TEXT, "Please visit and Follow my store on Autokatta. Stay connected for Product and Service updates and enquiries"
-                                        + "\n" + "http://autokatta.com/store/main/" + notificationList.get(mServiceHolder.getAdapterPosition()).getStoreId()
-                                        + "/" + notificationList.get(mServiceHolder.getAdapterPosition()).getStoreContact()
+                                        + "\n" + "http://autokatta.com/service/" + notificationList.get(mServiceHolder.getAdapterPosition()).getServiceId()
+                                        //  + "/" + notificationList.get(mServiceHolder.getAdapterPosition()).getStoreContact()
                                         + "\n" + "\n" + allServiceDetails);
                                 intent.setType("image/jpeg");
                                 intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(imageFilePath)));

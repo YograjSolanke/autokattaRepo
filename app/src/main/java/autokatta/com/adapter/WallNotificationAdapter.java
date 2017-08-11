@@ -1776,8 +1776,8 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
 
                                 intent.setType("text/plain");
                                 intent.putExtra(Intent.EXTRA_TEXT, "Please visit and Follow my store on Autokatta. Stay connected for Product and Service updates and enquiries"
-                                        + "\n" + "http://autokatta.com/store/main/" + notificationList.get(mProductHolder.getAdapterPosition()).getStoreID()
-                                        + "/" + notificationList.get(mProductHolder.getAdapterPosition()).getStoreContact()
+                                        + "\n" + "http://autokatta.com/product/" + notificationList.get(mProductHolder.getAdapterPosition()).getProductID()
+                                        //  + "/" + notificationList.get(mProductHolder.getAdapterPosition()).getStoreContact()
                                         + "\n" + "\n" + allProductDetails);
 
                                 intent.setType("image/jpeg");
@@ -2028,8 +2028,8 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                                 intent.setType("text/plain");
 
                                 intent.putExtra(Intent.EXTRA_TEXT, "Please visit and Follow my store on Autokatta. Stay connected for Product and Service updates and enquiries"
-                                        + "\n" + "http://autokatta.com/store/main/" + notificationList.get(mServiceHolder.getAdapterPosition()).getStoreID()
-                                        + "/" + notificationList.get(mServiceHolder.getAdapterPosition()).getStoreContact()
+                                        + "\n" + "http://autokatta.com/service/" + notificationList.get(mServiceHolder.getAdapterPosition()).getServiceID()
+                                        //   + "/" + notificationList.get(mServiceHolder.getAdapterPosition()).getStoreContact()
                                         + "\n" + "\n" + allServiceDetails);
 
                                 intent.setType("image/jpeg");
