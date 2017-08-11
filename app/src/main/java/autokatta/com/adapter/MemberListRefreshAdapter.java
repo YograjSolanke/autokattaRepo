@@ -86,8 +86,6 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
         this.bundle_GroupName = bundle_GroupName;
         mApiCall = new ApiCall(mActivity, this);
         mTestConnection = new ConnectionDetector(mActivity);
-
-
     }
 
     @Override
@@ -100,7 +98,7 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
     }
 
     @Override
-    public void onBindViewHolder(final MemberListRefreshAdapter.MyViewHolder holder, final int position) {
+    public void onBindViewHolder(final MemberListRefreshAdapter.MyViewHolder holder, int position) {
         mView = holder;
         myContact = mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference),
                 Context.MODE_PRIVATE).getString("loginContact", "");
@@ -208,7 +206,7 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
         holder.mCall.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                call(mItemList.get(position).getContact());
+                call(mItemList.get(holder.getAdapterPosition()).getContact());
             }
         });
 
@@ -224,7 +222,11 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
                 bundle.putString("grouptype", mCallFrom);
                 bundle.putString("className", "MemberListRefreshAdapter");
                 bundle.putInt("bundle_GroupId", mGroupId);
-                bundle.putString("bundle_UserName", mItemList.get(position).getUsername());
+
+                if (mItemList.get(holder.getAdapterPosition()).getContact().equalsIgnoreCase(myContact))
+                    bundle.putString("bundle_UserName", "You");
+                else
+                    bundle.putString("bundle_UserName", mItemList.get(holder.getAdapterPosition()).getUsername());
 
                 MemberDetailTabs memberDetailTabs = new MemberDetailTabs();
                 memberDetailTabs.setArguments(bundle);
@@ -293,7 +295,7 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
                                             if (mCallFrom.equals("MyGroups")) {
                                                 if (rmContact.equals(myContact)) {
                                                     if (mItemList.size() != 1)
-                                                        nextContact = mItemList.get(position + 1).getContact();
+                                                        nextContact = mItemList.get(holder.getAdapterPosition() + 1).getContact();
                                                     //nextContact = next[1];
                                                     //}
                                                 }
@@ -301,10 +303,10 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
 
                                             // if(!nextContact.equals("")||!nextContact.equals("null")||!nextContact.equals(null))
                                             //new DeleteMembers().execute();
-                                            DeleteMembers(position, nextContact, rmContact);
-                                            mItemList.remove(position);
-                                            notifyItemRemoved(position);
-                                            notifyItemRangeChanged(position, mItemList.size());
+                                            DeleteMembers(holder.getAdapterPosition(), nextContact, rmContact);
+                                            mItemList.remove(holder.getAdapterPosition());
+                                            notifyItemRemoved(holder.getAdapterPosition());
+                                            notifyItemRangeChanged(holder.getAdapterPosition(), mItemList.size());
 //                                else
 //                                    Snackbar.make(v,"please delete group",Snackbar.LENGTH_SHORT).show();
 
@@ -392,7 +394,7 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
             CustomToast.customToast(mActivity, mActivity.getString(R.string.no_internet));
         } else {
             Log.i("Check Class-"
-                    , "memberlistfrgmentrefreshadapter");
+                    , "MemberListRefreshAdapter");
             error.printStackTrace();
         }
     }
