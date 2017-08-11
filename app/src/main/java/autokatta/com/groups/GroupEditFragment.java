@@ -91,7 +91,7 @@ public class GroupEditFragment extends Fragment implements RequestNotifier {
         //get the values out by key
         bundle_id = bundle.getInt("bundle_GroupId");
         String bundle_name = bundle.getString("bundle_name");
-        bundle_image = bundle.getString("bundle_image");
+        bundle_image = bundle.getString("bundle_image", "");
         bundle_image = bundle_image.replaceAll(" ", "%20");
         group_name.setText(bundle_name);
 
@@ -190,7 +190,7 @@ public class GroupEditFragment extends Fragment implements RequestNotifier {
                 ///storage/emulated/0/DCIM/Camera/20170411_124425.jpg
                 lastWord = mediaPath.substring(mediaPath.lastIndexOf("/") + 1);
                 Log.i("Media", "path" + lastWord);
-                uploadImage(mediaPath);
+                //  uploadImage(mediaPath);
 
             } else if (requestCode == 101) {
                 if (resultCode == RESULT_OK) {
@@ -242,7 +242,7 @@ public class GroupEditFragment extends Fragment implements RequestNotifier {
             out.close();
             /*if (cd.isConnectingToInternet()) {*/
             lastWord = mediaPath.substring(mediaPath.lastIndexOf("/") + 1);
-            uploadImage(mediaPath);
+            // uploadImage(mediaPath);
             Log.i("image", "path" + lastWord);
             //      /data/data/autokatta.com/files/androidlift/Autokatta9460.jpg
             /*} else {
@@ -311,19 +311,19 @@ public class GroupEditFragment extends Fragment implements RequestNotifier {
     public void notifyError(Throwable error) {
         if (error instanceof SocketTimeoutException) {
             CustomToast.customToast(getActivity(),getString(R.string._404_));
-            //   showMessage(getActivity(), getString(R.string._404_));
+
         } else if (error instanceof NullPointerException) {
             CustomToast.customToast(getActivity(),getString(R.string.no_response));
-            // showMessage(getActivity(), getString(R.string.no_response));
+
         } else if (error instanceof ClassCastException) {
             CustomToast.customToast(getActivity(),getString(R.string.no_response));
-            //   showMessage(getActivity(), getString(R.string.no_response));
+
         } else if (error instanceof ConnectException) {
             CustomToast.customToast(getActivity(),getString(R.string.no_internet));
-            //   errorMessage(getActivity(), getString(R.string.no_internet));
+
         } else if (error instanceof UnknownHostException) {
             CustomToast.customToast(getActivity(),getString(R.string.no_internet));
-            //   errorMessage(getActivity(), getString(R.string.no_internet));
+
         } else {
             Log.i("Check Class-"
                     , "editgroupfragment");
@@ -362,31 +362,4 @@ public class GroupEditFragment extends Fragment implements RequestNotifier {
         }
     }
 
-
-    /*public void showMessage(Activity activity, String message) {
-        Snackbar snackbar = Snackbar.make(activity.findViewById(android.R.id.content),
-                message, Snackbar.LENGTH_LONG);
-        TextView textView = (TextView) snackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
-        textView.setTextColor(Color.RED);
-        snackbar.show();
-    }
-
-    public void errorMessage(Activity activity, String message) {
-        Snackbar snackbar = Snackbar.make(activity.findViewById(android.R.id.content),
-                message, Snackbar.LENGTH_INDEFINITE)
-                .setAction("Retry", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        *//*getData(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
-                                .getString("loginContact", ""));*//*
-                    }
-                });
-        // Changing message text color
-        snackbar.setActionTextColor(Color.BLUE);
-        // Changing action button text color
-        View sbView = snackbar.getView();
-        TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
-        textView.setTextColor(Color.WHITE);
-        snackbar.show();
-    }*/
 }
