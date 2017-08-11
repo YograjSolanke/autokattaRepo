@@ -532,13 +532,46 @@
             </RelativeLayout>
 
             <LinearLayout
-                android:id="@+id/linearbtn"
+                android:id="@+id/linearbtns"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/regrel"
                 android:orientation="horizontal"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
                 android:visibility="visible">
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Upload In->\t\t\t\t"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/upload_group"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="group"
+                    android:background="@android:color/transparent"
+                    android:layout_marginEnd="@dimen/card_margin"
+                    android:drawableEnd="@drawable/ic_upload" />
+
+                <Button
+                    android:id="@+id/upload_store"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="store"
+                    android:background="@android:color/transparent"
+                    android:drawableEnd="@drawable/ic_upload" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearbtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/linearbtns"
+                android:orientation="horizontal"
+                android:visibility="visible">
 
                 <Button
                     android:id="@+id/vehibtndetails"

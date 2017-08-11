@@ -108,10 +108,7 @@ public class SelectedImagesFragment extends Fragment implements View.OnClickList
 
     @Override
     public void onClick(View v) {
-
         switch (v.getId()) {
-
-
             case R.id.btnBack:
                 onBackPressed();
                /* b = new Bundle();

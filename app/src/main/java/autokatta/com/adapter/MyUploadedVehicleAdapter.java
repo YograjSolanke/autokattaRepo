@@ -42,6 +42,7 @@ import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.fragment.UploadedVehicleBuyerList;
 import autokatta.com.generic.SetMyDateAndTime;
+import autokatta.com.initial_fragment.CreateGroupFragment;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.interfaces.ServiceApi;
 import autokatta.com.networkreceiver.ConnectionDetector;
@@ -51,6 +52,7 @@ import autokatta.com.response.ProfileGroupResponse;
 import autokatta.com.view.ManualEnquiry;
 import autokatta.com.view.MyBroadcastGroupsActivity;
 import autokatta.com.view.VehicleDetails;
+import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
@@ -69,20 +71,25 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
 
     Activity activity;
     List<MyUploadedVehiclesResponse.Success> mMainList;
-  //  private ConnectionDetector connectionDetector;
+    //  private ConnectionDetector connectionDetector;
     ApiCall apiCall;
     private String prefcontact;
-    int groupid;
-    String groupname;
+    private int groupid;
+    private String groupname;
     //SubType
-    List<String> mGrouplist = new ArrayList<>();
-    List<String> parsedData = new ArrayList<>();
-    HashMap<String, Integer> mGrouplist1 = new HashMap<>();
+    private List<String> mGrouplist = new ArrayList<>();
+    private List<String> groupIdList = new ArrayList<>();
+    private List<String> groupTitleList = new ArrayList<>();
+    private String[] groupTitleArray = new String[0];
+    private String[] groupIdArray = new String[0];
+    private List<String> parsedData = new ArrayList<>();
+    private HashMap<String, Integer> mGrouplist1 = new HashMap<>();
     private ConnectionDetector mConnectionDetector;
-
+    private String stringgroupids = "";
+    private String stringgroupname = "";
+    private int mVehicleId;
 
     public MyUploadedVehicleAdapter(Activity activity1, List<MyUploadedVehiclesResponse.Success> successList) {
-
         this.activity = activity1;
         this.mMainList = successList;
         mConnectionDetector = new ConnectionDetector(activity);
@@ -178,12 +185,13 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
                 }
                 System.out.println("http://autokatta.com/mobile/uploads/" + vimages.get(0));
 
-                String vimagename = activity.getString(R.string.base_image_url)+ vimages.get(0);
+                String vimagename = activity.getString(R.string.base_image_url) + vimages.get(0);
                 vimagename = vimagename.replaceAll(" ", "%20");
                 try {
 
                     Glide.with(activity)
                             .load(activity.getString(R.string.base_image_url) + vimages.get(0))
+                            .bitmapTransform(new CropCircleTransformation(activity))
                             .diskCacheStrategy(DiskCacheStrategy.ALL)
                             .placeholder(R.drawable.logo)
                             .into(holder.vehicleimage);
@@ -463,6 +471,189 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
                 openDialog.show();
             }
         });
+
+        holder.mUploadGroup.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    getGroups();
+                    mVehicleId = mMainList.get(position).getVehicleId();
+                    /*if (groupTitleArray.length == 0) {
+                        android.app.AlertDialog.Builder alertDialog = new android.app.AlertDialog.Builder(activity);
+                        alertDialog.setTitle("No Group Found");
+                        alertDialog.setMessage("Do you want to create Group...");
+                        alertDialog.setIcon(android.R.drawable.ic_dialog_alert);
+                        alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                CreateGroupFragment createGroupFragment = new CreateGroupFragment();
+                                Bundle b = new Bundle();
+                                b.putString("classname", "uploadvehicle");
+                                createGroupFragment.setArguments(b);
+
+                                activity.getFragmentManager().beginTransaction()
+                                        .replace(R.id.vehicle_upload_container, createGroupFragment, "Title")
+                                        .addToBackStack("Title")
+                                        .commit();
+
+
+                            }
+                        });
+                        alertDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                            }
+                        });
+                        alertDialog.show();
+                    } else {*/
+                    //alertBoxToSelectExcelSheet(groupTitleArray);
+                    //}
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    /*
+    Get Groups...
+     */
+    private void getGroups() {
+        if (mConnectionDetector.isConnectedToInternet()) {
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl(activity.getString(R.string.base_url))
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .client(initLog().build())
+                    .build();
+
+            ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+            Call<ProfileGroupResponse> add = serviceApi._autokattaProfileGroup(activity.getSharedPreferences(activity.getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", null));
+            add.enqueue(new Callback<ProfileGroupResponse>() {
+                @Override
+                public void onResponse(Call<ProfileGroupResponse> call, Response<ProfileGroupResponse> response) {
+                    if (response.isSuccessful()) {
+                        groupIdList.clear();
+                        groupIdList.clear();
+                        groupTitleList.clear();
+                        ProfileGroupResponse mProfileGroupResponse = (ProfileGroupResponse) response.body();
+                        for (ProfileGroupResponse.MyGroup success : mProfileGroupResponse.getSuccess().getMyGroups()) {
+                            groupIdList.add(String.valueOf(success.getId()));
+                            groupTitleList.add(success.getTitle());
+                        }
+                        groupTitleArray = groupTitleList.toArray(new String[groupTitleList.size()]);
+                        groupIdArray = groupIdList.toArray(new String[groupIdList.size()]);
+
+                        if (groupTitleArray.length == 0) {
+                            android.app.AlertDialog.Builder alertDialog = new android.app.AlertDialog.Builder(activity);
+                            alertDialog.setTitle("No Group Found");
+                            alertDialog.setMessage("Do you want to create Group...");
+                            alertDialog.setIcon(android.R.drawable.ic_dialog_alert);
+                            alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    CreateGroupFragment createGroupFragment = new CreateGroupFragment();
+                                    Bundle b = new Bundle();
+                                    b.putString("classname", "uploadvehicle");
+                                    createGroupFragment.setArguments(b);
+
+                                    ((FragmentActivity) activity).getSupportFragmentManager().beginTransaction()
+                                            .replace(R.id.vehicle_upload_container, createGroupFragment, "Title")
+                                            .addToBackStack("Title")
+                                            .commit();
+                                }
+                            });
+                            alertDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.cancel();
+                                }
+                            });
+                            alertDialog.show();
+                        } else {
+                            alertBoxToSelectExcelSheet(groupTitleArray);
+                        }
+                    } else {
+                        CustomToast.customToast(activity, activity.getString(R.string._404));
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ProfileGroupResponse> call, Throwable t) {
+                    t.printStackTrace();
+                }
+
+            });
+        } else {
+            CustomToast.customToast(activity.getApplicationContext(), activity.getString(R.string.no_internet));
+        }
+    }
+
+    /*
+    Alert Dialog
+     */
+    private void alertBoxToSelectExcelSheet(final String[] groupTitleArray) {
+        final List<String> mSelectedItems = new ArrayList<>();
+        mSelectedItems.clear();
+
+        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(activity);
+
+        // set the dialog title
+        builder.setTitle("Select Groups From Following")
+                .setCancelable(true)
+                .setMultiChoiceItems(groupTitleArray, null, new DialogInterface.OnMultiChoiceClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+                        if (isChecked) {
+                            mSelectedItems.add(groupTitleArray[which]);
+                        } else if (mSelectedItems.contains(groupTitleArray[which])) {
+                            mSelectedItems.remove(groupTitleArray[which]);
+                        }
+                    }
+                })
+                // Set the action buttons
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        stringgroupids = "";
+                        stringgroupname = "";
+                        for (int i = 0; i < mSelectedItems.size(); i++) {
+                            for (int j = 0; j < groupTitleArray.length; j++) {
+                                if (mSelectedItems.get(i).equals(groupTitleArray[j])) {
+                                    if (stringgroupids.equals("")) {
+                                        stringgroupids = groupIdList.get(j);
+                                        stringgroupname = groupTitleArray[j];
+                                    } else {
+                                        stringgroupids = stringgroupids + "," + groupIdList.get(j);
+                                        stringgroupname = stringgroupname + "," + groupTitleArray[j];
+                                    }
+                                }
+                            }
+                        }
+                        setPrivacy(stringgroupids);
+
+                        if (mSelectedItems.size() == 0) {
+                            CustomToast.customToast(activity, "No Group Was Selected");
+                            stringgroupids = "";
+                            stringgroupname = "";
+                        }
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        stringgroupids = "";
+                        stringgroupname = "";
+                    }
+
+                })
+                .show();
+    }
+
+    /*
+
+     */
+    private void setPrivacy(String groupId) {
+        ApiCall apiCall = new ApiCall(activity, this);
+        apiCall.VehiclePrivacy(activity.getSharedPreferences(activity.getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""),
+                mVehicleId, groupId, "");
     }
 
     @Override
@@ -498,7 +689,7 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
 
         ImageView vehicleimage;
         TextView edittitles, editprices, editcategorys, editbrands, editmodels, editleads, edituploadedon, editmfgyr, editkms, editrto, editlocation, editregNo;
-        Button vehidetails, btnnotify, delete, mEnquiry, mQuotation;
+        Button vehidetails, btnnotify, delete, mEnquiry, mQuotation, mUploadGroup, mUploadStore;
         CardView mcardView;
         RelativeLayout mBroadcast;
 
@@ -518,6 +709,8 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
             vehidetails = (Button) itemView.findViewById(R.id.vehibtndetails);
             btnnotify = (Button) itemView.findViewById(R.id.btnnotify);
             mEnquiry = (Button) itemView.findViewById(R.id.Enquiry);
+            mUploadGroup = (Button) itemView.findViewById(R.id.upload_group);
+            mUploadStore = (Button) itemView.findViewById(R.id.upload_store);
             editmfgyr = (TextView) itemView.findViewById(R.id.year);
             editkms = (TextView) itemView.findViewById(R.id.km_hrs);
             //edithrs=(TextView)itemView.findViewById(R.id.km_hrs);
