@@ -32,10 +32,14 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -377,11 +381,26 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
                     mUserName = mProfileAboutResponse.getSuccess().get(0).getUsername();
                     RegID = mProfileAboutResponse.getSuccess().get(0).getRegId();
                     String dp_path = getString(R.string.base_image_url)+ dp;
+                    final ProgressBar progressBar = (ProgressBar) findViewById(R.id.progress);
+
                     Glide.with(this)
                             .load(dp_path)
                             .centerCrop()
                             .diskCacheStrategy(DiskCacheStrategy.ALL)
-                            .placeholder(R.drawable.logo48x48)
+                            .listener(new RequestListener<String, GlideDrawable>() {
+                                @Override
+                                public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
+                                    progressBar.setVisibility(View.GONE);
+                                    return false;
+                                }
+
+                                @Override
+                                public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
+                                    progressBar.setVisibility(View.GONE);
+                                    return false;
+                                }
+                            })
+                            //.placeholder(R.drawable.logo48x48)
                             .into(mProfilePicture);
                     collapsingToolbar.setTitle(mUserName);
                     collapsingToolbar.setCollapsedTitleTextColor(Color.WHITE);
