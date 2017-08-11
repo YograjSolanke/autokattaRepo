@@ -104,7 +104,7 @@ public class GroupVehicleRefreshAdapter extends RecyclerView.Adapter<GroupVehicl
     }
 
     @Override
-    public void onBindViewHolder(final GroupVehicleRefreshAdapter.MyViewHolder holder, final int position) {
+    public void onBindViewHolder(final GroupVehicleRefreshAdapter.MyViewHolder holder, int position) {
         myContact = mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).getString("loginContact", "");
         view = holder;
         /*String register = mItemList.get(position).getRegistrationNumber();
@@ -206,23 +206,23 @@ public class GroupVehicleRefreshAdapter extends RecyclerView.Adapter<GroupVehicl
 
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                allDetails =mItemList.get(position).getTitle() + "=" +
-                                        mItemList.get(position).getPrice() + "=" +
-                                        mItemList.get(position).getCategory() + "=" +
-                                        mItemList.get(position).getModel() + "=" +
-                                        mItemList.get(position).getYearOfManufacture() + "=" +
-                                        mItemList.get(position).getKmsRunning() + "=" +
-                                        mItemList.get(position).getRTOCity() + "=" +
-                                        mItemList.get(position).getLocationCity() + "=" +
-                                        mItemList.get(position).getRegistrationNumber() + "=" +
-                                        mItemList.get(position).getSingleImage() + "=" +
-                                        ""+"="+
+                                allDetails = mItemList.get(holder.getAdapterPosition()).getTitle() + "=" +
+                                        mItemList.get(holder.getAdapterPosition()).getPrice() + "=" +
+                                        mItemList.get(holder.getAdapterPosition()).getManufacturer() + "=" +
+                                        mItemList.get(holder.getAdapterPosition()).getModel() + "=" +
+                                        mItemList.get(holder.getAdapterPosition()).getYearOfManufacture() + "=" +
+                                        mItemList.get(holder.getAdapterPosition()).getKmsRunning() + "=" +
+                                        mItemList.get(holder.getAdapterPosition()).getRTOCity() + "=" +
+                                        mItemList.get(holder.getAdapterPosition()).getLocationCity() + "=" +
+                                        mItemList.get(holder.getAdapterPosition()).getRegistrationNumber() + "=" +
+                                        mItemList.get(holder.getAdapterPosition()).getSingleImage() + "=" +
+                                        "" + "=" +
                                         myContact + "=" + "0";
 
                                 mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
                                         putString("Share_sharedata", allDetails).apply();
                                 mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                                        putInt("Share_vehicle_id", mItemList.get(position).getVehicleId()).apply();
+                                        putInt("Share_vehicle_id", mItemList.get(holder.getAdapterPosition()).getVehicleId()).apply();
                                 mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
                                         putString("Share_keyword", "vehicle").apply();
 
@@ -234,23 +234,24 @@ public class GroupVehicleRefreshAdapter extends RecyclerView.Adapter<GroupVehicl
 
                         .setNegativeButton("No", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                allDetails =mItemList.get(position).getTitle() + "=" +
-                                        mItemList.get(position).getPrice() + "=" +
-                                        mItemList.get(position).getCategory() + "=" +
-                                        mItemList.get(position).getModel() + "=" +
-                                        mItemList.get(position).getYearOfManufacture() + "=" +
-                                        mItemList.get(position).getKmsRunning() + "=" +
-                                        mItemList.get(position).getRTOCity() + "=" +
-                                        mItemList.get(position).getLocationCity() + "=" +
-                                        mItemList.get(position).getRegistrationNumber() + "=" +
-                                        mItemList.get(position).getSingleImage() + "=" +
-                                        ""+"="+
-                                        mItemList.get(position).getContact();
+                                allDetails = mItemList.get(holder.getAdapterPosition()).getTitle() + "=" +
+                                        mItemList.get(holder.getAdapterPosition()).getPrice() + "=" +
+                                        mItemList.get(holder.getAdapterPosition()).getManufacturer() + "=" +
+                                        mItemList.get(holder.getAdapterPosition()).getModel() + "=" +
+                                        mItemList.get(holder.getAdapterPosition()).getYearOfManufacture() + "=" +
+                                        mItemList.get(holder.getAdapterPosition()).getKmsRunning() + "=" +
+                                        mItemList.get(holder.getAdapterPosition()).getRTOCity() + "=" +
+                                        mItemList.get(holder.getAdapterPosition()).getLocationCity() + "=" +
+                                        mItemList.get(holder.getAdapterPosition()).getRegistrationNumber() + "=" +
+                                        mItemList.get(holder.getAdapterPosition()).getSingleImage() + "=" +
+                                        "" + "=" +
+                                        mItemList.get(holder.getAdapterPosition()).getContact() +
+                                        "=" + "0";
 
                                 mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
                                         putString("Share_sharedata", allDetails).apply();
                                 mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                                        putInt("Share_vehicle_id", mItemList.get(position).getVehicleId()).apply();
+                                        putInt("Share_vehicle_id", mItemList.get(holder.getAdapterPosition()).getVehicleId()).apply();
                                 mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
                                         putString("Share_keyword", "vehicle").apply();
 
@@ -281,10 +282,10 @@ public class GroupVehicleRefreshAdapter extends RecyclerView.Adapter<GroupVehicl
                                 Intent intent = new Intent(Intent.ACTION_SEND);
 
 
-                                if (mItemList.get(position).getSingleImage().equalsIgnoreCase("") || mItemList.get(position).getSingleImage().equalsIgnoreCase(null)) {
-                                    imgUrl = "http://autokatta.com/mobile/uploads/" + "abc.jpg";
+                                if (mItemList.get(holder.getAdapterPosition()).getSingleImage().equalsIgnoreCase("") || mItemList.get(holder.getAdapterPosition()).getSingleImage().equalsIgnoreCase(null)) {
+                                    imgUrl = mActivity.getString(R.string.base_image_url) + "logo48x48.png";
                                 } else {
-                                    imgUrl = "http://autokatta.com/mobile/uploads/" + mItemList.get(position).getSingleImage();
+                                    imgUrl = mActivity.getString(R.string.base_image_url) + mItemList.get(holder.getAdapterPosition()).getSingleImage();
                                 }
                                 Log.e("TAG", "img : " + imgUrl);
 
@@ -308,29 +309,26 @@ public class GroupVehicleRefreshAdapter extends RecyclerView.Adapter<GroupVehicl
 
 
                                 String allGroupVehicleDetails =
-                                        "Vehicle Title : "+mItemList.get(position).getTitle() + "\n" +
-                                                "Vehicle Title : "+ mItemList.get(position).getPrice() + "\n" +
-                                                "Vehicle Brand : "+ mItemList.get(position).getCategory() + "\n" +
-                                                "Vehicle Model : "+ mItemList.get(position).getModel() + "\n" +
-                                                "Vehicle Manufacturing Year : "+  mItemList.get(position).getYearOfManufacture() + "\n" +
-                                                "Vehicle Running (Km/Hr) : "+   mItemList.get(position).getKmsRunning() + "\n" +
-                                                "RTO City : "+   mItemList.get(position).getRTOCity() + "\n" +
-                                                "Vehicle Location City : "+   mItemList.get(position).getLocationCity() + "\n" +
-                                                "Vehicle Registration Number : "+  mItemList.get(position).getRegistrationNumber() + "\n" +
-                                                "Contact : "+  mItemList.get(position).getContact();
+                                        "Vehicle Title : " + mItemList.get(holder.getAdapterPosition()).getTitle() + "\n" +
+                                                "Vehicle Price : " + mItemList.get(holder.getAdapterPosition()).getPrice() + "\n" +
+                                                "Vehicle Brand : " + mItemList.get(holder.getAdapterPosition()).getManufacturer() + "\n" +
+                                                "Vehicle Model : " + mItemList.get(holder.getAdapterPosition()).getModel() + "\n" +
+                                                "Vehicle Manufacturing Year : " + mItemList.get(holder.getAdapterPosition()).getYearOfManufacture() + "\n" +
+                                                "Vehicle Running (Km/Hr) : " + mItemList.get(holder.getAdapterPosition()).getKmsRunning() + "\n" +
+                                                "RTO City : " + mItemList.get(holder.getAdapterPosition()).getRTOCity() + "\n" +
+                                                "Vehicle Location City : " + mItemList.get(holder.getAdapterPosition()).getLocationCity() + "\n" +
+                                                "Vehicle Registration Number : " + mItemList.get(holder.getAdapterPosition()).getRegistrationNumber() + "\n" +
+                                                "Contact : " + mItemList.get(holder.getAdapterPosition()).getContact();
 
                                 intent.setType("text/plain");
                                 intent.putExtra(Intent.EXTRA_TEXT, "Please visit and Follow my vehicle on Autokatta. Stay connected for Product and Service updates and enquiries"
-                                        + "\n" + "http://autokatta.com/vehicle/main/" + mItemList.get(position).getVehicleId() + "/" + myContact);
+                                        + "\n" + "http://autokatta.com/vehicle/main/" + mItemList.get(holder.getAdapterPosition()).getVehicleId() + "/" + myContact
+                                        + "\n" + "\n" + allGroupVehicleDetails);
                                 intent.setType("image/jpeg");
                                 intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(imageFilePath)));
-                                mActivity.startActivity(Intent.createChooser(intent, "Autokatta"));
-
-                                intent.setType("text/plain");
-                                intent.putExtra(Intent.EXTRA_SUBJECT, "Please Find Below Attachments");
-                                intent.putExtra(Intent.EXTRA_TEXT, allGroupVehicleDetails);
                                 intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                                mActivity.startActivity(intent);
+                                intent.putExtra(Intent.EXTRA_SUBJECT, "Please Find Below Attachments");
+                                mActivity.startActivity(Intent.createChooser(intent, "Autokatta"));
 
                             }
                         })
@@ -338,16 +336,13 @@ public class GroupVehicleRefreshAdapter extends RecyclerView.Adapter<GroupVehicl
                         .setNegativeButton("No", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
 
-                                //ChoiceContact = Contact;
-                                System.out.println("Choice contact before share applying yes........" + mItemList.get(position).getContact());
-                                System.out.println("Choice contact before share applying yes........" + myContact);
                                 String imageFilePath;
                                 Intent intent = new Intent(Intent.ACTION_SEND);
 
-                                if (mItemList.get(position).getSingleImage().equalsIgnoreCase("") || mItemList.get(position).getSingleImage().equalsIgnoreCase(null)) {
-                                    imgUrl = "http://autokatta.com/mobile/uploads/" + "abc.jpg";
+                                if (mItemList.get(holder.getAdapterPosition()).getSingleImage().equalsIgnoreCase("") || mItemList.get(holder.getAdapterPosition()).getSingleImage().equalsIgnoreCase(null)) {
+                                    imgUrl = mActivity.getString(R.string.base_image_url) + "logo48x48.png";
                                 } else {
-                                    imgUrl = "http://autokatta.com/mobile/uploads/" + mItemList.get(position).getSingleImage();
+                                    imgUrl = mActivity.getString(R.string.base_image_url) + mItemList.get(holder.getAdapterPosition()).getSingleImage();
                                 }
                                 Log.e("TAG", "img : " + imgUrl);
 
@@ -369,28 +364,25 @@ public class GroupVehicleRefreshAdapter extends RecyclerView.Adapter<GroupVehicl
                                 System.out.println("ImageFilePath:" + imageFilePath);
 
                                 String allGroupVehicleDetails =
-                                        "Vehicle Title : "+mItemList.get(position).getTitle() + "\n" +
-                                                "Vehicle Title : "+ mItemList.get(position).getPrice() + "\n" +
-                                                "Vehicle Brand : "+ mItemList.get(position).getCategory() + "\n" +
-                                                "Vehicle Model : "+ mItemList.get(position).getModel() + "\n" +
-                                                "Vehicle Manufacturing Year : "+  mItemList.get(position).getYearOfManufacture() + "\n" +
-                                                "Vehicle Running (Km/Hr) : "+   mItemList.get(position).getKmsRunning() + "\n" +
-                                                "RTO City : "+   mItemList.get(position).getRTOCity() + "\n" +
-                                                "Vehicle Location City : "+   mItemList.get(position).getLocationCity() + "\n" +
-                                                "Vehicle Registration Number : "+  mItemList.get(position).getRegistrationNumber();
+                                        "Vehicle Title : " + mItemList.get(holder.getAdapterPosition()).getTitle() + "\n" +
+                                                "Vehicle Price : " + mItemList.get(holder.getAdapterPosition()).getPrice() + "\n" +
+                                                "Vehicle Brand : " + mItemList.get(holder.getAdapterPosition()).getManufacturer() + "\n" +
+                                                "Vehicle Model : " + mItemList.get(holder.getAdapterPosition()).getModel() + "\n" +
+                                                "Vehicle Manufacturing Year : " + mItemList.get(holder.getAdapterPosition()).getYearOfManufacture() + "\n" +
+                                                "Vehicle Running (Km/Hr) : " + mItemList.get(holder.getAdapterPosition()).getKmsRunning() + "\n" +
+                                                "RTO City : " + mItemList.get(holder.getAdapterPosition()).getRTOCity() + "\n" +
+                                                "Vehicle Location City : " + mItemList.get(holder.getAdapterPosition()).getLocationCity() + "\n" +
+                                                "Vehicle Registration Number : " + mItemList.get(holder.getAdapterPosition()).getRegistrationNumber();
 
                                 intent.setType("text/plain");
                                 intent.putExtra(Intent.EXTRA_TEXT, "Please visit and Follow my vehicle on Autokatta. Stay connected for Product and Service updates and enquiries"
-                                        + "\n" + "http://autokatta.com/vehicle/main/" + mItemList.get(position).getVehicleId() + "/" + mItemList.get(position).getContact());
+                                        + "\n" + "http://autokatta.com/vehicle/main/" + mItemList.get(holder.getAdapterPosition()).getVehicleId() + "/" + mItemList.get(holder.getAdapterPosition()).getContact()
+                                        + "\n" + "\n" + allGroupVehicleDetails);
                                 intent.setType("image/jpeg");
                                 intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(imageFilePath)));
-                                mActivity.startActivity(Intent.createChooser(intent, "Autokatta"));
-
-                                intent.setType("text/plain");
-                                intent.putExtra(Intent.EXTRA_SUBJECT, "Please Find Below Attachments");
-                                intent.putExtra(Intent.EXTRA_TEXT, allGroupVehicleDetails);
                                 intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                                mActivity.startActivity(intent);
+                                intent.putExtra(Intent.EXTRA_SUBJECT, "Please Find Below Attachments");
+                                mActivity.startActivity(Intent.createChooser(intent, "Autokatta"));
 
                             }
                         })
@@ -403,7 +395,7 @@ public class GroupVehicleRefreshAdapter extends RecyclerView.Adapter<GroupVehicl
             @Override
             public void onClick(View v) {
                 Bundle mBundle = new Bundle();
-                mBundle.putInt("vehicle_id", mItemList.get(position).getVehicleId());
+                mBundle.putInt("vehicle_id", mItemList.get(holder.getAdapterPosition()).getVehicleId());
                 ActivityOptions options = ActivityOptions.makeCustomAnimation(mActivity, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
                 Intent mVehicleDetails = new Intent(mActivity, VehicleDetails.class);
                 mVehicleDetails.putExtras(mBundle);
@@ -414,20 +406,20 @@ public class GroupVehicleRefreshAdapter extends RecyclerView.Adapter<GroupVehicl
         holder.mCall.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                call(mItemList.get(position).getContact());
+                call(mItemList.get(holder.getAdapterPosition()).getContact());
             }
         });
 
         holder.mRlike.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mItemList.get(position).getContact().equals(myContact)) {
+                if (mItemList.get(holder.getAdapterPosition()).getContact().equals(myContact)) {
                     Snackbar.make(holder.mCardView, "You Can't Like Your Own Vehicle ", Snackbar.LENGTH_LONG).show();
                 } else {
                     holder.mRlike.setVisibility(View.GONE);
                     holder.mRunlike.setVisibility(View.VISIBLE);
-                    mItemList.get(position).setVehiclelikestatus("yes");
-                    sendLike(mItemList.get(position).getContact(), mItemList.get(position).getVehicleId());
+                    mItemList.get(holder.getAdapterPosition()).setVehiclelikestatus("yes");
+                    sendLike(mItemList.get(holder.getAdapterPosition()).getContact(), mItemList.get(holder.getAdapterPosition()).getVehicleId());
                 }
             }
         });
@@ -437,8 +429,8 @@ public class GroupVehicleRefreshAdapter extends RecyclerView.Adapter<GroupVehicl
             public void onClick(View v) {
                 holder.mRlike.setVisibility(View.VISIBLE);
                 holder.mRunlike.setVisibility(View.GONE);
-                mItemList.get(position).setVehiclelikestatus("no");
-                sendUnlike(mItemList.get(position).getContact(), mItemList.get(position).getVehicleId());
+                mItemList.get(holder.getAdapterPosition()).setVehiclelikestatus("no");
+                sendUnlike(mItemList.get(holder.getAdapterPosition()).getContact(), mItemList.get(holder.getAdapterPosition()).getVehicleId());
             }
         });
 

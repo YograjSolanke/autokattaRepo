@@ -101,7 +101,7 @@ public class GroupVehicleList extends Fragment implements SwipeRefreshLayout.OnR
     private void getGroupVehicles(String rcontact) {
         try {
             if (mTestConnection.isConnectedToInternet()) {
-                mApiCall.getGroupVehicles(mGroupId, brand, model, version, city, RTOcity, price, reg_year, mgf_year, kmsrunning, no_of_owner,rcontact);
+                mApiCall.getGroupVehicles(mGroupId, brand, model, version, city, RTOcity, price, reg_year, mgf_year, kmsrunning, no_of_owner, rcontact);
             } else {
                 CustomToast.customToast(getActivity(), getString(R.string.no_internet));
             }
@@ -118,7 +118,7 @@ public class GroupVehicleList extends Fragment implements SwipeRefreshLayout.OnR
                 if (response.body() instanceof GetGroupVehiclesResponse) {
                     mSuccesses.clear();
                     GetGroupVehiclesResponse mGetGroupVehiclesResponse = (GetGroupVehiclesResponse) response.body();
-                    if (mGetGroupVehiclesResponse.getSuccess()!=null||!mGetGroupVehiclesResponse.getSuccess().isEmpty()) {
+                    if (mGetGroupVehiclesResponse.getSuccess() != null || !mGetGroupVehiclesResponse.getSuccess().isEmpty()) {
                         mNoData.setVisibility(View.GONE);
                         for (GetGroupVehiclesResponse.Success success : mGetGroupVehiclesResponse.getSuccess()) {
                             success.setVehicleId(success.getVehicleId());
@@ -245,7 +245,7 @@ public class GroupVehicleList extends Fragment implements SwipeRefreshLayout.OnR
             CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         } else {
             Log.i("Check Class-"
-                    , "groupvehiclelist");
+                    , "GroupVehicleList");
             error.printStackTrace();
         }
     }
@@ -382,16 +382,20 @@ public class GroupVehicleList extends Fragment implements SwipeRefreshLayout.OnR
                     public void onClick(View v) {
                         // TODO Auto-generated method stub
 
-                        brand = editbrand.getText().toString();
-                        model = editmodel.getText().toString();
-                        version = editversion.getText().toString();
-                        city = editcity.getText().toString();
-                        RTOcity = editRTOcity.getText().toString();
-                        price = editprice.getText().toString();
-                        reg_year = editregyr.getText().toString();
-                        mgf_year = editmgfyr.getText().toString();
-                        kmsrunning = editkms.getText().toString();
-                        no_of_owner = Integer.parseInt(editowner.getText().toString());
+                        brand = editbrand.getText().toString().trim();
+                        model = editmodel.getText().toString().trim();
+                        version = editversion.getText().toString().trim();
+                        city = editcity.getText().toString().trim();
+                        RTOcity = editRTOcity.getText().toString().trim();
+                        price = editprice.getText().toString().trim();
+                        reg_year = editregyr.getText().toString().trim();
+                        mgf_year = editmgfyr.getText().toString().trim();
+                        kmsrunning = editkms.getText().toString().trim();
+                        if (editowner.getText().toString().equals(""))
+                            no_of_owner = 0;
+                        else
+                            no_of_owner = Integer.parseInt(editowner.getText().toString());
+
                         if (brand.equals("") && model.equals("") && version.equals("") && city.equals("") && RTOcity.equals("")
                                 && price.equals("") && reg_year.equals("") && mgf_year.equals("") && kmsrunning.equals("")
                                 && no_of_owner == 0) {

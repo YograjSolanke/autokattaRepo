@@ -179,16 +179,19 @@ public class MemberVehicleListFragment extends Fragment implements SwipeRefreshL
                     @Override
                     public void onClick(View v) {
                         // TODO Auto-generated method stub
-                        brand = editbrand.getText().toString();
-                        model = editmodel.getText().toString();
-                        version = editversion.getText().toString();
-                        city = editcity.getText().toString();
-                        RTOcity = editRTOcity.getText().toString();
-                        price = editprice.getText().toString();
-                        reg_year = editregyr.getText().toString();
-                        mgf_year = editmgfyr.getText().toString();
-                        kmsrunning = editkms.getText().toString();
-                        no_of_owner =Integer.parseInt(editowner.getText().toString());
+                        brand = editbrand.getText().toString().trim();
+                        model = editmodel.getText().toString().trim();
+                        version = editversion.getText().toString().trim();
+                        city = editcity.getText().toString().trim();
+                        RTOcity = editRTOcity.getText().toString().trim();
+                        price = editprice.getText().toString().trim();
+                        reg_year = editregyr.getText().toString().trim();
+                        mgf_year = editmgfyr.getText().toString().trim();
+                        kmsrunning = editkms.getText().toString().trim();
+                        if (editowner.getText().toString().equals(""))
+                            no_of_owner = 0;
+                        else
+                            no_of_owner = Integer.parseInt(editowner.getText().toString().trim());
 
                         if (brand.equals("") && model.equals("") && version.equals("") && city.equals("") && RTOcity.equals("")
                                 && price.equals("") && reg_year.equals("") && mgf_year.equals("") && kmsrunning.equals("")

@@ -343,9 +343,9 @@ public class VehicleDetails extends AppCompatActivity implements RequestNotifier
                 String imageFilePath;
                 Intent intent = new Intent(Intent.ACTION_SEND);
                 if (mSendImage.equalsIgnoreCase("") || mSendImage.equalsIgnoreCase(null)) {
-                    imgUrl = "http://autokatta.com/mobile/uploads/" + "abc.jpg";
+                    imgUrl = getString(R.string.base_image_url) + "logo48x48.png";
                 } else {
-                    imgUrl = "http://autokatta.com/mobile/uploads/" + mSendImage;
+                    imgUrl = getString(R.string.base_image_url) + mSendImage;
                 }
                 Log.e("TAG", "dp : " + imgUrl);
                 DownloadManager.Request request = new DownloadManager.Request(
@@ -363,11 +363,26 @@ public class VehicleDetails extends AppCompatActivity implements RequestNotifier
                 imageFilePath = "/storage/emulated/0/Download/" + filename;
                 System.out.println("ImageFilePath:" + imageFilePath);
 
+                String allGroupVehicleDetails =
+                        "Vehicle Title : " + Title + "\n" +
+                                "Vehicle Price : " + mPrice + "\n" +
+                                "Vehicle Brand : " + mBrand + "\n" +
+                                "Vehicle Model : " + mModel + "\n" +
+                                "Vehicle Manufacturing Year : " + mYear + "\n" +
+                                "Vehicle Running (Km/Hr) : " + mKms + "\n" +
+                                "RTO City : " + mRTO_City + "\n" +
+                                "Vehicle Location City : " + mAddress + "\n" +
+                                "Vehicle Registration Number : " + mRegistration + "\n" +
+                                "Contact : " + prefcontact;
+
                 intent.setType("text/plain");
                 intent.putExtra(Intent.EXTRA_TEXT, "Please visit and Follow my vehicle on Autokatta. Stay connected for Product and Service updates and enquiries"
-                        + "\n" + "http://autokatta.com/vehicle/" + mVehicle_Id);
+                        + "\n" + "http://autokatta.com/vehicle/main/" + mVehicle_Id + "/" + prefcontact
+                        + "\n" + "\n" + allGroupVehicleDetails);
                 intent.setType("image/jpeg");
                 intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(imageFilePath)));
+                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                intent.putExtra(Intent.EXTRA_SUBJECT, "Please Find Below Attachments");
                 startActivity(Intent.createChooser(intent, "Autokatta"));
 
                 break;
@@ -381,7 +396,9 @@ public class VehicleDetails extends AppCompatActivity implements RequestNotifier
                         mRTO_City + "=" +
                         mAddress + "=" +
                         mRegistration + "=" +
-                        mSendImage + "=" + "0";
+                        mSendImage + "=" +
+                        prefcontact + "=" +
+                        "0";
 
                 getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
                         putString("Share_sharedata", allDetails).apply();
