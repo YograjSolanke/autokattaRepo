@@ -44,26 +44,27 @@ import static android.content.Context.MODE_PRIVATE;
 public class BussinessMsgSenders extends Fragment implements SwipeRefreshLayout.OnRefreshListener, RequestNotifier {
     String mContact;
     int product_id = 0, service_id = 0, vehicle_id = 0;
-     View root;
+    View root;
     BussinessMsgSendersAdapter mMsgReplyAdapter;
     RecyclerView mRecyclerView;
     SwipeRefreshLayout mSwipeRefreshLayout;
     TextView Title, Category, Brand, Model, Keyword, price;
     RelativeLayout relCategory, relBrand, relModel, relPrice, MainRel;
-   /* String vehi_img_url;// = getActivity().getString(R.string.base_image_url);
-    String prduct_img_url = getActivity().getString(R.string.base_image_url);
-    String service_img_url = getActivity().getString(R.string.base_image_url);*/
+    /* String vehi_img_url;// = getActivity().getString(R.string.base_image_url);
+     String prduct_img_url = getActivity().getString(R.string.base_image_url);
+     String service_img_url = getActivity().getString(R.string.base_image_url);*/
     String fullpath = "";
     ImageView Image;
     ApiCall mApiCall;
     List<BroadcastReceivedResponse.Success> mSuccesses = new ArrayList<>();
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         root = inflater.inflate(R.layout.mybroadcastmsglist, null);
-        mApiCall=new ApiCall(getActivity(),this);
+        mApiCall = new ApiCall(getActivity(), this);
         mContact = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "");
         mRecyclerView = (RecyclerView) root.findViewById(R.id.recycler_viewmsglist);
         mSwipeRefreshLayout = (SwipeRefreshLayout) root.findViewById(R.id.swipeRefreshLayoutBussinessChatmsglist);
@@ -116,9 +117,9 @@ public class BussinessMsgSenders extends Fragment implements SwipeRefreshLayout.
                     Category.setText(b.getString("category"));
                     Brand.setText(b.getString("brand"));
                     Model.setText(b.getString("model"));
-                    String image = b.getString("image");
+                    String image = b.getString("image", "");
 
-                    if (b.getString("keyword").equalsIgnoreCase("Product")) {
+                    if (b.getString("keyword", "").equalsIgnoreCase("Product")) {
                         relCategory.setVisibility(View.GONE);
                         relBrand.setVisibility(View.GONE);
                         relModel.setVisibility(View.GONE);
@@ -134,7 +135,7 @@ public class BussinessMsgSenders extends Fragment implements SwipeRefreshLayout.
                         } else {
                             Image.setImageResource(R.drawable.logo);
                         }
-                    } else if (b.getString("keyword").equalsIgnoreCase("Service")) {
+                    } else if (b.getString("keyword", "").equalsIgnoreCase("Service")) {
                         relCategory.setVisibility(View.GONE);
                         relBrand.setVisibility(View.GONE);
                         relModel.setVisibility(View.GONE);
@@ -150,7 +151,7 @@ public class BussinessMsgSenders extends Fragment implements SwipeRefreshLayout.
                         } else {
                             Image.setImageResource(R.drawable.logo);
                         }
-                    } else if (b.getString("keyword").equalsIgnoreCase("Vehicle")) {
+                    } else if (b.getString("keyword", "").equalsIgnoreCase("Vehicle")) {
                         if (!image.equals("") && !image.equals("null")) {
                             fullpath = getString(R.string.base_image_url) + image;
                             fullpath = fullpath.replaceAll(" ", "%20");
@@ -165,7 +166,7 @@ public class BussinessMsgSenders extends Fragment implements SwipeRefreshLayout.
                         }
                     }
 
-                   mApiCall.getBroadcastReceivers(mContact,product_id,service_id,vehicle_id);
+                    mApiCall.getBroadcastReceivers(mContact, product_id, service_id, vehicle_id);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -182,7 +183,7 @@ public class BussinessMsgSenders extends Fragment implements SwipeRefreshLayout.
             service_id = b.getInt("service_id");
             vehicle_id = b.getInt("vehicle_id");
 
-            mApiCall.getBroadcastReceivers(mContact,product_id,service_id,vehicle_id);
+            mApiCall.getBroadcastReceivers(mContact, product_id, service_id, vehicle_id);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -190,23 +191,23 @@ public class BussinessMsgSenders extends Fragment implements SwipeRefreshLayout.
 
     @Override
     public void notifySuccess(Response<?> response) {
-        if (response!=null){
-            if (response.isSuccessful()){
+        if (response != null) {
+            if (response.isSuccessful()) {
                 mSuccesses.clear();
                 mSwipeRefreshLayout.setRefreshing(false);
                 BroadcastReceivedResponse mGetBroadcastReceiver = (BroadcastReceivedResponse) response.body();
-                for (BroadcastReceivedResponse.Success msenders : mGetBroadcastReceiver.getSuccess()){
+                for (BroadcastReceivedResponse.Success msenders : mGetBroadcastReceiver.getSuccess()) {
                     msenders.setSender(msenders.getSender());
                     msenders.setSendername(msenders.getSendername());
                     mSuccesses.add(msenders);
                 }
-                mMsgReplyAdapter = new BussinessMsgSendersAdapter(getActivity(), mSuccesses,product_id,service_id,vehicle_id);
+                mMsgReplyAdapter = new BussinessMsgSendersAdapter(getActivity(), mSuccesses, product_id, service_id, vehicle_id);
                 mRecyclerView.setAdapter(mMsgReplyAdapter);
                 mMsgReplyAdapter.notifyDataSetChanged();
-            }else {
+            } else {
                 CustomToast.customToast(getActivity(), getString(R.string._404));
             }
-        }else {
+        } else {
             CustomToast.customToast(getActivity(), getString(R.string.no_response));
         }
     }
@@ -215,21 +216,16 @@ public class BussinessMsgSenders extends Fragment implements SwipeRefreshLayout.
     @Override
     public void notifyError(Throwable error) {
         if (error instanceof SocketTimeoutException) {
-            CustomToast.customToast(getActivity(),getString(R.string._404_));
-            //   showMessage(getActivity(), getString(R.string._404_));
+            CustomToast.customToast(getActivity(), getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
-            CustomToast.customToast(getActivity(),getString(R.string.no_response));
-            // showMessage(getActivity(), getString(R.string.no_response));
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            CustomToast.customToast(getActivity(),getString(R.string.no_response));
-            //   showMessage(getActivity(), getString(R.string.no_response));
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
-            CustomToast.customToast(getActivity(),getString(R.string.no_internet));
-            //   errorMessage(getActivity(), getString(R.string.no_internet));
+            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
-            CustomToast.customToast(getActivity(),getString(R.string.no_internet));
-            //   errorMessage(getActivity(), getString(R.string.no_internet));
-        }else {
+            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
+        } else {
             Log.i("Check Class-", "Bussiness msg sender");
         }
     }

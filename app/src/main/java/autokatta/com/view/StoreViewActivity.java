@@ -537,9 +537,9 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
                 String imageFilePath = "", imagename = "";
                 if (storeImage.equalsIgnoreCase("") || storeImage.equalsIgnoreCase(null) ||
                         storeImage.equalsIgnoreCase("null")) {
-                    imagename = "http://autokatta.com/mobile/store_profiles/" + "a.jpg";
+                    imagename = getString(R.string.base_image_url) + "logo48x48.png";
                 } else {
-                    imagename = "http://autokatta.com/mobile/store_profiles/" + storeImage;
+                    imagename = getString(R.string.base_image_url) + storeImage;
                 }
                 Log.e("TAG", "img : " + imagename);
                 DownloadManager.Request request = new DownloadManager.Request(

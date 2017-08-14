@@ -123,7 +123,7 @@ public class ContinueRegistration extends AppCompatActivity implements RequestNo
             if (!imageName.equals("") || !imageName.equalsIgnoreCase(null) || !imageName.equalsIgnoreCase("null")) {
                 try {
                     Glide.with(getApplicationContext())
-                            .load("http://autokatta.com/mobile/profile_profile_pics/" + imageName)
+                            .load(getString(R.string.base_image_url) + imageName)
                             .diskCacheStrategy(DiskCacheStrategy.ALL) //For caching diff versions of image.
                             .into(groupimg);
                 } catch (Exception e) {

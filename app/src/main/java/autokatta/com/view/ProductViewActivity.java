@@ -577,7 +577,7 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                             //silder code?????????????????????????????????????????????????????????????????
                             Hash_file_maps = new HashMap<String, String>();
 //                            sliderLayout = (SliderLayout) findViewById(R.id.slider);
-                            String dp_path = "http://autokatta.com/mobile/Product_pics/";// + dp;
+                            String dp_path = getString(R.string.base_image_url);
 
                             if (pimages.contains(",")) {
 
@@ -780,8 +780,8 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                 for (int i = 0; i < images.size(); i++) {
 
                     for (int j = 0; j < tagname.size(); j++) {
-                        if (images.get(i).toString().equalsIgnoreCase(tagname.get(j).toString()))
-                            idlist = idlist + "," + spnid.get(j).toString();
+                        if (images.get(i).equalsIgnoreCase(tagname.get(j)))
+                            idlist = idlist + "," + spnid.get(j);
                     }
 
                 }
@@ -1032,9 +1032,9 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                 String imageFilePath;
                 if (pimages.equalsIgnoreCase("") || pimages.equalsIgnoreCase(null) ||
                         pimages.equalsIgnoreCase("null")) {
-                    imagename = "http://autokatta.com/mobile/store_profiles/" + "a.jpg";
+                    imagename = getString(R.string.base_image_url) + "logo48x48.png";
                 } else {
-                    imagename = "http://autokatta.com/mobile/Product_pics/" + imageslist;
+                    imagename = getString(R.string.base_image_url) + imageslist;
                 }
                 Log.e("TAG", "img : " + imagename);
                 DownloadManager.Request request = new DownloadManager.Request(

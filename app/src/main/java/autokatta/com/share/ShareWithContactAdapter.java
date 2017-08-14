@@ -28,9 +28,9 @@ public class ShareWithContactAdapter extends BaseAdapter {
 
     private Activity activity;
     private ArrayList<Db_AutokattaContactResponse> contactdata = new ArrayList<>();
-    private String sharedata,  storecontact, name, number,profile_contact, contactnumber, keyword, contacttab;
-private int store_id ,vehicle_id, product_id,
-    service_id,  search_id, status_id, auction_id, loan_id, exchange_id;
+    private String sharedata, storecontact, name, number, profile_contact, contactnumber, keyword, contacttab;
+    private int store_id, vehicle_id, product_id,
+            service_id, search_id, status_id, auction_id, loan_id, exchange_id;
     private LayoutInflater mInflater;
 
 

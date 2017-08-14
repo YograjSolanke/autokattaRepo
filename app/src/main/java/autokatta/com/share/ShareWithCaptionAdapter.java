@@ -26,14 +26,14 @@ import jp.wasabeef.glide.transformations.CropCircleTransformation;
 public class ShareWithCaptionAdapter extends BaseAdapter {
 
     private Activity activity;
-    private String sharedata,  contactnumber, profile_contact,  keyword, contacttab;
-private int store_id ,vehicle_id, product_id, search_id, status_id, auction_id, loan_id, exchange_id,  service_id;
+    private String sharedata, contactnumber, profile_contact, keyword, contacttab;
+    private int store_id, vehicle_id, product_id, search_id, status_id, auction_id, loan_id, exchange_id, service_id;
     private LayoutInflater mInflater;
 
 
-    public ShareWithCaptionAdapter(Activity activity, String contactnumber, String sharedata, int store_id, String keyword, int product_id,
-                                   int service_id, int vehicle_id, int search_id, int status_id, String profile_contact,
-                                   int auction_id, int loan_id, int exchange_id) {
+    ShareWithCaptionAdapter(Activity activity, String contactnumber, String sharedata, int store_id, String keyword, int product_id,
+                            int service_id, int vehicle_id, int search_id, int status_id, String profile_contact,
+                            int auction_id, int loan_id, int exchange_id) {
 
         this.activity = activity;
         this.contactnumber = contactnumber;
@@ -320,184 +320,190 @@ private int store_id ,vehicle_id, product_id, search_id, status_id, auction_id, 
 
             case "profile":
 
-                String data10[] = sharedata.split("=");
 
-                holder.username.setText(data10[0]);
-                holder.profilelocation.setText(data10[3]);
-                holder.profileworkat.setText(data10[1]);
-                holder.profilewebsite.setText(data10[2]);
+                if (holder != null) {
+                    String data10[] = sharedata.split("=");
+                    holder.username.setText(data10[0]);
+                    holder.profilelocation.setText(data10[3]);
+                    holder.profileworkat.setText(data10[1]);
+                    holder.profilewebsite.setText(data10[2]);
 
-                holder.profilefollowcnt.setText("Followers(" + data10[6] + ")");
-                holder.profilelikecnt.setText("Likes(" + data10[5] + ")");
+                    holder.profilefollowcnt.setText("Followers(" + data10[6] + ")");
+                    holder.profilelikecnt.setText("Likes(" + data10[5] + ")");
 
-                holder.relaprofilelike.setVisibility(View.GONE);
-                holder.relalike2.setVisibility(View.GONE);
+                    holder.relaprofilelike.setVisibility(View.GONE);
+                    holder.relalike2.setVisibility(View.GONE);
 
 
-                if (data10[4] == null || data10[4].equals("")) {
-                    holder.profileimage.setBackgroundResource(R.drawable.profile);
+                    if (data10[4] == null || data10[4].equals(""))
+                        holder.profileimage.setBackgroundResource(R.drawable.logo48x48);
+                    else {
+                        Glide.with(activity)
+                                .load(activity.getString(R.string.base_image_url) + data10[4])
+                                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                .bitmapTransform(new CropCircleTransformation(activity))
+                                .override(100, 100)
+                                .into(holder.profileimage);
+                    }
                 }
-                if (data10[4] != null || !data10[4].equals("")) {
-
-                    Glide.with(activity)
-                            .load(activity.getString(R.string.base_image_url) + data10[4])
-                            .diskCacheStrategy(DiskCacheStrategy.ALL)
-                            .bitmapTransform(new CropCircleTransformation(activity))
-                            .override(100, 100)
-                            .into(holder.profileimage);
-                }
-
 
                 break;
 
             case "store":
 
-                String data[] = sharedata.split("=");
+                if (holder != null) {
+                    String data[] = sharedata.split("=");
+                    holder.storename.setText(data[0]);
+                    holder.website.setText(data[1]);
+                    holder.time.setText(data[2]);
+                    holder.workingday.setText(data[3]);
+                    holder.storetype.setText(data[4]);
+                    holder.location.setText(data[5]);
+                    holder.storefollowcnt.setText("Followers(" + data[9] + ")");
+                    holder.storelikecnt.setText("Likes(" + data[8] + ")");
+                    String rating = data[7];
+                    holder.relative.setVisibility(View.GONE);
+                    holder.relalike2.setVisibility(View.GONE);
+                    holder.storecallimg.setVisibility(View.GONE);
 
-                holder.storename.setText(data[0]);
-                holder.website.setText(data[1]);
-                holder.time.setText(data[2]);
-                holder.workingday.setText(data[3]);
-                holder.storetype.setText(data[4]);
-                holder.location.setText(data[5]);
-                holder.storefollowcnt.setText("Followers(" + data[9] + ")");
-                holder.storelikecnt.setText("Likes(" + data[8] + ")");
-                String rating = data[7];
-                holder.relative.setVisibility(View.GONE);
-                holder.relalike2.setVisibility(View.GONE);
-                holder.storecallimg.setVisibility(View.GONE);
+                    if (rating != null && !rating.equals("null")) {
+                        holder.storerating.setRating(Float.parseFloat(rating));
+                    }
 
-                if (rating != null && !rating.equals("null")) {
-                    holder.storerating.setRating(Float.parseFloat(rating));
+                    if (data[6] == null || data[6].equalsIgnoreCase("")) {
+                        holder.storeimage.setBackgroundResource(R.drawable.logo48x48);
+
+                    } else {
+                        Glide.with(activity)
+                                .load(activity.getString(R.string.base_image_url) + data[6])
+                                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                .bitmapTransform(new CropCircleTransformation(activity))
+                                .override(100, 100)
+                                .into(holder.storeimage);
+                    }
+
+
                 }
-
-                try {
-                    Glide.with(activity)
-                            .load(activity.getString(R.string.base_image_url)+ data[6])
-                            .diskCacheStrategy(DiskCacheStrategy.ALL)
-                            .bitmapTransform(new CropCircleTransformation(activity))
-                            .override(100, 100)
-                            .into(holder.storeimage);
-                } catch (Exception e) {
-                    System.out.println("Error in uploading images");
-                }
-
 
                 break;
 
 
             case "product":
 
-                holder.relative.setVisibility(View.GONE);
-                holder.relalike2.setVisibility(View.GONE);
-                holder.callimg.setVisibility(View.INVISIBLE);
+                if (holder != null) {
+                    holder.relative.setVisibility(View.GONE);
+                    holder.relalike2.setVisibility(View.GONE);
+                    holder.callimg.setVisibility(View.INVISIBLE);
 
-                String data1[] = sharedata.split("=");
+                    String data1[] = sharedata.split("=");
 
-                holder.productname.setText(data1[0]);
-                holder.producttype.setText(data1[1]);
-                holder.productlikecnt.setText("Like(" + data1[3] + ")");
+                    holder.productname.setText(data1[0]);
+                    holder.producttype.setText(data1[1]);
+                    holder.productlikecnt.setText("Like(" + data1[3] + ")");
 
 
-                try {
-                    Glide.with(activity)
-                            .load(activity.getString(R.string.base_image_url)+ data1[4])
-                            .diskCacheStrategy(DiskCacheStrategy.ALL)
-                            .bitmapTransform(new CropCircleTransformation(activity))
-                            .override(100, 100)
-                            .into(holder.imgproduct);
-
-                } catch (Exception e) {
-                    System.out.println("Error in uploading images");
-                }
-
-                if (!data1[2].equals("null")) {
-
-                    Float f = Float.parseFloat(data1[2]);
-                    if (f > 4.5) {
-                        holder.productrating1.setImageResource(R.drawable.ratestar1);
-                        holder.productrating2.setImageResource(R.drawable.ratestar1);
-                        holder.productrating3.setImageResource(R.drawable.ratestar1);
-                        holder.productrating4.setImageResource(R.drawable.ratestar1);
-                        holder.productrating5.setImageResource(R.drawable.ratestar1);
-                    } else if (f > 3.5 && f <= 4.5) {
-                        holder.productrating1.setImageResource(R.drawable.ratestar1);
-                        holder.productrating2.setImageResource(R.drawable.ratestar1);
-                        holder.productrating3.setImageResource(R.drawable.ratestar1);
-                        holder.productrating4.setImageResource(R.drawable.ratestar1);
-                    } else if (f > 2.5 && f <= 3.5) {
-                        holder.productrating1.setImageResource(R.drawable.ratestar1);
-                        holder.productrating2.setImageResource(R.drawable.ratestar1);
-                        holder.productrating3.setImageResource(R.drawable.ratestar1);
-                    } else if (f > 1.5 && f <= 2.5) {
-                        holder.productrating1.setImageResource(R.drawable.ratestar1);
-                        holder.productrating2.setImageResource(R.drawable.ratestar1);
-                    } else if (f <= 1.5 && f > 0.5) {
-                        holder.productrating1.setImageResource(R.drawable.ratestar1);
-
-                    } else if (f <= 0.5) {
-
+                    if (data1[4] == null || data1[4].equals(""))
+                        holder.imgproduct.setBackgroundResource(R.drawable.logo48x48);
+                    else {
+                        Glide.with(activity)
+                                .load(activity.getString(R.string.base_image_url) + data1[4])
+                                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                .bitmapTransform(new CropCircleTransformation(activity))
+                                .override(100, 100)
+                                .into(holder.imgproduct);
                     }
 
-                } else {
 
+                    if (!data1[2].equals("null")) {
+
+                        Float f = Float.parseFloat(data1[2]);
+                        if (f > 4.5) {
+                            holder.productrating1.setImageResource(R.drawable.ratestar1);
+                            holder.productrating2.setImageResource(R.drawable.ratestar1);
+                            holder.productrating3.setImageResource(R.drawable.ratestar1);
+                            holder.productrating4.setImageResource(R.drawable.ratestar1);
+                            holder.productrating5.setImageResource(R.drawable.ratestar1);
+                        } else if (f > 3.5 && f <= 4.5) {
+                            holder.productrating1.setImageResource(R.drawable.ratestar1);
+                            holder.productrating2.setImageResource(R.drawable.ratestar1);
+                            holder.productrating3.setImageResource(R.drawable.ratestar1);
+                            holder.productrating4.setImageResource(R.drawable.ratestar1);
+                        } else if (f > 2.5 && f <= 3.5) {
+                            holder.productrating1.setImageResource(R.drawable.ratestar1);
+                            holder.productrating2.setImageResource(R.drawable.ratestar1);
+                            holder.productrating3.setImageResource(R.drawable.ratestar1);
+                        } else if (f > 1.5 && f <= 2.5) {
+                            holder.productrating1.setImageResource(R.drawable.ratestar1);
+                            holder.productrating2.setImageResource(R.drawable.ratestar1);
+                        } else if (f <= 1.5 && f > 0.5) {
+                            holder.productrating1.setImageResource(R.drawable.ratestar1);
+
+                        } else if (f <= 0.5) {
+
+                        }
+
+                    } else {
+
+                    }
                 }
-
 
                 break;
 
             case "service":
 
-                holder.relative.setVisibility(View.GONE);
-                holder.relalike2.setVisibility(View.GONE);
-                holder.callimg.setVisibility(View.INVISIBLE);
+                if (holder != null) {
+                    holder.relative.setVisibility(View.GONE);
+                    holder.relalike2.setVisibility(View.GONE);
+                    holder.callimg.setVisibility(View.INVISIBLE);
 
-                String data2[] = sharedata.split("=");
-                holder.servicename.setText(data2[0]);
-                holder.servicetype.setText(data2[1]);
-                holder.servicelikecnt.setText("Like(" + data2[3] + ")");
-                try {
-                    Glide.with(activity)
-                            .load(activity.getString(R.string.base_image_url) + data2[4])
-                            .diskCacheStrategy(DiskCacheStrategy.ALL)
-                            .bitmapTransform(new CropCircleTransformation(activity))
-                            .override(100, 100)
-                            .into(holder.imgservice);
+                    String data2[] = sharedata.split("=");
+                    holder.servicename.setText(data2[0]);
+                    holder.servicetype.setText(data2[1]);
+                    holder.servicelikecnt.setText("Like(" + data2[3] + ")");
 
-                } catch (Exception e) {
-                    System.out.println("Error in uploading images");
-                }
-
-                if (!data2[2].equals("null")) {
-
-                    Float f = Float.parseFloat(data2[2]);
-                    if (f > 4.5) {
-                        holder.servicerating1.setImageResource(R.drawable.ratestar1);
-                        holder.servicerating2.setImageResource(R.drawable.ratestar1);
-                        holder.servicerating3.setImageResource(R.drawable.ratestar1);
-                        holder.servicerating4.setImageResource(R.drawable.ratestar1);
-                        holder.servicerating5.setImageResource(R.drawable.ratestar1);
-                    } else if (f > 3.5 && f <= 4.5) {
-                        holder.servicerating1.setImageResource(R.drawable.ratestar1);
-                        holder.servicerating2.setImageResource(R.drawable.ratestar1);
-                        holder.servicerating3.setImageResource(R.drawable.ratestar1);
-                        holder.servicerating4.setImageResource(R.drawable.ratestar1);
-                    } else if (f > 2.5 && f <= 3.5) {
-                        holder.servicerating1.setImageResource(R.drawable.ratestar1);
-                        holder.servicerating2.setImageResource(R.drawable.ratestar1);
-                        holder.servicerating3.setImageResource(R.drawable.ratestar1);
-                    } else if (f > 1.5 && f <= 2.5) {
-                        holder.servicerating1.setImageResource(R.drawable.ratestar1);
-                        holder.servicerating2.setImageResource(R.drawable.ratestar1);
-                    } else if (f <= 1.5 && f > 0.5) {
-                        holder.servicerating1.setImageResource(R.drawable.ratestar1);
-
-                    } else if (f <= 0.5) {
-
+                    if (data2[4] == null || data2[4].equals(""))
+                        holder.imgservice.setBackgroundResource(R.drawable.logo48x48);
+                    else {
+                        Glide.with(activity)
+                                .load(activity.getString(R.string.base_image_url) + data2[4])
+                                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                .bitmapTransform(new CropCircleTransformation(activity))
+                                .override(100, 100)
+                                .into(holder.imgservice);
                     }
 
-                } else {
 
+                    if (!data2[2].equals("null")) {
+
+                        Float f = Float.parseFloat(data2[2]);
+                        if (f > 4.5) {
+                            holder.servicerating1.setImageResource(R.drawable.ratestar1);
+                            holder.servicerating2.setImageResource(R.drawable.ratestar1);
+                            holder.servicerating3.setImageResource(R.drawable.ratestar1);
+                            holder.servicerating4.setImageResource(R.drawable.ratestar1);
+                            holder.servicerating5.setImageResource(R.drawable.ratestar1);
+                        } else if (f > 3.5 && f <= 4.5) {
+                            holder.servicerating1.setImageResource(R.drawable.ratestar1);
+                            holder.servicerating2.setImageResource(R.drawable.ratestar1);
+                            holder.servicerating3.setImageResource(R.drawable.ratestar1);
+                            holder.servicerating4.setImageResource(R.drawable.ratestar1);
+                        } else if (f > 2.5 && f <= 3.5) {
+                            holder.servicerating1.setImageResource(R.drawable.ratestar1);
+                            holder.servicerating2.setImageResource(R.drawable.ratestar1);
+                            holder.servicerating3.setImageResource(R.drawable.ratestar1);
+                        } else if (f > 1.5 && f <= 2.5) {
+                            holder.servicerating1.setImageResource(R.drawable.ratestar1);
+                            holder.servicerating2.setImageResource(R.drawable.ratestar1);
+                        } else if (f <= 1.5 && f > 0.5) {
+                            holder.servicerating1.setImageResource(R.drawable.ratestar1);
+
+                        } else if (f <= 0.5) {
+
+                        }
+
+                    } else {
+
+                    }
                 }
 
 
@@ -505,100 +511,97 @@ private int store_id ,vehicle_id, product_id, search_id, status_id, auction_id, 
 
             case "vehicle":
 
-                String data3[] = sharedata.split("=");
+                if (holder != null) {
+                    String data3[] = sharedata.split("=");
 
-                holder.title.setText(data3[0]);
-                holder.vprice.setText(data3[1]);
-                holder.vbrand.setText(data3[2]);
-                holder.vmodel.setText(data3[3]);
-                holder.vyear.setText(data3[4]);
-                holder.vehiclelikecnt.setText("Like(" + data3[10] + ")");
-                holder.vkms.setText(data3[5]);
-                holder.vregno.setText(data3[8]);
-                holder.vrto.setText(data3[6]);
-                holder.vlocation.setText(data3[7]);
+                    holder.title.setText(data3[0]);
+                    holder.vprice.setText(data3[1]);
+                    holder.vbrand.setText(data3[2]);
+                    holder.vmodel.setText(data3[3]);
+                    holder.vyear.setText(data3[4]);
+                    holder.vehiclelikecnt.setText("Like(" + data3[10] + ")");
+                    holder.vkms.setText(data3[5]);
+                    holder.vregno.setText(data3[8]);
+                    holder.vrto.setText(data3[6]);
+                    holder.vlocation.setText(data3[7]);
 
-                holder.relative.setVisibility(View.GONE);
-                holder.relalike2.setVisibility(View.GONE);
-                holder.callimg.setVisibility(View.GONE);
+                    holder.relative.setVisibility(View.GONE);
+                    holder.relalike2.setVisibility(View.GONE);
+                    holder.callimg.setVisibility(View.GONE);
 
-                System.out.println("imageeeee=========" + data3[9]);
+                    System.out.println("imageeeee=========" + data3[9]);
 
 
-                if (data3[9] == null || data3[9].equals("")) {
-                    holder.imgvehicle.setBackgroundResource(R.drawable.vehiimg);
+                    if (data3[9] == null || data3[9].equals(""))
+                        holder.imgvehicle.setBackgroundResource(R.drawable.logo48x48);
 
-                }
-                if (data3[9] != null || !data3[9].equals(""))
-                    try {
-
+                    else {
                         Glide.with(activity)
-                                .load(activity.getString(R.string.base_image_url)+ data3[9])
+                                .load(activity.getString(R.string.base_image_url) + data3[9])
                                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                                 .bitmapTransform(new CropCircleTransformation(activity))
                                 .override(100, 100)
                                 .into(holder.imgvehicle);
-
-                    } catch (Exception e) {
-                        System.out.println("Error in uploading images");
                     }
+                }
 
                 break;
 
 
             case "mysearch":
 
-                String data4[] = sharedata.split("=");
+                if (holder != null) {
+                    String data4[] = sharedata.split("=");
 
-                holder.category.setText(data4[0]);
-                holder.brand.setText(data4[1]);
-                holder.model.setText(data4[2]);
-                holder.price.setText(data4[3]);
-                holder.year.setText(data4[4]);
-                holder.dateofsearch.setText(data4[5]);
-                holder.searchleads.setText(data4[6]);
+                    holder.category.setText(data4[0]);
+                    holder.brand.setText(data4[1]);
+                    holder.model.setText(data4[2]);
+                    holder.price.setText(data4[3]);
+                    holder.year.setText(data4[4]);
+                    holder.dateofsearch.setText(data4[5]);
+                    holder.searchleads.setText(data4[6]);
 
-                holder.relaprofilelike.setVisibility(View.GONE);
-                holder.relalike2.setVisibility(View.GONE);
+                    holder.relaprofilelike.setVisibility(View.GONE);
+                    holder.relalike2.setVisibility(View.GONE);
+                }
 
                 break;
 
             case "poststatus":
 
-                String data5[] = sharedata.split("=");
+                if (holder != null) {
+                    String data5[] = sharedata.split("=");
 
-                holder.poststatus.setText("\"" + data5[0] + "\"");
-                holder.relaprofilelike.setVisibility(View.GONE);
-                holder.relalike2.setVisibility(View.GONE);
+                    holder.poststatus.setText("\"" + data5[0] + "\"");
+                    holder.relaprofilelike.setVisibility(View.GONE);
+                    holder.relalike2.setVisibility(View.GONE);
+                }
 
                 break;
 
             case "uploadvehicle":
+                if (holder != null) {
+                    String data6[] = sharedata.split("=");
 
-                String data6[] = sharedata.split("=");
+                    holder.title.setText(data6[0]);
+                    holder.vprice.setText(data6[1]);
+                    holder.vbrand.setText(data6[2]);
+                    holder.vmodel.setText(data6[3]);
+                    holder.vyear.setText(data6[4]);
+                    holder.vehiclelikecnt.setText("Like(" + data6[10] + ")");
 
-                holder.title.setText(data6[0]);
-                holder.vprice.setText(data6[1]);
-                holder.vbrand.setText(data6[2]);
-                holder.vmodel.setText(data6[3]);
-                holder.vyear.setText(data6[4]);
-                holder.vehiclelikecnt.setText("Like(" + data6[10] + ")");
+                    holder.vregno.setText(data6[8]);
+                    holder.vrto.setText(data6[6]);
+                    holder.vlocation.setText(data6[7]);
+                    holder.vkms.setText(data6[5]);
 
-                holder.vregno.setText(data6[8]);
-                holder.vrto.setText(data6[6]);
-                holder.vlocation.setText(data6[7]);
-                holder.vkms.setText(data6[5]);
+                    holder.relative.setVisibility(View.GONE);
+                    holder.relalike2.setVisibility(View.GONE);
+                    holder.callimg.setVisibility(View.GONE);
 
-                holder.relative.setVisibility(View.GONE);
-                holder.relalike2.setVisibility(View.GONE);
-                holder.callimg.setVisibility(View.GONE);
-
-                if (data6[9] == null || data6[9].equals("")) {
-                    holder.imgvehicle.setBackgroundResource(R.drawable.store);
-
-                }
-                if (data6[9] != null || !data6[9].equals(""))
-                    try {
+                    if (data6[9] == null || data6[9].equals(""))
+                        holder.imgvehicle.setBackgroundResource(R.drawable.logo48x48);
+                    else {
                         Glide.with(activity)
                                 .load(activity.getString(R.string.base_image_url) + data6[9])
                                 .diskCacheStrategy(DiskCacheStrategy.ALL)
@@ -606,82 +609,83 @@ private int store_id ,vehicle_id, product_id, search_id, status_id, auction_id, 
                                 .override(100, 100)
                                 .into(holder.imgvehicle);
 
-                    } catch (Exception e) {
-                        System.out.println("Error in uploading images");
                     }
+                }
 
                 break;
 
             case "auction":
+                if (holder != null) {
+                    String data7[] = sharedata.split("=");
 
-                String data7[] = sharedata.split("=");
-
-                holder.auctitle.setText(data7[0]);
-                holder.aucnoofvehicles.setText(data7[1]);
-                holder.aucenddate.setText(data7[2]);
-                holder.aucendtime.setText(data7[3]);
-                holder.auctype.setText(data7[4]);
-                holder.going.setText(data7[5]);
-                holder.ignore.setText(data7[6]);
-
-
-                holder.relaprofilelike.setVisibility(View.GONE);
-                holder.relatebutton.setVisibility(View.GONE);
-                holder.relGoing.setVisibility(View.GONE);
-                holder.relIgnore.setVisibility(View.GONE);
+                    holder.auctitle.setText(data7[0]);
+                    holder.aucnoofvehicles.setText(data7[1]);
+                    holder.aucenddate.setText(data7[2]);
+                    holder.aucendtime.setText(data7[3]);
+                    holder.auctype.setText(data7[4]);
+                    holder.going.setText(data7[5]);
+                    holder.ignore.setText(data7[6]);
 
 
-                if (!data7[7].equals("myauction")) {
+                    holder.relaprofilelike.setVisibility(View.GONE);
+                    holder.relatebutton.setVisibility(View.GONE);
                     holder.relGoing.setVisibility(View.GONE);
                     holder.relIgnore.setVisibility(View.GONE);
 
+
+                    if (!data7[7].equals("myauction")) {
+                        holder.relGoing.setVisibility(View.GONE);
+                        holder.relIgnore.setVisibility(View.GONE);
+
+                    }
                 }
 
                 break;
 
 
             case "loan":
+                if (holder != null) {
+                    String data8[] = sharedata.split("=");
 
-                String data8[] = sharedata.split("=");
-
-                holder.auctioneer.setText(data8[0]);
-                holder.titleevent.setText(data8[2]);
-                holder.eventlocation.setText(data8[3]);
-                holder.start_date.setText(data8[5]);
-                holder.start_time.setText(data8[6]);
-                holder.end_date.setText(data8[7]);
-                holder.end_time.setText(data8[8]);
-                holder.btnshare.setVisibility(View.GONE);
-
-
-                try {
-
-                    if (!data8[9].equals("") || !data8[9].equals("null") || !data8[9].equals(null)) {
-
-                        String imagename =activity.getString(R.string.base_image_url) + data8[9];
-
-                        imagename = imagename.replaceAll(" ", "%20");
-
-                        System.out.println("in list=======" + imagename);
-
-                        try {
-
-                            Glide.with(activity)
-                                    .load(imagename)
-                                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                                    .bitmapTransform(new CropCircleTransformation(activity))
-                                    .into(holder.image);
+                    holder.auctioneer.setText(data8[0]);
+                    holder.titleevent.setText(data8[2]);
+                    holder.eventlocation.setText(data8[3]);
+                    holder.start_date.setText(data8[5]);
+                    holder.start_time.setText(data8[6]);
+                    holder.end_date.setText(data8[7]);
+                    holder.end_time.setText(data8[8]);
+                    holder.btnshare.setVisibility(View.GONE);
 
 
-                        } catch (Exception e) {
-                            System.out.println("Error in uploading images");
-                        }
-                    } else
-                        holder.image.setImageResource(R.drawable.lonemelaimage);
+                    try {
 
-                } catch (Exception e) {
+                        if (!data8[9].equals("") || !data8[9].equals("null") || data8[9] != null) {
 
-                    e.printStackTrace();
+                            String imagename = activity.getString(R.string.base_image_url) + data8[9];
+
+                            imagename = imagename.replaceAll(" ", "%20");
+
+                            System.out.println("in list=======" + imagename);
+
+                            try {
+
+                                Glide.with(activity)
+                                        .load(imagename)
+                                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                        .bitmapTransform(new CropCircleTransformation(activity))
+                                        .into(holder.image);
+
+
+                            } catch (Exception e) {
+                                System.out.println("Error in uploading images");
+                            }
+                        } else
+                            holder.image.setImageResource(R.drawable.logo48x48);
+
+                    } catch (Exception e) {
+
+                        e.printStackTrace();
+                    }
                 }
 
                 break;
@@ -689,52 +693,54 @@ private int store_id ,vehicle_id, product_id, search_id, status_id, auction_id, 
 
             case "exchange":
 
-                String data9[] = sharedata.split("=");
+                if (holder != null) {
+                    String data9[] = sharedata.split("=");
 
-                holder.auctioneer.setText(data9[0]);
-                holder.titleevent.setText(data9[2]);
-                holder.eventlocation.setText(data9[3]);
-                holder.start_date.setText(data9[5]);
-                holder.start_time.setText(data9[6]);
-                holder.end_date.setText(data9[7]);
-                holder.end_time.setText(data9[8]);
-
-
-                holder.btnshare.setVisibility(View.GONE);
+                    holder.auctioneer.setText(data9[0]);
+                    holder.titleevent.setText(data9[2]);
+                    holder.eventlocation.setText(data9[3]);
+                    holder.start_date.setText(data9[5]);
+                    holder.start_time.setText(data9[6]);
+                    holder.end_date.setText(data9[7]);
+                    holder.end_time.setText(data9[8]);
 
 
-                try {
-                    System.out.println(data9[9]);
-
-                    if (!data9[9].equals("") || !data9[9].equals("null") || !data9[9].equals(null)) {
-
-                        String imagename = activity.getString(R.string.base_image_url) + data9[9];
-
-                        imagename = imagename.replaceAll(" ", "%20");
-
-                        System.out.println("in list=======" + imagename);
-
-                        try {
-
-                            Glide.with(activity)
-                                    .load(imagename)
-                                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                                    .bitmapTransform(new CropCircleTransformation(activity))
-                                    .into(holder.image);
+                    holder.btnshare.setVisibility(View.GONE);
 
 
-                        } catch (Exception e) {
-                            System.out.println("Error in uploading images");
+                    try {
+                        System.out.println(data9[9]);
+
+                        if (!data9[9].equals("") || !data9[9].equals("null") || data9[9] != null) {
+
+                            String imagename = activity.getString(R.string.base_image_url) + data9[9];
+
+                            imagename = imagename.replaceAll(" ", "%20");
+
+                            System.out.println("in list=======" + imagename);
+
+                            try {
+
+                                Glide.with(activity)
+                                        .load(imagename)
+                                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                        .bitmapTransform(new CropCircleTransformation(activity))
+                                        .into(holder.image);
+
+
+                            } catch (Exception e) {
+                                System.out.println("Error in uploading images");
+                            }
+                        } else if (data9[9].equals(""))
+
+                        {
+                            holder.image.setImageResource(R.drawable.exchangeimage);
+
                         }
-                    } else if (data9[9].equals(""))
+                    } catch (Exception e) {
 
-                    {
-                        holder.image.setImageResource(R.drawable.exchangeimage);
-
+                        e.printStackTrace();
                     }
-                } catch (Exception e) {
-
-                    e.printStackTrace();
                 }
 
                 break;

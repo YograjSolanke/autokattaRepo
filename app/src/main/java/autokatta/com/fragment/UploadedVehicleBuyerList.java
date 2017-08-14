@@ -56,7 +56,7 @@ public class UploadedVehicleBuyerList extends Fragment implements RequestNotifie
     View myVehicles;
     String vimagename = "";
     ArrayList<String> vimages = new ArrayList<>();
-    String  title, price, vcategory, brand, vmodel, image, noofleads, uploaddate, rto_city, manufacture_year;
+    String title, price, vcategory, brand, vmodel, image, noofleads, uploaddate, rto_city, manufacture_year;
     ImageView vehicleimage;
     int vehicle_id;
     TextView edittitles, editprices, editcategorys, editbrands, editmodels, editleads, edituploadedon;
@@ -70,7 +70,7 @@ public class UploadedVehicleBuyerList extends Fragment implements RequestNotifie
 
         apiCall = new ApiCall(getActivity(), this);
         mSharedPreferences = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE);
-         myContact = mSharedPreferences.getString("loginContact", "7841023392");
+        myContact = mSharedPreferences.getString("loginContact", "7841023392");
 
         mSwipeRefreshLayout = (SwipeRefreshLayout) myVehicles.findViewById(R.id.swipeRefreshLayoutUploadedVehicleBuyer);
         mRecyclerView = (RecyclerView) myVehicles.findViewById(R.id.buyerlist);
@@ -121,7 +121,6 @@ public class UploadedVehicleBuyerList extends Fragment implements RequestNotifie
         });
 
 
-
         editbrands.setText(brand);
         edittitles.setText(title);
         editprices.setText(price);
@@ -131,12 +130,12 @@ public class UploadedVehicleBuyerList extends Fragment implements RequestNotifie
         editmodels.setText(vmodel);
 
 
-        if (image.equalsIgnoreCase("") || image.toString().equalsIgnoreCase(null) || image.toString().equalsIgnoreCase("null")) {
+        if (image.equalsIgnoreCase("") || image.equalsIgnoreCase(null) || image.equalsIgnoreCase("null")) {
 
             vehicleimage.setBackgroundResource(R.drawable.vehiimg);
         }
         if (!image.equals("") || !image.equalsIgnoreCase(null) || !image.equalsIgnoreCase("null")) {
-            String[] parts = image.toString().split(",");
+            String[] parts = image.split(",");
 
             for (int l = 0; l < parts.length; l++) {
                 vimages.add(parts[l]);
@@ -144,7 +143,7 @@ public class UploadedVehicleBuyerList extends Fragment implements RequestNotifie
             }
             System.out.println(getString(R.string.base_image_url) + vimages.get(0));
 
-            vimagename =getString(R.string.base_image_url) + vimages.get(0);
+            vimagename = getString(R.string.base_image_url) + vimages.get(0);
             vimagename = vimagename.replaceAll(" ", "%20");
             try {
 
@@ -159,7 +158,6 @@ public class UploadedVehicleBuyerList extends Fragment implements RequestNotifie
                 System.out.println("Error in uploading images");
             }
         }
-
 
 
         return myVehicles;
@@ -246,20 +244,15 @@ public class UploadedVehicleBuyerList extends Fragment implements RequestNotifie
     public void notifyError(Throwable error) {
         mSwipeRefreshLayout.setRefreshing(false);
         if (error instanceof SocketTimeoutException) {
-            CustomToast.customToast(getActivity(),getString(R.string._404_));
-            //   showMessage(getActivity(), getString(R.string._404_));
+            CustomToast.customToast(getActivity(), getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
-            CustomToast.customToast(getActivity(),getString(R.string.no_response));
-            // showMessage(getActivity(), getString(R.string.no_response));
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            CustomToast.customToast(getActivity(),getString(R.string.no_response));
-            //   showMessage(getActivity(), getString(R.string.no_response));
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
-            CustomToast.customToast(getActivity(),getString(R.string.no_internet));
-            //   errorMessage(getActivity(), getString(R.string.no_internet));
+            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
-            CustomToast.customToast(getActivity(),getString(R.string.no_internet));
-            //   errorMessage(getActivity(), getString(R.string.no_internet));
+            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         } else {
             Log.i("Check Class-", "UploadedVehicleBuyerList Fragment");
             error.printStackTrace();

@@ -92,7 +92,7 @@ public class ShareWithGroupFragment extends Fragment implements RequestNotifier 
                     int id = myGroup.getId();
                     String title = myGroup.getTitle();
                     String image = myGroup.getImage();
-                    if (image.equals(null) || image.equals("null") || image.equals(""))
+                    if (image == null || image.equals("null") || image.equals(""))
                         alldata.add(title + "=" + id + "=null");
                     else
                         alldata.add(title + "=" + id + "=" + image);
@@ -110,7 +110,7 @@ public class ShareWithGroupFragment extends Fragment implements RequestNotifier 
                     String title = joinedGroup.getTitle();
                     String image = joinedGroup.getImage();
 
-                    if (image.equals(null) || image.equals("null") || image.equals(""))
+                    if (image == null || image.equals("null") || image.equals(""))
                         alldata.add(title + "=" + id + "=null");
                     else
                         alldata.add(title + "=" + id + "=" + image);

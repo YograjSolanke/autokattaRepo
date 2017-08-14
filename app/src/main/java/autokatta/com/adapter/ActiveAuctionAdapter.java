@@ -246,7 +246,7 @@ public class ActiveAuctionAdapter extends RecyclerView.Adapter<ActiveAuctionAdap
 
         holder.btnshare.setOnClickListener(new View.OnClickListener() {
 
-            String imageFilePath = "", imagename = "http://autokatta.com/mobile/AutokattaImages/" + "logo.png";
+            String imageFilePath = "", imagename = activity.getString(R.string.base_image_url) + "logo48x48.png";
             Intent intent = new Intent(Intent.ACTION_SEND);
 
             @Override

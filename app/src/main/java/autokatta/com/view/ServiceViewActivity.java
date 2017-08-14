@@ -544,7 +544,7 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
                                 //silder code?????????????????????????????????????????????????????????????????
                                 Hash_file_maps = new HashMap<String, String>();
 
-                                String dp_path = "http://autokatta.com/mobile/Service_pics/";// + dp;
+                                String dp_path = getString(R.string.base_image_url);
 
                                 if (simages.contains(",")) {
                                     String[] items = simages.split(",");
@@ -747,8 +747,8 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
                 for (int i = 0; i < images.size(); i++) {
 
                     for (int j = 0; j < tagname.size(); j++) {
-                        if (images.get(i).toString().equalsIgnoreCase(tagname.get(j).toString()))
-                            idlist = idlist + "," + spnid.get(j).toString();
+                        if (images.get(i).equalsIgnoreCase(tagname.get(j)))
+                            idlist = idlist + "," + spnid.get(j);
                     }
 
                 }
@@ -958,9 +958,9 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
 
                 if (simages.equalsIgnoreCase("") || simages.equalsIgnoreCase(null) ||
                         simages.equalsIgnoreCase("null")) {
-                    simagename = "http://autokatta.com/mobile/store_profiles/" + "a.jpg";
+                    simagename = getString(R.string.base_image_url) + "logo48x48.png";
                 } else {
-                    simagename = "http://autokatta.com/mobile/Service_pics/" + imageslist;
+                    simagename = getString(R.string.base_image_url) + imageslist;
                 }
                 Log.e("TAG", "img : " + simagename);
 
