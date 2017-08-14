@@ -795,9 +795,9 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                                 if (notificationList.get(mProfileHolder.getAdapterPosition()).getSenderPicture().equalsIgnoreCase("") ||
                                         notificationList.get(mProfileHolder.getAdapterPosition()).getSenderPicture().equalsIgnoreCase(null) ||
                                         notificationList.get(mProfileHolder.getAdapterPosition()).getSenderPicture().equalsIgnoreCase("null")) {
-                                    imagename = "http://autokatta.com/mobile/store_profiles/" + "a.jpg";
+                                    imagename = mActivity.getString(R.string.base_image_url) + "logo48x48.png";
                                 } else {
-                                    imagename = "http://autokatta.com/mobile/profile_profile_pics/" + notificationList.get(mProfileHolder.getAdapterPosition()).getSenderPicture();
+                                    imagename = mActivity.getString(R.string.base_image_url) + notificationList.get(mProfileHolder.getAdapterPosition()).getSenderPicture();
                                 }
                                 Log.e("TAG", "img : " + imagename);
 
@@ -1103,9 +1103,9 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                                 if (notificationList.get(mStoreHolder.getAdapterPosition()).getProductImage().equalsIgnoreCase("") ||
                                         notificationList.get(mStoreHolder.getAdapterPosition()).getProductImage().equalsIgnoreCase(null) ||
                                         notificationList.get(mStoreHolder.getAdapterPosition()).getProductImage().equalsIgnoreCase("null")) {
-                                    imagename = "http://autokatta.com/mobile/store_profiles/" + "a.jpg";
+                                    imagename = mActivity.getString(R.string.base_image_url) + "logo48x48.png";
                                 } else {
-                                    imagename = "http://autokatta.com/mobile/store_profiles/" + notificationList.get(mStoreHolder.getAdapterPosition()).getStoreImage();
+                                    imagename = mActivity.getString(R.string.base_image_url) + notificationList.get(mStoreHolder.getAdapterPosition()).getStoreImage();
                                 }
                                 Log.e("TAG", "img : " + imagename);
 
@@ -1492,9 +1492,9 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                                 if (notificationList.get(mVehicleHolder.getAdapterPosition()).getUpVehicleImage().equalsIgnoreCase("") ||
                                         notificationList.get(mVehicleHolder.getAdapterPosition()).getUpVehicleImage().equalsIgnoreCase(null) ||
                                         notificationList.get(mVehicleHolder.getAdapterPosition()).getUpVehicleImage().equalsIgnoreCase("null")) {
-                                    imagename = "http://autokatta.com/mobile/store_profiles/" + "a.jpg";
+                                    imagename = mActivity.getString(R.string.base_image_url) + "logo48x48.png";
                                 } else {
-                                    imagename = "http://autokatta.com/mobile/store_profiles/" + notificationList.get(mVehicleHolder.getAdapterPosition()).getUpVehicleImage();
+                                    imagename = mActivity.getString(R.string.base_image_url) + notificationList.get(mVehicleHolder.getAdapterPosition()).getUpVehicleImage();
                                 }
                                 Log.e("TAG", "img : " + imagename);
 
@@ -1741,9 +1741,9 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                                 if (notificationList.get(mProductHolder.getAdapterPosition()).getProductImage().equalsIgnoreCase("") ||
                                         notificationList.get(mProductHolder.getAdapterPosition()).getProductImage().equalsIgnoreCase(null) ||
                                         notificationList.get(mProductHolder.getAdapterPosition()).getProductImage().equalsIgnoreCase("null")) {
-                                    imagename = "http://autokatta.com/mobile/store_profiles/" + "a.jpg";
+                                    imagename = mActivity.getString(R.string.base_image_url) + "logo48x48.png";
                                 } else {
-                                    imagename = "http://autokatta.com/mobile/profile_profile_pics/" + notificationList.get(mProductHolder.getAdapterPosition()).getProductImage();
+                                    imagename = mActivity.getString(R.string.base_image_url) + notificationList.get(mProductHolder.getAdapterPosition()).getProductImage();
                                 }
                                 Log.e("TAG", "img : " + imagename);
 
@@ -1992,9 +1992,9 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                                 if (notificationList.get(mServiceHolder.getAdapterPosition()).getServiceImage().equalsIgnoreCase("") ||
                                         notificationList.get(mServiceHolder.getAdapterPosition()).getServiceImage().equalsIgnoreCase(null) ||
                                         notificationList.get(mServiceHolder.getAdapterPosition()).getServiceImage().equalsIgnoreCase("null")) {
-                                    imagename = "http://autokatta.com/mobile/store_profiles/" + "a.jpg";
+                                    imagename = mActivity.getString(R.string.base_image_url) + "logo48x48.png";
                                 } else {
-                                    imagename = "http://autokatta.com/mobile/profile_profile_pics/" + notificationList.get(mServiceHolder.getAdapterPosition()).getServiceImage();
+                                    imagename = mActivity.getString(R.string.base_image_url) + notificationList.get(mServiceHolder.getAdapterPosition()).getServiceImage();
                                 }
                                 Log.e("TAG", "img : " + imagename);
 
@@ -2572,9 +2572,9 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
 //                                if (notificationList.get(mUpVehicleHolder.getAdapterPosition()).getUpVehicleImage().equalsIgnoreCase("") ||
 //                                        notificationList.get(mUpVehicleHolder.getAdapterPosition()).getUpVehicleImage().equalsIgnoreCase(null) ||
 //                                        notificationList.get(mUpVehicleHolder.getAdapterPosition()).getUpVehicleImage().equalsIgnoreCase("null")) {
-//                                    imagename = "http://autokatta.com/mobile/store_profiles/" + "a.jpg";
+//                                    imagename = mActivity.getString(R.string.base_image_url) + "logo48x48.png";
 //                                } else {
-//                                    imagename = "http://autokatta.com/mobile/store_profiles/" + notificationList.get(mUpVehicleHolder.getAdapterPosition()).getUpVehicleImage();
+//                                    imagename = mActivity.getString(R.string.base_image_url) + notificationList.get(mUpVehicleHolder.getAdapterPosition()).getUpVehicleImage();
 //                                }
 //                                Log.e("TAG", "img : " + imagename);
 //
@@ -2890,9 +2890,9 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                                 if (notificationList.get(mUpVehicleHolder.getAdapterPosition()).getUpVehicleImage().equalsIgnoreCase("") ||
                                         notificationList.get(mUpVehicleHolder.getAdapterPosition()).getUpVehicleImage().equalsIgnoreCase(null) ||
                                         notificationList.get(mUpVehicleHolder.getAdapterPosition()).getUpVehicleImage().equalsIgnoreCase("null")) {
-                                    imagename = "http://autokatta.com/mobile/store_profiles/" + "a.jpg";
+                                    imagename = mActivity.getString(R.string.base_image_url) + "logo48x48.png";
                                 } else {
-                                    imagename = "http://autokatta.com/mobile/store_profiles/" + notificationList.get(mUpVehicleHolder.getAdapterPosition()).getUpVehicleImage();
+                                    imagename = mActivity.getString(R.string.base_image_url) + notificationList.get(mUpVehicleHolder.getAdapterPosition()).getUpVehicleImage();
                                 }
                                 Log.e("TAG", "img : " + imagename);
 
