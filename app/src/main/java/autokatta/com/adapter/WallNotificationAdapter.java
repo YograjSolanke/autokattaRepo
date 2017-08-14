@@ -647,7 +647,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                 }
 
                 mProfileHolder.mProfileAction.setText(notificationList.get(position).getSenderName() + " "
-                        + notificationList.get(position).getAction() + " " + notificationList.get(position).getReceiverName() + " " + "Profile");
+                        + notificationList.get(position).getAction() + "\n" + notificationList.get(position).getReceiverName() + " " + "Profile");
 
                 mProfileHolder.mActionTime.setText(notificationList.get(position).getDateTime());
                 mProfileHolder.mUserName.setText(notificationList.get(position).getSenderName());
@@ -878,7 +878,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                 }
 
                 mStoreHolder.mStoreActionName.setText(notificationList.get(position).getSenderName() + " "
-                        + notificationList.get(position).getAction() + " " + notificationList.get(position).getReceiverName() + " "
+                        + notificationList.get(position).getAction() + "\n" + notificationList.get(position).getReceiverName() + " "
                         + notificationList.get(position).getStoreName() + " " + "Store");
 
                 mStoreHolder.mActionTime.setText(notificationList.get(position).getDateTime());
@@ -1175,7 +1175,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                 final GroupNotifications mGroupHolder = (GroupNotifications) holder;
 
                 mGroupHolder.mActionName.setText(notificationList.get(position).getSenderName() + " " +
-                        notificationList.get(position).getAction() + " " + notificationList.get(position).getReceiverName() +
+                        notificationList.get(position).getAction() + "\n" + notificationList.get(position).getReceiverName() +
                         " in " + notificationList.get(position).getGroupName()
                         + " group");
                 mGroupHolder.mGroupName.setText(notificationList.get(position).getGroupName());
@@ -1264,7 +1264,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                 }
 
                 mVehicleHolder.mActionName.setText(notificationList.get(position).getSenderName() + " "
-                        + notificationList.get(position).getAction() + " " + notificationList.get(position).getReceiverName() + " "
+                        + notificationList.get(position).getAction() + "\n" + notificationList.get(position).getReceiverName() + " "
                         + notificationList.get(position).getUpVehicleTitle() + " " + "Vehicle");
 
                 mVehicleHolder.mActionTime.setText(notificationList.get(position).getDateTime());
@@ -1575,7 +1575,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                 }
 
                 mProductHolder.mProductActionName.setText(notificationList.get(position).getSenderName() + " " +
-                        notificationList.get(position).getAction() + " " +
+                        notificationList.get(position).getAction() + "\n" +
                         notificationList.get(position).getProductName()
                         + " product");
 
@@ -1825,7 +1825,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                 }
 
                 mServiceHolder.mServiceActionName.setText(notificationList.get(position).getSenderName() + " " +
-                        notificationList.get(position).getAction() + " " +
+                        notificationList.get(position).getAction() + "\n" +
                         notificationList.get(position).getServiceName()
                         + " service");
 
@@ -2660,7 +2660,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
 
                 mUpVehicleHolder.mActionName.setText(notificationList.get(position).getSenderName() + " "
                         + notificationList.get(position).getAction() + " "
-                        + "'" + notificationList.get(position).getUpVehicleTitle() + "'"
+                        + "\n'" + notificationList.get(position).getUpVehicleTitle() + "'"
                         + " Vehicle In"
                         + "'" + notificationList.get(position).getGroupName() + "'"
                         + " Group");
