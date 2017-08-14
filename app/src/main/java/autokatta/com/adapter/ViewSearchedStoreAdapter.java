@@ -274,9 +274,9 @@ public class ViewSearchedStoreAdapter extends RecyclerView.Adapter<ViewSearchedS
             public void onClick(View v) {
                 if (object.getStoreImage().equalsIgnoreCase("") || object.getStoreImage().equalsIgnoreCase(null) ||
                         object.getStoreImage().equalsIgnoreCase("null")) {
-                    imagename = "http://autokatta.com/mobile/store_profiles/" + "a.jpg";
+                    imagename = activity.getString(R.string.base_image_url) + "logo48x48.png";
                 } else {
-                    imagename = "http://autokatta.com/mobile/store_profiles/" + object.getStoreImage();
+                    imagename = activity.getString(R.string.base_image_url) + object.getStoreImage();
                 }
                 Log.e("TAG", "img : " + imagename);
 

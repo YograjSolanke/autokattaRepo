@@ -480,9 +480,9 @@ public class GroupNotificationAdapter extends RecyclerView.Adapter<RecyclerView.
                                 if (notificationList.get(mUpVehicleHolder.getAdapterPosition()).getUpVehicleImage().equalsIgnoreCase("") ||
                                         notificationList.get(mUpVehicleHolder.getAdapterPosition()).getUpVehicleImage().equalsIgnoreCase(null) ||
                                         notificationList.get(mUpVehicleHolder.getAdapterPosition()).getUpVehicleImage().equalsIgnoreCase("null")) {
-                                    imagename = "http://autokatta.com/mobile/store_profiles/" + "a.jpg";
+                                    imagename = mActivity.getString(R.string.base_image_url) + "logo48x48.png";
                                 } else {
-                                    imagename = "http://autokatta.com/mobile/store_profiles/" + notificationList.get(mUpVehicleHolder.getAdapterPosition()).getUpVehicleImage();
+                                    imagename = mActivity.getString(R.string.base_image_url) + notificationList.get(mUpVehicleHolder.getAdapterPosition()).getUpVehicleImage();
                                 }
                                 Log.e("TAG", "img : " + imagename);
 

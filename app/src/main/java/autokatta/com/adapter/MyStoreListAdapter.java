@@ -243,9 +243,9 @@ public class MyStoreListAdapter extends RecyclerView.Adapter<MyStoreListAdapter.
 
                 if (mStoreList.get(position).getStoreImage().equalsIgnoreCase("") || mStoreList.get(position).getStoreImage().equalsIgnoreCase(null) ||
                         mStoreList.get(position).getStoreImage().equalsIgnoreCase("null")) {
-                    imagename = "http://autokatta.com/mobile/store_profiles/" + "a.jpg";
+                    imagename = mActivity.getString(R.string.base_image_url) + "logo48x48.png";
                 } else {
-                    imagename = "http://autokatta.com/mobile/store_profiles/" + mStoreList.get(position).getStoreImage();
+                    imagename = mActivity.getString(R.string.base_image_url) + mStoreList.get(position).getStoreImage();
                 }
                 Log.e("TAG", "img : " + imagename);
 

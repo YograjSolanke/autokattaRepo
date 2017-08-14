@@ -364,9 +364,9 @@ public class StoreNotificationAdapter extends RecyclerView.Adapter<RecyclerView.
                         if (notificationList.get(mStoreHolder.getAdapterPosition()).getProductImage().equalsIgnoreCase("") ||
                                 notificationList.get(mStoreHolder.getAdapterPosition()).getProductImage().equalsIgnoreCase(null) ||
                                 notificationList.get(mStoreHolder.getAdapterPosition()).getProductImage().equalsIgnoreCase("null")) {
-                            imagename = "http://autokatta.com/mobile/store_profiles/" + "a.jpg";
+                            imagename = mActivity.getString(R.string.base_image_url) + "logo48x48.png";
                         } else {
-                            imagename = "http://autokatta.com/mobile/store_profiles/" + notificationList.get(mStoreHolder.getAdapterPosition()).getStoreImage();
+                            imagename = mActivity.getString(R.string.base_image_url) + notificationList.get(mStoreHolder.getAdapterPosition()).getStoreImage();
                         }
                         Log.e("TAG", "img : " + imagename);
 

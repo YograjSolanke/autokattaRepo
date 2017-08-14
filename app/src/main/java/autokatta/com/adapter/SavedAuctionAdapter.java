@@ -40,7 +40,6 @@ public class SavedAuctionAdapter extends RecyclerView.Adapter<SavedAuctionAdapte
         this.mMainlist = itemlist;
     }
 
-
     @Override
     public SavedAuctionAdapter.AuctionHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.saved_auction_adapter, parent, false);

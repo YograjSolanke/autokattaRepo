@@ -564,9 +564,9 @@ public class AuctionNotificationAdapter extends RecyclerView.Adapter<AuctionNoti
 
                     if (mItemList.get(position).getImage().equalsIgnoreCase("") || mItemList.get(position).getImage().equalsIgnoreCase(null) ||
                             mItemList.get(position).getImage().equalsIgnoreCase("null")) {
-                        imagename = "logo.png";
+                        imagename = mActivity.getString(R.string.base_image_url) + "logo48x48.png";
                     } else {
-                        imagename = "http://autokatta.com/mobile/loan_exchange_events_pics/" + mItemList.get(position).getImage();
+                        imagename = mActivity.getString(R.string.base_image_url) + mItemList.get(position).getImage();
                     }
 
                     allDetails = mItemList.get(position).getUsername() + "="
@@ -595,9 +595,9 @@ public class AuctionNotificationAdapter extends RecyclerView.Adapter<AuctionNoti
 
                     if (mItemList.get(position).getImage().equalsIgnoreCase("") || mItemList.get(position).getImage().equalsIgnoreCase(null) ||
                             mItemList.get(position).getImage().equalsIgnoreCase("null")) {
-                        imagename = "logo.png";
+                        imagename = mActivity.getString(R.string.base_image_url) + "logo48x48.png";
                     } else {
-                        imagename = "http://autokatta.com/mobile/loan_exchange_events_pics/" + mItemList.get(position).getImage();
+                        imagename = mActivity.getString(R.string.base_image_url) + mItemList.get(position).getImage();
                     }
 
                     allDetails = mItemList.get(position).getUsername() + "="
@@ -631,7 +631,7 @@ public class AuctionNotificationAdapter extends RecyclerView.Adapter<AuctionNoti
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
-                String imageFilePath = "", imagename = "http://autokatta.com/mobile/AutokattaImages/" + "logo.png";
+                String imageFilePath = "", imagename = mActivity.getString(R.string.base_image_url) + "logo48x48.png";
                 Intent intent = new Intent(Intent.ACTION_SEND);
 
                 if (mContact.equals(mItemList.get(position).getContact()))
@@ -654,9 +654,9 @@ public class AuctionNotificationAdapter extends RecyclerView.Adapter<AuctionNoti
 
                     if (mItemList.get(position).getImage().equalsIgnoreCase("") || mItemList.get(position).getImage().equalsIgnoreCase(null) ||
                             mItemList.get(position).getImage().equalsIgnoreCase("null")) {
-                        imagename = "http://autokatta.com/mobile/AutokattaImages/" + "logo.png";
+                        imagename = mActivity.getString(R.string.base_image_url) + "logo48x48.png";
                     } else {
-                        imagename = "http://autokatta.com/mobile/loan_exchange_events_pics/" + mItemList.get(position).getImage();
+                        imagename = mActivity.getString(R.string.base_image_url) + mItemList.get(position).getImage();
                     }
 
                     allDetails = "Loan Title: " + mItemList.get(position).getName() + "\n" +
@@ -672,9 +672,9 @@ public class AuctionNotificationAdapter extends RecyclerView.Adapter<AuctionNoti
 
                     if (mItemList.get(position).getImage().equalsIgnoreCase("") || mItemList.get(position).getImage().equalsIgnoreCase(null) ||
                             mItemList.get(position).getImage().equalsIgnoreCase("null")) {
-                        imagename = "http://autokatta.com/mobile/AutokattaImages/" + "logo.png";
+                        imagename = mActivity.getString(R.string.base_image_url) + "logo48x48.png";
                     } else {
-                        imagename = "http://autokatta.com/mobile/loan_exchange_events_pics/" + mItemList.get(position).getImage();
+                        imagename = mActivity.getString(R.string.base_image_url) + mItemList.get(position).getImage();
                     }
 
                     allDetails = "Exchange Title: " + mItemList.get(position).getName() + "\n" +
