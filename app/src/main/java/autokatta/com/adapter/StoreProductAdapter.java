@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -78,6 +79,8 @@ public class StoreProductAdapter extends RecyclerView.Adapter<StoreProductAdapte
         holder.pCategoey.setText(product.getCategory());
         holder.productrating.setEnabled(false);
 
+        holder.mLinear.setVisibility(View.VISIBLE);
+
         if (myContact.equals(product.getStorecontact())) {
             holder.deleteproduct.setVisibility(View.VISIBLE);
         }
@@ -139,7 +142,7 @@ public class StoreProductAdapter extends RecyclerView.Adapter<StoreProductAdapte
                 final int product_id = product.getProductId();
                 if (!connectionDetector.isConnectedToInternet()) {
                     CustomToast.customToast(activity, "Please try later");
-                   // Toast.makeText(activity, "Please try later", Toast.LENGTH_SHORT).show();
+                    // Toast.makeText(activity, "Please try later", Toast.LENGTH_SHORT).show();
                 } else {
                     new android.support.v7.app.AlertDialog.Builder(activity)
                             .setTitle("Delete?")
@@ -214,7 +217,7 @@ public class StoreProductAdapter extends RecyclerView.Adapter<StoreProductAdapte
 //            snackbar.setActionTextColor(Color.RED);
 //            // Changing action button text color
 //            View sbView = snackbar.getView();
-//            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+//            TexlinearbtnstView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
 //            textView.setTextColor(Color.YELLOW);
 //            snackbar.show();
         } else {
@@ -240,6 +243,7 @@ public class StoreProductAdapter extends RecyclerView.Adapter<StoreProductAdapte
         Button viewdetails, sviewdetails, vehidetails;
         RatingBar productrating;
         CardView mCardView;
+        LinearLayout mLinear;
 
         ProductHolder(View itemView) {
             super(itemView);
@@ -254,6 +258,7 @@ public class StoreProductAdapter extends RecyclerView.Adapter<StoreProductAdapte
             productrating = (RatingBar) itemView.findViewById(R.id.productrating);
             deleteproduct = (ImageView) itemView.findViewById(R.id.deleteproduct);
             mCardView = (CardView) itemView.findViewById(R.id.card_view);
+            mLinear = (LinearLayout) itemView.findViewById(R.id.linearbtns);
         }
     }
 }

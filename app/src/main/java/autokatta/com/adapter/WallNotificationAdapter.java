@@ -1208,7 +1208,6 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                 } else {
                     Glide.with(mActivity)
                             .load(mActivity.getString(R.string.base_image_url) + notificationList.get(position).getGroupImage())
-                            .bitmapTransform(new CropCircleTransformation(mActivity))
                             .diskCacheStrategy(DiskCacheStrategy.ALL) //For caching diff versions of image.
                             .into(mGroupHolder.mGroupImage);
                 }
@@ -1621,7 +1620,6 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                 } else {
                     Glide.with(mActivity)
                             .load(mActivity.getString(R.string.base_image_url) + notificationList.get(position).getProductImage())
-                            .bitmapTransform(new CropCircleTransformation(mActivity))
                             .diskCacheStrategy(DiskCacheStrategy.ALL) //For caching diff versions of image.
                             .into(mProductHolder.mProductImage);
                 }
@@ -1873,7 +1871,6 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                 } else {
                     Glide.with(mActivity)
                             .load(mActivity.getString(R.string.base_image_url)+ notificationList.get(position).getServiceImage())
-                            .bitmapTransform(new CropCircleTransformation(mActivity))
                             .diskCacheStrategy(DiskCacheStrategy.ALL) //For caching diff versions of image.
                             .into(mServiceHolder.mServiceImage);
                 }
