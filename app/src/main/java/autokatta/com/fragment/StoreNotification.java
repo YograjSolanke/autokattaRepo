@@ -45,6 +45,7 @@ public class StoreNotification extends Fragment implements SwipeRefreshLayout.On
     List<WallResponse.Success.WallNotification> storeNotiList = new ArrayList<>();
 
     public StoreNotification() {
+        //empty constructor...
     }
 
     @Nullable
@@ -69,6 +70,7 @@ public class StoreNotification extends Fragment implements SwipeRefreshLayout.On
         LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(getActivity());
         mLinearLayoutManager.setReverseLayout(true);
         mLinearLayoutManager.setStackFromEnd(true);
+        mLinearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
 
         mSwipeRefreshLayout.setOnRefreshListener(this);
@@ -81,7 +83,6 @@ public class StoreNotification extends Fragment implements SwipeRefreshLayout.On
                     mLoginContact = getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).
                             getString("loginContact", "");
 
-
                     mSwipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
                             android.R.color.holo_green_light,
                             android.R.color.holo_orange_light,
@@ -90,7 +91,6 @@ public class StoreNotification extends Fragment implements SwipeRefreshLayout.On
                         @Override
                         public void run() {
                             mSwipeRefreshLayout.setRefreshing(true);
-
                             storeNotification();
                         }
                     });
@@ -116,7 +116,6 @@ public class StoreNotification extends Fragment implements SwipeRefreshLayout.On
         super.setUserVisibleHint(isVisibleToUser);
         if (this.isVisible()) {
             if (isVisibleToUser && !hasViewCreated) {
-
                 storeNotification();
                 hasViewCreated = true;
             }
@@ -148,11 +147,9 @@ public class StoreNotification extends Fragment implements SwipeRefreshLayout.On
                                 notification.setShareSubData(arr[1]);
                             else
                                 notification.setShareSubData("No data");
-
                             //arr[1].equals("") ? notification.setShareSubData(arr[1]) : notification.setShareSubData("No data");
 
                         } else {
-
                             notification.setSubLayout(sublayout);
                             notification.setShareSubData(sublayout);
                         }

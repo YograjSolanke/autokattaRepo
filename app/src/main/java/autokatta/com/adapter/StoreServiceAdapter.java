@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -71,6 +72,8 @@ public class StoreServiceAdapter extends RecyclerView.Adapter<StoreServiceAdapte
         holder.ptype.setText(service.getServiceType());
         holder.pCategory.setText(service.getServicecategory());
         holder.productrating.setEnabled(false);
+
+        holder.mLinear.setVisibility(View.VISIBLE);
 
         if (myContact.equals(service.getStorecontact())) {
             holder.deleteproduct.setVisibility(View.VISIBLE);
@@ -197,6 +200,7 @@ public class StoreServiceAdapter extends RecyclerView.Adapter<StoreServiceAdapte
         Button  sviewdetails, vehidetails;
         RatingBar productrating;
         CardView viewdetails;
+        LinearLayout mLinear;
 
         ServiceHolder(View itemView) {
             super(itemView);
@@ -211,6 +215,7 @@ public class StoreServiceAdapter extends RecyclerView.Adapter<StoreServiceAdapte
             image = (ImageView) itemView.findViewById(R.id.profile);
             productrating = (RatingBar) itemView.findViewById(R.id.productrating);
             deleteproduct = (ImageView) itemView.findViewById(R.id.deleteproduct);
+            mLinear = (LinearLayout) itemView.findViewById(R.id.linearbtns);
         }
     }
 }

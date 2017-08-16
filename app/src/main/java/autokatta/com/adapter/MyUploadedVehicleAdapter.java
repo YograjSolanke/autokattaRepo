@@ -23,6 +23,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -68,7 +69,6 @@ import static android.content.Context.MODE_PRIVATE;
  */
 
 public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVehicleAdapter.VehicleHolder> implements RequestNotifier {
-
     Activity activity;
     List<MyUploadedVehiclesResponse.Success> mMainList;
     //  private ConnectionDetector connectionDetector;
@@ -112,7 +112,7 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
         holder.editmodels.setText(mMainList.get(position).getModel());
         holder.editleads.setText(mMainList.get(position).getBuyerLeads());
         holder.delete.setVisibility(View.VISIBLE);
-
+        holder.mLinear.setVisibility(View.VISIBLE);
         holder.editmfgyr.setText(mMainList.get(position).getYearOfManufacture());
         holder.editrto.setText(mMainList.get(position).getRtoCity());
         holder.editlocation.setText(mMainList.get(position).getLocationCity());
@@ -126,16 +126,13 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
 
         //To set Date
         try {
-
             //To set Date
             DateFormat inputDate = new SimpleDateFormat("yyyy-MM-dd");
             DateFormat newDateFormat = new SimpleDateFormat("dd-MMM-yyyy");
-
             holder.edituploadedon.setText(newDateFormat.format(inputDate.parse(mMainList.get(position).getDate())));
 
            /* DateFormat date = new SimpleDateFormat(" MMM dd ");
             DateFormat time = new SimpleDateFormat(" hh:mm a");
-
             holder.edituploadedon.setText(date.format(mMainList.get(position).getDate()) + time.format(mMainList.get(position).getDate()));
 */
         } catch (Exception e) {
@@ -146,11 +143,9 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
             holder.btnnotify.setText("Start Notification");
             holder.btnnotify.setBackgroundResource(R.color.orange);
         } else {
-
             holder.btnnotify.setText("Stop Notification");
             holder.btnnotify.setBackgroundResource(R.drawable.buttonback);
         }
-
 
         holder.edittitles.setEnabled(false);
         holder.editprices.setEnabled(false);
@@ -168,34 +163,26 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
         //  break;
 
         try {
-
-
             if (mMainList.get(position).getImages().equalsIgnoreCase("") || mMainList.get(position).getImages().equalsIgnoreCase(null) ||
                     mMainList.get(position).getImages().equalsIgnoreCase("null")) {
-
                 holder.vehicleimage.setBackgroundResource(R.drawable.vehiimg);
             }
             if (!mMainList.get(position).getImages().equals("") || !mMainList.get(position).getImages().equalsIgnoreCase(null)
                     || !mMainList.get(position).getImages().equalsIgnoreCase("null")) {
                 String[] parts = mMainList.get(position).getImages().split(",");
-
                 for (int l = 0; l < parts.length; l++) {
                     vimages.add(parts[l]);
                     System.out.println(parts[l]);
                 }
-                System.out.println("http://autokatta.com/mobile/uploads/" + vimages.get(0));
-
                 String vimagename = activity.getString(R.string.base_image_url) + vimages.get(0);
                 vimagename = vimagename.replaceAll(" ", "%20");
                 try {
-
                     Glide.with(activity)
                             .load(activity.getString(R.string.base_image_url) + vimages.get(0))
                             .bitmapTransform(new CropCircleTransformation(activity))
                             .diskCacheStrategy(DiskCacheStrategy.ALL)
                             .placeholder(R.drawable.logo)
                             .into(holder.vehicleimage);
-
                 } catch (Exception e) {
                     System.out.println("Error in uploading images");
                 }
@@ -212,26 +199,20 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
             }
         });
 
-
         holder.delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if ((!mConnectionDetector.isConnectedToInternet())) {
                     Toast.makeText(activity, "No network....Please try later", Toast.LENGTH_SHORT).show();
                 } else {
-
                     new AlertDialog.Builder(activity)
                             .setTitle("Delete?")
                             .setMessage("Are You Sure You Want To Delete This Store?")
-
                             .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
-
                                     apiCall.deleteUploadedVehicle(mMainList.get(holder.getAdapterPosition()).getVehicleId(), "delete");
-
                                     mMainList.remove(holder.getAdapterPosition());
                                     notifyDataSetChanged();
-
                                 }
                             })
 
@@ -243,8 +224,6 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
                             .setIcon(android.R.drawable.ic_dialog_alert)
                             .show();
                 }
-
-
             }
         });
 
@@ -252,13 +231,10 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
         holder.btnnotify.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 if (!mConnectionDetector.isConnectedToInternet()) {
                     CustomToast.customToast(activity, activity.getString(R.string.no_internet));
-
                 } else {
                     String keyword;
-
                     if (holder.btnnotify.getText().toString().equalsIgnoreCase("Stop Notification")) {
                         keyword = "stop";
                         holder.btnnotify.setText("Start Notification");
@@ -269,7 +245,6 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
                         holder.btnnotify.setBackgroundResource(R.drawable.buttonback);
                     }
                     apiCall.sendNotificationOfUploadedVehicle(mMainList.get(holder.getAdapterPosition()).getVehicleId(), keyword);
-
                 }
             }
         });
@@ -309,7 +284,6 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
                 if (holder.editleads.getText().toString().equalsIgnoreCase("0")) {
                     Toast.makeText(activity, "No leads found", Toast.LENGTH_SHORT).show();
                 } else {
-
                     Bundle b = new Bundle();
                     b.putInt("vehicle_id", mMainList.get(holder.getAdapterPosition()).getVehicleId());
                     b.putString("title", mMainList.get(holder.getAdapterPosition()).getTitle());
@@ -325,14 +299,12 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
 
                     UploadedVehicleBuyerList frag = new UploadedVehicleBuyerList();
                     frag.setArguments(b);
-
                     FragmentManager fragmentManager = ((FragmentActivity) activity).getSupportFragmentManager();
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                     fragmentTransaction.replace(R.id.myUploadedVehicleFrame, frag);
                     fragmentTransaction.addToBackStack("vehicle_buyer_list");
                     fragmentTransaction.commit();
                 }
-
             }
         });
 
@@ -360,7 +332,6 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
         holder.mQuotation.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 final Dialog openDialog = new Dialog(activity);
                 openDialog.setContentView(R.layout.get_quotation);
                 openDialog.setTitle("Fill Form For Quotation");
@@ -370,9 +341,7 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
                 final Spinner mGroupsSpinner = (Spinner) openDialog.findViewById(R.id.spinnergroup);
 
                 Button sendQuotation = (Button) openDialog.findViewById(R.id.btnSend);
-
                 /*Spinner to get groups*/
-
                 try {
                     if (mConnectionDetector.isConnectedToInternet()) {
                         Retrofit retrofit = new Retrofit.Builder()
@@ -410,7 +379,6 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
                                             if (position != 0) {
                                                 groupid = mGrouplist1.get(parsedData.get(position));
                                                 groupname = parsedData.get(position);
-
                                                 System.out.println("group id::" + groupid);
                                                 System.out.println("group name::" + groupname);
                                             }
@@ -439,14 +407,12 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
                     e.printStackTrace();
                 }
 
-
                 titleText.setText(mMainList.get(holder.getAdapterPosition()).getTitle() + " of Category "
                         + mMainList.get(holder.getAdapterPosition()).getCategory());
 
                 edtDate.setOnTouchListener(new View.OnTouchListener() {
                     @Override
                     public boolean onTouch(View v, MotionEvent event) {
-
                         int action = event.getAction();
                         if (action == MotionEvent.ACTION_DOWN) {
                             edtDate.setInputType(InputType.TYPE_NULL);
@@ -460,11 +426,9 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
                     @Override
                     public void onClick(View v) {
                         // TODO Auto-generated method stub
-
                         String strTitle = titleText.getText().toString();
                         String strPrice = edtResPrice.getText().toString();
                         String deadlineDate = edtDate.getText().toString();
-
                         openDialog.dismiss();
                     }
                 });
@@ -628,7 +592,6 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
                             }
                         }
                         setPrivacy(stringgroupids);
-
                         if (mSelectedItems.size() == 0) {
                             CustomToast.customToast(activity, "No Group Was Selected");
                             stringgroupids = "";
@@ -674,10 +637,8 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
     @Override
     public void notifyString(String str) {
         if (str != null) {
-
             if (str.equals("success")) {
                 CustomToast.customToast(activity, "vehicle deleted");
-
             } else if (str.equals("success_notification")) {
                 CustomToast.customToast(activity, "notification sent");
             }
@@ -686,17 +647,16 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
     }
 
     static class VehicleHolder extends RecyclerView.ViewHolder {
-
         ImageView vehicleimage;
-        TextView edittitles, editprices, editcategorys, editbrands, editmodels, editleads, edituploadedon, editmfgyr, editkms, editrto, editlocation, editregNo;
+        TextView edittitles, editprices, editcategorys, editbrands, editmodels, editleads, edituploadedon, editmfgyr,
+                editkms, editrto, editlocation, editregNo;
         Button vehidetails, btnnotify, delete, mEnquiry, mQuotation, mUploadGroup, mUploadStore;
         CardView mcardView;
         RelativeLayout mBroadcast;
-
+        LinearLayout mLinear;
 
         VehicleHolder(View itemView) {
             super(itemView);
-
             edittitles = (TextView) itemView.findViewById(R.id.edittitle);
             editprices = (TextView) itemView.findViewById(R.id.editprice);
             editcategorys = (TextView) itemView.findViewById(R.id.editcategory);
@@ -719,10 +679,8 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
             editregNo = (TextView) itemView.findViewById(R.id.registrationNo);
             mcardView = (CardView) itemView.findViewById(R.id.card_view);
             mBroadcast = (RelativeLayout) itemView.findViewById(R.id.relativebroadcast);
-
-
+            mLinear = (LinearLayout) itemView.findViewById(R.id.linearbtns);
             mQuotation = (Button) itemView.findViewById(R.id.quotation);
-
         }
     }
 

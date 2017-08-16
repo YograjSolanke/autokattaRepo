@@ -74,7 +74,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/profile"
-                    android:layout_toEndOf="@+id/rating_count"
                     android:numStars="5"
                     android:stepSize="1.0"
                     android:theme="@style/RatingBar" />
@@ -218,14 +217,47 @@
 
                 </LinearLayout>
 
+                <LinearLayout
+                    android:id="@+id/linearbtns"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/five"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Upload In->"
+                        android:textStyle="bold" />
+
+                    <Button
+                        android:id="@+id/upload_group"
+                        style="?android:attr/button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="25dp"
+                        android:layout_marginEnd="@dimen/card_margin"
+                        android:background="@android:color/transparent"
+                        android:drawableEnd="@drawable/ic_upload"
+                        android:text="group" />
+
+                    <Button
+                        android:id="@+id/upload_store"
+                        android:layout_width="wrap_content"
+                        android:layout_height="25dp"
+                        android:background="@android:color/transparent"
+                        android:drawableEnd="@drawable/ic_upload"
+                        android:text="store" />
+                </LinearLayout>
+
             </RelativeLayout>
         </RelativeLayout>
     </android.support.v7.widget.CardView>
 
-    <View
+    <!--<View
         android:id="@+id/vieww"
         android:layout_width="match_parent"
         android:layout_height="2dp"
         android:layout_below="@+id/card_view"
-        android:background="@color/grey" />
+        android:background="@color/grey" />-->
 </RelativeLayout>

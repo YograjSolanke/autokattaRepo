@@ -158,7 +158,6 @@ public class BrowseStoreAdapter extends RecyclerView.Adapter<BrowseStoreAdapter.
             }
         });
 
-
         holder.linearlike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
