@@ -47,6 +47,7 @@ import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.WallResponse;
 import autokatta.com.view.ShareWithinAppActivity;
+import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
@@ -903,6 +904,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                 } else {
                     Glide.with(mActivity)
                             .load(mActivity.getString(R.string.base_image_url) + notificationList.get(position).getSenderPicture())
+                            .bitmapTransform(new CropCircleTransformation(mActivity))
                             .diskCacheStrategy(DiskCacheStrategy.ALL) //For caching diff versions of image.
                             .into(mStoreHolder.mProfilePic);
                 }
@@ -1193,6 +1195,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                 } else {
                     Glide.with(mActivity)
                             .load(mActivity.getString(R.string.base_image_url) + notificationList.get(position).getSenderPicture())
+                            .bitmapTransform(new CropCircleTransformation(mActivity))
                             .diskCacheStrategy(DiskCacheStrategy.ALL) //For caching diff versions of image.
                             .into(mGroupHolder.mUserPic);
                 }
@@ -1205,6 +1208,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                 } else {
                     Glide.with(mActivity)
                             .load(mActivity.getString(R.string.base_image_url) + notificationList.get(position).getGroupImage())
+                            .bitmapTransform(new CropCircleTransformation(mActivity))
                             .diskCacheStrategy(DiskCacheStrategy.ALL) //For caching diff versions of image.
                             .into(mGroupHolder.mGroupImage);
                 }
@@ -1290,6 +1294,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                 } else {
                     Glide.with(mActivity)
                             .load(mActivity.getString(R.string.base_image_url) + notificationList.get(position).getSenderPicture())
+                            .bitmapTransform(new CropCircleTransformation(mActivity))
                             .diskCacheStrategy(DiskCacheStrategy.ALL) //For caching diff versions of image.
                             .into(mVehicleHolder.mUserPic);
                 }
@@ -1603,6 +1608,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                 } else {
                     Glide.with(mActivity)
                             .load(mActivity.getString(R.string.base_image_url)+ notificationList.get(position).getSenderPicture())
+                            .bitmapTransform(new CropCircleTransformation(mActivity))
                             .diskCacheStrategy(DiskCacheStrategy.ALL) //For caching diff versions of image.
                             .into(mProductHolder.mUserPic);
                 }
@@ -1615,6 +1621,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                 } else {
                     Glide.with(mActivity)
                             .load(mActivity.getString(R.string.base_image_url) + notificationList.get(position).getProductImage())
+                            .bitmapTransform(new CropCircleTransformation(mActivity))
                             .diskCacheStrategy(DiskCacheStrategy.ALL) //For caching diff versions of image.
                             .into(mProductHolder.mProductImage);
                 }
@@ -1853,6 +1860,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                 } else {
                     Glide.with(mActivity)
                             .load(mActivity.getString(R.string.base_image_url) + notificationList.get(position).getSenderPicture())
+                            .bitmapTransform(new CropCircleTransformation(mActivity))
                             .diskCacheStrategy(DiskCacheStrategy.ALL) //For caching diff versions of image.
                             .into(mServiceHolder.mUserPic);
                 }
@@ -1865,6 +1873,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                 } else {
                     Glide.with(mActivity)
                             .load(mActivity.getString(R.string.base_image_url)+ notificationList.get(position).getServiceImage())
+                            .bitmapTransform(new CropCircleTransformation(mActivity))
                             .diskCacheStrategy(DiskCacheStrategy.ALL) //For caching diff versions of image.
                             .into(mServiceHolder.mServiceImage);
                 }
@@ -2095,6 +2104,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                 } else {
                     Glide.with(mActivity)
                             .load(mActivity.getString(R.string.base_image_url) + notificationList.get(position).getSenderPicture())
+                            .bitmapTransform(new CropCircleTransformation(mActivity))
                             .diskCacheStrategy(DiskCacheStrategy.ALL) //For caching diff versions of image.
                             .into(mPostHolder.mProfile_pic);
                 }
@@ -2185,6 +2195,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                 } else {
                     Glide.with(mActivity)
                             .load(mActivity.getString(R.string.base_image_url) + notificationList.get(position).getSenderPicture())
+                            .bitmapTransform(new CropCircleTransformation(mActivity))
                             .diskCacheStrategy(DiskCacheStrategy.ALL) //For caching diff versions of image.
                             .into(mSearchHolder.mUserPic);
                 }
@@ -2688,6 +2699,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                 } else {
                     Glide.with(mActivity)
                             .load(mActivity.getString(R.string.base_image_url) + notificationList.get(position).getSenderPicture())
+                            .bitmapTransform(new CropCircleTransformation(mActivity))
                             .diskCacheStrategy(DiskCacheStrategy.ALL) //For caching diff versions of image.
                             .into(mUpVehicleHolder.mUserPic);
                 }

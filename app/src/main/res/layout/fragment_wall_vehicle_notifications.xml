@@ -11,8 +11,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginBottom="@dimen/text_margin_top"
-        android:layout_marginLeft="@dimen/card_margin"
-        android:layout_marginRight="@dimen/card_margin"
         android:layout_marginTop="@dimen/text_margin_top"
         android:foreground="?attr/selectableItemBackground">
 
@@ -111,7 +109,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_below="@+id/fav_layout"
-                    android:layout_marginTop="20dp">
+                    android:layout_marginTop="15dp">
 
                     <TextView
                         android:id="@+id/registration"
@@ -518,10 +516,10 @@
         </RelativeLayout>
     </android.support.v7.widget.CardView>
 
-    <View
+    <!--<View
         android:id="@+id/vieww"
         android:layout_width="match_parent"
         android:layout_height="2dp"
         android:layout_below="@+id/vehicle_card_view"
-        android:background="@color/grey" />
+        android:background="@color/grey" />-->
 </RelativeLayout>
