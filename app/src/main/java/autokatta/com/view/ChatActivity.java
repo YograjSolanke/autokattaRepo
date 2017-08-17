@@ -168,7 +168,7 @@ public class ChatActivity extends AppCompatActivity implements RequestNotifier, 
 
     @Override
     public void notifySuccess(Response<?> response) {
-        DateFormat f = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        DateFormat f = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
         if (response != null) {
             if (response.isSuccessful()) {
                 /*

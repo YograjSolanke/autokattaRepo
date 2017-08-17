@@ -147,9 +147,9 @@ public class SearchPersonAdapter extends RecyclerView.Adapter<SearchPersonAdapte
                 Bundle b = new Bundle();
                 b.putString("sender", contactdata.get(position).getContact());
                 b.putString("sendername", contactdata.get(position).getUsername());
-                b.putString("product_id", "");
-                b.putString("service_id", "");
-                b.putString("vehicle_id", "");
+                b.putInt("product_id", 0);
+                b.putInt("service_id", 0);
+                b.putInt("vehicle_id", 0);
                 ActivityOptions options = ActivityOptions.makeCustomAnimation(mActivity, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
                 Intent intent = new Intent(mActivity, ChatActivity.class);
                 intent.putExtras(b);

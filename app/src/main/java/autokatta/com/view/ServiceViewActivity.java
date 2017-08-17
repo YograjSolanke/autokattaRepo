@@ -876,9 +876,9 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
                     Bundle b = new Bundle();
                     b.putString("sender", storecontact);
                     b.putString("sendername", storeowner);
-                    b.putString("product_id", "");
+                    b.putInt("product_id", 0);
                     b.putInt("service_id", service_id);
-                    b.putString("vehicle_id", "");
+                    b.putInt("vehicle_id", 0);
 
                     Intent intent = new Intent(ServiceViewActivity.this, ChatActivity.class);
                     intent.putExtras(b);

@@ -169,9 +169,9 @@ public class BroadcastSendFragment extends Fragment implements RequestNotifier, 
                 Bundle b = new Bundle();
                 b.putString("sender", broadcastMessageArrayList.get(getAdapterPosition()).getReceiver());
                 b.putString("sendername", broadcastMessageArrayList.get(getAdapterPosition()).getReceivername());
-                b.putString("product_id", "");
-                b.putString("service_id", "");
-                b.putString("vehicle_id", "");
+                b.putInt("product_id", 0);
+                b.putInt("service_id", 0);
+                b.putInt("vehicle_id", 0);
                 ActivityOptions options = ActivityOptions.makeCustomAnimation(activity, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
                 Intent intent = new Intent(activity, ChatActivity.class);
                 intent.putExtras(b);

@@ -331,8 +331,8 @@ public class VehicleDetails extends AppCompatActivity implements RequestNotifier
                     Bundle b = new Bundle();
                     b.putString("sender", contact);
                     b.putString("sendername", name);
-                    b.putString("product_id", "");
-                    b.putString("service_id", "");
+                    b.putInt("product_id", 0);
+                    b.putInt("service_id", 0);
                     b.putInt("vehicle_id", mVehicle_Id);
                     Intent intent = new Intent(VehicleDetails.this, ChatActivity.class);
                     intent.putExtras(b);

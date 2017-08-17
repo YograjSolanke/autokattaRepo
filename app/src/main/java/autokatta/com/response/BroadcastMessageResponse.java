@@ -54,7 +54,7 @@ public class BroadcastMessageResponse {
         @SerializedName("vehicle_id")
         @Expose
         private int vehicleId;
-        @SerializedName("date")
+        @SerializedName("date_1")
         @Expose
         private String date;
 

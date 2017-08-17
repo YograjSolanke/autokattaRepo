@@ -910,8 +910,8 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                     b.putString("sender", storecontact);
                     b.putString("sendername", storeowner);
                     b.putInt("product_id", product_id);
-                    b.putString("service_id", "");
-                    b.putString("vehicle_id", "");
+                    b.putInt("service_id", 0);
+                    b.putInt("vehicle_id", 0);
 
                     Intent intent = new Intent(ProductViewActivity.this, ChatActivity.class);
                     intent.putExtras(b);
