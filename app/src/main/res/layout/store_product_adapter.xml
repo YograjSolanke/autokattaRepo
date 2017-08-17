@@ -58,6 +58,12 @@
                     android:layout_height="100dp"
                     android:contentDescription="@string/app_name" />
 
+                <ImageView
+                    android:id="@+id/expanded_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="invisible"
+                    android:contentDescription="@string/app_name" />
                 <!-- <TextView
                      android:id="@+id/rating_count"
                      android:layout_width="wrap_content"
@@ -225,11 +231,11 @@
                     android:orientation="horizontal"
                     android:visibility="gone">
 
-                    <TextView
+                    <!--<TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Upload In->"
-                        android:textStyle="bold" />
+                        android:textStyle="bold" />-->
 
                     <Button
                         android:id="@+id/upload_group"
