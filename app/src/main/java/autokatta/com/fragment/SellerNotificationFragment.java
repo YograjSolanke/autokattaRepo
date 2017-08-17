@@ -32,7 +32,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 import java.util.TimeZone;
 
 import autokatta.com.R;
@@ -77,7 +76,7 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
         mApiCall = new ApiCall(getActivity(), this);
 
         myContact = getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).
-                getString("loginContact", "7841023392");
+                getString("loginContact", "");
         mApiCall.getSavedSearchSellerList(myContact);
         //mApiCall.getSavedSearchSellerList("2020202020");
 
@@ -138,7 +137,10 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
                     obj.setYearOfManufacture(obj.getYearOfManufacture());
                     obj.setRtoCity(obj.getRtoCity());
                     obj.setTitle(obj.getTitle());
-                    obj.setRegistrationNumber(obj.getRegistrationNumber());
+                    if (obj.getRegistrationNumber().equals(""))
+                        obj.setRegistrationNumber("NA");
+                    else
+                        obj.setRegistrationNumber(obj.getRegistrationNumber());
                     obj.setKmsRunning(obj.getKmsRunning());
                     obj.setHrsRunning(obj.getHrsRunning());
                     obj.setLocationCity(obj.getLocationCity());
@@ -261,17 +263,17 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
                     try {
                         TimeZone utc = TimeZone.getTimeZone("etc/UTC");
                         //format of date coming from services
-                        DateFormat inputFormat = new SimpleDateFormat("yyyy-mm-dd HH:mm:ss",
-                                Locale.US);
+                        DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd");
                         inputFormat.setTimeZone(utc);
+
                         //format of date which we want to show
-                        DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy hh:mm aa",
-                                Locale.US);
+                        DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy");
                         outputFormat.setTimeZone(utc);
 
-                        Date date = inputFormat.parse(mainList.get(i).getDate().replace("T", " "));
+                        Date date = inputFormat.parse(mainList.get(i).getDate());
+                        //System.out.println("jjj"+date);
                         String output = outputFormat.format(date);
-                        System.out.println("jjj" + output);
+                        //System.out.println(mainList.get(i).getDate()+" jjj " + output);
                         mSearchDate.setText(output);
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -344,7 +346,7 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
                         final String itemRto = mainList.get(i).getMatchedResult().get(j).getRtoCity();
 
                         final String favStatus = mainList.get(i).getMatchedResult().get(j).getFavstatus();
-                        final String search_idget = mainList.get(i).getMatchedResult().get(j).getSearchId();
+                        final int search_idget = mainList.get(i).getMatchedResult().get(j).getSearchId();
                         final String itemrc = mainList.get(i).getMatchedResult().get(j).getRcAvailable();
                         final String itemins = mainList.get(i).getMatchedResult().get(j).getInsuranceValid();
                         final String itemHp = mainList.get(i).getMatchedResult().get(j).getHpCapacity();

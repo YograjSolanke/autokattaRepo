@@ -85,7 +85,7 @@ public class About extends Fragment implements RequestNotifier {
     Spinner spinner;
     RadioGroup usertype;
     RadioButton student, employee, selfemployee;
-    String Sharedcontact ;
+    String Sharedcontact;
     int RegId;
     String spinnervalue = "";
     ApiCall mApiCall;
@@ -177,25 +177,23 @@ public class About extends Fragment implements RequestNotifier {
 
 
                         mContact.setText(contact);
-                        Log.i("RegId-->","   --->"+RegId);
-                        Log.i("SUBProfession-->","   --->"+subProfession);
-                        if (subProfession==null || subProfession.equalsIgnoreCase("Select Category")) {
+                        Log.i("RegId-->", "   --->" + RegId);
+                        Log.i("SUBProfession-->", "   --->" + subProfession);
+                        if (subProfession == null || subProfession.equalsIgnoreCase("Select Category")) {
                             msubprofession.setText("NA");
-                        }else
-                        {
-                            msubprofession.setText("Sub Profession- "+subProfession);
+                        } else {
+                            msubprofession.setText("Sub Profession- " + subProfession);
                         }
                         mProfession.setText(profession);
-                        if (profession!="Student" || !profession.equalsIgnoreCase("Student"))
-                        {
+                        if (profession != "Student" || !profession.equalsIgnoreCase("Student")) {
                             msubprofession.setVisibility(View.VISIBLE);
-                        }else
+                        } else
                             msubprofession.setVisibility(View.GONE);
                         mEmail.setText(email);
                         mWebsite.setText(websitestr);
                         mCity.setText(city);
                         mCity.setEnabled(false);
-                       // mCity.setFocusable(false);
+                        // mCity.setFocusable(false);
                         mCompany.setText(company);
                         mDesignation.setText(designation);
                         mSkills.setText(skills);
@@ -291,25 +289,20 @@ public class About extends Fragment implements RequestNotifier {
     @Override
     public void notifyError(Throwable error) {
         if (error instanceof SocketTimeoutException) {
-
-            CustomToast.customToast(getActivity(), getString(R.string._404_));
-
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
-
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
-
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
-
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
-
-            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
-
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
-
-            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
-
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         } else {
             Log.i("Check Class-", "About Activity");
         }
@@ -359,7 +352,7 @@ public class About extends Fragment implements RequestNotifier {
                 mContact = (TextView) mAbout.findViewById(R.id.contact_no);
                 mEditTags = (TextView) mAbout.findViewById(R.id.editTags);
                 mProfession = (TextView) mAbout.findViewById(R.id.worked_at);
-                msubprofession= (TextView) mAbout.findViewById(R.id.subprofession);
+                msubprofession = (TextView) mAbout.findViewById(R.id.subprofession);
                 mEmail = (EditText) mAbout.findViewById(R.id.email);
                 mWebsite = (EditText) mAbout.findViewById(R.id.website);
                 mCity = (AutoCompleteTextView) mAbout.findViewById(R.id.address);
@@ -540,7 +533,7 @@ public class About extends Fragment implements RequestNotifier {
                             mCompany.clearFocus();
                             newcompanyname = mCompany.getText().toString();
                             try {
-                                if (!mCompanyList.contains(newcompanyname)&& !newcompanyname.equalsIgnoreCase("")) {
+                                if (!mCompanyList.contains(newcompanyname) && !newcompanyname.equalsIgnoreCase("")) {
                                     mApiCall.addNewCompany(newcompanyname);
                                 }
                             } catch (Exception e) {
@@ -557,7 +550,7 @@ public class About extends Fragment implements RequestNotifier {
                             mDesignation.clearFocus();
                             newdesignation = mDesignation.getText().toString();
                             try {
-                                if (!mDesignationList.contains(newdesignation)&& !newdesignation.equalsIgnoreCase("")) {
+                                if (!mDesignationList.contains(newdesignation) && !newdesignation.equalsIgnoreCase("")) {
                                     mApiCall.addNewDesignation(newdesignation);
                                 }
                             } catch (Exception e) {
@@ -608,7 +601,7 @@ public class About extends Fragment implements RequestNotifier {
                                 mSkills.setError("Enter Skills Name");
                                 mSkills.requestFocus();
                             } else {
-                                mApiCall.updateProfile(RegId,mUpdatedEmail,mUpdatedCity,mUpdatedProfession,spinnervalue, mUpdatedWebsite, mUpdatedCompany, mUpdatedDesignation, mUpdatedSkills1 );
+                                mApiCall.updateProfile(RegId, mUpdatedEmail, mUpdatedCity, mUpdatedProfession, spinnervalue, mUpdatedWebsite, mUpdatedCompany, mUpdatedDesignation, mUpdatedSkills1);
                                 mDone.setVisibility(View.GONE);
                                 mEdit.setVisibility(View.VISIBLE);
 

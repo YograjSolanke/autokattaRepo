@@ -64,7 +64,7 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
         mLinearListView = (LinearLayout) view.findViewById(R.id.linear_ListView);
         mApiCall = new ApiCall(getActivity(), this);
         myContact = getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).
-                getString("loginContact", null);
+                getString("loginContact", "");
 
         //mApiCall.getUploadedVehicleBuyerlist(myContact);
         //mApiCall.getUploadedVehicleBuyerlist("2020202020");
@@ -94,7 +94,10 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
                     obj.setYearOfManufacture(obj.getYearOfManufacture());
                     obj.setRtoCity(obj.getRtoCity());
                     obj.setTitle(obj.getTitle());
-                    obj.setRegistrationNumber(obj.getRegistrationNumber());
+                    if (obj.getRegistrationNumber().equals(""))
+                        obj.setRegistrationNumber("NA");
+                    else
+                        obj.setRegistrationNumber(obj.getRegistrationNumber());
                     obj.setKmsRunning(obj.getKmsRunning());
                     obj.setHrsRunning(obj.getHrsRunning());
                     obj.setLocationCity(obj.getLocationCity());
@@ -233,11 +236,12 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
                     try {
                         TimeZone utc = TimeZone.getTimeZone("etc/UTC");
                         //format of date coming from services
-                        DateFormat inputFormat = new SimpleDateFormat("yyyy-mm-dd HH:mm:ss",
+                        //DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",
+                        DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd",
                                 Locale.US);
                         inputFormat.setTimeZone(utc);
                         //format of date which want to show
-                        DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy hh:mm aa",
+                        DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy",
                                 Locale.US);
                         outputFormat.setTimeZone(utc);
 
@@ -328,7 +332,7 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
                             try {
 
                                 Glide.with(getActivity())
-                                        .load(getString(R.string.base_image_url)+ image_buyer)
+                                        .load(getString(R.string.base_image_url) + image_buyer)
                                         //.bitmapTransform(new CropCircleTransformation(getActivity()))
                                         .into(buyer_lead_image);
                             } catch (Exception e) {

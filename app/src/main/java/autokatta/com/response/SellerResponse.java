@@ -644,7 +644,7 @@ public class SellerResponse {
 
             @SerializedName("search_id")
             @Expose
-            private String searchId;
+            private int searchId;
             @SerializedName("category")
             @Expose
             private String category;
@@ -826,11 +826,11 @@ public class SellerResponse {
             @Expose
             private Integer count;
 
-            public String getSearchId() {
+            public int getSearchId() {
                 return searchId;
             }
 
-            public void setSearchId(String searchId) {
+            public void setSearchId(int searchId) {
                 this.searchId = searchId;
             }
 
