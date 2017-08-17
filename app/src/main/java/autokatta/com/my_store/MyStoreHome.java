@@ -223,6 +223,7 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
         });
         mCall.setOnClickListener(this);
         mWebSite.setOnClickListener(this);
+        mEnquiry.setOnClickListener(this);
     }
 
     private void goToUrl(String url) {
@@ -272,9 +273,14 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
                 } else
                     call(mOtherContact);
                 break;
+
             case R.id.web:
                 String website = mWebSite.getText().toString().trim();
                 goToUrl(website);
+                break;
+
+            case R.id.enquiry:
+
                 break;
         }
     }
