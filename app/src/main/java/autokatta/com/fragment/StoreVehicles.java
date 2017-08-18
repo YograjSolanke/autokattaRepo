@@ -112,6 +112,7 @@ public class StoreVehicles extends Fragment implements SwipeRefreshLayout.OnRefr
                         success.setTitle(success.getTitle());
                         success.setPrice(success.getPrice());
                         success.setCategory(success.getCategory());
+                        storeContact = success.getStorecontact();
                         success.setModel(success.getModel());
                         success.setManufacturer(success.getManufacturer());
                         success.setBuyerLeads(success.getBuyerLeads());

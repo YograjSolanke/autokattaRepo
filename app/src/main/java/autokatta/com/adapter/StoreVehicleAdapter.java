@@ -25,7 +25,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
@@ -110,8 +109,12 @@ public class StoreVehicleAdapter extends RecyclerView.Adapter<StoreVehicleAdapte
 
 
         if (myContact.equalsIgnoreCase(storeContact)) {
-            holder.delete.setVisibility(View.VISIBLE);
+
             holder.mLinear.setVisibility(View.VISIBLE);
+        } else {
+            holder.delete.setVisibility(View.GONE);
+            holder.mEnquiry.setVisibility(View.GONE);
+            holder.mQoutation.setVisibility(View.GONE);
         }
 
         //To set Date
@@ -120,17 +123,17 @@ public class StoreVehicleAdapter extends RecyclerView.Adapter<StoreVehicleAdapte
         try {
             TimeZone utc = TimeZone.getTimeZone("etc/UTC");
             //format of date coming from services
-            DateFormat inputFormat = new SimpleDateFormat("yyyy-mm-dd HH:mm:ss",
-                    Locale.US);
+            DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd");
             inputFormat.setTimeZone(utc);
-            //format of date which want to show
-            DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy hh:mm aa",
-                    Locale.US);
+
+            //format of date which we want to show
+            DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy");
             outputFormat.setTimeZone(utc);
 
             Date date = inputFormat.parse(obj.getDate());
+            //System.out.println("jjj"+date);
             String output = outputFormat.format(date);
-            System.out.println("jjj" + output);
+            //System.out.println(mainList.get(i).getDate()+" jjj " + output);
             holder.edituploadedon.setText(output);
         } catch (Exception e) {
             e.printStackTrace();
@@ -459,7 +462,7 @@ public class StoreVehicleAdapter extends RecyclerView.Adapter<StoreVehicleAdapte
         ImageView vehicleimage;
         TextView edittitles, editprices, editcategorys, editbrands, editmodels, editleads, edituploadedon;
         TextView Year, Location, Rto, Kms, Regno;
-        Button vehidetails, delete, mUploadGroup, mUploadStore;
+        Button vehidetails, delete, mUploadGroup, mUploadStore, mEnquiry, mQoutation;
         LinearLayout mLinear;
 
         public VehicleHolder(View itemView) {
@@ -477,6 +480,8 @@ public class StoreVehicleAdapter extends RecyclerView.Adapter<StoreVehicleAdapte
             mLinear = (LinearLayout) itemView.findViewById(R.id.linearbtns);
             mUploadGroup = (Button) itemView.findViewById(R.id.upload_group);
             mUploadStore = (Button) itemView.findViewById(R.id.upload_store);
+            mQoutation = (Button) itemView.findViewById(R.id.quotation);
+            mEnquiry = (Button) itemView.findViewById(R.id.Enquiry);
             vehidetails = (Button) itemView.findViewById(R.id.vehibtndetails);
 
 
