@@ -183,10 +183,10 @@ public class UploadedVehicleBuyerList extends Fragment implements RequestNotifie
             if (response.isSuccessful()) {
                 //mSwipeRefreshLayout.setRefreshing(false);
                 myUploadedVehiclesResponseList = new ArrayList<>();
-                BuyerResponse.Success buyerResponse = (BuyerResponse.Success) response.body();
+                BuyerResponse buyerResponse = (BuyerResponse) response.body();
 
-                if (!buyerResponse.getFound().isEmpty()) {
-                    for (BuyerResponse.Success.Found found : buyerResponse.getFound()) {
+                if (!buyerResponse.getSuccess().getFound().isEmpty()) {
+                    for (BuyerResponse.Success.Found found : buyerResponse.getSuccess().getFound()) {
 
                         if (found.getVehicleId().equals(vehicle_id)) {
 
@@ -216,8 +216,6 @@ public class UploadedVehicleBuyerList extends Fragment implements RequestNotifie
 
                             myUploadedVehiclesResponseList.add(found);
                         }
-
-
                     }
                 }
 
