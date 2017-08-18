@@ -200,7 +200,7 @@ public class SavedSearchSellerListFragment extends Fragment implements RequestNo
                     myUploadedVehiclesResponseList.clear();
                     for (SellerResponse.Success.MatchedResult found : sellerResponse.getSuccess().getMatchedResult()) {
 
-                        if (found.getSearchId().equals(b_search_id)) {
+                        if (found.getSearchId() == b_search_id) {
 
                             found.setVehicleId(found.getVehicleId());
                             found.setTitle(found.getTitle());
