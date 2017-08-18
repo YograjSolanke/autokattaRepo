@@ -186,6 +186,7 @@ public class InventoryProductsFragment extends Fragment implements RequestNotifi
                         success.setPrate1(success.getPrate1());
                         success.setPrate2(success.getPrate2());
                         success.setPrate3(success.getPrate3());
+                        storeContact = success.getStorecontact();
                         productList.add(success);
 //filter code commented
 

@@ -3,6 +3,7 @@ package autokatta.com.view;
 
 import android.app.ActivityOptions;
 import android.app.DownloadManager;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -38,6 +39,9 @@ import com.daimajia.slider.library.Tricks.ViewPagerEx;
 import com.kaopiz.kprogresshud.KProgressHUD;
 
 import java.io.File;
+import java.net.ConnectException;
+import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -82,8 +86,8 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
     String name, web, rating, pname, pprice, pdetails, ptags, ptype, plikecnt, pimages, plikestatus, action, pcategory, prating, receiver_contact, prate, prate1, prate2, prate3, brandtags_list;
     ImageView edit, check, callme, deleteproduct;
     String allDetails;
-    final List<String> spnid = new ArrayList<String>();
-    final List<String> tagname = new ArrayList<String>();
+    final List<String> spnid = new ArrayList<>();
+    final List<String> tagname = new ArrayList<>();
 
     String imagename = "", reviewstring = "", pimagename = "", brandtagpart = "", finalbrandtags = "";
 
@@ -130,6 +134,7 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
     private String[] groupIdArray = new String[0];
     private String stringgroupids = "";
     private String stringgroupname = "";
+    private ProgressDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -142,6 +147,9 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
         mApiCall = new ApiCall(ProductViewActivity.this, this);
         contact = getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
                 .getString("loginContact", "");
+
+        dialog = new ProgressDialog(this);
+        dialog.setMessage("Loading...");
 
         mConnectionDetector = new ConnectionDetector(this);
         storename = (TextView) findViewById(R.id.txtstorename);
@@ -307,6 +315,7 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
     private void getChatEnquiryStatus(String contact, String receiver_contact, int product_id) {
 
         ApiCall mApicall = new ApiCall(this, this);
+        dialog.show();
         mApicall.getChatEnquiryStatus(contact, receiver_contact, product_id, 0, 0);
     }
 
@@ -551,29 +560,6 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                                 productrating.setRating(Float.parseFloat(prating));
                             }
 
-                            /*else {
-                                String[] parts = pimages.split(",");
-                                photocount.setText(parts.length + " Photos");
-                                for (int l = 0; l < parts.length; l++) {
-                                    imageslist.add(parts[l]);
-                                    System.out.println(parts[l]);
-                                }
-                                pimagename = "http://autokatta.com/mobile/Product_pics/" + imageslist.get(0);
-                                pimagename = pimagename.replaceAll(" ", "%20");
-                                try {
-                                    Glide.with(ProductViewActivity.this)
-                                            .load(pimagename)
-                                            .diskCacheStrategy(DiskCacheStrategy.ALL)
-                                            .bitmapTransform(new CropCircleTransformation(ProductViewActivity.this))
-                                            .placeholder(R.drawable.logo)
-                                            .into(picture);
-                                } catch (Exception e) {
-                                    System.out.println("Error in uploading images");
-                                }
-                            }*/
-
-                            //...
-
                             storename.setText(name);
                             website.setText(web);
                             productname.setText(pname);
@@ -600,15 +586,14 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
 
                         sliderLayout = (SliderLayout) findViewById(R.id.slider);
                         if (!pimages.equals("") && !pimages.equals("null") && pimages != null) {
-                            //silder code?????????????????????????????????????????????????????????????????
-                            Hash_file_maps = new HashMap<String, String>();
-//                            sliderLayout = (SliderLayout) findViewById(R.id.slider);
+
+                            Hash_file_maps = new HashMap<>();
                             String dp_path = getString(R.string.base_image_url);
 
                             if (pimages.contains(",")) {
 
                                 String[] items = pimages.split(",");
-                                photocount.setText(items.length + " photos");
+                                photocount.setText("" + items.length + " photos");
                                 imageslist.add(items[0].substring(items[0].length()));
                                 for (String item : items) {
                                     Hash_file_maps.put("Image-" + item, dp_path + item.replaceAll(" ", ""));
@@ -658,13 +643,27 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
             }
         } else {
             hud.dismiss();
-
             CustomToast.customToast(ProductViewActivity.this, getString(R.string.no_response));
         }
     }
 
     @Override
     public void notifyError(Throwable error) {
+        if (error instanceof SocketTimeoutException) {
+            CustomToast.customToast(ProductViewActivity.this, getString(R.string._404_));
+        } else if (error instanceof NullPointerException) {
+            CustomToast.customToast(ProductViewActivity.this, getString(R.string.no_response));
+        } else if (error instanceof ClassCastException) {
+            CustomToast.customToast(ProductViewActivity.this, getString(R.string.no_response));
+        } else if (error instanceof ConnectException) {
+            CustomToast.customToast(ProductViewActivity.this, getString(R.string.no_internet));
+        } else if (error instanceof UnknownHostException) {
+            CustomToast.customToast(ProductViewActivity.this, getString(R.string.no_internet));
+        } else {
+            Log.i("Check Class-"
+                    , "ProductViewActivity");
+            error.printStackTrace();
+        }
 
     }
 
@@ -694,9 +693,15 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                 startActivity(intent);
             } else if (str.equals("success_message_saved")) {
                 CustomToast.customToast(getApplicationContext(), "Enquiry Sent");
-            } else if (str.equals("yes")) {
+            } else if (str.contains("yes")) {
+                if (dialog.isShowing()) {
+                    dialog.dismiss();
+                }
                 btnchat.setText("Chat");
-            } else if (str.equals("no")) {
+            } else if (str.contains("no")) {
+                if (dialog.isShowing()) {
+                    dialog.dismiss();
+                }
                 btnchat.setText("Send Enquiry");
             }
         }
@@ -774,8 +779,8 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                 updetails = productdetails.getText().toString();
                 upcat = spinCategory.getSelectedItem().toString();
                 String text = producttags.getText().toString();
-                ArrayList<String> images = new ArrayList<String>();
-                ArrayList<String> othertag = new ArrayList<String>();
+                List<String> images = new ArrayList<String>();
+                List<String> othertag = new ArrayList<String>();
                 text = text.trim();
                 text = text.replaceAll(",$", "");
                 System.out.println("txttttt=" + text);
@@ -820,7 +825,7 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
 
 
                 }
-                ArrayList<String> tempbrands = new ArrayList<String>();
+                List<String> tempbrands = new ArrayList<String>();
                 String textbrand = multiautobrand.getText().toString();
                 if (textbrand.endsWith(","))
                     textbrand = textbrand.substring(0, textbrand.length() - 1);
@@ -1024,35 +1029,10 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                 getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
                         putString("Share_keyword", "product").apply();
 
-                /*Intent i = new Intent(ProductViewActivity.this, ShareWithinAppActivity.class);
-                startActivity(i);*/
                 ActivityOptions options = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.ok_left_to_right,
                         R.anim.ok_right_to_left);
                 startActivity(new Intent(getApplicationContext(), ShareWithinAppActivity.class), options.toBundle());
 
-                /*String imageshare = "";
-                imageshare = "http://autokatta.com/mobile/store_profiles/" + mStoreList.get(position).getStoreImage();
-
-                imageshare = imageshare.replaceAll(" ", "%20");
-                System.out.println("image============" + imageshare);
-
-                String timing = mStoreList.get(position).getStoreOpenTime() + "" + mStoreList.get(position).getStoreCloseTime();
-
-                strDetailsShare = mStoreList.get(position).getName() + "=" + mStoreList.get(position).getWebsite() + "="
-                        + timing + "=" + mStoreList.get(position).getWorkingDays() + "="
-                        + mStoreList.get(position).getStoreType() + "=" + mStoreList.get(position).getLocation() + "="
-                        + mStoreList.get(position).getStoreImage() + "=" + mStoreList.get(position).getRating() + "="
-                        + mStoreList.get(position).getLikecount() + "=" + mStoreList.get(position).getFollowcount();
-
-                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                        putString("Share_sharedata", strDetailsShare).apply();
-                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                        putString("Share_store_id", mStoreList.get(position).getId()).apply();
-                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                        putString("Share_keyword", "store").apply();
-
-                mActivity.startActivity(new Intent(mActivity, ShareWithinAppActivity.class));
-                mActivity.finish();*/
                 break;
             case R.id.linearshare:
 
@@ -1087,9 +1067,6 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                         "Product type : " + ptype + "\n" +
                         "Ratings : " + prating + "\n" +
                         "Likes : " + plikecnt;
-
-
-                //    allDetails = pname + "=" + ptype + "=" + prating + "=" + plikecnt + "=" + imageslist;
 
                 intent.setType("text/plain");
                 intent.putExtra(Intent.EXTRA_TEXT, "Please visit and Follow my product on Autokatta. Stay connected for Product and Service updates and enquiries"
@@ -1144,6 +1121,13 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
 
             ServiceApi serviceApi = retrofit.create(ServiceApi.class);
             Call<ProfileGroupResponse> add = serviceApi._autokattaProfileGroup(getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", null));
+
+            hud = KProgressHUD.create(ProductViewActivity.this)
+                    .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                    .setLabel("loading groups...")
+                    .setMaxProgress(100)
+                    .show();
+
             add.enqueue(new Callback<ProfileGroupResponse>() {
                 @Override
                 public void onResponse(Call<ProfileGroupResponse> call, Response<ProfileGroupResponse> response) {
@@ -1151,16 +1135,19 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                         groupIdList.clear();
                         groupIdList.clear();
                         groupTitleList.clear();
-                        ProfileGroupResponse mProfileGroupResponse = (ProfileGroupResponse) response.body();
+                        hud.dismiss();
+                        ProfileGroupResponse mProfileGroupResponse = response.body();
                         for (ProfileGroupResponse.MyGroup success : mProfileGroupResponse.getSuccess().getMyGroups()) {
-                            Log.i("previousGrpIds--1", String.valueOf(success.getId()));
-                            if (!prevGroupIds.contains(String.valueOf(success.getId()))) {
+                            Log.i("previousGrpIds--", "in loop" + String.valueOf(success.getId()));
+
+                            //restrict previous group ids shown in list
+                            //if (!prevGroupIds.contains(String.valueOf(success.getId()))) {
                                 groupIdList.add(String.valueOf(success.getId()));
                                 groupTitleList.add(success.getTitle());
-                            }
+                            //}
                         }
                         //Log.i("previousGrpIds--",groupIdList);
-                        System.out.println("previousGrpIds--2" + groupIdList);
+                        System.out.println("previousGrpIds-- List" + groupIdList);
                         groupTitleArray = groupTitleList.toArray(new String[groupTitleList.size()]);
                         groupIdArray = groupIdList.toArray(new String[groupIdList.size()]);
 
@@ -1192,6 +1179,7 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                             alertBoxGroups(groupTitleArray);
                         }
                     } else {
+                        hud.dismiss();
                         CustomToast.customToast(getApplicationContext(), getString(R.string._404));
                     }
                 }
@@ -1269,17 +1257,6 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                 .show();
     }
 
-    /*
-
-     */
-   /* private void setPrivacy(String groupId) {
-        ApiCall apiCall = new ApiCall(, this);
-        apiCall.VehiclePrivacy(getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""),
-                mVehicleId, groupId, "");
-    }*/
-
-    
-
     private void updateProduct(int product_id, String upname, String upprice, String updetails, String uptags, String uptype, String upimgs, String upcat, String finalbrandtags) {
 
         ApiCall mApiCall = new ApiCall(this, this);
@@ -1330,11 +1307,8 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
      ***/
     private OkHttpClient.Builder initLog() {
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
-        // set your desired log level
         logging.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
-        // add your other interceptors …
-        // add logging as last interceptor
         httpClient.addInterceptor(logging).readTimeout(90, TimeUnit.SECONDS);
         return httpClient;
     }

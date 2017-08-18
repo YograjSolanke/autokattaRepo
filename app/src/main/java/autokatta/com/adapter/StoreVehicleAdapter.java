@@ -18,13 +18,17 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.kaopiz.kprogresshud.KProgressHUD;
 
+import java.net.ConnectException;
 import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
@@ -56,18 +60,19 @@ import static android.content.Context.MODE_PRIVATE;
 public class StoreVehicleAdapter extends RecyclerView.Adapter<StoreVehicleAdapter.VehicleHolder> implements RequestNotifier {
 
     Activity activity;
-    List<StoreInventoryResponse.Success.Vehicle> vehicleList = new ArrayList<>();
-    String myContact, storeContact;
-    String vimagename = "";
+    private List<StoreInventoryResponse.Success.Vehicle> vehicleList = new ArrayList<>();
+    private String myContact, storeContact;
     ApiCall apiCall;
     private List<String> groupIdList = new ArrayList<>();
     private List<String> groupTitleList = new ArrayList<>();
     private String[] groupTitleArray = new String[0];
     private String[] groupIdArray = new String[0];
-    ConnectionDetector connectionDetector;
+    private ConnectionDetector connectionDetector;
     private String stringgroupids = "";
     private String stringgroupname = "";
     private int mVehicleId;
+    private KProgressHUD hud;
+
     public StoreVehicleAdapter(Activity activity, List<StoreInventoryResponse.Success.Vehicle> vehicleList, String myContact,
                                String storeContact) {
         this.activity = activity;
@@ -76,23 +81,20 @@ public class StoreVehicleAdapter extends RecyclerView.Adapter<StoreVehicleAdapte
         this.storeContact = storeContact;
         apiCall = new ApiCall(activity, this);
         connectionDetector = new ConnectionDetector(activity);
-
-
     }
 
     @Override
     public StoreVehicleAdapter.VehicleHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.my_uploaded_vehicle_adapter, parent, false);
-        VehicleHolder holder = new VehicleHolder(view);
-        return holder;
+        return new VehicleHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(final StoreVehicleAdapter.VehicleHolder holder, final int position) {
+    public void onBindViewHolder(final StoreVehicleAdapter.VehicleHolder holder, int position) {
 
 
         final StoreInventoryResponse.Success.Vehicle obj = vehicleList.get(position);
-        ArrayList<String> vimages = new ArrayList<>();
+        List<String> vimages = new ArrayList<>();
 
         holder.edittitles.setText(obj.getTitle());
         holder.editprices.setText(obj.getPrice());
@@ -123,17 +125,15 @@ public class StoreVehicleAdapter extends RecyclerView.Adapter<StoreVehicleAdapte
         try {
             TimeZone utc = TimeZone.getTimeZone("etc/UTC");
             //format of date coming from services
-            DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd");
+            DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
             inputFormat.setTimeZone(utc);
 
             //format of date which we want to show
-            DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy");
+            DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
             outputFormat.setTimeZone(utc);
 
             Date date = inputFormat.parse(obj.getDate());
-            //System.out.println("jjj"+date);
             String output = outputFormat.format(date);
-            //System.out.println(mainList.get(i).getDate()+" jjj " + output);
             holder.edituploadedon.setText(output);
         } catch (Exception e) {
             e.printStackTrace();
@@ -163,7 +163,7 @@ public class StoreVehicleAdapter extends RecyclerView.Adapter<StoreVehicleAdapte
                 }
                 System.out.println(activity.getString(R.string.base_image_url) + vimages.get(0));
 
-                vimagename = activity.getString(R.string.base_image_url) + vimages.get(0);
+                String vimagename = activity.getString(R.string.base_image_url) + vimages.get(0);
                 vimagename = vimagename.replaceAll(" ", "%20");
                 try {
 
@@ -199,10 +199,8 @@ public class StoreVehicleAdapter extends RecyclerView.Adapter<StoreVehicleAdapte
 
                                     apiCall.deleteVehicle(vehicle_id, "delete");
                                     vehicleList.remove(holder.getAdapterPosition());
-                                    notifyItemRemoved(position);
-                                    notifyItemRangeChanged(position, vehicleList.size());
-
-
+                                    notifyItemRemoved(holder.getAdapterPosition());
+                                    notifyItemRangeChanged(holder.getAdapterPosition(), vehicleList.size());
                                 }
                             })
 
@@ -213,10 +211,7 @@ public class StoreVehicleAdapter extends RecyclerView.Adapter<StoreVehicleAdapte
                             })
                             .setIcon(android.R.drawable.ic_dialog_alert)
                             .show();
-
                 }
-
-
             }
         });
 
@@ -238,35 +233,6 @@ public class StoreVehicleAdapter extends RecyclerView.Adapter<StoreVehicleAdapte
                 try {
                     getGroups();
                     mVehicleId = obj.getVehicleId();
-                    /*if (groupTitleArray.length == 0) {
-                        android.app.AlertDialog.Builder alertDialog = new android.app.AlertDialog.Builder(activity);
-                        alertDialog.setTitle("No Group Found");
-                        alertDialog.setMessage("Do you want to create Group...");
-                        alertDialog.setIcon(android.R.drawable.ic_dialog_alert);
-                        alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                CreateGroupFragment createGroupFragment = new CreateGroupFragment();
-                                Bundle b = new Bundle();
-                                b.putString("classname", "uploadvehicle");
-                                createGroupFragment.setArguments(b);
-
-                                activity.getFragmentManager().beginTransaction()
-                                        .replace(R.id.vehicle_upload_container, createGroupFragment, "Title")
-                                        .addToBackStack("Title")
-                                        .commit();
-
-
-                            }
-                        });
-                        alertDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.cancel();
-                            }
-                        });
-                        alertDialog.show();
-                    } else {*/
-                    //alertBoxToSelectExcelSheet(groupTitleArray);
-                    //}
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -274,7 +240,6 @@ public class StoreVehicleAdapter extends RecyclerView.Adapter<StoreVehicleAdapte
         });
 
     }
-
 
     /*
    Get Groups...
@@ -289,6 +254,13 @@ public class StoreVehicleAdapter extends RecyclerView.Adapter<StoreVehicleAdapte
 
             ServiceApi serviceApi = retrofit.create(ServiceApi.class);
             Call<ProfileGroupResponse> add = serviceApi._autokattaProfileGroup(activity.getSharedPreferences(activity.getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", null));
+
+            hud = KProgressHUD.create(activity)
+                    .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                    .setLabel("loading groups...")
+                    .setMaxProgress(100)
+                    .show();
+
             add.enqueue(new Callback<ProfileGroupResponse>() {
                 @Override
                 public void onResponse(Call<ProfileGroupResponse> call, Response<ProfileGroupResponse> response) {
@@ -296,6 +268,7 @@ public class StoreVehicleAdapter extends RecyclerView.Adapter<StoreVehicleAdapte
                         groupIdList.clear();
                         groupIdList.clear();
                         groupTitleList.clear();
+                        hud.dismiss();
                         ProfileGroupResponse mProfileGroupResponse = (ProfileGroupResponse) response.body();
                         for (ProfileGroupResponse.MyGroup success : mProfileGroupResponse.getSuccess().getMyGroups()) {
                             groupIdList.add(String.valueOf(success.getId()));
@@ -332,6 +305,7 @@ public class StoreVehicleAdapter extends RecyclerView.Adapter<StoreVehicleAdapte
                             alertBoxToSelectExcelSheet(groupTitleArray);
                         }
                     } else {
+                        hud.dismiss();
                         CustomToast.customToast(activity, activity.getString(R.string._404));
                     }
                 }
@@ -430,14 +404,18 @@ public class StoreVehicleAdapter extends RecyclerView.Adapter<StoreVehicleAdapte
     @Override
     public void notifyError(Throwable error) {
         if (error instanceof SocketTimeoutException) {
-            CustomToast.customToast(activity, activity.getString(R.string._404));
+            CustomToast.customToast(activity, activity.getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
             CustomToast.customToast(activity, activity.getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
             CustomToast.customToast(activity, activity.getString(R.string.no_response));
+        } else if (error instanceof ConnectException) {
+            CustomToast.customToast(activity, activity.getString(R.string.no_internet));
+        } else if (error instanceof UnknownHostException) {
+            CustomToast.customToast(activity, activity.getString(R.string.no_internet));
         } else {
             Log.i("Check Class-"
-                    , "StoreServiceAdaper");
+                    , "ProductViewActivity");
             error.printStackTrace();
         }
 
@@ -448,16 +426,12 @@ public class StoreVehicleAdapter extends RecyclerView.Adapter<StoreVehicleAdapte
 
         if (str != null) {
             if (str.equals("success")) {
-
-                CustomToast.customToast(activity, "Vehicle Deleted");
-
+                CustomToast.customToast(activity, "success");
             }
-
         }
-
     }
 
-    public class VehicleHolder extends RecyclerView.ViewHolder {
+    class VehicleHolder extends RecyclerView.ViewHolder {
 
         ImageView vehicleimage;
         TextView edittitles, editprices, editcategorys, editbrands, editmodels, editleads, edituploadedon;
@@ -465,7 +439,7 @@ public class StoreVehicleAdapter extends RecyclerView.Adapter<StoreVehicleAdapte
         Button vehidetails, delete, mUploadGroup, mUploadStore, mEnquiry, mQoutation;
         LinearLayout mLinear;
 
-        public VehicleHolder(View itemView) {
+        VehicleHolder(View itemView) {
             super(itemView);
 
             edittitles = (TextView) itemView.findViewById(R.id.edittitle);
@@ -480,6 +454,7 @@ public class StoreVehicleAdapter extends RecyclerView.Adapter<StoreVehicleAdapte
             mLinear = (LinearLayout) itemView.findViewById(R.id.linearbtns);
             mUploadGroup = (Button) itemView.findViewById(R.id.upload_group);
             mUploadStore = (Button) itemView.findViewById(R.id.upload_store);
+            mUploadStore.setVisibility(View.GONE);
             mQoutation = (Button) itemView.findViewById(R.id.quotation);
             mEnquiry = (Button) itemView.findViewById(R.id.Enquiry);
             vehidetails = (Button) itemView.findViewById(R.id.vehibtndetails);
@@ -498,11 +473,8 @@ public class StoreVehicleAdapter extends RecyclerView.Adapter<StoreVehicleAdapte
      ***/
     private OkHttpClient.Builder initLog() {
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
-        // set your desired log level
         logging.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
-        // add your other interceptors …
-        // add logging as last interceptor
         httpClient.addInterceptor(logging).readTimeout(90, TimeUnit.SECONDS);
         return httpClient;
     }

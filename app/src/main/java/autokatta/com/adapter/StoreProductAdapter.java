@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -46,7 +45,6 @@ public class StoreProductAdapter extends RecyclerView.Adapter<StoreProductAdapte
     List<StoreInventoryResponse.Success.Product> mMainList = new ArrayList<>();
     private String myContact, storeContact;
     ApiCall apiCall;
-    private String pimagename = "";
     private ConnectionDetector connectionDetector;
     StoreProductAdapter.ProductHolder mView;
 
@@ -67,9 +65,9 @@ public class StoreProductAdapter extends RecyclerView.Adapter<StoreProductAdapte
     }
 
     @Override
-    public void onBindViewHolder(final StoreProductAdapter.ProductHolder holder, final int position) {
+    public void onBindViewHolder(final StoreProductAdapter.ProductHolder holder, int position) {
         mView = holder;
-        ArrayList<String> images = new ArrayList<String>();
+        List<String> images = new ArrayList<String>();
         final StoreInventoryResponse.Success.Product product = mMainList.get(position);
         holder.pname.setText(product.getName());
         holder.pprice.setText(product.getPrice());
@@ -79,7 +77,6 @@ public class StoreProductAdapter extends RecyclerView.Adapter<StoreProductAdapte
         holder.pCategoey.setText(product.getCategory());
         holder.productrating.setEnabled(false);
 
-        holder.mLinear.setVisibility(View.VISIBLE);
 
         if (myContact.equals(product.getStorecontact())) {
             holder.deleteproduct.setVisibility(View.VISIBLE);
@@ -102,7 +99,7 @@ public class StoreProductAdapter extends RecyclerView.Adapter<StoreProductAdapte
                     System.out.println(parts[l]);
                 }
                 System.out.println(activity.getString(R.string.base_image_url) + images.get(0));
-                pimagename = activity.getString(R.string.base_image_url) + images.get(0);
+                String pimagename = activity.getString(R.string.base_image_url) + images.get(0);
                 pimagename = pimagename.replaceAll(" ", "%20");
                 try {
                     Glide.with(activity)
@@ -150,9 +147,9 @@ public class StoreProductAdapter extends RecyclerView.Adapter<StoreProductAdapte
                             .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
                                     apiCall.deleteProduct(product_id, "delete");
-                                    mMainList.remove(position);
-                                    notifyItemRemoved(position);
-                                    notifyItemRangeChanged(position, mMainList.size());
+                                    mMainList.remove(holder.getAdapterPosition());
+                                    notifyItemRemoved(holder.getAdapterPosition());
+                                    notifyItemRangeChanged(holder.getAdapterPosition(), mMainList.size());
                                 }
                             })
 
@@ -188,38 +185,8 @@ public class StoreProductAdapter extends RecyclerView.Adapter<StoreProductAdapte
             CustomToast.customToast(activity, activity.getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
             CustomToast.customToast(activity, activity.getString(R.string.no_internet));
-            //mNoInternetIcon.setVisibility(View.VISIBLE);
-//            Snackbar snackbar = Snackbar.make(mView.mCardView, activity.getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
-//                    .setAction("Go Online", new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View view) {
-//                            activity.startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
-//                        }
-//                    });
-//            // Changing message text color
-//            snackbar.setActionTextColor(Color.RED);
-//            // Changing action button text color
-//            View sbView = snackbar.getView();
-//            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
-//            textView.setTextColor(Color.YELLOW);
-//            snackbar.show();
         } else if (error instanceof UnknownHostException) {
             CustomToast.customToast(activity, activity.getString(R.string.no_internet));
-            //mNoInternetIcon.setVisibility(View.VISIBLE);
-//            Snackbar snackbar = Snackbar.make(mView.mCardView, activity.getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
-//                    .setAction("Go Online", new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View view) {
-//                            activity.startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
-//                        }
-//                    });
-//            // Changing message text color
-//            snackbar.setActionTextColor(Color.RED);
-//            // Changing action button text color
-//            View sbView = snackbar.getView();
-//            TexlinearbtnstView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
-//            textView.setTextColor(Color.YELLOW);
-//            snackbar.show();
         } else {
             Log.i("Check Class-"
                     , "StoreProductAdaper");
@@ -243,7 +210,6 @@ public class StoreProductAdapter extends RecyclerView.Adapter<StoreProductAdapte
         Button viewdetails, sviewdetails, vehidetails;
         RatingBar productrating;
         CardView mCardView;
-        LinearLayout mLinear;
 
         ProductHolder(View itemView) {
             super(itemView);
@@ -258,7 +224,6 @@ public class StoreProductAdapter extends RecyclerView.Adapter<StoreProductAdapte
             productrating = (RatingBar) itemView.findViewById(R.id.productrating);
             deleteproduct = (ImageView) itemView.findViewById(R.id.deleteproduct);
             mCardView = (CardView) itemView.findViewById(R.id.card_view);
-            mLinear = (LinearLayout) itemView.findViewById(R.id.linearbtns);
         }
     }
 }

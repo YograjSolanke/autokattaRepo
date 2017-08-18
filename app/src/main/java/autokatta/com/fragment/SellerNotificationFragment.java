@@ -32,6 +32,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.TimeZone;
 
 import autokatta.com.R;
@@ -45,7 +46,6 @@ import retrofit2.Response;
 /**
  * Created by ak-003 on 21/4/17.
  */
-@SuppressLint("SimpleDateFormat")
 public class SellerNotificationFragment extends Fragment implements RequestNotifier {
     public SellerNotificationFragment() {
     }
@@ -120,7 +120,7 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
 
     @Override
     public void notifySuccess(Response<?> response) {
-        DateFormat f = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        DateFormat f = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.getDefault());
         if (response.isSuccessful()) {
 
             if (response.isSuccessful()) {
@@ -263,11 +263,11 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
                     try {
                         TimeZone utc = TimeZone.getTimeZone("etc/UTC");
                         //format of date coming from services
-                        DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd");
+                        DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
                         inputFormat.setTimeZone(utc);
 
                         //format of date which we want to show
-                        DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy");
+                        DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
                         outputFormat.setTimeZone(utc);
 
                         Date date = inputFormat.parse(mainList.get(i).getDate());
@@ -358,8 +358,8 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
 
                         //to set buyer last call date
                         try {
-                            DateFormat date = new SimpleDateFormat(" MMM dd ");
-                            DateFormat time = new SimpleDateFormat(" hh:mm a");
+                            DateFormat date = new SimpleDateFormat(" MMM dd ", Locale.getDefault());
+                            DateFormat time = new SimpleDateFormat(" hh:mm a", Locale.getDefault());
 
                             lastcall.setText("Last call on:" + date.format(mainList.get(i).getMatchedResult().get(j).getLastCallDateNew()) +
                                     time.format(mainList.get(i).getMatchedResult().get(j).getLastCallDateNew()));
@@ -369,8 +369,8 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
 
                         //to set vehicle uploaded date
                         try {
-                            DateFormat date = new SimpleDateFormat(" MMM dd ");
-                            DateFormat time = new SimpleDateFormat(" hh:mm a");
+                            DateFormat date = new SimpleDateFormat(" MMM dd ", Locale.getDefault());
+                            DateFormat time = new SimpleDateFormat(" hh:mm a", Locale.getDefault());
 
                             mDateTime.setText("Uploaded On :" + date.format(mainList.get(i).getMatchedResult().get(j).getUploaddate()) +
                                     time.format(mainList.get(i).getMatchedResult().get(j).getUploaddate()));
@@ -571,7 +571,7 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
                                 String recieverContact = mainList.get(finalI).getMatchedResult().get(finalJ).getContactNo();
                                 Calendar c = Calendar.getInstance();
                                 System.out.println("Current time => " + c.getTime());
-                                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
                                 String calldate = df.format(c.getTime());
                                 if (!recieverContact.equals(myContact)) {
                                     call(recieverContact);

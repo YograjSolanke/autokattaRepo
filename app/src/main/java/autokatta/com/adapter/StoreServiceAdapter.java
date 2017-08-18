@@ -11,14 +11,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
+import java.net.ConnectException;
 import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,7 +43,6 @@ public class StoreServiceAdapter extends RecyclerView.Adapter<StoreServiceAdapte
     List<StoreInventoryResponse.Success.Service> mMainList = new ArrayList<>();
     private String myContact, storeContact;
     ApiCall apiCall;
-    private String pimagename = "";
     private ConnectionDetector connectionDetector;
 
     public StoreServiceAdapter(Activity activity, List<StoreInventoryResponse.Success.Service> serviceList, String myContact,
@@ -62,8 +62,8 @@ public class StoreServiceAdapter extends RecyclerView.Adapter<StoreServiceAdapte
     }
 
     @Override
-    public void onBindViewHolder(final StoreServiceAdapter.ServiceHolder holder, final int position) {
-        ArrayList<String> images = new ArrayList<String>();
+    public void onBindViewHolder(final StoreServiceAdapter.ServiceHolder holder, int position) {
+        List<String> images = new ArrayList<String>();
         final StoreInventoryResponse.Success.Service service = mMainList.get(position);
         holder.pname.setText(service.getServiceName());
         holder.pprice.setText(service.getServicePrice());
@@ -73,7 +73,6 @@ public class StoreServiceAdapter extends RecyclerView.Adapter<StoreServiceAdapte
         holder.pCategory.setText(service.getServicecategory());
         holder.productrating.setEnabled(false);
 
-        holder.mLinear.setVisibility(View.VISIBLE);
 
         if (myContact.equals(service.getStorecontact())) {
             holder.deleteproduct.setVisibility(View.VISIBLE);
@@ -97,7 +96,7 @@ public class StoreServiceAdapter extends RecyclerView.Adapter<StoreServiceAdapte
                 }
                 System.out.println(activity.getString(R.string.base_image_url) + images.get(0));
 
-                pimagename = activity.getString(R.string.base_image_url) + images.get(0);
+                String pimagename = activity.getString(R.string.base_image_url) + images.get(0);
                 pimagename = pimagename.replaceAll(" ", "%20");
                 try {
                     Glide.with(activity)
@@ -133,7 +132,7 @@ public class StoreServiceAdapter extends RecyclerView.Adapter<StoreServiceAdapte
                 final int serviceId = service.getServiceId();
                 if (!connectionDetector.isConnectedToInternet()) {
                     CustomToast.customToast(activity, "Please try later");
-                   // Toast.makeText(activity, "Please try later", Toast.LENGTH_SHORT).show();
+                    // Toast.makeText(activity, "Please try later", Toast.LENGTH_SHORT).show();
                 } else {
                     new android.support.v7.app.AlertDialog.Builder(activity)
                             .setTitle("Delete?")
@@ -141,9 +140,9 @@ public class StoreServiceAdapter extends RecyclerView.Adapter<StoreServiceAdapte
                             .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
                                     apiCall.deleteService(serviceId, "delete");
-                                    mMainList.remove(position);
-                                    notifyItemRemoved(position);
-                                    notifyItemRangeChanged(position, mMainList.size());
+                                    mMainList.remove(holder.getAdapterPosition());
+                                    notifyItemRemoved(holder.getAdapterPosition());
+                                    notifyItemRangeChanged(holder.getAdapterPosition(), mMainList.size());
                                 }
                             })
                             .setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -178,6 +177,10 @@ public class StoreServiceAdapter extends RecyclerView.Adapter<StoreServiceAdapte
             CustomToast.customToast(activity, activity.getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
             CustomToast.customToast(activity, activity.getString(R.string.no_response));
+        } else if (error instanceof ConnectException) {
+            CustomToast.customToast(activity, activity.getString(R.string.no_internet));
+        } else if (error instanceof UnknownHostException) {
+            CustomToast.customToast(activity, activity.getString(R.string.no_internet));
         } else {
             Log.i("Check Class-"
                     , "StoreServiceAdaper");
@@ -189,7 +192,7 @@ public class StoreServiceAdapter extends RecyclerView.Adapter<StoreServiceAdapte
     public void notifyString(String str) {
         if (str != null) {
             if (str.equals("success")) {
-                CustomToast.customToast(activity, "Service Deleted");
+                CustomToast.customToast(activity, "success");
             }
         }
     }
@@ -197,10 +200,9 @@ public class StoreServiceAdapter extends RecyclerView.Adapter<StoreServiceAdapte
     class ServiceHolder extends RecyclerView.ViewHolder {
         TextView pname, pprice, pdetails, ptype, ptags, pCategory;
         ImageView image, deleteproduct;
-        Button  sviewdetails, vehidetails;
+        Button sviewdetails, vehidetails;
         RatingBar productrating;
         CardView viewdetails;
-        LinearLayout mLinear;
 
         ServiceHolder(View itemView) {
             super(itemView);
@@ -210,12 +212,11 @@ public class StoreServiceAdapter extends RecyclerView.Adapter<StoreServiceAdapte
             ptags = (TextView) itemView.findViewById(R.id.edittags);
             ptype = (TextView) itemView.findViewById(R.id.editproducttype);
             pCategory = (TextView) itemView.findViewById(R.id.editCategory);
-            viewdetails= (CardView) itemView.findViewById(R.id.card_view);
-          //  viewdetails = (Button) itemView.findViewById(R.id.btnviewdetails);
+            viewdetails = (CardView) itemView.findViewById(R.id.card_view);
+            //  viewdetails = (Button) itemView.findViewById(R.id.btnviewdetails);
             image = (ImageView) itemView.findViewById(R.id.profile);
             productrating = (RatingBar) itemView.findViewById(R.id.productrating);
             deleteproduct = (ImageView) itemView.findViewById(R.id.deleteproduct);
-            mLinear = (LinearLayout) itemView.findViewById(R.id.linearbtns);
         }
     }
 }
