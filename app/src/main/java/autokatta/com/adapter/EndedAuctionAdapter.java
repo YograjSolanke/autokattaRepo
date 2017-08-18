@@ -45,8 +45,6 @@ public class EndedAuctionAdapter extends RecyclerView.Adapter<EndedAuctionAdapte
         try {
             this.mActivity = mActivity;
             this.mMainList = mItemList;
-            myContact = mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).
-                    getString("loginContact", "");
             mConnectionDetector = new ConnectionDetector(mActivity);
         } catch (ClassCastException c) {
             c.printStackTrace();
@@ -66,6 +64,8 @@ public class EndedAuctionAdapter extends RecyclerView.Adapter<EndedAuctionAdapte
 
     @Override
     public void onBindViewHolder(final EndedAuctionAdapter.AuctionHolder holder, final int position) {
+        myContact = mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).
+                getString("loginContact", "");
         holder.action_title.setText(mMainList.get(position).getActionTitle());
         holder.auction_vehicle.setText(mMainList.get(position).getNoOfVehicle());
         holder.auction_enddate.setText(mMainList.get(position).getEndDate());

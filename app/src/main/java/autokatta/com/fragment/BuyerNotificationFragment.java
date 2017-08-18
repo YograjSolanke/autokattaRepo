@@ -66,7 +66,7 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
         myContact = getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).
                 getString("loginContact", "");
 
-        //mApiCall.getUploadedVehicleBuyerlist(myContact);
+        mApiCall.getUploadedVehicleBuyerlist(myContact);
         //mApiCall.getUploadedVehicleBuyerlist("2020202020");
 
         return view;
