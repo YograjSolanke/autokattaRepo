@@ -110,6 +110,9 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
     SliderLayout sliderLayout;
     HashMap<String, String> Hash_file_maps;
     KProgressHUD hud;
+    String prevGroupIds = "";
+    LinearLayout mLinearLayout;
+    Button mUploadGroup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -166,6 +169,8 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
         no_of_enquiries = (TextView) findViewById(R.id.no_of_enquiries);
         multiautobrand = (MultiAutoCompleteTextView) findViewById(R.id.txtbrandptags);
         mainlayout = (RelativeLayout) findViewById(R.id.mainlayout);
+        mLinearLayout = (LinearLayout) findViewById(R.id.linearbtns);
+        mUploadGroup = (Button) findViewById(R.id.upload_group);
 
         mainlayout.setVisibility(View.GONE);
         overallbar.setEnabled(false);
@@ -290,7 +295,8 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
 
     private void getProductData(int id, String contact) {
         ApiCall mApicall = new ApiCall(this, this);
-        mApicall.getProductDetails(id, contact);
+        //mApicall.getProductDetails(id, contact);
+        mApicall.getProductDetails(15, "2020202020");
     }
 
     /*
@@ -467,6 +473,9 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                             //  storecontact = "3030303030";
                             storeowner = success.getStoreOwner();
                             brandtags_list = success.getBrandtags();
+
+                            prevGroupIds = success.getGroupId().replaceAll(" ", "");
+                            Log.i("previousGrpIds", prevGroupIds);
 
                             getChatEnquiryStatus(contact, receiver_contact, product_id);
                             txtlike.setText("Like(" + plikecnt + ")");
@@ -734,6 +743,7 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                 producttype.requestFocus();
                 multiautobrand.setEnabled(true);
                 spinnerlayout.setVisibility(View.VISIBLE);
+                mLinearLayout.setVisibility(View.VISIBLE);
                 check.setVisibility(View.VISIBLE);
                 edit.setVisibility(View.GONE);
                 deleteproduct.setVisibility(View.GONE);
@@ -845,6 +855,7 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                     producttype.setEnabled(false);
                     multiautobrand.setEnabled(false);
                     spinnerlayout.setVisibility(View.GONE);
+                    mLinearLayout.setVisibility(View.GONE);
                     // spinCategory.setEnabled(false);
 
                     check.setVisibility(View.GONE);

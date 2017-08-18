@@ -733,11 +733,48 @@
 
                     </RelativeLayout>
 
+                    <LinearLayout
+                        android:id="@+id/linearbtns"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/linearcategory"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="5dp"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Upload In->"
+                            android:textColor="@color/textColor"
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
+
+                        <Button
+                            android:id="@+id/upload_group"
+                            style="?android:attr/button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="25dp"
+                            android:layout_marginEnd="@dimen/card_margin"
+                            android:background="@android:color/transparent"
+                            android:drawableEnd="@drawable/ic_upload"
+                            android:text="group" />
+
+                        <Button
+                            android:id="@+id/upload_store"
+                            android:layout_width="wrap_content"
+                            android:layout_height="25dp"
+                            android:background="@android:color/transparent"
+                            android:drawableEnd="@drawable/ic_upload"
+                            android:text="store"
+                            android:visibility="gone" />
+                    </LinearLayout>
+
                     <RelativeLayout
                         android:id="@+id/linearwritereview"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/linearcategory"
+                        android:layout_below="@+id/linearbtns"
                         android:layout_marginTop="10dp"
                         android:background="#80bebebe"
                         android:orientation="horizontal"
