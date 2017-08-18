@@ -92,4 +92,38 @@
     </android.support.v4.widget.SwipeRefreshLayout>
 
     <include layout="@layout/error_view" />
+
+    <LinearLayout
+        android:id="@+id/no_connection"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/no_internet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/wifi_off_second"
+            android:contentDescription="@string/app_name" />
+
+        <TextView
+            android:id="@+id/counttxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No Internet Connection"
+            android:textStyle="bold"
+            android:textColor="@color/medium_sea_green" />
+
+        <Button
+            android:id="@+id/retry"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:text="Retry"
+            android:textStyle="bold"
+            android:background="@color/medium_sea_green"
+            android:textColor="@color/white" />
+    </LinearLayout>
 </RelativeLayout>

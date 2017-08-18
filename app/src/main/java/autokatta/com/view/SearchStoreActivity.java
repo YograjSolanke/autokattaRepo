@@ -34,6 +34,7 @@ public class SearchStoreActivity extends AppCompatActivity {
                 try {
                     getSupportFragmentManager().beginTransaction()
                             .replace(R.id.searchStoreFrame, new StoreSearchFragment(), "storeSearchFragment")
+                            .addToBackStack("storeSearchFragment")
                             .commit();
                 } catch (Exception e) {
                     e.printStackTrace();

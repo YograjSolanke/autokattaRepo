@@ -77,8 +77,6 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
         this.mActivity = mActivity1;
         this.notificationList = notificationList;
         this.mApiCall = new ApiCall(mActivity, this);
-        mLoginContact = mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).
-                getString("loginContact", "");
         mConnectionDetector = new ConnectionDetector(mActivity);
     }
 
@@ -633,6 +631,8 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         Log.i("Wall", "Adapter-LayoutNo ->" + holder.getItemViewType());
+        mLoginContact = mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).
+                getString("loginContact", "");
         switch (holder.getItemViewType()) {
             case 1:
                 final ProfileNotifications mProfileHolder = (ProfileNotifications) holder;

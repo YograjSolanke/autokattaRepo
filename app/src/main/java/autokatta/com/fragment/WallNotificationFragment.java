@@ -11,6 +11,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.net.ConnectException;
@@ -24,6 +26,7 @@ import autokatta.com.adapter.WallNotificationAdapter;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.OnLoadMoreListener;
 import autokatta.com.interfaces.RequestNotifier;
+import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.WallResponse;
 import retrofit2.Response;
@@ -38,10 +41,13 @@ public class WallNotificationFragment extends Fragment implements SwipeRefreshLa
     SwipeRefreshLayout mSwipeRefreshLayout;
     View mWallNotify;
     TextView mNoData;
+    LinearLayout layout;
     boolean _hasLoadedOnce = false;
     List<WallResponse.Success.WallNotification> notificationList = new ArrayList<>();
     WallNotificationAdapter adapter;
     private String mLoginContact = "";
+    ConnectionDetector mConnectionDetector;
+    Button mRetry;
 
     public WallNotificationFragment() {
         //Empty Constructor...
@@ -79,6 +85,8 @@ public class WallNotificationFragment extends Fragment implements SwipeRefreshLa
                 mLoginContact = getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).
                         getString("loginContact", "");
                 mNoData = (TextView) mWallNotify.findViewById(R.id.no_category);
+                layout = (LinearLayout) mWallNotify.findViewById(R.id.no_connection);
+                mRetry = (Button) mWallNotify.findViewById(R.id.retry);
                 mRecyclerView = (RecyclerView) mWallNotify.findViewById(R.id.wall_recycler_view);
                 mSwipeRefreshLayout = (SwipeRefreshLayout) mWallNotify.findViewById(R.id.wall_swipe_refresh_layout);
                 mRecyclerView.setHasFixedSize(true);
@@ -98,8 +106,15 @@ public class WallNotificationFragment extends Fragment implements SwipeRefreshLa
                         getData();
                     }
                 });
+                mRetry.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        getData();
+                    }
+                });
             }
         });
+        mConnectionDetector = new ConnectionDetector(getActivity());
         mSwipeRefreshLayout.setOnRefreshListener(this);
         adapter = new WallNotificationAdapter();
         adapter.setOnLoadMoreListener(new OnLoadMoreListener() {
@@ -111,8 +126,19 @@ public class WallNotificationFragment extends Fragment implements SwipeRefreshLa
     }
 
     private void getData() {
-        ApiCall apiCall = new ApiCall(getActivity(), this);
-        apiCall.wallNotifications(mLoginContact, mLoginContact, "");
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                ApiCall apiCall = new ApiCall(getActivity(), this);
+                apiCall.wallNotifications(mLoginContact, mLoginContact, "");
+            } else {
+                CustomToast.customToast(getActivity(), getString(R.string.no_internet));
+                layout.setVisibility(View.VISIBLE);
+                mNoData.setVisibility(View.GONE);
+                mSwipeRefreshLayout.setRefreshing(false);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -123,6 +149,7 @@ public class WallNotificationFragment extends Fragment implements SwipeRefreshLa
                 if (!wallResponse.getSuccess().getWallNotifications().isEmpty()) {
                     mSwipeRefreshLayout.setRefreshing(false);
                     mNoData.setVisibility(View.GONE);
+                    layout.setVisibility(View.GONE);
                     notificationList.clear();
                     for (WallResponse.Success.WallNotification notification : wallResponse.getSuccess().getWallNotifications()) {
                         notification.setActionID(notification.getActionID());
@@ -320,8 +347,10 @@ public class WallNotificationFragment extends Fragment implements SwipeRefreshLa
             CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
             CustomToast.customToast(getActivity(), getString(R.string.no_internet));
+            layout.setVisibility(View.VISIBLE);
         } else if (error instanceof UnknownHostException) {
             CustomToast.customToast(getActivity(), getString(R.string.no_internet));
+            layout.setVisibility(View.VISIBLE);
         } else {
             Log.i("Check Class-", "Wall Notification Fragment");
             error.printStackTrace();
