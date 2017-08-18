@@ -41,10 +41,13 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
+import autokatta.com.initial_fragment.CreateGroupFragment;
 import autokatta.com.interfaces.RequestNotifier;
+import autokatta.com.interfaces.ServiceApi;
 import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.BrandsTagResponse;
@@ -54,7 +57,14 @@ import autokatta.com.response.GetTagsResponse;
 import autokatta.com.response.OtherBrandTagAddedResponse;
 import autokatta.com.response.OtherTagAddedResponse;
 import autokatta.com.response.ProductResponse;
+import autokatta.com.response.ProfileGroupResponse;
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Call;
+import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by ak-001 on 18/4/17.
@@ -72,14 +82,14 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
     String name, web, rating, pname, pprice, pdetails, ptags, ptype, plikecnt, pimages, plikestatus, action, pcategory, prating, receiver_contact, prate, prate1, prate2, prate3, brandtags_list;
     ImageView edit, check, callme, deleteproduct;
     String allDetails;
-    final ArrayList<String> spnid = new ArrayList<String>();
-    final ArrayList<String> tagname = new ArrayList<String>();
+    final List<String> spnid = new ArrayList<String>();
+    final List<String> tagname = new ArrayList<String>();
 
     String imagename = "", reviewstring = "", pimagename = "", brandtagpart = "", finalbrandtags = "";
 
     int lcnt;
     LinearLayout linearlike, linearshare, linearshare1, linearunlike, linearreview;
-    final ArrayList<String> brandTags = new ArrayList<>();
+    final List<String> brandTags = new ArrayList<>();
 
     // SharedPreferences settings;
     String contact;
@@ -105,7 +115,7 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
     int product_id;
     boolean tagflag = false;
     ConnectionDetector mConnectionDetector;
-    ArrayList<String> imageslist = new ArrayList<>();
+    List<String> imageslist = new ArrayList<>();
     ApiCall mApiCall;
     SliderLayout sliderLayout;
     HashMap<String, String> Hash_file_maps;
@@ -113,6 +123,13 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
     String prevGroupIds = "";
     LinearLayout mLinearLayout;
     Button mUploadGroup;
+    private List<String> mGrouplist = new ArrayList<>();
+    private List<String> groupIdList = new ArrayList<>();
+    private List<String> groupTitleList = new ArrayList<>();
+    private String[] groupTitleArray = new String[0];
+    private String[] groupIdArray = new String[0];
+    private String stringgroupids = "";
+    private String stringgroupname = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -228,7 +245,7 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                         if ((keyEvent.getAction() == KeyEvent.ACTION_DOWN) &&
                                 (i == KeyEvent.KEYCODE_ENTER)) {
                             // Perform action on key press
-                            producttags.setText(producttags.getText().toString() + ",");
+                            producttags.setText("" + producttags.getText().toString() + ",");
                             producttags.setSelection(producttags.getText().toString().length());
                             check();
                             return true;
@@ -295,8 +312,8 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
 
     private void getProductData(int id, String contact) {
         ApiCall mApicall = new ApiCall(this, this);
-        //mApicall.getProductDetails(id, contact);
-        mApicall.getProductDetails(15, "2020202020");
+        mApicall.getProductDetails(id, contact);
+        //mApicall.getProductDetails(15, "2020202020");
     }
 
     /*
@@ -1101,7 +1118,167 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
 
         }
 
+        mUploadGroup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    getGroups();
+                    //mVehicleId = mMainList.get(position).getVehicleId();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
+
+    /*
+    Get Groups...
+     */
+    private void getGroups() {
+        if (mConnectionDetector.isConnectedToInternet()) {
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl(getString(R.string.base_url))
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .client(initLog().build())
+                    .build();
+
+            ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+            Call<ProfileGroupResponse> add = serviceApi._autokattaProfileGroup(getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", null));
+            add.enqueue(new Callback<ProfileGroupResponse>() {
+                @Override
+                public void onResponse(Call<ProfileGroupResponse> call, Response<ProfileGroupResponse> response) {
+                    if (response.isSuccessful()) {
+                        groupIdList.clear();
+                        groupIdList.clear();
+                        groupTitleList.clear();
+                        ProfileGroupResponse mProfileGroupResponse = (ProfileGroupResponse) response.body();
+                        for (ProfileGroupResponse.MyGroup success : mProfileGroupResponse.getSuccess().getMyGroups()) {
+                            Log.i("previousGrpIds--1", String.valueOf(success.getId()));
+                            if (!prevGroupIds.contains(String.valueOf(success.getId()))) {
+                                groupIdList.add(String.valueOf(success.getId()));
+                                groupTitleList.add(success.getTitle());
+                            }
+                        }
+                        //Log.i("previousGrpIds--",groupIdList);
+                        System.out.println("previousGrpIds--2" + groupIdList);
+                        groupTitleArray = groupTitleList.toArray(new String[groupTitleList.size()]);
+                        groupIdArray = groupIdList.toArray(new String[groupIdList.size()]);
+
+                        if (groupTitleArray.length == 0) {
+                            android.app.AlertDialog.Builder alertDialog = new android.app.AlertDialog.Builder(ProductViewActivity.this);
+                            alertDialog.setTitle("No Group Found");
+                            alertDialog.setMessage("Do you want to create Group...");
+                            alertDialog.setIcon(android.R.drawable.ic_dialog_alert);
+                            alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    CreateGroupFragment createGroupFragment = new CreateGroupFragment();
+                                    Bundle b = new Bundle();
+                                    b.putString("classname", "uploadvehicle");
+                                    createGroupFragment.setArguments(b);
+
+                                    getSupportFragmentManager().beginTransaction()
+                                            .replace(R.id.vehicle_upload_container, createGroupFragment, "Title")
+                                            .addToBackStack("Title")
+                                            .commit();
+                                }
+                            });
+                            alertDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.cancel();
+                                }
+                            });
+                            alertDialog.show();
+                        } else {
+                            alertBoxGroups(groupTitleArray);
+                        }
+                    } else {
+                        CustomToast.customToast(getApplicationContext(), getString(R.string._404));
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ProfileGroupResponse> call, Throwable t) {
+                    t.printStackTrace();
+                }
+
+            });
+        } else {
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
+        }
+    }
+
+    /*
+    Alert Dialog
+     */
+    private void alertBoxGroups(final String[] groupTitleArray) {
+        final List<String> mSelectedItems = new ArrayList<>();
+        mSelectedItems.clear();
+
+        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(ProductViewActivity.this);
+
+        // set the dialog title
+        builder.setTitle("Select Groups From Following")
+                .setCancelable(true)
+                .setMultiChoiceItems(groupTitleArray, null, new DialogInterface.OnMultiChoiceClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+                        if (isChecked) {
+                            mSelectedItems.add(groupTitleArray[which]);
+                        } else if (mSelectedItems.contains(groupTitleArray[which])) {
+                            mSelectedItems.remove(groupTitleArray[which]);
+                        }
+                    }
+                })
+                // Set the action buttons
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        stringgroupids = "";
+                        stringgroupname = "";
+                        for (int i = 0; i < mSelectedItems.size(); i++) {
+                            for (int j = 0; j < groupTitleArray.length; j++) {
+                                if (mSelectedItems.get(i).equals(groupTitleArray[j])) {
+                                    if (stringgroupids.equals("")) {
+                                        stringgroupids = groupIdList.get(j);
+                                        stringgroupname = groupTitleArray[j];
+                                    } else {
+                                        stringgroupids = stringgroupids + "," + groupIdList.get(j);
+                                        stringgroupname = stringgroupname + "," + groupTitleArray[j];
+                                    }
+                                }
+                            }
+                        }
+                        //setPrivacy(stringgroupids);
+
+                        if (mSelectedItems.size() == 0) {
+                            CustomToast.customToast(getApplicationContext(), "No Group Was Selected");
+                            stringgroupids = "";
+                            stringgroupname = "";
+                        }
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        stringgroupids = "";
+                        stringgroupname = "";
+                    }
+
+                })
+                .show();
+    }
+
+    /*
+
+     */
+   /* private void setPrivacy(String groupId) {
+        ApiCall apiCall = new ApiCall(, this);
+        apiCall.VehiclePrivacy(getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""),
+                mVehicleId, groupId, "");
+    }*/
+
+    
 
     private void updateProduct(int product_id, String upname, String upprice, String updetails, String uptags, String uptype, String upimgs, String upcat, String finalbrandtags) {
 
@@ -1146,5 +1323,19 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
         super.onBackPressed();
         finish();
         overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
+    }
+
+    /***
+     * Retrofit Logs
+     ***/
+    private OkHttpClient.Builder initLog() {
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        // set your desired log level
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        // add your other interceptors …
+        // add logging as last interceptor
+        httpClient.addInterceptor(logging).readTimeout(90, TimeUnit.SECONDS);
+        return httpClient;
     }
 }
