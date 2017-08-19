@@ -1037,12 +1037,24 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
             case R.id.linearshare:
 
                 Intent intent = new Intent(Intent.ACTION_SEND);
-                String imageFilePath;
+                String imageFilePath, singleImage;
+
+                if (pimages.contains(",")) {
+                    String[] items = pimages.split(",");
+                    singleImage = items[0];
+                            /*for (String item : items) {
+                                notification.setUpVehicleImage(item);
+                            }*/
+                } else {
+                    singleImage = pimages;
+                }
+
+
                 if (pimages.equalsIgnoreCase("") || pimages.equalsIgnoreCase(null) ||
                         pimages.equalsIgnoreCase("null")) {
                     imagename = getString(R.string.base_image_url) + "logo48x48.png";
                 } else {
-                    imagename = getString(R.string.base_image_url) + imageslist;
+                    imagename = getString(R.string.base_image_url) + singleImage;
                 }
                 Log.e("TAG", "img : " + imagename);
                 DownloadManager.Request request = new DownloadManager.Request(
@@ -1144,8 +1156,8 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
 
                             //restrict previous group ids shown in list
                             //if (!prevGroupIds.contains(String.valueOf(success.getId()))) {
-                                groupIdList.add(String.valueOf(success.getId()));
-                                groupTitleList.add(success.getTitle());
+                            groupIdList.add(String.valueOf(success.getId()));
+                            groupTitleList.add(success.getTitle());
                             //}
                         }
                         //Log.i("previousGrpIds--",groupIdList);
