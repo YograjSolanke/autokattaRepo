@@ -753,7 +753,7 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
                 //  mBundle.putString("StoreContact", mOtherContact);
 
                 String dp_path = getString(R.string.base_image_url) + storeImage;
-                Glide.with(StoreViewActivity.this)
+                Glide.with(getApplicationContext())
                         .load(dp_path)
                         .centerCrop()
                         .diskCacheStrategy(DiskCacheStrategy.ALL)

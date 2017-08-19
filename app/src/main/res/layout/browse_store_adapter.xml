@@ -1177,10 +1177,10 @@
         <!--</android.support.v7.widget.CardView>-->
     </android.support.v7.widget.CardView>
 
-    <View
+    <!--<View
         android:id="@+id/vieww"
         android:layout_width="match_parent"
         android:layout_height="2dp"
         android:layout_below="@+id/card_view"
-        android:background="@color/grey" />
+        android:background="@color/grey" />-->
 </RelativeLayout>

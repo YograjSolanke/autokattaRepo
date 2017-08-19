@@ -901,10 +901,10 @@
             </RelativeLayout>-->
     </android.support.v7.widget.CardView>
 
-    <View
+    <!--<View
         android:id="@+id/vieww"
         android:layout_width="match_parent"
         android:layout_height="2dp"
         android:layout_below="@+id/adapter_mystoreListCard_view"
-        android:background="@color/grey" />
+        android:background="@color/grey" />-->
 </RelativeLayout>
