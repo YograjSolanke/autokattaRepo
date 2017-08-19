@@ -60,10 +60,10 @@ public class InventoryProductsFragment extends Fragment implements RequestNotifi
     StoreProductAdapter adapter;
     boolean hasView = false;
     ConnectionDetector mTestConnection;
-    ArrayList<String> categoryList = new ArrayList<>();
+    List<String> categoryList = new ArrayList<>();
     HashSet<String> categoryHashSet;
     CheckedCategoryAdapter categoryAdapter;
-    ArrayList<String> finalcategory = new ArrayList<>();
+    List<String> finalcategory = new ArrayList<>();
     TextView mNoData;
     int counter = 0;
 
@@ -141,9 +141,6 @@ public class InventoryProductsFragment extends Fragment implements RequestNotifi
 
     @Override
     public void onRefresh() {
-        mSwipeRefreshLayout.setRefreshing(false);
-
-//        productList.clear();
         getInventoryProducts(Sharedcontact);
     }
 
@@ -202,7 +199,6 @@ public class InventoryProductsFragment extends Fragment implements RequestNotifi
                     mNoData.setVisibility(View.VISIBLE);
                 }
             } else {
-
                 mSwipeRefreshLayout.setRefreshing(false);
                 if (isAdded())
                     CustomToast.customToast(getActivity(), getString(R.string._404_));
@@ -255,12 +251,6 @@ public class InventoryProductsFragment extends Fragment implements RequestNotifi
 
 
     public void filterResult(final String[] incomingCategory) {
-//        final AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
-//        LayoutInflater inflater = getActivity().getLayoutInflater();
-//
-//        View convertView = inflater.inflate(R.layout.custom_store, null);
-//        alertDialog.setView(convertView);
-
 
         final Dialog openDialog = new Dialog(getActivity());
         openDialog.setCancelable(false);
@@ -319,14 +309,12 @@ public class InventoryProductsFragment extends Fragment implements RequestNotifi
                     adapter.notifyDataSetChanged();
                 } else {
                     if (counter == 0) {
-                        CustomToast.customToast(getActivity(), "Please Select Atleast One Category");
-//                        AlertDialog alert = alertDialog.create();
-//                        alert.show();
+                        if (isAdded())
+                            CustomToast.customToast(getActivity(), "Please Select Atleast One Category");
                     }
                     if (counter > 5) {
-                        CustomToast.customToast(getActivity(), "Please Select Only 5 Category");
-//                        AlertDialog alert = alertDialog.create();
-//                        alert.show();
+                        if (isAdded())
+                            CustomToast.customToast(getActivity(), "Please Select Only 5 Category");
                     }
 
                 }
@@ -350,12 +338,12 @@ public class InventoryProductsFragment extends Fragment implements RequestNotifi
         CheckBox checkBox;
     }
 
-    public class CheckedCategoryAdapter extends BaseAdapter {
+    private class CheckedCategoryAdapter extends BaseAdapter {
         private LayoutInflater mInflater;
         Activity activity;
-        ArrayList<String> titles = new ArrayList<>();
+        List<String> titles = new ArrayList<>();
 
-        public CheckedCategoryAdapter(Activity a, String titles[]) {
+        CheckedCategoryAdapter(Activity a, String titles[]) {
             this.activity = a;
             this.titles = new ArrayList<>(Arrays.asList(titles));
 
