@@ -263,10 +263,14 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
                         TimeZone utc = TimeZone.getTimeZone("etc/UTC");
                         //format of date coming from services
                         DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                        /*DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",
+                                Locale.getDefault());*/
                         inputFormat.setTimeZone(utc);
 
                         //format of date which we want to show
                         DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
+                        /*DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy hh:mm aa",
+                                Locale.getDefault());*/
                         outputFormat.setTimeZone(utc);
 
                         Date date = inputFormat.parse(mainList.get(i).getDate());

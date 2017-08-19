@@ -60,10 +60,10 @@ public class InventoryServicesFragment extends Fragment implements RequestNotifi
     StoreServiceAdapter adapter;
     boolean hasView = false;
     ConnectionDetector mTestConnection;
-    ArrayList<String> categoryList = new ArrayList<>();
+    List<String> categoryList = new ArrayList<>();
     HashSet<String> categoryHashSet;
     CheckedCategoryAdapter categoryAdapter;
-    ArrayList<String> finalcategory = new ArrayList<>();
+    List<String> finalcategory = new ArrayList<>();
     RelativeLayout relativeFilter;
     int counter = 0;
 
@@ -138,29 +138,13 @@ public class InventoryServicesFragment extends Fragment implements RequestNotifi
         } else {
             mSwipeRefreshLayout.setRefreshing(false);
             mNoData.setVisibility(View.GONE);
-          /*  Snackbar snackbar = Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
-                    .setAction("Go Online", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
-                        }
-                    });
-            // Changing message text color
-            snackbar.setActionTextColor(Color.RED);
-            // Changing action button text color
-            View sbView = snackbar.getView();
-            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
-            textView.setTextColor(Color.YELLOW);
-            snackbar.show();*/
-            CustomToast.customToast(getActivity(),getString(R.string.no_internet));
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         }
     }
 
     @Override
     public void onRefresh() {
-        mSwipeRefreshLayout.setRefreshing(false);
-
-//        serviceList.clear();
         getInventoryService(Sharedcontact);
     }
 
@@ -219,13 +203,13 @@ public class InventoryServicesFragment extends Fragment implements RequestNotifi
                 }
             } else {
                 mSwipeRefreshLayout.setRefreshing(false);
-                CustomToast.customToast(getActivity(),getString(R.string.no_internet));
-                // Snackbar.make(getView(), getString(R.string._404_), Snackbar.LENGTH_SHORT).show();
+                if (isAdded())
+                    CustomToast.customToast(getActivity(), getString(R.string.no_internet));
             }
         } else {
             mSwipeRefreshLayout.setRefreshing(false);
-            CustomToast.customToast(getActivity(),getString(R.string.no_internet));
-            //  Snackbar.make(getView(), getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         }
     }
 
@@ -233,23 +217,23 @@ public class InventoryServicesFragment extends Fragment implements RequestNotifi
     public void notifyError(Throwable error) {
         mSwipeRefreshLayout.setRefreshing(false);
         if (error instanceof SocketTimeoutException) {
-            CustomToast.customToast(getActivity(),getString(R.string._404_));
-            //   showMessage(getActivity(), getString(R.string._404_));
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
-            CustomToast.customToast(getActivity(),getString(R.string.no_response));
-            // showMessage(getActivity(), getString(R.string.no_response));
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            CustomToast.customToast(getActivity(),getString(R.string.no_response));
-            //   showMessage(getActivity(), getString(R.string.no_response));
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
-            CustomToast.customToast(getActivity(),getString(R.string.no_internet));
-            //   errorMessage(getActivity(), getString(R.string.no_internet));
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
-            CustomToast.customToast(getActivity(),getString(R.string.no_internet));
-            //   errorMessage(getActivity(), getString(R.string.no_internet));
-        }  else {
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string.no_internet));
+        } else {
             Log.i("Check Class-"
-                    , "StoreServices");
+                    , "Inventory Service Fragment");
             error.printStackTrace();
         }
     }
@@ -269,12 +253,6 @@ public class InventoryServicesFragment extends Fragment implements RequestNotifi
     }
 
     public void filterResult(final String[] incomingCategory) {
-//        final AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
-//        LayoutInflater inflater = getActivity().getLayoutInflater();
-//
-//        View convertView = inflater.inflate(R.layout.custom_store, null);
-//        alertDialog.setView(convertView);
-
 
         final Dialog openDialog = new Dialog(getActivity());
         openDialog.setCancelable(false);
@@ -333,14 +311,12 @@ public class InventoryServicesFragment extends Fragment implements RequestNotifi
                     adapter.notifyDataSetChanged();
                 } else {
                     if (counter == 0) {
-                        CustomToast.customToast(getActivity(), "Please Select Atleast One Category");
-//                        AlertDialog alert = alertDialog.create();
-//                        alert.show();
+                        if (isAdded())
+                            CustomToast.customToast(getActivity(), "Please Select Atleast One Category");
                     }
                     if (counter > 5) {
-                        CustomToast.customToast(getActivity(), "Please Select Only 5 Category");
-//                        AlertDialog alert = alertDialog.create();
-//                        alert.show();
+                        if (isAdded())
+                            CustomToast.customToast(getActivity(), "Please Select Only 5 Category");
                     }
 
                 }
@@ -348,14 +324,6 @@ public class InventoryServicesFragment extends Fragment implements RequestNotifi
             }
         });
         openDialog.show();
-
-//        convertView.setOnTouchListener(new View.OnTouchListener() {
-//            @Override
-//            public boolean onTouch(View v, MotionEvent event) {
-//                v.getParent().requestDisallowInterceptTouchEvent(true);
-//                return false;
-//            }
-//        });
     }
 
 
@@ -364,12 +332,12 @@ public class InventoryServicesFragment extends Fragment implements RequestNotifi
         CheckBox checkBox;
     }
 
-    public class CheckedCategoryAdapter extends BaseAdapter {
+    private class CheckedCategoryAdapter extends BaseAdapter {
         private LayoutInflater mInflater;
         Activity activity;
-        ArrayList<String> titles = new ArrayList<>();
+        List<String> titles = new ArrayList<>();
 
-        public CheckedCategoryAdapter(Activity a, String titles[]) {
+        CheckedCategoryAdapter(Activity a, String titles[]) {
             this.activity = a;
             this.titles = new ArrayList<>(Arrays.asList(titles));
 

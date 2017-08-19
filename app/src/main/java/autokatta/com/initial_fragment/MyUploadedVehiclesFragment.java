@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
@@ -21,6 +22,7 @@ import autokatta.com.R;
 import autokatta.com.adapter.MyUploadedVehicleAdapter;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
+import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.MyUploadedVehiclesResponse;
 import retrofit2.Response;
@@ -34,52 +36,87 @@ import static android.content.Context.MODE_PRIVATE;
 public class MyUploadedVehiclesFragment extends Fragment implements RequestNotifier, SwipeRefreshLayout.OnRefreshListener {
     SwipeRefreshLayout mSwipeRefreshLayout;
     RecyclerView mRecyclerView;
-    ApiCall apiCall;
     List<MyUploadedVehiclesResponse.Success> myUploadedVehiclesResponseList = new ArrayList<>();
     View myVehicles;
     String myContact;
+    TextView mNoData;
+    ConnectionDetector mTestConnection;
+    boolean hasView = false;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         myVehicles = inflater.inflate(R.layout.fragment_my_uploaded_vehicles, container, false);
-
-
-        apiCall = new ApiCall(getActivity(), this);
-        myContact = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
-                .getString("loginContact", "");
-
-        mSwipeRefreshLayout = (SwipeRefreshLayout) myVehicles.findViewById(R.id.swipeRefreshLayoutMyUploadedVehicle);
-        mRecyclerView = (RecyclerView) myVehicles.findViewById(R.id.recyclerMyUploadedVehicle);
-
-        mRecyclerView.setHasFixedSize(true);
-
-        LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(getActivity());
-        mLinearLayoutManager.setReverseLayout(true);
-        mLinearLayoutManager.setStackFromEnd(true);
-        mRecyclerView.setLayoutManager(mLinearLayoutManager);
-
-        mSwipeRefreshLayout.setOnRefreshListener(this);
-        mSwipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
-                android.R.color.holo_green_light,
-                android.R.color.holo_orange_light,
-                android.R.color.holo_red_light);
-        mSwipeRefreshLayout.post(new Runnable() {
-            @Override
-            public void run() {
-                mSwipeRefreshLayout.setRefreshing(true);
-                apiCall.MyUploadedVehicles(myContact);
-            }
-        });
-
-
         return myVehicles;
     }
 
     @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+
+                mTestConnection = new ConnectionDetector(getActivity());
+                myContact = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
+                        .getString("loginContact", "");
+
+                mSwipeRefreshLayout = (SwipeRefreshLayout) myVehicles.findViewById(R.id.swipeRefreshLayoutMyUploadedVehicle);
+                mRecyclerView = (RecyclerView) myVehicles.findViewById(R.id.recyclerMyUploadedVehicle);
+                mNoData = (TextView) myVehicles.findViewById(R.id.no_category);
+                mNoData.setVisibility(View.GONE);
+
+                mRecyclerView.setHasFixedSize(true);
+
+                LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(getActivity());
+                mLinearLayoutManager.setReverseLayout(true);
+                mLinearLayoutManager.setStackFromEnd(true);
+                mRecyclerView.setLayoutManager(mLinearLayoutManager);
+
+
+                mSwipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
+                        android.R.color.holo_green_light,
+                        android.R.color.holo_orange_light,
+                        android.R.color.holo_red_light);
+                mSwipeRefreshLayout.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        mSwipeRefreshLayout.setRefreshing(true);
+                        getMyUploadedVehicles(myContact);
+                    }
+                });
+            }
+        });
+        mSwipeRefreshLayout.setOnRefreshListener(this);
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (this.isVisible()) {
+            if (isVisibleToUser && !hasView) {
+                getMyUploadedVehicles(myContact);
+                hasView = true;
+            }
+        }
+    }
+
+    @Override
     public void onRefresh() {
-        mSwipeRefreshLayout.setRefreshing(false);
-        apiCall.MyUploadedVehicles(myContact);
+        getMyUploadedVehicles(myContact);
+    }
+
+    private void getMyUploadedVehicles(String myContact) {
+        if (mTestConnection.isConnectedToInternet()) {
+            ApiCall apiCall = new ApiCall(getActivity(), this);
+            apiCall.MyUploadedVehicles(myContact);
+        } else {
+            mSwipeRefreshLayout.setRefreshing(false);
+            mNoData.setVisibility(View.GONE);
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string.no_internet));
+        }
     }
 
 
@@ -87,8 +124,11 @@ public class MyUploadedVehiclesFragment extends Fragment implements RequestNotif
     public void notifySuccess(Response<?> response) {
         if (response != null) {
             if (response.isSuccessful()) {
+                mSwipeRefreshLayout.setRefreshing(false);
+                myUploadedVehiclesResponseList.clear();
                 MyUploadedVehiclesResponse myVehicleResponse = (MyUploadedVehiclesResponse) response.body();
                 if (!myVehicleResponse.getSuccess().isEmpty()) {
+                    mNoData.setVisibility(View.GONE);
                     for (MyUploadedVehiclesResponse.Success myVehicleSuccess : myVehicleResponse.getSuccess()) {
                         myVehicleSuccess.setVehicleId(myVehicleSuccess.getVehicleId());
                         myVehicleSuccess.setTitle(myVehicleSuccess.getTitle());
@@ -106,6 +146,11 @@ public class MyUploadedVehiclesFragment extends Fragment implements RequestNotif
                         myVehicleSuccess.setRtoCity(myVehicleSuccess.getRtoCity());
                         myVehicleSuccess.setLocationCity(myVehicleSuccess.getLocationCity());
                         myVehicleSuccess.setRegistrationNumber(myVehicleSuccess.getRegistrationNumber());
+                        if (myVehicleSuccess.getRegistrationNumber().equals(""))
+                            myVehicleSuccess.setRegistrationNumber("NA");
+                        else
+                            myVehicleSuccess.setRegistrationNumber(myVehicleSuccess.getRegistrationNumber());
+
                         myUploadedVehiclesResponseList.add(myVehicleSuccess);
                     }
                     Log.i("size", String.valueOf(myUploadedVehiclesResponseList.size()));
@@ -113,13 +158,20 @@ public class MyUploadedVehiclesFragment extends Fragment implements RequestNotif
                     MyUploadedVehicleAdapter adapter = new MyUploadedVehicleAdapter(getActivity(), myUploadedVehiclesResponseList);
                     mRecyclerView.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
+                } else {
+                    mSwipeRefreshLayout.setRefreshing(false);
+                    mNoData.setVisibility(View.VISIBLE);
                 }
             } else {
-                CustomToast.customToast(getActivity(), getString(R.string._404));
+                mSwipeRefreshLayout.setRefreshing(false);
+                if (isAdded())
+                    CustomToast.customToast(getActivity(), getString(R.string._404));
             }
 
         } else {
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            mSwipeRefreshLayout.setRefreshing(false);
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string.no_response));
         }
     }
 
@@ -127,21 +179,21 @@ public class MyUploadedVehiclesFragment extends Fragment implements RequestNotif
     public void notifyError(Throwable error) {
         mSwipeRefreshLayout.setRefreshing(false);
         if (error instanceof SocketTimeoutException) {
-            CustomToast.customToast(getActivity(),getString(R.string._404_));
-            //   showMessage(getActivity(), getString(R.string._404_));
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
-            CustomToast.customToast(getActivity(),getString(R.string.no_response));
-            // showMessage(getActivity(), getString(R.string.no_response));
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            CustomToast.customToast(getActivity(),getString(R.string.no_response));
-            //   showMessage(getActivity(), getString(R.string.no_response));
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
-            CustomToast.customToast(getActivity(),getString(R.string.no_internet));
-            //   errorMessage(getActivity(), getString(R.string.no_internet));
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
-            CustomToast.customToast(getActivity(),getString(R.string.no_internet));
-            //   errorMessage(getActivity(), getString(R.string.no_internet));
-        }  else {
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string.no_internet));
+        } else {
             Log.i("Check Class-"
                     , "MyUploadedVehiclesActivity");
             error.printStackTrace();

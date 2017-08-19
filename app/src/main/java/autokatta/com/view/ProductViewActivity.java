@@ -1074,6 +1074,8 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                         + "\n" + "\n" + allStoreDetails);
                 intent.setType("image/jpeg");
                 intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(imageFilePath)));
+                intent.putExtra(Intent.EXTRA_SUBJECT, "Please Find Below Attachments");
+                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                 startActivity(Intent.createChooser(intent, "Autokatta"));
 
                 break;

@@ -2221,7 +2221,7 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
                     mUpVehicleHolder.mUserPic.setBackgroundResource(R.drawable.logo48x48);
                 } else {
                     Glide.with(mActivity)
-                            .load(mActivity.getString(R.string.base_image_url)+ notificationList.get(position).getSenderPic())
+                            .load(mActivity.getString(R.string.base_image_url) + notificationList.get(position).getSenderPic())
                             .diskCacheStrategy(DiskCacheStrategy.ALL) //For caching diff versions of image.
                             .into(mUpVehicleHolder.mUserPic);
                 }
@@ -2623,7 +2623,7 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
                         Calendar c = Calendar.getInstance();
                         System.out.println("Current time => " + c.getTime());
 
-                        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
                         String calldate = df.format(c.getTime());
 
                         if (!otherContact.equals(mLoginContact)) {
@@ -2675,12 +2675,12 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
                 try {
                     TimeZone utc = TimeZone.getTimeZone("etc/UTC");
                     //format of date coming from services
-                    DateFormat inputFormat = new SimpleDateFormat("yyyy-mm-dd HH:mm:ss",
-                            Locale.US);
+                    DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd",
+                            Locale.getDefault());
                     inputFormat.setTimeZone(utc);
                     //format of date which want to show
-                    DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy hh:mm aa",
-                            Locale.US);
+                    DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy",
+                            Locale.getDefault());
                     outputFormat.setTimeZone(utc);
 
                     Date date = inputFormat.parse(notificationList.get(position).getVdate());
@@ -2864,7 +2864,7 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
                         Calendar c = Calendar.getInstance();
                         System.out.println("Current time => " + c.getTime());
 
-                        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
                         String calldate = df.format(c.getTime());
 
                         if (!otherContact.equals(mLoginContact)) {

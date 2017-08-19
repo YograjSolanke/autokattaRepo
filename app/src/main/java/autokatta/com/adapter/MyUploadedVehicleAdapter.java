@@ -13,6 +13,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.text.InputType;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -31,12 +32,17 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.kaopiz.kprogresshud.KProgressHUD;
 
+import java.net.ConnectException;
+import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 import autokatta.com.R;
@@ -48,6 +54,7 @@ import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.interfaces.ServiceApi;
 import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.other.CustomToast;
+import autokatta.com.response.MyStoreResponse;
 import autokatta.com.response.MyUploadedVehiclesResponse;
 import autokatta.com.response.ProfileGroupResponse;
 import autokatta.com.view.ManualEnquiry;
@@ -89,6 +96,14 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
     private String stringgroupname = "";
     private int mVehicleId;
 
+    private List<String> storeIdList = new ArrayList<>();
+    private List<String> storeTitleList = new ArrayList<>();
+    private String[] storeTitleArray = new String[0];
+    private String[] storeIdArray = new String[0];
+    private String stringstoreids = "";
+    private String stringstorename = "";
+    private KProgressHUD hud;
+
     public MyUploadedVehicleAdapter(Activity activity1, List<MyUploadedVehiclesResponse.Success> successList) {
         this.activity = activity1;
         this.mMainList = successList;
@@ -103,8 +118,8 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
     }
 
     @Override
-    public void onBindViewHolder(final MyUploadedVehicleAdapter.VehicleHolder holder, final int position) {
-        ArrayList<String> vimages = new ArrayList<>();
+    public void onBindViewHolder(final MyUploadedVehicleAdapter.VehicleHolder holder, int position) {
+        List<String> vimages = new ArrayList<>();
         holder.edittitles.setText(mMainList.get(position).getTitle());
         holder.editprices.setText(mMainList.get(position).getPrice());
         holder.editcategorys.setText(mMainList.get(position).getCategory());
@@ -127,8 +142,8 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
         //To set Date
         try {
             //To set Date
-            DateFormat inputDate = new SimpleDateFormat("yyyy-MM-dd");
-            DateFormat newDateFormat = new SimpleDateFormat("dd-MMM-yyyy");
+            DateFormat inputDate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+            DateFormat newDateFormat = new SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault());
             holder.edituploadedon.setText(newDateFormat.format(inputDate.parse(mMainList.get(position).getDate())));
 
            /* DateFormat date = new SimpleDateFormat(" MMM dd ");
@@ -249,23 +264,6 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
             }
         });
 
-
-       /* holder.vehidetails.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Bundle b = new Bundle();
-//                Vehical_Details frag = new Vehical_Details();
-//                b.putString("Vehical_id", obj.vehicleId);
-//                frag.setArguments(b);
-//
-//                FragmentManager fragmentManager = ctx.getSupportFragmentManager();
-//                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//                fragmentTransaction.replace(R.id.containerView, frag);
-//                fragmentTransaction.addToBackStack("vehicle_details");
-//                fragmentTransaction.commit();
-
-            }
-        });*/
 
         holder.vehidetails.setOnClickListener(new OnClickListener() {
             @Override
@@ -441,36 +439,19 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
             public void onClick(View v) {
                 try {
                     getGroups();
-                    mVehicleId = mMainList.get(position).getVehicleId();
-                    /*if (groupTitleArray.length == 0) {
-                        android.app.AlertDialog.Builder alertDialog = new android.app.AlertDialog.Builder(activity);
-                        alertDialog.setTitle("No Group Found");
-                        alertDialog.setMessage("Do you want to create Group...");
-                        alertDialog.setIcon(android.R.drawable.ic_dialog_alert);
-                        alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                CreateGroupFragment createGroupFragment = new CreateGroupFragment();
-                                Bundle b = new Bundle();
-                                b.putString("classname", "uploadvehicle");
-                                createGroupFragment.setArguments(b);
+                    mVehicleId = mMainList.get(holder.getAdapterPosition()).getVehicleId();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
 
-                                activity.getFragmentManager().beginTransaction()
-                                        .replace(R.id.vehicle_upload_container, createGroupFragment, "Title")
-                                        .addToBackStack("Title")
-                                        .commit();
-
-
-                            }
-                        });
-                        alertDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.cancel();
-                            }
-                        });
-                        alertDialog.show();
-                    } else {*/
-                    //alertBoxToSelectExcelSheet(groupTitleArray);
-                    //}
+        holder.mUploadStore.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    getStores();
+                    mVehicleId = mMainList.get(holder.getAdapterPosition()).getVehicleId();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -491,13 +472,21 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
 
             ServiceApi serviceApi = retrofit.create(ServiceApi.class);
             Call<ProfileGroupResponse> add = serviceApi._autokattaProfileGroup(activity.getSharedPreferences(activity.getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", null));
+
+            hud = KProgressHUD.create(activity)
+                    .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                    .setLabel("loading groups...")
+                    .setMaxProgress(100)
+                    .show();
+            
             add.enqueue(new Callback<ProfileGroupResponse>() {
                 @Override
                 public void onResponse(Call<ProfileGroupResponse> call, Response<ProfileGroupResponse> response) {
                     if (response.isSuccessful()) {
                         groupIdList.clear();
-                        groupIdList.clear();
                         groupTitleList.clear();
+                        hud.dismiss();
+                        
                         ProfileGroupResponse mProfileGroupResponse = (ProfileGroupResponse) response.body();
                         for (ProfileGroupResponse.MyGroup success : mProfileGroupResponse.getSuccess().getMyGroups()) {
                             groupIdList.add(String.valueOf(success.getId()));
@@ -531,9 +520,10 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
                             });
                             alertDialog.show();
                         } else {
-                            alertBoxToSelectExcelSheet(groupTitleArray);
+                            alertBoxGroups(groupTitleArray);
                         }
                     } else {
+                        hud.dismiss();
                         CustomToast.customToast(activity, activity.getString(R.string._404));
                     }
                 }
@@ -552,7 +542,7 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
     /*
     Alert Dialog
      */
-    private void alertBoxToSelectExcelSheet(final String[] groupTitleArray) {
+    private void alertBoxGroups(final String[] groupTitleArray) {
         final List<String> mSelectedItems = new ArrayList<>();
         mSelectedItems.clear();
 
@@ -591,7 +581,7 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
                                 }
                             }
                         }
-                        setPrivacy(stringgroupids);
+                        setPrivacy(stringgroupids, "");
                         if (mSelectedItems.size() == 0) {
                             CustomToast.customToast(activity, "No Group Was Selected");
                             stringgroupids = "";
@@ -612,11 +602,148 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
 
     /*
 
+    /*
+    Get Store...
      */
-    private void setPrivacy(String groupId) {
+    private void getStores() {
+        if (mConnectionDetector.isConnectedToInternet()) {
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl(activity.getString(R.string.base_url))
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .client(initLog().build())
+                    .build();
+
+            ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+            Call<MyStoreResponse> add = serviceApi._autokattaGetMyStoreList(activity.getSharedPreferences(activity.getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", null));
+
+            hud = KProgressHUD.create(activity)
+                    .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                    .setLabel("loading stores...")
+                    .setMaxProgress(100)
+                    .show();
+
+            add.enqueue(new Callback<MyStoreResponse>() {
+                @Override
+                public void onResponse(Call<MyStoreResponse> call, Response<MyStoreResponse> response) {
+                    if (response.isSuccessful()) {
+                        storeIdList.clear();
+                        storeTitleList.clear();
+                        hud.dismiss();
+                        MyStoreResponse mProfileGroupResponse = response.body();
+                        for (MyStoreResponse.Success success : mProfileGroupResponse.getSuccess()) {
+                            storeIdList.add(String.valueOf(success.getId()));
+                            storeTitleList.add(success.getName());
+                        }
+                        storeTitleArray = storeTitleList.toArray(new String[storeTitleList.size()]);
+                        storeIdArray = storeIdList.toArray(new String[storeIdList.size()]);
+
+                        /*if (storeTitleArray.length == 0) {
+                            android.app.AlertDialog.Builder alertDialog = new android.app.AlertDialog.Builder(activity);
+                            alertDialog.setTitle("No Store Found");
+                            alertDialog.setMessage("Do you want to create Store...");
+                            alertDialog.setIcon(android.R.drawable.ic_dialog_alert);
+                            alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    CreateGroupFragment createGroupFragment = new CreateGroupFragment();
+                                    Bundle b = new Bundle();
+                                    b.putString("classname", "uploadvehicle");
+                                    createGroupFragment.setArguments(b);
+
+                                    ((FragmentActivity) activity).getSupportFragmentManager().beginTransaction()
+                                            .replace(R.id.vehicle_upload_container, createGroupFragment, "Title")
+                                            .addToBackStack("Title")
+                                            .commit();
+                                }
+                            });
+                            alertDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.cancel();
+                                }
+                            });
+                            alertDialog.show();
+                        } else {*/
+                        alertBoxStore(storeTitleArray);
+                        //}
+                    } else {
+                        hud.dismiss();
+                        CustomToast.customToast(activity, activity.getString(R.string._404));
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<MyStoreResponse> call, Throwable t) {
+                    t.printStackTrace();
+                }
+
+            });
+        } else {
+            CustomToast.customToast(activity.getApplicationContext(), activity.getString(R.string.no_internet));
+        }
+    }
+
+    private void alertBoxStore(final String[] storeTitleArray) {
+        final List<String> mSelectedItems = new ArrayList<>();
+        mSelectedItems.clear();
+
+        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(activity);
+
+        // set the dialog title
+        builder.setTitle("Select Store From Following")
+                .setCancelable(true)
+                .setMultiChoiceItems(storeTitleArray, null, new DialogInterface.OnMultiChoiceClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+                        if (isChecked) {
+                            mSelectedItems.add(storeTitleArray[which]);
+                        } else if (mSelectedItems.contains(storeTitleArray[which])) {
+                            mSelectedItems.remove(storeTitleArray[which]);
+                        }
+                    }
+                })
+                // Set the action buttons
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        stringstoreids = "";
+                        stringstorename = "";
+                        for (int i = 0; i < mSelectedItems.size(); i++) {
+                            for (int j = 0; j < storeTitleArray.length; j++) {
+                                if (mSelectedItems.get(i).equals(storeTitleArray[j])) {
+                                    if (stringstoreids.equals("")) {
+                                        stringstoreids = storeIdList.get(j);
+                                        stringstorename = storeTitleArray[j];
+                                    } else {
+                                        stringstoreids = stringstoreids + "," + storeIdList.get(j);
+                                        stringstorename = stringstorename + "," + storeTitleArray[j];
+                                    }
+                                }
+                            }
+                        }
+                        setPrivacy("", stringstoreids);
+                        if (mSelectedItems.size() == 0) {
+                            CustomToast.customToast(activity, "No store Was Selected");
+                            stringstoreids = "";
+                            stringstorename = "";
+                        }
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        stringstoreids = "";
+                        stringstorename = "";
+                    }
+
+                })
+                .show();
+    }
+
+
+    private void setPrivacy(String groupIds, String storeIds) {
         ApiCall apiCall = new ApiCall(activity, this);
         apiCall.VehiclePrivacy(activity.getSharedPreferences(activity.getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""),
-                mVehicleId, groupId, "");
+                mVehicleId, groupIds, storeIds);
     }
 
     @Override
@@ -631,6 +758,21 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
 
     @Override
     public void notifyError(Throwable error) {
+        if (error instanceof SocketTimeoutException) {
+            CustomToast.customToast(activity, activity.getString(R.string._404_));
+        } else if (error instanceof NullPointerException) {
+            CustomToast.customToast(activity, activity.getString(R.string.no_response));
+        } else if (error instanceof ClassCastException) {
+            CustomToast.customToast(activity, activity.getString(R.string.no_response));
+        } else if (error instanceof ConnectException) {
+            CustomToast.customToast(activity, activity.getString(R.string.no_internet));
+        } else if (error instanceof UnknownHostException) {
+            CustomToast.customToast(activity, activity.getString(R.string.no_internet));
+        } else {
+            Log.i("Check Class-"
+                    , "MyUploadedVehiclesActivity");
+            error.printStackTrace();
+        }
 
     }
 
@@ -689,11 +831,8 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
      ***/
     private OkHttpClient.Builder initLog() {
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
-        // set your desired log level
         logging.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
-        // add your other interceptors …
-        // add logging as last interceptor
         httpClient.addInterceptor(logging).readTimeout(90, TimeUnit.SECONDS);
         return httpClient;
     }
