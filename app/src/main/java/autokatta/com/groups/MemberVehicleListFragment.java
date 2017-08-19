@@ -306,7 +306,7 @@ public class MemberVehicleListFragment extends Fragment implements SwipeRefreshL
                             success.setEngineNo(success.getEngineNo());
                             success.setChassisNo(success.getChassisNo());
                             success.setPrice(success.getPrice());
-                            //success.setImage(success.getImage());
+                            success.setImage(success.getImage());
                             success.setDrive(success.getDrive());
                             success.setTransmission(success.getTransmission());
                             success.setBodyType(success.getBodyType());
