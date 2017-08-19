@@ -1,6 +1,5 @@
 package autokatta.com.fragment;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -44,7 +43,6 @@ import retrofit2.Response;
  * Created by ak-003 on 21/4/17.
  */
 
-@SuppressLint("SimpleDateFormat")
 public class BuyerNotificationFragment extends Fragment implements RequestNotifier {
     public BuyerNotificationFragment() {
     }
@@ -67,14 +65,12 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
                 getString("loginContact", "");
 
         mApiCall.getUploadedVehicleBuyerlist(myContact);
-        //mApiCall.getUploadedVehicleBuyerlist("2020202020");
-
         return view;
     }
 
     @Override
     public void notifySuccess(Response<?> response) {
-        DateFormat f = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        DateFormat f = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.getDefault());
         if (response.isSuccessful()) {
 
             if (response.isSuccessful()) {
@@ -238,11 +234,11 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
                         //format of date coming from services
                         //DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",
                         DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd",
-                                Locale.US);
+                                Locale.getDefault());
                         inputFormat.setTimeZone(utc);
                         //format of date which want to show
                         DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy",
-                                Locale.US);
+                                Locale.getDefault());
                         outputFormat.setTimeZone(utc);
 
                         Date date = inputFormat.parse(mainList.get(i).getDate());
@@ -371,11 +367,11 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
                         //to set buyer last call date
                         try {
 
-                            DateFormat date = new SimpleDateFormat(" MMM dd ");
-                            DateFormat time = new SimpleDateFormat(" hh:mm a");
+                            DateFormat date = new SimpleDateFormat(" MMM dd ", Locale.getDefault());
+                            DateFormat time = new SimpleDateFormat(" hh:mm a", Locale.getDefault());
 
-                            DateFormat inputDate = new SimpleDateFormat("yyyy-MM-dd");
-                            DateFormat newDateFormat = new SimpleDateFormat("dd-MMM-yyyy");
+                            DateFormat inputDate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                            DateFormat newDateFormat = new SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault());
 
                             /*holder.uploadDates.setText(newDateFormat.format(inputDate.parse(mGetOwnVehiclesList.get(position).getUploaddate())));
 
@@ -539,7 +535,7 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
                                 Calendar c = Calendar.getInstance();
                                 System.out.println("Current time => " + c.getTime());
 
-                                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
                                 String calldate = df.format(c.getTime());
 
                                 if (!recieverContact.equals(myContact)) {
@@ -587,15 +583,20 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
     @Override
     public void notifyError(Throwable error) {
         if (error instanceof SocketTimeoutException) {
-            CustomToast.customToast(getActivity(), getString(R.string._404_));
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
-            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
-            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         } else {
             Log.i("Check Class", "Buyer Notification Fragment");
             error.printStackTrace();
