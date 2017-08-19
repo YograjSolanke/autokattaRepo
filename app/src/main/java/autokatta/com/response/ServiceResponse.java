@@ -52,7 +52,7 @@ public class ServiceResponse {
         private String details;
         @SerializedName("group_id")
         @Expose
-        private int groupId;
+        private String groupId;
         @SerializedName("id")
         @Expose
         private int id;
@@ -149,11 +149,11 @@ public class ServiceResponse {
             this.details = details;
         }
 
-        public Object getGroupId() {
+        public String getGroupId() {
             return groupId;
         }
 
-        public void setGroupId(int groupId) {
+        public void setGroupId(String groupId) {
             this.groupId = groupId;
         }
 

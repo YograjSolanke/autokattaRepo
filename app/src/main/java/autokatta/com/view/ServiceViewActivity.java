@@ -40,10 +40,13 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
+import autokatta.com.initial_fragment.CreateGroupFragment;
 import autokatta.com.interfaces.RequestNotifier;
+import autokatta.com.interfaces.ServiceApi;
 import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.BrandsTagResponse;
@@ -52,8 +55,15 @@ import autokatta.com.response.EnquiryCountResponse;
 import autokatta.com.response.GetTagsResponse;
 import autokatta.com.response.OtherBrandTagAddedResponse;
 import autokatta.com.response.OtherTagAddedResponse;
+import autokatta.com.response.ProfileGroupResponse;
 import autokatta.com.response.ServiceResponse;
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Call;
+import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by ak-001 on 19/4/17.
@@ -87,12 +97,15 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
     int srate3;
     int store_id;
     String storecontact;
+    private String[] groupIdArray = new String[0];
     String brandtags_list;
     TextView storename, website, textlike, textshare;
     EditText servicename, servicetype, serviceprice, servicedetails, writereview;
     ImageView check, edit, callme, deleteservice;
     RelativeLayout mainlayout;
-
+    private List<String> groupIdList = new ArrayList<>();
+    private List<String> groupTitleList = new ArrayList<>();
+    private String[] groupTitleArray = new String[0];
 
     Button submitfeedback;
     RelativeLayout relativerate;
@@ -129,6 +142,11 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
     ApiCall mApiCall;
     SliderLayout sliderLayout;
     HashMap<String, String> Hash_file_maps;
+    private String stringgroupids = "";
+    private String stringgroupname = "";
+    String prevGroupIds = "";
+    LinearLayout mLinearLayout;
+    Button mUploadGroup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -179,6 +197,8 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
         storerating = (RatingBar) findViewById(R.id.storerating);
         submitfeedback = (Button) findViewById(R.id.btnfeedback);
         mainlayout = (RelativeLayout) findViewById(R.id.mainlayout);
+        mLinearLayout = (LinearLayout) findViewById(R.id.linearbtns);
+        mUploadGroup = (Button) findViewById(R.id.upload_group);
         mainlayout.setVisibility(View.GONE);
 
         overallbar.setEnabled(false);
@@ -284,6 +304,155 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
             }
         });
 
+    }
+
+    /*
+   Get Groups...
+    */
+    private void getGroups() {
+        if (mConnectionDetector.isConnectedToInternet()) {
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl(getString(R.string.base_url))
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .client(initLog().build())
+                    .build();
+
+            ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+            Call<ProfileGroupResponse> add = serviceApi._autokattaProfileGroup(getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", null));
+
+            hud = KProgressHUD.create(ServiceViewActivity.this)
+                    .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                    .setLabel("loading groups...")
+                    .setMaxProgress(100)
+                    .show();
+
+            add.enqueue(new Callback<ProfileGroupResponse>() {
+                @Override
+                public void onResponse(Call<ProfileGroupResponse> call, Response<ProfileGroupResponse> response) {
+                    if (response.isSuccessful()) {
+                        groupIdList.clear();
+                        groupIdList.clear();
+                        groupTitleList.clear();
+                        hud.dismiss();
+                        ProfileGroupResponse mProfileGroupResponse = response.body();
+                        for (ProfileGroupResponse.MyGroup success : mProfileGroupResponse.getSuccess().getMyGroups()) {
+                            Log.i("previousGrpIds--", "in loop" + String.valueOf(success.getId()));
+
+                            //restrict previous group ids shown in list
+                            //if (!prevGroupIds.contains(String.valueOf(success.getId()))) {
+                            groupIdList.add(String.valueOf(success.getId()));
+                            groupTitleList.add(success.getTitle());
+                            //}
+                        }
+                        //Log.i("previousGrpIds--",groupIdList);
+                        System.out.println("previousGrpIds-- List" + groupIdList);
+                        groupTitleArray = groupTitleList.toArray(new String[groupTitleList.size()]);
+                        groupIdArray = groupIdList.toArray(new String[groupIdList.size()]);
+
+                        if (groupTitleArray.length == 0) {
+                            android.app.AlertDialog.Builder alertDialog = new android.app.AlertDialog.Builder(ServiceViewActivity.this);
+                            alertDialog.setTitle("No Group Found");
+                            alertDialog.setMessage("Do you want to create Group...");
+                            alertDialog.setIcon(android.R.drawable.ic_dialog_alert);
+                            alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    CreateGroupFragment createGroupFragment = new CreateGroupFragment();
+                                    Bundle b = new Bundle();
+                                    b.putString("classname", "uploadvehicle");
+                                    createGroupFragment.setArguments(b);
+
+                                    getSupportFragmentManager().beginTransaction()
+                                            .replace(R.id.vehicle_upload_container, createGroupFragment, "Title")
+                                            .addToBackStack("Title")
+                                            .commit();
+                                }
+                            });
+                            alertDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.cancel();
+                                }
+                            });
+                            alertDialog.show();
+                        } else {
+                            alertBoxGroups(groupTitleArray);
+                        }
+                    } else {
+                        hud.dismiss();
+                        CustomToast.customToast(getApplicationContext(), getString(R.string._404));
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ProfileGroupResponse> call, Throwable t) {
+                    t.printStackTrace();
+                }
+
+            });
+        } else {
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
+        }
+    }
+
+    /*
+    Alert Dialog
+     */
+    private void alertBoxGroups(final String[] groupTitleArray) {
+        final List<String> mSelectedItems = new ArrayList<>();
+        mSelectedItems.clear();
+
+        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(ServiceViewActivity.this);
+
+        // set the dialog title
+        builder.setTitle("Select Groups From Following")
+                .setCancelable(true)
+                .setMultiChoiceItems(groupTitleArray, null, new DialogInterface.OnMultiChoiceClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+                        if (isChecked) {
+                            mSelectedItems.add(groupTitleArray[which]);
+                        } else if (mSelectedItems.contains(groupTitleArray[which])) {
+                            mSelectedItems.remove(groupTitleArray[which]);
+                        }
+                    }
+                })
+                // Set the action buttons
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        stringgroupids = "";
+                        stringgroupname = "";
+                        for (int i = 0; i < mSelectedItems.size(); i++) {
+                            for (int j = 0; j < groupTitleArray.length; j++) {
+                                if (mSelectedItems.get(i).equals(groupTitleArray[j])) {
+                                    if (stringgroupids.equals("")) {
+                                        stringgroupids = groupIdList.get(j);
+                                        stringgroupname = groupTitleArray[j];
+                                    } else {
+                                        stringgroupids = stringgroupids + "," + groupIdList.get(j);
+                                        stringgroupname = stringgroupname + "," + groupTitleArray[j];
+                                    }
+                                }
+                            }
+                        }
+                        //setPrivacy(stringgroupids);
+
+                        if (mSelectedItems.size() == 0) {
+                            CustomToast.customToast(getApplicationContext(), "No Group Was Selected");
+                            stringgroupids = "";
+                            stringgroupname = "";
+                        }
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        stringgroupids = "";
+                        stringgroupname = "";
+                    }
+
+                })
+                .show();
     }
 
     private void getNoOfEnquiryCount(int service_id, String contact) {
@@ -492,6 +661,7 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
                             storecontact = success.getStoreContact();
                             storeowner = success.getStoreOwner();
                             brandtags_list = success.getBrandtags();
+                            prevGroupIds = success.getGroupId().replaceAll(" ", "");
 
                             getChatEnquiryStatus(contact, receiver_contact, service_id);
                             textlike.setText("like(" + slikecnt + ")");
@@ -657,14 +827,26 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
 
             } else if (str.equals("success_message_saved")) {
                 CustomToast.customToast(getApplicationContext(), "Enquiry Sent");
-            } else if (str.equals("yes")) {
+            } else if (str.contains("yes")) {
                 btnchat.setText("Chat");
 
-            } else if (str.equals("no")) {
+            } else if (str.contains("no")) {
                 btnchat.setText("Send Enquiry");
 
             }
         }
+    }
+
+
+    /***
+     * Retrofit Logs
+     ***/
+    private OkHttpClient.Builder initLog() {
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        httpClient.addInterceptor(logging).readTimeout(90, TimeUnit.SECONDS);
+        return httpClient;
     }
 
 
@@ -697,7 +879,7 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
                 servicetype.requestFocus();
                 multiautobrand.setEnabled(true);
                 spinnerlayout.setVisibility(View.VISIBLE);
-
+                mLinearLayout.setVisibility(View.VISIBLE);
                 check.setVisibility(View.VISIBLE);
                 edit.setVisibility(View.GONE);
                 deleteservice.setVisibility(View.GONE);
@@ -813,6 +995,7 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
                     servicetype.setEnabled(false);
                     multiautobrand.setEnabled(false);
                     spinnerlayout.setVisibility(View.GONE);
+                    mLinearLayout.setVisibility(View.GONE);
                     check.setVisibility(View.GONE);
                     edit.setVisibility(View.VISIBLE);
                     deleteservice.setVisibility(View.VISIBLE);
@@ -955,13 +1138,25 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
             case R.id.linearshare:
                 Intent intent = new Intent(Intent.ACTION_SEND);
                 String imageFilePath;
+                String singleImage;
+                if (simages.contains(",")) {
+                    String[] items = simages.split(",");
+                    singleImage = items[0];
+                            /*for (String item : items) {
+                                notification.setUpVehicleImage(item);
+                            }*/
+                } else {
+                    singleImage = simages;
+                }
+
 
                 if (simages.equalsIgnoreCase("") || simages.equalsIgnoreCase(null) ||
                         simages.equalsIgnoreCase("null")) {
-                    simagename = getString(R.string.base_image_url) + "logo48x48.png";
+                    imagename = getString(R.string.base_image_url) + "logo48x48.png";
                 } else {
-                    simagename = getString(R.string.base_image_url) + imageslist;
+                    imagename = getString(R.string.base_image_url) + singleImage;
                 }
+
                 Log.e("TAG", "img : " + simagename);
 
                 DownloadManager.Request request = new DownloadManager.Request(
@@ -993,6 +1188,8 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
                         + "\n" + "\n" + allStoreDetails);
                 intent.setType("image/jpeg");
                 intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(imageFilePath)));
+                intent.putExtra(Intent.EXTRA_SUBJECT, "Please Find Below Attachments");
+                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                 startActivity(Intent.createChooser(intent, "Autokatta"));
                 break;
 

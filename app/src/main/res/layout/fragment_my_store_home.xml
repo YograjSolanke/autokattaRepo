@@ -111,6 +111,7 @@
                 android:layout_weight="1"
                 android:background="@color/background"
                 android:text="Enquiry"
+                android:visibility="gone"
                 android:textColor="@color/white"
                 android:textStyle="bold" />
         </LinearLayout>
