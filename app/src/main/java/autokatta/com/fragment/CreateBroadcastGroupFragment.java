@@ -50,6 +50,7 @@ public class CreateBroadcastGroupFragment extends Fragment implements RequestNot
     int  group_id = 0;
     Button create_broadcast;
     EditText edittitle;
+    TextView noContactText;
     ArrayList<String> incomingList = new ArrayList<>();
     ArrayList<String> checkedcontact = new ArrayList<>();
 
@@ -69,6 +70,7 @@ public class CreateBroadcastGroupFragment extends Fragment implements RequestNot
         create_broadcast = (Button) root.findViewById(R.id.btncreate);
         memberContactslist = (ListView) root.findViewById(R.id.broadcastgrplist);
         edittitle = (EditText) root.findViewById(R.id.edittitle);
+        noContactText = (TextView) root.findViewById(R.id.noContact);
         edittitle.requestFocus();
         contact = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "");
 
@@ -114,6 +116,11 @@ public class CreateBroadcastGroupFragment extends Fragment implements RequestNot
 
         autokattaContactAdapter = new BroadcastContactAdapter(getActivity(), contactdata, checkedcontact);
         memberContactslist.setAdapter(autokattaContactAdapter);
+
+        if (contactdata.size() == 0) {
+            noContactText.setVisibility(View.VISIBLE);
+            memberContactslist.setVisibility(View.GONE);
+        }
 
 
         create_broadcast.setOnClickListener(new View.OnClickListener() {

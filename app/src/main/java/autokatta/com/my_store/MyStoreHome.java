@@ -67,7 +67,6 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
     String myContact, storeAdmins = "";
     Activity mActivity;
     String mOtherContact;
-    String mLoginContact;
     String storeOtherContact;
     String mFolllowstr;
     String mLikestr;

@@ -89,7 +89,7 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
     TextView textstore, storetypetext;
     Button btnaddprofile, create, btnaddcover;
     CheckBox rbtstoreproduct, rbtstoreservice, rbtstorevehicle;
-    String myContact, callFrom, userSelected = "", picturePath = "", coverpicturePath = "", lastWord = "", coverlastWord = "",
+    String myContact, callFrom, lastWord = "", coverlastWord = "",
             storetype = "", preLastWord = "", preCoverLastWord;
     int store_id;
     //  MultiSelectionSpinnerForBrands brandSpinner;

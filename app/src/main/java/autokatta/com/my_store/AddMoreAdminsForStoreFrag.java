@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
@@ -52,6 +53,8 @@ public class AddMoreAdminsForStoreFrag extends Fragment implements RequestNotifi
     Button cancel;
     public static Button ok;
     StoreAdminAdapter adapter;
+    RelativeLayout mainlayout;
+    TextView noContacts;
 
     RelativeLayout btnlayout;
     EditText inputSearch;
@@ -77,6 +80,8 @@ public class AddMoreAdminsForStoreFrag extends Fragment implements RequestNotifi
         ok = (Button) root.findViewById(R.id.ok);
         cancel = (Button) root.findViewById(R.id.cancel);
         inputSearch = (EditText) root.findViewById(R.id.inputSearch);
+        mainlayout = (RelativeLayout) root.findViewById(R.id.mainlayout);
+        noContacts = (TextView) root.findViewById(R.id.textview);
         inputSearch.setVisibility(View.GONE);
 
         mRecyclerView.setHasFixedSize(true);
@@ -117,6 +122,9 @@ public class AddMoreAdminsForStoreFrag extends Fragment implements RequestNotifi
 
         if (!(contactdata.size() == 0)) {
             getAlreadyAdminData();
+        } else {
+            noContacts.setVisibility(View.VISIBLE);
+            mainlayout.setVisibility(View.GONE);
         }
 
         btnlayout.setVisibility(View.VISIBLE);

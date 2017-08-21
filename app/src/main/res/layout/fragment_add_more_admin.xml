@@ -5,15 +5,44 @@
     android:background="@color/white"
     android:orientation="vertical">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textview"
+        android:text="Select Contacts As Admins For Store"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:textSize="15sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:text="No Contacts Found"
+        android:textAlignment="center"
+        android:textStyle="bold"
+        android:visibility="gone" />
+
     <!-- Editext for Search -->
 
-    <EditText
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:id="@+id/mainlayout"
+        android:layout_marginTop="10dp"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/textview"
+        android:visibility="visible">
+
+        <EditText
         android:id="@+id/inputSearch"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:hint="@string/search_contact"
         android:inputType="textVisiblePassword"
         android:paddingEnd="5dp"
+
         android:paddingStart="5dp"
         android:textColor="#2C3343"
         android:textColorHint="#848484" />
@@ -51,6 +80,7 @@
             android:layout_height="40dp"
             android:layout_toEndOf="@+id/ok"
             android:text="Skip" />
+    </RelativeLayout>
     </RelativeLayout>
 
 </RelativeLayout>
