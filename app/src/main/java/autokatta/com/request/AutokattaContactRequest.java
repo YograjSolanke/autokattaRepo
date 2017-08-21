@@ -9,41 +9,41 @@ import com.google.gson.annotations.SerializedName;
 
 public class AutokattaContactRequest {
 
-        @SerializedName("Contacts")
-        @Expose
-        private String contacts;
+    @SerializedName("Contacts")
+    @Expose
+    private String contacts;
 
 
     @SerializedName("Names")
-        @Expose
-        private String names;
-        @SerializedName("MyContact")
-        @Expose
-        private String myContact;
+    @Expose
+    private String names;
+    @SerializedName("MyContact")
+    @Expose
+    private String myContact;
 
-        public String getContacts() {
-            return contacts;
-        }
+    public String getContacts() {
+        return contacts;
+    }
 
-        public void setContacts(String contacts) {
-            this.contacts = contacts;
-        }
+    public void setContacts(String contacts) {
+        this.contacts = contacts;
+    }
 
-        public String getNames() {
-            return names;
-        }
+    public String getNames() {
+        return names;
+    }
 
-        public void setNames(String names) {
-            this.names = names;
-        }
+    public void setNames(String names) {
+        this.names = names;
+    }
 
-        public String getMyContact() {
-            return myContact;
-        }
+    public String getMyContact() {
+        return myContact;
+    }
 
-        public void setMyContact(String myContact) {
-            this.myContact = myContact;
-        }
+    public void setMyContact(String myContact) {
+        this.myContact = myContact;
+    }
 
     public AutokattaContactRequest(String contacts, String names, String myContact) {
         this.contacts = contacts;
@@ -51,5 +51,5 @@ public class AutokattaContactRequest {
         this.myContact = myContact;
     }
 
-    }
+}
 

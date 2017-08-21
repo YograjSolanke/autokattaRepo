@@ -16,6 +16,7 @@ import android.widget.EditText;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 import autokatta.com.R;
 import autokatta.com.adapter.AutokattaContactAdapter;
@@ -35,7 +36,7 @@ public class AutokattaContactFragment extends Fragment {
     RecyclerView mRecyclerView;
     EditText edtSearchContact;
     String myContact;
-    ArrayList<Db_AutokattaContactResponse> contactdata = new ArrayList<>();
+    List<Db_AutokattaContactResponse> contactdata = new ArrayList<>();
     AutokattaContactAdapter autokattaContactAdapter;
 
     public AutokattaContactFragment() {

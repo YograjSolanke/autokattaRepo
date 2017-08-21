@@ -19,13 +19,13 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
@@ -47,15 +47,15 @@ public class CreateBroadcastGroupFragment extends Fragment implements RequestNot
     String editgroupname = "", editgrpmembers = "", calltype;
     String Mycontact, finalContacts = "", groupTitle;
     View root;
-    int  group_id = 0;
+    int group_id = 0;
     Button create_broadcast;
     EditText edittitle;
     TextView noContactText;
-    ArrayList<String> incomingList = new ArrayList<>();
-    ArrayList<String> checkedcontact = new ArrayList<>();
+    List<String> incomingList = new ArrayList<>();
+    List<String> checkedcontact = new ArrayList<>();
 
     ListView memberContactslist;
-    ArrayList<Db_AutokattaContactResponse> contactdata = new ArrayList<>();
+    List<Db_AutokattaContactResponse> contactdata = new ArrayList<>();
     BroadcastContactAdapter autokattaContactAdapter;
     ApiCall mApiCall;
     String contact;
@@ -144,9 +144,8 @@ public class CreateBroadcastGroupFragment extends Fragment implements RequestNot
                     }
                 }
                 if (groupTitle.equals("") || groupTitle.startsWith(" ") && groupTitle.endsWith(" ")) {
-                    Toast.makeText(getActivity(), "Please enter group Title",
-                            Toast.LENGTH_LONG).show();
-                    //return;
+                    if (isAdded())
+                        CustomToast.customToast(getActivity(), "Please enter group title");
                 } else {
                     //Toast.makeText(getActivity(), "Now web service call", Toast.LENGTH_LONG).show();
                     System.out.println("group id &&&&&ContactList:" + finalContacts + "Groupid" + group_id + "contact" + contact + "calltype" + calltype);
@@ -175,20 +174,20 @@ public class CreateBroadcastGroupFragment extends Fragment implements RequestNot
     @Override
     public void notifyError(Throwable error) {
         if (error instanceof SocketTimeoutException) {
-            CustomToast.customToast(getActivity(),getString(R.string._404_));
-            //   showMessage(getActivity(), getString(R.string._404_));
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
-            CustomToast.customToast(getActivity(),getString(R.string.no_response));
-            // showMessage(getActivity(), getString(R.string.no_response));
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            CustomToast.customToast(getActivity(),getString(R.string.no_response));
-            //   showMessage(getActivity(), getString(R.string.no_response));
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
-            CustomToast.customToast(getActivity(),getString(R.string.no_internet));
-            //   errorMessage(getActivity(), getString(R.string.no_internet));
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
-            CustomToast.customToast(getActivity(),getString(R.string.no_internet));
-            //   errorMessage(getActivity(), getString(R.string.no_internet));
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         } else {
             Log.i("Check Class-", "create BroadcastGroup");
         }
@@ -205,7 +204,7 @@ public class CreateBroadcastGroupFragment extends Fragment implements RequestNot
                 fragmentTransaction.replace(R.id.broadcast_groups_container, broadcastGroup);
                 fragmentTransaction.addToBackStack("createbroadcastgroup");
                 fragmentTransaction.commit();
-               // getActivity().finish();
+                // getActivity().finish();
             } else {
                 CustomToast.customToast(getActivity(), "Broadcast Group Created Successfully");
                 MyBroadcastGroupsFragment broadcastGroup = new MyBroadcastGroupsFragment();
@@ -214,7 +213,7 @@ public class CreateBroadcastGroupFragment extends Fragment implements RequestNot
                 fragmentTransaction.replace(R.id.broadcast_groups_container, broadcastGroup);
                 fragmentTransaction.addToBackStack("createbroadcastgroup");
                 fragmentTransaction.commit();
-               // getActivity().finish();
+                // getActivity().finish();
             }
         }
     }
@@ -225,17 +224,17 @@ public class CreateBroadcastGroupFragment extends Fragment implements RequestNot
     private class BroadcastContactAdapter extends BaseAdapter {
 
 
-        private ArrayList<Db_AutokattaContactResponse> contactdata = new ArrayList<>();
-        private ArrayList<Db_AutokattaContactResponse> contactdataCopy = new ArrayList<>();
+        private List<Db_AutokattaContactResponse> contactdata = new ArrayList<>();
+        private List<Db_AutokattaContactResponse> contactdataCopy = new ArrayList<>();
         Activity activity;
         private LayoutInflater inflater;
-        private ArrayList<Boolean> positionArray;
-        private ArrayList<String> contactlist;
-        private ArrayList<String> checkedcontact = new ArrayList<>();
+        private List<Boolean> positionArray;
+        private List<String> contactlist;
+        private List<String> checkedcontact = new ArrayList<>();
 
 
-        BroadcastContactAdapter(Activity activity, ArrayList<Db_AutokattaContactResponse> contactdata,
-                                ArrayList<String> checkedcontact) {
+        BroadcastContactAdapter(Activity activity, List<Db_AutokattaContactResponse> contactdata,
+                                List<String> checkedcontact) {
             this.activity = activity;
             this.contactdata = contactdata;
             this.contactdataCopy = contactdata;
@@ -331,7 +330,7 @@ public class CreateBroadcastGroupFragment extends Fragment implements RequestNot
             return view;
         }
 
-        private ArrayList checkboxselect() {
+        private List checkboxselect() {
             // TODO Auto-generated method stub
             return contactlist;
         }

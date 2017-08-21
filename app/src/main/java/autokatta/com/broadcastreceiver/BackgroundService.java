@@ -107,7 +107,7 @@ public class BackgroundService extends Service {
                 System.out.println("numberString=" + namestring);
 
             }
-             getAutokattaContacts();
+            getAutokattaContacts();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -157,7 +157,7 @@ public class BackgroundService extends Service {
                     .build();
             ServiceApi mServiceApi = mRetrofit.create(ServiceApi.class);
 
-            AutokattaContactRequest autokattaContactRequest = new AutokattaContactRequest(numberstring,namestring,getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
+            AutokattaContactRequest autokattaContactRequest = new AutokattaContactRequest(numberstring, namestring, getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
                     .getString("loginContact", ""));
             Call<GetAutokattaContactResponse> mAutokattaContact = mServiceApi.getAutokattaContact(autokattaContactRequest);
             mAutokattaContact.enqueue(new Callback<GetAutokattaContactResponse>() {
@@ -180,7 +180,7 @@ public class BackgroundService extends Service {
                             Log.i("asdfd", "asdf" + success.getUserName());
 
                             result = operation.addMyAutokattaContact(success.getUserName(), success.getProfilePic(),
-                                    String.valueOf(success.getContact()), success.getFollowStatus(), success.getMystatus());
+                                    success.getContact(), success.getFollowStatus(), success.getMystatus());
                         }
                         if (result > 0) {
                             Log.i("TAG", "Record Inserted Successfully");

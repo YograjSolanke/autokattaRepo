@@ -22,7 +22,9 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
+import java.net.ConnectException;
 import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -79,7 +81,7 @@ public class AutokattaContactAdapter extends RecyclerView.Adapter<AutokattaConta
 
     }
 
-    public AutokattaContactAdapter(Activity mActivity, ArrayList<Db_AutokattaContactResponse> contactdata) {
+    public AutokattaContactAdapter(Activity mActivity, List<Db_AutokattaContactResponse> contactdata) {
         try {
             this.mActivity = mActivity;
             this.contactdata = contactdata;
@@ -94,12 +96,11 @@ public class AutokattaContactAdapter extends RecyclerView.Adapter<AutokattaConta
     @Override
     public AutokattaContactAdapter.YoHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_autokatta_contact, parent, false);
-        YoHolder yoHolder = new YoHolder(v);
-        return yoHolder;
+        return new YoHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(final AutokattaContactAdapter.YoHolder holder, final int position) {
+    public void onBindViewHolder(final AutokattaContactAdapter.YoHolder holder, int position) {
         holder.mTextName.setText(contactdata.get(position).getUsername());
         holder.mTextNumber.setText(contactdata.get(position).getContact());
 
@@ -154,8 +155,8 @@ public class AutokattaContactAdapter extends RecyclerView.Adapter<AutokattaConta
             public void onClick(View view) {
 
                 Bundle b = new Bundle();
-                b.putString("sender", contactdata.get(position).getContact());
-                b.putString("sendername", contactdata.get(position).getUsername());
+                b.putString("sender", contactdata.get(holder.getAdapterPosition()).getContact());
+                b.putString("sendername", contactdata.get(holder.getAdapterPosition()).getUsername());
                 b.putInt("product_id", 0);
                 b.putInt("service_id", 0);
                 b.putInt("vehicle_id", 0);
@@ -232,14 +233,18 @@ public class AutokattaContactAdapter extends RecyclerView.Adapter<AutokattaConta
     @Override
     public void notifyError(Throwable error) {
         if (error instanceof SocketTimeoutException) {
-            CustomToast.customToast(mActivity, mActivity.getString(R.string._404));
+            CustomToast.customToast(mActivity, mActivity.getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
             CustomToast.customToast(mActivity, mActivity.getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
             CustomToast.customToast(mActivity, mActivity.getString(R.string.no_response));
+        } else if (error instanceof ConnectException) {
+            CustomToast.customToast(mActivity, mActivity.getString(R.string.no_internet));
+        } else if (error instanceof UnknownHostException) {
+            CustomToast.customToast(mActivity, mActivity.getString(R.string.no_internet));
         } else {
             Log.i("Check Class-"
-                    , "Autokatta Contact Adapter");
+                    , "AutokattaContactAdapter");
             error.printStackTrace();
         }
     }
@@ -300,7 +305,7 @@ public class AutokattaContactAdapter extends RecyclerView.Adapter<AutokattaConta
 
             int count = list.size();
 
-            if (filterString != null && filterString.length() > 0) {
+            if (filterString.length() > 0) {
                 Db_AutokattaContactResponse filterableString;
                 ArrayList<Db_AutokattaContactResponse> nlist = new ArrayList<Db_AutokattaContactResponse>(count);
                 for (int i = 0; i < count; i++) {
