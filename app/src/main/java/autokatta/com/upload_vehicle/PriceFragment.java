@@ -17,7 +17,9 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import java.io.File;
+import java.net.ConnectException;
 import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -289,7 +291,8 @@ public class PriceFragment extends Fragment implements RequestNotifier, View.OnC
                                 public void onStopTrackingTouch(SeekBar seekBar) {
 
                                     edtPrice.setText("" + seekBarProgress);
-                                    CustomToast.customToast(getActivity(), "Progresss" + seekBarProgress);
+                                    if (isAdded())
+                                        CustomToast.customToast(getActivity(), "Progresss" + seekBarProgress);
                                 }
                             });
                         } else {
@@ -300,8 +303,10 @@ public class PriceFragment extends Fragment implements RequestNotifier, View.OnC
                         }
 
 
-                    } else
-                        CustomToast.customToast(getActivity(), getActivity().getString(R.string.no_response));
+                    } else {
+                        if (isAdded())
+                            CustomToast.customToast(getActivity(), getActivity().getString(R.string.no_response));
+                    }
                 } else if (response.body() instanceof UploadUsedVehicleResponse) {
                     UploadUsedVehicleResponse vehicleResponse = (UploadUsedVehicleResponse) response.body();
                     if (vehicleResponse.getSuccess() != null) {
@@ -331,28 +336,42 @@ public class PriceFragment extends Fragment implements RequestNotifier, View.OnC
                             getActivity().startActivity(intent);
                             getActivity().finish();
                         }
-                    } else
-                        CustomToast.customToast(getActivity(), getActivity().getString(R.string.no_response));
+                    } else {
+                        if (isAdded())
+                            CustomToast.customToast(getActivity(), getActivity().getString(R.string.no_response));
+                    }
                 }
 
-            } else
-                CustomToast.customToast(getActivity(), getActivity().getString(R.string._404));
+            } else {
+                if (isAdded())
+                    CustomToast.customToast(getActivity(), getActivity().getString(R.string._404));
+            }
 
-        } else
-            CustomToast.customToast(getActivity(), getActivity().getString(R.string.no_response));
+        } else {
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getActivity().getString(R.string.no_response));
+        }
     }
 
     @Override
     public void notifyError(Throwable error) {
         if (error instanceof SocketTimeoutException) {
-            CustomToast.customToast(getActivity(), getString(R.string._404));
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string.no_response));
+        } else if (error instanceof ConnectException) {
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string.no_internet));
+        } else if (error instanceof UnknownHostException) {
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         } else {
             Log.i("Check Class-", "Price Fragment");
-            error.printStackTrace();
         }
     }
 

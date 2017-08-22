@@ -26,7 +26,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.net.ConnectException;
 import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -315,20 +317,20 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                     /*
                     Sub type Fragment
                      */
-                    if (!category.equalsIgnoreCase("Car")) {
+                    /*else if (!category.equalsIgnoreCase("Car")) {
                         linearPermit.setVisibility(View.GONE);
-                    }
+                    }*/
 
                     /*
                     Brand Fragment...
                      */
-                    if (category.equalsIgnoreCase("construction Equipment"))
+                    else if (category.equalsIgnoreCase("construction Equipment"))
                         mVersionSpinner.setVisibility(View.GONE);
 
                     /*
                     Kms fragment
                      */
-                    if (category.equalsIgnoreCase("Construction Equipment") || category.equalsIgnoreCase("Cranes")) {
+                    else if (category.equalsIgnoreCase("Construction Equipment") || category.equalsIgnoreCase("Cranes")) {
                         mKms.setVisibility(View.GONE);
                         mHrs.setVisibility(View.VISIBLE);
                         mPumpSpinner.setVisibility(View.GONE);
@@ -349,6 +351,7 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                         mPumpSpinner.setVisibility(View.GONE);
                         mBreakSpinner.setVisibility(View.GONE);
                         mStaringSpinner.setVisibility(View.GONE);
+                        linearPermit.setVisibility(View.GONE);
                         //note.setText("In Kms");
 
                     }
@@ -397,6 +400,8 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
         ApiCall mApiCall = new ApiCall(getActivity(), this);
         mApiCall.Groups(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", null));
     }
+
+
 
     /*
     Get store Data...
@@ -543,7 +548,8 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
 
 
                         if (mSelectedItems.size() == 0) {
-                            CustomToast.customToast(getActivity(), "No Group Was Selected");
+                            if (isAdded())
+                                CustomToast.customToast(getActivity(), "No Group Was Selected");
                             radioButton1.setChecked(false);
                             radioButton2.setChecked(true);
                             stringgroupids = "";
@@ -612,7 +618,8 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                             }
                         }
                         if (mSelectedItems.size() == 0) {
-                            CustomToast.customToast(getActivity(), "No Store Was Selected");
+                            if (isAdded())
+                                CustomToast.customToast(getActivity(), "No Store Was Selected");
                             storeradioyes.setChecked(false);
                             storeradiono.setChecked(true);
                             stringstoreids = "";
@@ -758,7 +765,8 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                                                 String edbrand = input.getText().toString();
 
                                                 if (edbrand.equals(""))
-                                                    CustomToast.customToast(getActivity(), "Please enter brand");
+                                                    if (isAdded())
+                                                        CustomToast.customToast(getActivity(), "Please enter brand");
 
                                                 else
                                                     AddBrand("Brand", edbrand, categoryId, subcategoryId);
@@ -841,7 +849,8 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                                                 String edmodel = input.getText().toString();
 
                                                 if (edmodel.equals(""))
-                                                    CustomToast.customToast(getActivity(), "Please enter model");
+                                                    if (isAdded())
+                                                        CustomToast.customToast(getActivity(), "Please enter model");
                                                 else
                                                     AddModel("Model", edmodel, categoryId, subcategoryId, brandId);
 
@@ -1000,7 +1009,8 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                                                 String otherBreak = input.getText().toString();
 
                                                 if (otherBreak.equals(""))
-                                                    CustomToast.customToast(getActivity(), "Please enter Brake type");
+                                                    if (isAdded())
+                                                        CustomToast.customToast(getActivity(), "Please enter Brake type");
                                                 else
                                                     addOtherBreak(otherBreak);
 
@@ -1077,7 +1087,8 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                                                 String otherPump = input.getText().toString();
 
                                                 if (otherPump.equals(""))
-                                                    CustomToast.customToast(getActivity(), "Please enter Brake type");
+                                                    if (isAdded())
+                                                        CustomToast.customToast(getActivity(), "Please enter Brake type");
                                                 else
                                                     addOtherPump(otherPump);
 
@@ -1109,24 +1120,34 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                     Log.e("Title Fragment", "No Response found");
                 }
             } else {
-                CustomToast.customToast(getActivity(), getString(R.string._404));
+                if (isAdded())
+                    CustomToast.customToast(getActivity(), getString(R.string._404));
             }
         } else {
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string.no_response));
         }
     }
 
     @Override
     public void notifyError(Throwable error) {
         if (error instanceof SocketTimeoutException) {
-            CustomToast.customToast(getActivity(), getString(R.string._404));
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string.no_response));
+        } else if (error instanceof ConnectException) {
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string.no_internet));
+        } else if (error instanceof UnknownHostException) {
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         } else {
-            Log.i("Check Class-", "Title Fragment");
-            error.printStackTrace();
+            Log.i("Check Class-", "Title");
         }
     }
 
@@ -1136,32 +1157,37 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
         if (str != null) {
             switch (str) {
                 case "success_brand_add":
-                    CustomToast.customToast(getActivity(), "Brand added successfully");
+                    if (isAdded())
+                        CustomToast.customToast(getActivity(), "Brand added successfully");
                     getBrand(categoryId, subcategoryId);
                     Log.i("msg", "Brand added successfully");
 
                     break;
                 case "success_model_add":
-
-                    CustomToast.customToast(getActivity(), "Model added successfully");
+                    if (isAdded())
+                        CustomToast.customToast(getActivity(), "Model added successfully");
                     getModel(categoryId, subcategoryId, brandId);
                     break;
                 case "success_version_add":
-                    CustomToast.customToast(getActivity(), "Version added successfully");
+                    if (isAdded())
+                        CustomToast.customToast(getActivity(), "Version added successfully");
                     getVersion(categoryId, subcategoryId, brandId, modelId);
                     break;
                 case "success_break_add":
-                    CustomToast.customToast(getActivity(), "Break added successfully");
+                    if (isAdded())
+                        CustomToast.customToast(getActivity(), "Break added successfully");
                     getBreaks();
                     break;
                 case "success_pump_add":
-                    CustomToast.customToast(getActivity(), "Pump added successfully");
+                    if (isAdded())
+                        CustomToast.customToast(getActivity(), "Pump added successfully");
                     getPumps();
                     break;
             }
 
         } else {
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string.no_response));
         }
     }
 
@@ -1186,6 +1212,12 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                 strMakeyear = String.valueOf(myp.getSelectedYear());
                 strRegisterMonth = myp1.getSelectedMonthName();
                 strRegisterYear = String.valueOf(myp1.getSelectedYear());
+
+                int man_monthposition = myp.getSelectedMonthPosition();
+                int reg_monthposition = myp1.getSelectedMonthPosition();
+
+                int man_yearposition = myp.getSelectedYearPosition();
+                int reg_yearposition = myp1.getSelectedYearPosition();
 
                 strHrs = mHrs.getText().toString();
                 strKms = mKms.getText().toString();
@@ -1238,6 +1270,8 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                 if (strTitle.equals("")) {
                     title.setError("Please provide title");
                     title.requestFocus();
+                } else if (category.equalsIgnoreCase("Car") && !mTouristPassing.isChecked() && !mPrivatePassing.isChecked()) {
+                    Toast.makeText(getActivity(), "Please select permit type", Toast.LENGTH_SHORT).show();
                 } else if (brandstr.startsWith("Select") || modelstr.startsWith("Select") || brandstr.equals("") || modelstr.equals("")) {
 
                     if (brandstr.startsWith("Select")) {
@@ -1245,7 +1279,12 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                     } else if (modelstr.startsWith("Select")) {
                         Toast.makeText(getActivity(), "Please select Model", Toast.LENGTH_SHORT).show();
                     }
-                    CustomToast.customToast(getActivity(), "Brand and Model are compulsory");
+                    if (isAdded())
+                        CustomToast.customToast(getActivity(), "Brand and Model are compulsory");
+                } else if (reg_yearposition < man_yearposition) {
+                    Toast.makeText(getActivity(), "Sorry Registration year not valid", Toast.LENGTH_LONG).show();
+                } else if (reg_yearposition == man_yearposition && reg_monthposition > man_monthposition) {
+                    Toast.makeText(getActivity(), "Sorry Registration Month not valid", Toast.LENGTH_LONG).show();
                 } else {
 
                     Log.i("Data", "GroupIds" + stringgroupids);

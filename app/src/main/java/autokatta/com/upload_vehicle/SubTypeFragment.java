@@ -30,7 +30,9 @@ import com.nguyenhoanglam.imagepicker.activity.ImagePicker;
 import com.nguyenhoanglam.imagepicker.activity.ImagePickerActivity;
 import com.nguyenhoanglam.imagepicker.model.Image;
 
+import java.net.ConnectException;
 import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -176,19 +178,8 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
                         checkBox1.setVisibility(View.GONE);
                     }
 
-                    if (Category.equalsIgnoreCase("Bus")) {
-
-                        autoBodymanufacturer.setVisibility(View.VISIBLE);
-                        autoSeatmanufacturer.setVisibility(View.VISIBLE);
-
-                        getBodyAndSeatManufacturer();
-                    } else if (Category.equalsIgnoreCase("Tractor") || Category.equalsIgnoreCase("Construction Equipment") ||
-                            Category.equalsIgnoreCase("2 Wheeler")) {
-
-                        mEmissionSpinner.setVisibility(View.GONE);
-                    }
-
                     mLocation.setAdapter(new GooglePlacesAdapter(getActivity(), R.layout.addproductspinner_color));
+
                     checkBox1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                         @Override
                         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -221,30 +212,34 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
                         mSetFuel.setAdapter(dataAdapter);
                     }
 
+                    if (Category.equalsIgnoreCase("Bus")) {
 
-                    if (Category.equalsIgnoreCase("2 Wheeler") || Category.equalsIgnoreCase("3 Wheeler")) {
+                        autoBodymanufacturer.setVisibility(View.VISIBLE);
+                        autoSeatmanufacturer.setVisibility(View.VISIBLE);
+
+                        getBodyAndSeatManufacturer();
+                    } else if (Category.equalsIgnoreCase("Tractor") || Category.equalsIgnoreCase("Construction Equipment") ||
+                            Category.equalsIgnoreCase("2 Wheeler")) {
+
+                        mEmissionSpinner.setVisibility(View.GONE);
+                    } else if (Category.equalsIgnoreCase("2 Wheeler") || Category.equalsIgnoreCase("3 Wheeler")) {
 
                         mTaxValidSpinner.setVisibility(View.GONE);
                         mPermitSpinner.setVisibility(View.GONE);
                         mFitnessSpinner.setVisibility(View.GONE);
-                    }
-                    if (Category.equalsIgnoreCase("Car")) {
+                    } else if (Category.equalsIgnoreCase("Car")) {
 
                         if (permit.equalsIgnoreCase("Private")) {
                             mTaxValidSpinner.setVisibility(View.GONE);
                             mPermitSpinner.setVisibility(View.GONE);
                             mFitnessSpinner.setVisibility(View.GONE);
                         }
-                    }
-
-                    if (Category.equalsIgnoreCase("tractor")) {
+                    } else if (Category.equalsIgnoreCase("tractor")) {
 
                         mPermitSpinner.setVisibility(View.GONE);
                         mFitnessSpinner.setVisibility(View.GONE);
                         relInsurance.setVisibility(View.GONE);
-                    }
-
-                    if (Category.equalsIgnoreCase(" Construction Equipment ")) {
+                    } else if (Category.equalsIgnoreCase("Construction Equipment")) {
 
                         String RCInvoiceText = "";
                         if (subCategory.equals("Excavator") || subCategory.equals("Skid Steers") || subCategory.equals("Crawlers")
@@ -271,11 +266,13 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
                         }
 
                     }
+
+
                     /*car Fragment
 
                      */
 
-                    if (Category.equalsIgnoreCase("3 Wheeler")) {
+                    else if (Category.equalsIgnoreCase("3 Wheeler")) {
                         edtTyreContext.setVisibility(View.VISIBLE);
                         edtApptext.setVisibility(View.VISIBLE);
 
@@ -287,6 +284,7 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
                         edtTyreContext.setVisibility(View.VISIBLE);
                         mDriveSpinner.setVisibility(View.VISIBLE);
                         mTransmissionSpinner.setVisibility(View.VISIBLE);
+
                     } else if (Category.equalsIgnoreCase("2 Wheeler")) {
                         edtTyreContext.setVisibility(View.GONE);
 
@@ -448,71 +446,6 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
                 }
             }
         });
-        /*mMakeMonth = (EditText) mSubtype.findViewById(R.id.make_month);
-        mMakeYear = (EditText) mSubtype.findViewById(R.id.make_year);
-        mRegisterMonth = (EditText) mSubtype.findViewById(R.id.register_month);
-        mRegisterYear = (EditText) mSubtype.findViewById(R.id.register_year);
-
-        mMakeMonth.setInputType(InputType.TYPE_NULL);
-        mMakeYear.setInputType(InputType.TYPE_NULL);
-        mRegisterMonth.setInputType(InputType.TYPE_NULL);
-        mRegisterYear.setInputType(InputType.TYPE_NULL);
-
-        mMakeMonth.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                myp.show();
-                makeMonth();
-            }
-        });
-
-        mMakeYear.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                myp.show();
-                myp.build(new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        mMakeMonth.setText(myp.getSelectedMonthName());
-                        mMakeYear.setText(myp.getSelectedYear());
-                    }
-                }, null);
-            }
-        });
-
-        mRegisterMonth.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                myp.show();
-                myp.build(new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        mRegisterMonth.setText(myp.getSelectedMonthName());
-                        mRegisterYear.setText(myp.getSelectedYear());
-                    }
-                }, null);
-            }
-        });
-
-        mRegisterYear.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                myp.show();
-                myp.build(new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        mRegisterMonth.setText(myp.getSelectedMonthName());
-                        mRegisterYear.setText(myp.getSelectedYear());
-                    }
-                }, null);
-            }
-        });
-        *//*mButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                myp.show();
-            }
-        });*/
 
         return mSubtype;
     }
@@ -704,6 +637,7 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
         if (!flag) {
             mLocation.setError("Please Select Address From Dropdown Only");
             mLocation.setFocusable(true);
+            mLocation.requestFocus();
         } else if (!checkBox1.isChecked() && rtostr.equalsIgnoreCase(""))
             Toast.makeText(getActivity(), "Please provide RTO city", Toast.LENGTH_LONG).show();
         else {
@@ -849,9 +783,7 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
 
             }
             System.out.println(selectedimg);
-            System.out.println(selectedimg);
         }
-        //textView.setText(sb.toString());
     }
 
     @Override
@@ -978,10 +910,9 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
                 }
                 //Body and Seat
                 else if (response.body() instanceof BodyAndSeatResponse) {
-                    bodyManufacturerlist.clear();
-                    seatManufacturerlist.clear();
                     BodyAndSeatResponse bodyAndSeatResponse = (BodyAndSeatResponse) response.body();
                     if (!bodyAndSeatResponse.getSuccess().getBodyManufac().isEmpty()) {
+                        bodyManufacturerlist.clear();
                         for (BodyAndSeatResponse.Success.BodyManufac bodySuccess : bodyAndSeatResponse.getSuccess().getBodyManufac()) {
                             bodySuccess.setBodyManufacturerId(bodySuccess.getBodyManufacturerId());
                             bodySuccess.setBodyManufacturerName(bodySuccess.getBodyManufacturerName());
@@ -995,6 +926,7 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
                     }
 
                     if (!bodyAndSeatResponse.getSuccess().getSeatManufac().isEmpty()) {
+                        seatManufacturerlist.clear();
                         for (BodyAndSeatResponse.Success.SeatManufac seatSuccess : bodyAndSeatResponse.getSuccess().getSeatManufac()) {
                             seatSuccess.setSeatManufacturerId(seatSuccess.getSeatManufacturerId());
                             seatSuccess.setSeatManufacturerName(seatSuccess.getSeatManufacturerName());
@@ -1008,24 +940,34 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
                     }
                 }
             } else {
-                CustomToast.customToast(getActivity(), getString(R.string._404));
+                if (isAdded())
+                    CustomToast.customToast(getActivity(), getString(R.string._404));
             }
         } else {
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string.no_response));
         }
     }
 
     @Override
     public void notifyError(Throwable error) {
         if (error instanceof SocketTimeoutException) {
-            CustomToast.customToast(getActivity(), getString(R.string._404));
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string.no_response));
+        } else if (error instanceof ConnectException) {
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string.no_internet));
+        } else if (error instanceof UnknownHostException) {
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         } else {
             Log.i("Check Class-", "Sub Type Fragment");
-            error.printStackTrace();
         }
     }
 
@@ -1035,13 +977,18 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
         if (str != null) {
 
             if (str.equals("success_body")) {
-                CustomToast.customToast(getActivity(), "Data added successfully");
+                if (isAdded())
+                    CustomToast.customToast(getActivity(), "Data added successfully");
                 getBodyAndSeatManufacturer();
             } else if (str.equals("success_body_type_add")) {
-                CustomToast.customToast(getActivity(), "Body type added successfully");
+                if (isAdded())
+                    CustomToast.customToast(getActivity(), "Body type added successfully");
                 getBodyTypes();
             }
-        } else CustomToast.customToast(getActivity(), getString(R.string.no_response));
+        } else {
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string.no_response));
+        }
 
     }
 
@@ -1116,24 +1063,4 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
             fm.popBackStack();
         }
     }
-    /*private void makeMonth() {
-        myp = new MonthYearPicker(getActivity());
-        myp.build(new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                mMakeMonth.setText(myp.getSelectedMonthName());
-                mMakeYear.setText(myp.getSelectedYear());
-            }
-        }, null);
-    }*/
 }
-
-    /*@Override
-    public boolean onTouch(View v, MotionEvent event) {
-        switch (v.getId()) {
-            case R.id.make_month:
-                myp.show();
-                break;
-        }
-        return false;
-    }*/

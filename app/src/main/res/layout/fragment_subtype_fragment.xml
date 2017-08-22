@@ -389,7 +389,7 @@
                 android:background="@color/background"
                 android:drawableStart="@mipmap/ic_launcher"
                 android:gravity="start|center"
-                android:text="Car"
+                android:text="Vehicle Details"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_layout"
                 android:textStyle="bold" />

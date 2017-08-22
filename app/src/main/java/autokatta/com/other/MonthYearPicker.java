@@ -154,6 +154,24 @@ public class MonthYearPicker {
     }
 
     /**
+     * Gets the selected month position.
+     *
+     * @return the selected month position
+     */
+    public int getSelectedMonthPosition() {
+        return monthNumberPicker.getValue();
+    }
+
+    /**
+     * Gets the selected year position.
+     *
+     * @return the selected year position
+     */
+    public int getSelectedYearPosition() {
+        return yearNumberPicker.getValue();
+    }
+
+    /**
      * Gets the selected month name.
      *
      * @return the selected month name
