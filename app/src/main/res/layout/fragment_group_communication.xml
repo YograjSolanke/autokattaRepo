@@ -8,400 +8,411 @@
     android:gravity="center"
     android:orientation="vertical">
 
-    <LinearLayout
+    <FrameLayout
+        android:id="@+id/communication_frame"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/fab_margin"
-        android:baselineAligned="false"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:weightSum="2">
+        android:layout_height="match_parent">
 
-        <RelativeLayout
-            android:id="@+id/relME"
-            android:layout_width="0dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center">
-
-            <android.support.v7.widget.CardView
-                android:id="@+id/view4"
-                android:layout_width="80dp"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:innerRadius="0dp"
-                android:shape="ring"
-                android:thicknessRatio="1.9"
-                app:cardBackgroundColor="@android:color/darker_gray"
-                app:cardCornerRadius="40dp">
-
-                <RelativeLayout
-                    android:id="@+id/rel4"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center">
-
-                    <ImageView
-                        android:id="@+id/imageView4"
-                        android:layout_width="match_parent"
-                        android:layout_height="80dp"
-                        android:contentDescription="@string/app_name"
-                        android:src="@drawable/hdlogo" />
-
-                </RelativeLayout>
-
-            </android.support.v7.widget.CardView>
+            android:layout_marginTop="@dimen/fab_margin"
+            android:baselineAligned="false"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:visibility="gone"
+            android:weightSum="2">
 
             <RelativeLayout
-                android:layout_width="match_parent"
+                android:id="@+id/relME"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/view4">
+                android:layout_weight="1"
+                android:gravity="center">
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <android.support.v7.widget.CardView
+                    android:id="@+id/view4"
+                    android:layout_width="80dp"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
                     android:layout_centerHorizontal="true"
-                    android:text="Process"
-                    android:textStyle="bold" />
+                    android:innerRadius="0dp"
+                    android:shape="ring"
+                    android:thicknessRatio="1.9"
+                    app:cardBackgroundColor="@android:color/darker_gray"
+                    app:cardCornerRadius="40dp">
 
-            </RelativeLayout>
-        </RelativeLayout>
+                    <RelativeLayout
+                        android:id="@+id/rel4"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center">
 
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center">
+                        <ImageView
+                            android:id="@+id/imageView4"
+                            android:layout_width="match_parent"
+                            android:layout_height="80dp"
+                            android:contentDescription="@string/app_name"
+                            android:src="@drawable/hdlogo" />
 
-            <android.support.v7.widget.CardView
-                android:id="@+id/view5"
-                android:layout_width="80dp"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:innerRadius="0dp"
-                android:shape="ring"
-                android:thicknessRatio="1.9"
-                app:cardCornerRadius="40dp">
+                    </RelativeLayout>
+
+                </android.support.v7.widget.CardView>
 
                 <RelativeLayout
-                    android:id="@+id/rel5"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/view4">
 
-                    <ImageView
-                        android:id="@+id/imageView5"
-                        android:layout_width="match_parent"
-                        android:layout_height="80dp"
-                        android:contentDescription="@string/app_name"
-                        android:src="@drawable/hdlogo" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_centerHorizontal="true"
+                        android:text="Process"
+                        android:textStyle="bold" />
 
                 </RelativeLayout>
-
-            </android.support.v7.widget.CardView>
+            </RelativeLayout>
 
             <RelativeLayout
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/view5">
+                android:layout_weight="1"
+                android:gravity="center">
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <android.support.v7.widget.CardView
+                    android:id="@+id/view5"
+                    android:layout_width="80dp"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
                     android:layout_centerHorizontal="true"
-                    android:text="Intimation"
-                    android:textStyle="bold" />
+                    android:innerRadius="0dp"
+                    android:shape="ring"
+                    android:thicknessRatio="1.9"
+                    app:cardCornerRadius="40dp">
 
-            </RelativeLayout>
-        </RelativeLayout>
+                    <RelativeLayout
+                        android:id="@+id/rel5"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
 
-    </LinearLayout>
+                        <ImageView
+                            android:id="@+id/imageView5"
+                            android:layout_width="match_parent"
+                            android:layout_height="80dp"
+                            android:contentDescription="@string/app_name"
+                            android:src="@drawable/hdlogo" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/fab_margin"
-        android:baselineAligned="false"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:weightSum="2">
+                    </RelativeLayout>
 
-        <RelativeLayout
-            android:id="@+id/relME1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center">
-
-            <android.support.v7.widget.CardView
-                android:id="@+id/view41"
-                android:layout_width="80dp"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:innerRadius="0dp"
-                android:shape="ring"
-                android:thicknessRatio="1.9"
-                app:cardBackgroundColor="@android:color/darker_gray"
-                app:cardCornerRadius="40dp">
+                </android.support.v7.widget.CardView>
 
                 <RelativeLayout
-                    android:id="@+id/rel41"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center">
+                    android:layout_below="@+id/view5">
 
-                    <ImageView
-                        android:id="@+id/imageView41"
-                        android:layout_width="match_parent"
-                        android:layout_height="80dp"
-                        android:contentDescription="@string/app_name"
-                        android:src="@drawable/hdlogo" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_centerHorizontal="true"
+                        android:text="Intimation"
+                        android:textStyle="bold" />
 
                 </RelativeLayout>
+            </RelativeLayout>
 
-            </android.support.v7.widget.CardView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/fab_margin"
+            android:baselineAligned="false"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:weightSum="2">
 
             <RelativeLayout
-                android:layout_width="match_parent"
+                android:id="@+id/relME1"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/view41">
+                android:layout_weight="1"
+                android:gravity="center"
+                android:visibility="gone">
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <android.support.v7.widget.CardView
+                    android:id="@+id/view41"
+                    android:layout_width="80dp"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
                     android:layout_centerHorizontal="true"
-                    android:text="Polls or Questions"
-                    android:textStyle="bold" />
+                    android:innerRadius="0dp"
+                    android:shape="ring"
+                    android:thicknessRatio="1.9"
+                    app:cardBackgroundColor="@android:color/darker_gray"
+                    app:cardCornerRadius="40dp">
 
-            </RelativeLayout>
-        </RelativeLayout>
+                    <RelativeLayout
+                        android:id="@+id/rel41"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center">
 
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center">
+                        <ImageView
+                            android:id="@+id/imageView41"
+                            android:layout_width="match_parent"
+                            android:layout_height="80dp"
+                            android:contentDescription="@string/app_name"
+                            android:src="@drawable/hdlogo" />
 
-            <android.support.v7.widget.CardView
-                android:id="@+id/view51"
-                android:layout_width="80dp"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:innerRadius="0dp"
-                android:shape="ring"
-                android:thicknessRatio="1.9"
-                app:cardCornerRadius="40dp">
+                    </RelativeLayout>
+
+                </android.support.v7.widget.CardView>
 
                 <RelativeLayout
-                    android:id="@+id/rel51"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/view41">
 
-                    <ImageView
-                        android:id="@+id/imageView51"
-                        android:layout_width="match_parent"
-                        android:layout_height="80dp"
-                        android:contentDescription="@string/app_name"
-                        android:src="@drawable/hdlogo" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_centerHorizontal="true"
+                        android:text="Polls or Questions"
+                        android:textStyle="bold" />
 
                 </RelativeLayout>
-
-            </android.support.v7.widget.CardView>
+            </RelativeLayout>
 
             <RelativeLayout
-                android:layout_width="match_parent"
+                android:id="@+id/get_quotation"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/view51">
+                android:layout_weight="1"
+                android:gravity="center">
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <android.support.v7.widget.CardView
+                    android:id="@+id/view51"
+                    android:layout_width="80dp"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
                     android:layout_centerHorizontal="true"
-                    android:text="Get Quote"
-                    android:textStyle="bold" />
+                    android:innerRadius="0dp"
+                    android:shape="ring"
+                    android:thicknessRatio="1.9"
+                    app:cardCornerRadius="40dp">
 
-            </RelativeLayout>
-        </RelativeLayout>
+                    <RelativeLayout
+                        android:id="@+id/rel51"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
 
-    </LinearLayout>
+                        <ImageView
+                            android:id="@+id/imageView51"
+                            android:layout_width="match_parent"
+                            android:layout_height="80dp"
+                            android:contentDescription="@string/app_name"
+                            android:src="@drawable/hdlogo" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/fab_margin"
-        android:baselineAligned="false"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:weightSum="2">
+                    </RelativeLayout>
 
-        <RelativeLayout
-            android:id="@+id/relME2"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center">
-
-            <android.support.v7.widget.CardView
-                android:id="@+id/view42"
-                android:layout_width="80dp"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:innerRadius="0dp"
-                android:shape="ring"
-                android:thicknessRatio="1.9"
-                app:cardBackgroundColor="@android:color/darker_gray"
-                app:cardCornerRadius="40dp">
+                </android.support.v7.widget.CardView>
 
                 <RelativeLayout
-                    android:id="@+id/rel42"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center">
+                    android:layout_below="@+id/view51">
 
-                    <ImageView
-                        android:id="@+id/imageView42"
-                        android:layout_width="match_parent"
-                        android:layout_height="80dp"
-                        android:contentDescription="@string/app_name"
-                        android:src="@drawable/hdlogo" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_centerHorizontal="true"
+                        android:text="Get Quote"
+                        android:textStyle="bold" />
 
                 </RelativeLayout>
+            </RelativeLayout>
 
-            </android.support.v7.widget.CardView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/fab_margin"
+            android:baselineAligned="false"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:visibility="gone"
+            android:weightSum="2">
 
             <RelativeLayout
-                android:layout_width="match_parent"
+                android:id="@+id/relME2"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/view42">
+                android:layout_weight="1"
+                android:gravity="center">
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <android.support.v7.widget.CardView
+                    android:id="@+id/view42"
+                    android:layout_width="80dp"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
                     android:layout_centerHorizontal="true"
-                    android:text="Get Quote and Auction"
-                    android:textStyle="bold" />
+                    android:innerRadius="0dp"
+                    android:shape="ring"
+                    android:thicknessRatio="1.9"
+                    app:cardBackgroundColor="@android:color/darker_gray"
+                    app:cardCornerRadius="40dp">
 
-            </RelativeLayout>
-        </RelativeLayout>
+                    <RelativeLayout
+                        android:id="@+id/rel42"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center">
 
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center">
+                        <ImageView
+                            android:id="@+id/imageView42"
+                            android:layout_width="match_parent"
+                            android:layout_height="80dp"
+                            android:contentDescription="@string/app_name"
+                            android:src="@drawable/hdlogo" />
 
-            <android.support.v7.widget.CardView
-                android:id="@+id/view52"
-                android:layout_width="80dp"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:innerRadius="0dp"
-                android:shape="ring"
-                android:thicknessRatio="1.9"
-                app:cardCornerRadius="40dp">
+                    </RelativeLayout>
+
+                </android.support.v7.widget.CardView>
 
                 <RelativeLayout
-                    android:id="@+id/rel52"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/view42">
 
-                    <ImageView
-                        android:id="@+id/imageView52"
-                        android:layout_width="match_parent"
-                        android:layout_height="80dp"
-                        android:contentDescription="@string/app_name"
-                        android:src="@drawable/hdlogo" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_centerHorizontal="true"
+                        android:text="Get Quote and Auction"
+                        android:textStyle="bold" />
 
                 </RelativeLayout>
-
-            </android.support.v7.widget.CardView>
+            </RelativeLayout>
 
             <RelativeLayout
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/view52">
+                android:layout_weight="1"
+                android:gravity="center">
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <android.support.v7.widget.CardView
+                    android:id="@+id/view52"
+                    android:layout_width="80dp"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
                     android:layout_centerHorizontal="true"
-                    android:text="Upload Seized Stock"
-                    android:textStyle="bold" />
+                    android:innerRadius="0dp"
+                    android:shape="ring"
+                    android:thicknessRatio="1.9"
+                    app:cardCornerRadius="40dp">
 
-            </RelativeLayout>
-        </RelativeLayout>
-    </LinearLayout>
+                    <RelativeLayout
+                        android:id="@+id/rel52"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/fab_margin"
-        android:baselineAligned="false"
-        android:gravity="start"
-        android:orientation="horizontal"
-        android:weightSum="2">
+                        <ImageView
+                            android:id="@+id/imageView52"
+                            android:layout_width="match_parent"
+                            android:layout_height="80dp"
+                            android:contentDescription="@string/app_name"
+                            android:src="@drawable/hdlogo" />
 
-        <RelativeLayout
-            android:id="@+id/relME3"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center">
+                    </RelativeLayout>
 
-            <android.support.v7.widget.CardView
-                android:id="@+id/view43"
-                android:layout_width="80dp"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:innerRadius="0dp"
-                android:shape="ring"
-                android:thicknessRatio="1.9"
-                app:cardBackgroundColor="@android:color/darker_gray"
-                app:cardCornerRadius="40dp">
+                </android.support.v7.widget.CardView>
 
                 <RelativeLayout
-                    android:id="@+id/rel43"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center">
+                    android:layout_below="@+id/view52">
 
-                    <ImageView
-                        android:id="@+id/imageView43"
-                        android:layout_width="match_parent"
-                        android:layout_height="80dp"
-                        android:contentDescription="@string/app_name"
-                        android:src="@drawable/hdlogo" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_centerHorizontal="true"
+                        android:text="Upload Seized Stock"
+                        android:textStyle="bold" />
 
                 </RelativeLayout>
+            </RelativeLayout>
+        </LinearLayout>
 
-            </android.support.v7.widget.CardView>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/fab_margin"
+            android:baselineAligned="false"
+            android:gravity="start"
+            android:orientation="horizontal"
+            android:visibility="gone"
+            android:weightSum="2">
 
             <RelativeLayout
-                android:layout_width="match_parent"
+                android:id="@+id/relME3"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/view43">
+                android:layout_weight="1"
+                android:gravity="center">
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <android.support.v7.widget.CardView
+                    android:id="@+id/view43"
+                    android:layout_width="80dp"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
                     android:layout_centerHorizontal="true"
-                    android:text="Meeting on Call"
-                    android:textStyle="bold" />
+                    android:innerRadius="0dp"
+                    android:shape="ring"
+                    android:thicknessRatio="1.9"
+                    app:cardBackgroundColor="@android:color/darker_gray"
+                    app:cardCornerRadius="40dp">
 
+                    <RelativeLayout
+                        android:id="@+id/rel43"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:id="@+id/imageView43"
+                            android:layout_width="match_parent"
+                            android:layout_height="80dp"
+                            android:contentDescription="@string/app_name"
+                            android:src="@drawable/hdlogo" />
+
+                    </RelativeLayout>
+
+                </android.support.v7.widget.CardView>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/view43">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_centerHorizontal="true"
+                        android:text="Meeting on Call"
+                        android:textStyle="bold" />
+
+                </RelativeLayout>
             </RelativeLayout>
-        </RelativeLayout>
-    </LinearLayout>
+        </LinearLayout>
+    </FrameLayout>
 </LinearLayout>

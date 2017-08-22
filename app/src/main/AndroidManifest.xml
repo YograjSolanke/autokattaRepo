@@ -586,6 +586,7 @@
             android:label="@string/title_activity_edit_tags"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".other.PostStatus" />
+        <activity android:name=".groups.GetQuotation"></activity>
     </application>
 
 </manifest>
