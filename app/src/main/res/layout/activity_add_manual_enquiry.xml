@@ -19,12 +19,24 @@
             android:layout_height="match_parent"
             android:layout_marginEnd="@dimen/text_margin_top"
             android:layout_marginStart="@dimen/text_margin_top"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            >
+            <RelativeLayout
+                android:id="@+id/details"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:background="@color/edit_background">
+
+                <include layout="@layout/business_chat_module" />
+
+            </RelativeLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
+                android:layout_marginTop="10dp"
                 android:weightSum="2">
 
                 <TextView
@@ -510,7 +522,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:orientation="horizontal"
-                android:weightSum="2">
+                android:weightSum="2"
+                android:id="@+id/selctinventory">
 
                 <TextView
                     android:layout_width="0dp"
@@ -556,6 +569,18 @@
 
                 </RelativeLayout>
             </LinearLayout>
+
+            <Button
+                android:layout_width="match_parent"
+                android:id="@+id/sub"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:background="@color/background"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:layout_marginTop="5dp"
+                android:text="Submit"
+                android:visibility="gone"/>
             <!-- </LinearLayout>-->
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>

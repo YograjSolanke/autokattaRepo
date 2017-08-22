@@ -29,7 +29,7 @@ public class BussinessMsgSendersAdapter extends RecyclerView.Adapter<BussinessMs
 
     private Activity mActivity;
     private List<BroadcastReceivedResponse.Success> mItemList = new ArrayList<>();
-    private String msender, msendername;
+    private String msender, msendername,mKeyword,mTitle,mPrice,mCategory,mBrand,mModel,mImage;
     private int product_id = 0, service_id = 0, vehicle_id = 0;
 
     class MyViewHolder extends RecyclerView.ViewHolder {
@@ -51,12 +51,19 @@ public class BussinessMsgSendersAdapter extends RecyclerView.Adapter<BussinessMs
 
     }
 
-    public BussinessMsgSendersAdapter(Activity mActivity, List<BroadcastReceivedResponse.Success> mItemList, int product_id, int service_id, int vehicle_id) {
+    public BussinessMsgSendersAdapter(Activity mActivity, List<BroadcastReceivedResponse.Success> mItemList, int product_id, int service_id, int vehicle_id,String keyword,String title,String price,String category,String brand,String model,String image) {
         this.mActivity = mActivity;
         this.mItemList = mItemList;
         this.product_id = product_id;
         this.service_id = service_id;
         this.vehicle_id = vehicle_id;
+        this.mKeyword=keyword;
+        this.mCategory=category;
+        this.mTitle=title;
+        this.mBrand=brand;
+        this.mPrice=price;
+        this.mModel=model;
+        this.mImage=image;
 
     }
 
@@ -99,8 +106,18 @@ public class BussinessMsgSendersAdapter extends RecyclerView.Adapter<BussinessMs
             public void onClick(View view) {
                 ActivityOptions option = ActivityOptions.makeCustomAnimation(mActivity, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
                 Bundle b = new Bundle();
-                b.putString("sender", msender);
-                b.putString("sendername", msendername);
+                b.putString("sender", holder.msgFromCnt.getText().toString());
+                b.putString("sendername", holder.msgFrom.getText().toString());
+                b.putString("keyword", mKeyword);
+                b.putString("category", mCategory);
+                b.putString("title", mTitle);
+                b.putString("brand", mBrand);
+                b.putString("model", mModel);
+                b.putString("price", mPrice);
+                b.putString("image", mImage);
+                b.putInt("vehicleid", vehicle_id);
+                b.putString("classname", "bussinessmsgsendersadapter");
+
                 Intent intent = new Intent(mActivity, AddManualEnquiry.class);
                 intent.putExtras(b);
                 mActivity.startActivity(intent, option.toBundle());

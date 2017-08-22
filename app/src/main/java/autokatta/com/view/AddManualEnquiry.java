@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.support.design.widget.Snackbar;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.telephony.gsm.SmsManager;
@@ -17,8 +18,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -26,6 +29,9 @@ import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import java.util.List;
 
@@ -36,6 +42,8 @@ import autokatta.com.apicall.ApiCall;
 import autokatta.com.generic.SetMyDateAndTime;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
+import autokatta.com.response.AddManualEnquiryResponse;
+import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import retrofit2.Response;
 
 public class AddManualEnquiry extends AppCompatActivity implements RequestNotifier, View.OnTouchListener {
@@ -44,13 +52,20 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
     AutoCompleteTextView autoAddress;
     Spinner spnInventory, spnStatus;
     String myContact;
-    LinearLayout txtUser, txtInvite;
+    LinearLayout txtUser, txtInvite,mInventory;
     ImageView imgContact;
     RelativeLayout mRelative;
     android.support.v4.widget.NestedScrollView scrollView;
     TextView mNoData;
+    TextView Title, Category, Brand, Model, Keyword, price;
+    RelativeLayout relCategory, relBrand, relModel, relPrice, mDetails;
+    ImageView Image;
     Menu menu;
+    String fullpath = "";
+    String mVehicleId;
+    String mKeyword,mTitle,mPrice,mCategory,mBrand,mModel,mClassname,mImage;
     private final int REQUEST_CODE = 99;
+    Button mSubmit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +97,23 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
                 scrollView = (NestedScrollView) findViewById(R.id.scroll_view);
                 imgContact = (ImageView) findViewById(R.id.contact_list);
                 txtInvite = (LinearLayout) findViewById(R.id.txtInvite);
+                mInventory = (LinearLayout) findViewById(R.id.selctinventory);
+                mSubmit= (Button) findViewById(R.id.sub);
+
+
+                Keyword = (TextView) findViewById(R.id.keyword);
+                Title = (TextView) findViewById(R.id.settitle);
+                Category = (TextView) findViewById(R.id.setcategory);
+                Brand = (TextView) findViewById(R.id.setbrand);
+                Model = (TextView) findViewById(R.id.setmodel);
+                Image = (ImageView) findViewById(R.id.image);
+                price = (TextView) findViewById(R.id.setprice);
+                relCategory = (RelativeLayout) findViewById(R.id.relative2);
+                relBrand = (RelativeLayout) findViewById(R.id.relative3);
+                relModel = (RelativeLayout) findViewById(R.id.relative4);
+                relPrice = (RelativeLayout) findViewById(R.id.relative5);
+                mDetails = (RelativeLayout) findViewById(R.id.details);
+
                 mNoData = (TextView) findViewById(R.id.no_category);
                 mNoData.setVisibility(View.GONE);
 
@@ -117,12 +149,145 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
                     }
                 });
 
+                /*This works when user comes from bussiness chat*/
                 if (getIntent().getExtras() != null) {
+
+                    mInventory.setVisibility(View.GONE);
+                    mDetails.setVisibility(View.VISIBLE);
+                    mSubmit.setVisibility(View.VISIBLE);
+
                     edtName.setText(getIntent().getExtras().getString("sendername"));
                     edtContact.setText(getIntent().getExtras().getString("sender"));
                     edtName.setSelection(edtName.getText().length());
                     edtContact.setSelection(edtContact.getText().length());
+
+                    Keyword.setText(getIntent().getExtras().getString("keyword"));
+                    Category.setText(getIntent().getExtras().getString("category"));
+                    Title.setText(getIntent().getExtras().getString("title"));
+                    Brand.setText(getIntent().getExtras().getString("brand"));
+                    Model.setText(getIntent().getExtras().getString("model"));
+                    price.setText(getIntent().getExtras().getString("price"));
+                    mImage=getIntent().getExtras().getString("image","");
+                    mVehicleId= String.valueOf(getIntent().getExtras().getInt("vehicleid"));
+                    mClassname=getIntent().getExtras().getString("classname");
+
+
+
+                    if (getIntent().getExtras().getString("keyword","").equalsIgnoreCase("Product")) {
+                        relBrand.setVisibility(View.GONE);
+                        relModel.setVisibility(View.GONE);
+                        if (!mImage.equals("") && !mImage.equals("null")) {
+                            fullpath = getString(R.string.base_image_url) + mImage;
+                            fullpath = fullpath.replaceAll(" ", "%20");
+                            Glide.with(AddManualEnquiry.this)
+                                    .load(fullpath)
+                                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                    .bitmapTransform(new CropCircleTransformation(AddManualEnquiry.this))
+                                    .placeholder(R.drawable.logo)
+                                    .into(Image);
+                        } else {
+                            Image.setImageResource(R.drawable.logo);
+                        }
+                    } else if (getIntent().getExtras().getString("keyword","").equalsIgnoreCase("Service")) {
+                        relCategory.setVisibility(View.GONE);
+                        relBrand.setVisibility(View.GONE);
+                        relModel.setVisibility(View.GONE);
+                        if (!mImage.equals("") && !mImage.equals("null")) {
+                            fullpath = getString(R.string.base_image_url) + mImage;
+                            fullpath = fullpath.replaceAll(" ", "%20");
+                            Glide.with(AddManualEnquiry.this)
+                                    .load(fullpath)
+                                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                    .bitmapTransform(new CropCircleTransformation(AddManualEnquiry.this))
+                                    .placeholder(R.drawable.logo)
+                                    .into(Image);
+                        } else {
+                            Image.setImageResource(R.drawable.logo);
+                        }
+                    } else if (getIntent().getExtras().getString("keyword","").equalsIgnoreCase("Vehicle")) {
+                        if (!mImage.equals("") && !mImage.equals("null")) {
+                            fullpath = getString(R.string.base_image_url) + mImage;
+                            fullpath = fullpath.replaceAll(" ", "%20");
+                            Glide.with(AddManualEnquiry.this)
+                                    .load(fullpath)
+                                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                    .bitmapTransform(new CropCircleTransformation(AddManualEnquiry.this))
+                                    .placeholder(R.drawable.logo)
+                                    .into(Image);
+                        } else {
+                            Image.setImageResource(R.drawable.logo);
+                        }
+                    }
+                    mSubmit.setOnClickListener(new OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            String custInventoryType = "", custEnquiryStatus = "";
+                            Boolean flag = false;
+                           // int strPos = spnInventory.getSelectedItemPosition();
+                            int strPos1 = spnStatus.getSelectedItemPosition();
+                            String custName = edtName.getText().toString();
+                            String custContact = edtContact.getText().toString();
+                            String custAddress = autoAddress.getText().toString();
+                            String custFullAddress = edtAddress.getText().toString();
+
+                           /* if (strPos != 0) {
+                                custInventoryType = spnInventory.getSelectedItem().toString();
+                            }*/
+                            if (strPos1 != 0)
+                                custEnquiryStatus = spnStatus.getSelectedItem().toString();
+
+                            String discussion = edtDiscussion.getText().toString();
+                            String nextFollowupDate = edtDate.getText().toString() + " " + edtTime.getText().toString();
+
+                            if (!custAddress.isEmpty()) {
+                                List<String> resultList = GooglePlacesAdapter.getResultList();
+                                for (int i = 0; i < resultList.size(); i++) {
+                                    if (custAddress.equalsIgnoreCase(resultList.get(i))) {
+                                        flag = true;
+                                        break;
+                                    } else {
+                                        CustomToast.customToast(AddManualEnquiry.this,"Please Select Valid Address ");
+                                        flag = false;
+                                    }
+                                }
+                            }
+
+                            if (custName.equalsIgnoreCase("") || custName.startsWith(" ") && custName.startsWith(" ")) {
+                                edtName.setError("Please provide customer name");
+                                edtName.requestFocus();
+                            } else if (custContact.isEmpty() || custContact.startsWith(" ") && custContact.startsWith(" ")) {
+                                edtContact.setError("Please provide customer contact");
+                                edtContact.requestFocus();
+                            } else if (custAddress.equals("") || custAddress.startsWith(" ") && custAddress.startsWith(" ")) {
+                                autoAddress.setError("Enter Address");
+                                autoAddress.requestFocus();
+                            } else if (!flag) {
+                                autoAddress.setError("Please provide proper address");
+                                autoAddress.requestFocus();
+                            } else if (custFullAddress.equals("")) {
+                                edtAddress.setError("Enter Detailed address");
+                                edtAddress.requestFocus();
+                            }/* else if (spnInventory.getSelectedItemPosition() == 0) {
+                                CustomToast.customToast(getApplicationContext(), "Please provide inventory");
+                                spnInventory.requestFocus();
+                            } */else if (spnStatus.getSelectedItemPosition() == 0) {
+                                CustomToast.customToast(getApplicationContext(), "Please provide status");
+                                spnStatus.requestFocus();
+                            } /*else if (discussion.equals("")) {
+                    edtDiscussion.setError("Enter discussion data");
+                    edtDiscussion.requestFocus();
+                }*/ else if (nextFollowupDate.equals("") || nextFollowupDate.startsWith(" ")) {
+                                edtDate.setError("Enter Date");
+                                edtDate.requestFocus();
+                            } else {
+                                    AddEnquiryData(custName, custContact, custAddress, custFullAddress, custInventoryType, custEnquiryStatus,
+                                            discussion, nextFollowupDate, mVehicleId);
+                                }
+
+                            }
+                    });
                 }
+
 
                 txtUser.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -308,12 +473,12 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
                     bundle.putString("discussion", discussion);
                     bundle.putString("nextFollowupDate", nextFollowupDate);
 
-                    ActivityOptions options = ActivityOptions.makeCustomAnimation(AddManualEnquiry.this, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
-                    Intent intent = new Intent(getApplicationContext(), ManualEnquiryVehicleList.class);
-                    intent.putExtras(bundle);
-                    startActivity(intent, options.toBundle());
-                    /*AddEnquiryData(custName, custContact, custAddress, custFullAddress, custInventoryType, custEnquiryStatus,
-                            discussion, nextFollowupDate, addArray);*/
+                        ActivityOptions options = ActivityOptions.makeCustomAnimation(AddManualEnquiry.this, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
+                        Intent intent = new Intent(getApplicationContext(), ManualEnquiryVehicleList.class);
+                        intent.putExtras(bundle);
+                        startActivity(intent, options.toBundle());
+
+
                 }
                 return true;
         }
@@ -373,25 +538,26 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
 
     @Override
     public void notifySuccess(Response<?> response) {
-        /*if (response != null) {
+        if (response != null) {
             if (response.isSuccessful()) {
                 if (response.body() instanceof AddManualEnquiryResponse) {
                     AddManualEnquiryResponse enquiryResponse = (AddManualEnquiryResponse) response.body();
                     if (enquiryResponse.getSuccess() != null) {
-                        if (enquiryResponse.getSuccess().getMessage().equalsIgnoreCase("Data successfully Inserted.")) {
-                            Snackbar.make(mRelative, enquiryResponse.getSuccess().getMessage(), Snackbar.LENGTH_SHORT).show();
-                            Bundle bundle = new Bundle();
+                        if (enquiryResponse.getSuccess().getSuccess().equalsIgnoreCase("Data successfully Inserted.")) {
+                            //Snackbar.make(mRelative, enquiryResponse.getSuccess().getSuccess(), Snackbar.LENGTH_SHORT).show();
+                         /*   Bundle bundle = new Bundle();
                             bundle.putString("spinnerValue",spnInventory.getSelectedItem().toString());
                             ActivityOptions options = ActivityOptions.makeCustomAnimation(AddManualEnquiry.this, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
                             Intent intent = new Intent(getApplicationContext(), ManualEnquiryVehicleList.class);
                             intent.putExtras(bundle);
-                            startActivity(intent, options.toBundle());
+                            startActivity(intent, options.toBundle());*/
+                            CustomToast.customToast(AddManualEnquiry.this, "Data Inserted Successfully");
                             finish();
                         }
                     } else {
                         CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
                     }
-                } *//*else if (response.body() instanceof GetInventoryResponse) {
+                } /*else if (response.body() instanceof GetInventoryResponse) {
                     GetInventoryResponse mInventoryResponse = (GetInventoryResponse) response.body();
                     if (mInventoryResponse.getSuccess() != null) {
                         mItemList.clear();
@@ -450,6 +616,13 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
         } else {
             Snackbar.make(mRelative, getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
         }*/
+            }
+            {
+                Snackbar.make(mRelative, getString(R.string._404_), Snackbar.LENGTH_SHORT).show();
+            }
+        } else {
+            Snackbar.make(mRelative, getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
+        }
     }
 
     @Override

@@ -54,6 +54,7 @@ public class BussinessMsgSenders extends Fragment implements SwipeRefreshLayout.
      String prduct_img_url = getActivity().getString(R.string.base_image_url);
      String service_img_url = getActivity().getString(R.string.base_image_url);*/
     String fullpath = "";
+    String bundle_keyword,bundle_title,bundle_price,bundle_category,bundle_brand,bundle_model,image;
     ImageView Image;
     ApiCall mApiCall;
     List<BroadcastReceivedResponse.Success> mSuccesses = new ArrayList<>();
@@ -111,13 +112,19 @@ public class BussinessMsgSenders extends Fragment implements SwipeRefreshLayout.
                     product_id = b.getInt("product_id");
                     service_id = b.getInt("service_id");
                     vehicle_id = b.getInt("vehicle_id");
-                    Keyword.setText(b.getString("keyword"));
-                    Title.setText(b.getString("title"));
-                    price.setText(b.getString("price"));
-                    Category.setText(b.getString("category"));
-                    Brand.setText(b.getString("brand"));
-                    Model.setText(b.getString("model"));
-                    String image = b.getString("image", "");
+                    bundle_keyword = b.getString("keyword");
+                    bundle_title = b.getString("title");
+                    bundle_price = b.getString("price");
+                    bundle_category = b.getString("category");
+                    bundle_brand = b.getString("brand");
+                    bundle_model = b.getString("model");
+                    Keyword.setText(bundle_keyword);
+                    Title.setText(bundle_title);
+                    price.setText(bundle_price);
+                    Category.setText(bundle_category);
+                    Brand.setText(bundle_brand);
+                    Model.setText(bundle_model);
+                    image = b.getString("image", "");
 
                     if (b.getString("keyword", "").equalsIgnoreCase("Product")) {
                         relCategory.setVisibility(View.GONE);
@@ -201,7 +208,7 @@ public class BussinessMsgSenders extends Fragment implements SwipeRefreshLayout.
                     msenders.setSendername(msenders.getSendername());
                     mSuccesses.add(msenders);
                 }
-                mMsgReplyAdapter = new BussinessMsgSendersAdapter(getActivity(), mSuccesses, product_id, service_id, vehicle_id);
+                mMsgReplyAdapter = new BussinessMsgSendersAdapter(getActivity(), mSuccesses, product_id, service_id, vehicle_id,bundle_keyword,bundle_title,bundle_price,bundle_category,bundle_brand,bundle_model,image);
                 mRecyclerView.setAdapter(mMsgReplyAdapter);
                 mMsgReplyAdapter.notifyDataSetChanged();
             } else {
