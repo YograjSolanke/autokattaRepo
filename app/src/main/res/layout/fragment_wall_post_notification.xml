@@ -182,6 +182,7 @@
                     android:layout_width="@dimen/cards_button_width"
                     android:layout_height="@dimen/cards_button_height"
                     android:layout_marginEnd="@dimen/text_margin_top"
+                    android:layout_alignParentEnd="true"
                     android:layout_toStartOf="@id/call"
                     android:contentDescription="@string/app_name"
                     android:tint="@color/button_grey"
