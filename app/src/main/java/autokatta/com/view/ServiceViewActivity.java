@@ -1032,7 +1032,7 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
                             .setLabel("Please wait")
                             .setMaxProgress(100)
                             .show();
-                    updateService(service_id, upname, upprice, updetails, "", uptype, "", upcat, finalbrandtags);
+                    updateService(service_id, upname, upprice, updetails, "", uptype, "", upcat, finalbrandtags, stringgroupids);
                 }
                 break;
 
@@ -1238,9 +1238,9 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
 
 
     private void updateService(int service_id, String upname, String upprice, String updetails, String uptags,
-                               String uptype, String upimgs, String upcat, String finalbrandtags) {
+                               String uptype, String upimgs, String upcat, String finalbrandtags, String stringgroupids) {
         ApiCall mApiCall = new ApiCall(this, this);
-        mApiCall.updateService(service_id, upname, upprice, updetails, "", uptype, "", upcat, finalbrandtags);
+        mApiCall.updateService(service_id, upname, upprice, updetails, "", uptype, "", upcat, finalbrandtags, stringgroupids);
     }
 
     @Override
