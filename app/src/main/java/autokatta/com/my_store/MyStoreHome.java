@@ -3,7 +3,6 @@ package autokatta.com.my_store;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -18,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -238,39 +238,40 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.call:
-                if (!storeAdmins.equals("")) {
-                    // createCotactsList();
-                    // @Here are the list of items to be shown in the list
-                    if (storeAdmins.contains(",")) {
-
-                        if (!storeAdmins.contains(mOtherContact)) {
-                            storeAdmins = storeAdmins + "," + mOtherContact + "-" + "owner";
-                            items = storeAdmins.split(",");
-                        }
-
-                    } else {
-                        items = new String[]{storeAdmins, mOtherContact + "-" + "Owner"};
-
-                    }
-
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                    builder.setTitle("Make your selection");
-                    builder.setItems(items, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int item) {
-
-                            // will toast your selection
-                            //   showToast("Name: " + items[item]);
-                            String[] arr = items[item].split("-");
-                            call(arr[0]);
-
-
-                            dialog.dismiss();
-
-                        }
-                    }).show();
-
-                } else
-                    call(mOtherContact);
+                getCallContactList();
+//                if (!storeAdmins.equals("")) {
+//                    // createCotactsList();
+//                    // @Here are the list of items to be shown in the list
+//                    if (storeAdmins.contains(",")) {
+//
+//                        if (!storeAdmins.contains(mOtherContact)) {
+//                            storeAdmins = storeAdmins + "," + mOtherContact + "-" + "owner";
+//                            items = storeAdmins.split(",");
+//                        }
+//
+//                    } else {
+//                        items = new String[]{storeAdmins, mOtherContact + "-" + "Owner"};
+//
+//                    }
+//
+//                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+//                    builder.setTitle("Make your selection");
+//                    builder.setItems(items, new DialogInterface.OnClickListener() {
+//                        public void onClick(DialogInterface dialog, int item) {
+//
+//                            // will toast your selection
+//                            //   showToast("Name: " + items[item]);
+//                            String[] arr = items[item].split("-");
+//                            call(arr[0]);
+//
+//
+//                            dialog.dismiss();
+//
+//                        }
+//                    }).show();
+//
+//                } else
+//                    call(mOtherContact);
                 break;
 
             case R.id.web:
@@ -737,30 +738,18 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
         startActivity(intent);
     }
 
+    private void getCallContactList() {
 
-    /*public void showMessage(Activity activity, String message) {
-        Snackbar snackbar = Snackbar.make(activity.findViewById(android.R.id.content),
-                message, Snackbar.LENGTH_LONG);
-        TextView textView = (TextView) snackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
-        textView.setTextColor(Color.RED);
-        snackbar.show();
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity());
+// ...Irrelevant code for customizing the buttons and title
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.admin_contact_call_layout, null);
+        dialogBuilder.setView(dialogView);
+
+        ListView editText = (ListView) dialogView.findViewById(R.id.listview);
+
+        AlertDialog alertDialog = dialogBuilder.create();
+        alertDialog.show();
+
     }
-
-    public void errorMessage(Activity activity, String message) {
-        Snackbar snackbar = Snackbar.make(activity.findViewById(android.R.id.content),
-                message, Snackbar.LENGTH_INDEFINITE)
-                .setAction("Retry", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        getOtherStore(myContact, store_id);
-                    }
-                });
-        // Changing message text color
-        snackbar.setActionTextColor(Color.BLUE);
-        // Changing action button text color
-        View sbView = snackbar.getView();
-        TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
-        textView.setTextColor(Color.WHITE);
-        snackbar.show();
-    }*/
 }
