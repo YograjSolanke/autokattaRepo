@@ -88,7 +88,7 @@ public class StoreNotificationAdapter extends RecyclerView.Adapter<RecyclerView.
             mStoreImage = (ImageView) storeView.findViewById(R.id.store_image);
 
             mStoreAutokattaShare = (ImageButton) storeView.findViewById(R.id.share_autokatta);
-            mCall = (ImageButton) storeView.findViewById(R.id.call);
+            //mCall = (ImageButton) storeView.findViewById(R.id.call);
             mLike = (ImageButton) storeView.findViewById(R.id.like);
             mUnlike = (ImageButton) storeView.findViewById(R.id.unlike);
             mFollow = (ImageButton) storeView.findViewById(R.id.follow_store);
@@ -180,13 +180,13 @@ public class StoreNotificationAdapter extends RecyclerView.Adapter<RecyclerView.
                             .into(mStoreHolder.mStoreImage);
         }
 
-        mStoreHolder.mCall.setOnClickListener(new View.OnClickListener() {
+        /*mStoreHolder.mCall.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String otherContact = notificationList.get(mStoreHolder.getAdapterPosition()).getSender();
                 call(otherContact);
             }
-        });
+        });*/
 
      /* Like & Unlike Functionality */
 

@@ -359,6 +359,10 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.add_manual_enquiry, menu);
         this.menu = menu;
+        MenuItem item = menu.findItem(R.id.ok_manual);
+        if (mClassname != null) {
+            item.setVisible(false);
+        }
         return true;
     }
 /*

@@ -140,7 +140,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
             mLikes = (TextView) profileView.findViewById(R.id.likes);
             mShares = (TextView) profileView.findViewById(R.id.share);
             mShareAutokatta = (ImageButton) profileView.findViewById(R.id.share_autokatta);
-            mCall = (ImageButton) profileView.findViewById(R.id.call);
+            //mCall = (ImageButton) profileView.findViewById(R.id.call);
             mLike = (ImageButton) profileView.findViewById(R.id.like);
             mUnlike = (ImageButton) profileView.findViewById(R.id.unlike);
             mFav = (ImageButton) profileView.findViewById(R.id.profile_favourite);
@@ -168,7 +168,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
             mStoreImage = (ImageView) storeView.findViewById(R.id.store_image);
 
             mStoreAutokattaShare = (ImageButton) storeView.findViewById(R.id.share_autokatta);
-            mCall = (ImageButton) storeView.findViewById(R.id.call);
+            //mCall = (ImageButton) storeView.findViewById(R.id.call);
             mLike = (ImageButton) storeView.findViewById(R.id.like);
             mUnlike = (ImageButton) storeView.findViewById(R.id.unlike);
             mFollow = (ImageButton) storeView.findViewById(R.id.follow_store);
@@ -242,7 +242,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
             mVehicleImage = (ImageView) upVehicleView.findViewById(R.id.vehicle_image);
 
             mVehicleAutokattaShare = (ImageButton) upVehicleView.findViewById(R.id.share_autokatta);
-            mCall = (ImageButton) upVehicleView.findViewById(R.id.call);
+            //mCall = (ImageButton) upVehicleView.findViewById(R.id.call);
             mVehicleLike = (ImageButton) upVehicleView.findViewById(R.id.like);
             mVehicleUnlike = (ImageButton) upVehicleView.findViewById(R.id.unlike);
             mVehicleFavourite = (ImageButton) upVehicleView.findViewById(R.id.vehicle_favourite);
@@ -286,7 +286,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
             mProductImage = (ImageView) productView.findViewById(R.id.product_image);
 
             mProductAutokattaShare = (ImageButton) productView.findViewById(R.id.share_autokatta);
-            mProductCall = (ImageButton) productView.findViewById(R.id.call);
+            //mProductCall = (ImageButton) productView.findViewById(R.id.call);
             mProductLike = (ImageButton) productView.findViewById(R.id.like);
             mProductUnlike = (ImageButton) productView.findViewById(R.id.unlike);
             mProductRating = (RatingBar) productView.findViewById(R.id.product_rating);
@@ -322,7 +322,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
             mServiceImage = (ImageView) serviceView.findViewById(R.id.service_image);
 
             mServiceAutokattaShare = (ImageButton) serviceView.findViewById(R.id.share_autokatta);
-            mServiceCall = (ImageButton) serviceView.findViewById(R.id.call);
+            //mServiceCall = (ImageButton) serviceView.findViewById(R.id.call);
             mServiceLike = (ImageButton) serviceView.findViewById(R.id.like);
             mServiceUnlike = (ImageButton) serviceView.findViewById(R.id.unlike);
             mServiceRating = (RatingBar) serviceView.findViewById(R.id.service_rating);
@@ -360,7 +360,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
             mActionTime = (TextView) postView.findViewById(R.id.post_action_time);
             mStatusText = (TextView) postView.findViewById(R.id.statustxt);
             mPostAutokattaShare = (ImageButton) postView.findViewById(R.id.share_autokatta);
-            mCall = (ImageButton) postView.findViewById(R.id.call);
+            //mCall = (ImageButton) postView.findViewById(R.id.call);
             mLike = (ImageButton) postView.findViewById(R.id.like);
             mUnlike = (ImageButton) postView.findViewById(R.id.unlike);
             mRelativeLike = (RelativeLayout) postView.findViewById(R.id.rlLike);
@@ -384,7 +384,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
             mUserPic = (ImageView) searchView.findViewById(R.id.profile_pro_pic);
 
             mSearchAutokattaShare = (ImageButton) searchView.findViewById(R.id.share_autokatta);
-            mCall = (ImageButton) searchView.findViewById(R.id.call);
+            //mCall = (ImageButton) searchView.findViewById(R.id.call);
             mSearchLike = (ImageButton) searchView.findViewById(R.id.like);
             mSearchUnlike = (ImageButton) searchView.findViewById(R.id.unlike);
             mSearchFavorite = (ImageButton) searchView.findViewById(R.id.search_favourite);
@@ -459,7 +459,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
             mVehicleImage = (ImageView) upVehicleView.findViewById(R.id.vehicle_image);
 
             mVehicleAutokattaShare = (ImageButton) upVehicleView.findViewById(R.id.share_autokatta);
-            mCall = (ImageButton) upVehicleView.findViewById(R.id.call);
+            //mCall = (ImageButton) upVehicleView.findViewById(R.id.call);
             mVehicleLike = (ImageButton) upVehicleView.findViewById(R.id.like);
             mVehicleUnlike = (ImageButton) upVehicleView.findViewById(R.id.unlike);
             mVehicleFavourite = (ImageButton) upVehicleView.findViewById(R.id.vehicle_favourite);
@@ -648,11 +648,11 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                 Log.i("Wall", "Profile-LayType ->" + notificationList.get(position).getLayoutType());
                 SpannableStringBuilder sb = new SpannableStringBuilder();
                 if (notificationList.get(position).getLayoutType().equalsIgnoreCase("MyAction")) {
-                    mProfileHolder.mCall.setVisibility(View.GONE);
+                    //mProfileHolder.mCall.setVisibility(View.GONE);
                     mProfileHolder.mRelativeLike.setVisibility(View.GONE);
 
                 } else {
-                    mProfileHolder.mCall.setVisibility(View.VISIBLE);
+                    //mProfileHolder.mCall.setVisibility(View.VISIBLE);
                     mProfileHolder.mRelativeLike.setVisibility(View.VISIBLE);
                 }
 
@@ -723,13 +723,13 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                             .into(mProfileHolder.mProfileImage);
                 }
 
-                mProfileHolder.mCall.setOnClickListener(new View.OnClickListener() {
+                /*mProfileHolder.mCall.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         String otherContact = notificationList.get(mProfileHolder.getAdapterPosition()).getSender();
                         call(otherContact);
                     }
-                });
+                });*/
 
      /* Like & Unlike Functionality */
                 if (notificationList.get(position).getSenderLikeStatus().equalsIgnoreCase("yes")) {
@@ -976,13 +976,13 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                             .into(mStoreHolder.mStoreImage);
                 }
 
-                mStoreHolder.mCall.setOnClickListener(new View.OnClickListener() {
+                /*mStoreHolder.mCall.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         String otherContact = notificationList.get(mStoreHolder.getAdapterPosition()).getSender();
                         call(otherContact);
                     }
-                });
+                });*/
 
      /* Like & Unlike Functionality */
 
@@ -1365,13 +1365,13 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                             .into(mVehicleHolder.mVehicleImage);
                 }
 
-                mVehicleHolder.mCall.setOnClickListener(new View.OnClickListener() {
+                /*mVehicleHolder.mCall.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         String otherContact = notificationList.get(mVehicleHolder.getAdapterPosition()).getUpVehicleContact();
                         call(otherContact);
                     }
-                });
+                });*/
 
         /* Like & Unlike Functionality */
 
@@ -1621,12 +1621,12 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                 final ProductNotifications mProductHolder = (ProductNotifications) holder;
                 Log.i("Wall", "Product-LayType ->" + notificationList.get(position).getLayoutType());
                 if (notificationList.get(position).getLayoutType().equalsIgnoreCase("MyAction")) {
-                    mProductHolder.mProductCall.setVisibility(View.GONE);
+                    //mProductHolder.mProductCall.setVisibility(View.GONE);
                     //mProductHolder.mProductLike.setVisibility(View.GONE);
                     //mProductHolder.mProductUnlike.setVisibility(View.GONE);
                     mProductHolder.mRelativeLike.setVisibility(View.GONE);
                 } else {
-                    mProductHolder.mProductCall.setVisibility(View.VISIBLE);
+                    //mProductHolder.mProductCall.setVisibility(View.VISIBLE);
                     //mProductHolder.mProductLike.setVisibility(View.VISIBLE);
                     // mProductHolder.mProductUnlike.setVisibility(View.VISIBLE);
                     mProductHolder.mRelativeLike.setVisibility(View.VISIBLE);
@@ -1645,13 +1645,13 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                 mProductHolder.mShares.setText("Shares(" + notificationList.get(position).getProductShareCount() + ")");
                 mProductHolder.mProductRating.setRating(notificationList.get(position).getProductRating());
 
-                mProductHolder.mProductCall.setOnClickListener(new View.OnClickListener() {
+                /*mProductHolder.mProductCall.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         String otherContact = notificationList.get(mProductHolder.getAdapterPosition()).getSender();
                         call(otherContact);
                     }
-                });
+                });*/
 
                 /* User profile pic */
                 if (notificationList.get(position).getSenderPicture() == null ||
@@ -1872,12 +1872,12 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
 
                 Log.i("Wall", "Service-LayType ->" + notificationList.get(position).getLayoutType());
                 if (notificationList.get(position).getLayoutType().equalsIgnoreCase("MyAction")) {
-                    mServiceHolder.mServiceCall.setVisibility(View.GONE);
+                    //mServiceHolder.mServiceCall.setVisibility(View.GONE);
                     //mServiceHolder.mServiceLike.setVisibility(View.GONE);
                     //mServiceHolder.mServiceUnlike.setVisibility(View.GONE);
                     mServiceHolder.mRelativeLike.setVisibility(View.GONE);
                 } else {
-                    mServiceHolder.mServiceCall.setVisibility(View.VISIBLE);
+                    //mServiceHolder.mServiceCall.setVisibility(View.VISIBLE);
                     //mServiceHolder.mServiceLike.setVisibility(View.VISIBLE);
                     // mServiceHolder.mServiceUnlike.setVisibility(View.VISIBLE);
                     mServiceHolder.mRelativeLike.setVisibility(View.VISIBLE);
@@ -1896,13 +1896,13 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                 mServiceHolder.mShares.setText("Shares(" + notificationList.get(position).getServiceShareCount() + ")");
                 mServiceHolder.mServiceRating.setRating(notificationList.get(position).getServiceRating());
 
-                mServiceHolder.mServiceCall.setOnClickListener(new View.OnClickListener() {
+                /*mServiceHolder.mServiceCall.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         String otherContact = notificationList.get(mServiceHolder.getAdapterPosition()).getSender();
                         call(otherContact);
                     }
-                });
+                });*/
 
                 /* User profile pic */
                 if (notificationList.get(position).getSenderPicture() == null ||
@@ -2160,13 +2160,13 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                             .into(mPostHolder.mProfile_pic);
                 }
 
-                mPostHolder.mCall.setOnClickListener(new View.OnClickListener() {
+                /*mPostHolder.mCall.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         String otherContact = notificationList.get(mPostHolder.getAdapterPosition()).getSender();
                         call(otherContact);
                     }
-                });
+                });*/
                 
                 /* Like & Unlike Functionality */
 
@@ -2251,13 +2251,13 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                             .into(mSearchHolder.mUserPic);
                 }
 
-                mSearchHolder.mCall.setOnClickListener(new View.OnClickListener() {
+                /*mSearchHolder.mCall.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         String otherContact = notificationList.get(mSearchHolder.getAdapterPosition()).getSender();
                         call(otherContact);
                     }
-                });
+                });*/
                 
                 /* Like & Unlike Functionality */
 
@@ -2768,13 +2768,13 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                             .into(mUpVehicleHolder.mVehicleImage);
                 }
 
-                mUpVehicleHolder.mCall.setOnClickListener(new View.OnClickListener() {
+               /* mUpVehicleHolder.mCall.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         String otherContact = notificationList.get(mUpVehicleHolder.getAdapterPosition()).getUpVehicleContact();
                         call(otherContact);
                     }
-                });
+                });*/
 
         /* Like & Unlike Functionality */
 

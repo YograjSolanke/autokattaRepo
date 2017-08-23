@@ -333,7 +333,7 @@
                 android:layout_toEndOf="@+id/re"
                 android:layout_toStartOf="@id/rlShare">
 
-                <ImageButton
+                <!--<ImageButton
                     android:id="@+id/call"
                     style="?android:attr/borderlessButtonStyle"
                     android:layout_width="@dimen/cards_button_width"
@@ -342,7 +342,7 @@
                     android:layout_marginEnd="@dimen/text_margin_top"
                     android:contentDescription="@string/app_name"
                     android:tint="@color/button_grey"
-                    app:srcCompat="@android:drawable/ic_menu_call" />
+                    app:srcCompat="@android:drawable/ic_menu_call" />-->
 
                 <ImageButton
                     android:id="@+id/like"
@@ -350,7 +350,7 @@
                     android:layout_width="@dimen/cards_button_width"
                     android:layout_height="@dimen/cards_button_height"
                     android:layout_marginEnd="@dimen/text_margin_top"
-                    android:layout_toStartOf="@id/call"
+                    android:layout_alignParentEnd="true"
                     android:contentDescription="@string/app_name"
                     android:tint="@color/button_grey"
                     android:visibility="gone"
@@ -362,7 +362,7 @@
                     android:layout_width="@dimen/cards_button_width"
                     android:layout_height="@dimen/cards_button_height"
                     android:layout_marginEnd="@dimen/text_margin_top"
-                    android:layout_toStartOf="@id/call"
+                    android:layout_alignParentEnd="true"
                     android:contentDescription="@string/app_name"
                     android:tint="@color/button_grey"
                     app:srcCompat="@mipmap/ic_like" />

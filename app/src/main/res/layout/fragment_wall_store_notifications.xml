@@ -409,7 +409,7 @@
                 android:layout_below="@+id/view3"
                 android:layout_toStartOf="@id/rlShare">
 
-                <LinearLayout
+                <!--<LinearLayout
                     android:id="@+id/llCall"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -424,15 +424,14 @@
                         android:contentDescription="@string/app_name"
                         android:tint="@color/button_grey"
                         app:srcCompat="@android:drawable/ic_menu_call" />
-                </LinearLayout>
+                </LinearLayout>-->
 
                 <LinearLayout
                     android:id="@+id/llLike"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/text_margin_top"
-                    android:layout_marginStart="@dimen/card_margin"
-                    android:layout_toEndOf="@+id/llCall">
+                    android:layout_marginStart="@dimen/card_margin">
 
                     <ImageButton
                         android:id="@+id/like"
