@@ -212,13 +212,7 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
                         mSetFuel.setAdapter(dataAdapter);
                     }
 
-                    if (Category.equalsIgnoreCase("Bus")) {
-
-                        autoBodymanufacturer.setVisibility(View.VISIBLE);
-                        autoSeatmanufacturer.setVisibility(View.VISIBLE);
-
-                        getBodyAndSeatManufacturer();
-                    } else if (Category.equalsIgnoreCase("Tractor") || Category.equalsIgnoreCase("Construction Equipment") ||
+                     /*else if (Category.equalsIgnoreCase("Tractor") || Category.equalsIgnoreCase("Construction Equipment") ||
                             Category.equalsIgnoreCase("2 Wheeler")) {
 
                         mEmissionSpinner.setVisibility(View.GONE);
@@ -234,12 +228,14 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
                             mPermitSpinner.setVisibility(View.GONE);
                             mFitnessSpinner.setVisibility(View.GONE);
                         }
-                    } else if (Category.equalsIgnoreCase("tractor")) {
+                    } else if (Category.equalsIgnoreCase("Tractor")) {
 
                         mPermitSpinner.setVisibility(View.GONE);
                         mFitnessSpinner.setVisibility(View.GONE);
                         relInsurance.setVisibility(View.GONE);
-                    } else if (Category.equalsIgnoreCase("Construction Equipment")) {
+
+
+                    }else if (Category.equalsIgnoreCase("Construction Equipment")) {
 
                         String RCInvoiceText = "";
                         if (subCategory.equals("Excavator") || subCategory.equals("Skid Steers") || subCategory.equals("Crawlers")
@@ -265,19 +261,14 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
                             mRcSpinner.setAdapter(dataAdapter1);
                         }
 
-                    }
+                    }*/
 
+                    if (Category.equalsIgnoreCase("Bus")) {
 
-                    /*car Fragment
+                        autoBodymanufacturer.setVisibility(View.VISIBLE);
+                        autoSeatmanufacturer.setVisibility(View.VISIBLE);
+                        getBodyAndSeatManufacturer();
 
-                     */
-
-                    else if (Category.equalsIgnoreCase("3 Wheeler")) {
-                        edtTyreContext.setVisibility(View.VISIBLE);
-                        edtApptext.setVisibility(View.VISIBLE);
-
-                        // seatrow.setVisibility(View.VISIBLE);
-                    } else if (Category.equalsIgnoreCase("Bus")) {
                         mBustypeSpinner.setVisibility(View.VISIBLE);
                         mAircondSpinner.setVisibility(View.VISIBLE);
                         edtSeatCap.setVisibility(View.VISIBLE);
@@ -285,39 +276,78 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
                         mDriveSpinner.setVisibility(View.VISIBLE);
                         mTransmissionSpinner.setVisibility(View.VISIBLE);
 
-                    } else if (Category.equalsIgnoreCase("2 Wheeler")) {
-                        edtTyreContext.setVisibility(View.GONE);
-
-                    } else if (Category.equalsIgnoreCase("Tractor")) {
-                        edtTyreContext.setVisibility(View.VISIBLE);
-                        mImplementSpinner.setVisibility(View.VISIBLE);
-                        edtApptext.setVisibility(View.VISIBLE);
-                        edtSetHpcapa.setVisibility(View.VISIBLE);
-                        mDriveSpinner.setVisibility(View.VISIBLE);
-                        mTransmissionSpinner.setVisibility(View.GONE);
-
+                    /*23-8-17*/
+                        mImplementSpinner.setVisibility(View.GONE);
+                        edtSetHpcapa.setVisibility(View.GONE);
+                        edtSetJib.setVisibility(View.GONE);
+                        edtSetBoon.setVisibility(View.GONE);
+                        mEmissionSpinner.setVisibility(View.VISIBLE);
                     } else if (Category.equalsIgnoreCase("Car")) {
-                        edtTyreContext.setVisibility(View.VISIBLE);
+                        //edtTyreContext.setVisibility(View.VISIBLE);
                         mTransmissionSpinner.setVisibility(View.VISIBLE);
                         edtSeatCap.setVisibility(View.VISIBLE);
                         mDriveSpinner.setVisibility(View.VISIBLE);
                         mTransmissionSpinner.setVisibility(View.VISIBLE);
                         mAircondSpinner.setVisibility(View.VISIBLE);
 
-                    } else if (Category.equalsIgnoreCase("Commercial Vehicle")) {
-                        edtTyreContext.setVisibility(View.GONE);
-                        edtBody.setVisibility(View.VISIBLE);
-                        mAircondSpinner.setVisibility(View.VISIBLE);
-                        mDriveSpinner.setVisibility(View.VISIBLE);
-                        mTransmissionSpinner.setVisibility(View.VISIBLE);
+                    /*23-8-17*/
+                        mBustypeSpinner.setVisibility(View.GONE);
+                        edtSetBoon.setVisibility(View.GONE);
+                        edtSetJib.setVisibility(View.GONE);
+                        edtSetHpcapa.setVisibility(View.GONE);
+                        edtApptext.setVisibility(View.GONE);
+                        mImplementSpinner.setVisibility(View.GONE);
+                        mInvoiceSpinner.setVisibility(View.GONE);
+                        mEmissionSpinner.setVisibility(View.VISIBLE);
+                        edtTyreContext.setVisibility(View.VISIBLE);
 
+                        if (permit.equalsIgnoreCase("Private")) {
+                            mTaxValidSpinner.setVisibility(View.GONE);
+                            mPermitSpinner.setVisibility(View.GONE);
+                            mFitnessSpinner.setVisibility(View.GONE);
+                        }
                     } else if (Category.equalsIgnoreCase("Construction Equipment")) {
                         String RCInvoiceText;
                         edtTyreContext.setVisibility(View.GONE);
                         mInvoiceSpinner.setVisibility(View.VISIBLE);
                         edtSetHpcapa.setVisibility(View.VISIBLE);
 
+                    /*23-8-17*/
+                        mBustypeSpinner.setVisibility(View.GONE);
+                        edtSetBoon.setVisibility(View.GONE);
+                        edtSetJib.setVisibility(View.GONE);
+                        edtSetHpcapa.setVisibility(View.GONE);
+                        mImplementSpinner.setVisibility(View.GONE);
+                        edtTyreContext.setVisibility(View.GONE);
 
+                        mEmissionSpinner.setVisibility(View.GONE);
+
+                /* RC Text */
+                        String RCText = "";
+                        if (subCategory.equals("Excavator") || subCategory.equals("Skid Steers") || subCategory.equals("Crawlers")
+                                || subCategory.equals("Dozer") || subCategory.equals("Concrete Mixers") || subCategory.equals("Road Rollers")
+                                || subCategory.equals("Milling Equipment") || subCategory.equals("Trenches")) {
+                            // tax.setVisibility(View.GONE);
+                            mHypoSpinner.setVisibility(View.GONE);
+                            mPermitSpinner.setVisibility(View.GONE);
+                            mFitnessSpinner.setVisibility(View.GONE);
+                            RCText = "-Select Invoice Available-";
+                        } else
+                            RCText = "-Select RC Available-";
+
+                        List<String> RcList = new ArrayList<>();
+                        RcList.add(RCText);
+                        RcList.add("Yes");
+                        RcList.add("No");
+
+                        if (getActivity() != null) {
+                            final ArrayAdapter<String> dataAdapter1 = new ArrayAdapter<>(getActivity(),
+                                    android.R.layout.simple_spinner_item, RcList);
+                            dataAdapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                            mRcSpinner.setAdapter(dataAdapter1);
+                        }
+
+                /* RC Invoice */
                         if (subCategory.equals("Excavator") || subCategory.equals("Skid Steers") || subCategory.equals("Crawlers")
                                 || subCategory.equals("Dozer") || subCategory.equals("Concrete Mixers") || subCategory.equals("Road Rollers")
                                 || subCategory.equals("Milling Equipment") || subCategory.equals("Trenches")) {
@@ -363,6 +393,79 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
 //                            else
 //                                invoicespinner.setSelection(2);
 //                        }
+
+                    } else if (Category.equalsIgnoreCase("Commercial Vehicle")) {
+                        edtTyreContext.setVisibility(View.GONE);
+                        edtBody.setVisibility(View.VISIBLE);
+                        mAircondSpinner.setVisibility(View.VISIBLE);
+                        mDriveSpinner.setVisibility(View.VISIBLE);
+                        mTransmissionSpinner.setVisibility(View.VISIBLE);
+
+                    /*23-8-17*/
+                        mBustypeSpinner.setVisibility(View.GONE);
+                        mInvoiceSpinner.setVisibility(View.GONE);
+                        mImplementSpinner.setVisibility(View.GONE);
+                        edtSeatCap.setVisibility(View.GONE);
+                        edtSetHpcapa.setVisibility(View.GONE);
+                        edtSetJib.setVisibility(View.GONE);
+                        edtSetBoon.setVisibility(View.GONE);
+                        edtTyreContext.setVisibility(View.VISIBLE);
+                    } else if (Category.equalsIgnoreCase("Tractor")) {
+                        edtTyreContext.setVisibility(View.VISIBLE);
+                        mImplementSpinner.setVisibility(View.VISIBLE);
+                        edtApptext.setVisibility(View.VISIBLE);
+                        edtSetHpcapa.setVisibility(View.VISIBLE);
+                        mDriveSpinner.setVisibility(View.VISIBLE);
+                        mTransmissionSpinner.setVisibility(View.GONE);
+
+                    /*23-8-17*/
+                        mBustypeSpinner.setVisibility(View.GONE);
+                        edtSetJib.setVisibility(View.GONE);
+                        edtSetBoon.setVisibility(View.GONE);
+                        edtSeatCap.setVisibility(View.GONE);
+
+                        mPermitSpinner.setVisibility(View.GONE);
+                        mFitnessSpinner.setVisibility(View.GONE);
+                        relInsurance.setVisibility(View.GONE);
+
+                        mEmissionSpinner.setVisibility(View.GONE);
+
+                    } else if (Category.equalsIgnoreCase("2 Wheeler")) {
+                        //edtTyreContext.setVisibility(View.GONE);
+
+                    /*23-8-17*/
+                        mBustypeSpinner.setVisibility(View.GONE);
+                        edtSetBoon.setVisibility(View.GONE);
+                        edtSetJib.setVisibility(View.GONE);
+                        edtSetHpcapa.setVisibility(View.GONE);
+                        edtApptext.setVisibility(View.GONE);
+                        mImplementSpinner.setVisibility(View.GONE);
+                        mInvoiceSpinner.setVisibility(View.GONE);
+                        edtTyreContext.setVisibility(View.VISIBLE);
+
+                        mEmissionSpinner.setVisibility(View.GONE);
+                        mTaxValidSpinner.setVisibility(View.GONE);
+                        mPermitSpinner.setVisibility(View.GONE);
+                        mFitnessSpinner.setVisibility(View.GONE);
+
+                    } else if (Category.equalsIgnoreCase("3 Wheeler")) {
+                        /*edtTyreContext.setVisibility(View.VISIBLE);
+                        edtApptext.setVisibility(View.VISIBLE);*/
+
+                    /*23-8-17*/
+                        mBustypeSpinner.setVisibility(View.GONE);
+                        edtSetBoon.setVisibility(View.GONE);
+                        edtSetJib.setVisibility(View.GONE);
+                        edtSetHpcapa.setVisibility(View.GONE);
+                        mImplementSpinner.setVisibility(View.GONE);
+                        mInvoiceSpinner.setVisibility(View.GONE);
+                        edtTyreContext.setVisibility(View.VISIBLE);
+                        mEmissionSpinner.setVisibility(View.VISIBLE);
+                        edtApptext.setVisibility(View.VISIBLE);
+                        // seatrow.setVisibility(View.VISIBLE);
+                        mTaxValidSpinner.setVisibility(View.GONE);
+                        mPermitSpinner.setVisibility(View.GONE);
+                        mFitnessSpinner.setVisibility(View.GONE);
 
                     } else if (Category.equalsIgnoreCase("Cranes")) {
                         edtTyreContext.setVisibility(View.VISIBLE);

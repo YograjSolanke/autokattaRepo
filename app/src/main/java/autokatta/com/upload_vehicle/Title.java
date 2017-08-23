@@ -305,15 +305,6 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                         exchangests = "No";
                     }
 
-                    String permit = "";
-                    if (category.equalsIgnoreCase("Car")) {
-
-                        if (mTouristPassing.isChecked())
-                            permit = "Tourist Passing";
-                        if (mPrivatePassing.isChecked())
-                            permit = "Private Passing";
-                    }
-
                     /*
                     Sub type Fragment
                      */
@@ -321,23 +312,36 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                         linearPermit.setVisibility(View.GONE);
                     }*/
 
-                    /*
-                    Brand Fragment...
-                     */
-                    else if (category.equalsIgnoreCase("construction Equipment"))
+                    String permit = "";
+                    if (category.equalsIgnoreCase("Car")) {
+
+                        if (mTouristPassing.isChecked())
+                            permit = "Tourist Passing";
+                        if (mPrivatePassing.isChecked())
+                            permit = "Private Passing";
+                /*23-8-17*/
+                        mKms.setVisibility(View.VISIBLE);
+                        mHrs.setVisibility(View.GONE);
+                        mPumpSpinner.setVisibility(View.GONE);
+                    } else if (category.equalsIgnoreCase("construction Equipment")) {
                         mVersionSpinner.setVisibility(View.GONE);
 
-                    /*
-                    Kms fragment
-                     */
-                    else if (category.equalsIgnoreCase("Construction Equipment") || category.equalsIgnoreCase("Cranes")) {
+                    /*23-8-17*/
+                        mKms.setVisibility(View.GONE);
+                        mHrs.setVisibility(View.VISIBLE);
+                        mPumpSpinner.setVisibility(View.GONE);
+                        mBreakSpinner.setVisibility(View.GONE);
+                        mStaringSpinner.setVisibility(View.GONE);
+                    }
+
+                    /*23-8-17*/
+                    else if (category.equalsIgnoreCase("Cranes")) {
                         mKms.setVisibility(View.GONE);
                         mHrs.setVisibility(View.VISIBLE);
                         mPumpSpinner.setVisibility(View.GONE);
                         mBreakSpinner.setVisibility(View.GONE);
                         mStaringSpinner.setVisibility(View.GONE);
                         //note.setText("In Hrs");
-
                     } else if (category.equalsIgnoreCase("Tractor")) {
                         mKms.setVisibility(View.GONE);
                         mHrs.setVisibility(View.VISIBLE);
@@ -345,6 +349,9 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                         mBreakSpinner.setVisibility(View.VISIBLE);
                         mStaringSpinner.setVisibility(View.VISIBLE);
                         //note.setText("In Hrs");
+
+                    /*23-8-17*/
+                        linearPermit.setVisibility(View.GONE);
                     } else {
                         mKms.setVisibility(View.VISIBLE);
                         mHrs.setVisibility(View.GONE);
@@ -355,6 +362,16 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                         //note.setText("In Kms");
 
                     }
+
+                    /*else if (category.equalsIgnoreCase("Construction Equipment") || category.equalsIgnoreCase("Cranes")) {
+                        mKms.setVisibility(View.GONE);
+                        mHrs.setVisibility(View.VISIBLE);
+                        mPumpSpinner.setVisibility(View.GONE);
+                        mBreakSpinner.setVisibility(View.GONE);
+                        mStaringSpinner.setVisibility(View.GONE);
+                        //note.setText("In Hrs");
+
+                    }*/
                     /*
                     Staring Spinner
                      */
@@ -764,12 +781,12 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
 
                                                 String edbrand = input.getText().toString();
 
-                                                if (edbrand.equals(""))
+                                                if (edbrand.equals("")) {
                                                     if (isAdded())
                                                         CustomToast.customToast(getActivity(), "Please enter brand");
-
-                                                else
+                                                } else {
                                                     AddBrand("Brand", edbrand, categoryId, subcategoryId);
+                                                }
 
                                                 dialog.dismiss();
                                             }
@@ -848,11 +865,12 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
 
                                                 String edmodel = input.getText().toString();
 
-                                                if (edmodel.equals(""))
+                                                if (edmodel.equals("")) {
                                                     if (isAdded())
                                                         CustomToast.customToast(getActivity(), "Please enter model");
-                                                else
+                                                } else {
                                                     AddModel("Model", edmodel, categoryId, subcategoryId, brandId);
+                                                }
 
                                                 dialog.dismiss();
                                             }
@@ -1008,11 +1026,12 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
 
                                                 String otherBreak = input.getText().toString();
 
-                                                if (otherBreak.equals(""))
+                                                if (otherBreak.equals("")) {
                                                     if (isAdded())
                                                         CustomToast.customToast(getActivity(), "Please enter Brake type");
-                                                else
+                                                } else {
                                                     addOtherBreak(otherBreak);
+                                                }
 
 
                                                 dialog.dismiss();
@@ -1086,11 +1105,12 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
 
                                                 String otherPump = input.getText().toString();
 
-                                                if (otherPump.equals(""))
+                                                if (otherPump.equals("")) {
                                                     if (isAdded())
                                                         CustomToast.customToast(getActivity(), "Please enter Brake type");
-                                                else
+                                                } else {
                                                     addOtherPump(otherPump);
+                                                }
 
 
                                                 dialog.dismiss();

@@ -15,7 +15,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.net.ConnectException;
 import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -454,28 +456,34 @@ public class UpComingFragment extends Fragment implements RequestNotifier {
                     mAdapter.notifyDataSetChanged();
                 }
             } else {
-                CustomToast.customToast(getActivity(), getString(R.string._404));
-                /*Snackbar.make(mLive.findViewById(R.id.activity_autokatta_main),"No Internet", Snackbar.LENGTH_LONG)
-                        .setAction("Go Online", null).show();*/
-                /*nackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();*/
+                if (isAdded())
+                    CustomToast.customToast(getActivity(), getString(R.string._404));
             }
         } else {
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string.no_response));
         }
     }
 
     @Override
     public void notifyError(Throwable error) {
         if (error instanceof SocketTimeoutException) {
-            CustomToast.customToast(getActivity(), getString(R.string._404));
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string.no_response));
+        } else if (error instanceof ConnectException) {
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string.no_internet));
+        } else if (error instanceof UnknownHostException) {
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         } else {
             Log.i("Check Class-", "Upcoming Fragment");
-            error.printStackTrace();
         }
     }
 

@@ -41,6 +41,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
@@ -132,7 +133,7 @@ public class AuctionNotificationAdapter extends RecyclerView.Adapter<AuctionNoti
     }
 
     @Override
-    public void onBindViewHolder(final AuctionNotificationAdapter.MyViewHolder holder, final int position) {
+    public void onBindViewHolder(final AuctionNotificationAdapter.MyViewHolder holder, int position) {
         mHolderViewCopy = holder;
         auction_id = mItemList.get(position).getAuctionId();
         loan_id = mItemList.get(position).getLoan_id();
@@ -161,7 +162,7 @@ public class AuctionNotificationAdapter extends RecyclerView.Adapter<AuctionNoti
         /*
         Timer...
          */
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
         try {
             Date futureDate = dateFormat.parse(mItemList.get(position).getEndDateTime());
             Date currentDate = dateFormat.parse(mItemList.get(position).getEndDateTime());
@@ -197,7 +198,10 @@ public class AuctionNotificationAdapter extends RecyclerView.Adapter<AuctionNoti
                     if (millisUntilFinished > DateUtils.SECOND_IN_MILLIS) {
                         seconds = (int) (millisUntilFinished / DateUtils.SECOND_IN_MILLIS);
                     }
-                    sDate += " " + String.format("%02d", hours) + ":" + String.format("%02d", minutes) + ":" + String.format("%02d", seconds);
+                    sDate += " " + String.format(Locale.getDefault(), "%02d", hours) + ":" +
+                            String.format(Locale.getDefault(), "%02d", minutes) + ":" +
+                            String.format(Locale.getDefault(), "%02d", seconds);
+
                     tv.setText(sDate.trim());
                 }
 
@@ -214,7 +218,7 @@ public class AuctionNotificationAdapter extends RecyclerView.Adapter<AuctionNoti
             e.printStackTrace();
         }
 
-        if (auctionType.equals("Upcoming")) {
+        if (auctionType.equalsIgnoreCase("Upcoming")) {
             holder.mTimer.setVisibility(View.GONE);
             holder.mStamp.setVisibility(View.VISIBLE);
             holder.mStamp.setImageResource(R.mipmap.upcomingstamp);
@@ -233,26 +237,7 @@ public class AuctionNotificationAdapter extends RecyclerView.Adapter<AuctionNoti
         holder.mSpecialClauses.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*final android.app.AlertDialog.Builder alertDialog = new android.app.AlertDialog.Builder(mActivity);
-                alertDialog.setTitle("Special Clauses");
 
-                final TextView input = new TextView(mActivity);
-                input.setText(special_clause.replaceAll(",", "\n"));
-
-                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.MATCH_PARENT,
-                        LinearLayout.LayoutParams.MATCH_PARENT);
-                input.setLayoutParams(lp);
-                alertDialog.setView(input);
-
-                alertDialog.setNeutralButton("cancel",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.cancel();
-                            }
-                        });
-
-                alertDialog.show();*/
                 android.support.v7.app.AlertDialog dialog = new android.support.v7.app.AlertDialog.Builder(mActivity)
                         .setTitle("Special Clauses")
                         .setMessage("YOUR_MSG")
@@ -288,17 +273,17 @@ public class AuctionNotificationAdapter extends RecyclerView.Adapter<AuctionNoti
         });
 
         //preview...
-        if (mItemList.get(position).getKeyWord().equals("auction")) {
+        if (mItemList.get(position).getKeyWord().equalsIgnoreCase("auction")) {
             holder.mAuctionGoing.setVisibility(View.GONE);
         } else {
-            holder.mAuctionPreview.setVisibility(View.GONE);
+            //holder.mAuctionPreview.setVisibility(View.GONE);
             holder.profilenamerel1.setVisibility(View.GONE);
             holder.profilenamerel2.setVisibility(View.GONE);
             holder.Rl_auction_category.setVisibility(View.GONE);
             holder.mSpecialClauses.setVisibility(View.GONE);
             holder.closeopentxt.setVisibility(View.GONE);
 
-            if (!auctionType.equals("Live"))
+            if (!auctionType.equalsIgnoreCase("Live"))
                 holder.mAuctionGoing.setVisibility(View.GONE);
             else
                 holder.mAuctionGoing.setVisibility(View.VISIBLE);
@@ -308,32 +293,32 @@ public class AuctionNotificationAdapter extends RecyclerView.Adapter<AuctionNoti
         /*
         Set title...
          */
-        if (mItemList.get(position).getKeyWord().equals("sale")) {
+        if (mItemList.get(position).getKeyWord().equalsIgnoreCase("sale")) {
             holder.title.setText("Sale Title");
             holder.mShare.setVisibility(View.GONE);
-            if (auctionType.equals("Live") && mItemList.get(position).getIgnoreGoingStatus().equals("going")) {
+            if (auctionType.equalsIgnoreCase("Live") && mItemList.get(position).getIgnoreGoingStatus().equalsIgnoreCase("going")) {
                 holder.mAuctionGoing.setVisibility(View.GONE);
             } /*else
                 holder.mAuctionGoing.setVisibility(View.VISIBLE);*/
 
-        } else if (mItemList.get(position).getKeyWord().equals("loan")) {
+        } else if (mItemList.get(position).getKeyWord().equalsIgnoreCase("loan")) {
             holder.title.setText("Loan Title");
-            if (auctionType.equals("Live") && mItemList.get(position).getIgnoreGoingStatus().equals("going")) {
+            if (auctionType.equalsIgnoreCase("Live") && mItemList.get(position).getIgnoreGoingStatus().equalsIgnoreCase("going")) {
                 holder.mAuctionGoing.setVisibility(View.GONE);
             } /*else
                 holder.mAuctionGoing.setVisibility(View.VISIBLE);*/
 
-        } else if (mItemList.get(position).getKeyWord().equals("exchange")) {
+        } else if (mItemList.get(position).getKeyWord().equalsIgnoreCase("exchange")) {
             holder.title.setText("Exchange Title");
-            if (auctionType.equals("Live") && mItemList.get(position).getIgnoreGoingStatus().equals("going")) {
+            if (auctionType.equalsIgnoreCase("Live") && mItemList.get(position).getIgnoreGoingStatus().equalsIgnoreCase("going")) {
                 holder.mAuctionGoing.setVisibility(View.GONE);
             }/* else
                 holder.mAuctionGoing.setVisibility(View.VISIBLE);*/
 
-        } else if (mItemList.get(position).getKeyWord().equals("service")) {
+        } else if (mItemList.get(position).getKeyWord().equalsIgnoreCase("service")) {
             holder.title.setText("Service Title");
             holder.mShare.setVisibility(View.GONE);
-            if (auctionType.equals("Live") && mItemList.get(position).getIgnoreGoingStatus().equals("going")) {
+            if (auctionType.equalsIgnoreCase("Live") && mItemList.get(position).getIgnoreGoingStatus().equalsIgnoreCase("going")) {
                 holder.mAuctionGoing.setVisibility(View.GONE);
             } /*else
                 holder.mAuctionGoing.setVisibility(View.VISIBLE);*/
@@ -351,39 +336,43 @@ public class AuctionNotificationAdapter extends RecyclerView.Adapter<AuctionNoti
 
             @Override
             public void onClick(View v) {
-                bundle.putString("auctioneer", mItemList.get(position).getUsername());
-                bundle.putInt("auction_id", mItemList.get(position).getAuctionId());
-                bundle.putString("action_title", mItemList.get(position).getName());
-                bundle.putString("auction_startdate", mItemList.get(position).getStartDate());
-                bundle.putString("auction_starttime", mItemList.get(position).getStartTime());
-                bundle.putString("auction_enddate", mItemList.get(position).getEndDate());
-                bundle.putString("auction_endtime", mItemList.get(position).getEndTime());
-                bundle.putString("no_of_vehicles", mItemList.get(position).getNoOfVehicles());
-                bundle.putString("auction_type", mItemList.get(position).getAuctionType());
-                bundle.putString("auctioncontact", mItemList.get(position).getContact());
-                bundle.putString("ignoreGoingStatus", mItemList.get(position).getIgnoreGoingStatus());
-                bundle.putString("startDateTime", mItemList.get(position).getStartDateTime());
-                bundle.putString("endDateTime", mItemList.get(position).getEndDateTime());
-                bundle.putString("specialcluases", mItemList.get(position).getSpecialClauses());
-                bundle.putString("blackListStatus", mItemList.get(position).getBlackListStatus());
-                bundle.putString("openClose", mItemList.get(position).getOpenClose());
-                bundle.putString("showPrice", mItemList.get(position).getShowPrice());
-                bundle.putString("keyword", mItemList.get(position).getKeyWord());
-                bundle.putString("category", mItemList.get(position).getAuctionCategory());
-                bundle.putString("location", mItemList.get(position).getLocation());
+                if (mItemList.get(holder.getAdapterPosition()).getKeyWord().equalsIgnoreCase("auction")) {
+                    bundle.putString("auctioneer", mItemList.get(holder.getAdapterPosition()).getUsername());
+                    bundle.putInt("auction_id", mItemList.get(holder.getAdapterPosition()).getAuctionId());
+                    bundle.putString("action_title", mItemList.get(holder.getAdapterPosition()).getName());
+                    bundle.putString("auction_startdate", mItemList.get(holder.getAdapterPosition()).getStartDate());
+                    bundle.putString("auction_starttime", mItemList.get(holder.getAdapterPosition()).getStartTime());
+                    bundle.putString("auction_enddate", mItemList.get(holder.getAdapterPosition()).getEndDate());
+                    bundle.putString("auction_endtime", mItemList.get(holder.getAdapterPosition()).getEndTime());
+                    bundle.putString("no_of_vehicles", mItemList.get(holder.getAdapterPosition()).getNoOfVehicles());
+                    bundle.putString("auction_type", mItemList.get(holder.getAdapterPosition()).getAuctionType());
+                    bundle.putString("auctioncontact", mItemList.get(holder.getAdapterPosition()).getContact());
+                    bundle.putString("ignoreGoingStatus", mItemList.get(holder.getAdapterPosition()).getIgnoreGoingStatus());
+                    bundle.putString("startDateTime", mItemList.get(holder.getAdapterPosition()).getStartDateTime());
+                    bundle.putString("endDateTime", mItemList.get(holder.getAdapterPosition()).getEndDateTime());
+                    bundle.putString("specialcluases", mItemList.get(holder.getAdapterPosition()).getSpecialClauses());
+                    bundle.putString("blackListStatus", mItemList.get(holder.getAdapterPosition()).getBlackListStatus());
+                    bundle.putString("openClose", mItemList.get(holder.getAdapterPosition()).getOpenClose());
+                    bundle.putString("showPrice", mItemList.get(holder.getAdapterPosition()).getShowPrice());
+                    bundle.putString("keyword", mItemList.get(holder.getAdapterPosition()).getKeyWord());
+                    bundle.putString("category", mItemList.get(holder.getAdapterPosition()).getAuctionCategory());
+                    bundle.putString("location", mItemList.get(holder.getAdapterPosition()).getLocation());
 
-                if (auctionType.equals("Live")) {
-                    Intent intent = new Intent(mActivity, PreviewLiveEvents.class);
-                    intent.putExtras(bundle);
-                    mActivity.startActivity(intent);
-                } else if (auctionType.equals("Going")) {
-                    Intent intent = new Intent(mActivity, PreviewGoingEvents.class);
-                    intent.putExtras(bundle);
-                    mActivity.startActivity(intent);
-                } else if (auctionType.equals("Upcoming")) {
-                    Intent intent = new Intent(mActivity, PreviewUpcomingEvent.class);
-                    intent.putExtras(bundle);
-                    mActivity.startActivity(intent);
+                    if (auctionType.equalsIgnoreCase("Live")) {
+                        Intent intent = new Intent(mActivity, PreviewLiveEvents.class);
+                        intent.putExtras(bundle);
+                        mActivity.startActivity(intent);
+                    } else if (auctionType.equalsIgnoreCase("Going")) {
+                        Intent intent = new Intent(mActivity, PreviewGoingEvents.class);
+                        intent.putExtras(bundle);
+                        mActivity.startActivity(intent);
+                    } else if (auctionType.equalsIgnoreCase("Upcoming")) {
+                        Intent intent = new Intent(mActivity, PreviewUpcomingEvent.class);
+                        intent.putExtras(bundle);
+                        mActivity.startActivity(intent);
+                    }
+                } else {
+                    showDetails(mItemList.get(holder.getAdapterPosition()).getDetails());
                 }
             }
         });
@@ -392,9 +381,44 @@ public class AuctionNotificationAdapter extends RecyclerView.Adapter<AuctionNoti
         holder.mShare.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                shareButton(position);
+                shareButton(holder.getAdapterPosition());
             }
         });
+    }
+
+    private void showDetails(String details) {
+
+        android.support.v7.app.AlertDialog dialog = new android.support.v7.app.AlertDialog.Builder(mActivity)
+                .setTitle("Event Details")
+                .setMessage("YOUR_MSG")
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_info)
+                .show();
+        TextView textView = (TextView) dialog.findViewById(android.R.id.message);
+        //textView.setMaxLines(5);
+        if (textView != null) {
+            textView.setScroller(new Scroller(mActivity));
+            textView.setVerticalScrollBarEnabled(true);
+            textView.setText(details);
+            textView.setMovementMethod(new ScrollingMovementMethod());
+
+            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT);
+            lp.setMarginStart(30);
+            textView.setBackgroundColor(Color.WHITE);
+            textView.setLayoutParams(lp);
+            textView.setPadding(40, 40, 40, 40);
+            textView.setGravity(Gravity.CENTER_VERTICAL);
+            textView.setTextColor(Color.BLACK);
+            textView.setTextSize(20);
+
+            dialog.setView(textView);
+        }
     }
 
     public void cancelAllTimers() {
@@ -452,7 +476,7 @@ public class AuctionNotificationAdapter extends RecyclerView.Adapter<AuctionNoti
                                             public void onResponse(Call<String> call, Response<String> response) {
                                                 if (response.isSuccessful()) {
                                                     if (response.body() != null) {
-                                                        if (response.body().equals("success")) {
+                                                        if (response.body().equalsIgnoreCase("success")) {
                                                             Log.e("Success", "Going");
                                                             mHolderViewCopy.mAuctionGoing.setVisibility(View.GONE);
                                                         }
@@ -502,7 +526,7 @@ public class AuctionNotificationAdapter extends RecyclerView.Adapter<AuctionNoti
                                             public void onResponse(Call<String> call, Response<String> response) {
                                                 if (response.isSuccessful()) {
                                                     if (response.body() != null) {
-                                                        if (response.body().equals("success")) {
+                                                        if (response.body().equalsIgnoreCase("success")) {
                                                             Log.e("Success", "Later");
                                                             mHolderViewCopy.mAuctionGoing.setVisibility(View.GONE);
                                                         }
@@ -542,7 +566,7 @@ public class AuctionNotificationAdapter extends RecyclerView.Adapter<AuctionNoti
             public void onClick(DialogInterface dialog, int which) {
                 String imagename = "";
 
-                if (mItemList.get(position).getKeyWord().equals("auction")) {
+                if (mItemList.get(position).getKeyWord().equalsIgnoreCase("auction")) {
                     allDetails = mItemList.get(position).getName() + "="
                             + mItemList.get(position).getNoOfVehicles() + "="
                             + mItemList.get(position).getEndDate() + "=" +
@@ -560,7 +584,7 @@ public class AuctionNotificationAdapter extends RecyclerView.Adapter<AuctionNoti
                             putString("Share_keyword", mAuction).apply();
                 }
                 /* Loan */
-                else if (mItemList.get(position).getKeyWord().equals("loan")) {
+                else if (mItemList.get(position).getKeyWord().equalsIgnoreCase("loan")) {
 
                     if (mItemList.get(position).getImage().equalsIgnoreCase("") || mItemList.get(position).getImage().equalsIgnoreCase(null) ||
                             mItemList.get(position).getImage().equalsIgnoreCase("null")) {
@@ -591,7 +615,7 @@ public class AuctionNotificationAdapter extends RecyclerView.Adapter<AuctionNoti
                 }
 
                 /* exchange */
-                else if (mItemList.get(position).getKeyWord().equals("exchange")) {
+                else if (mItemList.get(position).getKeyWord().equalsIgnoreCase("exchange")) {
 
                     if (mItemList.get(position).getImage().equalsIgnoreCase("") || mItemList.get(position).getImage().equalsIgnoreCase(null) ||
                             mItemList.get(position).getImage().equalsIgnoreCase("null")) {
@@ -634,13 +658,13 @@ public class AuctionNotificationAdapter extends RecyclerView.Adapter<AuctionNoti
                 String imageFilePath = "", imagename = mActivity.getString(R.string.base_image_url) + "logo48x48.png";
                 Intent intent = new Intent(Intent.ACTION_SEND);
 
-                if (mContact.equals(mItemList.get(position).getContact()))
+                if (mContact.equalsIgnoreCase(mItemList.get(position).getContact()))
                     whoseAuction = "your";
                 else
                     //whoseAuction = "otherauction";
                     whoseAuction = mItemList.get(position).getUsername();
 
-                if (mItemList.get(position).getKeyWord().equals("auction")) {
+                if (mItemList.get(position).getKeyWord().equalsIgnoreCase("auction")) {
                     allDetails = "Auction Title: " + mItemList.get(position).getName() + "\n" +
                             "No Of Vehicle: " + mItemList.get(position).getNoOfVehicles() + "\n" +
                             "Auction End Date: " + mItemList.get(position).getEndDate() + "\n" +
@@ -650,7 +674,7 @@ public class AuctionNotificationAdapter extends RecyclerView.Adapter<AuctionNoti
                         "0" + "\n"+//auctionIgnorecount*/
                             "Auctioneer: " + whoseAuction;
 
-                } else if (mItemList.get(position).getKeyWord().equals("loan")) {
+                } else if (mItemList.get(position).getKeyWord().equalsIgnoreCase("loan")) {
 
                     if (mItemList.get(position).getImage().equalsIgnoreCase("") || mItemList.get(position).getImage().equalsIgnoreCase(null) ||
                             mItemList.get(position).getImage().equalsIgnoreCase("null")) {
@@ -668,7 +692,7 @@ public class AuctionNotificationAdapter extends RecyclerView.Adapter<AuctionNoti
                         "0" + "\n"+//auctionIgnorecount*/
                             "Loan Owner: " + whoseAuction;
 
-                } else if (mItemList.get(position).getKeyWord().equals("exchange")) {
+                } else if (mItemList.get(position).getKeyWord().equalsIgnoreCase("exchange")) {
 
                     if (mItemList.get(position).getImage().equalsIgnoreCase("") || mItemList.get(position).getImage().equalsIgnoreCase(null) ||
                             mItemList.get(position).getImage().equalsIgnoreCase("null")) {
@@ -687,17 +711,6 @@ public class AuctionNotificationAdapter extends RecyclerView.Adapter<AuctionNoti
                             "Exchange Owner: " + whoseAuction;
 
                 }
-
-
-                /*Intent intent = new Intent(Intent.ACTION_SEND);
-                intent.setType("text/plain");
-                intent.putExtra(Intent.EXTRA_SUBJECT, "Please Find Below Attachments");
-                intent.putExtra(Intent.EXTRA_TEXT, allDetails);
-                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                mActivity.startActivity(intent);
-                dialog.dismiss();
-*/
-
 
                 Log.e("TAG", "img : " + imagename);
 
@@ -739,11 +752,8 @@ public class AuctionNotificationAdapter extends RecyclerView.Adapter<AuctionNoti
      ***/
     private OkHttpClient.Builder initLog() {
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
-        // set your desired log level
         logging.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
-        // add your other interceptors …
-        // add logging as last interceptor
         httpClient.addInterceptor(logging).readTimeout(90, TimeUnit.SECONDS);
         return httpClient;
     }
