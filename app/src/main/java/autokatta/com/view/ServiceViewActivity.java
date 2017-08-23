@@ -135,7 +135,7 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
     final ArrayList<String> brandTags = new ArrayList<>();
     KProgressHUD hud;
     String tagpart = "", tagid = "";
-    String idlist = "";
+    String idlist = "", editMode = "";
     int service_id;
     boolean tagflag = false;
     ConnectionDetector mConnectionDetector;
@@ -218,9 +218,13 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
         submitfeedback.setOnClickListener(this);
         linearshare1.setOnClickListener(this);
         linearshare.setOnClickListener(this);
+        mUploadGroup.setOnClickListener(this);
 
 
         service_id = getIntent().getExtras().getInt("service_id");
+        editMode = getIntent().getExtras().getString("editmode", "");
+
+
         //service_id="115";
 
 
@@ -700,14 +704,31 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
                             servicetype.setText(stype);
                             multiautobrand.setText(brandtags_list);
 
-                            storename.setEnabled(false);
-                            website.setEnabled(false);
-                            servicename.setEnabled(false);
-                            serviceprice.setEnabled(false);
-                            servicedetails.setEnabled(false);
-                            servicetags.setEnabled(false);
-                            servicetype.setEnabled(false);
-                            multiautobrand.setEnabled(false);
+                            if (editMode.equalsIgnoreCase("yes")) {
+                                getTags();
+                                getBrandTags();
+                                servicename.setEnabled(true);
+                                serviceprice.setEnabled(true);
+                                servicedetails.setEnabled(true);
+                                servicetags.setEnabled(true);
+                                servicetype.setEnabled(true);
+                                servicetype.requestFocus();
+                                multiautobrand.setEnabled(true);
+                                spinnerlayout.setVisibility(View.VISIBLE);
+                                mLinearLayout.setVisibility(View.VISIBLE);
+                                check.setVisibility(View.VISIBLE);
+                                edit.setVisibility(View.GONE);
+                                deleteservice.setVisibility(View.GONE);
+                            } else {
+                                storename.setEnabled(false);
+                                website.setEnabled(false);
+                                servicename.setEnabled(false);
+                                serviceprice.setEnabled(false);
+                                servicedetails.setEnabled(false);
+                                servicetags.setEnabled(false);
+                                servicetype.setEnabled(false);
+                                multiautobrand.setEnabled(false);
+                            }
 
                             sliderLayout = (SliderLayout) findViewById(R.id.slider);
                             if (!simages.equals("") && !simages.equals("null") && simages != null) {
@@ -1199,6 +1220,17 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
                 }
                 if (srate != 0) {
                     sendupdatedproductrating();
+                }
+                break;
+
+
+            case R.id.upload_group:
+
+                try {
+                    getGroups();
+                    //mVehicleId = mMainList.get(position).getVehicleId();
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
                 break;
         }

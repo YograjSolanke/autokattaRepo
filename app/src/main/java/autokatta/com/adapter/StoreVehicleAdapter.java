@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -117,6 +118,7 @@ public class StoreVehicleAdapter extends RecyclerView.Adapter<StoreVehicleAdapte
             holder.delete.setVisibility(View.GONE);
             holder.mEnquiry.setVisibility(View.GONE);
             holder.mQoutation.setVisibility(View.GONE);
+            holder.relativeleads.setVisibility(View.GONE);
         }
 
         //To set Date
@@ -438,6 +440,7 @@ public class StoreVehicleAdapter extends RecyclerView.Adapter<StoreVehicleAdapte
         TextView Year, Location, Rto, Kms, Regno;
         Button vehidetails, delete, mUploadGroup, mUploadStore, mEnquiry, mQoutation;
         LinearLayout mLinear;
+        RelativeLayout relativeleads;
 
         VehicleHolder(View itemView) {
             super(itemView);
@@ -465,6 +468,7 @@ public class StoreVehicleAdapter extends RecyclerView.Adapter<StoreVehicleAdapte
             Rto = (TextView) itemView.findViewById(R.id.RTO);
             Location = (TextView) itemView.findViewById(R.id.location);
             Regno = (TextView) itemView.findViewById(R.id.registrationNo);
+            relativeleads = (RelativeLayout) itemView.findViewById(R.id.relativeleads);
         }
     }
 

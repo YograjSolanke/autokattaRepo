@@ -44,6 +44,7 @@ public class StoreInfo extends Fragment implements RequestNotifier, View.OnClick
     int Store_id;
     ImageView editStore, addEnquiry;
     boolean hasView;
+    RelativeLayout adminContactLayout;
     NestedScrollView scrollView;
     RelativeLayout mRel;
     TextView storeName, storeLocation, storeWebsite, storeWorkDays, storeOpen, editbrandtags,
@@ -121,7 +122,9 @@ public class StoreInfo extends Fragment implements RequestNotifier, View.OnClick
                         if (StoreContact.contains(myContact)) {
                             editStore.setVisibility(View.VISIBLE);
                             addEnquiry.setVisibility(View.VISIBLE);
-                        }
+
+                        } else
+                            adminContactLayout.setVisibility(View.GONE);
                     }
                 } else {
 
@@ -217,6 +220,7 @@ public class StoreInfo extends Fragment implements RequestNotifier, View.OnClick
                 scrollView = (NestedScrollView) mAbout.findViewById(R.id.mainScroll);
                 adminContacts = (TextView) mAbout.findViewById(R.id.editAdminContact);
                 editbrandtags = (TextView) mAbout.findViewById(R.id.editbrandtags);
+                adminContactLayout = (RelativeLayout) mAbout.findViewById(R.id.linear14);
 
                 Bundle b = getArguments();
                 Store_id = b.getInt("store_id");

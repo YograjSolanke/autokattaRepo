@@ -89,7 +89,7 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
     final List<String> spnid = new ArrayList<>();
     final List<String> tagname = new ArrayList<>();
 
-    String imagename = "", reviewstring = "", pimagename = "", brandtagpart = "", finalbrandtags = "";
+    String imagename = "", reviewstring = "", editMode = "", brandtagpart = "", finalbrandtags = "";
 
     int lcnt;
     LinearLayout linearlike, linearshare, linearshare1, linearunlike, linearreview;
@@ -216,8 +216,10 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
         linearshare1.setOnClickListener(this);
         linearshare.setOnClickListener(this);
         seellreview.setOnClickListener(this);
+        mUploadGroup.setOnClickListener(this);
 
         product_id = getIntent().getExtras().getInt("product_id");
+        editMode = getIntent().getExtras().getString("editmode", "");
 
         System.out.println("hiiiiiii=" + product_id);
 
@@ -569,14 +571,37 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                             producttype.setText(ptype);
                             multiautobrand.setText(brandtags_list);
 
-                            storename.setEnabled(false);
-                            website.setEnabled(false);
-                            productname.setEnabled(false);
-                            productprice.setEnabled(false);
-                            productdetails.setEnabled(false);
-                            producttags.setEnabled(false);
-                            producttype.setEnabled(false);
-                            multiautobrand.setEnabled(false);
+
+                            if (editMode.equalsIgnoreCase("yes")) {
+
+                                try {
+                                    getTags();
+                                    getBrandTags();
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                                productname.setEnabled(true);
+                                productprice.setEnabled(true);
+                                productdetails.setEnabled(true);
+                                producttags.setEnabled(true);
+                                producttype.setEnabled(true);
+                                producttype.requestFocus();
+                                multiautobrand.setEnabled(true);
+                                spinnerlayout.setVisibility(View.VISIBLE);
+                                mLinearLayout.setVisibility(View.VISIBLE);
+                                check.setVisibility(View.VISIBLE);
+                                edit.setVisibility(View.GONE);
+                                deleteproduct.setVisibility(View.GONE);
+
+                            } else {
+                                productname.setEnabled(false);
+                                productprice.setEnabled(false);
+                                productdetails.setEnabled(false);
+                                producttags.setEnabled(false);
+                                producttype.setEnabled(false);
+                                multiautobrand.setEnabled(false);
+                            }
+
 
                             //like code
                             lcnt = Integer.parseInt(plikecnt);
@@ -1106,20 +1131,19 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                             fragmentTransaction.commit();*/
                 break;
 
+            case R.id.upload_group:
 
-        }
-
-        mUploadGroup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
                 try {
                     getGroups();
                     //mVehicleId = mMainList.get(position).getVehicleId();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-            }
-        });
+                break;
+
+
+        }
+
     }
 
     /*

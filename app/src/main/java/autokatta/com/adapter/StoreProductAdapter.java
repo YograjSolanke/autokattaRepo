@@ -80,6 +80,8 @@ public class StoreProductAdapter extends RecyclerView.Adapter<StoreProductAdapte
 
         if (myContact.equals(product.getStorecontact())) {
             holder.deleteproduct.setVisibility(View.VISIBLE);
+        } else {
+            holder.editdetails.setVisibility(View.GONE);
         }
 
         holder.pname.setEnabled(false);
@@ -122,13 +124,25 @@ public class StoreProductAdapter extends RecyclerView.Adapter<StoreProductAdapte
 
         }
 
-        holder.mCardView.setOnClickListener(new View.OnClickListener() {
+        holder.viewdetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 ActivityOptions options = ActivityOptions.makeCustomAnimation(activity, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
                 int proId = product.getProductId();
                 Intent intent = new Intent(activity, ProductViewActivity.class);
                 intent.putExtra("product_id", proId);
+                activity.startActivity(intent, options.toBundle());
+            }
+        });
+
+        holder.editdetails.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ActivityOptions options = ActivityOptions.makeCustomAnimation(activity, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
+                int proId = product.getProductId();
+                Intent intent = new Intent(activity, ProductViewActivity.class);
+                intent.putExtra("product_id", proId);
+                intent.putExtra("editmode", "yes");
                 activity.startActivity(intent, options.toBundle());
             }
         });
@@ -207,7 +221,7 @@ public class StoreProductAdapter extends RecyclerView.Adapter<StoreProductAdapte
     class ProductHolder extends RecyclerView.ViewHolder {
         TextView pname, pprice, pdetails, ptype, ptags, pCategoey;
         ImageView image, deleteproduct;
-        Button viewdetails, sviewdetails, vehidetails;
+        Button viewdetails, editdetails;
         RatingBar productrating;
         CardView mCardView;
 
@@ -219,7 +233,8 @@ public class StoreProductAdapter extends RecyclerView.Adapter<StoreProductAdapte
             ptags = (TextView) itemView.findViewById(R.id.edittags);
             pCategoey = (TextView) itemView.findViewById(R.id.editCategory);
             ptype = (TextView) itemView.findViewById(R.id.editproducttype);
-            viewdetails = (Button) itemView.findViewById(R.id.btnviewdetails);
+            viewdetails = (Button) itemView.findViewById(R.id.btnView);
+            editdetails = (Button) itemView.findViewById(R.id.btnEdit);
             image = (ImageView) itemView.findViewById(R.id.profile);
             productrating = (RatingBar) itemView.findViewById(R.id.productrating);
             deleteproduct = (ImageView) itemView.findViewById(R.id.deleteproduct);

@@ -3,7 +3,6 @@ package autokatta.com.adapter;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -76,6 +75,8 @@ public class StoreServiceAdapter extends RecyclerView.Adapter<StoreServiceAdapte
 
         if (myContact.equals(service.getStorecontact())) {
             holder.deleteproduct.setVisibility(View.VISIBLE);
+        } else {
+            holder.editdetails.setVisibility(View.GONE);
         }
 
         holder.pname.setEnabled(false);
@@ -125,6 +126,18 @@ public class StoreServiceAdapter extends RecyclerView.Adapter<StoreServiceAdapte
                 activity.startActivity(intent);
             }
         });
+
+        holder.editdetails.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int serviceId = service.getServiceId();
+                Intent intent = new Intent(activity, ServiceViewActivity.class);
+                intent.putExtra("service_id", serviceId);
+                intent.putExtra("editmode", "yes");
+                activity.startActivity(intent);
+            }
+        });
+
 
         holder.deleteproduct.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -200,9 +213,9 @@ public class StoreServiceAdapter extends RecyclerView.Adapter<StoreServiceAdapte
     class ServiceHolder extends RecyclerView.ViewHolder {
         TextView pname, pprice, pdetails, ptype, ptags, pCategory;
         ImageView image, deleteproduct;
-        Button sviewdetails, vehidetails;
+        Button viewdetails, editdetails;
         RatingBar productrating;
-        CardView viewdetails;
+        // CardView viewdetails;
 
         ServiceHolder(View itemView) {
             super(itemView);
@@ -212,8 +225,8 @@ public class StoreServiceAdapter extends RecyclerView.Adapter<StoreServiceAdapte
             ptags = (TextView) itemView.findViewById(R.id.edittags);
             ptype = (TextView) itemView.findViewById(R.id.editproducttype);
             pCategory = (TextView) itemView.findViewById(R.id.editCategory);
-            viewdetails = (CardView) itemView.findViewById(R.id.card_view);
-            //  viewdetails = (Button) itemView.findViewById(R.id.btnviewdetails);
+            viewdetails = (Button) itemView.findViewById(R.id.btnView);
+            editdetails = (Button) itemView.findViewById(R.id.btnEdit);
             image = (ImageView) itemView.findViewById(R.id.profile);
             productrating = (RatingBar) itemView.findViewById(R.id.productrating);
             deleteproduct = (ImageView) itemView.findViewById(R.id.deleteproduct);
