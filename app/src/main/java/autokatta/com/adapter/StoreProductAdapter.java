@@ -4,11 +4,13 @@ import android.app.Activity;
 import android.app.ActivityOptions;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -30,6 +32,7 @@ import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.StoreInventoryResponse;
+import autokatta.com.view.AddManualEnquiry;
 import autokatta.com.view.ProductViewActivity;
 import jp.wasabeef.glide.transformations.CropSquareTransformation;
 import retrofit2.Response;
@@ -65,9 +68,9 @@ public class StoreProductAdapter extends RecyclerView.Adapter<StoreProductAdapte
     }
 
     @Override
-    public void onBindViewHolder(final StoreProductAdapter.ProductHolder holder, int position) {
+    public void onBindViewHolder(final StoreProductAdapter.ProductHolder holder, final int position) {
         mView = holder;
-        List<String> images = new ArrayList<String>();
+        final List<String> images = new ArrayList<String>();
         final StoreInventoryResponse.Success.Product product = mMainList.get(position);
         holder.pname.setText(product.getName());
         holder.pprice.setText(product.getPrice());
@@ -118,6 +121,34 @@ public class StoreProductAdapter extends RecyclerView.Adapter<StoreProductAdapte
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+         /*Manual Enquiry */
+        holder.mEnquiry.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ActivityOptions option = ActivityOptions.makeCustomAnimation(activity, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
+                Bundle b = new Bundle();
+                //    b.putString("sender",storeContact);
+                b.putString("sender","");
+                b.putString("sendername","");
+                b.putString("keyword", "Product");
+                b.putString("category", mMainList.get(position).getCategory());
+                b.putString("title", mMainList.get(position).getName());
+                b.putString("brand", mMainList.get(position).getBrandtags());
+                b.putString("model", "");
+                b.putString("price", mMainList.get(position).getPrice());
+                b.putString("image", images.get(0));
+                b.putInt("vehicleid", 0);
+                b.putString("classname", "storeproductadapter");
+
+                Intent intent = new Intent(activity, AddManualEnquiry.class);
+                intent.putExtras(b);
+                activity.startActivity(intent, option.toBundle());
+
+            }
+        });
+
+
         if (product.getProductrating() != null) {
             holder.productrating.setRating(Float.parseFloat(product.getProductrating()));
         } else {
@@ -220,7 +251,7 @@ public class StoreProductAdapter extends RecyclerView.Adapter<StoreProductAdapte
 
     class ProductHolder extends RecyclerView.ViewHolder {
         TextView pname, pprice, pdetails, ptype, ptags, pCategoey;
-        ImageView image, deleteproduct;
+        ImageView image, deleteproduct, mEnquiry;
         Button viewdetails, editdetails;
         RatingBar productrating;
         CardView mCardView;
@@ -238,6 +269,7 @@ public class StoreProductAdapter extends RecyclerView.Adapter<StoreProductAdapte
             image = (ImageView) itemView.findViewById(R.id.profile);
             productrating = (RatingBar) itemView.findViewById(R.id.productrating);
             deleteproduct = (ImageView) itemView.findViewById(R.id.deleteproduct);
+            mEnquiry = (ImageView) itemView.findViewById(R.id.enquiry);
             mCardView = (CardView) itemView.findViewById(R.id.card_view);
         }
     }

@@ -1,12 +1,15 @@
 package autokatta.com.adapter;
 
 import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -28,6 +31,7 @@ import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.StoreInventoryResponse;
+import autokatta.com.view.AddManualEnquiry;
 import autokatta.com.view.ServiceViewActivity;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import retrofit2.Response;
@@ -61,8 +65,8 @@ public class StoreServiceAdapter extends RecyclerView.Adapter<StoreServiceAdapte
     }
 
     @Override
-    public void onBindViewHolder(final StoreServiceAdapter.ServiceHolder holder, int position) {
-        List<String> images = new ArrayList<String>();
+    public void onBindViewHolder(final StoreServiceAdapter.ServiceHolder holder, final int position) {
+        final List<String> images = new ArrayList<String>();
         final StoreInventoryResponse.Success.Service service = mMainList.get(position);
         holder.pname.setText(service.getServiceName());
         holder.pprice.setText(service.getServicePrice());
@@ -113,6 +117,34 @@ public class StoreServiceAdapter extends RecyclerView.Adapter<StoreServiceAdapte
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+           /*Manual Enquiry */
+        holder.mEnquiry.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ActivityOptions option = ActivityOptions.makeCustomAnimation(activity, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
+                Bundle b = new Bundle();
+                //    b.putString("sender",storeContact);
+                b.putString("sender","");
+                b.putString("sendername","");
+                b.putString("keyword", "Service");
+                b.putString("category", mMainList.get(position).getServicecategory());
+                b.putString("title", mMainList.get(position).getServiceName());
+                b.putString("brand", mMainList.get(position).getBrandtags());
+                b.putString("model", "");
+                b.putString("price", mMainList.get(position).getServicePrice());
+                b.putString("image", images.get(0));
+                b.putInt("vehicleid", 0);
+                b.putString("classname", "storeserviceadapter");
+
+                Intent intent = new Intent(activity, AddManualEnquiry.class);
+                intent.putExtras(b);
+                activity.startActivity(intent, option.toBundle());
+
+            }
+        });
+
+
         if (service.getServicerating() != null) {
             holder.productrating.setRating(Float.parseFloat(service.getServicerating()));
         }
@@ -212,7 +244,7 @@ public class StoreServiceAdapter extends RecyclerView.Adapter<StoreServiceAdapte
 
     class ServiceHolder extends RecyclerView.ViewHolder {
         TextView pname, pprice, pdetails, ptype, ptags, pCategory;
-        ImageView image, deleteproduct;
+        ImageView image, deleteproduct,mEnquiry;
         Button viewdetails, editdetails;
         RatingBar productrating;
         // CardView viewdetails;
@@ -230,6 +262,7 @@ public class StoreServiceAdapter extends RecyclerView.Adapter<StoreServiceAdapte
             image = (ImageView) itemView.findViewById(R.id.profile);
             productrating = (RatingBar) itemView.findViewById(R.id.productrating);
             deleteproduct = (ImageView) itemView.findViewById(R.id.deleteproduct);
+            mEnquiry = (ImageView) itemView.findViewById(R.id.enquiry);
         }
     }
 }

@@ -39,6 +39,16 @@
                 android:contentDescription="@string/app_name"
                 android:src="@drawable/ic_delete"
                 android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/enquiry"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:layout_marginLeft="5dp"
+                android:contentDescription="@string/app_name"
+                android:src="@drawable/ic_comment_question_outline"
+                android:visibility="visible" />
         </RelativeLayout>
 
         <RelativeLayout

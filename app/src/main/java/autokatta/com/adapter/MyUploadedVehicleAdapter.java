@@ -57,7 +57,7 @@ import autokatta.com.other.CustomToast;
 import autokatta.com.response.MyStoreResponse;
 import autokatta.com.response.MyUploadedVehiclesResponse;
 import autokatta.com.response.ProfileGroupResponse;
-import autokatta.com.view.ManualEnquiry;
+import autokatta.com.view.AddManualEnquiry;
 import autokatta.com.view.MyBroadcastGroupsActivity;
 import autokatta.com.view.VehicleDetails;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
@@ -118,8 +118,8 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
     }
 
     @Override
-    public void onBindViewHolder(final MyUploadedVehicleAdapter.VehicleHolder holder, int position) {
-        List<String> vimages = new ArrayList<>();
+    public void onBindViewHolder(final MyUploadedVehicleAdapter.VehicleHolder holder, final int position) {
+        final List<String> vimages = new ArrayList<>();
         holder.edittitles.setText(mMainList.get(position).getTitle());
         holder.editprices.setText(mMainList.get(position).getPrice());
         holder.editcategorys.setText(mMainList.get(position).getCategory());
@@ -206,14 +206,40 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
             e.printStackTrace();
         }
 
+           /*Manual Enquiry */
         holder.mEnquiry.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ActivityOptions option = ActivityOptions.makeCustomAnimation(activity, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
+                Bundle b = new Bundle();
+                //    b.putString("sender",storeContact);
+                b.putString("sender","");
+                b.putString("sendername","");
+                b.putString("keyword", "Vehicle");
+                b.putString("category", mMainList.get(position).getCategory());
+                b.putString("title", mMainList.get(position).getTitle());
+                b.putString("brand", mMainList.get(position).getManufacturer());
+                b.putString("model",  mMainList.get(position).getModel());
+                b.putString("price", mMainList.get(position).getPrice());
+                b.putString("image", vimages.get(0));
+                b.putInt("vehicleid",  mMainList.get(position).getVehicleId());
+                b.putString("classname", "myuploadedvehicleadapter");
+
+                Intent intent = new Intent(activity, AddManualEnquiry.class);
+                intent.putExtras(b);
+                activity.startActivity(intent, option.toBundle());
+
+            }
+        });
+
+   /*     holder.mEnquiry.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(activity, ManualEnquiry.class);
                 activity.startActivity(intent);
             }
         });
-
+*/
         holder.delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

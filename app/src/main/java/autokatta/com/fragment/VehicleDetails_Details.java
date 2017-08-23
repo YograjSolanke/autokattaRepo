@@ -1,12 +1,15 @@
 package autokatta.com.fragment;
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
@@ -21,6 +24,7 @@ import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.EnquiryCountResponse;
 import autokatta.com.response.GetVehicleByIdResponse;
+import autokatta.com.view.OtherProfile;
 import retrofit2.Response;
 
 /**
@@ -31,6 +35,7 @@ public class VehicleDetails_Details extends Fragment implements RequestNotifier 
 
     View mVehicleDetails;
     TextView mTitleStr, mPriceStr, mViewsStr, mCallStr, mEnquiryStr;
+    String contact,mycontact;
     TextView mAddressDetails, mCategoryDetails, mSubCatDetails, mBrandDetails, mModelDetails, mVersionDetails, mYearDetails;
     ConnectionDetector mTestConnection;
 
@@ -40,7 +45,8 @@ public class VehicleDetails_Details extends Fragment implements RequestNotifier 
         mVehicleDetails = inflater.inflate(R.layout.fragment_vehicle_details_details, container, false);
 
         mTestConnection = new ConnectionDetector(getActivity());
-
+mycontact=getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE)
+        .getString("loginContact", "");
         mTitleStr = (TextView) mVehicleDetails.findViewById(R.id.title_str);
         mPriceStr = (TextView) mVehicleDetails.findViewById(R.id.price_str);
         mViewsStr = (TextView) mVehicleDetails.findViewById(R.id.views_str);
@@ -54,6 +60,7 @@ public class VehicleDetails_Details extends Fragment implements RequestNotifier 
         mModelDetails = (TextView) mVehicleDetails.findViewById(R.id.modeldetails);
         mVersionDetails = (TextView) mVehicleDetails.findViewById(R.id.versiondetails);
         mYearDetails = (TextView) mVehicleDetails.findViewById(R.id.yeardetails);
+
 
         getActivity().runOnUiThread(new Runnable() {
             @Override
@@ -70,8 +77,21 @@ public class VehicleDetails_Details extends Fragment implements RequestNotifier 
             }
         });
 
+        /* go to other profile by clicking on name*/
+
+            mTitleStr.setTextColor(Color.BLUE);
+            mTitleStr.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent i = new Intent(getActivity(), OtherProfile.class);
+                    i.putExtra("contactOtherProfile", contact);
+                    getActivity().startActivity(i);
+                }
+            });
+
         return mVehicleDetails;
     }
+
 
     private void getEnquiryCount(String loginContact, int vehicle_id) {
         ApiCall mApicall = new ApiCall(getActivity(), this);
@@ -102,6 +122,7 @@ public class VehicleDetails_Details extends Fragment implements RequestNotifier 
                     GetVehicleByIdResponse mVehicleByIdResponse = (GetVehicleByIdResponse) response.body();
                     for (GetVehicleByIdResponse.VehicleDatum datum : mVehicleByIdResponse.getSuccess().getVehicleData()) {
                         datum.setVehicleId(datum.getVehicleId());
+                        contact=datum.getContact();
                         mTitleStr.setText(datum.getUsername());
                         mPriceStr.setText(datum.getPrice());
                         mCategoryDetails.setText(datum.getCategory());

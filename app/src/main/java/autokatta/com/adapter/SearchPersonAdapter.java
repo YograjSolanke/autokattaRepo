@@ -58,7 +58,7 @@ public class SearchPersonAdapter extends RecyclerView.Adapter<SearchPersonAdapte
 
         CardView mCardView;
         ImageView imgProfile;
-        TextView mTextName, mTextNumber, mTextStatus;
+        TextView mTextName, mTextNumber, mTextStatus,mCity;
         Button btnFollow, btnUnfollow, btnsendmsg;
 
         private YoHolder(View itemView) {
@@ -71,6 +71,7 @@ public class SearchPersonAdapter extends RecyclerView.Adapter<SearchPersonAdapte
             btnFollow = (Button) itemView.findViewById(R.id.btnfollow);
             btnUnfollow = (Button) itemView.findViewById(R.id.btnunfollow);
             btnsendmsg = (Button) itemView.findViewById(R.id.btnsendmsg);
+            mCity = (TextView) itemView.findViewById(R.id.txtcity);
         }
     }
 
@@ -97,6 +98,7 @@ public class SearchPersonAdapter extends RecyclerView.Adapter<SearchPersonAdapte
         myContact = mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).getString("loginContact", "");
         holder.mTextName.setText(contactdata.get(position).getUsername());
         holder.mTextNumber.setText(contactdata.get(position).getContact());
+        holder.mCity.setText(contactdata.get(position).getCity());
 
         if (contactdata.get(position).getMystatus()==null)
             holder.mTextStatus.setText("No Status");

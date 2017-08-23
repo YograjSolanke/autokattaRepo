@@ -45,13 +45,36 @@
                 android:text="Number"
                 android:textColor="#2C3343"
                 android:textSize="15sp"
+                android:visibility="gone"
+                android:textStyle="bold" />
+
+     <!--       <ImageView
+                android:id="@+id/loc"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:contentDescription="@string/app_name"
+                android:layout_toStartOf="@+id/txtcity"
+                android:layout_below="@id/txtname"
+                android:layout_toEndOf="@id/profileImg"/>-->
+
+            <TextView
+                android:id="@+id/txtcity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtname"
+                android:layout_marginStart="5dp"
+                android:layout_toEndOf="@+id/profileImg"
+                android:layout_toStartOf="@+id/btnsendmsg"
+                android:text="City"
+                android:textColor="#2C3343"
+                android:textSize="15sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/txtstatus"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/txtnumber"
+                android:layout_below="@+id/txtcity"
                 android:layout_marginStart="5dp"
                 android:layout_toEndOf="@+id/profileImg"
                 android:layout_toStartOf="@+id/btnsendmsg"
