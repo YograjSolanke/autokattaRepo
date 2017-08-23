@@ -7369,7 +7369,8 @@ get ServiceMela Data
                               String product_type,
                               String images,
                               String category,
-                              String brandtags) {
+                              String brandtags,
+                              String group_ids) {
 
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
@@ -7387,7 +7388,7 @@ get ServiceMela Data
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
                 Call<String> mUnfollowResponse = serviceApi.updateProduct(product_id, product_name, price, product_details, product_tags,
-                        product_type, images, category, brandtags);
+                        product_type, images, category, brandtags, group_ids);
                 mUnfollowResponse.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
@@ -7421,7 +7422,8 @@ get ServiceMela Data
                               String service_type,
                               String images,
                               String category,
-                              String brandtags) {
+                              String brandtags,
+                              String group_ids) {
 
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
@@ -7439,7 +7441,7 @@ get ServiceMela Data
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
                 Call<String> mUnfollowResponse = serviceApi.updateService(service_id, service_name, price, service_details, service_tags,
-                        service_type, images, category, brandtags);
+                        service_type, images, category, brandtags, group_ids);
                 mUnfollowResponse.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {

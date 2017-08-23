@@ -922,7 +922,7 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                             .setMaxProgress(100)
                             .show();
 
-                    updateProduct(product_id, upname, upprice, updetails, uptags, uptype, upimgs, upcat, finalbrandtags);
+                    updateProduct(product_id, upname, upprice, updetails, uptags, uptype, upimgs, upcat, finalbrandtags, stringgroupids);
                 }
                 break;
 
@@ -1295,10 +1295,11 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                 .show();
     }
 
-    private void updateProduct(int product_id, String upname, String upprice, String updetails, String uptags, String uptype, String upimgs, String upcat, String finalbrandtags) {
+    private void updateProduct(int product_id, String upname, String upprice, String updetails, String uptags, String uptype, String upimgs,
+                               String upcat, String finalbrandtags, String stringgroupids) {
 
         ApiCall mApiCall = new ApiCall(this, this);
-        mApiCall.updateProduct(product_id, upname, upprice, updetails, "", uptype, "", upcat, finalbrandtags);
+        mApiCall.updateProduct(product_id, upname, upprice, updetails, "", uptype, "", upcat, finalbrandtags, stringgroupids);
 
     }
 

@@ -1205,7 +1205,8 @@ public interface ServiceApi {
                                @Query("ProductType") String product_type,
                                @Query("Images") String images,
                                @Query("Category") String category,
-                               @Query("BrandTags") String brandtags);
+                               @Query("BrandTags") String brandtags,
+                               @Query("GroupID") String GroupID);
 
 
     //update Service details
@@ -1218,7 +1219,8 @@ public interface ServiceApi {
                                @Query("ServiceType") String service_type,
                                @Query("Images") String images,
                                @Query("Category") String category,
-                               @Query("BrandTags") String brandtags);
+                               @Query("BrandTags") String brandtags,
+                               @Query("GroupID") String GroupID);
 
 
     //get chat enquiry status
