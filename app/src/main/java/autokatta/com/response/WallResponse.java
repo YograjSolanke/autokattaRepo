@@ -51,6 +51,8 @@ public class WallResponse {
 
 
         public class WallNotification {
+            @SerializedName("Notif_Title")
+            @Expose
             private String layoutType;
 
             public String getLayoutType() {

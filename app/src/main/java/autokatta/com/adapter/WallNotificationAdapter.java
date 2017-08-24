@@ -638,7 +638,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         Log.i("Wall", "Adapter-LayoutNo ->" + holder.getItemViewType());
         mLoginContact = mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).
                 getString("loginContact", "");
@@ -668,7 +668,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                     public void onClick(View widget) {
                         Intent intent = new Intent(mActivity, OtherProfile.class);
                         Bundle bundle = new Bundle();
-                        bundle.putString("contactOtherProfile", notificationList.get(position).getSender());
+                        bundle.putString("contactOtherProfile", notificationList.get(mProfileHolder.getAdapterPosition()).getSender());
                         intent.putExtras(bundle);
                         mActivity.startActivity(intent);
                     }
@@ -1663,7 +1663,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                     mProductHolder.mUserPic.setBackgroundResource(R.drawable.profile);
                 } else {
                     Glide.with(mActivity)
-                            .load(mActivity.getString(R.string.base_image_url)+ notificationList.get(position).getSenderPicture())
+                            .load(mActivity.getString(R.string.base_image_url) + notificationList.get(position).getSenderPicture())
                             .bitmapTransform(new CropCircleTransformation(mActivity))
                             .diskCacheStrategy(DiskCacheStrategy.ALL) //For caching diff versions of image.
                             .into(mProductHolder.mUserPic);
@@ -1927,7 +1927,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                     mServiceHolder.mServiceImage.setBackgroundResource(R.drawable.logo48x48);
                 } else {
                     Glide.with(mActivity)
-                            .load(mActivity.getString(R.string.base_image_url)+ notificationList.get(position).getServiceImage())
+                            .load(mActivity.getString(R.string.base_image_url) + notificationList.get(position).getServiceImage())
                             .diskCacheStrategy(DiskCacheStrategy.ALL) //For caching diff versions of image.
                             .into(mServiceHolder.mServiceImage);
                 }
@@ -2766,7 +2766,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                     mUpVehicleHolder.mVehicleImage.setBackgroundResource(R.drawable.vehiimg);
                 } else {
                     Glide.with(mActivity)
-                            .load(mActivity.getString(R.string.base_image_url)+ notificationList.get(position).getUpVehicleImage())
+                            .load(mActivity.getString(R.string.base_image_url) + notificationList.get(position).getUpVehicleImage())
                             .diskCacheStrategy(DiskCacheStrategy.ALL) //For caching diff versions of image.
                             .into(mUpVehicleHolder.mVehicleImage);
                 }

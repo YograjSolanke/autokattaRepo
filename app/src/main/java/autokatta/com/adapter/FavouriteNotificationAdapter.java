@@ -747,7 +747,7 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
                 mProfileHolder.mProfileAction.setText(notificationList.get(position).getSendername() + " "
                         + notificationList.get(position).getAction() + " " + notificationList.get(position).getReceivername() + " " + "Profile");
 
-                mProfileHolder.mActionTime.setText(notificationList.get(position).getDatetime());
+                mProfileHolder.mActionTime.setText(notificationList.get(position).getDate());
                 mProfileHolder.mUserName.setText(notificationList.get(position).getSendername());
                 mProfileHolder.mProfileWorkAt.setText(notificationList.get(position).getSenderprofession());
                 mProfileHolder.mProfileWebSite.setText(notificationList.get(position).getSenderwebsite());
@@ -953,10 +953,10 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
                 mStoreHolder.mStoreUnfav.setImageResource(R.drawable.ic_delete);
 
                 mStoreHolder.mStoreActionName.setText(notificationList.get(position).getSendername() + " "
-                        + notificationList.get(position).getAction() + " " + notificationList.get(position).getReceivername() + " "
+                        + notificationList.get(position).getAction() + "\n" + notificationList.get(position).getReceivername() + " "
                         + notificationList.get(position).getStoreName() + " " + "Store");
 
-                mStoreHolder.mActionTime.setText(notificationList.get(position).getDatetime());
+                mStoreHolder.mActionTime.setText(notificationList.get(position).getDate());
                 mStoreHolder.mStoreName.setText(notificationList.get(position).getStoreName());
                 mStoreHolder.mStoreCategory.setText(notificationList.get(position).getStoreCategory());
                 mStoreHolder.mStoreType.setText(notificationList.get(position).getStoreType());
@@ -1226,11 +1226,11 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
                 mGroupHolder.mDelete.setImageResource(R.drawable.ic_delete);
 
                 mGroupHolder.mActionName.setText(notificationList.get(position).getSendername() + " " +
-                        notificationList.get(position).getAction() + " " + notificationList.get(position).getReceivername() +
+                        notificationList.get(position).getAction() + "\n" + notificationList.get(position).getReceivername() +
                         " in " + notificationList.get(position).getGroupName()
                         + " group");
                 mGroupHolder.mGroupName.setText(notificationList.get(position).getGroupName());
-                mGroupHolder.mActionTime.setText(notificationList.get(position).getDatetime());
+                mGroupHolder.mActionTime.setText(notificationList.get(position).getDate());
                 mGroupHolder.mGroupMembers.setText(String.valueOf(notificationList.get(position).getGroupMembers()));
                 mGroupHolder.mGroupNoOfVehicles.setText(String.valueOf(notificationList.get(position).getGroupVehicles()));
                /* mGroupHolder.mGroupNoOfProducts.setText(String.valueOf(notificationList.get(position)));
@@ -1281,10 +1281,10 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
                 mVehicleHolder.mVehicleUnfav.setImageResource(R.drawable.ic_delete);
 
                 mVehicleHolder.mActionName.setText(notificationList.get(position).getSendername() + " "
-                        + notificationList.get(position).getAction() + " " + notificationList.get(position).getReceivername() + " "
+                        + notificationList.get(position).getAction() + "\n" + notificationList.get(position).getReceivername() + " "
                         + notificationList.get(position).getUpVehicleTitle() + " " + "Vehicle");
 
-                mVehicleHolder.mActionTime.setText(notificationList.get(position).getDatetime());
+                mVehicleHolder.mActionTime.setText(notificationList.get(position).getDate());
                 mVehicleHolder.mVehicleName.setText(notificationList.get(position).getUpVehicleTitle());
                 mVehicleHolder.mVehicleRegistration.setText(notificationList.get(position).getUpVehicleRegNo());
                 mVehicleHolder.mVehiclePrice.setText(notificationList.get(position).getUpVehiclePrice());
@@ -1569,11 +1569,11 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
                 }*/
 
                 mProductHolder.mProductActionName.setText(notificationList.get(position).getSendername() + " " +
-                        notificationList.get(position).getAction() + " " +
+                        notificationList.get(position).getAction() + "\n" +
                         notificationList.get(position).getProductName()
                         + " product");
 
-                mProductHolder.mProductActionTime.setText(notificationList.get(position).getDatetime());
+                mProductHolder.mProductActionTime.setText(notificationList.get(position).getDate());
                 mProductHolder.mProductName.setText(notificationList.get(position).getProductName());
                 mProductHolder.mProductTitle.setText(notificationList.get(position).getProductName());
                 mProductHolder.mProductType.setText(notificationList.get(position).getProductType());
@@ -1798,11 +1798,11 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
                 }*/
 
                 mServiceHolder.mServiceActionName.setText(notificationList.get(position).getSendername() + " " +
-                        notificationList.get(position).getAction() + " " +
+                        notificationList.get(position).getAction() + "\n" +
                         notificationList.get(position).getServiceName()
                         + " service");
 
-                mServiceHolder.mServiceActionTime.setText(notificationList.get(position).getDatetime());
+                mServiceHolder.mServiceActionTime.setText(notificationList.get(position).getDate());
                 mServiceHolder.mServiceName.setText(notificationList.get(position).getServiceName());
                 mServiceHolder.mServiceTitle.setText(notificationList.get(position).getServiceName());
                 mServiceHolder.mServiceType.setText(notificationList.get(position).getServiceType());
@@ -2020,9 +2020,9 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
                 mSearchHolder.mSearchUnfav.setImageResource(R.drawable.ic_delete);
 
                 mSearchHolder.mSearchActionName.setText(notificationList.get(position).getSendername() + " " +
-                        notificationList.get(position).getAction() + " " + "search");
+                        notificationList.get(position).getAction() + "\n" + "search");
 
-                mSearchHolder.mSearchActionTime.setText(notificationList.get(position).getDatetime());
+                mSearchHolder.mSearchActionTime.setText(notificationList.get(position).getDate());
                 mSearchHolder.mSearchCategory.setText(notificationList.get(position).getSearchCategory());
                 mSearchHolder.mSearchBrand.setText(notificationList.get(position).getSearchBrand());
                 mSearchHolder.mSearchModel.setText(notificationList.get(position).getSearchModel());
@@ -2193,13 +2193,13 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
                 mUpVehicleHolder.mVehicleUnfav.setImageResource(R.drawable.ic_delete);
 
                 mUpVehicleHolder.mActionName.setText(notificationList.get(position).getSendername() + " "
-                        + notificationList.get(position).getAction() + " "
+                        + notificationList.get(position).getAction() + "\n"
                         + "'" + notificationList.get(position).getUpVehicleTitle() + "'"
                         + " Vehicle In"
                         + "'" + notificationList.get(position).getGroupName() + "'"
                         + " Group");
 
-                mUpVehicleHolder.mActionTime.setText(notificationList.get(position).getDatetime());
+                mUpVehicleHolder.mActionTime.setText(notificationList.get(position).getDate());
                 mUpVehicleHolder.mVehicleName.setText(notificationList.get(position).getUpVehicleTitle());
                 mUpVehicleHolder.mVehicleRegistration.setText(notificationList.get(position).getUpVehicleRegNo());
                 mUpVehicleHolder.mVehiclePrice.setText(notificationList.get(position).getUpVehiclePrice());

@@ -114,7 +114,7 @@ public class GroupNotificationAdapter extends RecyclerView.Adapter<RecyclerView.
             mVehicleImage = (ImageView) upVehicleView.findViewById(R.id.vehicle_image);
 
             mVehicleAutokattaShare = (ImageButton) upVehicleView.findViewById(R.id.share_autokatta);
-            mCall = (ImageButton) upVehicleView.findViewById(R.id.call);
+            //mCall = (ImageButton) upVehicleView.findViewById(R.id.call);
             mVehicleLike = (ImageButton) upVehicleView.findViewById(R.id.like);
             mVehicleUnlike = (ImageButton) upVehicleView.findViewById(R.id.unlike);
             mVehicleFavourite = (ImageButton) upVehicleView.findViewById(R.id.vehicle_favourite);
@@ -295,13 +295,13 @@ public class GroupNotificationAdapter extends RecyclerView.Adapter<RecyclerView.
                             .into(mUpVehicleHolder.mVehicleImage);*/
                 }
 
-                mUpVehicleHolder.mCall.setOnClickListener(new View.OnClickListener() {
+               /* mUpVehicleHolder.mCall.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         String otherContact = notificationList.get(mUpVehicleHolder.getAdapterPosition()).getSender();
                         call(otherContact);
                     }
-                });
+                });*/
 
         /* Like & Unlike Functionality */
 

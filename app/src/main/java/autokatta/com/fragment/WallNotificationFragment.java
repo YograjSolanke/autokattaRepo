@@ -18,8 +18,13 @@ import android.widget.TextView;
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 
 import autokatta.com.R;
 import autokatta.com.adapter.WallNotificationAdapter;
@@ -131,7 +136,8 @@ public class WallNotificationFragment extends Fragment implements SwipeRefreshLa
                 ApiCall apiCall = new ApiCall(getActivity(), this);
                 apiCall.wallNotifications(mLoginContact, mLoginContact, "");
             } else {
-                CustomToast.customToast(getActivity(), getString(R.string.no_internet));
+                if (isAdded())
+                    CustomToast.customToast(getActivity(), getString(R.string.no_internet));
                 layout.setVisibility(View.VISIBLE);
                 mNoData.setVisibility(View.GONE);
                 mSwipeRefreshLayout.setRefreshing(false);
@@ -154,7 +160,7 @@ public class WallNotificationFragment extends Fragment implements SwipeRefreshLa
                     for (WallResponse.Success.WallNotification notification : wallResponse.getSuccess().getWallNotifications()) {
                         notification.setActionID(notification.getActionID());
                         notification.setLayout(notification.getLayout());
-                        notification.setDateTime(notification.getDateTime());
+
                         notification.setSender(notification.getSender());
                         notification.setAction(notification.getAction());
                         notification.setReceiver(notification.getReceiver());
@@ -315,10 +321,32 @@ public class WallNotificationFragment extends Fragment implements SwipeRefreshLa
                         notification.setGoingCount(notification.getGoingCount());
                         notification.setIgnoreCount(notification.getIgnoreCount());
 
-                        if (notification.getSenderName().equalsIgnoreCase("You"))
-                            notification.setLayoutType("MyAction");
-                        else
-                            notification.setLayoutType("MyNotification");
+                        notification.setLayoutType(notification.getLayoutType());
+                        //notification.setDateTime(notification.getDateTime());
+                        try {
+                            TimeZone utc = TimeZone.getTimeZone("etc/UTC");
+                            //format of date coming from services
+                            DateFormat inputFormat = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss a", Locale.getDefault());
+                        /*DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",
+                                Locale.getDefault());*/
+                            inputFormat.setTimeZone(utc);
+
+                            //format of date which we want to show
+                            DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy hh:mm a", Locale.getDefault());
+                        /*DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy hh:mm aa",
+                                Locale.getDefault());*/
+                            outputFormat.setTimeZone(utc);
+
+                            Date date = inputFormat.parse(notification.getDateTime());
+                            //System.out.println("jjj"+date);
+                            String output = outputFormat.format(date);
+                            //System.out.println(mainList.get(i).getDate()+" jjj " + output);
+                            notification.setDateTime(output);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
+
                         notificationList.add(notification);
                     }
                     adapter = new WallNotificationAdapter(getActivity(), notificationList);
@@ -340,16 +368,21 @@ public class WallNotificationFragment extends Fragment implements SwipeRefreshLa
     public void notifyError(Throwable error) {
         mSwipeRefreshLayout.setRefreshing(false);
         if (error instanceof SocketTimeoutException) {
-            CustomToast.customToast(getActivity(), getString(R.string._404_));
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
-            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string.no_internet));
             layout.setVisibility(View.VISIBLE);
         } else if (error instanceof UnknownHostException) {
-            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string.no_internet));
             layout.setVisibility(View.VISIBLE);
         } else {
             Log.i("Check Class-", "Wall Notification Fragment");
