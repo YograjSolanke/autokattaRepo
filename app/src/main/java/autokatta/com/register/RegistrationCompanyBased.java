@@ -514,7 +514,7 @@ public class RegistrationCompanyBased extends AppCompatActivity implements Reque
                     spinManufacturer.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                            if (position != 0) {
+                            if (position != 0 && !parsedDataBrand.get(position).equalsIgnoreCase("other")) {
                                 brandId = mBrandListHash.get(parsedDataBrand.get(position));
                                 brandName = parsedDataBrand.get(position);
                             }

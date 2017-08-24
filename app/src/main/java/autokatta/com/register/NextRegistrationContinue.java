@@ -55,7 +55,7 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
             purchaseCancel, fitnessCancel, taxCancel, permitCancel, insuranceCancel, pucCancel, lastServiceCancel,
             nextServiceCancel;
 
-    String whichclick = "",  subcategoryName;
+    String whichclick = "", subcategoryName;
     int subcategoryId;
 
     final ArrayList<String> mVehicleTypeList = new ArrayList<>();
@@ -85,9 +85,9 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
     List<String> ModelList = new ArrayList<>();
     List<String> VersionList = new ArrayList<>();
 
-    String  brandName,modelName,versionName;
+    String brandName, modelName, versionName;
     ApiCall mApicall;
-    int vehicle_idD,brandId,modelId,versionId;
+    int vehicle_idD, brandId, modelId, versionId;
 
     String action = "", vehiType = "", vehiYear = "", vehiBrand = "", vehiModel = "", vehiVersion = "", vehiSubcat = "", ids = "", vehino = "",
             vehitaxValidity = "", vehifitnessValidity = "", vehipermitValidity = "", vehiinsurance = "", vehipuc = "", vehilastServicedate = "",
@@ -772,7 +772,7 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
                     mSpinnerBrand.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                            if (position != 0) {
+                            if (position != 0 && !brandData.get(position).equalsIgnoreCase("other")) {
                                 brandId = mBrandList1.get(brandData.get(position));
                                 brandName = brandData.get(position);
                                 ((TextView) mSpinnerBrand.getSelectedView()).setTextColor(getResources().getColor(R.color.black));
@@ -840,7 +840,7 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
                     mSpinnerModel.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                            if (position != 0) {
+                            if (position != 0 && !modelData.get(position).equalsIgnoreCase("other")) {
                                 modelId = mModelList1.get(modelData.get(position));
                                 modelName = modelData.get(position);
                                 ((TextView) mSpinnerModel.getSelectedView()).setTextColor(getResources().getColor(R.color.black));
@@ -907,7 +907,7 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
                     mSpinnerVersion.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                            if (position != 0) {
+                            if (position != 0 && !versionData.get(position).equalsIgnoreCase("other")) {
                                 versionId = mVersionList1.get(versionData.get(position));
                                 versionName = versionData.get(position);
                                 ((TextView) mSpinnerVersion.getSelectedView()).setTextColor(getResources().getColor(R.color.black));
@@ -1083,8 +1083,9 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
                 CustomToast.customToast(getApplicationContext(), "Version Added");
                 getVersion(vehicle_idD, subcategoryId, brandId, modelId);
             }
-        } else
+        } else {
             CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
+        }
     }
 
     /*
@@ -1124,7 +1125,7 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
      */
     private void AddBrand(String keyword, String title, int categoryId, int subCatID) {
         ApiCall mApiCall = new ApiCall(this, this);
-        mApiCall.addVersionModelBrand(keyword, title, categoryId, subCatID,0,0);
+        mApiCall.addVersionModelBrand(keyword, title, categoryId, subCatID, 0, 0);
     }
 
     /*
@@ -1132,7 +1133,7 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
      */
     private void AddModel(String keyword, String title, int categoryId, int subCatID, int brandId) {
         ApiCall mApiCall = new ApiCall(this, this);
-        mApiCall.addVersionModelBrand(keyword, title, categoryId, subCatID, brandId,0);
+        mApiCall.addVersionModelBrand(keyword, title, categoryId, subCatID, brandId, 0);
     }
 
     /*

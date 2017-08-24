@@ -752,7 +752,7 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                     mBrandSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                            if (position != 0) {
+                            if (position != 0 && !brandData.get(position).equalsIgnoreCase("other")) {
                                 brandId = mBrandList1.get(brandData.get(position));
                                 brandName = brandData.get(position);
 
@@ -761,7 +761,6 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                             }
 
                             if (brandData.get(position).equalsIgnoreCase("other")) {
-
                                 android.app.AlertDialog.Builder alertDialog = new android.app.AlertDialog.Builder(getActivity());
                                 alertDialog.setTitle("Add Brand");
                                 alertDialog.setMessage("Enter brand name");
@@ -836,7 +835,7 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                     mModelSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                            if (position != 0) {
+                            if (position != 0 && !modelData.get(position).equalsIgnoreCase("other")) {
                                 modelId = mModelList1.get(modelData.get(position));
                                 modelName = modelData.get(position);
 
@@ -845,7 +844,6 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                             }
 
                             if (modelData.get(position).equalsIgnoreCase("other")) {
-
                                 android.app.AlertDialog.Builder alertDialog = new android.app.AlertDialog.Builder(getActivity());
                                 alertDialog.setTitle("Add Model");
                                 alertDialog.setMessage("Enter model name");
@@ -919,7 +917,7 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                     mVersionSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                            if (position != 0) {
+                            if (position != 0 && !versionData.get(position).equalsIgnoreCase("other")) {
                                 versionId = mVersionList1.get(versionData.get(position));
                                 versionName = versionData.get(position);
 
@@ -928,7 +926,6 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                             }
 
                             if (versionData.get(position).equalsIgnoreCase("other")) {
-
                                 android.app.AlertDialog.Builder alertDialog = new android.app.AlertDialog.Builder(getActivity());
                                 alertDialog.setTitle("Add Version");
                                 alertDialog.setMessage("Enter version name");

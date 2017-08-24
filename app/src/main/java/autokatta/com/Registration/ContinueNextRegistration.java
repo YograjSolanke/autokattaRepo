@@ -722,21 +722,17 @@ public class ContinueNextRegistration extends AppCompatActivity implements Reque
                     mSpinnerBrand.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-                            if (position != 0) {
+                            if (position != 0 && !brandData.get(position).equalsIgnoreCase("other")) {
                                 brandId = mBrandList1.get(brandData.get(position));
                                 brandName = brandData.get(position);
                                 ((TextView) mSpinnerBrand.getSelectedView()).setTextColor(getResources().getColor(R.color.red));
-
                             }
 
                             if (brandData.get(position).equalsIgnoreCase("other")) {
-
                                 android.app.AlertDialog.Builder alertDialog = new android.app.AlertDialog.Builder(ContinueNextRegistration.this);
                                 //  AlertDialog.Builder alertDialog = new AlertDialog.Builder(ContinueNextRegistration.this);
                                 alertDialog.setTitle("Add Brand");
                                 alertDialog.setMessage("Enter brand name");
-
 
                                 final EditText input = new EditText(getApplicationContext());
                                 LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
@@ -749,9 +745,7 @@ public class ContinueNextRegistration extends AppCompatActivity implements Reque
                                 alertDialog.setPositiveButton("Add Brand",
                                         new DialogInterface.OnClickListener() {
                                             public void onClick(DialogInterface dialog, int which) {
-
                                                 String edbrand = input.getText().toString();
-
                                                 if (edbrand.equals(""))
                                                     CustomToast.customToast(getApplicationContext(), "Please enter brand");
                                                 else
@@ -802,16 +796,13 @@ public class ContinueNextRegistration extends AppCompatActivity implements Reque
                     mSpinnerModel.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                            if (position != 0) {
+                            if (position != 0 && !modelData.get(position).equalsIgnoreCase("other")) {
                                 modelId = mModelList1.get(modelData.get(position));
                                 modelName = modelData.get(position);
                                 ((TextView) mSpinnerModel.getSelectedView()).setTextColor(getResources().getColor(R.color.red));
-
-
                             }
 
                             if (modelData.get(position).equalsIgnoreCase("other")) {
-
                                 android.app.AlertDialog.Builder alertDialog = new android.app.AlertDialog.Builder(ContinueNextRegistration.this);
                                 alertDialog.setTitle("Add Model");
                                 alertDialog.setMessage("Enter model name");
@@ -827,9 +818,7 @@ public class ContinueNextRegistration extends AppCompatActivity implements Reque
                                 alertDialog.setPositiveButton("Add Model",
                                         new DialogInterface.OnClickListener() {
                                             public void onClick(DialogInterface dialog, int which) {
-
                                                 String edmodel = input.getText().toString();
-
                                                 if (edmodel.equals(""))
                                                     Toast.makeText(getApplicationContext(), "Please enter model", Toast.LENGTH_LONG).show();
                                                 else
@@ -881,7 +870,7 @@ public class ContinueNextRegistration extends AppCompatActivity implements Reque
                     mSpinnerVersion.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                            if (position != 0) {
+                            if (position != 0 && !versionData.get(position).equalsIgnoreCase("other")) {
                                 versionId = mVersionList1.get(versionData.get(position));
                                 versionName = versionData.get(position);
                                 ((TextView) mSpinnerVersion.getSelectedView()).setTextColor(getResources().getColor(R.color.red));
@@ -890,7 +879,6 @@ public class ContinueNextRegistration extends AppCompatActivity implements Reque
                             }
 
                             if (versionData.get(position).equalsIgnoreCase("other")) {
-
                                 Builder alertDialog = new Builder(ContinueNextRegistration.this);
                                 alertDialog.setTitle("Add Version");
                                 alertDialog.setMessage("Enter version name");
@@ -906,9 +894,7 @@ public class ContinueNextRegistration extends AppCompatActivity implements Reque
                                 alertDialog.setPositiveButton("Add Version",
                                         new OnClickListener() {
                                             public void onClick(DialogInterface dialog, int which) {
-
                                                 String edversion = input.getText().toString();
-
                                                 if (edversion.equals(""))
                                                     Toast.makeText(getApplicationContext(), "Please enter version", Toast.LENGTH_LONG).show();
                                                 else
@@ -968,16 +954,12 @@ public class ContinueNextRegistration extends AppCompatActivity implements Reque
                     //  Toast.makeText(getApplicationContext(), "updated Successfully", Toast.LENGTH_LONG).show();
                 }
             } else if (str.equals("Success")) {/*Response for Add Own*/
-
                 Toast.makeText(getApplicationContext(), "Your Vehicle added Sucessfully",
                         Toast.LENGTH_LONG).show();
 
-
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ContinueNextRegistration.this);
-
                 // set title
                 alertDialogBuilder.setTitle("Add Vehicle");
-
                 // set dialog message
                 alertDialogBuilder
                         .setMessage("You want to add another vehicle?")
@@ -986,10 +968,7 @@ public class ContinueNextRegistration extends AppCompatActivity implements Reque
                                 new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog,
                                                         int id) {
-
-
                                         dialog.cancel();
-
                                         edtvehicleno.setText("");
                                         edtfit.setText("");
                                         edtyear.setText("");
@@ -1006,7 +985,6 @@ public class ContinueNextRegistration extends AppCompatActivity implements Reque
                                         mSpinnerVersion.setSelection(0);
                                         mSpinnerSubType.setSelection(0);
 
-
                                         edtvehicleno.requestFocus();
                                         edtfit.setError(null);
                                         edtyear.setError(null);
@@ -1015,17 +993,13 @@ public class ContinueNextRegistration extends AppCompatActivity implements Reque
                                         edtpuc.setError(null);
                                         edtlastservice.setError(null);
                                         edtnextservice.setError(null);
-
-
                                     }
                                 })
                         .setNegativeButton("No",
                                 new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog,
                                                         int id) {
-
                                         dialog.cancel();
-//
                                         Intent i = new Intent(getApplicationContext(), CompanyBasedRegistrationActivity.class);
                                         startActivity(i);
                                         finish();
@@ -1034,20 +1008,15 @@ public class ContinueNextRegistration extends AppCompatActivity implements Reque
 
                 // create alert dialog
                 AlertDialog alertDialog = alertDialogBuilder.create();
-
                 // show it
                 alertDialog.show();
-
-
             }
             if (str != null) {
                 if (str.equals("success_brand_add")) {
                     CustomToast.customToast(getApplicationContext(), "Brand added successfully");
                     getBrand(vehicle_idD, subcategoryId);
                     Log.i("msg", "Brand added successfully");
-
                 } else if (str.equals("success_model_add")) {
-
                     CustomToast.customToast(getApplicationContext(), "Model added successfully");
                     getModel(vehicle_idD, subcategoryId, brandId);
                 } else if (str.equals("success_version_add")) {
@@ -1056,7 +1025,6 @@ public class ContinueNextRegistration extends AppCompatActivity implements Reque
                 }
 
             }
-
         }
     }
 

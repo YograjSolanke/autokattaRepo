@@ -103,14 +103,14 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
     TableRow rowInvoice, rowbustype, rowaircondition, rowbody, rowboattype, rowrvtype, rowcolor, rowrc, rowinsurance1, rowhypo, rowtax, rowfitness, rowpermit, rowfual, rowseat, rowdrive, rowtransmission, rowuse, rowimpl, rowtyre, rowtyrerange;
 
     String action, Scategory, Sbrand, Smodel, Sprice, Syear, Sid = "", Category, subCategory, hrs1, hrs2, hpcap1, hpcap2;
-    int  position_brand_id, position_model_id;
+    int position_brand_id, position_model_id;
     String spinnervalues[];
 
     String city1, city2, city11, city12, city13, city14, city21, city22, city23, city24, brand1, model1, color1, version1, man_yr1, man_yr2, reg_yr1, reg1, reg_yr2, rc1, insurance1, kms1, kms2, hypo1, owner1, price1, price2;
     String permit1, tax_validity1, fitness_validity1, permit_validity1, drive1, fual1, bus_type1, air1, invoice1;
 
     String use1, seating1, transmission1, implement1, body1, boat1, rv1, finance1, tyre1, tyre2;
-    int count = 0, vehicle_id,sub_category_id;
+    int count = 0, vehicle_id, sub_category_id;
 
     final ArrayList fuals = new ArrayList();
     List<String> colors = new ArrayList<String>();
@@ -124,9 +124,7 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
         super.onCreateView(inflater, container, savedInstanceState);
 
         final View root = inflater.inflate(R.layout.filter_all_activity, container, false);
-
         client = new GoogleApiClient.Builder(getActivity()).addApi(AppIndex.API).build();
-
         prefs = getActivity().getSharedPreferences(MyContactPREFERENCES, Context.MODE_PRIVATE);
         contact = prefs.getString("contact", "");
 
@@ -293,7 +291,6 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
                 public void onFocusChange(View v, boolean hasFocus) {
                     if (!hasFocus) {
                         autoCity.setEnabled(true);
-
                     } else {
                         autoCity.setEnabled(true);
                     }
@@ -305,7 +302,6 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
                 public void onFocusChange(View v, boolean hasFocus) {
                     if (!hasFocus) {
                         autoCity1.setEnabled(true);
-
                     } else {
                         autoCity1.setEnabled(true);
                     }
@@ -317,7 +313,6 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
                 public void onFocusChange(View v, boolean hasFocus) {
                     if (!hasFocus) {
                         autoCity2.setEnabled(true);
-
                     } else {
                         autoCity2.setEnabled(true);
                     }
@@ -341,7 +336,6 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
                 public void onFocusChange(View v, boolean hasFocus) {
                     if (!hasFocus) {
                         autoCity4.setEnabled(true);
-
                     } else {
                         autoCity4.setEnabled(true);
                     }
@@ -351,7 +345,6 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
             btnCity.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
                     counter++;
                     if (counter == 1) {
                         autoCity1.setVisibility(View.VISIBLE);
@@ -407,7 +400,6 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
                         autoRTO4.setVisibility(View.GONE);
                         counter1 = 0;
                     }
-
                 }
             });
 
@@ -415,17 +407,14 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
                 allcategory.setSelection(getIndex(allcategory, Scategory));
                 brand.setSelection(getIndex(brand, Sbrand));
                 model.setSelection(getIndex(model, Smodel));
-
             }
 
             BtnApplySearch.setOnClickListener(new View.OnClickListener() {
 
                 @Override
                 public void onClick(View v) {
-
                     finance1 = finance.getSelectedItem().toString();
                     Category = allcategory.getSelectedItem().toString();
-
                     try {
                         if (Category.equalsIgnoreCase("Car")) {
                             permit1 = radioPermitButton.getText().toString();
@@ -438,19 +427,14 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
 
                     if (finance1.startsWith("-Select")) {
                         Toast.makeText(getActivity(), "Please provide fianance required or not", Toast.LENGTH_LONG).show();
-
                     } else if (Category.equals("-Select Category-")) {
                         Toast.makeText(getActivity(), "select catagory", Toast.LENGTH_LONG).show();
-
                     } else if (subcategory.getSelectedItem().toString().equals("-Select subcategory-")) {
                         Toast.makeText(getActivity(), "select subcatagory", Toast.LENGTH_LONG).show();
-
                     } else if (brand.getSelectedItem().toString().equals("-Select Brand-")) {
                         Toast.makeText(getActivity(), "select brand", Toast.LENGTH_LONG).show();
-
                     } else if (model.getSelectedItem().toString().equals("-Select Models-")) {
                         Toast.makeText(getActivity(), "select model", Toast.LENGTH_LONG).show();
-
                     } else {
                         applySearch();
                     }
@@ -461,7 +445,6 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
             checkRTO.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
                     if (checkRTO.isChecked()) {
                         autoRTO.setVisibility(View.VISIBLE);
                         autoRTO1.setVisibility(View.GONE);
@@ -470,7 +453,6 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
                         autoRTO4.setVisibility(View.GONE);
 
                         autoRTO.setText("Unregistered");
-
                         autoRTO.setEnabled(false);
                         autoRTO1.setEnabled(false);
                         autoRTO2.setEnabled(false);
@@ -497,7 +479,6 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
 
             /************************Range seek bar for manufacture***************************/
             RangeSeekBar<Integer> rangeSeekBar1 = new RangeSeekBar<Integer>(getActivity());
-
             int regyear = Calendar.getInstance().get(Calendar.YEAR);
             int regyear1 = regyear - 25;
             rangeSeekBar1.setRangeValues(regyear1, regyear);
@@ -670,18 +651,13 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
                 @Override
                 public void onClick(View v) {
                     try {
-
                         count++;
-
                         System.out.println("moresearchlinear:" + count);
-
                         if (count % 2 == 1) {
-
                             moresearchlinear.setVisibility(View.VISIBLE);
                             Category = allcategory.getSelectedItem().toString();
 
                             if (Category.equals("Bus")) {
-
                                 rowInvoice.setVisibility(View.GONE);
                                 rowbody.setVisibility(View.GONE);
                                 rowboattype.setVisibility(View.GONE);
@@ -691,7 +667,6 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
                                 rowuse.setVisibility(View.GONE);
                                 rowimpl.setVisibility(View.GONE);
                             } else if (Category.equals("Car")) {
-
                                 rowInvoice.setVisibility(View.GONE);
                                 rowbustype.setVisibility(View.GONE);
                                 rowbody.setVisibility(View.GONE);
@@ -710,11 +685,8 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
                                     rowfitness.setVisibility(View.GONE);
                                     rowtax.setVisibility(View.GONE);
                                 }
-
                             } else if (Category.equals(" Construction Equipment ")) {
-
                                 String subCategory = subcategory.getSelectedItem().toString();
-
                                 rowbustype.setVisibility(View.GONE);
                                 rowaircondition.setVisibility(View.GONE);
                                 rowbody.setVisibility(View.GONE);
@@ -744,7 +716,6 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
                                 }
 
                             } else if (Category.equals("Commercial Vehicle")) {
-
                                 rowInvoice.setVisibility(View.GONE);
                                 rowbustype.setVisibility(View.GONE);
                                 rowaircondition.setVisibility(View.GONE);
@@ -757,7 +728,6 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
                                 rowimpl.setVisibility(View.GONE);
 
                             } else if (Category.equals("Tractor")) {
-
                                 rowInvoice.setVisibility(View.GONE);
                                 rowbustype.setVisibility(View.GONE);
                                 rowaircondition.setVisibility(View.GONE);
@@ -770,7 +740,6 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
                                 rowtransmission.setVisibility(View.GONE);
 
                             } else if (Category.equals("2 Wheeler")) {
-
                                 rowInvoice.setVisibility(View.GONE);
                                 rowbustype.setVisibility(View.GONE);
                                 rowaircondition.setVisibility(View.GONE);
@@ -787,7 +756,6 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
                                 rowimpl.setVisibility(View.GONE);
 
                             } else if (Category.equals("3 Wheeler")) {
-
                                 rowInvoice.setVisibility(View.GONE);
                                 rowbustype.setVisibility(View.GONE);
                                 rowaircondition.setVisibility(View.GONE);
@@ -798,12 +766,9 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
                                 rowtransmission.setVisibility(View.GONE);
                                 rowuse.setVisibility(View.GONE);
                                 rowimpl.setVisibility(View.GONE);
-
                             }
-
                         } else
                             moresearchlinear.setVisibility(View.GONE);
-
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -815,7 +780,6 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
                 @Override
                 public void onClick(View v) {
                     // TODO Auto-generated method stub
-
                     finance.setSelection(0);
                     allcategory.setSelection(0);
                     subcategory.setSelection(0);
@@ -858,8 +822,6 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
                     rvEdit.setText("");
 
                     getfual();
-
-
                 }
             });
 
@@ -953,7 +915,6 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
             //Log.e(LOG_TAG, "Cannot process JSON results", e);
             e.printStackTrace();
         }
-
         return resultList;
     }
 
@@ -1342,10 +1303,7 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
 
     @Override
     public void onResume() {
-
         super.onResume();
-
-
         rc.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
@@ -1727,9 +1685,7 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
 
                                 moresearchlinear.setVisibility(View.GONE);
                                 count = 0;
-
                                 System.out.println("Selected category:" + Category);
-
                                 if (!Category.equalsIgnoreCase("-Select Category-"))
                                     getSubCategory(vehicle_id);
 
@@ -1738,16 +1694,13 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
                                 else
                                     rowPermit.setVisibility(View.GONE);
 
-
                                 if (Category.equals("Tractor") || Category.equals("Cranes") || Category.equalsIgnoreCase(" Construction Equipment ")) {
-
                                     rowKms.setVisibility(View.GONE);
                                     rowkms1.setVisibility(View.GONE);
                                     rowhrs.setVisibility(View.VISIBLE);
                                     rowhpcapacity.setVisibility(View.VISIBLE);
                                     rowhrstb.setVisibility(View.VISIBLE);
                                     rowhpcap.setVisibility(View.VISIBLE);
-
                                 } else {
                                     rowKms.setVisibility(View.VISIBLE);
                                     rowkms1.setVisibility(View.VISIBLE);
@@ -1756,7 +1709,6 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
                                     rowhrstb.setVisibility(View.GONE);
                                     rowhpcap.setVisibility(View.GONE);
                                 }
-
                             }
 
                             @Override
@@ -1774,7 +1726,6 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
                             vehicles_id.add(success.getId());
                             vehicles.add(success.getName());
                         }
-
                         spinnervalues = new String[vehicles_id.size()];
                         spinnervalues = vehicles_id.toArray(spinnervalues);
                         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(),
@@ -1785,16 +1736,14 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
                         subcategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                             @Override
                             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
                                 try {
-
                                     sub_category_id = vehicles_id.get(position);
                                     subCategory = vehicles.get(position);
 
                                     moresearchlinear.setVisibility(View.GONE);
                                     count = 0;
 
-                                    if (sub_category_id!=0) {
+                                    if (sub_category_id != 0) {
                                         getBrand(sub_category_id, vehicle_id);
                                     }
                                     if (subCategory.equals("Excavator") || subCategory.equals("Skid Steers") || subCategory.equals("Crawlers")
@@ -1813,7 +1762,6 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
 
                             @Override
                             public void onNothingSelected(AdapterView<?> parent) {
-
 
                             }
                         });
@@ -1837,14 +1785,10 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
                         brand.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                             @Override
                             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
                                 try {
-
                                     position_brand_id = brand_id.get(position);
-
-                                    if (position_brand_id!=0)
+                                    if (position_brand_id != 0)
                                         getModel(position_brand_id, vehicle_id, sub_category_id);
-
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
@@ -1852,7 +1796,6 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
 
                             @Override
                             public void onNothingSelected(AdapterView<?> parent) {
-
 
                             }
                         });
@@ -1876,14 +1819,10 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
                         model.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                             @Override
                             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
                                 try {
-
                                     position_model_id = model_id.get(position);
-
-                                    if (position_model_id!=0)
+                                    if (position_model_id != 0)
                                         getVersion(position_model_id, position_brand_id, vehicle_id, sub_category_id);
-
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
@@ -1921,7 +1860,6 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
 
                             @Override
                             public void onNothingSelected(AdapterView<?> parent) {
-
 
                             }
                         });
@@ -1968,6 +1906,4 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
     public void notifyString(String str) {
 
     }
-
-
 }
