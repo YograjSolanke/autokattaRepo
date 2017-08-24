@@ -28,16 +28,16 @@ public class GetVehicleBrandResponse {
 
         @SerializedName("brand_id")
         @Expose
-        private String brandId;
+        private int brandId;
         @SerializedName("brand_title")
         @Expose
         private String brandTitle;
 
-        public String getBrandId() {
+        public int getBrandId() {
             return brandId;
         }
 
-        public void setBrandId(String brandId) {
+        public void setBrandId(int brandId) {
             this.brandId = brandId;
         }
 

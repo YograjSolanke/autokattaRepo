@@ -28,16 +28,16 @@ public class GetVehicleModelResponse {
 
         @SerializedName("model_id")
         @Expose
-        private String modelId;
+        private int modelId;
         @SerializedName("model_title")
         @Expose
         private String modelTitle;
 
-        public String getModelId() {
+        public int getModelId() {
             return modelId;
         }
 
-        public void setModelId(String modelId) {
+        public void setModelId(int modelId) {
             this.modelId = modelId;
         }
 

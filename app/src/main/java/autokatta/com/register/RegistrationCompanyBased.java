@@ -89,16 +89,16 @@ public class RegistrationCompanyBased extends AppCompatActivity implements Reque
     int categoryId;
     String categoryName = "";
 
-    HashMap<String, String> mSubCategoryListHash = new HashMap<>();
+    HashMap<String, Integer> mSubCategoryListHash = new HashMap<>();
     List<String> mSubCategoryList = new ArrayList<>();
     List<String> parsedDataSubCategory = new ArrayList<>();
-    String subCategoryId = "";
+    int subCategoryId = 0;
     String subCategoryName = "";
 
-    HashMap<String, String> mBrandListHash = new HashMap<>();
+    HashMap<String, Integer> mBrandListHash = new HashMap<>();
     List<String> mBrandList = new ArrayList<>();
     List<String> parsedDataBrand = new ArrayList<>();
-    String brandId = "";
+    int brandId = 0;
     String brandName = "";
 
     RelativeLayout relativeKms, relativeDistrict, relativeState;
@@ -288,22 +288,22 @@ public class RegistrationCompanyBased extends AppCompatActivity implements Reque
     /*
     Get Brand
      */
-    private void getBrand(int categoryId, String subcategoryId) {
+    private void getBrand(int categoryId, int subcategoryId) {
         mApiCall.getBrand(categoryId, subcategoryId);
     }
 
     /*
     Get Model...
      */
-    private void getModel(int categoryId, String subCategoryId, String brandId) {
+    private void getModel(int categoryId, int subCategoryId, int brandId) {
         mApiCall.getModel(categoryId, subCategoryId, brandId);
     }
 
     /*
     Add Brand
      */
-    private void AddBrand(String keyword, String title, int categoryId, String subCatID) {
-        mApiCall.addBrand(keyword, title, categoryId, subCatID);
+    private void AddBrand(String keyword, String title, int categoryId, int subCatID) {
+        mApiCall.addVersionModelBrand(keyword, title, categoryId, subCatID,0,0);
     }
 
     @Override

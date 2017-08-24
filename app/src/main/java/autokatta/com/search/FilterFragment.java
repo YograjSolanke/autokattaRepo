@@ -103,14 +103,14 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
     TableRow rowInvoice, rowbustype, rowaircondition, rowbody, rowboattype, rowrvtype, rowcolor, rowrc, rowinsurance1, rowhypo, rowtax, rowfitness, rowpermit, rowfual, rowseat, rowdrive, rowtransmission, rowuse, rowimpl, rowtyre, rowtyrerange;
 
     String action, Scategory, Sbrand, Smodel, Sprice, Syear, Sid = "", Category, subCategory, hrs1, hrs2, hpcap1, hpcap2;
-    String sub_category_id, position_brand_id, position_model_id;
+    int  position_brand_id, position_model_id;
     String spinnervalues[];
 
     String city1, city2, city11, city12, city13, city14, city21, city22, city23, city24, brand1, model1, color1, version1, man_yr1, man_yr2, reg_yr1, reg1, reg_yr2, rc1, insurance1, kms1, kms2, hypo1, owner1, price1, price2;
     String permit1, tax_validity1, fitness_validity1, permit_validity1, drive1, fual1, bus_type1, air1, invoice1;
 
     String use1, seating1, transmission1, implement1, body1, boat1, rv1, finance1, tyre1, tyre2;
-    int count = 0, vehicle_id;
+    int count = 0, vehicle_id,sub_category_id;
 
     final ArrayList fuals = new ArrayList();
     List<String> colors = new ArrayList<String>();
@@ -977,7 +977,7 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
     /*
     volley getBrand()
      */
-    private void getBrand(final String subcatid, final int vehicle_id) {
+    private void getBrand(final int subcatid, final int vehicle_id) {
         ApiCall mApiCall = new ApiCall(getActivity(), this);
         mApiCall.getBrand(vehicle_id, subcatid);
     }
@@ -985,7 +985,7 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
     /*
     volley getModel()
      */
-    private void getModel(final String brand_idsss, final int vehicle_id, final String subcatid) {
+    private void getModel(final int brand_idsss, final int vehicle_id, final int subcatid) {
         ApiCall mApiCall = new ApiCall(getActivity(), this);
         mApiCall.getModel(vehicle_id, subcatid, brand_idsss);
     }
@@ -993,7 +993,7 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
     /*
     volley getVersion()
      */
-    private void getVersion(final String model_idsss, final String brand_idsss, final int vehicle_id, final String subcatid) {
+    private void getVersion(final int model_idsss, final int brand_idsss, final int vehicle_id, final int subcatid) {
         ApiCall mApiCall = new ApiCall(getActivity(), this);
         mApiCall.getVersion(vehicle_id, subcatid, brand_idsss, model_idsss);
     }
@@ -1767,7 +1767,7 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
                     }
                 } else if (response.body() instanceof GetVehicleSubTypeResponse) {
                     final ArrayList<String> vehicles = new ArrayList<String>();
-                    final ArrayList<String> vehicles_id = new ArrayList<String>();
+                    final ArrayList<Integer> vehicles_id = new ArrayList<>();
                     GetVehicleSubTypeResponse subTypeResponse = (GetVehicleSubTypeResponse) response.body();
                     if (!subTypeResponse.getSuccess().isEmpty()) {
                         for (GetVehicleSubTypeResponse.Success success : subTypeResponse.getSuccess()) {
@@ -1794,7 +1794,7 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
                                     moresearchlinear.setVisibility(View.GONE);
                                     count = 0;
 
-                                    if (!sub_category_id.equals("0")) {
+                                    if (sub_category_id!=0) {
                                         getBrand(sub_category_id, vehicle_id);
                                     }
                                     if (subCategory.equals("Excavator") || subCategory.equals("Skid Steers") || subCategory.equals("Crawlers")
@@ -1820,7 +1820,7 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
                     }
                 } else if (response.body() instanceof GetVehicleBrandResponse) {
                     final ArrayList<String> brands = new ArrayList<String>();
-                    final ArrayList<String> brand_id = new ArrayList<String>();
+                    final ArrayList<Integer> brand_id = new ArrayList<>();
                     GetVehicleBrandResponse brandResponse = (GetVehicleBrandResponse) response.body();
                     if (!brandResponse.getSuccess().isEmpty()) {
                         for (GetVehicleBrandResponse.Success success : brandResponse.getSuccess()) {
@@ -1842,7 +1842,7 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
 
                                     position_brand_id = brand_id.get(position);
 
-                                    if (!position_brand_id.equals("0"))
+                                    if (position_brand_id!=0)
                                         getModel(position_brand_id, vehicle_id, sub_category_id);
 
                                 } catch (Exception e) {
@@ -1859,7 +1859,7 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
                     }
                 } else if (response.body() instanceof GetVehicleModelResponse) {
                     final ArrayList<String> models = new ArrayList<String>();
-                    final ArrayList<String> model_id = new ArrayList<String>();
+                    final ArrayList<Integer> model_id = new ArrayList<>();
                     GetVehicleModelResponse modelResponse = (GetVehicleModelResponse) response.body();
                     if (!modelResponse.getSuccess().isEmpty()) {
                         for (GetVehicleModelResponse.Success success : modelResponse.getSuccess()) {
@@ -1881,7 +1881,7 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
 
                                     position_model_id = model_id.get(position);
 
-                                    if (!position_model_id.equals("0"))
+                                    if (position_model_id!=0)
                                         getVersion(position_model_id, position_brand_id, vehicle_id, sub_category_id);
 
                                 } catch (Exception e) {
@@ -1898,7 +1898,7 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
                     }
                 } else if (response.body() instanceof GetVehicleVersionResponse) {
                     final ArrayList<String> versions = new ArrayList<String>();
-                    final ArrayList<String> version_id = new ArrayList<String>();
+                    final ArrayList<Integer> version_id = new ArrayList<Integer>();
                     GetVehicleVersionResponse versionResponse = (GetVehicleVersionResponse) response.body();
                     if (!versionResponse.getSuccess().isEmpty()) {
                         for (GetVehicleVersionResponse.Success success : versionResponse.getSuccess()) {

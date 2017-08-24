@@ -79,19 +79,19 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
     //SubType
     List<String> mSubTypeList = new ArrayList<>();
     List<String> parsedData = new ArrayList<>();
-    HashMap<String, String> mSubTypeList1 = new HashMap<>();
+    HashMap<String, Integer> mSubTypeList1 = new HashMap<>();
     //Brands
     List<String> mBrandIdList = new ArrayList<>();
     List<String> brandData = new ArrayList<>();
-    HashMap<String, String> mBrandList1 = new HashMap<>();
+    HashMap<String, Integer> mBrandList1 = new HashMap<>();
     //Model
     List<String> mModelIdList = new ArrayList<>();
     List<String> modelData = new ArrayList<>();
-    HashMap<String, String> mModelList1 = new HashMap<>();
+    HashMap<String, Integer> mModelList1 = new HashMap<>();
     //Version
     List<String> mVersionIdList = new ArrayList<>();
     List<String> versionData = new ArrayList<>();
-    HashMap<String, String> mVersionList1 = new HashMap<>();
+    HashMap<String, Integer> mVersionList1 = new HashMap<>();
     //Break
     List<String> mBreakList = new ArrayList<>();
     List<String> breakListData = new ArrayList<>();
@@ -102,10 +102,10 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
     HashMap<String, String> mPumpList1 = new HashMap<>();
     //Staring
     List<String> mStaringList = new ArrayList<>();
-    String category, subcategoryId, brandId, modelId, versionId, brandName = "", modelName = "", versionName = "",
+    String category,   brandName = "", modelName = "", versionName = "",
             subcategoryName, brakeId, brakeName, pumpId, pumpName, uploadauctioncat;
 
-    int categoryId;
+    int categoryId,subcategoryId,brandId, modelId, versionId;
     /*
     Year Fragment...
      */
@@ -440,7 +440,7 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
     /*
     Get Brand
      */
-    private void getBrand(int categoryId, String subcategoryId) {
+    private void getBrand(int categoryId, int subcategoryId) {
         ApiCall mApiCall = new ApiCall(getActivity(), this);
         mApiCall.getBrand(categoryId, subcategoryId);
     }
@@ -448,7 +448,7 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
     /*
     Get Model...
      */
-    private void getModel(int categoryId, String subCategoryId, String brandId) {
+    private void getModel(int categoryId, int subCategoryId, int brandId) {
         ApiCall mApiCall = new ApiCall(getActivity(), this);
         mApiCall.getModel(categoryId, subCategoryId, brandId);
     }
@@ -456,7 +456,7 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
     /*
     Get Version...
      */
-    private void getVersion(int categoryId, String subCategoryId, String brandId, String modelId) {
+    private void getVersion(int categoryId, int subCategoryId, int brandId, int modelId) {
         ApiCall mApiCall = new ApiCall(getActivity(), this);
         mApiCall.getVersion(categoryId, subCategoryId, brandId, modelId);
     }
@@ -465,25 +465,25 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
     /*
     Add Brand
      */
-    private void AddBrand(String keyword, String title, int categoryId, String subCatID) {
+    private void AddBrand(String keyword, String title, int categoryId, int subCatID) {
         ApiCall mApiCall = new ApiCall(getActivity(), this);
-        mApiCall.addBrand(keyword, title, categoryId, subCatID);
+        mApiCall.addVersionModelBrand(keyword, title, categoryId, subCatID,0,0);
     }
 
     /*
     Add Model
      */
-    private void AddModel(String keyword, String title, int categoryId, String subCatID, String brandId) {
+    private void AddModel(String keyword, String title, int categoryId, int subCatID, int brandId) {
         ApiCall mApiCall = new ApiCall(getActivity(), this);
-        mApiCall.addModel(keyword, title, categoryId, subCatID, brandId);
+        mApiCall.addVersionModelBrand(keyword, title, categoryId, subCatID, brandId,0);
     }
 
     /*
     Add Version
      */
-    private void AddVersion(String keyword, String title, int categoryId, String subCatID, String brandId, String modelId) {
+    private void AddVersion(String keyword, String title, int categoryId, int subCatID, int brandId, int modelId) {
         ApiCall mApiCall = new ApiCall(getActivity(), this);
-        mApiCall.addVersion(keyword, title, categoryId, subCatID, brandId, modelId);
+        mApiCall.addVersionModelBrand(keyword, title, categoryId, subCatID, brandId, modelId);
     }
 
     /*
@@ -1312,13 +1312,13 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                     Log.i("Data", "StoreIds" + stringstoreids);
                     Log.i("Data", "StoreNames" + stringstorename);
 
-                    getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_brandId", brandId).apply();
+                    getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putInt("upload_brandId", brandId).apply();
                     getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_brandName", brandstr).apply();
-                    getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_modelId", modelId).apply();
+                    getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putInt("upload_modelId", modelId).apply();
                     getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_modelName", modelstr).apply();
-                    getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_versionId", versionId).apply();
+                    getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putInt("upload_versionId", versionId).apply();
                     getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_versionName", versionstr).apply();
-                    getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_subCatId", subcategoryId).apply();
+                    getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putInt("upload_subCatId", subcategoryId).apply();
                     getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_subCatName", subcategoryName).apply();
                     getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_brakeId", brakeId).apply();
                     getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_brakeName", brakeName).apply();

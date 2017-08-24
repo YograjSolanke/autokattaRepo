@@ -27,16 +27,16 @@ public class GetVehicleVersionResponse {
 
         @SerializedName("version_id")
         @Expose
-        private String versionId;
+        private int versionId;
         @SerializedName("version")
         @Expose
         private String version;
 
-        public String getVersionId() {
+        public int getVersionId() {
             return versionId;
         }
 
-        public void setVersionId(String versionId) {
+        public void setVersionId(int versionId) {
             this.versionId = versionId;
         }
 

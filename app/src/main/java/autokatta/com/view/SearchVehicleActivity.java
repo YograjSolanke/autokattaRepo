@@ -75,11 +75,11 @@ public class SearchVehicleActivity extends AppCompatActivity implements MultiSel
             rowhypo, rowtax, rowfitness, rowpermit, rowfual, rowseat, rowdrive, rowtransmission, rowuse, rowimpl, rowtyre;
 
     String action = "", Scategory, Sbrand, Smodel, Sprice, Syear, Category, subCategory, hrs1, hrs2, hpcap1, hpcap2;
-    String sub_category_id, position_brand_id, position_model_id;
+    int  position_brand_id, position_model_id;
     String city1, city2, city11, city12, city13, city14, city21, city22, city23, city24, brand1, model1, color1, version1, man_yr1, man_yr2, rc1, insurance1, kms1, kms2, hypo1, price1, price2;
     String permit1, tax_validity1, fitness_validity1, permit_validity1, drive1, fual1, bus_type1, air1, invoice1;
     String use1, seating1, transmission1, implement1, body1, boat1, rv1, finance1, tyre1, tyre2, callPermission = "";
-    int count = 0, owner1, Sid, vehicle_id;
+    int count = 0, owner1, Sid, vehicle_id,sub_category_id;
 
     List<String> fuals = new ArrayList<>();
     List<String> colors = new ArrayList<>();
@@ -1035,21 +1035,21 @@ public class SearchVehicleActivity extends AppCompatActivity implements MultiSel
     /*
     Get brandSpinner
      */
-    private void getBrand(int categoryId, String subcategoryId) {
+    private void getBrand(int categoryId, int subcategoryId) {
         mApiCall.getBrand(categoryId, subcategoryId);
     }
 
     /*
     Get modelSpinner...
      */
-    private void getModel(int categoryId, String subCategoryId, String brandId) {
+    private void getModel(int categoryId, int subCategoryId, int brandId) {
         mApiCall.getModel(categoryId, subCategoryId, brandId);
     }
 
     /*
     Get Version...
      */
-    private void getVersion(int categoryId, String subCategoryId, String brandId, String modelId) {
+    private void getVersion(int categoryId, int subCategoryId, int brandId, int modelId) {
         mApiCall.getVersion(categoryId, subCategoryId, brandId, modelId);
     }
 
@@ -1171,7 +1171,7 @@ public class SearchVehicleActivity extends AppCompatActivity implements MultiSel
                     Log.e("GetVehicleTypes", "->");
                     List<String> mSubTypeList = new ArrayList<>();
                     final List<String> parsedData = new ArrayList<>();
-                    final HashMap<String, String> mSubTypeMap = new HashMap<>();
+                    final HashMap<String, Integer> mSubTypeMap = new HashMap<>();
 
                     mSubTypeList.add("Select subcategory");
                     GetVehicleSubTypeResponse mGetVehicleSubTypeResponse = (GetVehicleSubTypeResponse) response.body();
@@ -1224,7 +1224,7 @@ public class SearchVehicleActivity extends AppCompatActivity implements MultiSel
                     Log.e("GetVehicleBrands", "->");
                     List<String> mBrandList = new ArrayList<>();
                     final List<String> brandData = new ArrayList<>();
-                    final HashMap<String, String> mBrandMap = new HashMap<>();
+                    final HashMap<String, Integer> mBrandMap = new HashMap<>();
 
                     mBrandList.add("Select Brands");
                     GetVehicleBrandResponse getVehicleBrandResponse = (GetVehicleBrandResponse) response.body();
@@ -1267,7 +1267,7 @@ public class SearchVehicleActivity extends AppCompatActivity implements MultiSel
                     Log.e("GetVehicleModel", "->");
                     List<String> mModelList = new ArrayList<>();
                     final List<String> modelData = new ArrayList<>();
-                    final HashMap<String, String> mModelMap = new HashMap<>();
+                    final HashMap<String, Integer> mModelMap = new HashMap<>();
 
                     mModelList.add("Select model");
                     GetVehicleModelResponse getVehicleModelResponse = (GetVehicleModelResponse) response.body();
@@ -1310,7 +1310,7 @@ public class SearchVehicleActivity extends AppCompatActivity implements MultiSel
                     Log.e("GetVehicleVersion", "->");
                     List<String> mVersionIdList = new ArrayList<>();
                     final List<String> versionData = new ArrayList<>();
-                    final HashMap<String, String> mVersionMap = new HashMap<>();
+                    final HashMap<String, Integer> mVersionMap = new HashMap<>();
 
                     mVersionIdList.add("Select Version");
                     GetVehicleVersionResponse getVehicleVersionResponse = (GetVehicleVersionResponse) response.body();
@@ -1331,7 +1331,7 @@ public class SearchVehicleActivity extends AppCompatActivity implements MultiSel
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                             if (position != 0) {
-                                String versionId = mVersionMap.get(versionData.get(position));
+                                int versionId = mVersionMap.get(versionData.get(position));
                                 String versionName = versionData.get(position);
 
                                 System.out.println("Version id is::" + versionId);

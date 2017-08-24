@@ -59,31 +59,32 @@ public class ContinueNextRegistration extends AppCompatActivity implements Reque
     Spinner mSpinnerVehitype, mSpinnerModel, mSpinnerBrand, mSpinnerVersion, mSpinnerSubType;
 
     RelativeLayout relavite3;
-    String whichclick = "", subcategoryId, subcategoryName;
+    int subcategoryId;
+    String whichclick = "",  subcategoryName;
     final ArrayList<String> mVehicleTypeList = new ArrayList<>();
     HashMap<String, Integer> mVehicleTypeList1 = new HashMap<>();
     List<String> parsedData1 = new ArrayList<>();
     //SubType
     List<String> mSubTypeList = new ArrayList<>();
     List<String> parsedData = new ArrayList<>();
-    HashMap<String, String> mSubTypeList1 = new HashMap<>();
+    HashMap<String, Integer> mSubTypeList1 = new HashMap<>();
     //Brands
     List<String> mBrandIdList = new ArrayList<>();
     List<String> brandData = new ArrayList<>();
-    HashMap<String, String> mBrandList1 = new HashMap<>();
+    HashMap<String, Integer> mBrandList1 = new HashMap<>();
     //Model
     List<String> mModelIdList = new ArrayList<>();
     List<String> modelData = new ArrayList<>();
-    HashMap<String, String> mModelList1 = new HashMap<>();
+    HashMap<String, Integer> mModelList1 = new HashMap<>();
     //Version
     List<String> mVersionIdList = new ArrayList<>();
     List<String> versionData = new ArrayList<>();
-    HashMap<String, String> mVersionList1 = new HashMap<>();
+    HashMap<String, Integer> mVersionList1 = new HashMap<>();
 
     Bundle bundle = new Bundle();
-    String brandId, brandName, modelId, modelName, versionId, versionName;
+    String  brandName,  modelName,  versionName;
     ApiCall mApicall;
-    int vehicle_idD;
+    int vehicle_idD,brandId,modelId,versionId;
 
     String action = "", vehiType = "", vehiYear = "", vehiBrand = "", vehiModel = "", vehiVersion = "", vehiSubcat = "", ids = "", vehino = "",
             vehitaxValidity = "", vehifitnessValidity = "", vehipermitValidity = "", vehiinsurance = "", vehipuc = "", vehilastServicedate = "",
@@ -1070,7 +1071,7 @@ public class ContinueNextRegistration extends AppCompatActivity implements Reque
     /*
     Get Brand
      */
-    private void getBrand(int categoryId, String subcategoryId) {
+    private void getBrand(int categoryId, int subcategoryId) {
         ApiCall mApiCall = new ApiCall(this, this);
         mApiCall.getBrand(categoryId, subcategoryId);
     }
@@ -1078,7 +1079,7 @@ public class ContinueNextRegistration extends AppCompatActivity implements Reque
     /*
     Get Model...
      */
-    private void getModel(int categoryId, String subCategoryId, String brandId) {
+    private void getModel(int categoryId, int subCategoryId, int brandId) {
         ApiCall mApiCall = new ApiCall(this, this);
         mApiCall.getModel(categoryId, subCategoryId, brandId);
     }
@@ -1086,7 +1087,7 @@ public class ContinueNextRegistration extends AppCompatActivity implements Reque
     /*
     Get Version...
      */
-    private void getVersion(int categoryId, String subCategoryId, String brandId, String modelId) {
+    private void getVersion(int categoryId, int subCategoryId, int brandId, int modelId) {
         ApiCall mApiCall = new ApiCall(this, this);
         mApiCall.getVersion(categoryId, subCategoryId, brandId, modelId);
     }
@@ -1095,25 +1096,25 @@ public class ContinueNextRegistration extends AppCompatActivity implements Reque
     /*
     Add Brand
      */
-    private void AddBrand(String keyword, String title, int categoryId, String subCatID) {
+    private void AddBrand(String keyword, String title, int categoryId, int subCatID) {
         ApiCall mApiCall = new ApiCall(this, this);
-        mApiCall.addBrand(keyword, title, categoryId, subCatID);
+        mApiCall.addVersionModelBrand(keyword, title, categoryId, subCatID,0,0);
     }
 
     /*
     Add Model
      */
-    private void AddModel(String keyword, String title, int categoryId, String subCatID, String brandId) {
+    private void AddModel(String keyword, String title, int categoryId, int subCatID, int brandId) {
         ApiCall mApiCall = new ApiCall(this, this);
-        mApiCall.addModel(keyword, title, categoryId, subCatID, brandId);
+        mApiCall.addVersionModelBrand(keyword, title, categoryId, subCatID, brandId,0);
     }
 
     /*
     Add Version
      */
-    private void AddVersion(String keyword, String title, int categoryId, String subCatID, String brandId, String modelId) {
+    private void AddVersion(String keyword, String title, int categoryId, int subCatID, int brandId, int modelId) {
         ApiCall mApiCall = new ApiCall(this, this);
-        mApiCall.addVersion(keyword, title, categoryId, subCatID, brandId, modelId);
+        mApiCall.addVersionModelBrand(keyword, title, categoryId, subCatID, brandId, modelId);
     }
 
     public void onBackPressed() {

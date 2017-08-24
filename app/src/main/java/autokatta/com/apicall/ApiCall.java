@@ -1246,7 +1246,7 @@ public class ApiCall {
     /*
     Add Brand
      */
-    public void addBrand(String keyword, String title, int categoryId, String subCatID) {
+ /*   public void addBrand(String keyword, String title, int categoryId, String subCatID) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
 
@@ -1281,10 +1281,10 @@ public class ApiCall {
             e.printStackTrace();
         }
     }
-
-    /*
+*/
+   /* *//*
     Add Model
-     */
+     *//*
     public void addModel(String keyword, String title, int categoryId, String subCatID, String brandId) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
@@ -1319,13 +1319,13 @@ public class ApiCall {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
     /*
-    Add Version
+    Add Version or model or brand through one
      */
-    public void addVersion(String keyword, String title, int categoryId, String subCatID, String brandId,
-                           String modleId) {
+    public void addVersionModelBrand(String keyword, String title, int categoryId, int subCatID, int brandId,
+                           int modleId) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
 
@@ -1520,7 +1520,7 @@ public class ApiCall {
     /*
     Get Brand
      */
-    public void getBrand(int category, String subCategory) {
+    public void getBrand(int category, int subCategory) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 Retrofit mRetrofit = new Retrofit.Builder()
@@ -1553,7 +1553,7 @@ public class ApiCall {
     /*
     Get Model
      */
-    public void getModel(int category, String subCategory, String brandId) {
+    public void getModel(int category, int subCategory, int brandId) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 Retrofit mRetrofit = new Retrofit.Builder()
@@ -1586,7 +1586,7 @@ public class ApiCall {
     /*
     Get Version
      */
-    public void getVersion(int category, String subCategory, String brandId, String modelId) {
+    public void getVersion(int category, int subCategory, int brandId, int modelId) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 Retrofit mRetrofit = new Retrofit.Builder()
@@ -8151,7 +8151,7 @@ get ExchangeMela Analytics Data
                 .connectTimeout(60, TimeUnit.SECONDS);
         // add your other interceptors …
         // add logging as last interceptor
-        httpClient.addInterceptor(logging);
+        httpClient.addInterceptor(logging).build();
         return httpClient;
     }
 
@@ -8164,7 +8164,7 @@ get ExchangeMela Analytics Data
                 .connectTimeout(60, TimeUnit.SECONDS);
         // add your other interceptors …
         // add logging as last interceptor
-        httpClient.addInterceptor(logging);
+        httpClient.addInterceptor(logging).build();
         return httpClient;
     }
 

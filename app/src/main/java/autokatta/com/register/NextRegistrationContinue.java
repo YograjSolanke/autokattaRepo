@@ -55,7 +55,8 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
             purchaseCancel, fitnessCancel, taxCancel, permitCancel, insuranceCancel, pucCancel, lastServiceCancel,
             nextServiceCancel;
 
-    String whichclick = "", subcategoryId, subcategoryName;
+    String whichclick = "",  subcategoryName;
+    int subcategoryId;
 
     final ArrayList<String> mVehicleTypeList = new ArrayList<>();
     HashMap<String, Integer> mVehicleTypeList1 = new HashMap<>();
@@ -63,19 +64,19 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
     //SubType
     List<String> mSubTypeList = new ArrayList<>();
     List<String> parsedData = new ArrayList<>();
-    HashMap<String, String> mSubTypeList1 = new HashMap<>();
+    HashMap<String, Integer> mSubTypeList1 = new HashMap<>();
     //Brands
     List<String> mBrandIdList = new ArrayList<>();
     List<String> brandData = new ArrayList<>();
-    HashMap<String, String> mBrandList1 = new HashMap<>();
+    HashMap<String, Integer> mBrandList1 = new HashMap<>();
     //Model
     List<String> mModelIdList = new ArrayList<>();
     List<String> modelData = new ArrayList<>();
-    HashMap<String, String> mModelList1 = new HashMap<>();
+    HashMap<String, Integer> mModelList1 = new HashMap<>();
     //Version
     List<String> mVersionIdList = new ArrayList<>();
     List<String> versionData = new ArrayList<>();
-    HashMap<String, String> mVersionList1 = new HashMap<>();
+    HashMap<String, Integer> mVersionList1 = new HashMap<>();
 
     //Edit Vehicle data to show in spinner
     List<String> TypeList = new ArrayList<>();
@@ -84,9 +85,9 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
     List<String> ModelList = new ArrayList<>();
     List<String> VersionList = new ArrayList<>();
 
-    String brandId, brandName, modelId, modelName, versionId, versionName;
+    String  brandName,modelName,versionName;
     ApiCall mApicall;
-    int vehicle_idD;
+    int vehicle_idD,brandId,modelId,versionId;
 
     String action = "", vehiType = "", vehiYear = "", vehiBrand = "", vehiModel = "", vehiVersion = "", vehiSubcat = "", ids = "", vehino = "",
             vehitaxValidity = "", vehifitnessValidity = "", vehipermitValidity = "", vehiinsurance = "", vehipuc = "", vehilastServicedate = "",
@@ -928,7 +929,6 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
                                             public void onClick(DialogInterface dialog, int which) {
                                                 String edversion = input.getText().toString();
                                                 if (edversion.equals(""))
-
                                                     CustomToast.customToast(getApplicationContext(), "Enter Version");
                                                 else
                                                     AddVersion("Version", edversion, vehicle_idD, subcategoryId, brandId, modelId);
@@ -1098,7 +1098,7 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
     /*
     Get Brand
      */
-    private void getBrand(int categoryId, String subcategoryId) {
+    private void getBrand(int categoryId, int subcategoryId) {
         ApiCall mApiCall = new ApiCall(this, this);
         mApiCall.getBrand(categoryId, subcategoryId);
     }
@@ -1106,7 +1106,7 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
     /*
     Get Model...
      */
-    private void getModel(int categoryId, String subCategoryId, String brandId) {
+    private void getModel(int categoryId, int subCategoryId, int brandId) {
         ApiCall mApiCall = new ApiCall(this, this);
         mApiCall.getModel(categoryId, subCategoryId, brandId);
     }
@@ -1114,7 +1114,7 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
     /*
     Get Version...
      */
-    private void getVersion(int categoryId, String subCategoryId, String brandId, String modelId) {
+    private void getVersion(int categoryId, int subCategoryId, int brandId, int modelId) {
         ApiCall mApiCall = new ApiCall(this, this);
         mApiCall.getVersion(categoryId, subCategoryId, brandId, modelId);
     }
@@ -1122,25 +1122,25 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
     /*
     Add Brand
      */
-    private void AddBrand(String keyword, String title, int categoryId, String subCatID) {
+    private void AddBrand(String keyword, String title, int categoryId, int subCatID) {
         ApiCall mApiCall = new ApiCall(this, this);
-        mApiCall.addBrand(keyword, title, categoryId, subCatID);
+        mApiCall.addVersionModelBrand(keyword, title, categoryId, subCatID,0,0);
     }
 
     /*
     Add Model
      */
-    private void AddModel(String keyword, String title, int categoryId, String subCatID, String brandId) {
+    private void AddModel(String keyword, String title, int categoryId, int subCatID, int brandId) {
         ApiCall mApiCall = new ApiCall(this, this);
-        mApiCall.addModel(keyword, title, categoryId, subCatID, brandId);
+        mApiCall.addVersionModelBrand(keyword, title, categoryId, subCatID, brandId,0);
     }
 
     /*
     Add Version
      */
-    private void AddVersion(String keyword, String title, int categoryId, String subCatID, String brandId, String modelId) {
+    private void AddVersion(String keyword, String title, int categoryId, int subCatID, int brandId, int modelId) {
         ApiCall mApiCall = new ApiCall(this, this);
-        mApiCall.addVersion(keyword, title, categoryId, subCatID, brandId, modelId);
+        mApiCall.addVersionModelBrand(keyword, title, categoryId, subCatID, brandId, modelId);
     }
 
     @Override
