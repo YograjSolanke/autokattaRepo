@@ -678,6 +678,8 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                         ds.setUnderlineText(false);
                         ds.setColor(mActivity.getResources().getColor(R.color.colorPrimaryDark));
                         ds.setFakeBoldText(true);
+                        ds.setTextSize((float) 30.0);
+                        Log.i("TextSize", "->" + ds.getTextSize());
                     }
                 }, 0, notificationList.get(position).getSenderName().length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
@@ -692,6 +694,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                                    ds.setUnderlineText(false);
                                    ds.setColor(mActivity.getResources().getColor(R.color.colorPrimaryDark));
                                    ds.setFakeBoldText(true);
+                                   ds.setTextSize((float) 30.0);
                                }
                            }, notificationList.get(position).getSenderName().length() + notificationList.get(position).getAction().length() + 2,
                         notificationList.get(position).getSenderName().length() +
