@@ -403,19 +403,26 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
     private void alertBoxGroups(final String[] groupTitleArray) {
         final List<String> mSelectedItems = new ArrayList<>();
         mSelectedItems.clear();
+        final boolean[] itemsChecked = new boolean[groupTitleArray.length];
+        for (int i = 0; i < groupIdList.size(); i++) {
+            if (groupIdList.get(i).matches(prevGroupIds))
+                itemsChecked[i] = true;
+            else
+                itemsChecked[i] = false;
+        }
 
         android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(ServiceViewActivity.this);
 
         // set the dialog title
         builder.setTitle("Select Groups From Following")
                 .setCancelable(true)
-                .setMultiChoiceItems(groupTitleArray, null, new DialogInterface.OnMultiChoiceClickListener() {
+                .setMultiChoiceItems(groupTitleArray, itemsChecked, new DialogInterface.OnMultiChoiceClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which, boolean isChecked) {
                         if (isChecked) {
-                            mSelectedItems.add(groupTitleArray[which]);
-                        } else if (mSelectedItems.contains(groupTitleArray[which])) {
-                            mSelectedItems.remove(groupTitleArray[which]);
+                            mSelectedItems.add(groupIdArray[which]);
+                        } else if (mSelectedItems.contains(groupIdArray[which])) {
+                            mSelectedItems.remove(groupIdArray[which]);
                         }
                     }
                 })
@@ -426,9 +433,10 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
                     public void onClick(DialogInterface dialog, int id) {
                         stringgroupids = "";
                         stringgroupname = "";
+                        prevGroupIds = "";
                         for (int i = 0; i < mSelectedItems.size(); i++) {
-                            for (int j = 0; j < groupTitleArray.length; j++) {
-                                if (mSelectedItems.get(i).equals(groupTitleArray[j])) {
+                            for (int j = 0; j < groupIdArray.length; j++) {
+                                if (mSelectedItems.get(i).equals(groupIdArray[j])) {
                                     if (stringgroupids.equals("")) {
                                         stringgroupids = groupIdList.get(j);
                                         stringgroupname = groupTitleArray[j];
@@ -439,6 +447,7 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
                                 }
                             }
                         }
+                        prevGroupIds = stringgroupids;
                         //setPrivacy(stringgroupids);
 
                         if (mSelectedItems.size() == 0) {
