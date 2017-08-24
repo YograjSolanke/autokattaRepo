@@ -49,13 +49,17 @@ import autokatta.com.response.AuctionAllVehicleData;
 import autokatta.com.response.AuctionAllVehicleResponse;
 import autokatta.com.response.AuctionReauctionVehicleResponse;
 import autokatta.com.response.SpecialClauseGetResponse;
+import co.mobiwise.materialintro.animation.MaterialIntroListener;
+import co.mobiwise.materialintro.shape.Focus;
+import co.mobiwise.materialintro.shape.FocusGravity;
+import co.mobiwise.materialintro.view.MaterialIntroView;
 import retrofit2.Response;
 
 /**
  * Created by ak-003 on 1/4/17.
  */
 
-public class AddVehiclesForAuctionFragment extends Fragment implements RequestNotifier, View.OnTouchListener, View.OnClickListener {
+public class AddVehiclesForAuctionFragment extends Fragment implements RequestNotifier, View.OnTouchListener, View.OnClickListener, MaterialIntroListener {
 
     public AddVehiclesForAuctionFragment() {
         //empty constructor
@@ -68,6 +72,7 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
     EditText auctionTitle, startDate, startTime, endDate, endTime;
     Button btnspecial_clauses;
     ImageView editpencil, donecheck;
+    private static final String INTRO_FOCUS_1 = "intro_focus_1";
     Button btnbyteam, btnbyself, btnbyadmin, btnbyreauction, buttonnext;
     ListView byteam_listview, byself_listview, byadmin_listview, byreauction_listview;
     Spinner selectAuctionsSpinner;
@@ -94,7 +99,6 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-
         final View root = inflater.inflate(R.layout.fragment_addvehicles_auction, container, false);
 
         contactnumber = getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).getString("loginContact", "");
@@ -136,6 +140,7 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
 
         editpencil = (ImageView) root.findViewById(R.id.editpencil);
         donecheck = (ImageView) root.findViewById(R.id.donecheck);
+        showIntro(donecheck, INTRO_FOCUS_1, "Confirm event details first", Focus.MINIMUM);
 
         btnbyteam = (Button) root.findViewById(R.id.btnbyteam);
         btnbyself = (Button) root.findViewById(R.id.btnbyself);
@@ -913,7 +918,6 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
 
     @Override
     public void notifyString(String str) {
-
         if (str != null) {
             if (str.startsWith("Success")) {
                 CustomToast.customToast(getActivity(), "Update Successfull");
@@ -936,6 +940,25 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
             }
         } else
             CustomToast.customToast(getActivity(), getString(R.string.no_response));
+    }
+
+    public void showIntro(View view, String id, String text, Focus focusType) {
+        new MaterialIntroView.Builder(getActivity())
+                .enableDotAnimation(false)
+                .setFocusGravity(FocusGravity.CENTER)
+                .setFocusType(focusType)
+                .setDelayMillis(200)
+                .enableFadeAnimation(true)
+                .setListener(this)
+                .performClick(true)
+                .setInfoText(text)
+                .setTarget(view)
+                .setUsageId(id) //THIS SHOULD BE UNIQUE ID
+                .show();
+    }
+
+    @Override
+    public void onUserClicked(String s) {
 
     }
 }

@@ -25,6 +25,7 @@ import java.util.List;
 import autokatta.com.R;
 import autokatta.com.events.AddVehiclesForAuctionFragment;
 import autokatta.com.response.MySavedAuctionResponse;
+import co.mobiwise.materialintro.prefs.PreferencesManager;
 
 /**
  * Created by ak-004 on 31/3/17.
@@ -135,7 +136,7 @@ public class SavedAuctionAdapter extends RecyclerView.Adapter<SavedAuctionAdapte
                    b.putString("noofvehicles", mMainlist.get(position).getNoOfVehicles());
                }
                 b.putBooleanArray("positionArray", mMainlist.get(position).getPositionArray());
-
+                new PreferencesManager(activity.getApplicationContext()).resetAll();
                 AddVehiclesForAuctionFragment frag = new AddVehiclesForAuctionFragment();
                 FragmentManager fragmentManager = ((FragmentActivity) activity).getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
