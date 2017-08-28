@@ -76,7 +76,6 @@ public class AutokattaContactAdapter extends RecyclerView.Adapter<AutokattaConta
             btnFollow = (Button) itemView.findViewById(R.id.btnfollow);
             btnUnfollow = (Button) itemView.findViewById(R.id.btnunfollow);
             btnsendmsg = (Button) itemView.findViewById(R.id.btnsendmsg);
-
         }
 
     }
@@ -103,7 +102,7 @@ public class AutokattaContactAdapter extends RecyclerView.Adapter<AutokattaConta
     public void onBindViewHolder(final AutokattaContactAdapter.YoHolder holder, int position) {
         holder.mTextName.setText(contactdata.get(position).getUsername());
         holder.mTextNumber.setText(contactdata.get(position).getContact());
-
+        holder.imgCall.setVisibility(VISIBLE);
         if (contactdata.get(position).getMystatus() != null && !contactdata.get(position).getMystatus().equals("null"))
             holder.mTextStatus.setText(contactdata.get(position).getMystatus());
         else
@@ -140,14 +139,12 @@ public class AutokattaContactAdapter extends RecyclerView.Adapter<AutokattaConta
 
 
         //calling Functionality
-       /* holder.imgCall.setOnClickListener(new View.OnClickListener() {
+        holder.imgCall.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 call(contactdata.get(holder.getAdapterPosition()).getContact());
-
             }
-        });*/
+        });
 
        /*Send Message*/
         holder.btnsendmsg.setOnClickListener(new OnClickListener() {

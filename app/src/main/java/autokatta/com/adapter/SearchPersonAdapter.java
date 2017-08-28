@@ -98,6 +98,7 @@ public class SearchPersonAdapter extends RecyclerView.Adapter<SearchPersonAdapte
         myContact = mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).getString("loginContact", "");
         holder.mTextName.setText(contactdata.get(position).getUsername());
         holder.mTextNumber.setText(contactdata.get(position).getContact());
+        holder.mCity.setVisibility(VISIBLE);
         holder.mCity.setText(contactdata.get(position).getCity());
 
         if (contactdata.get(position).getMystatus()==null)

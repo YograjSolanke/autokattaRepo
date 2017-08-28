@@ -118,7 +118,6 @@ public class SearchPerson extends Fragment implements RequestNotifier {
     }
 
     private void getSearchResults(String searchString) {
-
         if (mConnectionDetector.isConnectedToInternet()) {
             //dialog.show();
             ApiCall mApiCall = new ApiCall(getActivity(), this);
@@ -208,7 +207,6 @@ public class SearchPerson extends Fragment implements RequestNotifier {
     Filter Data...
      */
     public void filterData(final String[] incomingCity) {
-
         final List<String> mSelectedItems = new ArrayList<>();
         android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(getActivity());
         // set the dialog title
@@ -252,7 +250,6 @@ public class SearchPerson extends Fragment implements RequestNotifier {
                             if (allSearchDataArrayList.get(w).contactVisibility) {
                                 allSearchDataArrayList_new.add(allSearchDataArrayList.get(w));
                             }
-
                         }
 
                         adapter = new SearchPersonAdapter(getActivity(), allSearchDataArrayList_new);
@@ -269,7 +266,6 @@ public class SearchPerson extends Fragment implements RequestNotifier {
                         // removes the AlertDialog in the screen
                     }
                 })
-
                 .show();
 
     }

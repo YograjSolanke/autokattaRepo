@@ -66,6 +66,7 @@
                 android:layout_toEndOf="@+id/profileImg"
                 android:layout_toStartOf="@+id/btnsendmsg"
                 android:text="City"
+                android:visibility="gone"
                 android:textColor="#2C3343"
                 android:textSize="15sp"
                 android:textStyle="bold" />
@@ -83,7 +84,7 @@
                 android:textSize="15sp"
                 android:textStyle="italic" />
 
-            <!--<ImageView
+            <ImageView
                 android:id="@+id/callImg"
                 android:layout_width="40dp"
                 android:layout_height="50dp"
@@ -91,7 +92,8 @@
                 android:layout_marginEnd="90dp"
                 android:contentDescription="@string/app_name"
                 android:padding="5dp"
-                android:src="@android:drawable/ic_menu_call" />-->
+                android:visibility="gone"
+                android:src="@android:drawable/ic_menu_call" />
 
             <Button
                 android:id="@+id/btnfollow"
