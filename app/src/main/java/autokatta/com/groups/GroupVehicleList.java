@@ -202,7 +202,7 @@ public class GroupVehicleList extends Fragment implements SwipeRefreshLayout.OnR
                     for (GetRTOCityResponse.Success success : mGetRTOCityResponse.getSuccess()) {
                         success.setRtoCityId(success.getRtoCityId());
                         success.setRtoCityName(success.getRtoCityName());
-                        mRtoCity.add(success.getRtoCityName());
+                        mRtoCity.add(success.getRtoCode());
                     }
                     if (getActivity() != null) {
                         ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(getActivity(),

@@ -1394,7 +1394,7 @@ public class SearchVehicleActivity extends AppCompatActivity implements MultiSel
                     for (GetRTOCityResponse.Success success : mGetRTOCityResponse.getSuccess()) {
                         success.setRtoCityId(success.getRtoCityId());
                         success.setRtoCityName(success.getRtoCityName());
-                        mRtoCity.add(success.getRtoCityName());
+                        mRtoCity.add(success.getRtoCode());
                     }
                     ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(getApplicationContext(),
                             R.layout.registration_spinner, mRtoCity);

@@ -82,6 +82,7 @@ public class MemberVehicleListFragment extends Fragment implements SwipeRefreshL
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                getRtoCity();
                 mRecyclerView = (RecyclerView) mGroupVehicleList.findViewById(R.id.rv_recycler_view);
                 editbrand = (EditText) mGroupVehicleList.findViewById(R.id.editbrand);
                 editmodel = (EditText) mGroupVehicleList.findViewById(R.id.editmodel);
@@ -138,7 +139,7 @@ public class MemberVehicleListFragment extends Fragment implements SwipeRefreshL
                                 String Rcontact = getBundle.getString("Rcontact");
                                 getGroupVehicles(Rcontact);
                             }
-                            getRtoCity();
+
 
                 /*
                 Recycler View OnScrollChanged Listener...
@@ -356,7 +357,7 @@ public class MemberVehicleListFragment extends Fragment implements SwipeRefreshL
                     for (GetRTOCityResponse.Success success : mGetRTOCityResponse.getSuccess()) {
                         success.setRtoCityId(success.getRtoCityId());
                         success.setRtoCityName(success.getRtoCityName());
-                        mRtoCity.add(success.getRtoCityName());
+                        mRtoCity.add(success.getRtoCode());
                     }
                     if (getActivity() != null) {
                         ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(getActivity(),

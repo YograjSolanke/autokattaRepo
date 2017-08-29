@@ -28,6 +28,9 @@ public class GetRTOCityResponse {
         @SerializedName("rtoCityId")
         @Expose
         private String rtoCityId;
+        @SerializedName("rtoCode")
+        @Expose
+        private String rtoCode;
         @SerializedName("rtoCityName")
         @Expose
         private String rtoCityName;
@@ -38,6 +41,14 @@ public class GetRTOCityResponse {
 
         public void setRtoCityId(String rtoCityId) {
             this.rtoCityId = rtoCityId;
+        }
+
+        public String getRtoCode() {
+            return rtoCode;
+        }
+
+        public void setRtoCode(String rtoCode) {
+            this.rtoCode = rtoCode;
         }
 
         public String getRtoCityName() {

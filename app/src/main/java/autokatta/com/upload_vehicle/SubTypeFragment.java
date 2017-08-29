@@ -901,7 +901,8 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
                     for (GetRTOCityResponse.Success success : mGetRTOCityResponse.getSuccess()) {
                         success.setRtoCityId(success.getRtoCityId());
                         success.setRtoCityName(success.getRtoCityName());
-                        mRtoCity.add(success.getRtoCityName());
+                        success.setRtoCode(success.getRtoCode());
+                        mRtoCity.add(success.getRtoCode());
                     }
                     if (getActivity() != null) {
                         ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),

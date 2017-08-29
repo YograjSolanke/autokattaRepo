@@ -1877,7 +1877,7 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
                     GetRTOCityResponse cityResponse = (GetRTOCityResponse) response.body();
                     if (!cityResponse.getSuccess().isEmpty()) {
                         for (GetRTOCityResponse.Success success : cityResponse.getSuccess()) {
-                            RtoCity.add(success.getRtoCityName());
+                            RtoCity.add(success.getRtoCode());
                         }
                         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(),
                                 android.R.layout.simple_spinner_item, RtoCity);
