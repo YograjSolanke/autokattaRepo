@@ -40,6 +40,7 @@ import java.net.UnknownHostException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -100,9 +101,11 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
     private List<String> storeTitleList = new ArrayList<>();
     private String[] storeTitleArray = new String[0];
     private String[] storeIdArray = new String[0];
-    private String stringstoreids = "";
+    private String stringstoreids = "", prevGroupIds = "", prevStoreIds = "";
     private String stringstorename = "";
     private KProgressHUD hud;
+    private boolean[] itemsCheckedGroups;
+    private boolean[] itemsCheckedStores;
 
     public MyUploadedVehicleAdapter(Activity activity1, List<MyUploadedVehiclesResponse.Success> successList) {
         this.activity = activity1;
@@ -118,7 +121,7 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
     }
 
     @Override
-    public void onBindViewHolder(final MyUploadedVehicleAdapter.VehicleHolder holder, final int position) {
+    public void onBindViewHolder(final MyUploadedVehicleAdapter.VehicleHolder holder, int position) {
         final List<String> vimages = new ArrayList<>();
         holder.edittitles.setText(mMainList.get(position).getTitle());
         holder.editprices.setText(mMainList.get(position).getPrice());
@@ -139,6 +142,8 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
         else
             holder.editkms.setText(mMainList.get(position).getKmsRunning());
 
+        prevGroupIds = mMainList.get(position).getGroupIDs().replaceAll(" ", "");
+        prevStoreIds = mMainList.get(position).getStoreIDs().replaceAll(" ", "");
         //To set Date
         try {
             //To set Date
@@ -213,16 +218,16 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
                 ActivityOptions option = ActivityOptions.makeCustomAnimation(activity, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
                 Bundle b = new Bundle();
                 //    b.putString("sender",storeContact);
-                b.putString("sender","");
-                b.putString("sendername","");
+                b.putString("sender", "");
+                b.putString("sendername", "");
                 b.putString("keyword", "Vehicle");
-                b.putString("category", mMainList.get(position).getCategory());
-                b.putString("title", mMainList.get(position).getTitle());
-                b.putString("brand", mMainList.get(position).getManufacturer());
-                b.putString("model",  mMainList.get(position).getModel());
-                b.putString("price", mMainList.get(position).getPrice());
+                b.putString("category", mMainList.get(holder.getAdapterPosition()).getCategory());
+                b.putString("title", mMainList.get(holder.getAdapterPosition()).getTitle());
+                b.putString("brand", mMainList.get(holder.getAdapterPosition()).getManufacturer());
+                b.putString("model", mMainList.get(holder.getAdapterPosition()).getModel());
+                b.putString("price", mMainList.get(holder.getAdapterPosition()).getPrice());
                 b.putString("image", vimages.get(0));
-                b.putInt("vehicleid",  mMainList.get(position).getVehicleId());
+                b.putInt("vehicleid", mMainList.get(holder.getAdapterPosition()).getVehicleId());
                 b.putString("classname", "myuploadedvehicleadapter");
 
                 Intent intent = new Intent(activity, AddManualEnquiry.class);
@@ -504,7 +509,7 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
                     .setLabel("loading groups...")
                     .setMaxProgress(100)
                     .show();
-            
+
             add.enqueue(new Callback<ProfileGroupResponse>() {
                 @Override
                 public void onResponse(Call<ProfileGroupResponse> call, Response<ProfileGroupResponse> response) {
@@ -512,7 +517,7 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
                         groupIdList.clear();
                         groupTitleList.clear();
                         hud.dismiss();
-                        
+
                         ProfileGroupResponse mProfileGroupResponse = (ProfileGroupResponse) response.body();
                         for (ProfileGroupResponse.MyGroup success : mProfileGroupResponse.getSuccess().getMyGroups()) {
                             groupIdList.add(String.valueOf(success.getId()));
@@ -546,6 +551,7 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
                             });
                             alertDialog.show();
                         } else {
+                            itemsCheckedGroups = new boolean[groupTitleArray.length];
                             alertBoxGroups(groupTitleArray);
                         }
                     } else {
@@ -571,19 +577,30 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
     private void alertBoxGroups(final String[] groupTitleArray) {
         final List<String> mSelectedItems = new ArrayList<>();
         mSelectedItems.clear();
+        String[] prearra = prevGroupIds.split(",");
+
+        for (int i = 0; i < groupIdList.size(); i++) {
+            if (Arrays.asList(prearra).contains(groupIdList.get(i))) {
+                itemsCheckedGroups[i] = true;
+                mSelectedItems.add(groupIdList.get(i));
+            } else
+                itemsCheckedGroups[i] = false;
+        }
 
         android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(activity);
 
         // set the dialog title
         builder.setTitle("Select Groups From Following")
                 .setCancelable(true)
-                .setMultiChoiceItems(groupTitleArray, null, new DialogInterface.OnMultiChoiceClickListener() {
+                .setMultiChoiceItems(groupTitleArray, itemsCheckedGroups, new DialogInterface.OnMultiChoiceClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which, boolean isChecked) {
                         if (isChecked) {
-                            mSelectedItems.add(groupTitleArray[which]);
-                        } else if (mSelectedItems.contains(groupTitleArray[which])) {
-                            mSelectedItems.remove(groupTitleArray[which]);
+                            mSelectedItems.add(groupIdArray[which]);
+                            itemsCheckedGroups[which] = true;
+                        } else if (mSelectedItems.contains(groupIdArray[which])) {
+                            mSelectedItems.remove(groupIdArray[which]);
+                            itemsCheckedGroups[which] = false;
                         }
                     }
                 })
@@ -592,11 +609,14 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
 
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
+
+                        System.out.println("selected ids=" + mSelectedItems);
                         stringgroupids = "";
                         stringgroupname = "";
+                        prevGroupIds = "";
                         for (int i = 0; i < mSelectedItems.size(); i++) {
-                            for (int j = 0; j < groupTitleArray.length; j++) {
-                                if (mSelectedItems.get(i).equals(groupTitleArray[j])) {
+                            for (int j = 0; j < groupIdArray.length; j++) {
+                                if (mSelectedItems.get(i).equals(groupIdArray[j])) {
                                     if (stringgroupids.equals("")) {
                                         stringgroupids = groupIdList.get(j);
                                         stringgroupname = groupTitleArray[j];
@@ -607,7 +627,9 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
                                 }
                             }
                         }
+                        prevGroupIds = stringgroupids;
                         setPrivacy(stringgroupids, "");
+
                         if (mSelectedItems.size() == 0) {
                             CustomToast.customToast(activity, "No Group Was Selected");
                             stringgroupids = "";
@@ -624,6 +646,7 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
 
                 })
                 .show();
+
     }
 
     /*
@@ -655,6 +678,7 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
                         storeIdList.clear();
                         storeTitleList.clear();
                         hud.dismiss();
+
                         MyStoreResponse mProfileGroupResponse = response.body();
                         for (MyStoreResponse.Success success : mProfileGroupResponse.getSuccess()) {
                             storeIdList.add(String.valueOf(success.getId()));
@@ -688,6 +712,7 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
                             });
                             alertDialog.show();
                         } else {*/
+                        itemsCheckedStores = new boolean[storeTitleArray.length];
                         alertBoxStore(storeTitleArray);
                         //}
                     } else {
@@ -710,19 +735,31 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
     private void alertBoxStore(final String[] storeTitleArray) {
         final List<String> mSelectedItems = new ArrayList<>();
         mSelectedItems.clear();
+        String[] prearra = prevStoreIds.split(",");
+
+        for (int i = 0; i < storeIdList.size(); i++) {
+            if (Arrays.asList(prearra).contains(storeIdList.get(i))) {
+                itemsCheckedStores[i] = true;
+                mSelectedItems.add(storeIdList.get(i));
+            } else
+                itemsCheckedStores[i] = false;
+        }
 
         android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(activity);
 
         // set the dialog title
         builder.setTitle("Select Store From Following")
                 .setCancelable(true)
-                .setMultiChoiceItems(storeTitleArray, null, new DialogInterface.OnMultiChoiceClickListener() {
+                .setMultiChoiceItems(storeTitleArray, itemsCheckedStores, new DialogInterface.OnMultiChoiceClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+
                         if (isChecked) {
-                            mSelectedItems.add(storeTitleArray[which]);
-                        } else if (mSelectedItems.contains(storeTitleArray[which])) {
-                            mSelectedItems.remove(storeTitleArray[which]);
+                            mSelectedItems.add(storeIdArray[which]);
+                            itemsCheckedStores[which] = true;
+                        } else if (mSelectedItems.contains(storeIdArray[which])) {
+                            mSelectedItems.remove(storeIdArray[which]);
+                            itemsCheckedStores[which] = false;
                         }
                     }
                 })
@@ -733,9 +770,10 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
                     public void onClick(DialogInterface dialog, int id) {
                         stringstoreids = "";
                         stringstorename = "";
+                        prevStoreIds = "";
                         for (int i = 0; i < mSelectedItems.size(); i++) {
-                            for (int j = 0; j < storeTitleArray.length; j++) {
-                                if (mSelectedItems.get(i).equals(storeTitleArray[j])) {
+                            for (int j = 0; j < storeIdArray.length; j++) {
+                                if (mSelectedItems.get(i).equals(storeIdArray[j])) {
                                     if (stringstoreids.equals("")) {
                                         stringstoreids = storeIdList.get(j);
                                         stringstorename = storeTitleArray[j];
@@ -746,6 +784,7 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
                                 }
                             }
                         }
+                        prevStoreIds = stringstoreids;
                         setPrivacy("", stringstoreids);
                         if (mSelectedItems.size() == 0) {
                             CustomToast.customToast(activity, "No store Was Selected");
@@ -796,7 +835,7 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
             CustomToast.customToast(activity, activity.getString(R.string.no_internet));
         } else {
             Log.i("Check Class-"
-                    , "MyUploadedVehiclesActivity");
+                    , "MyUploadedVehiclesAdapter");
             error.printStackTrace();
         }
 
@@ -809,6 +848,8 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
                 CustomToast.customToast(activity, "vehicle deleted");
             } else if (str.equals("success_notification")) {
                 CustomToast.customToast(activity, "notification sent");
+            } else if (str.equals("success_added")) {
+                CustomToast.customToast(activity, "data updated");
             }
         }
 

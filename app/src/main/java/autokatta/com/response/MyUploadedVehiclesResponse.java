@@ -83,6 +83,27 @@ public class MyUploadedVehiclesResponse {
         @Expose
         private String buyerLeads;
 
+        @SerializedName("Version")
+        @Expose
+        private String version;
+
+        @SerializedName("rc_available")
+        @Expose
+        private String rcAvailable;
+
+        @SerializedName("no_of_owners")
+        @Expose
+        private String noOfOwner;
+
+        @SerializedName("groupIDs")
+        @Expose
+        private String groupIDs;
+
+        @SerializedName("storeIDs")
+        @Expose
+        private String storeIDs;
+
+
         public int getVehicleId() {
             return vehicleId;
         }
@@ -233,6 +254,46 @@ public class MyUploadedVehiclesResponse {
 
         public void setBuyerLeads(String buyerLeads) {
             this.buyerLeads = buyerLeads;
+        }
+
+        public String getVersion() {
+            return version;
+        }
+
+        public void setVersion(String version) {
+            this.version = version;
+        }
+
+        public String getRcAvailable() {
+            return rcAvailable;
+        }
+
+        public void setRcAvailable(String rcAvailable) {
+            this.rcAvailable = rcAvailable;
+        }
+
+        public String getNoOfOwner() {
+            return noOfOwner;
+        }
+
+        public void setNoOfOwner(String noOfOwner) {
+            this.noOfOwner = noOfOwner;
+        }
+
+        public String getGroupIDs() {
+            return groupIDs;
+        }
+
+        public void setGroupIDs(String groupIDs) {
+            this.groupIDs = groupIDs;
+        }
+
+        public String getStoreIDs() {
+            return storeIDs;
+        }
+
+        public void setStoreIDs(String storeIDs) {
+            this.storeIDs = storeIDs;
         }
     }
 }

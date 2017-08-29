@@ -634,10 +634,10 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
         Boolean flag = false;
 
         String rtostr = "", registernumberstr = "", locationstr = "", hypostr = "", bodymanufacturerstr = "", seatmanufacturerstr = "", rcStr = "", insuranceStr = "", taxStr = "", permitStr = "", fitnessStr = "", insuranceDate = "", taxDate = "", fitnessDate = "",
-                permitDate = "", insuranceIdv = "", chasisstr = "", enginestr = "", ownerstr = "", emissionstr = "", drivestr = "", transstr = "",
+                permitDate = "", insuranceIdv = "", chasisstr = "", enginestr = "", emissionstr = "", drivestr = "", transstr = "",
                 bustypestr = "", airstr = "", appstr = "", implementstr = "", seatcapstr = "", tyrecontextstr = "", fuelstr = "", hpcapstr = "",
                 jibstr = "", boonstr = "";
-
+        int ownerstr = 0;
 
         bodymanufacturerstr = autoBodymanufacturer.getText().toString();
         seatmanufacturerstr = autoSeatmanufacturer.getText().toString();
@@ -662,7 +662,7 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
 
         int ownerPos = mOwnerSpinner.getSelectedItemPosition();
         if (ownerPos != 0)
-            ownerstr = mOwnerSpinner.getSelectedItem().toString();
+            ownerstr = Integer.parseInt(mOwnerSpinner.getSelectedItem().toString());
 
         int emissionPos = mEmissionSpinner.getSelectedItemPosition();
         if (emissionPos != 0)
@@ -750,7 +750,7 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
 
             getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_BodyManufacture", bodymanufacturerstr).apply();
             getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_SeatManufacture", seatmanufacturerstr).apply();
-            getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_owner", ownerstr).apply();
+            getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putInt("upload_owner", ownerstr).apply();
             getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_emission", emissionstr).apply();
 
             getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_hypo", hypostr).apply();

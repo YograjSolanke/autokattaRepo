@@ -18,16 +18,16 @@ public class UploadUsedVehicleRequest {
     private int categoryID;
     @SerializedName("SubCategoryID")
     @Expose
-    private String subCategoryID;
+    private int subCategoryID;
     @SerializedName("BrandID")
     @Expose
-    private String brandID;
+    private int brandID;
     @SerializedName("ModelID")
     @Expose
-    private String modelID;
+    private int modelID;
     @SerializedName("VersionId")
     @Expose
-    private String versionId;
+    private int versionId;
     @SerializedName("Category")
     @Expose
     private String category;
@@ -228,35 +228,35 @@ public class UploadUsedVehicleRequest {
         this.categoryID = categoryID;
     }
 
-    public String getSubCategoryID() {
+    public int getSubCategoryID() {
         return subCategoryID;
     }
 
-    public void setSubCategoryID(String subCategoryID) {
+    public void setSubCategoryID(int subCategoryID) {
         this.subCategoryID = subCategoryID;
     }
 
-    public String getBrandID() {
+    public int getBrandID() {
         return brandID;
     }
 
-    public void setBrandID(String brandID) {
+    public void setBrandID(int brandID) {
         this.brandID = brandID;
     }
 
-    public String getModelID() {
+    public int getModelID() {
         return modelID;
     }
 
-    public void setModelID(String modelID) {
+    public void setModelID(int modelID) {
         this.modelID = modelID;
     }
 
-    public String getVersionId() {
+    public int getVersionId() {
         return versionId;
     }
 
-    public void setVersionId(String versionId) {
+    public void setVersionId(int versionId) {
         this.versionId = versionId;
     }
 
@@ -775,7 +775,7 @@ public class UploadUsedVehicleRequest {
                                     String invoice, String implementss, String privacy, String hp_capacity, String JIB,
                                     String Boon, String brakes, String pump, String insuranceDate, String emissionVersion,
                                     String financeStatus, String exchangeStatus, String steering,
-                                    int category_id, String sub_cat_id, String BrandID, String ModelID, String VersionId) {
+                                    int category_id, int sub_cat_id, int BrandID, int ModelID, int VersionId) {
         this.title = title;
         this.contact = myContact;
         this.category = category;

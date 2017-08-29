@@ -151,6 +151,12 @@ public class MyUploadedVehiclesFragment extends Fragment implements RequestNotif
                         else
                             myVehicleSuccess.setRegistrationNumber(myVehicleSuccess.getRegistrationNumber());
 
+                        myVehicleSuccess.setVersion(myVehicleSuccess.getVersion());
+                        myVehicleSuccess.setRcAvailable(myVehicleSuccess.getRcAvailable());
+                        myVehicleSuccess.setNoOfOwner(myVehicleSuccess.getNoOfOwner());
+                        myVehicleSuccess.setGroupIDs(myVehicleSuccess.getGroupIDs());
+                        myVehicleSuccess.setStoreIDs(myVehicleSuccess.getStoreIDs());
+
                         myUploadedVehiclesResponseList.add(myVehicleSuccess);
                     }
                     Log.i("size", String.valueOf(myUploadedVehiclesResponseList.size()));

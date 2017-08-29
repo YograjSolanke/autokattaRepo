@@ -1325,7 +1325,7 @@ public class ApiCall {
     Add Version or model or brand through one
      */
     public void addVersionModelBrand(String keyword, String title, int categoryId, int subCatID, int brandId,
-                           int modleId) {
+                                     int modleId) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
 
@@ -2162,7 +2162,7 @@ Upload Vehicle
     /*
   Get Suggested Price
    */
-    public void SuggestedPrice(int categoryId, String subCategoryId, String brandId, String modelId, String versionId,
+    public void SuggestedPrice(int categoryId, int subCategoryId, int brandId, int modelId, int versionId,
                                String mfgYear, String rtoCity) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
@@ -3463,7 +3463,7 @@ Upload Vehicle
     /*
 remove contact from blacklist contact
 */
-    public void addRemoveFromBlacklist(String myContact, String contact, String keyword,String EventType) {
+    public void addRemoveFromBlacklist(String myContact, String contact, String keyword, String EventType) {
         //JSON to Gson conversion
         Gson gson = new GsonBuilder()
                 .setLenient()
@@ -3476,7 +3476,7 @@ remove contact from blacklist contact
                         .client(initLog().build())
                         .build();
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<String> mUpdateRegistration = serviceApi.removeContactFromBlacklist(myContact, contact, keyword,EventType);
+                Call<String> mUpdateRegistration = serviceApi.removeContactFromBlacklist(myContact, contact, keyword, EventType);
                 mUpdateRegistration.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
@@ -8051,8 +8051,8 @@ get ExchangeMela Analytics Data
                                   String strBustype, String strAir, String strInvoice, String strImplement, String strGroupprivacy,
                                   String strHp, String strJib, String strBoon, String strBrakename, String strPumpname,
                                   String strInsuDate, String strEmission, String strFinancestatus1, String strExhangestatus,
-                                  String strStearing, int strCategoryId, String strSubcategoryId, String strBrandId,
-                                  String strModelId, String strVersionId) {
+                                  String strStearing, int strCategoryId, int strSubcategoryId, int strBrandId,
+                                  int strModelId, int strVersionId) {
 
         try {
             if (mConnectionDetector.isConnectedToInternet()) {

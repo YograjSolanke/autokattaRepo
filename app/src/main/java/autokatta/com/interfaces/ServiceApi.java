@@ -292,9 +292,9 @@ public interface ServiceApi {
 
     //create loan mela event
     @GET("GetPriceSuggestion")
-    Call<PriceSuggestionResponse> _autokattaGetPriceSuggestion(@Query("CategoryId") int categoryId, @Query("SubCategoryId") String subCategoryId,
-                                                               @Query("BrandID") String brandId, @Query("ModelID") String modelId,
-                                                               @Query("VersionId") String versionId, @Query("ManufactureYear") String mfgYear,
+    Call<PriceSuggestionResponse> _autokattaGetPriceSuggestion(@Query("CategoryId") int categoryId, @Query("SubCategoryId") int subCategoryId,
+                                                               @Query("BrandID") int brandId, @Query("ModelID") int modelId,
+                                                               @Query("VersionId") int versionId, @Query("ManufactureYear") String mfgYear,
                                                                @Query("RTOCity") String rtoCity);
 
     //Get Group Vehicles
