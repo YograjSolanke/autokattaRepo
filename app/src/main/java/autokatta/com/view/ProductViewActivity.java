@@ -78,6 +78,7 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
 
     Button post, btnchat;
     Spinner spinCategory;
+    boolean[] itemsChecked;
     RelativeLayout mainlayout;
     TextView storename, website, txtlike, txtshare, txtreview;
     EditText productname, productprice, productdetails, producttype, writereview;
@@ -699,6 +700,10 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                 hud.dismiss();
                 CustomToast.customToast(ProductViewActivity.this, "Product Updated");
                 updatetagids();
+                Intent intent = new Intent(ProductViewActivity.this, ProductViewActivity.class);
+                intent.putExtra("product_id", product_id);
+                startActivity(intent);
+
             } else if (str.equals("success_tag_updation")) {
                 CustomToast.customToast(ProductViewActivity.this, "Tags Updated");
             } else if (str.equals("success_rating_submitted")) {
@@ -1214,6 +1219,7 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                             });
                             alertDialog.show();
                         } else {
+                            itemsChecked = new boolean[groupTitleArray.length];
                             alertBoxGroups(groupTitleArray);
                         }
                     } else {
@@ -1239,10 +1245,12 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
     private void alertBoxGroups(final String[] groupTitleArray) {
         final List<String> mSelectedItems = new ArrayList<>();
         mSelectedItems.clear();
-        final boolean[] itemsChecked = new boolean[groupTitleArray.length];
+
         for (int i = 0; i < groupIdList.size(); i++) {
-            if (groupIdList.get(i).matches(prevGroupIds))
+            if (groupIdList.get(i).matches(prevGroupIds)) {
                 itemsChecked[i] = true;
+                mSelectedItems.add(groupIdList.get(i));
+            }
             else
                 itemsChecked[i] = false;
         }
@@ -1257,8 +1265,10 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                     public void onClick(DialogInterface dialog, int which, boolean isChecked) {
                         if (isChecked) {
                             mSelectedItems.add(groupIdArray[which]);
+                            itemsChecked[which] = true;
                         } else if (mSelectedItems.contains(groupIdArray[which])) {
                             mSelectedItems.remove(groupIdArray[which]);
+                            itemsChecked[which] = false;
                         }
                     }
                 })

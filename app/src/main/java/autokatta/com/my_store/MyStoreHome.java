@@ -9,6 +9,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -17,7 +19,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -28,8 +29,10 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 
 import autokatta.com.R;
+import autokatta.com.adapter.AdminCallContactAdapter;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.model.LikeUnlike;
@@ -64,7 +67,9 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
     int pretmrate = 0;
     int preoverall = 0;
     String isDealing = "";
-    String myContact, storeAdmins = "";
+    AdminCallContactAdapter adapter;
+    String myContact;
+    ArrayList<String> storeAdmins = new ArrayList<>();
     Activity mActivity;
     String mOtherContact;
     String storeOtherContact;
@@ -238,6 +243,9 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.call:
+                if (storeAdmins.size() == 0)
+                    call(mOtherContact);
+                else
                 getCallContactList();
 //                if (!storeAdmins.equals("")) {
 //                    // createCotactsList();
@@ -398,16 +406,18 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
                 } else if (response.body() instanceof StoreOldAdminResponse) {
                     StoreOldAdminResponse adminResponse = (StoreOldAdminResponse) response.body();
                     if (!adminResponse.getSuccess().isEmpty()) {
+                        //8007855589-dealer-RUTU
+                        storeAdmins.add(myContact + "-" + "Owner" + "-" + "Owner");
                         for (StoreOldAdminResponse.Success success : adminResponse.getSuccess()) {
-                            if (storeAdmins.equals(""))
-                                storeAdmins = success.getAdmin();
-                            else
-                                storeAdmins = storeAdmins + "," + success.getAdmin();
+
+                            storeAdmins.add(success.getAdmin());
+
                         }
 
-                        System.out.println("alreadyadmin=" + storeAdmins);
+                        System.out.println("alreadyadmin=" + storeAdmins.size());
 
                     }
+
 
                 }
 
@@ -746,10 +756,19 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
         View dialogView = inflater.inflate(R.layout.admin_contact_call_layout, null);
         dialogBuilder.setView(dialogView);
 
-        ListView editText = (ListView) dialogView.findViewById(R.id.listview);
+        RecyclerView recyclerView = (RecyclerView) dialogView.findViewById(R.id.listview);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setHasFixedSize(true);
+
 
         AlertDialog alertDialog = dialogBuilder.create();
+
+        adapter = new AdminCallContactAdapter(getActivity(), storeAdmins);
+        recyclerView.setAdapter(adapter);
         alertDialog.show();
 
     }
+
+
 }
