@@ -2,6 +2,7 @@ package autokatta.com.view;
 
 import android.app.ActivityOptions;
 import android.app.DownloadManager;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -38,6 +39,7 @@ import com.kaopiz.kprogresshud.KProgressHUD;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -77,6 +79,7 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
     int id;
     String action;
     String name;
+    boolean[] itemsChecked;
     String web;
     Integer rating;
     String receiver_contact;
@@ -106,7 +109,7 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
     private List<String> groupIdList = new ArrayList<>();
     private List<String> groupTitleList = new ArrayList<>();
     private String[] groupTitleArray = new String[0];
-
+    private ProgressDialog dialog;
     Button submitfeedback;
     RelativeLayout relativerate;
     LinearLayout linearlike, linearunlike, linearshare, linearshare1, linearreview;
@@ -159,6 +162,10 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
         mApiCall = new ApiCall(ServiceViewActivity.this, this);
         contact = getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
                 .getString("loginContact", "");
+
+
+        dialog = new ProgressDialog(this);
+        dialog.setMessage("Loading...");
         mConnectionDetector = new ConnectionDetector(this);
 
         storename = (TextView) findViewById(R.id.txtstorename);
@@ -237,6 +244,12 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
                         getSupportActionBar().setDisplayShowHomeEnabled(true);
                     }
 
+
+                    hud = KProgressHUD.create(ServiceViewActivity.this)
+                            .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                            .setLabel("Please wait")
+                            .setMaxProgress(100)
+                            .show();
                     if (!mConnectionDetector.isConnectedToInternet()) {
                         Toast.makeText(ServiceViewActivity.this, "Please check your internet connection", Toast.LENGTH_SHORT).show();
                     } else {
@@ -378,6 +391,7 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
                             });
                             alertDialog.show();
                         } else {
+                            itemsChecked = new boolean[groupTitleArray.length];
                             alertBoxGroups(groupTitleArray);
                         }
                     } else {
@@ -403,10 +417,13 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
     private void alertBoxGroups(final String[] groupTitleArray) {
         final List<String> mSelectedItems = new ArrayList<>();
         mSelectedItems.clear();
-        final boolean[] itemsChecked = new boolean[groupTitleArray.length];
+        String[] prearra = prevGroupIds.split(",");
+
         for (int i = 0; i < groupIdList.size(); i++) {
-            if (groupIdList.get(i).matches(prevGroupIds))
+            if (Arrays.asList(prearra).contains(groupIdList.get(i))) {
                 itemsChecked[i] = true;
+                mSelectedItems.add(groupIdList.get(i));
+            }
             else
                 itemsChecked[i] = false;
         }
@@ -421,8 +438,10 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
                     public void onClick(DialogInterface dialog, int which, boolean isChecked) {
                         if (isChecked) {
                             mSelectedItems.add(groupIdArray[which]);
+                            itemsChecked[which] = true;
                         } else if (mSelectedItems.contains(groupIdArray[which])) {
                             mSelectedItems.remove(groupIdArray[which]);
+                            itemsChecked[which] = false;
                         }
                     }
                 })
@@ -431,6 +450,8 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
 
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
+
+                        System.out.println("selected ids=" + mSelectedItems);
                         stringgroupids = "";
                         stringgroupname = "";
                         prevGroupIds = "";
@@ -467,7 +488,6 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
                 })
                 .show();
     }
-
     private void getNoOfEnquiryCount(int service_id, String contact) {
         ApiCall mApicall = new ApiCall(this, this);
         mApicall.getEnquiryCount(contact, 0, service_id, 0);
@@ -606,6 +626,7 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
         if (response != null) {
             if (response.isSuccessful()) {
                 mainlayout.setVisibility(View.VISIBLE);
+                hud.dismiss();
                 if (response.body() instanceof CategoryResponse) {
                     CategoryResponse moduleResponse = (CategoryResponse) response.body();
                     final List<String> module = new ArrayList<String>();
@@ -832,7 +853,7 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
     public void notifyString(String str) {
         if (str != null) {
             if (str.equals("Service_updated_successfully")) {
-
+                hud.dismiss();
                 CustomToast.customToast(ServiceViewActivity.this, "Service Updated");
                 updatetagids();
             } else if (str.equals("success_tag_updation")) {
@@ -858,11 +879,15 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
             } else if (str.equals("success_message_saved")) {
                 CustomToast.customToast(getApplicationContext(), "Enquiry Sent");
             } else if (str.contains("yes")) {
+                if (dialog.isShowing()) {
+                    dialog.dismiss();
+                }
                 btnchat.setText("Chat");
-
             } else if (str.contains("no")) {
+                if (dialog.isShowing()) {
+                    dialog.dismiss();
+                }
                 btnchat.setText("Send Enquiry");
-
             }
         }
     }
@@ -883,6 +908,7 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
     private void getChatEnquiryStatus(String contact, String receiver_contact, int service_id) {
 
         ApiCall mApicall = new ApiCall(this, this);
+        dialog.show();
         mApicall.getChatEnquiryStatus(contact, receiver_contact, 0, service_id, 0);
     }
 

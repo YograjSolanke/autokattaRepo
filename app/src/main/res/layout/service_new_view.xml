@@ -116,7 +116,7 @@
             android:layout_marginEnd="10dp"
             android:layout_marginTop="10dp"
             android:numStars="5"
-            android:stepSize="1.0"
+            android:stepSize="1"
             android:theme="@style/RatingBar" />
 
 
@@ -232,7 +232,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:numStars="5"
-                            android:stepSize="1.0"
+                            android:stepSize="1"
                             android:theme="@style/RatingBar" />
 
                     </LinearLayout>
@@ -875,7 +875,7 @@
                                 android:layout_centerVertical="true"
                                 android:isIndicator="false"
                                 android:numStars="5"
-                                android:stepSize="1.0"
+                                android:stepSize="1"
                                 android:theme="@style/RatingBar" />
 
 
@@ -906,7 +906,7 @@
                                 android:layout_centerVertical="true"
                                 android:isIndicator="false"
                                 android:numStars="5"
-                                android:stepSize="1.0"
+                                android:stepSize="1"
                                 android:theme="@style/RatingBar" />
 
                         </RelativeLayout>
@@ -936,7 +936,7 @@
                                 android:layout_centerVertical="true"
                                 android:isIndicator="false"
                                 android:numStars="5"
-                                android:stepSize="1.0"
+                                android:stepSize="1"
                                 android:theme="@style/RatingBar" />
 
                         </RelativeLayout>
@@ -968,7 +968,7 @@
                                 android:layout_centerHorizontal="true"
                                 android:layout_centerVertical="true"
                                 android:numStars="5"
-                                android:stepSize="1.0"
+                                android:stepSize="1"
                                 android:theme="@style/RatingBar" />
 
                             <Button

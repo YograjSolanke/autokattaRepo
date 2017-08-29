@@ -43,6 +43,7 @@ import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -700,9 +701,9 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                 hud.dismiss();
                 CustomToast.customToast(ProductViewActivity.this, "Product Updated");
                 updatetagids();
-                Intent intent = new Intent(ProductViewActivity.this, ProductViewActivity.class);
-                intent.putExtra("product_id", product_id);
-                startActivity(intent);
+//                Intent intent = new Intent(ProductViewActivity.this, ProductViewActivity.class);
+//                intent.putExtra("product_id", product_id);
+//                startActivity(intent);
 
             } else if (str.equals("success_tag_updation")) {
                 CustomToast.customToast(ProductViewActivity.this, "Tags Updated");
@@ -1245,9 +1246,10 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
     private void alertBoxGroups(final String[] groupTitleArray) {
         final List<String> mSelectedItems = new ArrayList<>();
         mSelectedItems.clear();
+        String[] prearra = prevGroupIds.split(",");
 
         for (int i = 0; i < groupIdList.size(); i++) {
-            if (groupIdList.get(i).matches(prevGroupIds)) {
+            if (Arrays.asList(prearra).contains(groupIdList.get(i))) {
                 itemsChecked[i] = true;
                 mSelectedItems.add(groupIdList.get(i));
             }
@@ -1277,6 +1279,8 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
 
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
+
+                        System.out.println("selected ids=" + mSelectedItems);
                         stringgroupids = "";
                         stringgroupname = "";
                         prevGroupIds = "";
