@@ -17,8 +17,6 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.Filter;
-import android.widget.Filterable;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -27,19 +25,9 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.appindexing.AppIndex;
-import com.google.android.gms.common.api.GoogleApiClient;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLEncoder;
+import java.net.ConnectException;
+import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -47,6 +35,7 @@ import java.util.List;
 import autokatta.com.R;
 import autokatta.com.Registration.MultiSelectionSpinner;
 import autokatta.com.Registration.Multispinner;
+import autokatta.com.adapter.GooglePlacesAdapter;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.generic.RangeSeekBar;
 import autokatta.com.interfaces.RequestNotifier;
@@ -66,16 +55,6 @@ import retrofit2.Response;
  */
 
 public class FilterFragment extends Fragment implements Multispinner.MultiSpinnerListener, MultiSelectionSpinner.MultiSpinnerListener, RequestNotifier {
-
-    //fields for google API
-    private static final String PLACES_API_BASE = "https://maps.googleapis.com/maps/api/place";
-    private static final String TYPE_AUTOCOMPLETE = "/autocomplete";
-    private static final String OUT_JSON = "/json";
-
-    //------------ make your specific key ------------
-    private static final String API_KEY = "AIzaSyDQy-sYUScw5BJkClbJH6HC93gpk4B2Am4";
-    private GoogleApiClient client;
-
 
     SharedPreferences prefs;
     public static final String MyContactPREFERENCES = "contact No";
@@ -112,7 +91,7 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
     String use1, seating1, transmission1, implement1, body1, boat1, rv1, finance1, tyre1, tyre2;
     int count = 0, vehicle_id, sub_category_id;
 
-    final ArrayList fuals = new ArrayList();
+    final List<String> fuals = new ArrayList<String>();
     List<String> colors = new ArrayList<String>();
 
     int counter = 0;
@@ -124,7 +103,6 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
         super.onCreateView(inflater, container, savedInstanceState);
 
         final View root = inflater.inflate(R.layout.filter_all_activity, container, false);
-        client = new GoogleApiClient.Builder(getActivity()).addApi(AppIndex.API).build();
         prefs = getActivity().getSharedPreferences(MyContactPREFERENCES, Context.MODE_PRIVATE);
         contact = prefs.getString("contact", "");
 
@@ -285,7 +263,7 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
                 e.printStackTrace();
             }
 
-            autoCity.setAdapter(new GooglePlacesAutocompleteAdapter(getActivity(), R.layout.simple));
+            autoCity.setAdapter(new GooglePlacesAdapter(getActivity(), R.layout.simple));
             autoCity.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                 @Override
                 public void onFocusChange(View v, boolean hasFocus) {
@@ -296,7 +274,7 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
                     }
                 }
             });
-            autoCity1.setAdapter(new GooglePlacesAutocompleteAdapter(getActivity(), R.layout.simple));
+            autoCity1.setAdapter(new GooglePlacesAdapter(getActivity(), R.layout.simple));
             autoCity1.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                 @Override
                 public void onFocusChange(View v, boolean hasFocus) {
@@ -307,7 +285,7 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
                     }
                 }
             });
-            autoCity2.setAdapter(new GooglePlacesAutocompleteAdapter(getActivity(), R.layout.simple));
+            autoCity2.setAdapter(new GooglePlacesAdapter(getActivity(), R.layout.simple));
             autoCity2.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                 @Override
                 public void onFocusChange(View v, boolean hasFocus) {
@@ -318,7 +296,7 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
                     }
                 }
             });
-            autoCity3.setAdapter(new GooglePlacesAutocompleteAdapter(getActivity(), R.layout.simple));
+            autoCity3.setAdapter(new GooglePlacesAdapter(getActivity(), R.layout.simple));
             autoCity3.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                 @Override
                 public void onFocusChange(View v, boolean hasFocus) {
@@ -330,7 +308,7 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
                     }
                 }
             });
-            autoCity4.setAdapter(new GooglePlacesAutocompleteAdapter(getActivity(), R.layout.simple));
+            autoCity4.setAdapter(new GooglePlacesAdapter(getActivity(), R.layout.simple));
             autoCity4.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                 @Override
                 public void onFocusChange(View v, boolean hasFocus) {
@@ -864,61 +842,6 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
         multiSpinnercolor.setItems(colors, "-Select Color-", this);
     }
 
-    public static ArrayList<String> autocomplete(String input) {
-        ArrayList<String> resultList = null;
-
-        HttpURLConnection conn = null;
-        StringBuilder jsonResults = new StringBuilder();
-        try {
-            StringBuilder sb = new StringBuilder(PLACES_API_BASE + TYPE_AUTOCOMPLETE + OUT_JSON);
-            sb.append("?key=" + API_KEY);
-            sb.append("&input=" + URLEncoder.encode(input, "utf8"));
-
-            URL url = new URL(sb.toString());
-
-            System.out.println("URL: " + url);
-            conn = (HttpURLConnection) url.openConnection();
-            InputStreamReader in = new InputStreamReader(conn.getInputStream());
-
-            // Load the results into a StringBuilder
-            int read;
-            char[] buff = new char[1024];
-            while ((read = in.read(buff)) != -1) {
-                jsonResults.append(buff, 0, read);
-            }
-        } catch (MalformedURLException e) {
-            // Log.e(LOG_TAG, "Error processing Places API URL", e);
-            return resultList;
-        } catch (IOException e) {
-
-            return resultList;
-        } finally {
-            if (conn != null) {
-                conn.disconnect();
-            }
-        }
-
-        try {
-
-            // Create a JSON object hierarchy from the results
-            JSONObject jsonObj = new JSONObject(jsonResults.toString());
-            JSONArray predsJsonArray = jsonObj.getJSONArray("predictions");
-
-            // Extract the Place descriptions from the results
-            resultList = new ArrayList<String>(predsJsonArray.length());
-            for (int i = 0; i < predsJsonArray.length(); i++) {
-                System.out.println(predsJsonArray.getJSONObject(i).getString("description"));
-                System.out.println("============================================================");
-                resultList.add(predsJsonArray.getJSONObject(i).getString("description"));
-            }
-        } catch (JSONException e) {
-            //Log.e(LOG_TAG, "Cannot process JSON results", e);
-            e.printStackTrace();
-        }
-        return resultList;
-    }
-
-
     /*
     volley getAllCategory()
      */
@@ -966,6 +889,7 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
 
     public void applySearch() {
         System.out.println("inside apply search ");
+        boolean flag;
         try {
             brand1 = brand.getSelectedItem().toString();
             Category = allcategory.getSelectedItem().toString();
@@ -1010,11 +934,25 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
             city22 = autoRTO2.getText().toString();
             city23 = autoRTO3.getText().toString();
             city24 = autoRTO4.getText().toString();
+
             city1 = autoCity.getText().toString();
             city11 = autoCity1.getText().toString();
             city12 = autoCity2.getText().toString();
             city13 = autoCity3.getText().toString();
             city14 = autoCity4.getText().toString();
+
+            if (!city1.isEmpty()) {
+                List<String> resultList = GooglePlacesAdapter.getResultList();
+                for (int i = 0; i < resultList.size(); i++) {
+
+                    if (city1.equalsIgnoreCase(resultList.get(i))) {
+                        flag = true;
+                        break;
+                    } else {
+                        flag = false;
+                    }
+                }
+            }
 
             use1 = useEdit.getText().toString();
             rv1 = rvEdit.getText().toString();
@@ -1235,53 +1173,6 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
 
     }
 
-    //class for google API
-    private class GooglePlacesAutocompleteAdapter extends ArrayAdapter<String> implements Filterable {
-        private ArrayList<String> resultList;
-
-        public GooglePlacesAutocompleteAdapter(Context context, int textViewResourceId) {
-            super(context, textViewResourceId);
-        }
-
-        @Override
-        public int getCount() {
-            return resultList.size();
-        }
-
-        @Override
-        public String getItem(int index) {
-            return resultList.get(index);
-        }
-
-        @Override
-        public Filter getFilter() {
-            Filter filter = new Filter() {
-                @Override
-                protected FilterResults performFiltering(CharSequence constraint) {
-                    FilterResults filterResults = new FilterResults();
-                    if (constraint != null) {
-                        // Retrieve the autocomplete results.
-                        resultList = autocomplete(constraint.toString());
-
-                        // Assign the data to the FilterResults
-                        filterResults.values = resultList;
-                        filterResults.count = resultList.size();
-                    }
-                    return filterResults;
-                }
-
-                @Override
-                protected void publishResults(CharSequence constraint, FilterResults results) {
-                    if (results != null && results.count > 0) {
-                        notifyDataSetChanged();
-                    } else {
-                        notifyDataSetInvalidated();
-                    }
-                }
-            };
-            return filter;
-        }
-    }
 
     private int getIndex(Spinner spinner, String myString) {
 
@@ -1671,10 +1562,12 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
                             vehicle_iddd.add(success.getId());
                             vehicles.add(success.getName());
                         }
-                        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(),
-                                android.R.layout.simple_spinner_item, vehicles);
-                        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                        allcategory.setAdapter(dataAdapter);
+                        if (isAdded()) {
+                            ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(),
+                                    android.R.layout.simple_spinner_item, vehicles);
+                            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                            allcategory.setAdapter(dataAdapter);
+                        }
 
                         allcategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                             @Override
@@ -1718,8 +1611,8 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
                         });
                     }
                 } else if (response.body() instanceof GetVehicleSubTypeResponse) {
-                    final ArrayList<String> vehicles = new ArrayList<String>();
-                    final ArrayList<Integer> vehicles_id = new ArrayList<>();
+                    final List<String> vehicles = new ArrayList<String>();
+                    final List<Integer> vehicles_id = new ArrayList<>();
                     GetVehicleSubTypeResponse subTypeResponse = (GetVehicleSubTypeResponse) response.body();
                     if (!subTypeResponse.getSuccess().isEmpty()) {
                         for (GetVehicleSubTypeResponse.Success success : subTypeResponse.getSuccess()) {
@@ -1728,10 +1621,12 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
                         }
                         spinnervalues = new String[vehicles_id.size()];
                         spinnervalues = vehicles_id.toArray(spinnervalues);
-                        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(),
-                                android.R.layout.simple_spinner_item, vehicles);
-                        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                        subcategory.setAdapter(dataAdapter);
+                        if (isAdded()) {
+                            ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(),
+                                    android.R.layout.simple_spinner_item, vehicles);
+                            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                            subcategory.setAdapter(dataAdapter);
+                        }
 
                         subcategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                             @Override
@@ -1767,8 +1662,8 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
                         });
                     }
                 } else if (response.body() instanceof GetVehicleBrandResponse) {
-                    final ArrayList<String> brands = new ArrayList<String>();
-                    final ArrayList<Integer> brand_id = new ArrayList<>();
+                    final List<String> brands = new ArrayList<String>();
+                    final List<Integer> brand_id = new ArrayList<>();
                     GetVehicleBrandResponse brandResponse = (GetVehicleBrandResponse) response.body();
                     if (!brandResponse.getSuccess().isEmpty()) {
                         for (GetVehicleBrandResponse.Success success : brandResponse.getSuccess()) {
@@ -1777,10 +1672,12 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
                         }
                         spinnervalues = new String[brand_id.size()];
                         spinnervalues = brand_id.toArray(spinnervalues);
-                        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(),
-                                android.R.layout.simple_spinner_item, brands);
-                        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                        brand.setAdapter(dataAdapter);
+                        if (isAdded()) {
+                            ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(),
+                                    android.R.layout.simple_spinner_item, brands);
+                            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                            brand.setAdapter(dataAdapter);
+                        }
 
                         brand.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                             @Override
@@ -1801,8 +1698,8 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
                         });
                     }
                 } else if (response.body() instanceof GetVehicleModelResponse) {
-                    final ArrayList<String> models = new ArrayList<String>();
-                    final ArrayList<Integer> model_id = new ArrayList<>();
+                    final List<String> models = new ArrayList<String>();
+                    final List<Integer> model_id = new ArrayList<>();
                     GetVehicleModelResponse modelResponse = (GetVehicleModelResponse) response.body();
                     if (!modelResponse.getSuccess().isEmpty()) {
                         for (GetVehicleModelResponse.Success success : modelResponse.getSuccess()) {
@@ -1811,10 +1708,12 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
                         }
                         spinnervalues = new String[model_id.size()];
                         spinnervalues = model_id.toArray(spinnervalues);
-                        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(),
-                                android.R.layout.simple_spinner_item, models);
-                        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                        model.setAdapter(dataAdapter);
+                        if (isAdded()) {
+                            ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(),
+                                    android.R.layout.simple_spinner_item, models);
+                            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                            model.setAdapter(dataAdapter);
+                        }
 
                         model.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                             @Override
@@ -1836,8 +1735,8 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
                         });
                     }
                 } else if (response.body() instanceof GetVehicleVersionResponse) {
-                    final ArrayList<String> versions = new ArrayList<String>();
-                    final ArrayList<Integer> version_id = new ArrayList<Integer>();
+                    final List<String> versions = new ArrayList<String>();
+                    final List<Integer> version_id = new ArrayList<Integer>();
                     GetVehicleVersionResponse versionResponse = (GetVehicleVersionResponse) response.body();
                     if (!versionResponse.getSuccess().isEmpty()) {
                         for (GetVehicleVersionResponse.Success success : versionResponse.getSuccess()) {
@@ -1847,10 +1746,12 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
 
                         spinnervalues = new String[version_id.size()];
                         spinnervalues = version_id.toArray(spinnervalues);
-                        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(),
-                                android.R.layout.simple_spinner_item, versions);
-                        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                        version.setAdapter(dataAdapter);
+                        if (isAdded()) {
+                            ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(),
+                                    android.R.layout.simple_spinner_item, versions);
+                            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                            version.setAdapter(dataAdapter);
+                        }
 
                         version.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                             @Override
@@ -1873,19 +1774,23 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
                         multiSpinnercolor.setItems(colors, "-Select Color-", FilterFragment.this);
                     }
                 } else if (response.body() instanceof GetRTOCityResponse) {
-                    final ArrayList<String> RtoCity = new ArrayList<String>();
+                    final List<String> RtoCity = new ArrayList<String>();
                     GetRTOCityResponse cityResponse = (GetRTOCityResponse) response.body();
                     if (!cityResponse.getSuccess().isEmpty()) {
                         for (GetRTOCityResponse.Success success : cityResponse.getSuccess()) {
-                            RtoCity.add(success.getRtoCode());
+                            /*RtoCity.add(success.getRtoCode());*/
+                            RtoCity.add(success.getRtoCode() + " " +
+                                    success.getRtoCityName());
                         }
-                        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(),
-                                android.R.layout.simple_spinner_item, RtoCity);
-                        autoRTO.setAdapter(dataAdapter);
-                        autoRTO1.setAdapter(dataAdapter);
-                        autoRTO2.setAdapter(dataAdapter);
-                        autoRTO3.setAdapter(dataAdapter);
-                        autoRTO4.setAdapter(dataAdapter);
+                        if (isAdded()) {
+                            ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(),
+                                    android.R.layout.simple_spinner_item, RtoCity);
+                            autoRTO.setAdapter(dataAdapter);
+                            autoRTO1.setAdapter(dataAdapter);
+                            autoRTO2.setAdapter(dataAdapter);
+                            autoRTO3.setAdapter(dataAdapter);
+                            autoRTO4.setAdapter(dataAdapter);
+                        }
                     }
                 }
 
@@ -1899,6 +1804,25 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
 
     @Override
     public void notifyError(Throwable error) {
+        if (error instanceof SocketTimeoutException) {
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string._404_));
+        } else if (error instanceof NullPointerException) {
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string.no_response));
+        } else if (error instanceof ClassCastException) {
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string.no_response));
+        } else if (error instanceof ConnectException) {
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string.no_internet));
+        } else if (error instanceof UnknownHostException) {
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string.no_internet));
+        } else {
+            Log.i("Check Class-", " Filter Fragment");
+            error.printStackTrace();
+        }
 
     }
 

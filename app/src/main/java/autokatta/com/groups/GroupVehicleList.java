@@ -103,7 +103,8 @@ public class GroupVehicleList extends Fragment implements SwipeRefreshLayout.OnR
             if (mTestConnection.isConnectedToInternet()) {
                 mApiCall.getGroupVehicles(mGroupId, brand, model, version, city, RTOcity, price, reg_year, mgf_year, kmsrunning, no_of_owner, rcontact);
             } else {
-                CustomToast.customToast(getActivity(), getString(R.string.no_internet));
+                if (isAdded())
+                    CustomToast.customToast(getActivity(), getString(R.string.no_internet));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -200,11 +201,14 @@ public class GroupVehicleList extends Fragment implements SwipeRefreshLayout.OnR
                     mRtoCity.add("-Select RTO city-");
                     GetRTOCityResponse mGetRTOCityResponse = (GetRTOCityResponse) response.body();
                     for (GetRTOCityResponse.Success success : mGetRTOCityResponse.getSuccess()) {
-                        success.setRtoCityId(success.getRtoCityId());
+                        /*success.setRtoCityId(success.getRtoCityId());
                         success.setRtoCityName(success.getRtoCityName());
-                        mRtoCity.add(success.getRtoCode());
+                        mRtoCity.add(success.getRtoCode());*/
+
+                        mRtoCity.add(success.getRtoCode() + " " +
+                                success.getRtoCityName());
                     }
-                    if (getActivity() != null) {
+                    if (isAdded()) {
                         ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(getActivity(),
                                 R.layout.registration_spinner, mRtoCity);
                         editRTOcity.setAdapter(dataAdapter);
@@ -212,11 +216,13 @@ public class GroupVehicleList extends Fragment implements SwipeRefreshLayout.OnR
                 }
             } else {
                 mSwipeRefreshLayout.setRefreshing(false);
-                CustomToast.customToast(getActivity(), getString(R.string._404_));
+                if (isAdded())
+                    CustomToast.customToast(getActivity(), getString(R.string._404_));
             }
         } else {
             mSwipeRefreshLayout.setRefreshing(false);
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string.no_response));
         }
     }
 
@@ -234,15 +240,20 @@ public class GroupVehicleList extends Fragment implements SwipeRefreshLayout.OnR
     public void notifyError(Throwable error) {
         mSwipeRefreshLayout.setRefreshing(false);
         if (error instanceof SocketTimeoutException) {
-            CustomToast.customToast(getActivity(), getString(R.string._404_));
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
-            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
-            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         } else {
             Log.i("Check Class-"
                     , "GroupVehicleList");

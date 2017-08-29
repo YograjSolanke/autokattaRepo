@@ -1392,9 +1392,10 @@ public class SearchVehicleActivity extends AppCompatActivity implements MultiSel
                     mRtoCity.add("-Select RTO city-");
                     GetRTOCityResponse mGetRTOCityResponse = (GetRTOCityResponse) response.body();
                     for (GetRTOCityResponse.Success success : mGetRTOCityResponse.getSuccess()) {
-                        success.setRtoCityId(success.getRtoCityId());
-                        success.setRtoCityName(success.getRtoCityName());
-                        mRtoCity.add(success.getRtoCode());
+                        /*success.setRtoCityId(success.getRtoCityId());
+                        success.setRtoCityName(success.getRtoCityName());*/
+                        mRtoCity.add(success.getRtoCode() + " " +
+                                success.getRtoCityName());
                     }
                     ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(getApplicationContext(),
                             R.layout.registration_spinner, mRtoCity);

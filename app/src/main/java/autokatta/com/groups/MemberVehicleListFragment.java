@@ -355,9 +355,11 @@ public class MemberVehicleListFragment extends Fragment implements SwipeRefreshL
                     mRtoCity.add("-Select RTO city-");
                     GetRTOCityResponse mGetRTOCityResponse = (GetRTOCityResponse) response.body();
                     for (GetRTOCityResponse.Success success : mGetRTOCityResponse.getSuccess()) {
-                        success.setRtoCityId(success.getRtoCityId());
+                        /*success.setRtoCityId(success.getRtoCityId());
                         success.setRtoCityName(success.getRtoCityName());
-                        mRtoCity.add(success.getRtoCode());
+                        mRtoCity.add(success.getRtoCode());*/
+                        mRtoCity.add(success.getRtoCode() + " " +
+                                success.getRtoCityName());
                     }
                     if (getActivity() != null) {
                         ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(getActivity(),

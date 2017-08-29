@@ -899,10 +899,12 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
                     mRtoCity.clear();
                     GetRTOCityResponse mGetRTOCityResponse = (GetRTOCityResponse) response.body();
                     for (GetRTOCityResponse.Success success : mGetRTOCityResponse.getSuccess()) {
-                        success.setRtoCityId(success.getRtoCityId());
+                        /*success.setRtoCityId(success.getRtoCityId());
                         success.setRtoCityName(success.getRtoCityName());
                         success.setRtoCode(success.getRtoCode());
-                        mRtoCity.add(success.getRtoCode());
+                        mRtoCity.add(success.getRtoCode());*/
+                        mRtoCity.add(success.getRtoCode() + " " +
+                                success.getRtoCityName());
                     }
                     if (getActivity() != null) {
                         ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
