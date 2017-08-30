@@ -22,7 +22,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dip"
-                android:text="Category:"
+                android:text="@string/category"
                 android:textColor="#808080"
                 android:textStyle="bold" />
 
@@ -49,7 +49,7 @@
                 android:layout_height="80dip"
                 android:layout_alignParentEnd="true"
                 android:layout_margin="10dp"
-                android:flipInterval="500"></ViewFlipper>
+                android:flipInterval="500" />
 
             <TextView
                 android:id="@+id/bbrand"
@@ -57,7 +57,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dip"
                 android:layout_marginTop="2dip"
-                android:text="Brand"
+                android:text="@string/brand"
                 android:textColor="#808080"
                 android:textStyle="bold" />
 
@@ -79,7 +79,7 @@
                 android:layout_below="@+id/setbrand"
                 android:layout_marginStart="5dip"
                 android:layout_marginTop="2dip"
-                android:text="Model"
+                android:text="@string/model"
                 android:textColor="#808080"
                 android:textStyle="bold" />
 
@@ -102,7 +102,7 @@
                 android:layout_below="@+id/setmodel"
                 android:layout_marginStart="5dip"
                 android:layout_marginTop="2dip"
-                android:text="Price"
+                android:text="@string/price"
                 android:textColor="#808080"
                 android:textStyle="bold" />
 
@@ -118,7 +118,6 @@
                 android:text="--"
                 android:textColor="#808080" />
 
-
             <TextView
                 android:id="@+id/yyear"
                 android:layout_width="80dip"
@@ -126,7 +125,7 @@
                 android:layout_below="@+id/setprice"
                 android:layout_marginStart="5dip"
                 android:layout_marginTop="2dip"
-                android:text="Year"
+                android:text="@string/years"
                 android:textColor="#808080"
                 android:textStyle="bold" />
 
@@ -149,7 +148,7 @@
                 android:layout_below="@+id/setyear"
                 android:layout_marginStart="5dip"
                 android:layout_marginTop="2dip"
-                android:text="RTO City"
+                android:text="@string/rto_citys"
                 android:textColor="#808080"
                 android:textStyle="bold" />
 
@@ -172,7 +171,7 @@
                 android:layout_below="@+id/setrto"
                 android:layout_marginStart="5dip"
                 android:layout_marginTop="2dip"
-                android:text="Kms :"
+                android:text="@string/kms_run"
                 android:textColor="#808080"
                 android:textStyle="bold" />
 
@@ -195,7 +194,7 @@
                 android:layout_below="@+id/setkms"
                 android:layout_marginStart="5dip"
                 android:layout_marginTop="2dip"
-                android:text="Location"
+                android:text="@string/location"
                 android:textColor="#808080"
                 android:textStyle="bold" />
 
@@ -217,7 +216,7 @@
                 android:layout_below="@+id/setlocation"
                 android:layout_marginStart="5dip"
                 android:layout_marginTop="2dip"
-                android:text="Registration No :"
+                android:text="@string/registration_no"
                 android:textColor="#808080"
                 android:textStyle="bold" />
 
@@ -240,7 +239,7 @@
                 android:layout_below="@+id/yreg"
                 android:layout_marginStart="5dip"
                 android:layout_marginTop="2dip"
-                android:text="Uploaded Date :"
+                android:text="@string/uploaded_date"
                 android:textColor="#808080"
                 android:textStyle="bold" />
 
@@ -261,10 +260,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_below="@+id/rel1"
-            android:background="#cccccc">
-
-        </View>
-
+            android:background="#cccccc" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -280,7 +276,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginStart="4dp"
                 android:layout_marginTop="5dp"
-                android:text="Buyer Leads"
+                android:text="@string/buyer_leads"
                 android:textColor="@color/white"
                 android:textSize="15sp"
                 android:textStyle="bold" />
@@ -322,10 +318,7 @@
                 android:visibility="gone" />
 
         </RelativeLayout>
-
-
     </RelativeLayout>
-
 
     <LinearLayout
         android:id="@+id/linear_scroll"

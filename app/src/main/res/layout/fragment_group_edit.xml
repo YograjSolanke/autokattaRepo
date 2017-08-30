@@ -33,7 +33,7 @@
         android:layout_marginEnd="@dimen/text_margin_top"
         android:labelFor="@+id/group_name"
         android:paddingStart="@dimen/text_margin_top"
-        android:text="Group Name"
+        android:text="@string/group_name"
         android:textColor="#2C3343" />
 
     <RelativeLayout
@@ -47,7 +47,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/background"
-            android:text="Update"
+            android:text="@string/update"
             android:textColor="@color/white"
             android:textSize="16dp" />
 

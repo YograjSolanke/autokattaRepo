@@ -8,7 +8,6 @@
     android:layout_marginTop="7dp"
     tools:context="autokatta.com.view.EnquiredPersonsListActivity">
 
-
     <android.support.v7.widget.CardView
         android:id="@+id/EnquiredpersonList_card_view"
         android:layout_width="match_parent"
@@ -40,7 +39,7 @@
                     android:layout_height="wrap_content"
                     android:contentDescription="@string/app_name"
                     android:padding="5dp"
-                    android:text="Type :"
+                    android:text="@string/type"
                     android:textStyle="bold" />
 
                 <TextView
@@ -60,7 +59,7 @@
                     android:layout_below="@+id/typetxt"
                     android:contentDescription="@string/app_name"
                     android:padding="5dp"
-                    android:text="Title :"
+                    android:text="@string/title"
                     android:textStyle="bold" />
 
                 <TextView

@@ -124,7 +124,7 @@
                         android:id="@+id/title"
                         android:layout_width="110dp"
                         android:layout_height="wrap_content"
-                        android:text="Auction Title :"
+                        android:text="@string/auction_title"
                         android:textColor="#808080"
                         android:textStyle="bold" />
 
@@ -133,7 +133,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_toEndOf="@+id/title"
-                        android:hint="title"
+                        android:hint="@string/names"
                         android:textColor="#808080" />
 
                 </RelativeLayout>
@@ -148,7 +148,7 @@
                         android:id="@+id/vehicle"
                         android:layout_width="110dp"
                         android:layout_height="wrap_content"
-                        android:text="No Of Vehicle : "
+                        android:text="@string/no_of_vehicle"
                         android:textColor="#808080"
                         android:textStyle="bold" />
 
@@ -157,7 +157,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_toEndOf="@+id/vehicle"
-                        android:hint="vehicles"
+                        android:hint="@string/names"
                         android:textColor="#808080" />
 
                 </RelativeLayout>
@@ -172,7 +172,7 @@
                         android:id="@+id/end_date"
                         android:layout_width="110dp"
                         android:layout_height="wrap_content"
-                        android:text="End Date : "
+                        android:text="@string/end_date"
                         android:textColor="#808080"
                         android:textStyle="bold" />
 
@@ -181,7 +181,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_toEndOf="@+id/end_date"
-                        android:hint="date"
+                        android:hint="@string/date"
                         android:textColor="#808080" />
 
                 </RelativeLayout>
@@ -196,7 +196,7 @@
                         android:id="@+id/time"
                         android:layout_width="110dp"
                         android:layout_height="wrap_content"
-                        android:text="End Time : "
+                        android:text="@string/end_time"
                         android:textColor="#808080"
                         android:textStyle="bold" />
 
@@ -205,7 +205,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_toEndOf="@+id/time"
-                        android:hint="time"
+                        android:hint="@string/time"
                         android:textColor="#808080" />
 
                 </RelativeLayout>
@@ -220,7 +220,7 @@
                         android:id="@+id/type"
                         android:layout_width="110dp"
                         android:layout_height="wrap_content"
-                        android:text="Type Of Auction : "
+                        android:text="@string/type_of_auction"
                         android:textColor="#808080"
                         android:textStyle="bold" />
 
@@ -229,7 +229,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_toEndOf="@+id/type"
-                        android:hint="type"
+                        android:hint="@string/type"
                         android:textColor="#808080" />
 
                 </RelativeLayout>
@@ -244,7 +244,7 @@
                         android:id="@+id/going"
                         android:layout_width="110dp"
                         android:layout_height="wrap_content"
-                        android:text="Going Count : "
+                        android:text="@string/going_count"
                         android:textColor="#808080"
                         android:textStyle="bold" />
 
@@ -253,7 +253,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_toEndOf="@+id/going"
-                        android:hint="going"
+                        android:hint="@string/going"
                         android:textColor="#808080" />
 
                 </RelativeLayout>
@@ -268,7 +268,7 @@
                         android:id="@+id/ignore"
                         android:layout_width="110dp"
                         android:layout_height="wrap_content"
-                        android:text="Ignore Count : "
+                        android:text="@string/ignore_count"
                         android:textColor="#808080"
                         android:textStyle="bold" />
 
@@ -277,7 +277,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_toEndOf="@+id/ignore"
-                        android:hint="ignore"
+                        android:hint="@string/ignore"
                         android:textColor="#808080" />
 
                 </RelativeLayout>
@@ -310,7 +310,7 @@
                 android:layout_height="@dimen/cards_button_height"
                 android:layout_below="@+id/linear_card"
                 android:layout_toStartOf="@id/share_autokatta"
-                android:text="Ignore"
+                android:text="@string/ignore"
                 android:textColor="?attr/colorPrimary" />
 
             <Button
@@ -320,7 +320,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/linear_card"
                 android:layout_toStartOf="@id/btn_ignore"
-                android:text="Going"
+                android:text="@string/going"
                 android:textColor="?attr/colorPrimary" />
 
         </RelativeLayout>

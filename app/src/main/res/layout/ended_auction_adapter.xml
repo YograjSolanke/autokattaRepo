@@ -33,7 +33,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
-                    android:text="Auction Title :"
+                    android:text="@string/auction_title"
                     android:textColor="#808080"
                     android:textStyle="bold" />
 
@@ -105,7 +105,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
-                    android:text="No.of vehicle :"
+                    android:text="@string/no_of_vehicle"
                     android:textColor="#808080"
                     android:textStyle="bold" />
 
@@ -115,7 +115,7 @@
                     android:layout_height="wrap_content"
                     android:layout_toEndOf="@+id/noofvehicle"
                     android:enabled="false"
-                    android:hint="No of vehicle"
+                    android:hint="@string/no_of_vehicle"
                     android:textColor="#808080" />
             </RelativeLayout>
 
@@ -132,7 +132,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="5dp"
-                    android:text="Start :"
+                    android:text="@string/start"
                     android:textColor="#808080"
                     android:textStyle="bold" />
 
@@ -144,7 +144,7 @@
                     android:layout_marginStart="45dp"
                     android:layout_toEndOf="@+id/start2"
                     android:enabled="false"
-                    android:hint="Date"
+                    android:hint="@string/date"
                     android:textColor="#808080" />
 
                 <TextView
@@ -165,7 +165,7 @@
                     android:layout_marginStart="57dp"
                     android:layout_toEndOf="@+id/datetime1"
                     android:enabled="false"
-                    android:hint="Time"
+                    android:hint="@string/time"
                     android:textColor="#808080" />
 
             </RelativeLayout>
@@ -183,7 +183,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="5dp"
-                    android:text="End :"
+                    android:text="@string/end"
                     android:textColor="#808080"
                     android:textStyle="bold" />
 
@@ -195,7 +195,7 @@
                     android:layout_marginStart="50dp"
                     android:layout_toEndOf="@+id/end2"
                     android:enabled="false"
-                    android:hint="Date"
+                    android:hint="@string/date"
                     android:textColor="#808080" />
 
                 <TextView
@@ -216,7 +216,7 @@
                     android:layout_marginStart="57dp"
                     android:layout_toEndOf="@+id/datetime2"
                     android:enabled="false"
-                    android:hint="Time"
+                    android:hint="@string/time"
                     android:textColor="#808080" />
 
             </RelativeLayout>
@@ -233,7 +233,7 @@
                     android:id="@+id/Txt_auction_category"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Auction Category :"
+                    android:text="@string/auction_category"
                     android:textColor="#808080"
                     android:textStyle="bold" />
 
@@ -242,7 +242,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_toEndOf="@+id/Txt_auction_category"
-                    android:hint="category"
+                    android:hint="@string/category"
                     android:textColor="#808080"
                     android:textStyle="bold" />
 
@@ -260,7 +260,7 @@
                     android:id="@+id/Txt_stockLocation"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Location :"
+                    android:text="@string/location"
                     android:textColor="#808080"
                     android:textStyle="bold" />
 
@@ -269,7 +269,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_toEndOf="@+id/Txt_stockLocation"
-                    android:hint="location"
+                    android:hint="@string/location"
                     android:textColor="#808080" />
 
             </RelativeLayout>

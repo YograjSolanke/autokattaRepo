@@ -58,7 +58,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@drawable/bg_btn"
-            android:text="Ignore"
+            android:text="@string/ignore"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="12sp"
@@ -72,7 +72,7 @@
             android:layout_marginStart="1dp"
             android:layout_weight="1"
             android:background="@drawable/bg_btn"
-            android:text="Going"
+            android:text="@string/going"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="12sp"
@@ -86,7 +86,7 @@
             android:layout_marginStart="1dp"
             android:layout_weight="1"
             android:background="@drawable/bg_btn"
-            android:text="Share"
+            android:text="@string/share"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="12sp"
@@ -126,7 +126,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="Closed type auction"
+                    android:text="@string/closed_type_auction"
                     android:textColor="@color/white"
                     android:textStyle="bold" />
 
@@ -143,7 +143,7 @@
                         android:layout_marginEnd="5dp"
                         android:layout_marginStart="5dp"
                         android:layout_marginTop="5dp"
-                        android:text="Closed type auction"
+                        android:text="@string/closed_type_auction"
                         android:textColor="@color/white" />
 
                     <TextView
@@ -168,7 +168,7 @@
                     android:layout_marginStart="15dp"
                     android:layout_marginTop="5dp"
                     android:gravity="center"
-                    android:text="Timer"
+                    android:text="@string/timer"
                     android:textColor="@color/red"
                     android:textSize="15sp"
                     android:textStyle="bold"
@@ -185,7 +185,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
-                        android:text="Start:"
+                        android:text="@string/start"
                         android:textColor="@color/white"
                         android:textStyle="bold" />
 
@@ -196,7 +196,7 @@
                         android:layout_alignParentTop="true"
                         android:layout_marginStart="10dp"
                         android:layout_toEndOf="@+id/start"
-                        android:text="Date"
+                        android:text="@string/dates"
                         android:textColor="@color/white" />
 
                     <TextView
@@ -214,7 +214,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
                         android:layout_toEndOf="@+id/and"
-                        android:text="Time"
+                        android:text="@string/times"
                         android:textColor="@color/white" />
 
                     <TextView
@@ -223,7 +223,7 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/start_date"
                         android:layout_marginStart="10dp"
-                        android:text="End:"
+                        android:text="@string/end"
                         android:textColor="@color/white"
                         android:textStyle="bold" />
 
@@ -234,7 +234,7 @@
                         android:layout_alignStart="@+id/start_date"
                         android:layout_below="@+id/start_date"
                         android:layout_toEndOf="@+id/end2"
-                        android:text="Date"
+                        android:text="@string/dates"
                         android:textColor="@color/white" />
 
                     <TextView
@@ -254,7 +254,7 @@
                         android:layout_below="@+id/start_date"
                         android:layout_marginStart="5dp"
                         android:layout_toEndOf="@+id/and2"
-                        android:text="Time"
+                        android:text="@string/time"
                         android:textColor="@color/white" />
 
 
@@ -269,13 +269,12 @@
                             android:layout_height="40dp"
                             android:layout_marginStart="@dimen/card_margin"
                             android:background="@color/medium_sea_green"
-                            android:text="Go to live"
+                            android:text="@string/go_to_live"
                             android:textAllCaps="false"
                             android:textColor="@color/white"
                             android:visibility="gone" />
                     </RelativeLayout>
                 </RelativeLayout>
-
 
                 <RelativeLayout
                     android:id="@+id/rlLocation"
@@ -288,7 +287,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
-                        android:text="Location:"
+                        android:text="@string/location"
                         android:textColor="@color/white"
                         android:textStyle="bold" />
 

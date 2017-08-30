@@ -47,7 +47,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
                 android:layout_marginTop="10dp"
-                android:text="Auction Title: "
+                android:text="@string/auction_title"
                 android:textSize="15sp"
                 android:textStyle="bold" />
 
@@ -59,7 +59,7 @@
                 android:layout_toEndOf="@+id/auctiontitletxt"
                 android:layout_toStartOf="@+id/editpencil"
                 android:enabled="false"
-                android:hint="Auction Title"
+                android:hint="@string/auction_title"
                 android:textSize="12sp" />
 
             <TextView
@@ -69,7 +69,7 @@
                 android:layout_below="@+id/editauctiontitle"
                 android:layout_marginStart="5dp"
                 android:layout_marginTop="10dp"
-                android:text="No.of vehicle"
+                android:text="@string/no_of_vehicle"
                 android:textSize="15sp"
                 android:textStyle="bold" />
 
@@ -80,7 +80,7 @@
                 android:layout_alignStart="@+id/editauctiontitle"
                 android:layout_below="@+id/editauctiontitle"
                 android:enabled="false"
-                android:hint="No of vehicle"
+                android:hint="@string/no_of_vehicle"
                 android:textSize="12sp" />
 
             <TextView
@@ -90,7 +90,7 @@
                 android:layout_below="@+id/editNoOfVehicles"
                 android:layout_marginStart="5dp"
                 android:layout_marginTop="10dp"
-                android:text="Start:"
+                android:text="@string/start"
                 android:textSize="15sp"
                 android:textStyle="bold" />
 
@@ -102,7 +102,7 @@
                 android:layout_marginStart="30dp"
                 android:layout_toEndOf="@+id/start2"
                 android:enabled="false"
-                android:hint="Date"
+                android:hint="@string/date"
                 android:inputType="date"
                 android:textSize="12sp" />
 
@@ -124,7 +124,7 @@
                 android:layout_marginStart="30dp"
                 android:layout_toEndOf="@+id/ampsine"
                 android:enabled="false"
-                android:hint="Time"
+                android:hint="@string/time"
                 android:inputType="time"
                 android:textSize="12sp" />
 
@@ -135,7 +135,7 @@
                 android:layout_below="@+id/startdate"
                 android:layout_marginStart="5dp"
                 android:layout_marginTop="10dp"
-                android:text="End:"
+                android:text="@string/end"
                 android:textSize="15sp"
                 android:textStyle="bold" />
 
@@ -156,7 +156,7 @@
                 android:layout_below="@+id/startdate"
                 android:layout_toEndOf="@+id/enddate"
                 android:enabled="false"
-                android:hint="Time"
+                android:hint="@string/time"
                 android:inputType="time"
                 android:textSize="12sp" />
 
@@ -167,7 +167,7 @@
                 android:layout_alignStart="@+id/startdate"
                 android:layout_below="@+id/startdate"
                 android:enabled="false"
-                android:hint="Date"
+                android:hint="@string/date"
                 android:inputType="date"
                 android:textSize="12sp" />
 
@@ -186,7 +186,7 @@
                     android:background="@drawable/buttonback"
                     android:enabled="false"
                     android:padding="3dp"
-                    android:text="Special clauses"
+                    android:text="@string/special_clauses"
                     android:textAllCaps="false"
                     android:textColor="@color/white"
                     android:visibility="gone" />
@@ -201,7 +201,7 @@
            android:background="@drawable/buttonback"
            android:gravity="center"
            android:text="Select vehicles"
-           android:textColor="@color/white"
+           android:textColor="@color/white"Special clauses
            android:textSize="20sp" />-->
 
     <LinearLayout
@@ -220,7 +220,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="24.85"
             android:background="@drawable/buttonback"
-            android:text="By Team"
+            android:text="@string/by_team"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="12sp" />
@@ -239,7 +239,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="24.85"
             android:background="@drawable/buttonback"
-            android:text="By Self"
+            android:text="@string/by_self"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="12sp" />
@@ -258,7 +258,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="24.85"
             android:background="@drawable/buttonback"
-            android:text="By Admin"
+            android:text="@string/by_admin"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="12sp" />
@@ -277,7 +277,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="24.85"
             android:background="@drawable/buttonback"
-            android:text="Reauction"
+            android:text="@string/reauction"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="12sp" />

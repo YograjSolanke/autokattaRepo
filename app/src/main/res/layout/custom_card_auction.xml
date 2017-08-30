@@ -31,7 +31,7 @@
                     android:id="@+id/auctioneer"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Event By:- "
+                    android:text="@string/event_by"
                     android:textStyle="bold" />
 
                 <TextView
@@ -67,7 +67,7 @@
                         android:id="@+id/title"
                         android:layout_width="100dp"
                         android:layout_height="wrap_content"
-                        android:text="Auction Title :"
+                        android:text="@string/auction_title"
                         android:textColor="#808080"
                         android:textStyle="bold" />
 
@@ -93,7 +93,7 @@
                         android:id="@+id/vehicle"
                         android:layout_width="100dp"
                         android:layout_height="wrap_content"
-                        android:text="No Of Vehicle :"
+                        android:text="@string/no_of_vehicle"
                         android:textColor="#808080"
                         android:textStyle="bold" />
 
@@ -119,7 +119,7 @@
                         android:id="@+id/type"
                         android:layout_width="100dp"
                         android:layout_height="wrap_content"
-                        android:text="Auction Type :"
+                        android:text="@string/auction_type"
                         android:textColor="#808080"
                         android:textStyle="bold" />
 
@@ -145,7 +145,7 @@
                         android:id="@+id/Txt_auction_category"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Auction Category: "
+                        android:text="@string/auction_category"
                         android:textColor="#808080"
                         android:textStyle="bold" />
 
@@ -199,7 +199,7 @@
                         android:layout_marginStart="5dp"
                         android:layout_marginTop="@dimen/cardview_compat_inset_shadow"
                         android:background="@color/colorPrimary"
-                        android:text="Special Clauses"
+                        android:text="@string/special_clauses"
                         android:textColor="@color/white"
                         android:textSize="12sp"
                         android:textStyle="bold" />
@@ -224,7 +224,7 @@
                             android:layout_alignParentEnd="true"
                             android:layout_marginEnd="@dimen/cardview_compat_inset_shadow"
                             android:layout_marginTop="@dimen/cardview_compat_inset_shadow"
-                            android:text="Closed type auction"
+                            android:text="@string/closed_type_auction"
                             android:textColor="@color/red"
                             android:visibility="visible" />
 
@@ -237,7 +237,7 @@
                             android:layout_marginEnd="@dimen/cardview_compat_inset_shadow"
                             android:layout_marginTop="@dimen/cardview_compat_inset_shadow"
                             android:gravity="center"
-                            android:text="Timer"
+                            android:text="@string/timer"
                             android:textColor="@color/red"
                             android:textSize="15sp"
                             android:textStyle="bold"
@@ -266,7 +266,7 @@
                         android:id="@+id/start"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Start:"
+                        android:text="@string/start"
                         android:textColor="#808080"
                         android:textStyle="bold" />
 
@@ -277,7 +277,7 @@
                         android:layout_alignParentTop="true"
                         android:layout_marginStart="10dp"
                         android:layout_toEndOf="@+id/start"
-                        android:text="Date"
+                        android:text="@string/date"
                         android:textColor="#808080" />
 
                     <TextView
@@ -295,7 +295,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
                         android:layout_toEndOf="@+id/and"
-                        android:text="Time"
+                        android:text="@string/time"
                         android:textColor="#808080" />
 
                     <TextView
@@ -304,7 +304,7 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/start_date"
                         android:layout_marginTop="@dimen/cardview_compat_inset_shadow"
-                        android:text="End:"
+                        android:text="@string/end"
                         android:textColor="#808080"
                         android:textStyle="bold" />
 
@@ -316,7 +316,7 @@
                         android:layout_below="@+id/start_date"
                         android:layout_marginTop="@dimen/cardview_compat_inset_shadow"
                         android:layout_toEndOf="@+id/end2"
-                        android:text="Date"
+                        android:text="@string/date"
                         android:textColor="#808080" />
 
                     <TextView
@@ -338,7 +338,7 @@
                         android:layout_marginStart="5dp"
                         android:layout_marginTop="@dimen/cardview_compat_inset_shadow"
                         android:layout_toEndOf="@+id/and2"
-                        android:text="Time"
+                        android:text="@string/time"
                         android:textColor="#808080" />
                 </RelativeLayout>
 
@@ -358,7 +358,7 @@
                         android:layout_marginEnd="@dimen/margin_small"
                         android:layout_weight="1"
                         android:background="@color/medium_sea_green"
-                        android:text="PREVIEW"
+                        android:text="@string/preview"
                         android:textColor="@color/white"
                         android:textStyle="bold"
                         android:visibility="visible" />
@@ -371,7 +371,7 @@
                         android:layout_marginEnd="@dimen/margin_small"
                         android:layout_weight="1"
                         android:background="@color/medium_sea_green"
-                        android:text="GOING"
+                        android:text="@string/going"
                         android:textColor="@color/white"
                         android:textStyle="bold"
                         android:visibility="gone" />
@@ -383,7 +383,7 @@
                         android:layout_height="@dimen/spinner_height"
                         android:layout_weight="1"
                         android:background="@color/medium_sea_green"
-                        android:text="SHARE"
+                        android:text="@string/share"
                         android:textColor="@color/white"
                         android:textStyle="bold" />
 

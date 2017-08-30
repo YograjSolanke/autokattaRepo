@@ -39,14 +39,13 @@
                 android:layout_marginStart="5dp"
                 android:layout_marginTop="10dp">
 
-
                 <TextView
                     android:id="@+id/uploadedon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:gravity="center"
-                    android:text="Uploaded On"
+                    android:text="@string/uploaded_on"
                     android:textColor="#808080"
                     android:textStyle="bold" />
 
@@ -62,7 +61,6 @@
                     android:textColor="#808080"
                     android:textStyle="bold" />
 
-
                 <TextView
                     android:id="@+id/edituploadedon"
                     android:layout_width="match_parent"
@@ -72,7 +70,6 @@
                     android:layout_toEndOf="@+id/dash6"
                     android:textColor="#808080" />
             </RelativeLayout>
-
 
             <RelativeLayout
                 android:id="@+id/yearrel"
@@ -86,7 +83,7 @@
                     android:id="@+id/yeartxt"
                     android:layout_width="80dp"
                     android:layout_height="wrap_content"
-                    android:text="Year  -"
+                    android:text="@string/years"
                     android:textColor="#808080"
                     android:textStyle="bold" />
 
@@ -95,9 +92,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_toEndOf="@+id/yeartxt"
-                    android:hint="Not Mentioned"
+                    android:hint="@string/not_mentioned"
                     android:textColor="#808080" />
-
             </RelativeLayout>
 
             <RelativeLayout
@@ -112,7 +108,7 @@
                     android:id="@+id/kmtxt"
                     android:layout_width="80dp"
                     android:layout_height="wrap_content"
-                    android:text="Km/hrs  -"
+                    android:text="@string/kms_hrs"
                     android:textColor="#808080"
                     android:textStyle="bold" />
 
@@ -121,9 +117,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_toEndOf="@+id/kmtxt"
-                    android:hint="Not Mentioned"
+                    android:hint="@string/not_mentioned"
                     android:textColor="#808080" />
-
             </RelativeLayout>
 
             <RelativeLayout
@@ -138,7 +133,7 @@
                     android:id="@+id/RTOtxt"
                     android:layout_width="80dp"
                     android:layout_height="wrap_content"
-                    android:text="RTO city  -"
+                    android:text="@string/rto_citys"
                     android:textColor="#808080"
                     android:textStyle="bold" />
 
@@ -147,7 +142,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_toEndOf="@+id/RTOtxt"
-                    android:hint="Not Mentioned"
+                    android:hint="@string/not_mentioned"
                     android:textColor="#808080" />
 
             </RelativeLayout>
@@ -164,7 +159,7 @@
                     android:id="@+id/locationtxt"
                     android:layout_width="80dp"
                     android:layout_height="wrap_content"
-                    android:text="Location  -"
+                    android:text="@string/location"
                     android:textColor="#808080"
                     android:textStyle="bold" />
 
@@ -173,7 +168,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_toEndOf="@+id/locationtxt"
-                    android:hint="Not Mentioned"
+                    android:hint="@string/not_mentioned"
                     android:textColor="#808080" />
 
             </RelativeLayout>
@@ -190,7 +185,7 @@
                     android:id="@+id/regtxt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Registration no  - "
+                    android:text="@string/registration_no"
                     android:textColor="#808080"
                     android:textStyle="bold" />
 
@@ -199,9 +194,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_toEndOf="@+id/regtxt"
-                    android:hint="Not Mentioned"
+                    android:hint="@string/not_mentioned"
                     android:textColor="#808080" />
-
             </RelativeLayout>
 
             <RelativeLayout
@@ -221,7 +215,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
-                        android:text="Title"
+                        android:text="@string/title"
                         android:textColor="#000000"
                         android:textStyle="bold" />
 
@@ -269,7 +263,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="15dp"
                         android:layout_below="@+id/broadcast"
-                        android:text="Broadcast"
+                        android:text="@string/broadcast"
                         android:textColor="@color/black"
                         android:textSize="12sp" />
                 </RelativeLayout>
@@ -284,7 +278,7 @@
                 android:layout_marginEnd="5dp"
                 android:layout_marginTop="5dp"
                 android:background="@color/background"
-                android:text="Sold"
+                android:text="@string/sold"
                 android:textColor="@color/white"
                 android:visibility="visible" />
 
@@ -297,7 +291,7 @@
                 android:layout_marginEnd="5dp"
                 android:layout_marginTop="5dp"
                 android:background="@color/background"
-                android:text="Enquiry"
+                android:text="@string/enquiry"
                 android:textColor="@color/white"
                 android:visibility="visible" />
 
@@ -309,7 +303,7 @@
                 android:layout_below="@+id/view_quotation"
                 android:layout_marginTop="5dp"
                 android:background="@color/background"
-                android:text="Get Quotation"
+                android:text="@string/get_quot"
                 android:textColor="@color/white"
                 android:textSize="12sp"
                 android:visibility="visible" />
@@ -322,7 +316,7 @@
                 android:layout_below="@+id/relativetitle"
                 android:layout_marginTop="5dp"
                 android:background="@color/background"
-                android:text="View Quotation"
+                android:text="@string/view_quot"
                 android:textColor="@color/white"
                 android:textSize="12sp"
                 android:visibility="visible" />
@@ -343,7 +337,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:gravity="center"
-                    android:text="Price"
+                    android:text="@string/price"
                     android:textColor="#808080"
                     android:textStyle="bold" />
 
@@ -366,7 +360,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginStart="10dp"
                     android:layout_toEndOf="@+id/dash2"
-                    android:hint="Not Mentioned"
+                    android:hint="@string/not_mentioned"
                     android:textColor="#808080" />
             </RelativeLayout>
 
@@ -387,7 +381,7 @@
                     android:layout_alignParentStart="true"
                     android:layout_alignParentTop="true"
                     android:gravity="center"
-                    android:text="No of leads"
+                    android:text="@string/no_of_leads"
                     android:textColor="#808080"
                     android:textStyle="bold" />
 
@@ -428,7 +422,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:gravity="center"
-                    android:text="Category"
+                    android:text="@string/category"
                     android:textColor="#808080"
                     android:textStyle="bold" />
 
@@ -469,7 +463,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:gravity="center"
-                    android:text="Brand"
+                    android:text="@string/brand"
                     android:textColor="#808080"
                     android:textStyle="bold" />
 
@@ -510,7 +504,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:gravity="center"
-                    android:text="Model"
+                    android:text="@string/model"
                     android:textColor="#808080"
                     android:textStyle="bold" />
 
@@ -525,7 +519,6 @@
                     android:text="-"
                     android:textColor="#808080"
                     android:textStyle="bold" />
-
 
                 <TextView
                     android:id="@+id/editmodel"
@@ -550,7 +543,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Upload In->\t\t\t\t"
+                    android:text="@string/upload_in"
                     android:textStyle="bold" />
 
                 <Button
@@ -561,7 +554,7 @@
                     android:layout_marginEnd="@dimen/card_margin"
                     android:background="@android:color/transparent"
                     android:drawableEnd="@drawable/ic_upload"
-                    android:text="group" />
+                    android:text="@string/groups" />
 
                 <Button
                     android:id="@+id/upload_store"
@@ -569,7 +562,7 @@
                     android:layout_height="25dp"
                     android:background="@android:color/transparent"
                     android:drawableEnd="@drawable/ic_upload"
-                    android:text="store" />
+                    android:text="@string/store" />
             </LinearLayout>
 
             <LinearLayout
@@ -588,10 +581,9 @@
                     android:layout_marginTop="10dp"
                     android:layout_weight="1"
                     android:background="@drawable/buttonback"
-                    android:text="View  Details"
+                    android:text="@string/view_details"
                     android:textColor="@color/white"
                     android:visibility="visible" />
-
 
                 <Button
                     android:id="@+id/btnnotify"
@@ -603,7 +595,7 @@
                     android:layout_marginTop="10dp"
                     android:layout_weight="1"
                     android:background="@drawable/buttonback"
-                    android:text="Stop Notification"
+                    android:text="@string/stop_notifications"
                     android:textColor="@color/white"
                     android:visibility="gone" />
             </LinearLayout>

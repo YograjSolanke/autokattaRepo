@@ -8,7 +8,6 @@
         android:id="@+id/relativeratestore"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/linearbtn"
         android:visibility="visible">
 
         <RelativeLayout
@@ -23,10 +22,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:text="Customer Service"
+                android:text="@string/customer_service"
                 android:textColor="#2C3343"
                 android:textStyle="bold" />
-
 
             <RatingBar
                 android:id="@+id/cs_rating"
@@ -41,8 +39,6 @@
                 android:isIndicator="false"
                 android:stepSize="1.0"
                 android:theme="@style/RatingBar" />
-
-
         </RelativeLayout>
 
         <RelativeLayout
@@ -59,7 +55,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:text="Quality Of Work"
+                android:text="@string/quality_of_work"
                 android:textColor="#2C3343"
                 android:textStyle="bold" />
 
@@ -76,8 +72,6 @@
                 android:numStars="5"
                 android:stepSize="1.0"
                 android:theme="@style/RatingBar" />
-
-
         </RelativeLayout>
 
         <RelativeLayout
@@ -93,7 +87,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:text="Friendliness"
+                android:text="@string/friendliness"
                 android:textColor="#2C3343"
                 android:textStyle="bold" />
 
@@ -110,8 +104,6 @@
                 android:numStars="5"
                 android:stepSize="1.0"
                 android:theme="@style/RatingBar" />
-
-
         </RelativeLayout>
 
 
@@ -128,7 +120,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:text="Price"
+                android:text="@string/price"
                 android:textColor="#2C3343"
                 android:textStyle="bold" />
 
@@ -161,7 +153,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:text="Time Management"
+                android:text="@string/time_management"
                 android:textColor="#2C3343"
                 android:textStyle="bold" />
 
@@ -179,7 +171,6 @@
                 android:stepSize="1.0"
                 android:theme="@style/RatingBar" />
 
-
         </RelativeLayout>
 
         <RelativeLayout
@@ -193,7 +184,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:gravity="center"
-                android:text="Your Overall Rating Of This Store"
+                android:text="@string/overall_ratings"
                 android:textColor="#2C3343"
                 android:textStyle="bold" />
 
@@ -226,7 +217,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:gravity="center"
-                android:text="Would You Like To Recommend This Store"
+                android:text="@string/recommend"
                 android:textColor="#2C3343"
                 android:textStyle="bold" />
 
@@ -243,7 +234,7 @@
                     android:layout_width="60dp"
                     android:layout_height="30dp"
                     android:background="@drawable/buttonback"
-                    android:text="Yes"
+                    android:text="@string/yes"
                     android:textAllCaps="false"
                     android:textColor="@color/white" />
 
@@ -254,12 +245,10 @@
                     android:layout_marginLeft="10dp"
                     android:layout_toRightOf="@+id/btnyes"
                     android:background="@drawable/buttonback"
-                    android:text="No"
+                    android:text="@string/no"
                     android:textAllCaps="false"
                     android:textColor="@color/white" />
             </RelativeLayout>
-
         </RelativeLayout>
     </RelativeLayout>
-
 </RelativeLayout>

@@ -7,14 +7,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/cattext"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
-            android:text="Select Categories To Filter Results"
+            android:text="@string/select_filter_categories"
             android:textStyle="bold" />
 
         <ListView
@@ -37,7 +36,7 @@
                 android:layout_width="60dp"
                 android:layout_height="40dp"
                 android:background="@drawable/buttonback"
-                android:text="Ok"
+                android:text="@string/ok"
                 android:id="@+id/btnok"
                 android:textColor="@color/white" />
 
@@ -45,14 +44,10 @@
                 android:layout_width="60dp"
                 android:layout_height="40dp"
                 android:background="@drawable/buttonback"
-                android:text="Cancel"
-                android:layout_below="@+id/listview1"
+                android:text="@string/cancel"
                 android:layout_marginLeft="5dp"
                 android:id="@+id/btncancel"
                 android:textColor="@color/white" />
-
         </LinearLayout>
     </RelativeLayout>
-
-
 </RelativeLayout>

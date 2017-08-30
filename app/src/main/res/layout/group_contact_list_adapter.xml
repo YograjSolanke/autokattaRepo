@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/white"
-                android:orientation="vertical" >
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
 
     <!-- Single ListItem -->
 
@@ -28,16 +28,16 @@
         android:layout_alignLeft="@+id/contact_name"
         android:layout_alignRight="@+id/contact_name"
         android:layout_below="@+id/contact_name"
-        android:textColor="#2C3343"
         android:padding="5dip"
-        android:text="" />
+        android:text=""
+        android:textColor="#2C3343" />
 
     <ImageView
         android:id="@+id/group_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"/>
+        android:layout_alignParentTop="true" />
     <!--android:src="@drawable/share"/>-->
 
     <CheckBox

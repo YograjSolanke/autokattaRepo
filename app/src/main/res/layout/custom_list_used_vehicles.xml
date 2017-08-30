@@ -28,7 +28,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:layout_toEndOf="@+id/vehicle_icon"
-            android:text="Vehicle title"
+            android:text="@string/vehicle_title"
             android:textColor="@color/zxing_custom_viewfinder_laser"
             android:textSize="14sp"
             android:textStyle="bold" />
@@ -47,7 +47,7 @@
             android:layout_below="@+id/vehicle_title"
             android:layout_marginStart="10dp"
             android:layout_toEndOf="@+id/vehicle_icon"
-            android:text="Category :"
+            android:text="@string/category"
             android:textSize="14sp"
             android:textStyle="bold" />
 
@@ -68,7 +68,7 @@
             android:layout_below="@+id/category"
             android:layout_marginStart="10dp"
             android:layout_toEndOf="@+id/vehicle_icon"
-            android:text="Sub Category :"
+            android:text="@string/sub_category"
             android:textSize="14sp"
             android:textStyle="bold" />
 
@@ -89,7 +89,7 @@
             android:layout_below="@+id/sub_category"
             android:layout_marginStart="10dp"
             android:layout_toEndOf="@+id/vehicle_icon"
-            android:text="Model :"
+            android:text="@string/model"
             android:textSize="14sp"
             android:textStyle="bold" />
 

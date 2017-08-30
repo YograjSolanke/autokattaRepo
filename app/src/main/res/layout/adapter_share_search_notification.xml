@@ -115,7 +115,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
                     android:layout_marginStart="5dp"
-                    android:text="Category :"
+                    android:text="@string/category"
                     android:textColor="#808080"
                     android:textStyle="bold" />
 
@@ -127,7 +127,7 @@
                     android:layout_alignParentTop="true"
                     android:layout_marginStart="5dip"
                     android:layout_toEndOf="@+id/textView2"
-                    android:text="category"
+                    android:text="@string/category"
                     android:textColor="#808080" />
 
                 <TextView
@@ -138,7 +138,7 @@
                     android:layout_below="@+id/textView2"
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="5dip"
-                    android:text="Brand :"
+                    android:text="@string/brand"
                     android:textColor="#808080"
                     android:textStyle="bold" />
 
@@ -149,7 +149,7 @@
                     android:layout_alignTop="@+id/textView3"
                     android:layout_marginStart="5dip"
                     android:layout_toEndOf="@+id/textView3"
-                    android:text="brand"
+                    android:text="@string/brand"
                     android:textColor="#808080" />
 
                 <TextView
@@ -160,7 +160,7 @@
                     android:layout_below="@+id/textView3"
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="5dip"
-                    android:text="Model :"
+                    android:text="@string/model"
                     android:textColor="#808080"
                     android:textStyle="bold" />
 
@@ -171,7 +171,7 @@
                     android:layout_alignTop="@+id/textView5"
                     android:layout_marginStart="5dip"
                     android:layout_toEndOf="@+id/textView5"
-                    android:text="model"
+                    android:text="@string/model"
                     android:textColor="#808080" />
 
                 <TextView
@@ -182,7 +182,7 @@
                     android:layout_below="@+id/textView5"
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="5dip"
-                    android:text="Price :"
+                    android:text="@string/price"
                     android:textColor="#808080"
                     android:textStyle="bold" />
 
@@ -193,7 +193,7 @@
                     android:layout_alignTop="@+id/textView6"
                     android:layout_marginStart="5dip"
                     android:layout_toEndOf="@+id/textView6"
-                    android:text="price"
+                    android:text="@string/price"
                     android:textColor="#808080" />
 
                 <TextView
@@ -204,7 +204,7 @@
                     android:layout_below="@+id/textView6"
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="5dip"
-                    android:text="Year :"
+                    android:text="@string/years"
                     android:textColor="#808080"
                     android:textStyle="bold" />
 
@@ -215,7 +215,7 @@
                     android:layout_alignTop="@+id/textView7"
                     android:layout_marginStart="5dip"
                     android:layout_toEndOf="@+id/textView7"
-                    android:text="year"
+                    android:text="@string/years"
                     android:textColor="#808080" />
 
                 <TextView
@@ -226,7 +226,7 @@
                     android:layout_below="@+id/textView7"
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="5dip"
-                    android:text="Date Of Search:"
+                    android:text="@string/date_of_search"
                     android:textColor="#808080"
                     android:textStyle="bold" />
 
@@ -237,7 +237,7 @@
                     android:layout_alignTop="@+id/textView8"
                     android:layout_marginStart="5dip"
                     android:layout_toEndOf="@+id/textView8"
-                    android:text="date of search"
+                    android:text="@string/date_of_search"
                     android:textColor="#808080" />
 
 
@@ -250,7 +250,7 @@
                     android:layout_marginBottom="5dp"
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="5dip"
-                    android:text="Search Leads :"
+                    android:text="@string/search_leads"
                     android:textColor="#808080"
                     android:textStyle="bold" />
 
@@ -261,7 +261,7 @@
                     android:layout_alignTop="@+id/textView9"
                     android:layout_marginStart="5dip"
                     android:layout_toEndOf="@+id/textView9"
-                    android:text="search lead"
+                    android:text="@string/search_leads"
                     android:textColor="#808080" />
             </RelativeLayout>
 

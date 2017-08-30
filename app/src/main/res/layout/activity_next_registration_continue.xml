@@ -81,7 +81,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
                     android:gravity="center"
-                    android:text="Vehicle Number"
+                    android:text="@string/vehicle_no"
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
@@ -91,7 +91,7 @@
                     android:layout_height="40dp"
                     android:background="@android:color/transparent"
                     android:digits="0123456789qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM-. "
-                    android:hint="Enter Vehicle No"
+                    android:hint="@string/enter_vehicle_number"
                     android:inputType="text"
                     android:textColor="#2C3343"
                     android:textSize="16sp" />
@@ -295,7 +295,7 @@
                     android:id="@+id/textPurchaseDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Purchase Date"
+                    android:text="@string/purchase_date"
                     android:textSize="16sp" />
 
                 <EditText
@@ -306,7 +306,7 @@
                     android:layout_marginEnd="40dp"
                     android:background="@android:color/transparent"
                     android:ems="10"
-                    android:hint="Enter Purchase date(YY/MM/DD)"
+                    android:hint="@string/purchase_datess"
                     android:textColor="#2C3343"
                     android:textSize="16sp" />
 
@@ -354,7 +354,7 @@
                     android:id="@+id/textTaxValidity"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Tax Validity"
+                    android:text="@string/tax_validity"
                     android:textSize="16sp" />
 
                 <EditText
@@ -365,7 +365,7 @@
                     android:layout_marginEnd="40dp"
                     android:background="@android:color/transparent"
                     android:ems="10"
-                    android:hint="Enter tax Validity(YY/MM/DD)"
+                    android:hint="@string/enter_tax_val"
                     android:textColor="#2C3343"
                     android:textSize="16sp" />
 
@@ -412,7 +412,7 @@
                     android:id="@+id/textFitnessValidity"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Fitness Validity"
+                    android:text="@string/fitness_validity"
                     android:textSize="16sp" />
 
                 <EditText
@@ -423,7 +423,7 @@
                     android:layout_marginEnd="40dp"
                     android:background="@android:color/transparent"
                     android:ems="10"
-                    android:hint="Enter Fitness Validity(YY/MM/DD)"
+                    android:hint="@string/enter_fit_val"
                     android:textColor="#2C3343"
                     android:textSize="16sp" />
 
@@ -470,7 +470,7 @@
                     android:id="@+id/textPermitValidity"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Permit Validity"
+                    android:text="@string/permit_validity"
                     android:textSize="16sp" />
 
                 <EditText
@@ -481,10 +481,9 @@
                     android:layout_marginEnd="40dp"
                     android:background="@android:color/transparent"
                     android:ems="10"
-                    android:hint="Enter permit validity(YY/MM/DD)"
+                    android:hint="@string/enter_permit_val"
                     android:textColor="#2C3343"
                     android:textSize="16sp" />
-
 
                 <ImageView
                     android:id="@+id/permitCal"
@@ -529,7 +528,7 @@
                     android:id="@+id/textInsuranceDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Insurance Date"
+                    android:text="@string/insurance_date"
                     android:textSize="16sp" />
 
                 <EditText
@@ -540,7 +539,7 @@
                     android:layout_marginEnd="40dp"
                     android:background="@android:color/transparent"
                     android:ems="10"
-                    android:hint="Enter Insurance Date(YY/MM/DD)"
+                    android:hint="@string/enter_insurance_val"
                     android:textColor="#2C3343"
                     android:textSize="16sp" />
 
@@ -587,7 +586,7 @@
                     android:id="@+id/textPUCDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="PUC Date"
+                    android:text="@string/puc_date"
                     android:textSize="16sp" />
 
                 <EditText
@@ -598,7 +597,7 @@
                     android:layout_marginEnd="40dp"
                     android:background="@android:color/transparent"
                     android:ems="10"
-                    android:hint="Enter PUC(YY/MM/DD)"
+                    android:hint="@string/enter_puc_date"
                     android:textColor="#2C3343"
                     android:textSize="16sp" />
 
@@ -645,7 +644,7 @@
                     android:id="@+id/textLastServiceDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Last Service Date"
+                    android:text="@string/last_service_date"
                     android:textSize="16sp" />
 
                 <EditText
@@ -656,10 +655,9 @@
                     android:layout_marginEnd="40dp"
                     android:background="@android:color/transparent"
                     android:ems="10"
-                    android:hint="Enter last service date(YY/MM/DD)"
+                    android:hint="@string/enter_last_service_date"
                     android:textColor="#2C3343"
                     android:textSize="16sp" />
-
 
                 <ImageView
                     android:id="@+id/lastServiceCal"
@@ -704,7 +702,7 @@
                     android:id="@+id/textNextServiceDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Next Service Date"
+                    android:text="@string/next_service_date"
                     android:textSize="16sp" />
 
                 <EditText
@@ -715,7 +713,7 @@
                     android:layout_marginEnd="40dp"
                     android:background="@android:color/transparent"
                     android:ems="10"
-                    android:hint="Enter Next Service Date(YY/MM/DD)"
+                    android:hint="@string/enter_next_service_date"
                     android:textColor="#2C3343"
                     android:textSize="16sp" />
 

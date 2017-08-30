@@ -11,8 +11,8 @@
     <me.gujun.android.taggroup.TagGroup
         android:id="@+id/tag_group"
         style="@style/TagGroup"
-        app:atg_isAppendMode="true"
+        android:layout_marginStart="@dimen/activity_half_margin"
         android:layout_marginTop="@dimen/activity_half_margin"
-        android:layout_marginStart="@dimen/activity_half_margin" />
+        app:atg_isAppendMode="true" />
 
 </LinearLayout>

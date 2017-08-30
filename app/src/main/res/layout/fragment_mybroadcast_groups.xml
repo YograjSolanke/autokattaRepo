@@ -1,20 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefreshLayoutBGroup"
         android:layout_width="match_parent"
-        android:layout_above="@+id/button"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/button">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerBGroup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:scrollbars="vertical"/>
+            android:scrollbars="vertical" />
     </android.support.v4.widget.SwipeRefreshLayout>
 
     <LinearLayout
@@ -24,8 +23,7 @@
         android:layout_alignParentBottom="true"
         android:layout_gravity="bottom"
         android:orientation="horizontal"
-        android:weightSum="3"
-       >
+        android:weightSum="3">
 
         <Button
             android:id="@+id/btnSendMsg"
@@ -33,21 +31,20 @@
             android:layout_height="wrap_content"
             android:layout_weight="2"
             android:background="@color/background"
-            android:text="Send Message"
+            android:text="@string/send_message"
             android:textAllCaps="false"
             android:textColor="@color/white"
-            android:visibility="gone"/>
+            android:visibility="gone" />
 
         <ImageView
             android:id="@+id/deletegroup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:contentDescription="@string/app_name"
             android:layout_gravity="center"
             android:layout_weight="1"
+            android:contentDescription="@string/app_name"
             android:src="@android:drawable/ic_menu_delete"
-            android:visibility="gone"
-           />
+            android:visibility="gone" />
 
     </LinearLayout>
 
@@ -55,10 +52,10 @@
         android:id="@+id/fabCreateBroadcastGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="end|bottom"
         android:layout_above="@+id/button"
-        android:background="@color/red"
         android:layout_alignParentEnd="true"
+        android:layout_gravity="end|bottom"
         android:layout_margin="@dimen/fab_margin"
-        android:src="@mipmap/ic_account_multiple_plus"/>
+        android:background="@color/red"
+        android:src="@mipmap/ic_account_multiple_plus" />
 </RelativeLayout>

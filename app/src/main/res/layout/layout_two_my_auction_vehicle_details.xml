@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView android:id="@+id/card_view"
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/card_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_below="@id/profile_card_view"
@@ -7,8 +8,7 @@
     android:layout_marginEnd="@dimen/card_margin"
     android:layout_marginStart="@dimen/card_margin"
     android:layout_marginTop="@dimen/card_margin"
-    android:foreground="?attr/selectableItemBackground"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:foreground="?attr/selectableItemBackground">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
             android:layout_marginTop="5dp"
-            android:text="Category :"
+            android:text="@string/category"
             android:textColor="#2C3343" />
 
         <View
@@ -63,7 +63,7 @@
             android:layout_below="@+id/vcat"
             android:layout_marginStart="5dp"
             android:layout_marginTop="5dp"
-            android:text="Registration Year :"
+            android:text="@string/registration_year"
             android:textColor="#2C3343" />
 
         <TextView
@@ -92,7 +92,7 @@
             android:layout_below="@+id/vryear"
             android:layout_marginStart="5dp"
             android:layout_marginTop="5dp"
-            android:text="Insurence : "
+            android:text="@string/insurance"
             android:textColor="#2C3343"
             android:visibility="visible" />
 
@@ -123,7 +123,7 @@
             android:layout_below="@+id/vinsurence"
             android:layout_marginStart="5dp"
             android:layout_marginTop="5dp"
-            android:text="Owner : "
+            android:text="@string/owner"
             android:textColor="#2C3343"
             android:visibility="visible" />
 
@@ -154,7 +154,7 @@
             android:layout_below="@+id/vowner"
             android:layout_marginStart="5dp"
             android:layout_marginTop="5dp"
-            android:text="RC Available :"
+            android:text="@string/rc_available"
             android:textColor="#2C3343"
             android:visibility="visible" />
 
@@ -185,7 +185,7 @@
             android:layout_below="@+id/vrc"
             android:layout_marginStart="5dp"
             android:layout_marginTop="5dp"
-            android:text="Insurence Validity :"
+            android:text="@string/insurance_validity"
             android:textColor="#2C3343"
             android:visibility="visible" />
 
@@ -216,7 +216,7 @@
             android:layout_below="@+id/vinsval"
             android:layout_marginStart="5dp"
             android:layout_marginTop="5dp"
-            android:text="Tax Validity : "
+            android:text="@string/tax_validity"
             android:textColor="#2C3343"
             android:visibility="visible" />
 
@@ -247,7 +247,7 @@
             android:layout_below="@+id/vtaxval"
             android:layout_marginStart="5dp"
             android:layout_marginTop="5dp"
-            android:text="Fitness Validity :"
+            android:text="@string/fitness_validity"
             android:textColor="#2C3343"
             android:visibility="visible" />
 
@@ -278,7 +278,7 @@
             android:layout_below="@+id/vfitval"
             android:layout_marginStart="5dp"
             android:layout_marginTop="5dp"
-            android:text="Permit Validity :"
+            android:text="@string/permit_validity"
             android:textColor="#2C3343"
             android:visibility="visible" />
 
@@ -309,7 +309,7 @@
             android:layout_below="@+id/vperval"
             android:layout_marginStart="5dp"
             android:layout_marginTop="5dp"
-            android:text="Fuel :"
+            android:text="@string/fuel"
             android:textColor="#2C3343"
             android:visibility="visible" />
 
@@ -341,7 +341,7 @@
             android:layout_below="@+id/vfuel"
             android:layout_marginStart="5dp"
             android:layout_marginTop="5dp"
-            android:text="Seating Capacity :"
+            android:text="@string/seating_capacity"
             android:textColor="#2C3343"
             android:visibility="gone" />
 
@@ -362,7 +362,7 @@
             android:layout_height="1dp"
             android:layout_below="@+id/seatingdetails"
             android:layout_marginTop="5dp"
-            android:background="#cccccc"></View>
+            android:background="#cccccc" />
 
         <TextView
             android:id="@+id/permittext"
@@ -372,7 +372,7 @@
             android:layout_below="@+id/vseat"
             android:layout_marginStart="5dp"
             android:layout_marginTop="5dp"
-            android:text="Permit : "
+            android:text="@string/permit"
             android:textColor="#2C3343"
             android:visibility="visible" />
 

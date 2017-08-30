@@ -49,7 +49,7 @@
                 android:id="@+id/byselftitle"
                 android:layout_width="55dp"
                 android:layout_height="wrap_content"
-                android:text="Title"
+                android:text="@string/title"
                 android:textColor="#848484"
                 android:textSize="12sp"
                 android:textStyle="bold" />
@@ -78,7 +78,7 @@
                 android:id="@+id/byselfcategory"
                 android:layout_width="55dp"
                 android:layout_height="wrap_content"
-                android:text="Category"
+                android:text="@string/category"
                 android:textColor="#848484"
                 android:textSize="12sp"
                 android:textStyle="bold" />
@@ -106,7 +106,7 @@
                 android:id="@+id/byselfbrand"
                 android:layout_width="55dp"
                 android:layout_height="wrap_content"
-                android:text="Brand"
+                android:text="@string/brand"
                 android:textColor="#848484"
                 android:textSize="12sp"
                 android:textStyle="bold" />
@@ -134,7 +134,7 @@
                 android:id="@+id/byselfmodel"
                 android:layout_width="55dp"
                 android:layout_height="wrap_content"
-                android:text="Model"
+                android:text="@string/model"
                 android:textColor="#848484"
                 android:textSize="12sp"
                 android:textStyle="bold" />
@@ -162,7 +162,7 @@
                 android:id="@+id/byselfrtocity"
                 android:layout_width="55dp"
                 android:layout_height="wrap_content"
-                android:text="City"
+                android:text="@string/city"
                 android:textColor="#848484"
                 android:textSize="12sp"
                 android:textStyle="bold" />
@@ -190,7 +190,7 @@
                 android:id="@+id/byselfcolor"
                 android:layout_width="55dp"
                 android:layout_height="wrap_content"
-                android:text="Color"
+                android:text="@string/color"
                 android:textColor="#848484"
                 android:textSize="12sp"
                 android:textStyle="bold" />
@@ -218,7 +218,7 @@
                 android:id="@+id/byselfreg"
                 android:layout_width="55dp"
                 android:layout_height="wrap_content"
-                android:text="Reg. No"
+                android:text="@string/no_register"
                 android:textColor="#848484"
                 android:textSize="12sp"
                 android:textStyle="bold" />
@@ -246,7 +246,7 @@
                 android:id="@+id/byselfrepo"
                 android:layout_width="60dp"
                 android:layout_height="wrap_content"
-                android:text="Repo Date"
+                android:text="@string/repodate"
                 android:textColor="#848484"
                 android:textSize="12sp"
                 android:textStyle="bold" />
@@ -274,7 +274,7 @@
                 android:id="@+id/byselfyard"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Yard rent per day "
+                android:text="@string/yard_rent_per_day"
                 android:textColor="#848484"
                 android:textSize="12sp"
                 android:textStyle="bold" />
@@ -303,7 +303,7 @@
                 android:id="@+id/manufactureyeartext"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Manufacture Year"
+                android:text="@string/manufacture_year"
                 android:textColor="#848484"
                 android:textSize="12sp"
                 android:textStyle="bold" />

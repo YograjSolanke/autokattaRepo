@@ -36,7 +36,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="7dp"
-                        android:text="Registration No :-"
+                        android:text="@string/registration_no"
                         android:textColor="#2C3343"
                         android:textStyle="bold" />
 
@@ -46,7 +46,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="7dp"
                         android:layout_toEndOf="@+id/live_registration_no"
-                        android:text="no"
+                        android:text="0"
                         android:textColor="#2C3343" />
 
                 </RelativeLayout>
@@ -64,7 +64,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="7dp"
-                        android:text="Lot No."
+                        android:text="@string/lot_no"
                         android:textColor="#2C3343"
                         android:textStyle="bold" />
 
@@ -114,7 +114,7 @@
                         android:id="@+id/brand"
                         android:layout_width="90dp"
                         android:layout_height="wrap_content"
-                        android:text="Brand : "
+                        android:text="@string/brand"
                         android:textColor="#808080"
                         android:textStyle="bold" />
 
@@ -123,7 +123,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_toEndOf="@+id/brand"
-                        android:hint="brand"
+                        android:hint="@string/brand"
                         android:textColor="#808080" />
 
                 </RelativeLayout>
@@ -138,7 +138,7 @@
                         android:id="@+id/model"
                         android:layout_width="90dp"
                         android:layout_height="wrap_content"
-                        android:text="Model : "
+                        android:text="@string/model"
                         android:textColor="#808080"
                         android:textStyle="bold" />
 
@@ -147,11 +147,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_toEndOf="@+id/model"
-                        android:hint="model"
+                        android:hint="@string/model"
                         android:textColor="#808080" />
 
                 </RelativeLayout>
-
 
                 <RelativeLayout
                     android:id="@+id/time_layout"
@@ -163,7 +162,7 @@
                         android:id="@+id/year_of_mfg"
                         android:layout_width="90dp"
                         android:layout_height="wrap_content"
-                        android:text="Year Of Mfg : "
+                        android:text="@string/year_of_mfg"
                         android:textColor="#808080"
                         android:textStyle="bold" />
 
@@ -172,7 +171,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_toEndOf="@+id/year_of_mfg"
-                        android:hint="year of mfg"
+                        android:hint="@string/year_of_mfg"
                         android:textColor="#808080" />
 
                 </RelativeLayout>
@@ -187,7 +186,7 @@
                         android:id="@+id/kms_hrs"
                         android:layout_width="90dp"
                         android:layout_height="wrap_content"
-                        android:text="KMS/HRS : "
+                        android:text="@string/kms_hrs"
                         android:textColor="#808080"
                         android:textStyle="bold" />
 
@@ -196,7 +195,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_toEndOf="@+id/kms_hrs"
-                        android:hint="KMS/HRS"
+                        android:hint="@string/kms_hrs"
                         android:textColor="#808080" />
 
                 </RelativeLayout>
@@ -211,7 +210,7 @@
                         android:id="@+id/storetypetxt"
                         android:layout_width="90dp"
                         android:layout_height="wrap_content"
-                        android:text="Location : "
+                        android:text="@string/location"
                         android:textColor="#808080"
                         android:textStyle="bold" />
 
@@ -220,7 +219,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_toEndOf="@+id/storetypetxt"
-                        android:hint="location"
+                        android:hint="@string/location"
                         android:textColor="#808080" />
 
                 </RelativeLayout>
@@ -235,7 +234,7 @@
                         android:id="@+id/rto"
                         android:layout_width="90dp"
                         android:layout_height="wrap_content"
-                        android:text="RTO City : "
+                        android:text="@string/rto_citys"
                         android:textColor="#808080"
                         android:textStyle="bold" />
 
@@ -244,7 +243,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_toEndOf="@+id/rto"
-                        android:hint="rtocity"
+                        android:hint="@string/rto_citys"
                         android:textColor="#808080" />
                 </RelativeLayout>
 
@@ -270,7 +269,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
-                            android:text="Start price"
+                            android:text="@string/start_price"
                             android:textColor="#808080"
                             android:textStyle="bold" />
 
@@ -295,7 +294,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
-                            android:text="Reserve price"
+                            android:text="@string/reserve_price"
                             android:textColor="#808080"
                             android:textStyle="bold" />
 

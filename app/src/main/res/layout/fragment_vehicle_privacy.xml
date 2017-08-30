@@ -24,7 +24,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
-                    android:text="Groups Where your vehicles belongs"
+                    android:text="@string/groups_where_your_vehicles_belongs"
                     android:textStyle="bold" />
 
 
@@ -51,7 +51,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
-                    android:text="Stores Where your vehicles belongs"
+                    android:text="@string/store_where_your_vehicles_belongs"
                     android:textStyle="bold" />
 
                 <ListView

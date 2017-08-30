@@ -72,7 +72,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
-                android:text="Lets Connect - Suggestions based on Company"
+                android:text="@string/message1"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textColor="#ffffff"
                 android:textSize="20sp" />
@@ -103,7 +103,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/rl"
-        android:hint="Search Contacts.."
+        android:hint="@string/search_contacts"
         android:inputType="textVisiblePassword"
         android:paddingLeft="5dp"
         android:textColor="#2C3343"

@@ -25,8 +25,6 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="#ffffff"
             android:textSize="20sp" />
-
-
     </RelativeLayout>
 
     <ScrollView
@@ -36,13 +34,11 @@
         android:layout_below="@+id/relativename"
         android:layout_marginTop="10dip">
 
-
         <RelativeLayout
             android:id="@+id/relative1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10dp">
-
 
             <LinearLayout
                 android:id="@+id/linear1"
@@ -57,10 +53,9 @@
                     android:layout_width="100dp"
                     android:layout_height="40dp"
                     android:background="@drawable/buttonback"
-                    android:text="Add Photo"
+                    android:text="@string/add_photo"
                     android:textColor="#ffffff"
                     android:textSize="16sp" />
-
             </LinearLayout>
 
             <LinearLayout
@@ -71,13 +66,12 @@
                 android:orientation="vertical"
                 android:visibility="visible">
 
-
                 <Button
                     android:id="@+id/btnaddcover"
                     android:layout_width="100dp"
                     android:layout_height="40dp"
                     android:background="@drawable/buttonback"
-                    android:text="Add Cover Photo"
+                    android:text="@string/add_cover_photo"
                     android:textColor="#ffffff"
                     android:textSize="16sp" />
             </LinearLayout>
@@ -94,7 +88,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-
                     <EditText
                         android:id="@+id/editstorename"
                         android:layout_width="match_parent"
@@ -104,7 +97,7 @@
                         android:layout_weight="2"
                         android:digits="1234567890QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnm- "
                         android:ems="10"
-                        android:hint="Store Name"
+                        android:hint="@string/store_name"
                         android:inputType="text"
                         android:maxLength="25"
                         android:textColor="#2C3343"
@@ -134,7 +127,7 @@
                         android:layout_marginRight="10dip"
                         android:layout_weight="2"
                         android:drawableStart="@mipmap/map"
-                        android:hint="Location"
+                        android:hint="@string/location"
                         android:textColor="#2C3343"
                         android:textColorHint="#848484" />
                 </android.support.design.widget.TextInputLayout>
@@ -160,14 +153,12 @@
                         android:layout_marginLeft="10dip"
                         android:layout_marginRight="10dip"
                         android:layout_weight="2"
-                        android:hint="Address"
+                        android:hint="@string/address"
                         android:inputType="textPostalAddress"
                         android:textColor="#2C3343"
                         android:textColorHint="#848484" />
 
                 </android.support.design.widget.TextInputLayout>
-
-
             </LinearLayout>
 
             <LinearLayout
@@ -190,16 +181,14 @@
                         android:layout_marginRight="10dip"
                         android:layout_weight="2"
                         android:ems="10"
-                        android:hint="Contact No."
+                        android:hint="@string/contact_no"
                         android:inputType="phone"
                         android:maxLength="10"
                         android:textColor="#2C3343"
                         android:textColorHint="#848484" />
 
                 </android.support.design.widget.TextInputLayout>
-
             </LinearLayout>
-
 
             <LinearLayout
                 android:id="@+id/linear6"
@@ -213,7 +202,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-
                     <EditText
                         android:id="@+id/editstorewebsite"
                         android:layout_width="match_parent"
@@ -222,13 +210,12 @@
                         android:layout_marginRight="10dip"
                         android:layout_weight="2"
                         android:ems="10"
-                        android:hint="Website(Ex.www.example.com)"
+                        android:hint="@string/website"
                         android:textColor="#2C3343"
                         android:textColorHint="#848484" />
 
                 </android.support.design.widget.TextInputLayout>
             </LinearLayout>
-
 
             <RelativeLayout
                 android:id="@+id/linear7"
@@ -248,7 +235,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="10dp"
-                    android:text="Timing"
+                    android:text="@string/timing"
                     android:textColor="#2C3343"
                     android:textSize="18sp" />
 
@@ -290,10 +277,7 @@
                     android:textColor="#2C3343"
                     android:textColorHint="#848484"
                     android:textSize="12sp" />
-
-
             </RelativeLayout>
-
 
             <LinearLayout
                 android:id="@+id/linear8"
@@ -303,7 +287,6 @@
                 android:layout_marginTop="5dp"
                 android:orientation="horizontal"
                 android:visibility="visible">
-
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
@@ -319,9 +302,7 @@
                         android:textColorHint="#848484">
 
                     </autokatta.com.my_store.MultiSelectionSpinner>
-
                 </android.support.design.widget.TextInputLayout>
-
             </LinearLayout>
 
             <RelativeLayout
@@ -338,7 +319,7 @@
                     android:layout_height="40dp"
                     android:layout_marginStart="40dp"
                     android:layout_marginTop="10dp"
-                    android:text="Store Type"
+                    android:text="@string/store_type"
                     android:textColor="#2C3343"
                     android:textSize="18sp" />
 
@@ -349,7 +330,7 @@
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="10dp"
                     android:layout_toEndOf="@+id/textstoretype"
-                    android:text="Product"
+                    android:text="@string/product"
                     android:textColor="#2C3343"
                     android:textSize="18sp" />
 
@@ -362,11 +343,9 @@
                     android:layout_marginTop="10dp"
                     android:layout_toEndOf="@+id/textstoretype"
                     android:checked="false"
-                    android:text="Service"
+                    android:text="@string/service"
                     android:textColor="#2C3343"
-                    android:textSize="18sp"
-
-                    />
+                    android:textSize="18sp" />
 
                 <CheckBox
                     android:id="@+id/rbtvehicle"
@@ -377,13 +356,10 @@
                     android:layout_marginTop="10dp"
                     android:layout_toEndOf="@+id/textstoretype"
                     android:checked="false"
-                    android:text="Vehicle"
+                    android:text="@string/vehicles"
                     android:textColor="#2C3343"
-                    android:textSize="18sp"
-
-                    />
+                    android:textSize="18sp" />
             </RelativeLayout>
-
 
             <LinearLayout
                 android:id="@+id/linear10"
@@ -400,15 +376,11 @@
                         android:id="@+id/multiautotext"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Services Offered(Ex.Auto Washing Centre)"
+                        android:hint="@string/services_offered"
                         android:textColor="#2C3343"
-                        android:textColorHint="#848484"
-
-                        />
+                        android:textColorHint="#848484" />
                 </android.support.design.widget.TextInputLayout>
-
             </LinearLayout>
-
 
             <LinearLayout
                 android:id="@+id/linear12"
@@ -426,15 +398,13 @@
                         android:id="@+id/editstoredescription"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Store Description"
+                        android:hint="@string/store_description"
                         android:maxLength="200"
                         android:paddingEnd="10dip"
                         android:paddingStart="10dip"
                         android:textColor="#2C3343"
                         android:textColorHint="#848484" />
                 </android.support.design.widget.TextInputLayout>
-
-
             </LinearLayout>
 
             <RelativeLayout
@@ -483,16 +453,12 @@
                         android:id="@+id/multiautobrand"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Add Brand Tags"
-                        android:textColorHint="#848484"
-
-                        />
+                        android:hint="@string/add_brand_tags"
+                        android:textColorHint="#848484" />
                 </android.support.design.widget.TextInputLayout>
-
             </LinearLayout>
 
             <LinearLayout
-
                 android:id="@+id/linear13"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -510,15 +476,9 @@
                     android:text="Next"
                     android:textColor="#ffffff"
                     android:textSize="16sp" />
-
             </LinearLayout>
-
-
         </RelativeLayout>
-
     </ScrollView>
-
-
 </RelativeLayout>
 
 

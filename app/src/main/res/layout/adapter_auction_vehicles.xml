@@ -57,7 +57,7 @@
                     android:id="@+id/byselftitle"
                     android:layout_width="55dp"
                     android:layout_height="wrap_content"
-                    android:text="Title"
+                    android:text="@string/title"
                     android:textColor="#848484"
                     android:textSize="12sp"
                     android:textStyle="bold" />
@@ -67,7 +67,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_toEndOf="@+id/byselftitle"
-                    android:text="title"
+                    android:text="@string/title"
                     android:textColor="#848484"
                     android:textSize="12sp" />
 
@@ -85,7 +85,7 @@
                     android:id="@+id/byselfcategory"
                     android:layout_width="55dp"
                     android:layout_height="wrap_content"
-                    android:text="Category"
+                    android:text="@string/category"
                     android:textColor="#848484"
                     android:textSize="12sp"
                     android:textStyle="bold" />
@@ -95,7 +95,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_toEndOf="@+id/byselfcategory"
-                    android:text="category"
+                    android:text="@string/category"
                     android:textColor="#848484"
                     android:textSize="12sp" />
 
@@ -113,7 +113,7 @@
                     android:id="@+id/byselfbrand"
                     android:layout_width="55dp"
                     android:layout_height="wrap_content"
-                    android:text="Brand"
+                    android:text="@string/brand"
                     android:textColor="#848484"
                     android:textSize="12sp"
                     android:textStyle="bold" />
@@ -123,7 +123,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_toEndOf="@+id/byselfbrand"
-                    android:text="brand"
+                    android:text="@string/brand"
                     android:textColor="#848484"
                     android:textSize="12sp" />
 
@@ -141,7 +141,7 @@
                     android:id="@+id/byselfmodel"
                     android:layout_width="55dp"
                     android:layout_height="wrap_content"
-                    android:text="Model"
+                    android:text="@string/model"
                     android:textColor="#848484"
                     android:textSize="12sp"
                     android:textStyle="bold" />
@@ -151,7 +151,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_toEndOf="@+id/byselfmodel"
-                    android:text="model"
+                    android:text="@string/model"
                     android:textColor="#848484"
                     android:textSize="12sp" />
 
@@ -169,7 +169,7 @@
                     android:id="@+id/byselfrtocity"
                     android:layout_width="55dp"
                     android:layout_height="wrap_content"
-                    android:text="City"
+                    android:text="@string/city"
                     android:textColor="#848484"
                     android:textSize="12sp"
                     android:textStyle="bold" />
@@ -179,7 +179,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_toEndOf="@+id/byselfrtocity"
-                    android:text="city "
+                    android:text="@string/city"
                     android:textColor="#848484"
                     android:textSize="12sp" />
 
@@ -197,7 +197,7 @@
                     android:id="@+id/byselfcolor"
                     android:layout_width="55dp"
                     android:layout_height="wrap_content"
-                    android:text="Color"
+                    android:text="@string/color"
                     android:textColor="#848484"
                     android:textSize="12sp"
                     android:textStyle="bold" />
@@ -207,7 +207,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_toEndOf="@+id/byselfcolor"
-                    android:text="color"
+                    android:text="@string/color"
                     android:textColor="#848484"
                     android:textSize="12sp" />
 
@@ -225,7 +225,7 @@
                     android:id="@+id/byselfreg"
                     android:layout_width="55dp"
                     android:layout_height="wrap_content"
-                    android:text="Reg.No"
+                    android:text="@string/registration_no"
                     android:textColor="#848484"
                     android:textSize="12sp"
                     android:textStyle="bold" />
@@ -253,7 +253,7 @@
                     android:id="@+id/byself_manu_year"
                     android:layout_width="110dp"
                     android:layout_height="wrap_content"
-                    android:text="Manufacture Year"
+                    android:text="@string/manufacture_year"
                     android:textColor="#848484"
                     android:textSize="12sp"
                     android:textStyle="bold" />

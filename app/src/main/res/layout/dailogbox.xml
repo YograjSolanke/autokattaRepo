@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:text="Do you want to Create Open Auction or Closed Auction?"
+            android:text="@string/auction_dialog"
             android:textSize="18sp"
             android:textStyle="bold" />
 
@@ -37,7 +37,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="50"
             android:checked="true"
-            android:text="Open"
+            android:text="@string/open"
             android:textColor="#848484" />
 
         <RadioButton
@@ -45,7 +45,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="50"
-            android:text="Closed"
+            android:text="@string/closed"
             android:textColor="#848484" />
     </RadioGroup>
 
@@ -64,7 +64,7 @@
             android:layout_marginEnd="10dp"
             android:layout_weight="50"
             android:background="@drawable/buttonback"
-            android:text="OK"
+            android:text="@string/ok"
             android:textColor="@color/white" />
 
         <Button
@@ -74,7 +74,7 @@
             android:layout_marginStart="10dp"
             android:layout_weight="50"
             android:background="@drawable/buttonback"
-            android:text="Cancel"
+            android:text="@string/cancel"
             android:textColor="@color/white" />
     </LinearLayout>
 

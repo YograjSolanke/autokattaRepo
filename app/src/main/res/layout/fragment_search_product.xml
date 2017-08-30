@@ -26,11 +26,9 @@
             android:layout_marginTop="5dp"
             android:background="@drawable/buttonback"
             android:padding="5dp"
-            android:text="Advanced Search"
+            android:text="@string/advance_search"
             android:textColor="@color/white"
-            android:visibility="gone"
-
-            />
+            android:visibility="gone" />
     </RelativeLayout>
 
     <ListView
@@ -39,6 +37,4 @@
         android:layout_height="wrap_content" />
 
     <include layout="@layout/error_view" />
-
-
 </LinearLayout>

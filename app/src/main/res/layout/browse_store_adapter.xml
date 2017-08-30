@@ -65,7 +65,7 @@
                         android:layout_gravity="center_vertical"
                         android:layout_marginEnd="5dp"
                         android:gravity="center"
-                        android:text="Like" />
+                        android:text="@string/likes" />
 
                     <TextView
                         android:id="@+id/follow"
@@ -74,7 +74,7 @@
                         android:layout_below="@+id/like"
                         android:layout_gravity="center_vertical"
                         android:gravity="center"
-                        android:text="Follow"
+                        android:text="@string/follower"
                         android:textColor="#808080" />
 
                     <TextView
@@ -110,7 +110,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/layout_top"
                             android:fontFamily="sans-serif"
-                            android:text="Store Name"
+                            android:text="@string/store_name"
                             android:textSize="@dimen/article_subheading"
                             android:textStyle="bold" />
                     </LinearLayout>
@@ -126,7 +126,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="sans-serif"
-                            android:text="Store Type"
+                            android:text="@string/store_type"
                             android:visibility="gone" />
 
                     </LinearLayout>
@@ -154,7 +154,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:fontFamily="sans-serif"
-                            android:text="Location" />
+                            android:text="@string/location" />
 
                     </LinearLayout>
 
@@ -178,7 +178,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:fontFamily="sans-serif"
-                            android:text="Website" />
+                            android:text="@string/website" />
 
                     </LinearLayout>
 
@@ -202,7 +202,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:fontFamily="sans-serif"
-                            android:text="Timing" />
+                            android:text="@string/timing" />
 
                     </LinearLayout>
 
@@ -226,7 +226,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:fontFamily="sans-serif"
-                            android:text="Store Services" />
+                            android:text="@string/store_services" />
 
                     </LinearLayout>
 
@@ -250,7 +250,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:fontFamily="sans-serif"
-                            android:text="Working days" />
+                            android:text="@string/working_day" />
 
                     </LinearLayout>
 
@@ -266,7 +266,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:fontFamily="sans-serif"
-                            android:text="Products(10)" />
+                            android:text="@string/product" />
 
                     </LinearLayout>
 
@@ -282,7 +282,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:fontFamily="sans-serif"
-                            android:text="Services(10)" />
+                            android:text="@string/service" />
 
                     </LinearLayout>
 

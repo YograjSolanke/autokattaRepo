@@ -9,14 +9,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-
         <TextView
             android:id="@+id/auctiontitle2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
             android:layout_marginTop="10dp"
-            android:text="Auction Title: "
+            android:text="@string/auction_title"
             android:textColor="#808080"
             android:textStyle="bold" />
 
@@ -27,7 +26,7 @@
             android:layout_marginStart="10dp"
             android:layout_toEndOf="@+id/auctiontitle2"
             android:enabled="false"
-            android:hint="Type of Auction"
+            android:hint="@string/type_of_auction"
             android:textColor="#808080"
             android:textSize="14sp" />
 
@@ -38,7 +37,7 @@
             android:layout_below="@+id/typeofauction2"
             android:layout_marginStart="5dp"
             android:layout_marginTop="10dp"
-            android:text="No.of vehicle"
+            android:text="@string/no_of_vehicle"
             android:textColor="#808080"
             android:textStyle="bold" />
 
@@ -49,7 +48,7 @@
             android:layout_alignStart="@+id/typeofauction2"
             android:layout_below="@+id/typeofauction2"
             android:enabled="false"
-            android:hint="No of vehicle"
+            android:hint="@string/no_of_vehicle"
             android:textColor="#808080"
             android:textSize="14sp" />
 
@@ -60,7 +59,7 @@
             android:layout_below="@+id/editvehicle"
             android:layout_marginStart="5dp"
             android:layout_marginTop="10dp"
-            android:text="Start:"
+            android:text="@string/start"
             android:textColor="#808080"
             android:textStyle="bold" />
 
@@ -72,7 +71,7 @@
             android:layout_marginStart="30dp"
             android:layout_toEndOf="@+id/start2"
             android:enabled="false"
-            android:hint="Date"
+            android:hint="@string/date"
             android:textColor="#808080"
             android:textSize="14sp" />
 
@@ -95,7 +94,7 @@
             android:layout_marginStart="30dp"
             android:layout_toEndOf="@+id/ampsine"
             android:enabled="false"
-            android:hint="Time"
+            android:hint="@string/time"
             android:textColor="#808080"
             android:textSize="14sp" />
 
@@ -106,7 +105,7 @@
             android:layout_below="@+id/start2"
             android:layout_marginStart="5dp"
             android:layout_marginTop="10dp"
-            android:text="End:"
+            android:text="@string/end"
             android:textColor="#808080"
             android:textStyle="bold" />
 
@@ -128,7 +127,7 @@
             android:layout_below="@+id/start2"
             android:layout_toEndOf="@+id/enddate"
             android:enabled="false"
-            android:hint="Time"
+            android:hint="@string/time"
             android:textColor="#808080"
             android:textSize="14sp" />
 
@@ -139,7 +138,7 @@
             android:layout_alignStart="@+id/startdate"
             android:layout_below="@+id/start2"
             android:enabled="false"
-            android:hint="Date"
+            android:hint="@string/date"
             android:textSize="14sp" />
 
         <RelativeLayout
@@ -155,12 +154,10 @@
                 android:layout_height="30dp"
                 android:layout_marginStart="5dp"
                 android:background="@drawable/button_background"
-                android:text="Special clauses"
+                android:text="@string/special_clauses"
                 android:textColor="@color/white" />
 
         </RelativeLayout>
-
-
     </RelativeLayout>
 
     <RelativeLayout
@@ -178,12 +175,10 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="5dp"
             android:gravity="center"
-            android:text="Confirm vehicles"
+            android:text="@string/confirm_vehicles"
             android:textColor="@color/white"
             android:textSize="15sp"
             android:textStyle="bold" />
-
-
     </RelativeLayout>
 
     <RelativeLayout
@@ -199,7 +194,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:text="Do you want show start price?"
+            android:text="@string/message2"
             android:textColor="@color/red"
             android:textStyle="bold" />
 
@@ -215,29 +210,24 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:checked="true"
-                android:text="Show"
+                android:text="@string/show"
                 android:textColor="@color/red" />
 
             <RadioButton
                 android:id="@+id/hideprice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Hide"
+                android:text="@string/hide"
                 android:textColor="@color/red" />
         </RadioGroup>
-
     </RelativeLayout>
-
 
     <ListView
         android:id="@+id/vehiclelistview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/btnconfirm"
-        android:layout_below="@+id/rel">
-
-    </ListView>
-
+        android:layout_below="@+id/rel" />
 
     <Button
         android:id="@+id/btnconfirm"
@@ -245,9 +235,7 @@
         android:layout_height="40dp"
         android:layout_alignParentBottom="true"
         android:background="@drawable/buttonback"
-        android:text="Confirm"
+        android:text="@string/confirm"
         android:textColor="@color/white"
         android:textSize="16sp" />
-
-
 </RelativeLayout>

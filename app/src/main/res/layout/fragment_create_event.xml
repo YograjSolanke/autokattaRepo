@@ -25,7 +25,6 @@
                 android:contentDescription="@string/app_name"
                 android:src="@mipmap/auctioncolor" />
 
-
             <TextView
                 android:id="@+id/textauctionevent"
                 android:layout_width="wrap_content"
@@ -34,7 +33,7 @@
                 android:layout_marginStart="10dp"
                 android:layout_toEndOf="@+id/auctionImage"
                 android:background="@drawable/text_underline"
-                android:text="Auction Event"
+                android:text="@string/auction_event"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
@@ -65,7 +64,7 @@
                 android:layout_marginStart="10dp"
                 android:layout_toEndOf="@+id/loanMelaImage"
                 android:background="@drawable/text_underline"
-                android:text="Loan Mela"
+                android:text="@string/loan_mela"
                 android:textSize="20sp"
                 android:textStyle="bold" />
         </RelativeLayout>
@@ -95,7 +94,7 @@
                 android:layout_marginStart="10dp"
                 android:layout_toEndOf="@+id/exchangeMelaImage"
                 android:background="@drawable/text_underline"
-                android:text="Exchange Mela"
+                android:text="@string/exchange_mela"
                 android:textSize="20sp"
                 android:textStyle="bold" />
         </RelativeLayout>
@@ -125,7 +124,7 @@
                 android:layout_marginStart="10dp"
                 android:layout_toEndOf="@+id/saleMelaImage"
                 android:background="@drawable/text_underline"
-                android:text="Sale Mela"
+                android:text="@string/sale_mela"
                 android:textSize="20sp"
                 android:textStyle="bold" />
         </RelativeLayout>
@@ -155,12 +154,10 @@
                 android:layout_marginStart="10dp"
                 android:layout_toEndOf="@+id/serviceMelaImage"
                 android:background="@drawable/text_underline"
-                android:text="Service Mela"
+                android:text="@string/service_mela"
                 android:textSize="20sp"
                 android:textStyle="bold" />
         </RelativeLayout>
-
-
     </RelativeLayout>
 
     <RelativeLayout
@@ -185,7 +182,7 @@
             android:layout_centerVertical="true"
             android:layout_marginStart="10dp"
             android:layout_toEndOf="@+id/clickindicator"
-            android:text="Click on type of event you want to create"
+            android:text="@string/event_click"
             android:textStyle="bold" />
     </RelativeLayout>
 

@@ -19,7 +19,7 @@
             android:layout_height="match_parent"
             android:layout_toStartOf="@+id/add_contacts"
             android:background="#80bebebe"
-            android:hint=" Search Contacts.."
+            android:hint="@string/search_contact"
             android:inputType="textVisiblePassword"
             android:textColor="#2C3343"
             android:textColorHint="#848484"
@@ -38,10 +38,7 @@
             android:text="Add"
             android:textColor="@android:color/white"
             android:textSize="15sp" />
-
-
     </RelativeLayout>
-
 
     <ListView
         android:id="@+id/list_view"

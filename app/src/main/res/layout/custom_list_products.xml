@@ -28,7 +28,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:layout_toEndOf="@+id/product_icon"
-            android:text="Vehicle title"
+            android:text="@string/vehicle_title"
             android:textColor="@color/text_color"
             android:textSize="14sp"
             android:textStyle="bold" />
@@ -47,7 +47,7 @@
             android:layout_below="@+id/product_title"
             android:layout_marginStart="10dp"
             android:layout_toEndOf="@+id/product_icon"
-            android:text="Category :"
+            android:text="@string/category"
             android:textSize="14sp"
             android:textStyle="bold" />
 
@@ -68,7 +68,7 @@
             android:layout_below="@+id/category"
             android:layout_marginStart="10dp"
             android:layout_toEndOf="@+id/product_icon"
-            android:text="Type :"
+            android:text="@string/type"
             android:textSize="14sp"
             android:textStyle="bold" />
 

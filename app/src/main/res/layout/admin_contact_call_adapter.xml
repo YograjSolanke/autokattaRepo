@@ -23,7 +23,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Person Name"
+                android:text="@string/names"
                 android:id="@+id/textName"
                 android:layout_toLeftOf="@+id/call"
                 android:layout_marginRight="5dp"
@@ -33,7 +33,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Person Role"
+                android:text="@string/name"
                 android:layout_toLeftOf="@+id/call"
                 android:layout_marginRight="5dp"
                 android:layout_below="@+id/textName"

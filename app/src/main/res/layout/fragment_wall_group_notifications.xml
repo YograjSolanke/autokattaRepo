@@ -146,7 +146,7 @@
                         android:id="@+id/members"
                         android:layout_width="105dp"
                         android:layout_height="wrap_content"
-                        android:text="No of Members: "
+                        android:text="@string/no_of_members"
                         android:textColor="#808080"
                         android:textStyle="bold" />
 
@@ -155,7 +155,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_toEndOf="@+id/members"
-                        android:hint="members"
+                        android:hint="@string/names"
                         android:textColor="#808080" />
 
                 </RelativeLayout>
@@ -170,7 +170,7 @@
                         android:id="@+id/vehicles"
                         android:layout_width="105dp"
                         android:layout_height="wrap_content"
-                        android:text="No of Vehicles: "
+                        android:text="@string/no_of_vehicle"
                         android:textColor="#808080"
                         android:textStyle="bold" />
 
@@ -179,7 +179,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_toEndOf="@+id/vehicles"
-                        android:hint="vehicles"
+                        android:hint="@string/names"
                         android:textColor="#808080" />
 
                 </RelativeLayout>
@@ -194,7 +194,7 @@
                         android:id="@+id/products"
                         android:layout_width="105dp"
                         android:layout_height="wrap_content"
-                        android:text="No of Products: "
+                        android:text="@string/no_of_products"
                         android:textColor="#808080"
                         android:textStyle="bold" />
 
@@ -203,7 +203,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_toEndOf="@+id/products"
-                        android:hint="products"
+                        android:hint="@string/names"
                         android:textColor="#808080" />
 
                 </RelativeLayout>
@@ -218,7 +218,7 @@
                         android:id="@+id/service"
                         android:layout_width="105dp"
                         android:layout_height="wrap_content"
-                        android:text="No of Services: "
+                        android:text="@string/no_of_services"
                         android:textColor="#808080"
                         android:textStyle="bold" />
 
@@ -227,7 +227,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_toEndOf="@+id/service"
-                        android:hint="services"
+                        android:hint="@string/names"
                         android:textColor="#808080" />
 
                 </RelativeLayout>

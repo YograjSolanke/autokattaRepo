@@ -18,7 +18,7 @@
             android:layout_marginBottom="2dp"
             android:background="@drawable/button_background"
             android:gravity="center"
-            android:text="Buyer lead"
+            android:text="@string/buyer_leads"
             android:textColor="@color/white"
             android:visibility="gone" />
 
@@ -40,7 +40,7 @@
             android:layout_marginTop="5dp"
             android:layout_toEndOf="@+id/buyer_lead_image"
             android:layout_toStartOf="@+id/favouritebuyer"
-            android:text="Username"
+            android:text="@string/username"
             android:textColor="#2C3343"
             android:textSize="15sp" />
 
@@ -75,7 +75,7 @@
             android:layout_marginStart="5dp"
             android:layout_toEndOf="@+id/buyer_lead_image"
             android:layout_toStartOf="@+id/favouritebuyer"
-            android:text="Location"
+            android:text="@string/location"
             android:textColor="#2C3343"
             android:textSize="15sp"
             android:visibility="visible" />
@@ -105,21 +105,16 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:padding="5dp"
-            android:text="NAME/city"
+            android:text="@string/name_city"
             android:textColor="#2C3343"
             android:textSize="15sp" />
-
-
     </RelativeLayout>
 
     <View
         android:id="@+id/view"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="#cccccc">
-
-    </View>
-
+        android:background="#cccccc" />
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -135,13 +130,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-
                 <TextView
                     android:id="@+id/seachreq"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="Car details"
+                    android:text="@string/car_details"
                     android:textColor="#2C3343"
                     android:textSize="15sp" />
 
@@ -243,7 +237,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="Search requirement"
+                    android:text="@string/search_req"
                     android:textColor="#2C3343"
                     android:textSize="15sp" />
 
@@ -299,7 +293,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/checkBox10"
                     android:layout_marginStart="20dp"
-                    android:text="RC Available"
+                    android:text="@string/rc_available"
                     android:textColor="#2C3343" />
 
                 <CheckBox
@@ -308,7 +302,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/checkBoxRcRight"
                     android:layout_marginStart="20dp"
-                    android:text="Insurance Available"
+                    android:text="@string/ins_aval"
                     android:textColor="#2C3343" />
 
                 <CheckBox
@@ -317,7 +311,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/checkBoxINSRight"
                     android:layout_marginStart="20dp"
-                    android:text="HP Capacity"
+                    android:text="@string/hp_capacity"
                     android:textColor="#2C3343"
                     android:visibility="gone" />
             </RelativeLayout>

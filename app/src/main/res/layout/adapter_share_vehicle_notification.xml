@@ -121,12 +121,11 @@
                         android:id="@+id/vehiclenametxt"
                         android:layout_width="80dp"
                         android:layout_height="wrap_content"
-                        android:text="Title :"
+                        android:text="@string/title"
                         android:textColor="#808080"
                         android:textStyle="bold" />
 
                     <TextView
-
                         android:id="@+id/title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -148,7 +147,7 @@
                         android:id="@+id/pricetxt"
                         android:layout_width="80dp"
                         android:layout_height="wrap_content"
-                        android:text="Price :"
+                        android:text="@string/price"
                         android:textColor="#808080"
                         android:textStyle="bold" />
 
@@ -157,7 +156,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_toEndOf="@+id/pricetxt"
-                        android:hint="price"
+                        android:hint="@string/price"
                         android:textColor="#808080" />
 
                 </RelativeLayout>
@@ -174,7 +173,7 @@
                         android:id="@+id/brandtxt"
                         android:layout_width="80dp"
                         android:layout_height="wrap_content"
-                        android:text="Brand :"
+                        android:text="@string/brand"
                         android:textColor="#808080"
                         android:textStyle="bold" />
 
@@ -183,7 +182,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_toEndOf="@+id/brandtxt"
-                        android:hint="brand"
+                        android:hint="@string/brand"
                         android:textColor="#808080" />
 
                 </RelativeLayout>
@@ -200,7 +199,7 @@
                         android:id="@+id/modeltxt"
                         android:layout_width="80dp"
                         android:layout_height="wrap_content"
-                        android:text="Model :"
+                        android:text="@string/model"
                         android:textColor="#808080"
                         android:textStyle="bold" />
 
@@ -209,7 +208,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_toEndOf="@+id/modeltxt"
-                        android:hint="model"
+                        android:hint="@string/model"
                         android:textColor="#808080" />
 
                 </RelativeLayout>
@@ -226,7 +225,7 @@
                         android:id="@+id/yeartxt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Year of mfg : "
+                        android:text="@string/year_of_mfg"
                         android:textColor="#808080"
                         android:textStyle="bold" />
 
@@ -235,7 +234,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_toEndOf="@+id/yeartxt"
-                        android:hint="year"
+                        android:hint="@string/years"
                         android:textColor="#808080" />
 
                 </RelativeLayout>
@@ -252,7 +251,7 @@
                         android:id="@+id/kmtxt"
                         android:layout_width="80dp"
                         android:layout_height="wrap_content"
-                        android:text="Km/hrs :"
+                        android:text="@string/kms_hrs"
                         android:textColor="#808080"
                         android:textStyle="bold" />
 
@@ -261,7 +260,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_toEndOf="@+id/kmtxt"
-                        android:hint="km/hrs"
+                        android:hint="@string/kms_hrss"
                         android:textColor="#808080" />
 
                 </RelativeLayout>
@@ -278,7 +277,7 @@
                         android:id="@+id/RTOtxt"
                         android:layout_width="110dp"
                         android:layout_height="wrap_content"
-                        android:text="RTO city :"
+                        android:text="@string/rto_citys"
                         android:textColor="#808080"
                         android:textStyle="bold" />
 
@@ -287,7 +286,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_toEndOf="@+id/RTOtxt"
-                        android:hint="RTO"
+                        android:hint="@string/rto_citys"
                         android:textColor="#808080" />
 
                 </RelativeLayout>
@@ -304,7 +303,7 @@
                         android:id="@+id/regtxt"
                         android:layout_width="110dp"
                         android:layout_height="wrap_content"
-                        android:text="Registration no :"
+                        android:text="@string/registration_no"
                         android:textColor="#808080"
                         android:textStyle="bold" />
 
@@ -313,7 +312,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_toEndOf="@+id/regtxt"
-                        android:hint="no"
+                        android:hint="@string/number"
                         android:textColor="#808080" />
 
                 </RelativeLayout>
@@ -330,7 +329,7 @@
                         android:id="@+id/locationtxt"
                         android:layout_width="110dp"
                         android:layout_height="wrap_content"
-                        android:text="Location :"
+                        android:text="@string/location"
                         android:textColor="#808080"
                         android:textStyle="bold" />
 
@@ -339,7 +338,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_toEndOf="@+id/locationtxt"
-                        android:hint="location"
+                        android:hint="@string/location"
                         android:textColor="#808080" />
 
                 </RelativeLayout>
@@ -359,7 +358,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="10dp"
                         android:layout_marginTop="5dp"
-                        android:text="Like"
+                        android:text="@string/likes"
                         android:textColor="#808080"
                         android:textSize="12sp" />
 
@@ -379,11 +378,9 @@
                         android:layout_marginStart="5dp"
                         android:layout_marginTop="5dp"
                         android:layout_toEndOf="@+id/dot"
-                        android:text="Share"
+                        android:text="@string/share"
                         android:textColor="#808080"
                         android:textSize="12sp" />
-
-
                 </RelativeLayout>
 
 

@@ -147,7 +147,7 @@
                         android:id="@+id/storenametxt"
                         android:layout_width="90dp"
                         android:layout_height="wrap_content"
-                        android:text="Name :"
+                        android:text="@string/names"
                         android:textColor="#808080"
                         android:textStyle="bold" />
 
@@ -156,7 +156,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_toEndOf="@+id/storenametxt"
-                        android:hint="name"
+                        android:hint="@string/names"
                         android:textColor="#808080" />
 
                 </RelativeLayout>
@@ -171,7 +171,7 @@
                         android:id="@+id/storelocationtxt"
                         android:layout_width="90dp"
                         android:layout_height="wrap_content"
-                        android:text="Worked at : "
+                        android:text="@string/worked_at"
                         android:textColor="#808080"
                         android:textStyle="bold" />
 
@@ -180,7 +180,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_toEndOf="@+id/storelocationtxt"
-                        android:hint="work at"
+                        android:hint="@string/worked_at"
                         android:textColor="#808080" />
 
                 </RelativeLayout>
@@ -195,7 +195,7 @@
                         android:id="@+id/storewebsitetxt"
                         android:layout_width="90dp"
                         android:layout_height="wrap_content"
-                        android:text="Website : "
+                        android:text="@string/website"
                         android:textColor="#808080"
                         android:textStyle="bold" />
 
@@ -204,7 +204,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_toEndOf="@+id/storewebsitetxt"
-                        android:hint="website"
+                        android:hint="@string/website"
                         android:textColor="#808080" />
 
                 </RelativeLayout>
@@ -220,7 +220,7 @@
                         android:id="@+id/storetypetxt"
                         android:layout_width="90dp"
                         android:layout_height="wrap_content"
-                        android:text="Location : "
+                        android:text="@string/location"
                         android:textColor="#808080"
                         android:textStyle="bold" />
 
@@ -229,7 +229,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_toEndOf="@+id/storetypetxt"
-                        android:hint="location"
+                        android:hint="@string/location"
                         android:textColor="#808080" />
 
                 </RelativeLayout>

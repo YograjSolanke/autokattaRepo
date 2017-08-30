@@ -14,7 +14,7 @@
             android:id="@+id/txtname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Name"
+            android:text="@string/names"
             android:layout_marginLeft="5dp"
             android:layout_toLeftOf="@+id/checkbox"
             android:layout_centerVertical="true"
@@ -27,8 +27,6 @@
             android:layout_height="wrap_content"
             android:id="@+id/checkbox"
             android:layout_alignParentRight="true" />
-
-
     </RelativeLayout>
 
 </RelativeLayout>

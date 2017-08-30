@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginTop="5dp"
-            android:text="Store:-"
+            android:text="@string/store"
             android:textAlignment="center"
             android:textColor="#2C3343"
             android:textSize="15sp"
@@ -30,7 +30,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginTop="5dp"
             android:layout_toEndOf="@+id/lstorename"
-            android:text="Store"
+            android:text="@string/store"
             android:textAlignment="center"
             android:textColor="#2C3343"
             android:textSize="15sp" />
@@ -43,7 +43,7 @@
             android:layout_marginBottom="10dp"
             android:layout_marginStart="10dp"
             android:layout_marginTop="5dp"
-            android:text="Website:-"
+            android:text="@string/website"
             android:textAlignment="center"
             android:textColor="#2C3343"
             android:textSize="15sp"
@@ -58,7 +58,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginTop="5dp"
             android:layout_toEndOf="@+id/lstorewebsite"
-            android:text="website"
+            android:text="@string/website"
             android:textAlignment="center"
             android:textColor="#2C3343"
             android:textSize="15sp" />
@@ -69,7 +69,7 @@
             android:layout_below="@+id/txtstorewebsite"
             android:layout_marginBottom="5dp"
             android:layout_marginStart="10dp"
-            android:text="No.Of Enquiries:"
+            android:text="@string/no_of_enquiries"
             android:id="@+id/no_of_enquiries"
             android:textStyle="bold"
             android:textColor="@color/textColor"
@@ -84,7 +84,7 @@
             android:layout_marginBottom="5dp"
             android:layout_marginStart="10dp"
             android:background="@drawable/buttonback"
-            android:text="Send Enquiry"
+            android:text="@string/send_enquiry"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="10sp"
@@ -145,9 +145,8 @@
                         android:layout_centerHorizontal="true"
                         android:layout_marginBottom="10dp"
                         android:layout_marginTop="10dp"
-                        android:text="Photos"
+                        android:text="@string/photos"
                         android:textStyle="bold" />
-
 
                     <com.daimajia.slider.library.SliderLayout
                         android:id="@+id/slider"
@@ -183,7 +182,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="5dp"
-                            android:text="likes"
+                            android:text="@string/likes"
                             android:textAlignment="center"
                             android:textColor="#2C3343" />
 
@@ -226,9 +225,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:numStars="5" />
-
                     </LinearLayout>
-
 
                     <View
                         android:id="@+id/v2"
@@ -236,12 +233,9 @@
                         android:layout_height="1dp"
                         android:layout_below="@+id/linearstars"
                         android:layout_marginTop="5dp"
-                        android:background="#cccccc">
-
-                    </View>
+                        android:background="#cccccc" />
 
                     <LinearLayout
-
                         android:id="@+id/relalike2"
                         android:layout_width="match_parent"
                         android:layout_height="35dp"
@@ -443,7 +437,7 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:gravity="center"
-                            android:text="Product  Type"
+                            android:text="@string/product_type"
                             android:textAlignment="center"
                             android:textColor="#2C3343"
                             android:textColorHint="#000000"
@@ -485,12 +479,11 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:gravity="center"
-                            android:text="Product Name"
+                            android:text="@string/product_name"
                             android:textAlignment="center"
                             android:textColor="#2C3343"
                             android:textSize="15sp"
                             android:textStyle="bold" />
-
 
                         <TextView
                             android:id="@+id/dash2"
@@ -528,7 +521,7 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:gravity="center"
-                            android:text="Price"
+                            android:text="@string/price"
                             android:textAlignment="center"
                             android:textColor="#2C3343"
                             android:textColorHint="#000000"
@@ -556,9 +549,7 @@
                             android:inputType="number"
                             android:textColor="#2C3343"
                             android:textColorHint="#000000"
-                            android:textSize="15sp"
-
-                            />
+                            android:textSize="15sp" />
                     </RelativeLayout>
 
                     <RelativeLayout
@@ -573,7 +564,7 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:gravity="center"
-                            android:text="Tags"
+                            android:text="@string/tags"
                             android:textAlignment="center"
                             android:textColor="#2C3343"
                             android:textSize="15sp"
@@ -615,7 +606,7 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:gravity="center"
-                            android:text="Brand Tags"
+                            android:text="@string/brand_tags"
                             android:textAlignment="center"
                             android:textColor="#2C3343"
                             android:textSize="15sp"
@@ -640,6 +631,7 @@
                             android:layout_marginStart="10dp"
                             android:layout_toEndOf="@+id/dash5"
                             android:textColor="#2C3343"
+                            android:labelFor="@id/txtbrandptags"
                             android:textColorHint="#000000"
                             android:textSize="15sp" />
                     </RelativeLayout>
@@ -656,12 +648,11 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:gravity="center"
-                            android:text="Details"
+                            android:text="@string/details"
                             android:textAlignment="center"
                             android:textColor="#2C3343"
                             android:textSize="15sp"
                             android:textStyle="bold" />
-
 
                         <TextView
                             android:id="@+id/dash6"
@@ -685,7 +676,6 @@
                             android:textColor="#2C3343"
                             android:textColorHint="#000000"
                             android:textSize="15sp" />
-
                     </RelativeLayout>
 
                     <RelativeLayout
@@ -701,12 +691,11 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:gravity="center"
-                            android:text="Category"
+                            android:text="@string/category"
                             android:textAlignment="center"
                             android:textColor="#2C3343"
                             android:textSize="15sp"
                             android:textStyle="bold" />
-
 
                         <TextView
                             android:id="@+id/dash7"
@@ -728,10 +717,7 @@
                             android:layout_marginStart="10dp"
                             android:layout_toEndOf="@+id/dash7"
                             android:textColor="#2C3343"
-                            android:textSize="15sp">
-
-                        </Spinner>
-
+                            android:textSize="15sp" />
                     </RelativeLayout>
 
                     <RelativeLayout
@@ -823,7 +809,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="5dp"
                                 android:padding="5dip"
-                                android:text="Price"
+                                android:text="@string/price"
                                 android:textColor="#2C3343" />
 
                             <RatingBar

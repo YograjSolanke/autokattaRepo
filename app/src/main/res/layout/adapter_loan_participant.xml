@@ -15,7 +15,6 @@
         android:layout_marginTop="@dimen/card_margin"
         android:foreground="?attr/selectableItemBackground">
 
-
         <RelativeLayout
             android:id="@+id/Rel"
             android:layout_width="wrap_content"
@@ -42,7 +41,7 @@
                     android:id="@+id/nametxt"
                     android:layout_width="80dp"
                     android:layout_height="wrap_content"
-                    android:text="Name: "
+                    android:text="@string/names"
                     android:textColor="#808080"
                     android:textStyle="bold" />
 
@@ -51,7 +50,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_toEndOf="@+id/nametxt"
-                    android:text="name"
+                    android:text="@string/names"
                     android:textColor="#808080" />
             </RelativeLayout>
 
@@ -68,7 +67,7 @@
                     android:id="@+id/locationtxt"
                     android:layout_width="110dp"
                     android:layout_height="wrap_content"
-                    android:text="Location: "
+                    android:text="@string/location"
                     android:textColor="#808080"
                     android:textStyle="bold" />
 
@@ -77,7 +76,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_toEndOf="@+id/locationtxt"
-                    android:text="location"
+                    android:text="@string/location"
                     android:textColor="#808080" />
             </RelativeLayout>
 
@@ -94,7 +93,7 @@
                     android:id="@+id/limit_for_auction"
                     android:layout_width="110dp"
                     android:layout_height="wrap_content"
-                    android:text="Limit for auction:"
+                    android:text="@string/limit_for_auction"
                     android:textColor="#808080"
                     android:textStyle="bold" />
 
@@ -103,7 +102,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_toEndOf="@+id/limit_for_auction"
-                    android:text="Limit for auction"
+                    android:text="@string/limit_for_auction"
                     android:textColor="#808080" />
 
             </RelativeLayout>
@@ -125,14 +124,14 @@
                     android:layout_marginTop="10dp"
                     android:text="Increase limit:"
                     android:textColor="#808080"
-                    android:textStyle="bold"></TextView>
+                    android:textStyle="bold" />
 
                 <EditText
                     android:id="@+id/inclimit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toEndOf="@+id/increaselimit"
-                    android:hint="Increase Limit"
+                    android:hint="@string/increase_limit"
                     android:inputType="number"
                     android:textColor="#808080"
                     android:textColorHint="#848484"
@@ -146,7 +145,7 @@
                     android:layout_height="30dp"
                     android:layout_alignParentEnd="true"
                     android:background="@drawable/buttonback"
-                    android:text="Confirm"
+                    android:text="@string/confirm"
                     android:textColor="@color/white" />
 
 
@@ -167,7 +166,7 @@
                     android:id="@+id/usertypetxt"
                     android:layout_width="80dp"
                     android:layout_height="wrap_content"
-                    android:text="Profession: "
+                    android:text="@string/profession"
                     android:textColor="#808080"
                     android:textStyle="bold" />
 
@@ -176,7 +175,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toEndOf="@+id/usertypetxt"
-                    android:text="user"
+                    android:text="@string/user"
                     android:textColor="#808080" />
             </RelativeLayout>
 
@@ -209,7 +208,7 @@
                     android:layout_height="40dp"
                     android:layout_weight="0.50"
                     android:background="@drawable/buttonback"
-                    android:text="Reminder for limit"
+                    android:text="@string/reminder_for_limit"
                     android:textColor="@color/white"
                     android:visibility="gone" />
 
@@ -221,7 +220,7 @@
                     android:layout_marginStart="2dp"
                     android:layout_weight="0.50"
                     android:background="@drawable/buttonback"
-                    android:text="Add to blacklist"
+                    android:text="@string/add_to_blacklist"
                     android:textColor="@color/white"
                     android:visibility="gone" />
 
@@ -233,7 +232,7 @@
                     android:layout_marginStart="2dp"
                     android:layout_weight="0.50"
                     android:background="@drawable/orange_back"
-                    android:text="Remove from blacklist"
+                    android:text="@string/remove_to_blacklist"
                     android:textAllCaps="false"
                     android:textColor="@color/black"
                     android:visibility="gone" />

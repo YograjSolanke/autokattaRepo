@@ -24,7 +24,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginTop="5dp"
             android:layout_toEndOf="@+id/profile_image"
-            android:text="name"
+            android:text="@string/names"
             android:textColor="#2C3343" />
 
         <TextView
@@ -35,7 +35,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginTop="5dp"
             android:layout_toEndOf="@+id/profile_image"
-            android:text="number"
+            android:text="@string/number"
             android:textColor="#2C3343" />
 
     </RelativeLayout>

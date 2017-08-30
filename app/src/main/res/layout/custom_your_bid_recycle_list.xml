@@ -38,7 +38,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="7dp"
-                        android:text="Registration No :-"
+                        android:text="@string/registration_no"
                         android:textColor="#2C3343"
                         android:textStyle="bold" />
 
@@ -48,7 +48,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="7dp"
                         android:layout_toEndOf="@+id/live_registration_no"
-                        android:text="no"
+                        android:text="0"
                         android:textColor="#2C3343" />
 
                 </RelativeLayout>
@@ -67,7 +67,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:gravity="center_horizontal"
-                        android:text="Lot No."
+                        android:text="@string/lot_no"
                         android:textColor="@color/white"
                         android:textStyle="bold" />
 
@@ -123,7 +123,7 @@
                     android:id="@+id/storetypetxt"
                     android:layout_width="70dp"
                     android:layout_height="wrap_content"
-                    android:text="Location : "
+                    android:text="@string/location"
                     android:textColor="#808080"
                     android:textStyle="bold" />
 
@@ -132,7 +132,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toEndOf="@+id/storetypetxt"
-                    android:hint="location"
+                    android:hint="@string/location"
                     android:textColor="#808080" />
 
             </RelativeLayout>
@@ -148,7 +148,7 @@
                     android:id="@+id/rto"
                     android:layout_width="70dp"
                     android:layout_height="wrap_content"
-                    android:text="RTO City : "
+                    android:text="@string/rto_citys"
                     android:textColor="#808080"
                     android:textStyle="bold" />
 
@@ -157,7 +157,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toEndOf="@+id/rto"
-                    android:hint="rtocity"
+                    android:hint="@string/rto_citys"
                     android:textColor="#808080" />
             </RelativeLayout>
 
@@ -173,7 +173,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="1dp"
-                    android:text="Your current bid price"
+                    android:text="@string/your_current_bid_price"
                     android:textColor="#808080"
                     android:visibility="gone" />
 
@@ -183,7 +183,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="1dp"
-                    android:text="Current bid received"
+                    android:text="@string/current_bid_received"
                     android:textColor="#808080"
                     android:visibility="visible" />
 
@@ -193,7 +193,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="1dp"
-                    android:text="Current bider status"
+                    android:text="@string/current_bidder_status"
                     android:textColor="#808080"
                     android:visibility="gone" />
 
@@ -203,7 +203,7 @@
                     android:layout_height="wrap_content"
                     android:background="@color/white"
                     android:gravity="center"
-                    android:text="-More details-"
+                    android:text="@string/more_details"
                     android:textSize="15sp" />
 
                 <LinearLayout
@@ -224,7 +224,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:text="Start price" />
+                            android:text="@string/start_price" />
 
                         <TextView
                             android:id="@+id/startprice"
@@ -245,7 +245,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:text="Bid increament" />
+                            android:text="@string/bid_increament" />
 
                         <TextView
                             android:id="@+id/bidincreament"
@@ -270,7 +270,7 @@
                         android:layout_height="30dp"
                         android:layout_centerHorizontal="true"
                         android:background="@color/colorPrimary"
-                        android:text=" Bid for vehicle "
+                        android:text="@string/bid_for_vehicle"
                         android:textColor="@color/white" />
                 </RelativeLayout>
             </LinearLayout>
@@ -294,7 +294,7 @@
                         android:id="@+id/brand"
                         android:layout_width="70dp"
                         android:layout_height="wrap_content"
-                        android:text="Brand : "
+                        android:text="@string/brand"
                         android:textColor="#808080"
                         android:textStyle="bold" />
 
@@ -303,7 +303,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_toEndOf="@+id/brand"
-                        android:hint="brand"
+                        android:hint="@string/brand"
                         android:textColor="#808080" />
 
                 </RelativeLayout>
@@ -318,7 +318,7 @@
                         android:id="@+id/model"
                         android:layout_width="70dp"
                         android:layout_height="wrap_content"
-                        android:text="Model : "
+                        android:text="@string/model"
                         android:textColor="#808080"
                         android:textStyle="bold" />
 
@@ -327,11 +327,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_toEndOf="@+id/model"
-                        android:hint="model"
+                        android:hint="@string/model"
                         android:textColor="#808080" />
-
                 </RelativeLayout>
-
 
                 <RelativeLayout
                     android:id="@+id/time_layout"
@@ -343,7 +341,7 @@
                         android:id="@+id/year_of_mfg"
                         android:layout_width="70dp"
                         android:layout_height="wrap_content"
-                        android:text="Year : "
+                        android:text="@string/years"
                         android:textColor="#808080"
                         android:textStyle="bold" />
 
@@ -352,7 +350,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_toEndOf="@+id/year_of_mfg"
-                        android:hint="year"
+                        android:hint="@string/years"
                         android:textColor="#808080" />
 
                 </RelativeLayout>
@@ -367,7 +365,7 @@
                         android:id="@+id/kms_hrs"
                         android:layout_width="70dp"
                         android:layout_height="wrap_content"
-                        android:text="KMS/HRS : "
+                        android:text="@string/kms_hrss"
                         android:textColor="#808080"
                         android:textStyle="bold" />
 
@@ -376,7 +374,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_toEndOf="@+id/kms_hrs"
-                        android:hint="KMS/HRS"
+                        android:hint="@string/kms_hrs"
                         android:textColor="#808080" />
 
                 </RelativeLayout>
@@ -391,7 +389,7 @@
                         android:id="@+id/rc"
                         android:layout_width="70dp"
                         android:layout_height="wrap_content"
-                        android:text="Rc : "
+                        android:text="@string/rc"
                         android:textColor="#808080"
                         android:textStyle="bold" />
 
@@ -400,7 +398,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_toEndOf="@+id/rc"
-                        android:hint="rc"
+                        android:hint="@string/rc"
                         android:textColor="#808080" />
 
                 </RelativeLayout>

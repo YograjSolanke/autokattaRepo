@@ -24,7 +24,7 @@
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="18dp"
-                android:text="Category -"
+                android:text="@string/category"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@color/white"
                 android:textSize="17sp"
@@ -37,12 +37,10 @@
                 android:layout_centerVertical="true"
                 android:layout_marginStart="5dp"
                 android:layout_toEndOf="@+id/categorytext"
-                android:text="Category"
+                android:text="@string/category"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@color/white"
                 android:textSize="15sp" />
-
-
         </RelativeLayout>
 
         <RelativeLayout
@@ -61,7 +59,7 @@
                 android:background="@color/background"
                 android:drawableStart="@drawable/logo48x48"
                 android:gravity="start|center"
-                android:text="Vehicle Title"
+                android:text="@string/vehicle_title"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_layout"
                 android:textStyle="bold" />
@@ -81,7 +79,7 @@
                     android:layout_marginTop="5dp"
                     android:background="#80bebebe"
                     android:ems="10"
-                    android:hint="Title"
+                    android:hint="@string/title"
                     android:padding="5dp"
                     android:textColor="#2C3343"
                     android:textColorHint="#848484" />
@@ -91,7 +89,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:text="Allow your vehicle to display in groups?"
+                    android:text="@string/message4"
                     android:textColor="#2C3343"
                     android:textSize="18sp" />
 
@@ -107,14 +105,14 @@
                         android:id="@+id/radioButton1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Yes"
+                        android:text="@string/yes"
                         android:textColor="#2C3343" />
 
                     <RadioButton
                         android:id="@+id/radioButton2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="No"
+                        android:text="@string/no"
                         android:textColor="#2C3343" />
                 </RadioGroup>
 
@@ -123,11 +121,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:text="Allow your vehicle to display in stores?"
+                    android:text="@string/message5"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="#2C3343"
                     android:textSize="18sp" />
-
 
                 <RadioGroup
                     android:id="@+id/storeradiogroup"
@@ -141,24 +138,23 @@
                         android:id="@+id/storeradio1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Yes"
+                        android:text="@string/yes"
                         android:textColor="#2C3343" />
 
                     <RadioButton
                         android:id="@+id/storeradio2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="No"
+                        android:text="@string/no"
                         android:textColor="#2C3343" />
                 </RadioGroup>
-
 
                 <TextView
                     android:id="@+id/exchangetext"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:text="Are you looking for vehicle exchange?"
+                    android:text="@string/message6"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="#2C3343"
                     android:textSize="18sp" />
@@ -175,7 +171,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
                         android:layout_weight="1.4"
-                        android:text="Finance"
+                        android:text="@string/finance"
                         android:textAppearance="?android:attr/textAppearanceMedium"
                         android:textColor="#2C3343"
                         android:textSize="18sp" />
@@ -192,14 +188,14 @@
                             android:id="@+id/financeYes"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Yes"
+                            android:text="@string/yes"
                             android:textColor="#2C3343" />
 
                         <RadioButton
                             android:id="@+id/financeNo"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="No"
+                            android:text="@string/no"
                             android:textColor="#2C3343" />
                     </RadioGroup>
                 </LinearLayout>
@@ -216,7 +212,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
                         android:layout_weight="1.4"
-                        android:text="Exchange"
+                        android:text="@string/exchange"
                         android:textAppearance="?android:attr/textAppearanceMedium"
                         android:textColor="#2C3343"
                         android:textSize="18sp" />
@@ -233,14 +229,14 @@
                             android:id="@+id/exchangeYes"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Yes"
+                            android:text="@string/yes"
                             android:textColor="#2C3343" />
 
                         <RadioButton
                             android:id="@+id/exchangeNo"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="No"
+                            android:text="@string/no"
                             android:textColor="#2C3343" />
                     </RadioGroup>
                 </LinearLayout>
@@ -264,7 +260,7 @@
                 android:background="@color/background"
                 android:drawableStart="@drawable/logo48x48"
                 android:gravity="start|center"
-                android:text="SubType"
+                android:text="@string/sub_type"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_layout"
                 android:textStyle="bold" />
@@ -297,7 +293,7 @@
                         android:id="@+id/group_title_id"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Permit/Private* "
+                        android:text="@string/permit_private"
                         android:textColor="#2C3343"
                         android:textSize="18sp" />
 
@@ -310,14 +306,14 @@
                             android:id="@+id/tourist_passing"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Tourist Passing"
+                            android:text="@string/tourist_passing"
                             android:textColor="#2C3343" />
 
                         <RadioButton
                             android:id="@+id/private_passing"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Private"
+                            android:text="@string/privates"
                             android:textColor="#2C3343" />
                     </RadioGroup>
                 </LinearLayout>
@@ -341,7 +337,7 @@
                 android:background="@color/background"
                 android:drawableStart="@drawable/logo48x48"
                 android:gravity="start|center"
-                android:text="Brand"
+                android:text="@string/brand"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_layout"
                 android:textStyle="bold" />
@@ -401,7 +397,7 @@
                 android:background="@color/background"
                 android:drawableStart="@drawable/logo48x48"
                 android:gravity="start|center"
-                android:text="Year"
+                android:text="@string/years"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_layout"
                 android:textStyle="bold" />
@@ -413,7 +409,7 @@
                 android:layout_below="@+id/year_title"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="10dip"
-                android:text="Make Year"
+                android:text="@string/make_year"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="#2C3343"
                 android:textStyle="bold" />
@@ -446,7 +442,7 @@
                     android:layout_marginTop="5dp"
                     android:layout_weight="1"
                     android:background="@android:color/transparent"
-                    android:hint="      Month               Year"
+                    android:hint="@string/month_year"
                     android:inputType="text"
                     android:paddingEnd="@dimen/card_margin"
                     android:paddingStart="@dimen/card_margin"
@@ -461,7 +457,7 @@
                     android:layout_marginTop="5dp"
                     android:layout_weight="1"
                     android:background="#80bebebe"
-                    android:hint="Year"
+                    android:hint="@string/years"
                     android:inputType="text"
                     android:paddingEnd="@dimen/card_margin"
                     android:paddingStart="@dimen/card_margin"
@@ -476,7 +472,7 @@
                 android:layout_below="@+id/make"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="10dip"
-                android:text="Registration Year"
+                android:text="@string/registration_year"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="#2C3343"
                 android:textStyle="bold" />
@@ -508,7 +504,7 @@
                     android:layout_marginTop="5dp"
                     android:layout_weight="1"
                     android:background="@android:color/transparent"
-                    android:hint="      Month               Year"
+                    android:hint="@string/month_year"
                     android:inputType="text"
                     android:paddingEnd="@dimen/card_margin"
                     android:paddingStart="@dimen/card_margin"
@@ -523,7 +519,7 @@
                     android:layout_marginTop="5dp"
                     android:layout_weight="1"
                     android:background="#80bebebe"
-                    android:hint="Year"
+                    android:hint="@string/years"
                     android:inputType="text"
                     android:paddingEnd="@dimen/card_margin"
                     android:paddingStart="@dimen/card_margin"
@@ -549,7 +545,7 @@
                 android:background="@color/background"
                 android:drawableStart="@drawable/logo48x48"
                 android:gravity="start|center"
-                android:text="KMS/HRS Details"
+                android:text="@string/kms_hrs_details"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_layout"
                 android:textStyle="bold" />
@@ -571,7 +567,7 @@
                     android:layout_marginTop="5dp"
                     android:background="#80bebebe"
                     android:ems="10"
-                    android:hint="Kms Run"
+                    android:hint="@string/kms_run"
                     android:inputType="number"
                     android:paddingEnd="10dp"
                     android:paddingStart="10dp"
@@ -586,7 +582,7 @@
                     android:layout_marginTop="5dp"
                     android:background="#80bebebe"
                     android:ems="10"
-                    android:hint="Hrs"
+                    android:hint="@string/hrs"
                     android:inputType="number"
                     android:paddingEnd="10dp"
                     android:paddingStart="10dp"
@@ -628,7 +624,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginTop="@dimen/text_about"
             android:background="@color/background"
-            android:text="submit"
+            android:text="@string/submit"
             android:textColor="@color/white"
             android:textStyle="bold" />
     </LinearLayout>

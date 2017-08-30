@@ -44,7 +44,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="7dp"
                 android:layout_marginTop="25dp"
-                android:text="Name"
+                android:text="@string/names"
                 android:textColor="#2C3343"
                 android:textStyle="bold" />
 
@@ -54,7 +54,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/names"
                 android:layout_marginStart="7dp"
-                android:text="Number"
+                android:text="@string/number"
                 android:textColor="#2C3343"
                 android:textStyle="bold" />
 
@@ -64,7 +64,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/contact"
                 android:layout_marginStart="7dp"
-                android:text="Vehicles Count: "
+                android:text="@string/vehicle_count"
                 android:textColor="#2C3343"
                 android:textStyle="bold" />
 
@@ -85,7 +85,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/vehi_cnt"
                 android:layout_marginStart="7dp"
-                android:text="Product Count: "
+                android:text="@string/product_count"
                 android:textColor="#2C3343"
                 android:textStyle="bold" />
 
@@ -106,7 +106,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/product_cnt"
                 android:layout_marginStart="7dp"
-                android:text="Service Count: "
+                android:text="@string/service_count"
                 android:textColor="#2C3343"
                 android:textStyle="bold" />
 
@@ -131,7 +131,7 @@
             android:layout_marginEnd="5dp"
             android:layout_marginTop="5dp"
             android:background="@color/background"
-            android:text="Options"
+            android:text="@string/options"
             android:textColor="@color/white" />
 
         <TextView
@@ -144,7 +144,7 @@
             android:layout_marginStart="89dp"
             android:layout_marginTop="5dp"
             android:padding="5dp"
-            android:text="Admin"
+            android:text="@string/admin"
             android:textColor="@color/black"
             android:textStyle="bold"
             android:visibility="visible" />

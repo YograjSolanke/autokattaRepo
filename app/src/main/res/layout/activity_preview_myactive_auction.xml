@@ -65,7 +65,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="Active Auction"
+                    android:text="@string/active_auction"
                     android:textColor="@color/white"
                     android:textStyle="bold" />
 
@@ -76,7 +76,7 @@
                     android:layout_marginEnd="5dp"
                     android:layout_marginStart="55dp"
                     android:layout_marginTop="5dp"
-                    android:text="category"
+                    android:text="@string/category"
                     android:textColor="@color/white"
                     android:textStyle="bold" />
 
@@ -88,7 +88,7 @@
                     android:layout_marginStart="15dp"
                     android:layout_marginTop="5dp"
                     android:gravity="center"
-                    android:text="Timer"
+                    android:text="@string/timer"
                     android:textColor="@color/red"
                     android:textSize="15sp"
                     android:textStyle="bold"
@@ -105,7 +105,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
-                        android:text="Start:"
+                        android:text="@string/start"
                         android:textColor="@color/white"
                         android:textStyle="bold" />
 
@@ -116,7 +116,7 @@
                         android:layout_alignParentTop="true"
                         android:layout_marginStart="10dp"
                         android:layout_toEndOf="@+id/start"
-                        android:text="Date"
+                        android:text="@string/dates"
                         android:textColor="@color/white" />
 
                     <TextView
@@ -134,7 +134,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
                         android:layout_toEndOf="@+id/and"
-                        android:text="Time"
+                        android:text="@string/times"
                         android:textColor="@color/white" />
 
                     <TextView
@@ -143,7 +143,7 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/start_date"
                         android:layout_marginStart="10dp"
-                        android:text="End:"
+                        android:text="@string/end"
                         android:textColor="@color/white"
                         android:textStyle="bold" />
 
@@ -154,7 +154,7 @@
                         android:layout_alignStart="@+id/start_date"
                         android:layout_below="@+id/start_date"
                         android:layout_toEndOf="@+id/end2"
-                        android:text="Date"
+                        android:text="@string/dates"
                         android:textColor="@color/white" />
 
                     <TextView
@@ -174,7 +174,7 @@
                         android:layout_below="@+id/start_date"
                         android:layout_marginStart="5dp"
                         android:layout_toEndOf="@+id/and2"
-                        android:text="Time"
+                        android:text="@string/times"
                         android:textColor="@color/white" />
 
                     <!--                    <RelativeLayout
@@ -207,7 +207,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
                         android:layout_marginTop="5dp"
-                        android:text="No.of vehicle :"
+                        android:text="@string/no_of_vehicle"
                         android:textColor="@color/white"
                         android:textStyle="bold" />
 
@@ -234,7 +234,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="5dp"
                             android:layout_marginTop="5dp"
-                            android:text="Participants:"
+                            android:text="@string/participants"
                             android:textColor="@color/white"
                             android:textStyle="bold" />
 
@@ -262,7 +262,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
-                        android:text="Location:"
+                        android:text="@string/location"
                         android:textColor="@color/white"
                         android:textStyle="bold" />
 

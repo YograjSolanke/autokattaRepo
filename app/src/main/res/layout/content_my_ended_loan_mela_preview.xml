@@ -27,7 +27,6 @@
         app:tabSelectedTextColor="@color/white"
         app:tabTextColor="#B0C4DE" />
 
-
     <android.support.design.widget.AppBarLayout
         android:id="@id/appbar"
         android:layout_width="match_parent"
@@ -84,7 +83,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="Ended Loan Mela"
+                    android:text="@string/ended_loan_mela"
                     android:textColor="@color/white"
                     android:textStyle="bold" />
 
@@ -99,7 +98,7 @@
                         android:id="@+id/start"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Start:"
+                        android:text="@string/start"
                         android:textColor="@color/white"
                         android:textStyle="bold" />
 
@@ -110,7 +109,7 @@
                         android:layout_alignParentTop="true"
                         android:layout_marginStart="10dp"
                         android:layout_toEndOf="@+id/start"
-                        android:text="Date"
+                        android:text="@string/dates"
                         android:textColor="@color/white" />
 
                     <TextView
@@ -128,7 +127,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
                         android:layout_toEndOf="@+id/and"
-                        android:text="Time"
+                        android:text="@string/times"
                         android:textColor="@color/white" />
 
                     <TextView
@@ -136,7 +135,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/start_date"
-                        android:text="End:"
+                        android:text="@string/end"
                         android:textColor="@color/white"
                         android:textStyle="bold" />
 
@@ -147,7 +146,7 @@
                         android:layout_alignLeft="@+id/start_date"
                         android:layout_below="@+id/start_date"
                         android:layout_toEndOf="@+id/end2"
-                        android:text="Date"
+                        android:text="@string/dates"
                         android:textColor="@color/white" />
 
                     <TextView
@@ -167,11 +166,9 @@
                         android:layout_below="@+id/start_date"
                         android:layout_marginStart="5dp"
                         android:layout_toEndOf="@+id/and2"
-                        android:text="Time"
+                        android:text="@string/times"
                         android:textColor="@color/white" />
-
                 </RelativeLayout>
-
 
                 <RelativeLayout
                     android:id="@+id/rlLocation"
@@ -184,7 +181,7 @@
                         android:id="@+id/txtLocation"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Location:"
+                        android:text="@string/location"
                         android:textColor="@color/white"
                         android:textStyle="bold" />
 
