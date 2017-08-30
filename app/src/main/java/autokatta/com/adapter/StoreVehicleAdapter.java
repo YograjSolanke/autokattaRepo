@@ -119,6 +119,7 @@ public class StoreVehicleAdapter extends RecyclerView.Adapter<StoreVehicleAdapte
             holder.mEnquiry.setVisibility(View.GONE);
             holder.mQoutation.setVisibility(View.GONE);
             holder.relativeleads.setVisibility(View.GONE);
+            holder.mViewQuote.setVisibility(View.GONE);
         }
 
         //To set Date
@@ -417,7 +418,7 @@ public class StoreVehicleAdapter extends RecyclerView.Adapter<StoreVehicleAdapte
             CustomToast.customToast(activity, activity.getString(R.string.no_internet));
         } else {
             Log.i("Check Class-"
-                    , "ProductViewActivity");
+                    , "StoreVehicleAdapter");
             error.printStackTrace();
         }
 
@@ -429,6 +430,8 @@ public class StoreVehicleAdapter extends RecyclerView.Adapter<StoreVehicleAdapte
         if (str != null) {
             if (str.equals("success")) {
                 CustomToast.customToast(activity, "success");
+            } else if (str.equals("success_added")) {
+                CustomToast.customToast(activity, "data updated");
             }
         }
     }
@@ -438,7 +441,7 @@ public class StoreVehicleAdapter extends RecyclerView.Adapter<StoreVehicleAdapte
         ImageView vehicleimage;
         TextView edittitles, editprices, editcategorys, editbrands, editmodels, editleads, edituploadedon;
         TextView Year, Location, Rto, Kms, Regno;
-        Button vehidetails, delete, mUploadGroup, mUploadStore, mEnquiry, mQoutation;
+        Button vehidetails, delete, mUploadGroup, mUploadStore, mEnquiry, mQoutation, mViewQuote;
         LinearLayout mLinear;
         RelativeLayout relativeleads;
 
@@ -461,6 +464,7 @@ public class StoreVehicleAdapter extends RecyclerView.Adapter<StoreVehicleAdapte
             mQoutation = (Button) itemView.findViewById(R.id.quotation);
             mEnquiry = (Button) itemView.findViewById(R.id.Enquiry);
             vehidetails = (Button) itemView.findViewById(R.id.vehibtndetails);
+            mViewQuote = (Button) itemView.findViewById(R.id.view_quotation);
 
 
             Year = (TextView) itemView.findViewById(R.id.year);
