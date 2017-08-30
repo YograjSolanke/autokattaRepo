@@ -48,6 +48,7 @@
             android:name=".AutokattaMainActivity"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
             android:label="@string/app_name"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize">
             <meta-data
@@ -75,27 +76,32 @@
             android:name=".view.UserProfile"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
             android:label="@string/title_activity_user_profile"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
             android:name=".view.MyAutokattaContactsActivity"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
             android:label="@string/title_activity_my_autokatta_contacts"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".view.UploadVehicleIntro"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".view.MyStoreListActivity"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
             android:label="@string/title_activity_my_store_list"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".other.SplashActivity"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
@@ -108,135 +114,158 @@
             android:name=".view.LoginActivity"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
             android:label="@string/title_activity_login"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".Registration.RegistrationActivity"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
             android:label="@string/title_activity_registration"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".view.BrowseStoreActivity"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
             android:label="@string/title_activity_browse_store"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".view.VehicleUpload"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
             android:label="@string/title_activity_vehicle_upload"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".view.SearchStoreActivity"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
             android:label="@string/title_activity_search_store"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".view.OTP"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
             android:label="@string/title_activity_otp"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".view.MySearchActivity"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
             android:label="@string/title_activity_my_search"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".view.Forget_Password"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
             android:label="@string/title_activity_forget__password"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".view.NewPassword"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
             android:label="@string/title_activity_new_password"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".view.MyUploadedVehiclesActivity"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
             android:label="@string/title_activity_my_uploaded_vehicles"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".view.MyActiveEventsTabActivity"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
             android:label="@string/title_activity_my_active_events_tab"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".view.MySavedAuctionEventActivity"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
             android:label="@string/title_activity_my_saved_auction_event"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".view.BlackListedMemberActivity"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
             android:label="@string/title_activity_black_listed_member"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".Registration.ContinueRegistration"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
             android:label="@string/title_activity_continue_registration"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".view.MyUpcomingEventsTabActivity"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
             android:label="@string/title_activity_my_upcoming_events_tab"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".view.Create_Event"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
             android:label="@string/title_activity_create_event"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".view.MyBroadcastGroupsActivity"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
             android:label="@string/title_activity_my_broadcast_groups"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".Registration.ContinueNextRegistration"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
             android:label="Continue Next Registration"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".view.MyEndedEventTabActivity"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
             android:label="@string/title_activity_my_ended_event"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".view.GroupTabs"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
             android:label="@string/title_activity_group_tabs"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".view.VehicleDetails"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
             android:label="@string/title_activity_vehicle_details"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".Registration.CompanyBasedRegistrationActivity"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".view.OtherProfile"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
             android:label="@string/title_activity_other_profile"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
 
@@ -253,167 +282,198 @@
             android:name=".Registration.CompanyBasedInvitation"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
             android:label="@string/company_based_invitation"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".Registration.SkillsBasedInvitation"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
             android:label="@string/skill_based_invitation"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".Registration.InviteFriends"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
             android:label="Invite Friends"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".auction.PreviewLiveEvents"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
             android:label="@string/title_activity_preview_live_events"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".auction.LiveAuctionEventBiding"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity
             android:name=".events.PreviewMyActiveAuctionActivity"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".events.PreviewNextMyActiveAuctionActivity"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".view.BroadcastMessageActivity"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
             android:label="@string/title_activity_broadcast_message"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".view.BussinessChatActivity"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
             android:label="@string/title_activity_bussiness_chat"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".events.MyEndedAuctionPreviewActivity"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".events.MyEndedAuctionPreviewNextActivity"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".auction.PreviewGoingEvents"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
             android:label="@string/title_activity_preview_going_events"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".auction.PreviewUpcomingEvent"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
             android:label="@string/title_activity_preview_upcoming_events"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".register.Registration"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
             android:label="@string/sign_up"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".view.SearchVehicleActivity"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
             android:label="@string/title_activity_search_vehicle"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".register.RegistrationContinue"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
             android:label="@string/title_activity_continue_registration"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".register.NextRegistrationContinue"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
             android:label="@string/next_registration_continue"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".register.RegistrationCompanyBased"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
             android:label="@string/registration_company_based"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
             android:name=".register.InvitationCompanyBased"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
             android:label="@string/company_based_invitation"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".register.CreateStoreContainer"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
             android:label="@string/create_store"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".auction.MyAuctionVehicleDetails"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
             android:label="@string/title_activity_my_auction_vehicle_details"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".view.StoreViewActivity"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".auction.AdminVehicleDetails"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
             android:label="@string/title_activity_admin_vehicle_details"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".other.SearchActivity"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
             android:label="@string/app_name"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".view.GroupsActivity"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
             android:label="@string/app_name"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".view.AddProductActivity"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
             android:label="@string/app_name"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".view.AddServiceActivity"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
             android:label="@string/app_name"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".view.ProductViewActivity"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
             android:label="@string/app_name"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
             android:name=".view.ServiceViewActivity"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
             android:label="@string/app_name"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
             android:name=".view.ChatActivity"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
             android:label="@string/app_name"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".view.ShareWithinAppActivity"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
             android:label="@string/app_name"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize">
 
@@ -433,11 +493,13 @@
             android:name=".view.LocalityActivity"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
             android:label="@string/title_activity_locality"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".initial_fragment.LocalityFragment"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
 
         <!-- Meta data for Google Map API key -->
@@ -461,7 +523,8 @@
 
         <activity
             android:name=".other.MapsActivity"
-            android:label="@string/title_activity_maps" />
+            android:label="@string/title_activity_maps"
+            android:screenOrientation="portrait" />
 
         <service
             android:name=".firebase.MyFirebaseMessagingService"
@@ -479,7 +542,10 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".firebase.FirebaseActivity">
+        <activity
+            android:name=".firebase.FirebaseActivity"
+            android:screenOrientation="portrait">
+
             <intent-filter>
                 <action android:name="OPEN_ACTIVITY_1" />
 
@@ -490,141 +556,171 @@
             android:name=".events.ActiveExchangeMelaPreviewActivity"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
             android:label="@string/title_activity_active_exchange_mela_preview"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".events.ActiveSaleMelaPreviewActivity"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
             android:label="@string/title_activity_active_sale_mela_preview"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".events.ActiveServiceMelaPreviewActivity"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
             android:label="@string/title_activity_active_service_mela_preview"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".events.ActiveLoanmelaPreviewActivity"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
             android:label="@string/title_activity_active_loanmela_preview"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".events.MyEndedExchangePreviewActivity"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
             android:label="@string/title_activity_my_ended_exchange_preview"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".events.MyEndedLoanMelaPreviewActivity"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
             android:label="@string/title_activity_my_ended_loan_mela_preview"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".events.MyEndedServiceMelaPreviewActivity"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
             android:label="@string/title_activity_my_ended_service_mela_preview"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".events.MyEndedSaleMelaPreviewActivity"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
             android:label="@string/title_activity_my_ended_sale_mela_preview"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".view.ManualEnquiry"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".view.AddManualEnquiry"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".view.NewVehicleCatalogActivity"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
             android:label="@string/title_activity_new_vehicle_catalog"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".enquiries.AllEnquiryTabActivity"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
             android:label="@string/title_activity_all_enquiry_tab"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".apicall.DeleteActivity"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
-        <activity android:name=".other.AddTags" />
+        <activity
+            android:name=".other.AddTags"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".fragment_profile.EditProfile"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
             android:label="@string/title_activity_edit_profile"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity
             android:name=".view.ManualEnquiryVehicleList"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
             android:label="@string/title_activity_manual_enquiry_vehicle_list"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".search.SearchDemo"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".view.EnquiredPersonsActivity"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".view.EnquiredPersonsListActivity"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".app_info.GradientBackgroundExampleActivity"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".app_info.ManualAppIntro"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".app_info.MyInventoryAppIntro"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".app_info.UploadVehicleAppIntro"
-            android:theme="@style/AppTheme.NoActionBar"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".app_info.SearchVehicleAppIntro"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".app_info.SearchStoreAppIntro"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".app_info.BrowseStoreAppIntro"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".fragment_profile.EditTags"
-            android:label="@string/title_activity_edit_tags"
-            android:theme="@style/AppTheme.NoActionBar"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
+            android:label="@string/title_activity_edit_tags"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".other.PostStatus"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".groups.GetQuotation"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
     </application>
 
