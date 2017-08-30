@@ -8,7 +8,7 @@
         android:id="@+id/text_registration"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Lets Connect - Suggestions based on Company"
+        android:text="@string/message1"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="@color/background"
         android:textSize="14sp" />
@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="7dp"
             android:layout_weight="1.5"
-            android:hint="Search Contacts.."
+            android:hint="@string/search_contacts"
             android:inputType="textVisiblePassword"
             android:paddingEnd="5dp"
             android:paddingStart="5dp"

@@ -30,7 +30,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginStart="10dp"
                 android:layout_toEndOf="@+id/auctioneventimage"
-                android:text="Auction Event"
+                android:text="@string/auction_event"
                 android:textColor="#2C3343"
                 android:textStyle="bold" />
 
@@ -92,7 +92,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginStart="10dp"
                 android:layout_toEndOf="@+id/loan_mela_image"
-                android:text="Loan Mela"
+                android:text="@string/loan_mela"
                 android:textColor="#2C3343"
                 android:textStyle="bold" />
 
@@ -153,7 +153,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginStart="10dp"
                 android:layout_toEndOf="@+id/exchange_event_image"
-                android:text="Exchange Event"
+                android:text="@string/exchange_event"
                 android:textColor="#2C3343"
                 android:textStyle="bold" />
 
@@ -214,7 +214,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginStart="10dp"
                 android:layout_toEndOf="@+id/service_event_image"
-                android:text="Service Event"
+                android:text="@string/service_event"
                 android:textColor="#2C3343"
                 android:textStyle="bold" />
 
@@ -275,7 +275,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginStart="10dp"
                 android:layout_toEndOf="@+id/sale_event_image"
-                android:text="Sale Event"
+                android:text="@string/sale_event"
                 android:textColor="#2C3343"
                 android:textStyle="bold" />
 

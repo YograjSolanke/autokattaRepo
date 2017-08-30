@@ -11,9 +11,12 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.MimeTypeMap;
@@ -45,6 +48,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import autokatta.com.R;
+import autokatta.com.adapter.AdminCallContactAdapter;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.initial_fragment.CreateGroupFragment;
 import autokatta.com.interfaces.RequestNotifier;
@@ -59,6 +63,7 @@ import autokatta.com.response.OtherBrandTagAddedResponse;
 import autokatta.com.response.OtherTagAddedResponse;
 import autokatta.com.response.ProfileGroupResponse;
 import autokatta.com.response.ServiceResponse;
+import autokatta.com.response.StoreOldAdminResponse;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
@@ -75,6 +80,8 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
         BaseSliderView.OnSliderClickListener, ViewPagerEx.OnPageChangeListener {
 
     String contact;
+    AdminCallContactAdapter adapter;
+    ArrayList<String> storeAdmins = new ArrayList<>();
     Bundle b = new Bundle();
     int id;
     String action;
@@ -256,6 +263,7 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
                         getCategory();
                         getServiceData(service_id, contact);
                         getNoOfEnquiryCount(service_id, contact);
+
 
 
                         servicetags.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
@@ -572,6 +580,15 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
     }
 
     /*
+Get Admin data...
+*/
+    private void getStoreAdmins(int store_id) {
+        ApiCall mApiCall = new ApiCall(this, this);
+        mApiCall.StoreAdmin(store_id);
+    }
+
+
+    /*
     Get Tags...
      */
     private void getTags() {
@@ -666,6 +683,22 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
                     CustomToast.customToast(ServiceViewActivity.this, "Other Tag added successfully");
                     tagid = tagid + "," + ((OtherTagAddedResponse) response.body()).getSuccess().getTagID().toString();
                     tagflag = true;
+                } else if (response.body() instanceof StoreOldAdminResponse) {
+                    StoreOldAdminResponse adminResponse = (StoreOldAdminResponse) response.body();
+                    if (!adminResponse.getSuccess().isEmpty()) {
+                        //8007855589-dealer-RUTU
+                        storeAdmins.add(contact + "-" + "Owner" + "-" + "Owner");
+                        for (StoreOldAdminResponse.Success success : adminResponse.getSuccess()) {
+
+                            storeAdmins.add(success.getAdmin());
+
+                        }
+
+                        System.out.println("alreadyadmin=" + storeAdmins.size());
+
+                    }
+
+
                 } else if (response.body() instanceof ServiceResponse) {
                     ServiceResponse serviceresponse = (ServiceResponse) response.body();
                     if (!serviceresponse.getSuccess().isEmpty()) {
@@ -692,6 +725,7 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
                             srate2 = success.getSrate2();
                             srate3 = success.getSrate3();
                             store_id = success.getStoreId();
+                            getStoreAdmins(store_id);
                             storecontact = success.getStoreContact();
                             storeowner = success.getStoreOwner();
                             brandtags_list = success.getBrandtags();
@@ -1077,21 +1111,27 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
 
             case R.id.call:
 
-                // @Here are the list of items to be shown in the list
-                if (storecontact.contains(",")) {
-                    final String[] items = storecontact.split(",");
-                    AlertDialog.Builder builder = new AlertDialog.Builder(ServiceViewActivity.this);
-                    builder.setTitle("Make your selection");
-                    builder.setItems(items, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int item) {
-                            call(items[item]);
-                            dialog.dismiss();
-
-                        }
-                    }).show();
-                } else {
+                if (storeAdmins.size() == 0)
                     call(storecontact);
-                }
+                else
+                    getCallContactList();
+
+
+//                // @Here are the list of items to be shown in the list
+//                if (storecontact.contains(",")) {
+//                    final String[] items = storecontact.split(",");
+//                    AlertDialog.Builder builder = new AlertDialog.Builder(ServiceViewActivity.this);
+//                    builder.setTitle("Make your selection");
+//                    builder.setItems(items, new DialogInterface.OnClickListener() {
+//                        public void onClick(DialogInterface dialog, int item) {
+//                            call(items[item]);
+//                            dialog.dismiss();
+//
+//                        }
+//                    }).show();
+//                } else {
+//                    call(storecontact);
+//                }
                 break;
 
             case R.id.btnpost:
@@ -1314,5 +1354,28 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
         super.onBackPressed();
         finish();
         overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
+    }
+
+
+    private void getCallContactList() {
+
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(ServiceViewActivity.this);
+// ...Irrelevant code for customizing the buttons and title
+        LayoutInflater inflater = getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.admin_contact_call_layout, null);
+        dialogBuilder.setView(dialogView);
+
+        RecyclerView recyclerView = (RecyclerView) dialogView.findViewById(R.id.listview);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(ServiceViewActivity.this);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setHasFixedSize(true);
+
+
+        AlertDialog alertDialog = dialogBuilder.create();
+
+        adapter = new AdminCallContactAdapter(this, storeAdmins);
+        recyclerView.setAdapter(adapter);
+        alertDialog.show();
+
     }
 }

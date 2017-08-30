@@ -22,5 +22,4 @@
 
     <include layout="@layout/content_my_uploaded_vehicles" />
 
-
 </android.support.design.widget.CoordinatorLayout>

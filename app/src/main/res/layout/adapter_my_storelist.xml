@@ -65,7 +65,7 @@
                         android:layout_gravity="center_vertical"
                         android:layout_marginEnd="5dp"
                         android:gravity="center"
-                        android:text="Like" />
+                        android:text="@string/likes" />
 
                     <TextView
                         android:id="@+id/textfollow"
@@ -74,7 +74,7 @@
                         android:layout_below="@+id/textlike"
                         android:layout_gravity="center_vertical"
                         android:gravity="center"
-                        android:text="Follow"
+                        android:text="@string/follower"
                         android:textColor="#808080" />
 
                     <TextView
@@ -104,7 +104,7 @@
                         android:layout_marginStart="@dimen/layout_top"
                         android:layout_toStartOf="@+id/storedelete"
                         android:fontFamily="sans-serif"
-                        android:text="Store Name"
+                        android:text="@string/store_name"
                         android:textSize="@dimen/article_subheading"
                         android:textStyle="bold" />
 
@@ -114,7 +114,7 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/editstname"
                         android:fontFamily="sans-serif"
-                        android:text="Store Type"
+                        android:text="@string/store_type"
                         android:visibility="gone" />
 
                     <TextView
@@ -127,7 +127,7 @@
                         android:drawableStart="@mipmap/map"
                         android:fontFamily="sans-serif"
                         android:gravity="start"
-                        android:text="Location" />
+                        android:text="@string/location" />
 
                     <TextView
                         android:id="@+id/editwebsite"
@@ -137,7 +137,7 @@
                         android:drawableStart="@mipmap/web"
                         android:fontFamily="sans-serif"
                         android:gravity="start"
-                        android:text="Website" />
+                        android:text="@string/website" />
 
                     <TextView
                         android:id="@+id/edittiming"
@@ -147,7 +147,7 @@
                         android:drawableStart="@mipmap/ic_timer"
                         android:fontFamily="sans-serif"
                         android:gravity="start"
-                        android:text="Timing" />
+                        android:text="@string/timing" />
 
                     <TextView
                         android:id="@+id/storeservices"
@@ -157,7 +157,7 @@
                         android:drawableStart="@mipmap/ic_wrench"
                         android:fontFamily="sans-serif"
                         android:gravity="start"
-                        android:text="Store Services"
+                        android:text="@string/store_services"
                         android:visibility="gone" />
 
                     <TextView
@@ -168,7 +168,7 @@
                         android:drawableStart="@mipmap/ic_calendar_small"
                         android:fontFamily="sans-serif"
                         android:gravity="start"
-                        android:text="Working days" />
+                        android:text="@string/working_day" />
 
                     <TextView
                         android:id="@+id/servicesOffered"
@@ -176,8 +176,7 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/editworkingdays"
                         android:drawableStart="@mipmap/ic_wrench"
-                        android:text="services offered" />
-
+                        android:text="@string/services_offered" />
 
                     <ImageView
                         android:id="@+id/storedelete"

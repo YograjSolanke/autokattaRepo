@@ -12,7 +12,7 @@
         android:layout_marginTop="20dp"
         android:focusable="true"
         android:gravity="center"
-        android:hint="Enter Group Title"
+        android:hint="@string/enter_group_title"
         android:padding="10dp"
         android:textColor="@color/black" />
 
@@ -35,7 +35,7 @@
         android:layout_marginStart="5dp"
         android:layout_marginTop="12dp"
         android:layout_toEndOf="@+id/profile"
-        android:text="Add Members..."
+        android:text="@string/add_member"
         android:textColor="@color/black" />
 
     <!--   &lt;!&ndash; Editext for Search &ndash;&gt;
@@ -53,16 +53,16 @@
            android:textColorHint="#848484" />-->
 
     <TextView
+        android:id="@+id/noContact"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="No Contacts Found"
-        android:id="@+id/noContact"
-        android:visibility="gone"
-        android:textAlignment="center"
-        android:textStyle="bold"
-        android:textSize="15sp"
         android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true" />
+        android:layout_centerVertical="true"
+        android:text="@string/no_contact_found"
+        android:textAlignment="center"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:visibility="gone" />
 
     <ListView
         android:id="@+id/broadcastgrplist"
@@ -71,10 +71,8 @@
         android:layout_above="@+id/tbl"
         android:layout_below="@+id/addmembertext"
         android:layout_margin="5dp"
-        android:visibility="visible"
-        android:layout_marginTop="10dp">
-
-    </ListView>
+        android:layout_marginTop="10dp"
+        android:visibility="visible" />
 
     <TableRow
         android:id="@+id/tbl"
@@ -83,17 +81,14 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true">
 
-
         <Button
             android:id="@+id/btncreate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@color/background"
-            android:text="Create"
+            android:text="@string/create"
             android:textAllCaps="false"
             android:textColor="@color/white" />
 
     </TableRow>
-
-
 </RelativeLayout>

@@ -4,7 +4,6 @@
     android:layout_height="match_parent"
     android:background="@color/white">
 
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -17,7 +16,6 @@
             android:background="@android:drawable/dialog_holo_light_frame"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-
 
             <ImageView
                 android:layout_width="75dp"
@@ -37,7 +35,6 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="2dp">
 
-
                 <TextView
                     android:id="@+id/uploadedon"
                     android:layout_width="wrap_content"
@@ -46,7 +43,7 @@
                     android:gravity="center"
                     android:textStyle="bold"
                     android:layout_centerVertical="true"
-                    android:text="Uploaded On" />
+                    android:text="@string/uploaded_on" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -60,13 +57,11 @@
                     android:layout_toRightOf="@+id/uploadedon"
                     android:layout_marginLeft="10dp" />
 
-
                 <TextView
                     android:id="@+id/edituploadedon"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="#808080"
-
                     android:layout_centerVertical="true"
                     android:layout_toRightOf="@+id/dash6"
                     android:layout_marginLeft="5dp" />
@@ -84,7 +79,6 @@
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true">
 
-
                     <TextView
                         android:id="@+id/title"
                         android:layout_width="wrap_content"
@@ -93,8 +87,7 @@
                         android:gravity="center"
                         android:textStyle="bold"
                         android:layout_centerVertical="true"
-
-                        android:text="Title" />
+                        android:text="@string/title" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -106,9 +99,7 @@
                         android:gravity="center"
                         android:layout_marginLeft="10dp"
                         android:textStyle="bold"
-                        android:layout_toRightOf="@+id/title"
-
-                        />
+                        android:layout_toRightOf="@+id/title" />
 
                     <TextView
                         android:id="@+id/edittitle"
@@ -149,7 +140,7 @@
                     android:gravity="center"
                     android:textStyle="bold"
                     android:layout_centerVertical="true"
-                    android:text="Price" />
+                    android:text="@string/price" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -170,7 +161,6 @@
                     android:textColor="#808080"
                     android:id="@+id/editprice"
                     android:layout_centerVertical="true"
-
                     android:layout_toRightOf="@+id/dash2"
                     android:layout_marginLeft="5dp" />
             </RelativeLayout>
@@ -192,7 +182,7 @@
                     android:gravity="center"
                     android:textStyle="bold"
                     android:layout_centerVertical="true"
-                    android:text="No of leads" />
+                    android:text="@string/no_of_leads" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -206,14 +196,12 @@
                     android:layout_toRightOf="@+id/leads"
                     android:layout_marginLeft="10dp" />
 
-
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="#808080"
                     android:id="@+id/editleads"
                     android:layout_centerVertical="true"
-
                     android:layout_toRightOf="@+id/dash"
                     android:layout_marginLeft="5dp" />
             </RelativeLayout>
@@ -235,7 +223,7 @@
                     android:gravity="center"
                     android:textStyle="bold"
                     android:layout_centerVertical="true"
-                    android:text="Category" />
+                    android:text="@string/category" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -268,7 +256,6 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginLeft="5dp">
 
-
                 <TextView
                     android:id="@+id/brand"
                     android:layout_width="wrap_content"
@@ -277,7 +264,7 @@
                     android:gravity="center"
                     android:textStyle="bold"
                     android:layout_centerVertical="true"
-                    android:text="Brand" />
+                    android:text="@string/brand" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -309,7 +296,6 @@
                 android:layout_marginTop="2dp"
                 android:layout_marginLeft="5dp">
 
-
                 <TextView
                     android:id="@+id/model"
                     android:layout_width="wrap_content"
@@ -318,7 +304,7 @@
                     android:gravity="center"
                     android:textStyle="bold"
                     android:layout_centerVertical="true"
-                    android:text="Model" />
+                    android:text="@string/model" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -338,15 +324,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="#808080"
-
                     android:layout_centerVertical="true"
                     android:layout_toRightOf="@+id/dash5"
                     android:layout_marginLeft="5dp" />
             </RelativeLayout>
-
-
         </RelativeLayout>
-
     </RelativeLayout>
 
     <android.support.v4.widget.SwipeRefreshLayout

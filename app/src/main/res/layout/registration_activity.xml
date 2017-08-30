@@ -27,7 +27,7 @@
                 android:layout_height="wrap_content"
                 android:drawablePadding="@dimen/card_margin"
                 android:drawableStart="@mipmap/ic_contacts"
-                android:hint="Enter Contact to Register"
+                android:hint="@string/enter_register"
                 android:inputType="phone"
                 android:maxLength="10"
                 android:maxLines="1"
@@ -79,7 +79,7 @@
                     android:layout_height="wrap_content"
                     android:drawablePadding="@dimen/card_margin"
                     android:drawableStart="@mipmap/ic_account"
-                    android:hint="Full Name"
+                    android:hint="@string/full_name"
                     android:inputType="textPersonName"
                     android:maxLines="1"
                     android:paddingEnd="@dimen/margin_heading_top"
@@ -99,7 +99,7 @@
                     android:layout_height="wrap_content"
                     android:drawablePadding="@dimen/card_margin"
                     android:drawableStart="@mipmap/ic_contact_mail"
-                    android:hint="Email"
+                    android:hint="@string/email"
                     android:inputType="textEmailAddress"
                     android:maxLines="1"
                     android:paddingEnd="@dimen/margin_heading_top"
@@ -121,7 +121,7 @@
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
                     android:gravity="center"
-                    android:text="Gender"
+                    android:text="@string/gender"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:textColor="@color/textColor"
                     android:textSize="15sp" />
@@ -142,7 +142,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:checked="false"
-                        android:text="Female"
+                        android:text="@string/female"
                         android:textColor="@color/textColor"
                         android:textSize="15sp" />
 
@@ -151,12 +151,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:checked="true"
-                        android:text="Male"
+                        android:text="@string/male"
                         android:textColor="@color/textColor"
                         android:textSize="15sp" />
                 </RadioGroup>
             </RelativeLayout>
-
 
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/doblayout"
@@ -167,7 +166,6 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/text_layout_height">
-
 
                     <ImageView
                         android:id="@+id/clearDate"
@@ -185,7 +183,7 @@
                         android:drawablePadding="@dimen/card_margin"
                         android:drawableRight="@null"
                         android:drawableStart="@mipmap/ic_calendar"
-                        android:hint="Date of Birth"
+                        android:hint="@string/date_of_birth"
                         android:inputType="date"
                         android:maxLines="1"
                         android:paddingEnd="@dimen/margin_heading_top"
@@ -193,11 +191,8 @@
                         android:textColor="@color/textColor"
                         android:textColorHint="@color/hintColor"
                         android:textSize="15sp" />
-
                 </RelativeLayout>
-
             </android.support.design.widget.TextInputLayout>
-
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
@@ -209,7 +204,7 @@
                     android:layout_height="wrap_content"
                     android:drawablePadding="@dimen/card_margin"
                     android:drawableStart="@mipmap/ic_map_marker"
-                    android:hint="Address"
+                    android:hint="@string/address"
                     android:paddingEnd="@dimen/margin_heading_top"
                     android:paddingStart="@dimen/margin_heading_top"
                     android:textColor="@color/textColor"
@@ -227,7 +222,7 @@
                     android:layout_height="@dimen/text_layout_height"
                     android:drawablePadding="@dimen/card_margin"
                     android:drawableStart="@mipmap/ic_dialpad"
-                    android:hint="Pin Code"
+                    android:hint="@string/pin_code"
                     android:inputType="number"
                     android:maxLength="6"
                     android:paddingEnd="@dimen/margin_heading_top"
@@ -253,7 +248,6 @@
                 android:layout_marginTop="10dp"
                 android:visibility="gone" />
 
-
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/otherIndustryLayout"
                 android:layout_width="match_parent"
@@ -266,7 +260,7 @@
                     android:layout_height="wrap_content"
                     android:drawablePadding="@dimen/card_margin"
                     android:drawableStart="@mipmap/ic_factory"
-                    android:hint="Enter Your Industry"
+                    android:hint="@string/enter_your_industry"
                     android:maxLines="1"
                     android:paddingEnd="@dimen/margin_heading_top"
                     android:paddingStart="@dimen/margin_heading_top"
@@ -275,7 +269,6 @@
                     android:textSize="15sp" />
             </android.support.design.widget.TextInputLayout>
 
-
             <Spinner
                 android:id="@+id/spinnerCategory"
                 style="@style/Widget.AppCompat.Spinner.Underlined"
@@ -283,7 +276,6 @@
                 android:layout_height="@dimen/text_layout_height"
                 android:layout_marginTop="10dp"
                 android:visibility="gone" />
-
 
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/otherCategoryLayout"
@@ -297,7 +289,7 @@
                     android:layout_height="wrap_content"
                     android:drawablePadding="@dimen/card_margin"
                     android:drawableStart="@mipmap/ic_account_star"
-                    android:hint="Enter Your Profession"
+                    android:hint="@string/enter_your_profession"
                     android:maxLines="1"
                     android:paddingEnd="@dimen/margin_heading_top"
                     android:paddingStart="@dimen/margin_heading_top"
@@ -317,7 +309,7 @@
                     android:layout_height="wrap_content"
                     android:drawablePadding="@dimen/card_margin"
                     android:drawableStart="@mipmap/ic_lock"
-                    android:hint="Password"
+                    android:hint="@string/password"
                     android:inputType="textPassword"
                     android:maxLines="1"
                     android:minEms="6"
@@ -333,14 +325,13 @@
                 android:layout_height="@dimen/text_layout_height"
                 app:passwordToggleEnabled="true">
 
-
                 <EditText
                     android:id="@+id/editConfirmPassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:drawablePadding="@dimen/card_margin"
                     android:drawableStart="@mipmap/ic_lock"
-                    android:hint="Confirm Password"
+                    android:hint="@string/confirm_password"
                     android:inputType="textPassword"
                     android:maxLines="1"
                     android:minEms="6"
@@ -350,7 +341,6 @@
                     android:textColorHint="@color/hintColor"
                     android:textSize="15sp" />
             </android.support.design.widget.TextInputLayout>
-
         </LinearLayout>
     </ScrollView>
 
@@ -370,7 +360,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@color/background"
-            android:text="Submit"
+            android:text="@string/submit"
             android:textColor="@color/white" />
 
         <Button
@@ -381,7 +371,7 @@
             android:layout_marginStart="5dp"
             android:layout_weight="1"
             android:background="@color/background"
-            android:text="Clear"
+            android:text="@string/clear"
             android:textColor="@color/white" />
     </LinearLayout>
 

@@ -15,7 +15,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:hint="Send To :- "
+            android:hint="@string/send_to"
             android:textStyle="bold" />
 
         <TextView
@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_toEndOf="@+id/txtsend"
-            android:hint="User"
+            android:hint="@string/user"
             android:textSize="15sp"
             android:textStyle="bold" />
 
@@ -51,17 +51,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="120dp"
                     android:layout_marginTop="10dp"
-                    android:hint="Add Caption" />
-
+                    android:hint="@string/add_caption" />
             </RelativeLayout>
 
             <ListView
                 android:id="@+id/listshare"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/editrel">
-
-            </ListView>
+                android:layout_below="@+id/editrel" />
 
             <RelativeLayout
                 android:id="@+id/btnrel"
@@ -76,10 +73,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/buttonback"
-                    android:text="Share"
+                    android:text="@string/share"
                     android:textColor="@color/white" />
             </RelativeLayout>
-
         </RelativeLayout>
     </android.support.v4.widget.NestedScrollView>
 

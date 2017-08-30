@@ -1,9 +1,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:layout_marginTop="7dp">
-
+    android:layout_marginTop="7dp"
+    android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="wrap_content"
@@ -11,70 +10,68 @@
         android:layout_gravity="center_horizontal">
 
         <TextView
+            android:id="@+id/dateTextview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/dateTextview"
-            android:textSize="10sp"
             android:background="@drawable/date_textview_back"
-            android:text="Date Of Message" />
+            android:text="@string/date_of_message"
+            android:textSize="10sp" />
     </RelativeLayout>
 
     <LinearLayout
+        android:id="@+id/maintext"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/maintext"
         android:layout_gravity="left"
-        android:orientation="vertical"
         android:layout_marginLeft="3dp"
         android:layout_marginTop="5dp"
-        android:background="@drawable/chat_textview_left">
+        android:background="@drawable/chat_textview_left"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/msgr"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
             android:paddingBottom="5dp"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
             android:paddingTop="5dp"
-            android:text="Sample"
+            android:text="@string/sample"
             android:textColor="#000" />
 
         <TextView
+            android:id="@+id/dateNtime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Date and Time"
-            android:id="@+id/dateNtime"
-            android:textSize="10sp"
+            android:layout_below="@+id/msgr"
             android:layout_gravity="right"
-            android:layout_below="@+id/msgr" />
-
+            android:text="@string/date_and_time"
+            android:textSize="10sp" />
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/imagelayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:id="@+id/imagelayout"
         android:layout_gravity="left"
         android:layout_marginLeft="3dp"
-        android:background="@drawable/chat_textview_left">
+        android:background="@drawable/chat_textview_left"
+        android:orientation="vertical">
 
         <ImageView
+            android:id="@+id/image"
             android:layout_width="150dp"
             android:layout_height="150dp"
-            android:id="@+id/image"
             android:layout_below="@+id/maintext"
             android:layout_marginTop="5dp" />
 
         <TextView
+            android:id="@+id/imagetime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="10sp"
-            android:id="@+id/imagetime"
             android:layout_gravity="right"
+            android:text="@string/times"
             android:textColor="@color/white"
-            android:text="time" />
+            android:textSize="10sp" />
     </LinearLayout>
 </LinearLayout>

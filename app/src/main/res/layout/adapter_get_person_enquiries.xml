@@ -30,7 +30,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.6"
-                    android:text="Contact:"
+                    android:text="@string/contact_no"
                     android:textStyle="bold" />
 
                 <TextView
@@ -39,7 +39,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1.2"
                     android:gravity="start"
-                    android:text="Contact"
+                    android:text="@string/contact_no"
                     android:textColor="@color/text_color" />
 
                 <ImageView
@@ -62,7 +62,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.6"
-                    android:text="Discussion:"
+                    android:text="@string/discussion"
                     android:textStyle="bold" />
 
                 <TextView
@@ -71,7 +71,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1.4"
                     android:gravity="start"
-                    android:text="Discussion"
+                    android:text="@string/discussion"
                     android:textColor="@color/text_color" />
             </LinearLayout>
 
@@ -85,7 +85,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.6"
-                    android:text="Enquiry Status:"
+                    android:text="@string/enquiry_status"
                     android:textStyle="bold" />
 
                 <TextView
@@ -94,7 +94,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1.4"
                     android:gravity="start"
-                    android:text="Status"
+                    android:text="@string/enquiry_status"
                     android:textColor="@color/text_color" />
             </LinearLayout>
 
@@ -108,7 +108,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.6"
-                    android:text="FollowUp:"
+                    android:text="@string/follow_up"
                     android:textStyle="bold" />
 
                 <TextView
@@ -117,7 +117,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1.4"
                     android:gravity="start"
-                    android:text="FollowUp"
+                    android:text="@string/follow_up"
                     android:textColor="@color/text_color" />
             </LinearLayout>
 
@@ -131,7 +131,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.6"
-                    android:text="Last Enquiry:"
+                    android:text="@string/last_enquiry"
                     android:textStyle="bold" />
 
                 <TextView
@@ -140,7 +140,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1.4"
                     android:gravity="start"
-                    android:text="date"
+                    android:text="@string/dates"
                     android:textColor="@color/text_color" />
             </LinearLayout>
 

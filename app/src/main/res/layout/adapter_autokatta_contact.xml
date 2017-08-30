@@ -30,7 +30,7 @@
                 android:layout_alignTop="@+id/profileImg"
                 android:layout_marginStart="5dp"
                 android:layout_toEndOf="@+id/profileImg"
-                android:text="Name"
+                android:text="@string/names"
                 android:textColor="#2C3343"
                 android:textSize="16sp"
                 android:textStyle="bold" />
@@ -42,7 +42,7 @@
                 android:layout_below="@+id/txtname"
                 android:layout_marginStart="5dp"
                 android:layout_toEndOf="@+id/profileImg"
-                android:text="Number"
+                android:text="@string/number"
                 android:textColor="#2C3343"
                 android:textSize="15sp"
                 android:visibility="gone"
@@ -65,7 +65,22 @@
                 android:layout_marginStart="5dp"
                 android:layout_toEndOf="@+id/profileImg"
                 android:layout_toStartOf="@+id/btnsendmsg"
-                android:text="City"
+                android:text="@string/company_name"
+                android:visibility="gone"
+                android:textColor="#2C3343"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+
+            <TextView
+                android:id="@+id/txtcompany"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtcity"
+                android:layout_marginStart="5dp"
+                android:layout_toEndOf="@+id/profileImg"
+                android:layout_toStartOf="@+id/btnsendmsg"
+                android:text="@string/city"
                 android:visibility="gone"
                 android:textColor="#2C3343"
                 android:textSize="15sp"
@@ -79,7 +94,7 @@
                 android:layout_marginStart="5dp"
                 android:layout_toEndOf="@+id/profileImg"
                 android:layout_toStartOf="@+id/btnsendmsg"
-                android:text="status"
+                android:text="@string/selectStatus"
                 android:textColor="#2C3343"
                 android:textSize="15sp"
                 android:textStyle="italic" />
@@ -114,7 +129,7 @@
                 android:layout_alignParentEnd="true"
                 android:background="@drawable/buttonback"
                 android:gravity="center"
-                android:text="Following"
+                android:text="@string/follower"
                 android:textColor="@android:color/white"
                 android:textSize="15sp"
                 android:visibility="gone" />

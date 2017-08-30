@@ -20,8 +20,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:background="@color/background"
+        android:text="@string/submit"
         android:textColor="@color/white"
-        android:textStyle="bold"
-        android:text="Submit" />
+        android:textStyle="bold" />
 
 </RelativeLayout>

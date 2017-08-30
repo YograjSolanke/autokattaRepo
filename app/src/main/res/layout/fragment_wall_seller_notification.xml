@@ -29,7 +29,7 @@
                     android:layout_marginBottom="2dp"
                     android:background="@drawable/buttonback"
                     android:gravity="center"
-                    android:text="Seller lead"
+                    android:text="@string/seller_leads"
                     android:textColor="@color/white"
                     android:visibility="gone" />
 
@@ -40,10 +40,9 @@
                     android:layout_below="@+id/sellertext"
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="5dp"
-                    android:text="Title"
+                    android:text="@string/title"
                     android:textColor="#2C3343"
                     android:textSize="15sp" />
-
 
                 <TextView
                     android:id="@+id/compare"
@@ -53,7 +52,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginTop="5dp"
                     android:layout_toStartOf="@+id/checkauc"
-                    android:text="Compare"
+                    android:text="@string/compare"
                     android:textColor="#2C3343"
                     android:textSize="15sp"
                     android:visibility="gone" />
@@ -79,7 +78,7 @@
                     android:layout_height="80dip"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="10dp"
-                    android:flipInterval="500"></ViewFlipper>
+                    android:flipInterval="500" />
 
                 <TextView
                     android:id="@+id/username"
@@ -88,7 +87,7 @@
                     android:layout_alignParentEnd="true"
                     android:layout_marginEnd="10dp"
                     android:layout_marginTop="20dp"
-                    android:text="Username"
+                    android:text="@string/username"
                     android:textColor="#2C3343" />
 
                 <TextView
@@ -99,7 +98,7 @@
                     android:layout_below="@+id/username"
                     android:layout_marginEnd="10dp"
                     android:layout_marginTop="5dp"
-                    android:text="Vehicle Count"
+                    android:text="@string/vehicle_count"
                     android:textColor="#2C3343" />
 
                 <TextView
@@ -109,7 +108,7 @@
                     android:layout_below="@+id/sellvehicalimgflicker"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="10dp"
-                    android:text="Added On"
+                    android:text="@string/added_on"
                     android:textColor="#2C3343" />
 
                 <TextView
@@ -119,7 +118,7 @@
                     android:layout_below="@+id/addon"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="10dp"
-                    android:text="Last Call: "
+                    android:text="@string/last_call"
                     android:textColor="#2C3343" />
 
                 <ImageView
@@ -156,7 +155,6 @@
                     android:background="@drawable/ic_delete"
                     android:contentDescription="@string/app_name"
                     android:visibility="gone" />
-
             </RelativeLayout>
 
             <View
@@ -164,9 +162,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_below="@+id/sellrelative1"
-                android:background="#cccccc">
-
-            </View>
+                android:background="#cccccc" />
 
             <LinearLayout
                 android:id="@+id/selllinear1"
@@ -188,12 +184,10 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="20dp"
                         android:layout_marginTop="10dp"
-                        android:text="Search requirement"
+                        android:text="@string/search_req"
                         android:textColor="#2C3343"
                         android:textSize="15sp" />
-
                 </LinearLayout>
-
 
                 <LinearLayout
                     android:layout_width="fill_parent"
@@ -206,13 +200,11 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="20dp"
                         android:layout_marginTop="10dp"
-                        android:text="Car details"
+                        android:text="@string/car_details"
                         android:textColor="#2C3343"
                         android:textSize="15sp" />
-
                 </LinearLayout>
             </LinearLayout>
-
 
             <LinearLayout
                 android:id="@+id/lData"
@@ -318,7 +310,7 @@
                     android:id="@+id/view1"
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
-                    android:background="#cccccc"></View>
+                    android:background="#cccccc" />
 
                 <LinearLayout
                     android:layout_width="fill_parent"

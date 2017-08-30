@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                                 xmlns:app="http://schemas.android.com/apk/res-auto"
-                                                 xmlns:tools="http://schemas.android.com/tools"
-                                                 android:layout_width="match_parent"
-                                                 android:layout_height="match_parent"
-                                                 android:fitsSystemWindows="true"
-    >
+
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
 
     <android.support.v4.view.ViewPager
         android:id="@+id/preview_myactive_loanmela_viewpager"
@@ -61,10 +60,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="Active Loan Mela"
+                    android:text="@string/active_loan_mela"
                     android:textColor="@color/white"
                     android:textStyle="bold" />
-
 
                 <TextView
                     android:id="@+id/live_timer"
@@ -73,7 +71,7 @@
                     android:layout_marginEnd="5dp"
                     android:layout_marginTop="25dp"
                     android:gravity="center"
-                    android:text="Timer"
+                    android:text="@string/timer"
                     android:textColor="@color/red"
                     android:textSize="15sp"
                     android:textStyle="bold"
@@ -89,7 +87,7 @@
                         android:id="@+id/start"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Start:"
+                        android:text="@string/start"
                         android:textColor="@color/white"
                         android:textStyle="bold" />
 
@@ -100,7 +98,7 @@
                         android:layout_alignParentTop="true"
                         android:layout_marginStart="10dp"
                         android:layout_toEndOf="@+id/start"
-                        android:text="Date"
+                        android:text="@string/dates"
                         android:textColor="@color/white" />
 
                     <TextView
@@ -118,7 +116,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
                         android:layout_toEndOf="@+id/and"
-                        android:text="Time"
+                        android:text="@string/times"
                         android:textColor="@color/white" />
 
                     <TextView
@@ -126,7 +124,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/start_date"
-                        android:text="End:"
+                        android:text="@string/end"
                         android:textColor="@color/white"
                         android:textStyle="bold" />
 
@@ -137,7 +135,7 @@
                         android:layout_alignLeft="@+id/start_date"
                         android:layout_below="@+id/start_date"
                         android:layout_toEndOf="@+id/end2"
-                        android:text="Date"
+                        android:text="@string/dates"
                         android:textColor="@color/white" />
 
                     <TextView
@@ -157,7 +155,7 @@
                         android:layout_below="@+id/start_date"
                         android:layout_marginStart="5dp"
                         android:layout_toEndOf="@+id/and2"
-                        android:text="Time"
+                        android:text="@string/times"
                         android:textColor="@color/white" />
 
                     <!--                    <RelativeLayout
@@ -189,7 +187,7 @@
                         android:id="@+id/txtLocation"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Location:"
+                        android:text="@string/location"
                         android:textColor="@color/white"
                         android:textStyle="bold" />
 
@@ -200,11 +198,9 @@
                         android:layout_alignParentTop="true"
                         android:layout_marginStart="10dp"
                         android:layout_toEndOf="@+id/txtLocation"
-                        android:text="location"
+                        android:text="@string/location"
                         android:textColor="@color/white" />
                 </RelativeLayout>
-
-
             </LinearLayout>
 
             <android.support.v7.widget.Toolbar
@@ -217,6 +213,4 @@
 
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
-
-
 </android.support.design.widget.CoordinatorLayout>

@@ -232,7 +232,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentTop="true"
                         android:layout_centerHorizontal="true"
-                        android:text="Get Quote"
+                        android:text="@string/get_quot"
                         android:textStyle="bold" />
 
                 </RelativeLayout>

@@ -34,7 +34,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
                         android:layout_marginTop="5dp"
-                        android:text="Loan Title :"
+                        android:text="@string/loan_title"
                         android:textColor="#808080"
                         android:textStyle="bold" />
 
@@ -72,7 +72,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
                         android:layout_marginTop="10dp"
-                        android:text="Location :" />
+                        android:text="@string/location" />
 
                     <TextView
                         android:id="@+id/setlocation"
@@ -81,7 +81,7 @@
                         android:layout_marginStart="10dp"
                         android:layout_marginTop="10dp"
                         android:layout_toEndOf="@+id/location"
-                        android:text="Set Location :" />
+                        android:text="@string/set_location" />
 
                 </RelativeLayout>
 
@@ -98,7 +98,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
                         android:layout_marginTop="10dp"
-                        android:text="Address :" />
+                        android:text="@string/address" />
 
                     <TextView
                         android:id="@+id/setaddress"
@@ -107,7 +107,7 @@
                         android:layout_marginStart="10dp"
                         android:layout_marginTop="10dp"
                         android:layout_toEndOf="@+id/address"
-                        android:text="Set Address :" />
+                        android:text="@string/set_address" />
 
                 </RelativeLayout>
 
@@ -124,7 +124,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginStart="5dp"
-                        android:text="Start :"
+                        android:text="@string/start"
                         android:textColor="#808080"
                         android:textStyle="bold">
                     </TextView>
@@ -147,7 +147,7 @@
                         android:layout_marginStart="57dp"
                         android:layout_toEndOf="@+id/datetime1"
                         android:enabled="false"
-                        android:hint="Time"
+                        android:hint="@string/time"
                         android:textColor="#808080" />
 
                     <TextView
@@ -158,7 +158,7 @@
                         android:layout_marginStart="45dp"
                         android:layout_toEndOf="@+id/start2"
                         android:enabled="false"
-                        android:hint="Date"
+                        android:hint="@string/date"
                         android:textColor="#808080" />
                 </RelativeLayout>
 
@@ -176,7 +176,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginStart="5dp"
-                        android:text="End :"
+                        android:text="@string/end"
                         android:textColor="#808080"
                         android:textStyle="bold">
                     </TextView>
@@ -199,7 +199,7 @@
                         android:layout_marginStart="57dp"
                         android:layout_toEndOf="@+id/datetime2"
                         android:enabled="false"
-                        android:hint="Time"
+                        android:hint="@string/time"
                         android:textColor="#808080" />
 
                     <TextView
@@ -210,7 +210,7 @@
                         android:layout_marginStart="50dp"
                         android:layout_toEndOf="@+id/end2"
                         android:enabled="false"
-                        android:hint="Date"
+                        android:hint="@string/date"
                         android:textColor="#808080" />
                 </RelativeLayout>
 
@@ -237,7 +237,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:background="@drawable/buttonback"
-                        android:text="Preview"
+                        android:text="@string/preview"
                         android:textColor="@color/white" />
 
                     <Button
@@ -268,7 +268,7 @@
                             android:background="@drawable/button_background"
                             android:contentDescription="@string/app_name"
                             android:src="@drawable/autoshare"
-                            android:text="Share"
+                            android:text="@string/share"
                             android:textAllCaps="false"
                             android:textColor="@color/white" />
 
@@ -281,7 +281,7 @@
                             android:layout_toEndOf="@+id/share1"
                             android:background="@drawable/buttonback"
                             android:gravity="center"
-                            android:text="SHARE"
+                            android:text="@string/cap_share"
                             android:textAllCaps="false"
                             android:textColor="@color/white" />
                     </RelativeLayout>

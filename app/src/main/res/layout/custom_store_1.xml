@@ -19,7 +19,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="10dp"
-                android:text="Categories"
+                android:text="@string/category"
                 android:textStyle="bold" />
 
             <ListView
@@ -35,7 +35,7 @@
                 android:layout_below="@+id/listview1"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="5dp"
-                android:text="Location"
+                android:text="@string/location"
                 android:textStyle="bold" />
 
             <ListView
@@ -64,7 +64,7 @@
             android:layout_height="40dp"
             android:layout_marginEnd="5dp"
             android:background="@color/background"
-            android:text="Cancel"
+            android:text="@string/cancel"
             android:textStyle="bold"
             android:textColor="@color/white" />
 
@@ -73,7 +73,7 @@
             style="?android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
-            android:text="Ok"
+            android:text="@string/ok"
             android:background="@color/background"
             android:textStyle="bold"
             android:textColor="@color/white" />

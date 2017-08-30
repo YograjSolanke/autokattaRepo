@@ -170,7 +170,7 @@
                         android:id="@+id/categorytxt"
                         android:layout_width="105dp"
                         android:layout_height="wrap_content"
-                        android:text="Store Category : "
+                        android:text="@string/store_category"
                         android:textColor="#808080"
                         android:textStyle="bold" />
 
@@ -194,7 +194,7 @@
                         android:id="@+id/storelocationtxt"
                         android:layout_width="105dp"
                         android:layout_height="wrap_content"
-                        android:text="Store Type : "
+                        android:text="@string/store_type"
                         android:textColor="#808080"
                         android:textStyle="bold" />
 
@@ -218,7 +218,7 @@
                         android:id="@+id/storewebsitetxt"
                         android:layout_width="105dp"
                         android:layout_height="wrap_content"
-                        android:text="Website : "
+                        android:text="@string/website"
                         android:textColor="#808080"
                         android:textStyle="bold" />
 
@@ -227,7 +227,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_toEndOf="@+id/storewebsitetxt"
-                        android:hint="website"
+                        android:hint="@string/website"
                         android:textColor="#808080" />
 
                 </RelativeLayout>
@@ -243,7 +243,7 @@
                         android:id="@+id/time"
                         android:layout_width="105dp"
                         android:layout_height="wrap_content"
-                        android:text="Timing : "
+                        android:text="@string/timing"
                         android:textColor="#808080"
                         android:textStyle="bold" />
 
@@ -252,7 +252,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_toEndOf="@+id/time"
-                        android:hint="Timing"
+                        android:hint="@string/timing"
                         android:textColor="#808080" />
 
                 </RelativeLayout>
@@ -267,7 +267,7 @@
                         android:id="@+id/workingDay"
                         android:layout_width="105dp"
                         android:layout_height="wrap_content"
-                        android:text="Working Day : "
+                        android:text="@string/working_day"
                         android:textColor="#808080"
                         android:textStyle="bold" />
 
@@ -276,7 +276,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_toEndOf="@+id/workingDay"
-                        android:hint="Working Day"
+                        android:hint="@string/working_day"
                         android:textColor="#808080" />
 
                 </RelativeLayout>
@@ -291,7 +291,7 @@
                         android:id="@+id/storetypetxt"
                         android:layout_width="105dp"
                         android:layout_height="wrap_content"
-                        android:text="Location : "
+                        android:text="@string/location"
                         android:textColor="#808080"
                         android:textStyle="bold" />
 
@@ -300,7 +300,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_toEndOf="@+id/storetypetxt"
-                        android:hint="location"
+                        android:hint="@string/location"
                         android:textColor="#808080" />
 
                 </RelativeLayout>
@@ -332,7 +332,7 @@
                     android:layout_marginTop="5dp"
                     android:layout_toEndOf="@+id/dot2"
                     android:gravity="center"
-                    android:text="follower"
+                    android:text="@string/follower"
                     android:textColor="#808080"
                     android:textSize="12sp" />
 
@@ -351,7 +351,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:gravity="center"
-                    android:text="Like"
+                    android:text="@string/likes"
                     android:textColor="#808080"
                     android:textSize="12sp" />
 
@@ -362,7 +362,7 @@
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="5dp"
                     android:layout_toEndOf="@+id/dot"
-                    android:text="Share"
+                    android:text="@string/share"
                     android:textColor="#808080"
                     android:textSize="12sp" />
 

@@ -30,7 +30,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:layout_toEndOf="@+id/vehicle_icon"
-            android:text="Vehicle title"
+            android:text="@string/vehicle_title"
             android:textSize="14sp"
             android:textStyle="bold" />
 
@@ -100,7 +100,7 @@
                 android:layout_width="110dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:text="Category :"
+                android:text="@string/category"
                 android:textSize="14sp"
                 android:textStyle="bold" />
 
@@ -148,7 +148,7 @@
                 android:layout_width="110dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:text="Sub Category :"
+                android:text="@string/sub_category"
                 android:textSize="14sp"
                 android:textStyle="bold" />
 
@@ -175,7 +175,7 @@
                 android:layout_width="110dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:text="Model :"
+                android:text="@string/model"
                 android:textSize="14sp"
                 android:textStyle="bold" />
 
@@ -202,7 +202,7 @@
                 android:layout_width="110dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:text="Price :"
+                android:text="@string/price"
                 android:textSize="14sp"
                 android:textStyle="bold" />
 
@@ -229,7 +229,7 @@
                 android:layout_width="110dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:text="FollowUpDate :"
+                android:text="@string/followdate"
                 android:textSize="14sp"
                 android:textStyle="bold" />
 
@@ -256,7 +256,7 @@
                 android:layout_width="110dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:text="Enquiry Date :"
+                android:text="@string/enquiry_date"
                 android:textSize="14sp"
                 android:textStyle="bold" />
 

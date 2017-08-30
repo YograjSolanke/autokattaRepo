@@ -56,7 +56,7 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="5dp"
                 android:layout_toEndOf="@+id/group_icon"
-                android:text="Member Count :"
+                android:text="@string/member_count"
                 android:textColor="#2C3343"
                 android:textSize="16sp"
                 android:textStyle="bold" />
@@ -80,7 +80,7 @@
                 android:layout_below="@+id/member_count"
                 android:layout_marginStart="20dp"
                 android:layout_toEndOf="@+id/group_icon"
-                android:text="Vehicle Count :"
+                android:text="@string/vehicle_count"
                 android:textColor="#2C3343"
                 android:textSize="16sp"
                 android:textStyle="bold" />
@@ -104,7 +104,7 @@
                 android:layout_below="@+id/vehicle_count"
                 android:layout_marginStart="20dp"
                 android:layout_toEndOf="@+id/group_icon"
-                android:text="Product Count :"
+                android:text="@string/product_count"
                 android:textColor="#2C3343"
                 android:textSize="16sp"
                 android:textStyle="bold" />
@@ -128,7 +128,7 @@
                 android:layout_below="@+id/Product_count"
                 android:layout_marginStart="20dp"
                 android:layout_toEndOf="@+id/group_icon"
-                android:text="Service Count :"
+                android:text="@string/service_count"
                 android:textColor="#2C3343"
                 android:textSize="16sp"
                 android:textStyle="bold" />

@@ -13,7 +13,6 @@
             android:layout_height="282dp"
             android:padding="10dp">
 
-
             <LinearLayout
                 android:id="@+id/catlinear"
                 android:layout_width="match_parent"
@@ -27,10 +26,9 @@
                     android:id="@+id/auto_category"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="category of store (Ex.Auto Accesories)"
+                    android:hint="@string/category_of_store"
                     android:textColor="#2C3343"
                     android:textColorHint="#848484" />
-
             </LinearLayout>
 
             <LinearLayout
@@ -45,10 +43,9 @@
                     android:id="@+id/brand_tags"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="brand tags (Ex. tata)"
+                    android:hint="@string/brand_tags_ex"
                     android:textColor="#2C3343"
                     android:textColorHint="#848484" />
-
             </LinearLayout>
 
             <LinearLayout
@@ -72,14 +69,13 @@
                         android:layout_alignStart="@+id/spinner_category"
                         android:layout_below="@+id/catlinear"
                         android:ems="10"
-                        android:hint="phrase to search"
+                        android:hint="@string/phrase_to_search"
                         android:paddingEnd="10dp"
                         android:paddingStart="10dp"
                         android:textColor="#2C3343"
                         android:textColorHint="#848484" />
                 </android.support.design.widget.TextInputLayout>
             </LinearLayout>
-
 
             <LinearLayout
                 android:id="@+id/conactlinear"
@@ -95,7 +91,7 @@
                     android:layout_height="40dp"
                     android:layout_gravity="center_horizontal"
                     android:gravity="center"
-                    android:text="OR"
+                    android:text="@string/or"
                     android:textColor="#2C3343"
                     android:textSize="20sp" />
 
@@ -115,18 +111,15 @@
                             android:layout_alignStart="@+id/spinner_category"
                             android:layout_below="@+id/catlinear"
                             android:ems="10"
-                            android:hint="contact to search "
+                            android:hint="@string/search_contact"
                             android:inputType="phone"
                             android:maxLength="10"
                             android:paddingEnd="10dp"
                             android:paddingStart="10dp"
                             android:textColor="#2C3343"
                             android:textColorHint="#848484" />
-
                     </android.support.design.widget.TextInputLayout>
-
                 </LinearLayout>
-
 
                 <ImageView
                     android:id="@+id/getContact"
@@ -156,7 +149,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/phraselinear"
-                        android:hint="Location (Ex.pune)"
+                        android:hint="@string/location"
                         android:paddingEnd="10dp"
                         android:paddingStart="10dp"
                         android:textColor="#2C3343"
@@ -172,7 +165,6 @@
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/locationlinear"
                 android:layout_marginTop="10dp"
-
                 android:orientation="vertical">
 
                 <Spinner
@@ -181,7 +173,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
             </LinearLayout>
-
 
             <Button
                 android:id="@+id/search"

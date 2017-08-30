@@ -20,12 +20,10 @@
             android:layout_centerVertical="true"
             android:layout_marginTop="5dp"
             android:gravity="center"
-            android:text="Create Loan Mela Event"
+            android:text="@string/create_loan_mela"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="#ffffff"
             android:textSize="20sp" />
-
-
     </RelativeLayout>
 
     <ScrollView
@@ -35,13 +33,11 @@
         android:layout_below="@+id/relativename"
         android:layout_marginTop="10dip">
 
-
         <RelativeLayout
             android:id="@+id/relative1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="5dp">
-
 
             <LinearLayout
                 android:id="@+id/linear1"
@@ -70,13 +66,12 @@
                         android:layout_height="30dp"
                         android:layout_centerHorizontal="true"
                         android:background="@drawable/buttonback"
-                        android:text="Add Photo"
+                        android:text="@string/add_photo"
                         android:textAllCaps="false"
                         android:textColor="#ffffff"
                         android:textSize="16sp" />
                 </RelativeLayout>
             </LinearLayout>
-
 
             <EditText
                 android:id="@+id/editauctionname"
@@ -88,7 +83,7 @@
                 android:layout_marginTop="10dp"
                 android:background="#80bebebe"
                 android:gravity="center"
-                android:hint="Event Title"
+                android:hint="@string/event_title"
                 android:textAlignment="center"
                 android:textColor="#2C3343"
                 android:textColorHint="#848484" />
@@ -102,7 +97,7 @@
                 android:layout_marginTop="10dp"
                 android:background="@drawable/text_underline"
                 android:gravity="center_horizontal"
-                android:text="Event Start"
+                android:text="@string/event_start"
                 android:textColor="#848484"
                 android:textSize="18sp" />
 
@@ -122,7 +117,7 @@
                     android:layout_height="30dp"
                     android:background="#80bebebe"
                     android:gravity="center"
-                    android:hint="Date"
+                    android:hint="@string/date"
                     android:textAlignment="center"
                     android:textColor="#2C3343"
                     android:textColorHint="#848484" />
@@ -134,7 +129,7 @@
                     android:layout_alignParentEnd="true"
                     android:background="#80bebebe"
                     android:gravity="center"
-                    android:hint="Time"
+                    android:hint="@string/time"
                     android:textAlignment="center"
                     android:textColor="#2C3343"
                     android:textColorHint="#848484" />
@@ -149,7 +144,7 @@
                 android:layout_marginTop="10dp"
                 android:background="@drawable/text_underline"
                 android:gravity="center_horizontal"
-                android:text="Event End"
+                android:text="@string/event_end"
                 android:textAlignment="center"
                 android:textColor="#848484"
                 android:textSize="18sp" />
@@ -170,7 +165,7 @@
                     android:layout_height="30dp"
                     android:background="#80bebebe"
                     android:gravity="center"
-                    android:hint="Date"
+                    android:hint="@string/date"
                     android:textAlignment="center"
                     android:textColor="#2C3343"
                     android:textColorHint="#848484" />
@@ -182,12 +177,11 @@
                     android:layout_alignParentEnd="true"
                     android:background="#80bebebe"
                     android:gravity="center"
-                    android:hint="Time"
+                    android:hint="@string/time"
                     android:textAlignment="center"
                     android:textColor="#2C3343"
                     android:textColorHint="#848484" />
             </RelativeLayout>
-
 
             <AutoCompleteTextView
                 android:id="@+id/editlocation"
@@ -200,11 +194,10 @@
                 android:background="#80bebebe"
                 android:drawableStart="@mipmap/map"
                 android:gravity="center"
-                android:hint="Event Location"
+                android:hint="@string/event_location"
                 android:textAlignment="center"
                 android:textColor="#2C3343"
                 android:textColorHint="#848484" />
-
 
             <EditText
                 android:id="@+id/editaddress"
@@ -217,7 +210,7 @@
                 android:height="1dp"
                 android:background="#80bebebe"
                 android:gravity="center"
-                android:hint="Event Address"
+                android:hint="@string/event_address"
                 android:maxLength="200"
                 android:textAlignment="center"
                 android:textColor="#2C3343"
@@ -233,11 +226,10 @@
                 android:layout_marginTop="10dp"
                 android:background="#80bebebe"
                 android:gravity="center"
-                android:hint="Event Details"
+                android:hint="@string/event_details"
                 android:textAlignment="center"
                 android:textColor="#2C3343"
                 android:textColorHint="#848484" />
-
 
             <Button
                 android:id="@+id/btncreate"
@@ -247,16 +239,11 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/buttonback"
-                android:text="Create"
+                android:text="@string/create"
                 android:textAllCaps="false"
                 android:textColor="@color/white" />
-
-
         </RelativeLayout>
-
     </ScrollView>
-
-
 </RelativeLayout>
 
 

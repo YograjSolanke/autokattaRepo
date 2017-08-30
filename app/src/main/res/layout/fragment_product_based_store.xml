@@ -22,7 +22,7 @@
             android:layout_height="30dp"
             android:padding="5dp"
             android:layout_toEndOf="@+id/filterimg"
-            android:text="Filter"
+            android:text="@string/filter"
             android:textStyle="bold"
             android:contentDescription="@string/app_name" />
 

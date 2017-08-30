@@ -6,7 +6,6 @@
     android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-
     <RelativeLayout
         android:id="@+id/rel"
         android:layout_width="match_parent"
@@ -15,36 +14,36 @@
         android:visibility="gone">
 
         <ImageView
+            android:id="@+id/filterimg"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:id="@+id/filterimg"
+            android:contentDescription="@string/app_name"
             android:padding="5dp"
-            android:src="@drawable/filter"
-            android:contentDescription="@string/app_name" />
+            android:src="@drawable/filter" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="30dp"
-            android:padding="5dp"
             android:layout_toEndOf="@+id/filterimg"
+            android:contentDescription="@string/app_name"
+            android:padding="5dp"
             android:text="Filter"
-            android:textStyle="bold"
-            android:contentDescription="@string/app_name" />
+            android:textStyle="bold" />
 
     </RelativeLayout>
 
     <android.support.v4.widget.SwipeRefreshLayout
-        android:layout_below="@+id/rel"
-        android:layout_marginTop="3dp"
         android:id="@+id/swipeRefreshLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rel"
+        android:layout_marginTop="3dp">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler_view"
             android:layout_width="match_parent"
-            android:background="#E6E6E6"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:background="#E6E6E6" />
 
     </android.support.v4.widget.SwipeRefreshLayout>
 

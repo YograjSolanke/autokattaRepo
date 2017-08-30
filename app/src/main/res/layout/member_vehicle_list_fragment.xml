@@ -41,7 +41,7 @@
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
             android:paddingTop="5dp"
-            android:visibility="visible">
+            android:visibility="gone">
 
             <RelativeLayout
                 android:id="@+id/relativebrand"
@@ -56,7 +56,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:gravity="center"
-                    android:text="Brand"
+                    android:text="@string/brand"
                     android:textAlignment="center"
                     android:textColor="#2C3343"
                     android:textStyle="bold" />
@@ -79,7 +79,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginStart="10dp"
                     android:layout_toEndOf="@+id/dash1"
-                    android:hint="Enter brand"
+                    android:hint="@string/brand"
                     android:textColor="#2C3343"
                     android:textColorHint="#848484"
                     android:textSize="12sp" />
@@ -99,7 +99,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:gravity="center"
-                    android:text="Model"
+                    android:text="@string/model"
                     android:textAlignment="center"
                     android:textColor="#2C3343"
                     android:textStyle="bold" />
@@ -122,7 +122,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginStart="10dp"
                     android:layout_toEndOf="@+id/dash2"
-                    android:hint="Enter model"
+                    android:hint="@string/model"
                     android:textColor="#2C3343"
                     android:textColorHint="#848484"
                     android:textSize="12sp" />
@@ -142,7 +142,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:gravity="center"
-                    android:text="Version"
+                    android:text="@string/version"
                     android:textAlignment="center"
                     android:textColor="#2C3343"
                     android:textStyle="bold" />
@@ -165,7 +165,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginStart="10dp"
                     android:layout_toEndOf="@+id/dash3"
-                    android:hint="Enter version"
+                    android:hint="@string/version"
                     android:textColor="#2C3343"
                     android:textColorHint="#848484"
                     android:textSize="12sp" />
@@ -185,7 +185,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:gravity="center"
-                    android:text="City"
+                    android:text="@string/city"
                     android:textAlignment="center"
                     android:textColor="#2C3343"
                     android:textStyle="bold" />
@@ -208,12 +208,11 @@
                     android:layout_centerVertical="true"
                     android:layout_marginStart="10dp"
                     android:layout_toEndOf="@+id/dash4"
-                    android:hint="Enter city"
+                    android:hint="@string/city"
                     android:textColor="#2C3343"
                     android:textColorHint="#848484"
                     android:textSize="12sp" />
             </RelativeLayout>
-
 
             <RelativeLayout
                 android:id="@+id/relativertocity"
@@ -229,7 +228,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:gravity="center"
-                    android:text="RTOCity"
+                    android:text="@string/rto_citys"
                     android:textAlignment="center"
                     android:textColor="#2C3343"
                     android:textStyle="bold" />
@@ -255,7 +254,7 @@
                     android:layout_marginTop="20dp"
                     android:layout_toEndOf="@+id/dash5"
                     android:ems="10"
-                    android:hint="Enter RTO city"
+                    android:hint="@string/rto_citys"
                     android:textAlignment="textStart"
                     android:textColor="#2C3343"
                     android:textColorHint="#848484"
@@ -276,7 +275,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:gravity="center"
-                    android:text="RegistrationYear"
+                    android:text="@string/registration_year"
                     android:textAlignment="center"
                     android:textColor="#2C3343"
                     android:textStyle="bold" />
@@ -299,7 +298,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginStart="10dp"
                     android:layout_toEndOf="@+id/dash6"
-                    android:hint="Enter RegistrationYear"
+                    android:hint="@string/registration_year"
                     android:textColor="#2C3343"
                     android:textColorHint="#848484"
                     android:textSize="12sp" />
@@ -319,7 +318,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:gravity="center"
-                    android:text="ManufactureYear"
+                    android:text="@string/manufacture_year"
                     android:textAlignment="center"
                     android:textColor="#2C3343"
                     android:textStyle="bold" />
@@ -342,7 +341,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginStart="10dp"
                     android:layout_toEndOf="@+id/dash7"
-                    android:hint="Enter ManufactureYear"
+                    android:hint="@string/manufacture_year"
                     android:textColor="#2C3343"
                     android:textColorHint="#848484"
                     android:textSize="12sp" />
@@ -362,7 +361,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:gravity="center"
-                    android:text="Price"
+                    android:text="@string/price"
                     android:textAlignment="center"
                     android:textColor="#2C3343"
                     android:textStyle="bold" />
@@ -385,7 +384,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginStart="10dp"
                     android:layout_toEndOf="@+id/dash8"
-                    android:hint="Enter price"
+                    android:hint="@string/price"
                     android:textColor="#2C3343"
                     android:textColorHint="#848484"
                     android:textSize="12sp" />
@@ -405,7 +404,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:gravity="center"
-                    android:text="KmsRunning"
+                    android:text="@string/kms_running"
                     android:textAlignment="center"
                     android:textColor="#2C3343"
                     android:textStyle="bold" />
@@ -428,7 +427,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginStart="10dp"
                     android:layout_toEndOf="@+id/dash9"
-                    android:hint="Enter Kms"
+                    android:hint="@string/kms_running"
                     android:textColor="#2C3343"
                     android:textColorHint="#848484"
                     android:textSize="12sp" />
@@ -448,7 +447,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:gravity="center"
-                    android:text="No of Owners"
+                    android:text="@string/no_of_owners"
                     android:textAlignment="center"
                     android:textColor="#2C3343"
                     android:textStyle="bold" />
@@ -471,7 +470,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginStart="10dp"
                     android:layout_toEndOf="@+id/dash10"
-                    android:hint="Enter no of owners"
+                    android:hint="@string/no_of_owners"
                     android:textColor="#2C3343"
                     android:textColorHint="#848484"
                     android:textSize="12sp" />
@@ -484,7 +483,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_below="@+id/relativenoofowner"
                 android:background="@color/background"
-                android:text="Filter All"
+                android:text="@string/filter_all"
                 android:textAlignment="center"
                 android:textAllCaps="false"
                 android:textColor="@color/white"

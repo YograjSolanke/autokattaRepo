@@ -36,7 +36,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="24dp"
                 android:ems="10"
-                android:hint="Type Your Group Name"
+                android:hint="@string/type_group_name"
                 android:paddingEnd="10dip"
                 android:paddingStart="10dip"
                 android:textColor="#2C3343"
@@ -53,7 +53,7 @@
         android:layout_marginStart="15dip"
         android:layout_marginTop="20dp"
         android:layout_toEndOf="@+id/group_profile_pic"
-        android:text="Please provide group name and optional group icon"
+        android:text="@string/provide_group_name"
         android:textColor="@color/black" />
 
     <Button
@@ -65,7 +65,7 @@
         android:layout_marginTop="10dp"
         android:background="@color/colorPrimary"
         android:selectAllOnFocus="true"
-        android:text="Add  Member"
+        android:text="@string/add_member"
         android:textColor="@android:color/white"
         android:textSize="16sp" />
 

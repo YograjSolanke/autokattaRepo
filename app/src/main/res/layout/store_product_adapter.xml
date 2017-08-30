@@ -26,7 +26,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:fontFamily="sans-serif"
-                android:text="Store Name"
+                android:text="@string/store_name"
                 android:textColor="#2C3343"
                 android:textSize="@dimen/article_subheading"
                 android:textStyle="bold" />
@@ -44,8 +44,8 @@
                 android:id="@+id/enquiry"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
                 android:layout_marginLeft="5dp"
+                android:layout_marginTop="2dp"
                 android:contentDescription="@string/app_name"
                 android:src="@drawable/ic_comment_question_outline"
                 android:visibility="visible" />
@@ -59,8 +59,8 @@
             <RelativeLayout
                 android:id="@+id/actionlinear"
                 android:layout_width="wrap_content"
-                android:layout_marginTop="5dp"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp">
 
                 <ImageView
                     android:id="@+id/profile"
@@ -91,10 +91,10 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/infoRelative"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/item_padding"
-                android:id="@+id/infoRelative"
                 android:layout_toEndOf="@+id/actionlinear">
 
                 <LinearLayout
@@ -109,7 +109,7 @@
                         android:layout_width="@dimen/product_text"
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif"
-                        android:text="Type :"
+                        android:text="@string/type"
                         android:textStyle="bold" />
 
                     <TextView
@@ -117,7 +117,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif"
-                        android:text="Store Type"
+                        android:text="@string/store_type"
                         android:textColor="@color/enteredTextColor" />
                 </LinearLayout>
 
@@ -134,7 +134,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif"
                         android:gravity="start"
-                        android:text="Price :"
+                        android:text="@string/price"
                         android:textStyle="bold" />
 
                     <TextView
@@ -142,7 +142,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif"
-                        android:text="Price"
+                        android:text="@string/price"
                         android:textColor="@color/enteredTextColor" />
 
                 </LinearLayout>
@@ -160,7 +160,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif"
                         android:gravity="start"
-                        android:text="Tags :"
+                        android:text="@string/tags"
                         android:textStyle="bold" />
 
                     <TextView
@@ -169,7 +169,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif"
                         android:gravity="start"
-                        android:text="Tags"
+                        android:text="@string/tags"
                         android:textColor="@color/enteredTextColor" />
 
                 </LinearLayout>
@@ -187,7 +187,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif"
                         android:gravity="start"
-                        android:text="Details :"
+                        android:text="@string/details"
                         android:textStyle="bold" />
 
                     <TextView
@@ -196,7 +196,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif"
                         android:gravity="start"
-                        android:text="Details"
+                        android:text="@string/details"
                         android:textColor="@color/enteredTextColor" />
 
                 </LinearLayout>
@@ -214,7 +214,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif"
                         android:gravity="start"
-                        android:text="Category:"
+                        android:text="@string/category"
                         android:textStyle="bold" />
 
                     <TextView
@@ -223,11 +223,9 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif"
                         android:gravity="start"
-                        android:text="Category"
+                        android:text="@string/category"
                         android:textColor="@color/enteredTextColor" />
-
                 </LinearLayout>
-
             </RelativeLayout>
 
             <RelativeLayout
@@ -236,31 +234,32 @@
                 android:layout_below="@+id/actionlinear">
 
                 <LinearLayout
+                    android:id="@+id/buttonRelative"
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
-                    android:id="@+id/buttonRelative"
-
                     android:weightSum="1">
 
                     <Button
+                        android:id="@+id/btnView"
+                        style="?android:attr/buttonBarButtonStyle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/buttonback"
-                        android:text="View Details"
-                        android:id="@+id/btnView"
                         android:layout_weight="0.5"
-                        android:textColor="@color/white"
-                        android:textAllCaps="false" />
+                        android:background="@drawable/buttonback"
+                        android:text="@string/view_details"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white" />
 
                     <Button
+                        android:id="@+id/btnEdit"
+                        style="?android:attr/buttonBarButtonStyle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/buttonback"
-                        android:text="Edit Details"
                         android:layout_weight="0.5"
-                        android:id="@+id/btnEdit"
-                        android:textColor="@color/white"
-                        android:textAllCaps="false" />
+                        android:background="@drawable/buttonback"
+                        android:text="@string/edit_details"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white" />
                 </LinearLayout>
             </RelativeLayout>
         </RelativeLayout>

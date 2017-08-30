@@ -20,12 +20,10 @@
             android:layout_centerVertical="true"
             android:layout_marginTop="5dp"
             android:gravity="center"
-            android:text="Create Auction Event"
+            android:text="@string/create_auction"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="#ffffff"
             android:textSize="20sp" />
-
-
     </RelativeLayout>
 
     <ScrollView
@@ -50,7 +48,7 @@
                 android:layout_marginStart="30dip"
                 android:background="#80bebebe"
                 android:gravity="center"
-                android:hint="Auction Title"
+                android:hint="@string/auction_title"
                 android:textAlignment="center"
                 android:textColor="#2C3343"
                 android:textColorHint="#848484" />
@@ -61,7 +59,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:gravity="center_horizontal"
-                android:text="Auction Start"
+                android:text="@string/auction_start"
                 android:textColor="#848484"
                 android:textSize="18sp" />
 
@@ -80,7 +78,7 @@
                     android:layout_height="30dp"
                     android:background="#80bebebe"
                     android:gravity="center"
-                    android:hint="Date"
+                    android:hint="@string/date"
                     android:textAlignment="center"
                     android:textColor="#2C3343"
                     android:textColorHint="#848484" />
@@ -92,7 +90,7 @@
                     android:layout_alignParentEnd="true"
                     android:background="#80bebebe"
                     android:gravity="center"
-                    android:hint="Time"
+                    android:hint="@string/time"
                     android:textAlignment="center"
                     android:textColor="#2C3343"
                     android:textColorHint="#848484" />
@@ -104,7 +102,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginTop="10dp"
                 android:gravity="center_horizontal"
-                android:text="Auction End"
+                android:text="@string/auction_end"
                 android:textAlignment="center"
                 android:textColor="#848484"
                 android:textSize="18sp" />
@@ -124,7 +122,7 @@
                     android:layout_height="30dp"
                     android:background="#80bebebe"
                     android:gravity="center"
-                    android:hint="Date"
+                    android:hint="@string/date"
                     android:textAlignment="center"
                     android:textColor="#2C3343"
                     android:textColorHint="#848484" />
@@ -136,7 +134,7 @@
                     android:layout_alignParentEnd="true"
                     android:background="#80bebebe"
                     android:gravity="center"
-                    android:hint="Time"
+                    android:hint="@string/time"
                     android:textAlignment="center"
                     android:textColor="#2C3343"
                     android:textColorHint="#848484" />
@@ -148,7 +146,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginTop="10dp"
                 android:gravity="center_horizontal"
-                android:text="Type Of Auction"
+                android:text="@string/type_of_auction"
                 android:textAlignment="center"
                 android:textColor="#848484"
                 android:textSize="18sp" />
@@ -165,7 +163,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:checked="true"
-                    android:text="Physical"
+                    android:text="@string/physical"
                     android:textColor="#848484" />
 
                 <RadioButton
@@ -174,7 +172,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
                     android:checked="true"
-                    android:text="Online"
+                    android:text="@string/online"
                     android:textColor="#848484" />
 
                 <RadioButton
@@ -182,7 +180,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
-                    android:text="Banquet"
+                    android:text="@string/banquet"
                     android:textColor="#848484" />
             </RadioGroup>
 
@@ -196,7 +194,7 @@
                 android:background="#80bebebe"
                 android:drawableStart="@mipmap/map"
                 android:gravity="center"
-                android:hint="Address/Location"
+                android:hint="@string/location"
                 android:textAlignment="center"
                 android:textColor="#2C3343"
                 android:textColorHint="@color/hintColor"
@@ -311,7 +309,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:gravity="center_horizontal"
-                    android:text="Special Clauses"
+                    android:text="@string/special_clauses"
                     android:textColor="#848484"
                     android:textSize="18sp" />
 
@@ -350,7 +348,7 @@
                 android:layout_marginTop="10dp"
                 android:background="@drawable/buttonback"
                 android:gravity="center"
-                android:text="Create"
+                android:text="@string/create"
                 android:textAlignment="center"
                 android:textColor="@color/white"
                 android:textSize="18sp" />

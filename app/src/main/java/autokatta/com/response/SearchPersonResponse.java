@@ -42,6 +42,19 @@ public class SearchPersonResponse {
         @SerializedName("status")
         @Expose
         private String status;
+
+        @SerializedName("company")
+        @Expose
+        private String company;
+
+        public String getCompany() {
+            return company;
+        }
+
+        public void setCompany(String company) {
+            this.company = company;
+        }
+
         public Boolean contactVisibility;
 
         public String getContact() {

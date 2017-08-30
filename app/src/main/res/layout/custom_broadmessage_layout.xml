@@ -11,7 +11,6 @@
         android:padding="10dp">
 
         <EditText
-
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:id="@+id/statustext"
@@ -22,7 +21,6 @@
             android:background="@android:color/transparent"
             android:textAlignment="textStart"
             android:gravity="start" />
-
 
         <TextView
             android:id="@+id/counttxt"

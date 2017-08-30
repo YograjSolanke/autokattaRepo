@@ -161,7 +161,7 @@
                         android:id="@+id/name"
                         android:layout_width="100dp"
                         android:layout_height="wrap_content"
-                        android:text="Product Name :"
+                        android:text="@string/product_name"
                         android:textColor="#808080"
                         android:textStyle="bold" />
 
@@ -170,7 +170,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_toEndOf="@+id/name"
-                        android:hint="name"
+                        android:hint="@string/names"
                         android:textColor="#808080" />
 
                 </RelativeLayout>
@@ -185,7 +185,7 @@
                         android:id="@+id/type"
                         android:layout_width="100dp"
                         android:layout_height="wrap_content"
-                        android:text="Product Type: "
+                        android:text="@string/product_type"
                         android:textColor="#808080"
                         android:textStyle="bold" />
 
@@ -194,7 +194,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_toEndOf="@+id/type"
-                        android:hint="type"
+                        android:hint="@string/type"
                         android:textColor="#808080" />
 
                 </RelativeLayout>
@@ -232,7 +232,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:gravity="center"
-                    android:text="Like"
+                    android:text="@string/likes"
                     android:textColor="#808080"
                     android:textSize="12sp" />
 
@@ -243,7 +243,7 @@
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="5dp"
                     android:layout_toEndOf="@+id/dot"
-                    android:text="Share"
+                    android:text="@string/share"
                     android:textColor="#808080"
                     android:textSize="12sp" />
 

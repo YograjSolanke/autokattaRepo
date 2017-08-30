@@ -8,9 +8,9 @@
 
     <LinearLayout
         android:id="@+id/ll"
-        android:baselineAligned="false"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:baselineAligned="false"
         android:orientation="horizontal">
 
         <LinearLayout
@@ -24,7 +24,7 @@
                 android:id="@+id/txtname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Name"
+                android:text="@string/names"
                 android:textColor="@color/textColor"
                 android:textSize="16sp" />
 
@@ -32,7 +32,7 @@
                 android:id="@+id/txtnumber"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Number"
+                android:text="@string/number"
                 android:textColor="@color/textColor"
                 android:textSize="15sp" />
         </LinearLayout>
@@ -54,15 +54,13 @@
                 android:textColor="@android:color/white"
                 android:textSize="15sp" />
         </LinearLayout>
-
-
     </LinearLayout>
 
     <View
         android:id="@+id/vieww"
-        android:layout_below="@+id/ll"
         android:layout_width="match_parent"
         android:layout_height="2dp"
+        android:layout_below="@+id/ll"
         android:background="@color/grey" />
 
 </RelativeLayout>

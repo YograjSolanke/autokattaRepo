@@ -20,14 +20,13 @@
             android:layout_height="wrap_content"
             android:padding="5dp">
 
-
             <TextView
                 android:id="@+id/keyword"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:gravity="center"
-                android:text="Keyword"
+                android:text="@string/keyword"
                 android:textColor="@color/black"
                 android:textStyle="bold" />
 
@@ -55,8 +54,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:gravity="center"
-                    android:text="Title"
-
+                    android:text="@string/title"
                     android:textAlignment="center"
                     android:textColor="#2C3343"
                     android:textColorHint="#000000"
@@ -70,7 +68,6 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="10dp"
                     android:layout_toRightOf="@+id/titletext"
-
                     android:textColor="#2C3343"
                     android:textColorHint="#000000"
                     android:textSize="12sp" />
@@ -93,8 +90,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:gravity="center"
-                    android:text="Category"
-
+                    android:text="@string/category"
                     android:textAlignment="center"
                     android:textColor="#2C3343"
                     android:textColorHint="#000000"
@@ -108,12 +104,10 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="10dp"
                     android:layout_toRightOf="@+id/categorytext"
-
                     android:textColor="#2C3343"
                     android:textColorHint="#000000"
                     android:textSize="12sp" />
             </RelativeLayout>
-
 
             <RelativeLayout
                 android:id="@+id/relative3"
@@ -131,8 +125,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:gravity="center"
-                    android:text="Brand"
-
+                    android:text="@string/brand"
                     android:textAlignment="center"
                     android:textColor="#2C3343"
                     android:textColorHint="#000000"
@@ -146,7 +139,6 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="10dp"
                     android:layout_toRightOf="@+id/brandtext"
-
                     android:textColor="#2C3343"
                     android:textColorHint="#000000"
                     android:textSize="12sp" />
@@ -168,8 +160,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:gravity="center"
-                    android:text="Model"
-
+                    android:text="@string/model"
                     android:textAlignment="center"
                     android:textColor="#2C3343"
                     android:textColorHint="#000000"
@@ -183,7 +174,6 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="10dp"
                     android:layout_toRightOf="@+id/modeltext"
-
                     android:textColor="#2C3343"
                     android:textColorHint="#000000"
                     android:textSize="12sp" />
@@ -205,8 +195,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:gravity="center"
-                    android:text="Price"
-
+                    android:text="@string/price"
                     android:textAlignment="center"
                     android:textColor="#2C3343"
                     android:textColorHint="#000000"
@@ -220,12 +209,10 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="10dp"
                     android:layout_toRightOf="@+id/pricetext"
-
                     android:textColor="#2C3343"
                     android:textColorHint="#000000"
                     android:textSize="12sp" />
             </RelativeLayout>
-
         </RelativeLayout>
     </android.support.v7.widget.CardView>
 

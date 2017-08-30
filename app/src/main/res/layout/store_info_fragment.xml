@@ -49,7 +49,7 @@
                     android:id="@+id/txtstorename"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Store Name"
+                    android:text="@string/store_name"
                     android:textColor="@color/textColor"
                     android:textSize="15sp"
                     android:textStyle="bold" />
@@ -60,7 +60,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/txtstorename"
                     android:layout_marginTop="5dp"
-                    android:hint="name"
+                    android:hint="@string/names"
                     android:maxLength="25"
                     android:textColor="#000000"
                     android:textColorHint="#848484"
@@ -84,7 +84,7 @@
                     android:id="@+id/txtlocation"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Location"
+                    android:text="@string/location"
                     android:textColor="@color/textColor"
                     android:textSize="15sp"
                     android:textStyle="bold" />
@@ -95,7 +95,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/txtlocation"
                     android:layout_marginTop="5dp"
-                    android:hint="Location"
+                    android:hint="@string/location"
                     android:textColor="@color/textColor"
                     android:textColorHint="#848484"
                     android:textSize="15sp" />
@@ -118,7 +118,7 @@
                     android:id="@+id/txtaddress"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Address"
+                    android:text="@string/address"
                     android:textColor="@color/textColor"
                     android:textSize="15sp"
                     android:textStyle="bold" />
@@ -129,7 +129,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/txtaddress"
                     android:layout_marginTop="5dp"
-                    android:hint="Address"
+                    android:hint="@string/address"
                     android:textColor="@color/textColor"
                     android:textColorHint="#848484"
                     android:textSize="15sp" />
@@ -152,7 +152,7 @@
                     android:id="@+id/txtwebsite"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Website"
+                    android:text="@string/website"
                     android:textColor="@color/textColor"
                     android:textSize="15sp"
                     android:textStyle="bold" />
@@ -163,7 +163,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/txtwebsite"
                     android:layout_marginTop="5dp"
-                    android:hint="Website"
+                    android:hint="@string/website"
                     android:textColor="#2C3343"
                     android:textColorHint="#848484"
                     android:textSize="15sp" />
@@ -186,7 +186,7 @@
                     android:id="@+id/txtopentime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Timing"
+                    android:text="@string/timing"
                     android:textColor="@color/textColor"
                     android:textSize="15sp"
                     android:textStyle="bold" />
@@ -198,7 +198,7 @@
                     android:layout_below="@+id/txtopentime"
                     android:layout_marginTop="5dp"
                     android:editable="false"
-                    android:hint="Open"
+                    android:hint="@string/open"
                     android:textColor="@color/textColor"
                     android:textColorHint="#848484"
                     android:textSize="15sp" />
@@ -214,7 +214,7 @@
                     android:layout_marginTop="5dp"
                     android:layout_toEndOf="@id/edittiming"
                     android:layout_toRightOf="@id/edittiming"
-                    android:text="To"
+                    android:text="@string/to"
                     android:textColor="@color/textColor"
                     android:textSize="15sp"
                     android:textStyle="bold" />
@@ -230,7 +230,7 @@
                     android:layout_toEndOf="@+id/txtclosetime"
                     android:layout_toRightOf="@+id/txtclosetime"
                     android:editable="false"
-                    android:hint="Close"
+                    android:hint="@string/closed"
                     android:textColor="@color/textColor"
                     android:textColorHint="#848484"
                     android:textSize="15sp" />
@@ -255,7 +255,7 @@
                     android:id="@+id/txtworkingdays"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Working Days"
+                    android:text="@string/working_day"
                     android:textColor="@color/textColor"
                     android:textSize="15sp"
                     android:textStyle="bold" />
@@ -266,7 +266,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/txtworkingdays"
                     android:layout_marginTop="5dp"
-                    android:hint="workind days"
+                    android:hint="@string/working_day"
                     android:textColor="@color/textColor"
                     android:textSize="15sp" />
 
@@ -290,7 +290,7 @@
                     android:id="@+id/txtType"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Store Type"
+                    android:text="@string/store_type"
                     android:textColor="@color/textColor"
                     android:textSize="15sp"
                     android:textStyle="bold" />
@@ -301,7 +301,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/txtType"
                     android:layout_marginTop="5dp"
-                    android:hint="store type"
+                    android:hint="@string/store_type"
                     android:textColor="@color/textColor"
                     android:textSize="15sp"
                     android:visibility="visible" />
@@ -326,7 +326,7 @@
                     android:id="@+id/txtcategory"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Services Offered"
+                    android:text="@string/services_offered"
                     android:textColor="@color/textColor"
                     android:textSize="15sp"
                     android:textStyle="bold" />
@@ -337,7 +337,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/txtcategory"
                     android:layout_marginTop="5dp"
-                    android:hint="services offered"
+                    android:hint="@string/services_offered"
                     android:textColor="@color/textColor"
                     android:textSize="15sp"
                     android:visibility="visible" />
@@ -360,7 +360,7 @@
                     android:id="@+id/txtdescription"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Description"
+                    android:text="@string/store_description"
                     android:textColor="@color/textColor"
                     android:textSize="15sp"
                     android:textStyle="bold" />
@@ -371,7 +371,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/txtdescription"
                     android:layout_marginTop="5dp"
-                    android:hint="Store Description"
+                    android:hint="@string/store_description"
                     android:maxLength="200"
                     android:textColor="@color/textColor"
                     android:textColorHint="#848484"
@@ -396,7 +396,7 @@
                     android:id="@+id/txtbrandtags"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Brand Tags"
+                    android:text="@string/brand_tags"
                     android:textColor="@color/textColor"
                     android:textSize="15sp"
                     android:textStyle="bold" />
@@ -407,7 +407,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/txtbrandtags"
                     android:layout_marginTop="5dp"
-                    android:hint="Brand tags"
+                    android:hint="@string/brand_tags"
                     android:textColor="@color/textColor"
                     android:textColorHint="#848484"
                     android:textSize="15sp" />
@@ -431,7 +431,7 @@
                     android:id="@+id/txtAdminContact"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Admin Contact"
+                    android:text="@string/admin_contact"
                     android:textColor="@color/textColor"
                     android:textSize="15sp"
                     android:textStyle="bold" />
@@ -442,13 +442,11 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/txtAdminContact"
                     android:layout_marginTop="5dp"
-                    android:hint="admin contacts"
+                    android:hint="@string/admin_contact"
                     android:textColor="@color/textColor"
                     android:textColorHint="#848484"
                     android:textSize="15sp" />
-
             </RelativeLayout>
-
         </RelativeLayout>
     </RelativeLayout>
 </android.support.v4.widget.NestedScrollView>

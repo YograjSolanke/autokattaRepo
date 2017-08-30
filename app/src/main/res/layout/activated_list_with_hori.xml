@@ -36,7 +36,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
                         android:layout_marginTop="5dp"
-                        android:text="Auction Title :"
+                        android:text="@string/auction_title"
                         android:textColor="#808080"
                         android:textStyle="bold" />
 
@@ -66,7 +66,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
                         android:layout_marginTop="5dp"
-                        android:text="No.of vehicle :"
+                        android:text="@string/no_of_vehicle"
                         android:textColor="#808080"
                         android:textStyle="bold" />
 
@@ -94,7 +94,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Currently active"
+                        android:text="@string/currently_active"
                         android:textColor="#808080"
                         android:textStyle="bold" />
 
@@ -114,9 +114,9 @@
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginStart="5dp"
-                        android:text="Start :"
+                        android:text="@string/start"
                         android:textColor="#808080"
-                        android:textStyle="bold"></TextView>
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/datetime1"
@@ -126,7 +126,7 @@
                         android:layout_marginStart="5dp"
                         android:layout_toEndOf="@+id/start2"
                         android:enabled="false"
-                        android:hint="Date"
+                        android:hint="dates"
                         android:textColor="#808080" />
 
                     <TextView
@@ -147,11 +147,10 @@
                         android:layout_marginStart="10dp"
                         android:layout_toEndOf="@+id/andtext1"
                         android:enabled="false"
-                        android:hint="Time"
+                        android:hint="times"
                         android:textColor="#808080" />
 
                 </RelativeLayout>
-
 
                 <RelativeLayout
                     android:id="@+id/rl5"
@@ -167,7 +166,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginStart="5dp"
-                        android:text="End :"
+                        android:text="@string/end"
                         android:textColor="#808080"
                         android:textStyle="bold">
 
@@ -181,7 +180,7 @@
                         android:layout_marginStart="5dp"
                         android:layout_toEndOf="@+id/end2"
                         android:enabled="false"
-                        android:hint="Date"
+                        android:hint="@string/dates"
                         android:textColor="#808080" />
 
                     <TextView
@@ -202,7 +201,7 @@
                         android:layout_marginStart="10dp"
                         android:layout_toEndOf="@+id/andtext2"
                         android:enabled="false"
-                        android:hint="Time"
+                        android:hint="@string/times"
                         android:textColor="#808080" />
 
                 </RelativeLayout>
@@ -236,7 +235,7 @@
                         android:layout_marginTop="5dp"
                         android:layout_weight="0.50"
                         android:background="@drawable/buttonback"
-                        android:text="Special Clause"
+                        android:text="@string/special_clauses"
                         android:textColor="@color/white"
                         android:textSize="16sp" />
 
@@ -264,7 +263,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:background="@color/background"
-                        android:text="Preview"
+                        android:text="@string/preview"
                         android:textColor="@color/white"
                         android:textSize="16sp" />
 
@@ -275,7 +274,7 @@
                         android:layout_marginStart="1dp"
                         android:layout_weight="1"
                         android:background="@color/background"
-                        android:text="Share"
+                        android:text="@string/share"
                         android:textColor="@color/white"
                         android:textSize="16sp" />
 
@@ -308,7 +307,7 @@
                             android:layout_toEndOf="@+id/share1"
                             android:background="@color/background"
                             android:gravity="center"
-                            android:text="SHARE"
+                            android:text="@string/cap_share"
                             android:textColor="@color/white"
                             android:textSize="15sp" />
                     </RelativeLayout>

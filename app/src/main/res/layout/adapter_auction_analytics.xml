@@ -36,7 +36,7 @@
                         android:id="@+id/reachedtxt"
                         android:layout_width="110dp"
                         android:layout_height="wrap_content"
-                        android:text="Total Reached :"
+                        android:text="@string/total_reached"
                         android:textColor="#808080"
                         android:textStyle="bold" />
 
@@ -72,7 +72,7 @@
                         android:id="@+id/goingcnttxt"
                         android:layout_width="110dp"
                         android:layout_height="wrap_content"
-                        android:text="Going :"
+                        android:text="@string/going"
                         android:textColor="#808080"
                         android:textStyle="bold" />
 
@@ -98,7 +98,7 @@
                         android:id="@+id/ignorecounttxt"
                         android:layout_width="70dp"
                         android:layout_height="wrap_content"
-                        android:text="Ignores :"
+                        android:text="@string/ignore"
                         android:textColor="#808080"
                         android:textStyle="bold" />
 
@@ -124,7 +124,7 @@
                         android:id="@+id/sharecnttxt"
                         android:layout_width="70dp"
                         android:layout_height="wrap_content"
-                        android:text="Shares :"
+                        android:text="@string/share"
                         android:textColor="#808080"
                         android:textStyle="bold" />
 
@@ -152,7 +152,7 @@
                     android:id="@+id/typeusertxt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Type of user(going)"
+                    android:text="@string/type_of_user"
                     android:textColor="#808080"
                     android:textSize="15sp"
                     android:textStyle="bold" />
@@ -169,7 +169,7 @@
                         android:id="@+id/studcnttxt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Student count : "
+                        android:text="@string/student_count"
                         android:textColor="#808080"
                         android:textStyle="bold" />
 
@@ -195,7 +195,7 @@
                         android:id="@+id/selfemptxt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Self employee : "
+                        android:text="@string/self_employee"
                         android:textColor="#808080"
                         android:textStyle="bold" />
 
@@ -222,7 +222,7 @@
                         android:id="@+id/emptxt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Employee : "
+                        android:text="@string/employee"
                         android:textColor="#808080"
                         android:textStyle="bold" />
 
@@ -253,7 +253,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="2dp"
                     android:layout_toEndOf="@+id/view"
-                    android:text="Type of user(ignore)"
+                    android:text="@string/type_of_user"
                     android:textColor="#808080"
                     android:textSize="15sp"
                     android:textStyle="bold" />
@@ -271,7 +271,7 @@
                         android:id="@+id/studignorecnttxt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Student count : "
+                        android:text="@string/student_count"
                         android:textColor="#808080"
                         android:textStyle="bold" />
 
@@ -298,7 +298,7 @@
                         android:id="@+id/selfempignoretxt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Self employee : "
+                        android:text="@string/self_employee"
                         android:textColor="#808080"
                         android:textStyle="bold" />
 
@@ -324,7 +324,7 @@
                         android:id="@+id/empignoretxt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Employee : "
+                        android:text="@string/employee"
                         android:textColor="#808080"
                         android:textStyle="bold" />
 
@@ -360,7 +360,7 @@
                         android:id="@+id/totalAuctiontxt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Auctioned Vehicles : "
+                        android:text="@string/auctioned_vehicles"
                         android:textColor="#808080"
                         android:textStyle="bold" />
 
@@ -386,7 +386,7 @@
                         android:id="@+id/approvetxt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Approved : "
+                        android:text="@string/approved"
                         android:textColor="#808080"
                         android:textStyle="bold" />
 
@@ -423,7 +423,7 @@
                         android:id="@+id/abovetxt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Above Reserved  : "
+                        android:text="@string/above_reserved"
                         android:textColor="#808080"
                         android:textStyle="bold" />
 
@@ -449,7 +449,7 @@
                         android:id="@+id/highesttxt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Highest  : "
+                        android:text="@string/highest"
                         android:textColor="#808080"
                         android:textStyle="bold" />
 
@@ -476,7 +476,7 @@
                         android:id="@+id/nobidtxt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="No Bid : "
+                        android:text="@string/no_bid"
                         android:textColor="#808080"
                         android:textStyle="bold" />
 
@@ -509,7 +509,7 @@
                         android:id="@+id/noofbidderstxt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="No Of Bidders: "
+                        android:text="@string/no_of_bidders"
                         android:textColor="#808080"
                         android:textStyle="bold" />
 
@@ -545,7 +545,7 @@
                         android:id="@+id/successfultxt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Successfull Bidders : "
+                        android:text="@string/success_bidder"
                         android:textColor="#808080"
                         android:textStyle="bold" />
 
@@ -571,7 +571,7 @@
                         android:id="@+id/totalbidtxt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Total Bids: "
+                        android:text="@string/total_bids"
                         android:textColor="#808080"
                         android:textStyle="bold" />
 
@@ -596,7 +596,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="5dp"
                 android:background="@drawable/buttonback"
-                android:text="Go to live"
+                android:text="@string/go_to_live"
                 android:textColor="@color/white"
                 android:textSize="16sp"
                 android:visibility="gone" />

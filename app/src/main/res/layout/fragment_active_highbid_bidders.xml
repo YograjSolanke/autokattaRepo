@@ -33,7 +33,7 @@
                     android:id="@+id/nametxt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Name:"
+                    android:text="@string/names"
                     android:textColor="#808080"
                     android:textStyle="bold" />
 
@@ -43,10 +43,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:layout_toEndOf="@+id/nametxt"
-                    android:text="Name"
+                    android:text="@string/names"
                     android:textColor="#808080" />
-
-
             </RelativeLayout>
 
             <RelativeLayout
@@ -58,12 +56,11 @@
                 android:layout_marginTop="5dp"
                 android:layout_toStartOf="@+id/approve">
 
-
                 <TextView
                     android:id="@+id/bidpricetxt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Bid price:"
+                    android:text="@string/bid_price"
                     android:textColor="#808080"
                     android:textStyle="bold" />
 
@@ -73,10 +70,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:layout_toEndOf="@+id/bidpricetxt"
-                    android:text="Bid price"
+                    android:text="@string/bid_price"
                     android:textColor="#808080" />
-
-
             </RelativeLayout>
 
             <RelativeLayout
@@ -89,12 +84,11 @@
                 android:layout_marginTop="5dp"
                 android:layout_toEndOf="@+id/approve">
 
-
                 <TextView
                     android:id="@+id/vehicletxt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="No.of vehicles bid:"
+                    android:text="@string/no_of_vehicle_bids"
                     android:textColor="#808080"
                     android:textStyle="bold" />
 
@@ -104,10 +98,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:layout_toEndOf="@+id/vehicletxt"
-                    android:text="vehicle"
+                    android:text="@string/vehicle"
                     android:textColor="#808080" />
-
-
             </RelativeLayout>
 
             <ImageView
@@ -128,12 +120,10 @@
                 android:layout_centerVertical="true"
                 android:layout_toStartOf="@+id/call"
                 android:background="@drawable/button_background"
-                android:text="Approve"
+                android:text="@string/approve"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
                 android:visibility="gone" />
-
         </RelativeLayout>
-
     </android.support.v7.widget.CardView>
 </RelativeLayout>

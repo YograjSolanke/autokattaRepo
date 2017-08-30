@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginTop="5dp"
-            android:text="Store Name"
+            android:text="@string/store_name"
             android:textAlignment="center"
             android:textColor="#2C3343"
             android:textSize="15sp"
@@ -34,7 +34,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/lstorename"
-            android:text="Store Name"
+            android:text="@string/store_name"
             android:layout_toLeftOf="@+id/call"
             android:layout_marginRight="10dp"
             android:layout_marginEnd="10dp"
@@ -51,7 +51,7 @@
             android:layout_below="@+id/txtstorename"
             android:layout_marginStart="10dp"
             android:layout_marginTop="5dp"
-            android:text="Website"
+            android:text="@string/website"
             android:textAlignment="center"
             android:textColor="@color/textColor"
             android:textSize="15sp"
@@ -65,7 +65,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
             android:layout_marginTop="5dp"
-            android:text="website"
+            android:text="@string/website"
             android:textColor="@color/textColor"
             android:textSize="15sp" />
 
@@ -76,7 +76,7 @@
             android:layout_below="@+id/txtstorewebsite"
             android:layout_marginBottom="5dp"
             android:layout_marginStart="10dp"
-            android:text="No.Of Enquiries:"
+            android:text="@string/no_of_enquiries"
             android:enabled="false"
             android:textColor="@color/textColor"
             android:textSize="12sp"
@@ -92,7 +92,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginTop="5dp"
             android:background="@drawable/buttonback"
-            android:text="Send Enquiry"
+            android:text="@string/send_enquiry"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="12sp"
@@ -153,7 +153,7 @@
                         android:layout_centerHorizontal="true"
                         android:layout_marginBottom="10dp"
                         android:layout_marginTop="10dp"
-                        android:text="Photos"
+                        android:text="@string/photos"
                         android:textStyle="bold" />
 
 
@@ -191,7 +191,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="5dp"
-                            android:text="likes"
+                            android:text="@string/likes"
                             android:textAlignment="center"
                             android:textColor="#2C3343" />
 
@@ -200,7 +200,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="5dp"
-                            android:text="shares"
+                            android:text="@string/share"
                             android:textAlignment="center"
                             android:textColor="#2C3343" />
 
@@ -452,7 +452,7 @@
                             android:id="@+id/ptype"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Product  Type"
+                            android:text="@string/product_type"
                             android:textAlignment="center"
                             android:textColor="@color/textColor"
                             android:textColorHint="#000000"
@@ -476,7 +476,7 @@
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/ptype"
                             android:layout_marginTop="5dp"
-                            android:hint="product type"
+                            android:hint="@string/product_type"
                             android:background="@android:color/transparent"
                             android:textColor="@color/textColor"
                             android:textColorHint="@color/hintColor"
@@ -494,7 +494,7 @@
                             android:id="@+id/lpname"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Product Name"
+                            android:text="@string/product_name"
                             android:textColor="@color/textColor"
                             android:textSize="15sp"
                             android:textStyle="bold" />
@@ -518,7 +518,7 @@
                             android:layout_below="@+id/lpname"
                             android:textColor="@color/textColor"
                             android:layout_marginTop="5dp"
-                            android:hint="product name"
+                            android:hint="@string/product_name"
                             android:background="@android:color/transparent"
                             android:textColorHint="@color/hintColor"
                             android:textSize="15sp" />
@@ -536,7 +536,7 @@
                             android:id="@+id/lpprice"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Price"
+                            android:text="@string/price"
                             android:textColor="@color/textColor"
                             android:textColorHint="#000000"
                             android:textSize="15sp"
@@ -560,7 +560,7 @@
                             android:layout_below="@+id/lpprice"
                             android:inputType="number"
                             android:layout_marginTop="5dp"
-                            android:hint="price"
+                            android:hint="@string/price"
                             android:background="@android:color/transparent"
                             android:textColor="@color/textColor"
                             android:textColorHint="@color/hintColor"
@@ -580,7 +580,7 @@
                             android:id="@+id/lptags"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Tags"
+                            android:text="@string/tags"
                             android:textColor="#2C3343"
                             android:textSize="15sp"
                             android:textStyle="bold" />
@@ -604,7 +604,7 @@
                             android:textColor="@color/textColor"
                             android:layout_marginTop="5dp"
                             android:background="@android:color/transparent"
-                            android:hint="tags"
+                            android:hint="@string/tags"
                             android:textColorHint="@color/hintColor"
                             android:textSize="15sp" />
                     </RelativeLayout>
@@ -621,7 +621,7 @@
                             android:id="@+id/brandtags"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Brand Tags"
+                            android:text="@string/brand_tags"
                             android:textColor="@color/textColor"
                             android:textSize="15sp"
                             android:textStyle="bold" />
@@ -661,7 +661,7 @@
                             android:id="@+id/lpdetails"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Details"
+                            android:text="@string/details"
                             android:textColor="@color/textColor"
                             android:textSize="15sp"
                             android:textStyle="bold" />
@@ -684,7 +684,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
                             android:layout_below="@+id/lpdetails"
-                            android:hint="product details"
+                            android:hint="@string/product_details"
                             android:textColor="@color/textColor"
                             android:background="@android:color/transparent"
                             android:textColorHint="@color/hintColor"
@@ -704,7 +704,7 @@
                             android:id="@+id/lpcategory"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Category"
+                            android:text="@string/category"
                             android:textColor="@color/textColor"
                             android:textSize="15sp"
                             android:textStyle="bold" />

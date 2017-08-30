@@ -125,7 +125,7 @@
                         android:id="@+id/productnametxt"
                         android:layout_width="110dp"
                         android:layout_height="wrap_content"
-                        android:text="Product name  :"
+                        android:text="@string/product_name"
                         android:textColor="#808080"
                         android:textStyle="bold" />
 
@@ -134,7 +134,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_toEndOf="@+id/productnametxt"
-                        android:hint="name"
+                        android:hint="@string/names"
                         android:textColor="#808080" />
 
                 </RelativeLayout>
@@ -151,7 +151,7 @@
                         android:id="@+id/producttypetxt"
                         android:layout_width="110dp"
                         android:layout_height="wrap_content"
-                        android:text="Product type  : "
+                        android:text="@string/product_type"
                         android:textColor="#808080"
                         android:textStyle="bold" />
 
@@ -160,7 +160,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_toEndOf="@+id/producttypetxt"
-                        android:hint="type"
+                        android:hint="@string/type"
                         android:textColor="#808080" />
 
                 </RelativeLayout>

@@ -41,7 +41,7 @@
             android:id="@+id/editPersonName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Full Name"
+            android:hint="@string/full_name"
             android:inputType="textPersonName"
             android:maxLines="1"
             android:paddingEnd="@dimen/margin_heading_top"

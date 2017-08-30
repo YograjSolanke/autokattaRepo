@@ -11,7 +11,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
             <TextView
                 android:id="@+id/cattext"
@@ -19,14 +19,14 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="10dp"
-                android:text="Categories"
+                android:text="@string/category"
                 android:textStyle="bold" />
 
             <ListView
                 android:id="@+id/listview1"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
-                android:layout_below="@+id/cattext"></ListView>
+                android:layout_below="@+id/cattext" />
 
             <TextView
                 android:id="@+id/tagtext"
@@ -35,16 +35,14 @@
                 android:layout_below="@+id/listview1"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="5dp"
-                android:text="Tags"
+                android:text="@string/tags"
                 android:textStyle="bold" />
 
             <ListView
                 android:id="@+id/listview2"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
-                android:layout_below="@+id/tagtext">
-
-            </ListView>
+                android:layout_below="@+id/tagtext" />
 
             <TextView
                 android:id="@+id/brandtagtext"
@@ -53,7 +51,7 @@
                 android:layout_below="@+id/listview2"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="5dp"
-                android:text="Brand Tags"
+                android:text="@string/brand_tags"
                 android:textStyle="bold" />
 
             <ListView

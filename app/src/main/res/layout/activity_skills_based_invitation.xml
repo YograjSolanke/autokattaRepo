@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="7dp"
             android:layout_weight="1.5"
-            android:hint="Search Contacts.."
+            android:hint="@string/search_contacts"
             android:inputType="textVisiblePassword"
             android:paddingEnd="5dp"
             android:paddingStart="5dp"

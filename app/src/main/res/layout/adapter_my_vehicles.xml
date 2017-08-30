@@ -54,7 +54,7 @@
                 android:layout_marginStart="5dp"
                 android:layout_marginTop="5dp"
                 android:layout_toEndOf="@+id/image1"
-                android:text="Model:"
+                android:text="@string/model"
                 android:textColor="#000000"
                 android:textStyle="bold" />
 
@@ -75,7 +75,7 @@
                 android:layout_below="@+id/model"
                 android:layout_marginStart="5dp"
                 android:layout_toEndOf="@+id/image1"
-                android:text="Brand :"
+                android:text="@string/brand"
                 android:textColor="#000000"
                 android:textStyle="bold" />
 
@@ -95,7 +95,7 @@
                 android:layout_below="@+id/brand"
                 android:layout_marginStart="5dp"
                 android:layout_toEndOf="@+id/image1"
-                android:text="Version :"
+                android:text="@string/version"
                 android:textColor="#000000"
                 android:textStyle="bold" />
 
@@ -115,7 +115,7 @@
                 android:layout_below="@+id/version"
                 android:layout_marginStart="5dp"
                 android:layout_toEndOf="@+id/image1"
-                android:text="Year :"
+                android:text="@string/years"
                 android:textColor="#000000"
                 android:textStyle="bold" />
 
@@ -135,7 +135,7 @@
                 android:layout_below="@+id/notifyyear"
                 android:layout_marginStart="5dp"
                 android:layout_toEndOf="@+id/image1"
-                android:text="Sub Category :"
+                android:text="@string/sub_category"
                 android:textColor="#000000"
                 android:textStyle="bold" />
 
@@ -155,7 +155,7 @@
                 android:layout_below="@+id/subcategory"
                 android:layout_marginStart="5dp"
                 android:layout_toEndOf="@+id/image1"
-                android:text="Uploaded Date :"
+                android:text="@string/updated_date"
                 android:textColor="#000000"
                 android:textStyle="bold"
                 android:visibility="visible" />

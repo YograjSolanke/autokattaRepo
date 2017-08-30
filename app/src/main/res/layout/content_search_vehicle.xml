@@ -32,7 +32,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
-                    android:text="Finance Required:"
+                    android:text="@string/finance_required"
                     android:textColor="#2C3343" />
 
                 <!--<Spinner
@@ -93,7 +93,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
-                    android:text="Category:"
+                    android:text="@string/category"
                     android:textColor="#2C3343"
                     android:textSize="15sp" />
 
@@ -152,7 +152,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
-                    android:text="Sub category:"
+                    android:text="@string/sub_category"
                     android:textColor="#2C3343"
                     android:textSize="15sp" />
 
@@ -211,7 +211,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
-                    android:text="Permit/Private "
+                    android:text="@string/permit_private"
                     android:textColor="@color/black" />
 
                 <RadioGroup
@@ -250,7 +250,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
-                    android:text="Brand:"
+                    android:text="@string/brand"
                     android:textColor="#2C3343"
                     android:textSize="15sp" />
 
@@ -310,7 +310,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
-                    android:text="Model:"
+                    android:text="@string/model"
                     android:textColor="#2C3343"
                     android:textSize="15sp" />
 
@@ -429,7 +429,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentTop="true"
-                    android:text="Location city:"
+                    android:text="@string/location"
                     android:textColor="#2C3343"
                     android:textSize="15sp" />
 
@@ -455,7 +455,7 @@
                     android:layout_marginStart="150dp"
                     android:background="@drawable/spinner_background"
                     android:ems="10"
-                    android:hint="Enter city"
+                    android:hint="@string/enter_city"
                     android:padding="5dp"
                     android:textAlignment="textStart"
                     android:textColor="#2C3343"
@@ -471,7 +471,7 @@
                     android:layout_marginTop="10dip"
                     android:background="@drawable/spinner_background"
                     android:ems="10"
-                    android:hint="Enter city"
+                    android:hint="@string/enter_city"
                     android:padding="5dp"
                     android:textAlignment="textStart"
                     android:textColor="#2C3343"
@@ -488,7 +488,7 @@
                     android:layout_marginTop="10dip"
                     android:background="@drawable/spinner_background"
                     android:ems="10"
-                    android:hint="Enter city"
+                    android:hint="@string/enter_city"
                     android:padding="5dp"
                     android:textAlignment="textStart"
                     android:textColor="#2C3343"
@@ -505,7 +505,7 @@
                     android:layout_marginTop="10dip"
                     android:background="@drawable/spinner_background"
                     android:ems="10"
-                    android:hint="Enter city"
+                    android:hint="@string/enter_city"
                     android:padding="5dp"
                     android:textAlignment="textStart"
                     android:textColor="#2C3343"
@@ -523,7 +523,7 @@
                     android:layout_marginTop="10dip"
                     android:background="@drawable/spinner_background"
                     android:ems="10"
-                    android:hint="Enter city"
+                    android:hint="@string/enter_city"
                     android:padding="5dp"
                     android:textAlignment="textStart"
                     android:textColor="#2C3343"
@@ -552,7 +552,7 @@
                     android:layout_height="20dp"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentTop="true"
-                    android:text="RTO City:"
+                    android:text="@string/rto_citys"
                     android:textColor="#2C3343" />
 
                 <CheckBox
@@ -561,7 +561,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:layout_below="@+id/RTOText"
-                    android:text="Unregitsered"
+                    android:text="@string/un_registered"
                     android:textColor="#2C3343"
                     android:textSize="12sp" />
 
@@ -587,7 +587,7 @@
                     android:layout_marginTop="20dp"
                     android:background="@drawable/spinner_background"
                     android:ems="10"
-                    android:hint="Enter Rto city"
+                    android:hint="@string/enter_rto_city"
                     android:padding="5dp"
                     android:textAlignment="textStart"
                     android:textColor="#2C3343"
@@ -605,7 +605,7 @@
                     android:layout_marginTop="10dip"
                     android:background="@drawable/spinner_background"
                     android:ems="10"
-                    android:hint="Enter Rto city"
+                    android:hint="@string/enter_rto_city"
                     android:padding="5dp"
                     android:textAlignment="textStart"
                     android:textColor="#2C3343"
@@ -623,7 +623,7 @@
                     android:layout_marginTop="10dip"
                     android:background="@drawable/spinner_background"
                     android:ems="10"
-                    android:hint="Enter Rto city"
+                    android:hint="@string/enter_rto_city"
                     android:padding="5dp"
                     android:textAlignment="textStart"
                     android:textColor="#2C3343"
@@ -640,7 +640,7 @@
                     android:layout_marginTop="10dip"
                     android:background="@drawable/spinner_background"
                     android:ems="10"
-                    android:hint="Enter Rto city"
+                    android:hint="@string/enter_rto_city"
                     android:padding="5dp"
                     android:textAlignment="textStart"
                     android:textColor="#2C3343"
@@ -657,7 +657,7 @@
                     android:layout_marginTop="10dip"
                     android:background="@drawable/spinner_background"
                     android:ems="10"
-                    android:hint="Enter Rto city"
+                    android:hint="@string/enter_rto_city"
                     android:padding="5dp"
                     android:textAlignment="textStart"
                     android:textColor="#2C3343"
@@ -687,7 +687,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentTop="true"
-                    android:text="Manufacture Year :"
+                    android:text="@string/manufacture_year"
                     android:textColor="#2C3343"
                     android:textSize="15sp" />
 
@@ -740,7 +740,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentTop="true"
-                    android:text="Price :"
+                    android:text="@string/price"
                     android:textColor="#2C3343" />
 
                 <TextView
@@ -788,7 +788,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentTop="true"
-                    android:text="Kms Running:"
+                    android:text="@string/kms_running"
                     android:textColor="#2C3343" />
 
                 <TextView
@@ -846,7 +846,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentTop="true"
-                    android:text="Hours Running:"
+                    android:text="@string/hrs_running"
                     android:textColor="#2C3343" />
 
                 <TextView
@@ -901,7 +901,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentTop="true"
-                    android:text="Hp or Capacity"
+                    android:text="@string/hp_capacitys"
                     android:textColor="#2C3343" />
 
                 <TextView
@@ -955,7 +955,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
-                    android:text="Owners"
+                    android:text="@string/owner"
                     android:textColor="#2C3343"
                     android:textSize="15sp" />
 
@@ -1020,7 +1020,7 @@
                     android:layout_height="40dp"
                     android:background="@drawable/buttonback"
                     android:ems="10"
-                    android:text="More Options"
+                    android:text="@string/more_options"
                     android:textAllCaps="false"
                     android:textColor="@android:color/white"
                     android:textSize="15sp" />
@@ -1051,7 +1051,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
                         android:layout_centerVertical="true"
-                        android:text="Invoice Available :"
+                        android:text="@string/invoice_available"
                         android:textColor="#2C3343" />
 
                     <!--<Spinner
@@ -1114,7 +1114,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
                         android:layout_centerVertical="true"
-                        android:text="Bus Type :"
+                        android:text="@string/bus_types"
                         android:textColor="#2C3343" />
 
                     <!--<Spinner
@@ -1178,7 +1178,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
                         android:layout_centerVertical="true"
-                        android:text="Air Condition :"
+                        android:text="@string/air_condition"
                         android:textColor="#2C3343" />
 
                     <!--<Spinner
@@ -1241,7 +1241,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
                         android:layout_centerVertical="true"
-                        android:text="Body type:"
+                        android:text="@string/body_type"
                         android:textColor="#2C3343"
                         android:textSize="15sp" />
 
@@ -1254,7 +1254,7 @@
                         android:layout_marginStart="150dp"
                         android:background="@drawable/spinner_background"
                         android:ems="10"
-                        android:hint="Body type:"
+                        android:hint="@string/body_type"
                         android:textAlignment="center"
                         android:textColor="#2C3343" />
                 </RelativeLayout>
@@ -1274,7 +1274,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
                         android:layout_centerVertical="true"
-                        android:text="Boat Type :"
+                        android:text="@string/boat_type"
                         android:textColor="#2C3343"
                         android:textSize="15sp" />
 
@@ -1288,7 +1288,7 @@
                         android:layout_marginStart="150dp"
                         android:background="@drawable/spinner_background"
                         android:ems="10"
-                        android:hint="Boat Type :"
+                        android:hint="@string/boat_type"
                         android:padding="5dp"
                         android:textAlignment="textStart"
                         android:textColor="#2C3343" />
@@ -1310,7 +1310,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
                         android:layout_centerVertical="true"
-                        android:text="RV Type :"
+                        android:text="@string/rv_type"
                         android:textColor="#2C3343"
                         android:textSize="15sp" />
 
@@ -1324,7 +1324,7 @@
                         android:layout_marginStart="150dp"
                         android:background="@drawable/spinner_background"
                         android:ems="10"
-                        android:hint="RV Type :"
+                        android:hint="@string/rv_type"
                         android:padding="5dp"
                         android:textAlignment="textStart"
                         android:textColor="#2C3343" />
@@ -1346,7 +1346,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
                         android:layout_centerVertical="true"
-                        android:text="Color :"
+                        android:text="@string/color"
                         android:textColor="#2C3343" />
 
                     <!-- <autokatta.com.Registration.Multispinner
@@ -1410,7 +1410,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
                         android:layout_centerVertical="true"
-                        android:text="RC Available :"
+                        android:text="@string/rc_available"
                         android:textColor="#2C3343" />
 
                     <!--<Spinner-->
@@ -1474,7 +1474,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
                         android:layout_centerVertical="true"
-                        android:text="Insurance Valid:"
+                        android:text="@string/insurance_validity"
                         android:textColor="#2C3343" />
 
                     <!--Spinner
@@ -1535,7 +1535,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
                         android:layout_centerVertical="true"
-                        android:text="Hypothecation:"
+                        android:text="@string/hypothetication"
                         android:textColor="#2C3343" />
 
                     <!--<Spinner
@@ -1597,7 +1597,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
                         android:layout_centerVertical="true"
-                        android:text="Tax Validity :"
+                        android:text="@string/tax_validity"
                         android:textColor="#2C3343" />
 
                     <!--<Spinner
@@ -1660,7 +1660,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
                         android:layout_centerVertical="true"
-                        android:text="Fitness Validity :"
+                        android:text="@string/fitness_validity"
                         android:textColor="#2C3343" />
 
                     <!--<Spinner
@@ -1724,7 +1724,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
                         android:layout_centerVertical="true"
-                        android:text="Permit Validity :"
+                        android:text="@string/permit_validity"
                         android:textColor="#2C3343" />
 
                     <!-- <Spinner
@@ -1787,7 +1787,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
                         android:layout_centerVertical="true"
-                        android:text="Fuel Type :"
+                        android:text="@string/fuel_type"
                         android:textColor="#2C3343" />
 
                     <!--<autokatta.com.Registration.MultiSelectionSpinner
@@ -1850,7 +1850,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
                         android:layout_centerVertical="true"
-                        android:text="Seating Capacity :"
+                        android:text="@string/seating_capacity"
                         android:textColor="#2C3343"
                         android:textSize="15sp" />
 
@@ -1863,7 +1863,7 @@
                         android:layout_marginStart="150dp"
                         android:background="@drawable/spinner_background"
                         android:ems="10"
-                        android:hint="Seating Capacity :"
+                        android:hint="@string/seating_capacity"
                         android:inputType="number"
                         android:padding="5dp"
                         android:textAlignment="textStart"
@@ -1886,7 +1886,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
                         android:layout_centerVertical="true"
-                        android:text="Drive Type :"
+                        android:text="@string/drive_type"
                         android:textColor="#2C3343" />
 
                     <!--<Spinner
@@ -1950,7 +1950,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
                         android:layout_centerVertical="true"
-                        android:text="Transmission"
+                        android:text="@string/transmission"
                         android:textColor="#2C3343"
                         android:textSize="15sp" />
 
@@ -1963,7 +1963,7 @@
                         android:layout_marginStart="150dp"
                         android:background="@drawable/spinner_background"
                         android:ems="10"
-                        android:hint="Transmission"
+                        android:hint="@string/transmission"
                         android:padding="5dp"
                         android:textAlignment="textStart"
                         android:textColor="#2C3343" />
@@ -1985,7 +1985,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
                         android:layout_centerVertical="true"
-                        android:text="Use/Application"
+                        android:text="@string/use_application"
                         android:textColor="#2C3343"
                         android:textSize="15sp" />
 
@@ -1998,7 +1998,7 @@
                         android:layout_marginStart="150dp"
                         android:background="@drawable/spinner_background"
                         android:ems="10"
-                        android:hint="Use/Application"
+                        android:hint="@string/use_application"
                         android:padding="5dp"
                         android:textAlignment="textStart"
                         android:textColor="#2C3343" />
@@ -2019,7 +2019,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
                         android:layout_centerVertical="true"
-                        android:text="Implements :"
+                        android:text="@string/implementss"
                         android:textColor="#2C3343"
                         android:textSize="15sp" />
 
@@ -2032,7 +2032,7 @@
                         android:layout_marginStart="150dp"
                         android:background="@drawable/spinner_background"
                         android:ems="10"
-                        android:hint="Implements :"
+                        android:hint="@string/implementss"
                         android:padding="5dp"
                         android:textAlignment="textStart"
                         android:textColor="#2C3343" />
@@ -2054,7 +2054,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
                         android:layout_centerVertical="true"
-                        android:text="Tyre Condition :"
+                        android:text="@string/tyre_condition"
                         android:textColor="#2C3343"
                         android:textSize="15sp" />
 

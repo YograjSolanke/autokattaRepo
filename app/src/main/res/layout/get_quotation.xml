@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:id="@+id/get_quotation"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginEnd="@dimen/text_margin_top"
-                android:layout_marginStart="@dimen/text_margin_top"
-                android:layout_marginTop="@dimen/text_margin_top">
+    android:id="@+id/get_quotation"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginEnd="@dimen/text_margin_top"
+    android:layout_marginStart="@dimen/text_margin_top"
+    android:layout_marginTop="@dimen/text_margin_top">
 
     <!--    <android.support.v4.widget.NestedScrollView
             android:id="@+id/scroll_view"
@@ -21,9 +21,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="Quotation Form"
+            android:text="@string/quotation_form"
             android:textSize="18sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
     </RelativeLayout>
 
     <LinearLayout
@@ -46,8 +46,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.8"
-                android:text="Quotation For: "
-                android:textStyle="bold"/>
+                android:text="@string/quotation_for"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/txtTitle"
@@ -55,10 +55,10 @@
                 android:layout_height="@dimen/card_title_height"
                 android:layout_weight="1.2"
                 android:background="@android:color/transparent"
-                android:hint="title"
+                android:hint="@string/title"
                 android:paddingEnd="@dimen/card_margin"
                 android:paddingStart="@dimen/card_margin"
-                android:textColor="#708090"/>
+                android:textColor="#708090" />
         </LinearLayout>
 
         <LinearLayout
@@ -71,8 +71,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.8"
-                android:text="Reserved Price"
-                android:textStyle="bold"/>
+                android:text="@string/reserve_price"
+                android:textStyle="bold" />
 
             <EditText
                 android:id="@+id/edtReservedPrice"
@@ -80,11 +80,11 @@
                 android:layout_height="@dimen/card_title_height"
                 android:layout_weight="1.2"
                 android:background="@android:color/transparent"
-                android:hint="Optional"
+                android:hint="@string/optional"
                 android:inputType="numberDecimal"
                 android:paddingEnd="@dimen/card_margin"
                 android:paddingStart="@dimen/card_margin"
-                android:textColor="#708090"/>
+                android:textColor="#708090" />
         </LinearLayout>
 
         <LinearLayout
@@ -97,8 +97,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.8"
-                android:text="Deadline Date"
-                android:textStyle="bold"/>
+                android:text="@string/deadline_date"
+                android:textStyle="bold" />
 
             <EditText
                 android:id="@+id/edtDate"
@@ -110,8 +110,7 @@
                 android:inputType="datetime"
                 android:paddingEnd="@dimen/card_margin"
                 android:paddingStart="@dimen/card_margin"
-                android:textColor="#708090"/>
-
+                android:textColor="#708090" />
         </LinearLayout>
 
         <LinearLayout
@@ -123,18 +122,15 @@
                 style="@style/Widget.AppCompat.Spinner.Underlined"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/text_layout_height"
-                android:layout_marginTop="2dp">
-
-            </Spinner>
+                android:layout_marginTop="2dp" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="40dp"
-            android:layout_marginTop="5dp"
             android:layout_gravity="center_horizontal"
-            android:orientation="horizontal"
-            >
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal">
 
             <Button
                 android:id="@+id/btnSend"
@@ -144,15 +140,10 @@
                 android:layout_weight="1"
                 android:background="@drawable/buttonback"
                 android:padding="5dp"
-                android:text="Send Enquiry"
+                android:text="@string/send_enquiry"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
-                android:textStyle="bold"/>
-
-
+                android:textStyle="bold" />
         </LinearLayout>
-
     </LinearLayout>
-    <!--</android.support.v4.widget.NestedScrollView>-->
-
 </RelativeLayout>

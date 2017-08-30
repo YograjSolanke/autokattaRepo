@@ -8,5 +8,4 @@
 
     <include layout="@layout/content_my_ended_service_mela_preview"/>
 
-
 </android.support.design.widget.CoordinatorLayout>

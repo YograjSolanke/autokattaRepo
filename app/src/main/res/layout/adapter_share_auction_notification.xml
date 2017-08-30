@@ -91,7 +91,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
                     android:layout_marginStart="5dp"
-                    android:text="Auction Title :"
+                    android:text="@string/auction_title"
                     android:textColor="#808080"
                     android:textStyle="bold" />
 
@@ -115,7 +115,7 @@
                     android:layout_below="@+id/textView2"
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="5dip"
-                    android:text="No of vehicle :"
+                    android:text="@string/no_of_vehicle"
                     android:textColor="#808080"
                     android:textStyle="bold" />
 
@@ -138,7 +138,7 @@
                     android:layout_below="@+id/textView3"
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="5dip"
-                    android:text="End Date :"
+                    android:text="@string/end_date"
                     android:textColor="#808080"
                     android:textStyle="bold" />
 
@@ -160,7 +160,7 @@
                     android:layout_below="@+id/textView5"
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="5dip"
-                    android:text="End Time :"
+                    android:text="@string/end_time"
                     android:textColor="#808080"
                     android:textStyle="bold" />
 
@@ -183,7 +183,7 @@
                     android:layout_below="@+id/textView6"
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="5dip"
-                    android:text="Type of Auction :"
+                    android:text="@string/type_of_auction"
                     android:textColor="#808080"
                     android:textStyle="bold" />
 
@@ -210,7 +210,7 @@
                         android:layout_alignParentStart="true"
                         android:layout_marginStart="5dp"
                         android:layout_marginTop="5dip"
-                        android:text="Going Count:"
+                        android:text="@string/going_count"
                         android:textColor="#808080"
                         android:textStyle="bold" />
 
@@ -239,7 +239,7 @@
                         android:layout_alignParentStart="true"
                         android:layout_marginStart="5dp"
                         android:layout_marginTop="5dip"
-                        android:text="Ignore Count:"
+                        android:text="@string/ignore_count"
                         android:textColor="#808080"
                         android:textStyle="bold" />
 
@@ -273,7 +273,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:background="@drawable/buttonback"
-                        android:text="Ignore"
+                        android:text="@string/ignore"
                         android:textColor="@color/white"
                         android:textSize="14sp" />
 
@@ -284,7 +284,7 @@
                         android:layout_marginStart="1dp"
                         android:layout_weight="1"
                         android:background="@drawable/buttonback"
-                        android:text="Going"
+                        android:text="@string/going"
                         android:textColor="@color/white"
                         android:textSize="14sp" />
 
@@ -295,7 +295,7 @@
                         android:layout_marginStart="1dp"
                         android:layout_weight="1"
                         android:background="@drawable/buttonback"
-                        android:text="Share"
+                        android:text="@string/share"
                         android:textColor="@color/white"
                         android:textSize="14sp" />
 

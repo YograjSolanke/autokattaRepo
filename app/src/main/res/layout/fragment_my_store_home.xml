@@ -43,7 +43,7 @@
                     android:id="@+id/store_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Store Name"
+                    android:text="@string/store_name"
                     android:textSize="@dimen/article_subheading"
                     android:textStyle="bold" />
 
@@ -53,7 +53,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/store_name"
                     android:layout_marginTop="5dp"
-                    android:text="www.store.com"
+                    android:text="@string/website"
                     android:textColor="@color/stateBlue"
                     android:textSize="15sp" />
 
@@ -63,7 +63,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/web"
                     android:layout_marginTop="5dp"
-                    android:text="likecount" />
+                    android:text="@string/likes" />
 
                 <TextView
                     android:id="@+id/followCount"
@@ -71,7 +71,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/likeCount"
                     android:layout_marginTop="5dp"
-                    android:text="followcount" />
+                    android:text="@string/follower" />
 
             </RelativeLayout>
         </RelativeLayout>
@@ -98,7 +98,7 @@
                 android:layout_height="40dp"
                 android:layout_weight="1"
                 android:background="@color/background"
-                android:text="Call"
+                android:text="@string/call"
                 android:textColor="@color/white"
                 android:textStyle="bold" />
 
@@ -110,7 +110,7 @@
                 android:layout_marginStart="@dimen/card_margin"
                 android:layout_weight="1"
                 android:background="@color/background"
-                android:text="Enquiry"
+                android:text="@string/enquiry"
                 android:visibility="gone"
                 android:textColor="@color/white"
                 android:textStyle="bold" />
@@ -237,7 +237,7 @@
             android:layout_marginTop="20dp"
             android:gravity="center"
             android:textStyle="bold"
-            android:text="Kalewadi main road, thergaon pune" />
+            android:text="@string/location" />
 
         <TextView
             android:id="@+id/category"
@@ -246,8 +246,7 @@
             android:layout_marginTop="20dp"
             android:gravity="center"
             android:textStyle="bold"
-            android:text="Services Offered By This Store" />
-
+            android:text="@string/services_store" />
 
         <RatingBar
             android:id="@+id/store_rating"

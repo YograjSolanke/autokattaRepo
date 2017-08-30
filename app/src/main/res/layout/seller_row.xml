@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
             android:layout_marginTop="2dp"
-            android:text="Title"
+            android:text="@string/title"
             android:textColor="#808080"
             android:textStyle="bold" />
 
@@ -38,7 +38,7 @@
             android:layout_below="@+id/ttile"
             android:layout_marginStart="5dp"
             android:layout_marginTop="5dp"
-            android:text="CATEGORY"
+            android:text="@string/category"
             android:textColor="#808080"
             android:visibility="gone" />
 
@@ -60,7 +60,7 @@
             android:layout_below="@+id/category"
             android:layout_marginStart="5dp"
             android:layout_marginTop="5dp"
-            android:text="SUBCATEGORY"
+            android:text="@string/sub_category"
             android:textColor="#808080"
             android:visibility="gone" />
 
@@ -82,7 +82,7 @@
             android:layout_below="@+id/subcategory"
             android:layout_marginStart="5dp"
             android:layout_marginTop="2dip"
-            android:text="Brand"
+            android:text="@string/brand"
             android:textColor="#808080"
             android:textStyle="bold" />
 
@@ -97,7 +97,6 @@
             android:text="--"
             android:textColor="#808080" />
 
-
         <TextView
             android:id="@+id/mmodel"
             android:layout_width="110dp"
@@ -105,7 +104,7 @@
             android:layout_below="@+id/setbrand"
             android:layout_marginStart="5dp"
             android:layout_marginTop="2dip"
-            android:text="Model"
+            android:text="@string/model"
             android:textColor="#808080"
             android:textStyle="bold" />
 
@@ -128,7 +127,7 @@
             android:layout_below="@+id/setmodel"
             android:layout_marginStart="5dp"
             android:layout_marginTop="2dip"
-            android:text="Price"
+            android:text="@string/price"
             android:textColor="#808080"
             android:textStyle="bold" />
 
@@ -151,7 +150,7 @@
             android:layout_below="@+id/setprice"
             android:layout_marginStart="5dp"
             android:layout_marginTop="2dip"
-            android:text="Year"
+            android:text="@string/years"
             android:textColor="#808080"
             android:textStyle="bold" />
 
@@ -173,7 +172,7 @@
             android:layout_below="@+id/yyear"
             android:layout_marginStart="5dp"
             android:layout_marginTop="2dip"
-            android:text="RTO City:"
+            android:text="@string/rto_citys"
             android:textColor="#808080"
             android:textStyle="bold" />
 
@@ -195,7 +194,7 @@
             android:layout_below="@+id/yrto"
             android:layout_marginStart="5dp"
             android:layout_marginTop="2dip"
-            android:text="Kms:"
+            android:text="@string/kms_hrs"
             android:textColor="#808080"
             android:textStyle="bold" />
 
@@ -217,7 +216,7 @@
             android:layout_below="@+id/ykms"
             android:layout_marginStart="5dp"
             android:layout_marginTop="2dip"
-            android:text="Location:"
+            android:text="@string/location"
             android:textColor="#808080"
             android:textStyle="bold" />
 
@@ -239,7 +238,7 @@
             android:layout_below="@+id/ylocation"
             android:layout_marginStart="5dp"
             android:layout_marginTop="2dip"
-            android:text="Registration No:"
+            android:text="@string/registration_no"
             android:textColor="#808080"
             android:textStyle="bold" />
 
@@ -261,7 +260,7 @@
             android:layout_below="@+id/yregno"
             android:layout_marginStart="5dp"
             android:layout_marginTop="2dip"
-            android:text="Search Date :"
+            android:text="@string/date_of_search"
             android:textColor="#808080"
             android:textStyle="bold" />
 
@@ -290,7 +289,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="5dp"
-                android:text="Seller Leads"
+                android:text="@string/seller_leads"
                 android:textColor="#ffffff"
                 android:textSize="15sp" />
 
@@ -321,10 +320,7 @@
                 android:layout_toStartOf="@+id/seller_match_count"
                 android:contentDescription="@string/app_name"
                 android:visibility="gone" />
-
         </RelativeLayout>
-
-
     </RelativeLayout>
 
     <LinearLayout

@@ -6,14 +6,14 @@
     android:orientation="vertical">
 
     <TextView
+        android:id="@+id/textview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/textview"
-        android:text="Select Contacts As Admins For Store"
+        android:text="@string/select_contacts"
         android:textAlignment="center"
         android:textColor="@color/black"
-        android:textStyle="bold"
-        android:textSize="15sp" />
+        android:textSize="15sp"
+        android:textStyle="bold" />
 
     <TextView
         android:layout_width="match_parent"
@@ -28,59 +28,56 @@
     <!-- Editext for Search -->
 
     <RelativeLayout
-        android:layout_width="match_parent"
         android:id="@+id/mainlayout"
-        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/textview"
+        android:layout_marginTop="10dp"
         android:visibility="visible">
 
         <EditText
-        android:id="@+id/inputSearch"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/search_contact"
-        android:inputType="textVisiblePassword"
-        android:paddingEnd="5dp"
+            android:id="@+id/inputSearch"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/search_contact"
+            android:inputType="textVisiblePassword"
+            android:paddingEnd="5dp"
+            android:paddingStart="5dp"
+            android:textColor="#2C3343"
+            android:textColorHint="#848484" />
 
-        android:paddingStart="5dp"
-        android:textColor="#2C3343"
-        android:textColorHint="#848484" />
-
-    <!-- List View -->
-
-
-    <android.support.v7.widget.RecyclerView
-
-        android:id="@+id/l1"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/btnrelative"
-        android:layout_below="@+id/inputSearch" />
+        <!-- List View -->
 
 
-    <RelativeLayout
-        android:id="@+id/btnrelative"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:visibility="gone">
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/l1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/btnrelative"
+            android:layout_below="@+id/inputSearch" />
 
-        <Button
-            android:id="@+id/ok"
+        <RelativeLayout
+            android:id="@+id/btnrelative"
             android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:text="Ok"
-            android:visibility="gone" />
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:visibility="gone">
 
-        <Button
-            android:id="@+id/cancel"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:layout_toEndOf="@+id/ok"
-            android:text="Skip" />
-    </RelativeLayout>
+            <Button
+                android:id="@+id/ok"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:text="@string/ok"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_toEndOf="@+id/ok"
+                android:text="@string/skip" />
+        </RelativeLayout>
     </RelativeLayout>
 
 </RelativeLayout>

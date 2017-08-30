@@ -45,7 +45,6 @@
             android:layout_marginTop="@dimen/margin_small"
             android:orientation="vertical">
 
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -66,9 +65,8 @@
                 android:id="@+id/subprofession"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="Sub Profession"
+                android:hint="@string/sub_profession"
                 android:visibility="gone" />
-
 
         </LinearLayout>
 

@@ -34,7 +34,7 @@
                         android:layout_alignParentStart="true"
                         android:layout_centerVertical="true"
                         android:layout_toStartOf="@+id/finacialEdit1"
-                        android:text="Finance Required:"
+                        android:text="@string/finance_required"
                         android:textColor="#2C3343" />
 
                     <Spinner
@@ -66,7 +66,7 @@
                         android:layout_alignParentStart="true"
                         android:layout_centerVertical="true"
                         android:layout_toStartOf="@+id/allCategory1"
-                        android:text="Category:"
+                        android:text="@string/category"
                         android:textColor="#2C3343"
                         android:textSize="15sp" />
 
@@ -97,7 +97,7 @@
                         android:layout_alignParentStart="true"
                         android:layout_centerVertical="true"
                         android:layout_toStartOf="@+id/subCategory"
-                        android:text="Sub category:"
+                        android:text="@string/sub_category"
                         android:textColor="#2C3343"
                         android:textSize="15sp" />
 
@@ -127,7 +127,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
                         android:layout_centerVertical="true"
-                        android:text="Permit/Private "
+                        android:text="@string/permit_private"
                         android:textColor="@color/black" />
 
                     <RadioGroup
@@ -142,17 +142,15 @@
                             android:id="@+id/tourist_passing"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Tourist Passing" />
+                            android:text="@string/tourist_passing" />
 
                         <RadioButton
                             android:id="@+id/private_passing"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Private" />
+                            android:text="@string/privates" />
                     </RadioGroup>
-
                 </RelativeLayout>
-
             </TableRow>
 
             <TableRow
@@ -172,7 +170,7 @@
                         android:layout_alignParentStart="true"
                         android:layout_centerVertical="true"
                         android:layout_toStartOf="@+id/BrandEdit1"
-                        android:text="Brand:"
+                        android:text="@string/brand"
                         android:textColor="#2C3343"
                         android:textSize="15sp" />
 
@@ -204,7 +202,7 @@
                         android:layout_alignParentStart="true"
                         android:layout_centerVertical="true"
                         android:layout_toStartOf="@+id/ModelEdit1"
-                        android:text="Model:"
+                        android:text="@string/model"
                         android:textColor="#2C3343"
                         android:textSize="15sp" />
 
@@ -236,7 +234,7 @@
                         android:layout_alignParentStart="true"
                         android:layout_centerVertical="true"
                         android:layout_toStartOf="@+id/VersionEdit1"
-                        android:text="Version:"
+                        android:text="@string/version"
                         android:textColor="#2C3343"
                         android:textSize="15sp" />
 
@@ -267,7 +265,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
                         android:layout_alignParentTop="true"
-                        android:text="Location city:"
+                        android:text="@string/location_city"
                         android:textColor="#2C3343"
                         android:textSize="15sp" />
 
@@ -292,6 +290,7 @@
                         android:layout_alignTop="@+id/btncity"
                         android:background="#80bebebe"
                         android:ems="10"
+                        android:labelFor="@+id/cityEdit"
                         android:textColor="#2C3343" />
 
                     <AutoCompleteTextView
@@ -303,6 +302,7 @@
                         android:layout_marginTop="10dip"
                         android:background="#80bebebe"
                         android:ems="10"
+                        android:labelFor="@+id/cityEdit1"
                         android:textColor="#2C3343"
                         android:visibility="gone" />
 
@@ -315,6 +315,7 @@
                         android:layout_marginTop="10dip"
                         android:background="#80bebebe"
                         android:ems="10"
+                        android:labelFor="@+id/cityEdit2"
                         android:textColor="#2C3343"
                         android:visibility="gone" />
 
@@ -327,9 +328,9 @@
                         android:layout_marginTop="10dip"
                         android:background="#80bebebe"
                         android:ems="10"
+                        android:labelFor="@+id/cityEdit3"
                         android:textColor="#2C3343"
                         android:visibility="gone" />
-
 
                     <AutoCompleteTextView
                         android:id="@+id/cityEdit4"
@@ -341,6 +342,7 @@
                         android:layout_marginTop="10dip"
                         android:background="#80bebebe"
                         android:ems="10"
+                        android:labelFor="@+id/cityEdit4"
                         android:textColor="#2C3343"
                         android:visibility="gone" />
 
@@ -370,7 +372,7 @@
                         android:layout_height="20dp"
                         android:layout_alignParentStart="true"
                         android:layout_alignParentTop="true"
-                        android:text="RTO City:"
+                        android:text="@string/rto_citys"
                         android:textColor="#2C3343" />
 
                     <CheckBox
@@ -380,7 +382,7 @@
                         android:layout_alignParentStart="true"
                         android:layout_below="@+id/RTOText"
                         android:layout_toStartOf="@+id/rtoEdit"
-                        android:text="Unregitsered"
+                        android:text="@string/un_registered"
                         android:textColor="#2C3343"
                         android:textSize="12sp" />
 
@@ -405,7 +407,8 @@
                         android:layout_marginTop="20dp"
                         android:background="#80bebebe"
                         android:ems="10"
-                        android:textColor="#2C3343"></AutoCompleteTextView>
+                        android:labelFor="@+id/rtoEdit"
+                        android:textColor="#2C3343" />
 
                     <AutoCompleteTextView
                         android:id="@+id/rtoEdit1"
@@ -416,6 +419,7 @@
                         android:layout_marginTop="10dip"
                         android:background="#80bebebe"
                         android:ems="10"
+                        android:labelFor="@+id/rtoEdit1"
                         android:textColor="#2C3343"
                         android:visibility="gone" />
 
@@ -429,6 +433,7 @@
                         android:layout_marginTop="10dip"
                         android:background="#80bebebe"
                         android:ems="10"
+                        android:labelFor="@+id/rtoEdit2"
                         android:textColor="#2C3343"
                         android:visibility="gone" />
 
@@ -440,6 +445,7 @@
                         android:layout_below="@+id/rtoEdit2"
                         android:layout_marginTop="10dip"
                         android:background="#80bebebe"
+                        android:labelFor="@+id/rtoEdit3"
                         android:ems="10"
                         android:textColor="#2C3343"
                         android:visibility="gone" />
@@ -452,13 +458,12 @@
                         android:layout_alignParentEnd="true"
                         android:layout_below="@+id/rtoEdit3"
                         android:layout_marginTop="10dip"
+                        android:labelFor="@+id/rtoEdit4"
                         android:background="#80bebebe"
                         android:ems="10"
                         android:textColor="#2C3343"
                         android:visibility="gone" />
-
                 </RelativeLayout>
-
             </TableRow>
 
             <View
@@ -484,7 +489,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
                         android:layout_alignParentTop="true"
-                        android:text="Manufacture Year :"
+                        android:text="@string/manufacture_year"
                         android:textColor="#2C3343"
                         android:textSize="15sp" />
 
@@ -523,7 +528,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginEnd="1dip"
-                    android:orientation="vertical"></LinearLayout>
+                    android:orientation="vertical" />
 
             </TableRow>
 
@@ -545,7 +550,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
                         android:layout_alignParentTop="true"
-                        android:text="Registration Year :"
+                        android:text="@string/registration_year"
                         android:textColor="#2C3343" />
 
                     <TextView
@@ -582,7 +587,7 @@
                     android:id="@+id/REGYRLinear"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical"></LinearLayout>
+                    android:orientation="vertical" />
             </TableRow>
 
             <!-- Price -->
@@ -602,7 +607,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
                         android:layout_alignParentTop="true"
-                        android:text="Price :"
+                        android:text="@string/price"
                         android:textColor="#2C3343" />
 
                     <TextView
@@ -637,9 +642,8 @@
                     android:id="@+id/PriceLinear"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical">
+                    android:orientation="vertical" />
 
-                </LinearLayout>
             </TableRow>
 
             <!-- KMS -->
@@ -660,7 +664,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
                         android:layout_alignParentTop="true"
-                        android:text="Kms Running:"
+                        android:text="@string/kms_running"
                         android:textColor="#2C3343" />
 
                     <TextView
@@ -697,7 +701,7 @@
                     android:id="@+id/kmsLinear"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical"></LinearLayout>
+                    android:orientation="vertical" />
             </TableRow>
 
             <!-- HRS -->
@@ -718,7 +722,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
                         android:layout_alignParentTop="true"
-                        android:text="Hours Running:"
+                        android:text="@string/hours_running"
                         android:textColor="#2C3343" />
 
                     <TextView
@@ -755,7 +759,7 @@
                     android:id="@+id/hrslinear"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical"></LinearLayout>
+                    android:orientation="vertical" />
             </TableRow>
 
             <!--hp capacity-->
@@ -776,7 +780,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
                         android:layout_alignParentTop="true"
-                        android:text="Hp or Capacity"
+                        android:text="@string/hp_capacitys"
                         android:textColor="#2C3343" />
 
                     <TextView
@@ -813,7 +817,7 @@
                     android:id="@+id/hpcaplinear"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical"></LinearLayout>
+                    android:orientation="vertical" />
             </TableRow>
 
             <!-- owners -->
@@ -833,7 +837,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
                         android:layout_toStartOf="@+id/ownerEdit"
-                        android:text="Owners"
+                        android:text="@string/owner"
                         android:textColor="#2C3343"
                         android:textSize="15sp" />
 
@@ -867,13 +871,11 @@
                         android:layout_height="40dp"
                         android:background="@drawable/button_background"
                         android:ems="10"
-                        android:text="More Options"
+                        android:text="@string/more_options"
                         android:textAllCaps="false"
                         android:textColor="@android:color/white"
                         android:textSize="15sp" />
-
                 </RelativeLayout>
-
             </TableRow>
 
             <LinearLayout
@@ -900,7 +902,7 @@
                             android:layout_alignParentStart="true"
                             android:layout_centerVertical="true"
                             android:layout_toStartOf="@+id/invoiceEdit"
-                            android:text="Invoice Available :"
+                            android:text="@string/invoice_available"
                             android:textColor="#2C3343" />
 
                         <Spinner
@@ -933,7 +935,7 @@
                             android:layout_alignParentStart="true"
                             android:layout_centerVertical="true"
                             android:layout_toStartOf="@+id/bustypeEdit"
-                            android:text="Bus Type :"
+                            android:text="@string/bus_type"
                             android:textColor="#2C3343" />
 
                         <Spinner
@@ -966,7 +968,7 @@
                             android:layout_alignParentStart="true"
                             android:layout_centerVertical="true"
                             android:layout_toStartOf="@+id/aircondEdit"
-                            android:text="Air Condition :"
+                            android:text="@string/air_condition"
                             android:textColor="#2C3343" />
 
                         <Spinner
@@ -999,7 +1001,7 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentStart="true"
                             android:layout_centerVertical="true"
-                            android:text="Body type:"
+                            android:text="@string/body_type"
                             android:textColor="#2C3343"
                             android:textSize="15sp" />
 
@@ -1011,7 +1013,7 @@
                             android:layout_alignParentTop="true"
                             android:background="#80bebebe"
                             android:ems="10"
-                            android:hint="body type"
+                            android:hint="@string/body_type"
                             android:textColor="#2C3343" />
                     </RelativeLayout>
                 </TableRow>
@@ -1034,7 +1036,7 @@
                             android:layout_alignParentStart="true"
                             android:layout_centerVertical="true"
                             android:layout_toStartOf="@+id/boatEdit1"
-                            android:text="Boat Type :"
+                            android:text="@string/boat_type"
                             android:textColor="#2C3343"
                             android:textSize="15sp" />
 
@@ -1046,7 +1048,7 @@
                             android:layout_alignParentTop="true"
                             android:background="#80bebebe"
                             android:ems="10"
-                            android:hint="boat type"
+                            android:hint="@string/boat_type"
                             android:textColor="#2C3343" />
                     </RelativeLayout>
                 </TableRow>
@@ -1069,7 +1071,7 @@
                             android:layout_alignParentStart="true"
                             android:layout_centerVertical="true"
                             android:layout_toStartOf="@+id/rvEdit1"
-                            android:text="RV Type :"
+                            android:text="@string/rv_type"
                             android:textColor="#2C3343"
                             android:textSize="15sp" />
 
@@ -1081,7 +1083,7 @@
                             android:layout_alignParentTop="true"
                             android:background="#80bebebe"
                             android:ems="10"
-                            android:hint="rv type"
+                            android:hint="@string/rv_type"
                             android:textColor="#2C3343" />
                     </RelativeLayout>
                 </TableRow>
@@ -1103,7 +1105,7 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentStart="true"
                             android:layout_centerVertical="true"
-                            android:text="Color :"
+                            android:text="@string/color"
                             android:textColor="#2C3343" />
 
                         <autokatta.com.Registration.Multispinner
@@ -1114,8 +1116,6 @@
                             android:layout_alignParentTop="true"
                             android:background="#80bebebe"
                             android:ems="10" />
-
-
                     </RelativeLayout>
                 </TableRow>
 
@@ -1137,7 +1137,7 @@
                             android:layout_alignParentStart="true"
                             android:layout_centerVertical="true"
                             android:layout_toStartOf="@+id/rcEdit1"
-                            android:text="RC Available :"
+                            android:text="@string/rc_available"
                             android:textColor="#2C3343" />
 
                         <Spinner
@@ -1170,7 +1170,7 @@
                             android:layout_alignParentStart="true"
                             android:layout_centerVertical="true"
                             android:layout_toStartOf="@+id/insEdit1"
-                            android:text="Insurance Valid:"
+                            android:text="@string/insurance_validity"
                             android:textColor="#2C3343" />
 
                         <Spinner
@@ -1209,7 +1209,7 @@
                             android:layout_alignParentStart="true"
                             android:layout_centerVertical="true"
                             android:layout_toStartOf="@+id/hypoEdit1"
-                            android:text="Hypothecation:"
+                            android:text="@string/hypothetication"
                             android:textColor="#2C3343" />
 
                         <Spinner
@@ -1241,7 +1241,7 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentStart="true"
                             android:layout_centerVertical="true"
-                            android:text="Tax Validity :"
+                            android:text="@string/tax_validity"
                             android:textColor="#2C3343" />
 
                         <Spinner
@@ -1274,7 +1274,7 @@
                             android:layout_alignParentStart="true"
                             android:layout_centerVertical="true"
                             android:layout_toStartOf="@+id/fitnessEdit1"
-                            android:text="Fitness Validity :"
+                            android:text="@string/fitness_validity"
                             android:textColor="#2C3343" />
 
                         <Spinner
@@ -1307,7 +1307,7 @@
                             android:layout_alignParentStart="true"
                             android:layout_centerVertical="true"
                             android:layout_toStartOf="@+id/permitEdit1"
-                            android:text="Permit Validity :"
+                            android:text="@string/permit_validity"
                             android:textColor="#2C3343" />
 
                         <Spinner
@@ -1340,7 +1340,7 @@
                             android:layout_alignParentStart="true"
                             android:layout_centerVertical="true"
                             android:layout_toStartOf="@+id/fualEdit1"
-                            android:text="Fuel Type :"
+                            android:text="@string/fuel_type"
                             android:textColor="#2C3343" />
 
                         <autokatta.com.Registration.MultiSelectionSpinner
@@ -1351,7 +1351,6 @@
                             android:layout_alignParentTop="true"
                             android:background="#80bebebe"
                             android:ems="10" />
-
                     </RelativeLayout>
                 </TableRow>
 
@@ -1373,7 +1372,7 @@
                             android:layout_alignParentStart="true"
                             android:layout_centerVertical="true"
                             android:layout_toStartOf="@+id/seatsEdit1"
-                            android:text="Seating Capacity :"
+                            android:text="@string/seating_capacity"
                             android:textColor="#2C3343"
                             android:textSize="15sp" />
 
@@ -1409,7 +1408,7 @@
                             android:layout_alignParentStart="true"
                             android:layout_centerVertical="true"
                             android:layout_toStartOf="@+id/driveEdit1"
-                            android:text="Drive Type :"
+                            android:text="@string/drive_type"
                             android:textColor="#2C3343" />
 
                         <Spinner
@@ -1442,7 +1441,7 @@
                             android:layout_alignParentStart="true"
                             android:layout_centerVertical="true"
                             android:layout_toStartOf="@+id/transEdit1"
-                            android:text="Transmission"
+                            android:text="@string/transmission"
                             android:textColor="#2C3343"
                             android:textSize="15sp" />
 
@@ -1454,7 +1453,7 @@
                             android:layout_alignParentTop="true"
                             android:background="#80bebebe"
                             android:ems="10"
-                            android:hint="transmission"
+                            android:hint="@string/transmission"
                             android:textColor="#2C3343" />
                     </RelativeLayout>
                 </TableRow>
@@ -1477,7 +1476,7 @@
                             android:layout_alignParentStart="true"
                             android:layout_centerVertical="true"
                             android:layout_toStartOf="@+id/useEdit1"
-                            android:text="Use/Application"
+                            android:text="@string/use_application"
                             android:textColor="#2C3343"
                             android:textSize="15sp" />
 
@@ -1489,7 +1488,7 @@
                             android:layout_alignParentTop="true"
                             android:background="#80bebebe"
                             android:ems="10"
-                            android:hint="application"
+                            android:hint="@string/application"
                             android:textColor="#2C3343" />
                     </RelativeLayout>
                 </TableRow>
@@ -1512,7 +1511,7 @@
                             android:layout_alignParentStart="true"
                             android:layout_centerVertical="true"
                             android:layout_toStartOf="@+id/implEdit"
-                            android:text="Implements :"
+                            android:text="@string/implementss"
                             android:textColor="#2C3343"
                             android:textSize="15sp" />
 
@@ -1524,7 +1523,7 @@
                             android:layout_alignParentTop="true"
                             android:background="#80bebebe"
                             android:ems="10"
-                            android:hint="implements"
+                            android:hint="@string/implementss"
                             android:textColor="#2C3343" />
                     </RelativeLayout>
                 </TableRow>
@@ -1547,7 +1546,7 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentStart="true"
                             android:layout_centerVertical="true"
-                            android:text="Tyre Condition :"
+                            android:text="@string/tyre_condition"
                             android:textColor="#2C3343"
                             android:textSize="15sp" />
 
@@ -1587,7 +1586,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginEnd="1dip"
-                        android:orientation="vertical"></LinearLayout>
+                        android:orientation="vertical" />
 
                 </TableRow>
 

@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -58,7 +57,7 @@
                         android:id="@+id/title"
                         android:layout_width="80dp"
                         android:layout_height="wrap_content"
-                        android:text="Title :"
+                        android:text="@string/title"
                         android:textColor="#808080"
                         android:textStyle="bold" />
 
@@ -83,7 +82,7 @@
                         android:id="@+id/model"
                         android:layout_width="80dp"
                         android:layout_height="wrap_content"
-                        android:text="Model :"
+                        android:text="@string/model"
                         android:textColor="#808080"
                         android:textStyle="bold" />
 
@@ -94,8 +93,6 @@
                         android:layout_toEndOf="@+id/model"
                         android:text="-"
                         android:textColor="#808080" />
-
-
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -109,7 +106,7 @@
                         android:id="@+id/brand"
                         android:layout_width="80dp"
                         android:layout_height="wrap_content"
-                        android:text="Brand :"
+                        android:text="@string/brand"
                         android:textColor="#808080"
                         android:textStyle="bold" />
 
@@ -134,7 +131,7 @@
                         android:id="@+id/year"
                         android:layout_width="80dp"
                         android:layout_height="wrap_content"
-                        android:text="Year :"
+                        android:text="@string/years"
                         android:textColor="#808080"
                         android:textStyle="bold" />
 
@@ -150,7 +147,7 @@
                         android:id="@+id/minimumbidpricetxt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Bid Increament"
+                        android:text="@string/bid_increament"
                         android:visibility="gone" />
 
                 </RelativeLayout>
@@ -166,7 +163,7 @@
                         android:id="@+id/rc_invoice"
                         android:layout_width="80dp"
                         android:layout_height="wrap_content"
-                        android:text="RC/Invoice :"
+                        android:text="@string/rc_invoice"
                         android:textColor="#808080"
                         android:textStyle="bold" />
 
@@ -191,7 +188,7 @@
                         android:id="@+id/km_hrs"
                         android:layout_width="80dp"
                         android:layout_height="wrap_content"
-                        android:text="Km/Hrs :"
+                        android:text="@string/kms_hrss"
                         android:textColor="#808080"
                         android:textStyle="bold" />
 
@@ -223,7 +220,7 @@
                         android:id="@+id/location"
                         android:layout_width="80dp"
                         android:layout_height="wrap_content"
-                        android:text="Location :"
+                        android:text="@string/location"
                         android:textColor="#808080"
                         android:textStyle="bold" />
 
@@ -249,7 +246,7 @@
                         android:id="@+id/rto_city"
                         android:layout_width="80dp"
                         android:layout_height="wrap_content"
-                        android:text="RTO City :"
+                        android:text="@string/rto_citys"
                         android:textColor="#808080"
                         android:textStyle="bold" />
 
@@ -269,7 +266,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="5dp"
-                    android:text="start price"
+                    android:text="@string/start_price"
                     android:textColor="#808080"
                     android:visibility="gone" />
 
@@ -289,7 +286,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="10dp"
-                    android:text="Your current bid price"
+                    android:text="@string/your_current_bid_price"
                     android:textColor="#808080"
                     android:textStyle="bold"
                     android:visibility="gone" />
@@ -307,7 +304,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginStart="10dp"
-                        android:text="--More details--"
+                        android:text="@string/more_details"
                         android:textColor="#808080"
                         android:textStyle="bold" />
 
@@ -316,7 +313,7 @@
                         android:layout_width="100dp"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:hint="price"
+                        android:hint="@string/price"
                         android:inputType="number"
                         android:textColor="#808080" />
 
@@ -328,7 +325,7 @@
                         android:layout_marginEnd="5dp"
                         android:layout_marginTop="5dp"
                         android:background="@drawable/button_background"
-                        android:text="Bid"
+                        android:text="@string/bid"
                         android:textAllCaps="false"
                         android:textColor="@color/white" />
                 </RelativeLayout>
