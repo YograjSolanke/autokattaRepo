@@ -1,8 +1,10 @@
 package autokatta.com.adapter;
 
 import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -15,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import autokatta.com.R;
+import autokatta.com.view.OtherProfile;
 
 /**
  * Created by ak-004 on 28/8/17.
@@ -66,6 +69,22 @@ public class AdminCallContactAdapter extends RecyclerView.Adapter<AdminCallConta
             @Override
             public void onClick(View view) {
                 call(arr[0]);
+
+            }
+        });
+
+        holder.mCardView.setOnClickListener(new View.OnClickListener() {
+
+            Bundle bundle = new Bundle();
+
+            @Override
+            public void onClick(View view) {
+                bundle.putString("contactOtherProfile", arr[0]);
+
+                ActivityOptions options = ActivityOptions.makeCustomAnimation(mActivity, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
+                Intent i = new Intent(mActivity, OtherProfile.class);
+                i.putExtras(bundle);
+                mActivity.startActivity(i, options.toBundle());
 
             }
         });

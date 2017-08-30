@@ -12,9 +12,12 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.MimeTypeMap;
@@ -49,6 +52,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import autokatta.com.R;
+import autokatta.com.adapter.AdminCallContactAdapter;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.initial_fragment.CreateGroupFragment;
 import autokatta.com.interfaces.RequestNotifier;
@@ -63,6 +67,7 @@ import autokatta.com.response.OtherBrandTagAddedResponse;
 import autokatta.com.response.OtherTagAddedResponse;
 import autokatta.com.response.ProductResponse;
 import autokatta.com.response.ProfileGroupResponse;
+import autokatta.com.response.StoreOldAdminResponse;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
@@ -110,7 +115,8 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
     RatingBar pricebar, qualitybar, stockbar, overallbar, productrating, storerating;
     String storecontact, storeowner;
     int store_id;
-
+    AdminCallContactAdapter adapter;
+    ArrayList<String> storeAdmins = new ArrayList<>();
     //product updating variables
     String uptype, upname, upprice, updetails, uptags, upimgs, upcat;
     LinearLayout linearbtns, lineartxts;
@@ -245,6 +251,7 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                 getCategory();
                 getProductData(product_id, contact);
                 getNoOfEnquiryCount(product_id, contact);
+
 
 
                 producttags.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
@@ -419,6 +426,15 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
         mApiCall.Categories("Product");
     }
 
+    /*
+ Get Admin data...
+  */
+    private void getStoreAdmins(int store_id) {
+        ApiCall mApiCall = new ApiCall(this, this);
+        mApiCall.StoreAdmin(store_id);
+    }
+
+
     @Override
     public void notifySuccess(Response<?> response) {
         if (response != null) {
@@ -460,6 +476,22 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                     }
                 } else if (response.body() instanceof OtherBrandTagAddedResponse) {
                     CustomToast.customToast(ProductViewActivity.this, "Brand Tag added successfully");
+                } else if (response.body() instanceof StoreOldAdminResponse) {
+                    StoreOldAdminResponse adminResponse = (StoreOldAdminResponse) response.body();
+                    if (!adminResponse.getSuccess().isEmpty()) {
+                        //8007855589-dealer-RUTU
+                        storeAdmins.add(contact + "-" + "Owner" + "-" + "Owner");
+                        for (StoreOldAdminResponse.Success success : adminResponse.getSuccess()) {
+
+                            storeAdmins.add(success.getAdmin());
+
+                        }
+
+                        System.out.println("alreadyadmin=" + storeAdmins.size());
+
+                    }
+
+
                 } else if (response.body() instanceof OtherTagAddedResponse) {
                     CustomToast.customToast(ProductViewActivity.this, "Other Tag added successfully");
                     tagid = tagid + "," + ((OtherTagAddedResponse) response.body()).getSuccess().getTagID().toString();
@@ -499,6 +531,8 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                             prate2 = success.getPrate2();
                             prate3 = success.getPrate3();
                             store_id = success.getStoreId();
+
+                            getStoreAdmins(store_id);
                             storecontact = success.getStoreContact();
                             //  storecontact = "3030303030";
                             storeowner = success.getStoreOwner();
@@ -937,21 +971,26 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                 break;
             case R.id.call:
 
-                // @Here are the list of items to be shown in the list
-                if (storecontact.contains(",")) {
-                    final String[] items = storecontact.split(",");
-                    AlertDialog.Builder builder = new AlertDialog.Builder(ProductViewActivity.this);
-                    builder.setTitle("Make your selection");
-                    builder.setItems(items, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int item) {
-                            call(items[item]);
-                            dialog.dismiss();
 
-                        }
-                    }).show();
-                } else {
+                if (storeAdmins.size() == 0)
                     call(storecontact);
-                }
+                else
+                    getCallContactList();
+//                // @Here are the list of items to be shown in the list
+//                if (storecontact.contains(",")) {
+//                    final String[] items = storecontact.split(",");
+//                    AlertDialog.Builder builder = new AlertDialog.Builder(ProductViewActivity.this);
+//                    builder.setTitle("Make your selection");
+//                    builder.setItems(items, new DialogInterface.OnClickListener() {
+//                        public void onClick(DialogInterface dialog, int item) {
+//                            call(items[item]);
+//                            dialog.dismiss();
+//
+//                        }
+//                    }).show();
+//                } else {
+//                    call(storecontact);
+//                }
                 break;
 
             case R.id.btnpost:
@@ -1373,5 +1412,28 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
         httpClient.addInterceptor(logging).readTimeout(90, TimeUnit.SECONDS);
         return httpClient;
+    }
+
+
+    private void getCallContactList() {
+
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(ProductViewActivity.this);
+// ...Irrelevant code for customizing the buttons and title
+        LayoutInflater inflater = getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.admin_contact_call_layout, null);
+        dialogBuilder.setView(dialogView);
+
+        RecyclerView recyclerView = (RecyclerView) dialogView.findViewById(R.id.listview);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(ProductViewActivity.this);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setHasFixedSize(true);
+
+
+        AlertDialog alertDialog = dialogBuilder.create();
+
+        adapter = new AdminCallContactAdapter(this, storeAdmins);
+        recyclerView.setAdapter(adapter);
+        alertDialog.show();
+
     }
 }

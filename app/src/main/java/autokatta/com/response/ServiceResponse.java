@@ -13,27 +13,27 @@ public class ServiceResponse {
 
 
     @SerializedName("Success")
-        @Expose
+    @Expose
     private List<Success> success = null;
     @SerializedName("Error")
-        @Expose
+    @Expose
     private Object error;
 
     public List<Success> getSuccess() {
         return success;
-        }
+    }
 
     public void setSuccess(List<Success> success) {
         this.success = success;
-        }
+    }
 
     public Object getError() {
         return error;
-        }
+    }
 
     public void setError(Object error) {
         this.error = error;
-        }
+    }
 
 
     public class Success {
@@ -55,7 +55,7 @@ public class ServiceResponse {
         private String groupId;
         @SerializedName("id")
         @Expose
-        private int id;
+        private Integer id;
         @SerializedName("images")
         @Expose
         private String images;
@@ -64,13 +64,13 @@ public class ServiceResponse {
         private String name;
         @SerializedName("price")
         @Expose
-        private int price;
+        private Integer price;
         @SerializedName("status")
         @Expose
         private String status;
         @SerializedName("store_id")
         @Expose
-        private int storeId;
+        private Integer storeId;
         @SerializedName("tags")
         @Expose
         private String tags;
@@ -91,28 +91,28 @@ public class ServiceResponse {
         private String storeOwner;
         @SerializedName("storeRating")
         @Expose
-        private int storeRating;
+        private Integer storeRating;
         @SerializedName("servicelikecount")
         @Expose
-        private int servicelikecount;
+        private Integer servicelikecount;
         @SerializedName("servicelikestatus")
         @Expose
         private String servicelikestatus;
         @SerializedName("srate")
         @Expose
-        private int srate;
+        private Integer srate;
         @SerializedName("srate1")
         @Expose
-        private int srate1;
+        private Integer srate1;
         @SerializedName("srate2")
         @Expose
-        private int srate2;
+        private Integer srate2;
         @SerializedName("srate3")
         @Expose
-        private int srate3;
+        private Integer srate3;
         @SerializedName("servicerating")
         @Expose
-        private int servicerating;
+        private Integer servicerating;
         @SerializedName("servicetags")
         @Expose
         private String servicetags;
@@ -157,11 +157,11 @@ public class ServiceResponse {
             this.groupId = groupId;
         }
 
-        public int getId() {
+        public Integer getId() {
             return id;
         }
 
-        public void setId(int id) {
+        public void setId(Integer id) {
             this.id = id;
         }
 
@@ -181,11 +181,11 @@ public class ServiceResponse {
             this.name = name;
         }
 
-        public int getPrice() {
+        public Integer getPrice() {
             return price;
         }
 
-        public void setPrice(int price) {
+        public void setPrice(Integer price) {
             this.price = price;
         }
 
@@ -197,11 +197,11 @@ public class ServiceResponse {
             this.status = status;
         }
 
-        public int getStoreId() {
+        public Integer getStoreId() {
             return storeId;
         }
 
-        public void setStoreId(int storeId) {
+        public void setStoreId(Integer storeId) {
             this.storeId = storeId;
         }
 
@@ -253,19 +253,19 @@ public class ServiceResponse {
             this.storeOwner = storeOwner;
         }
 
-        public int getStoreRating() {
+        public Integer getStoreRating() {
             return storeRating;
         }
 
-        public void setStoreRating(int storeRating) {
+        public void setStoreRating(Integer storeRating) {
             this.storeRating = storeRating;
         }
 
-        public int getServicelikecount() {
+        public Integer getServicelikecount() {
             return servicelikecount;
         }
 
-        public void setServicelikecount(int servicelikecount) {
+        public void setServicelikecount(Integer servicelikecount) {
             this.servicelikecount = servicelikecount;
         }
 
@@ -277,43 +277,43 @@ public class ServiceResponse {
             this.servicelikestatus = servicelikestatus;
         }
 
-        public int getSrate() {
+        public Integer getSrate() {
             return srate;
         }
 
-        public void setSrate(int srate) {
+        public void setSrate(Integer srate) {
             this.srate = srate;
         }
 
-        public int getSrate1() {
+        public Integer getSrate1() {
             return srate1;
         }
 
-        public void setSrate1(int srate1) {
+        public void setSrate1(Integer srate1) {
             this.srate1 = srate1;
         }
 
-        public int getSrate2() {
+        public Integer getSrate2() {
             return srate2;
         }
 
-        public void setSrate2(int srate2) {
+        public void setSrate2(Integer srate2) {
             this.srate2 = srate2;
         }
 
-        public int getSrate3() {
+        public Integer getSrate3() {
             return srate3;
         }
 
-        public void setSrate3(int srate3) {
+        public void setSrate3(Integer srate3) {
             this.srate3 = srate3;
         }
 
-        public int getServicerating() {
+        public Integer getServicerating() {
             return servicerating;
         }
 
-        public void setServicerating(int servicerating) {
+        public void setServicerating(Integer servicerating) {
             this.servicerating = servicerating;
         }
 
@@ -325,5 +325,5 @@ public class ServiceResponse {
             this.servicetags = servicetags;
         }
 
-        }
+    }
     }
