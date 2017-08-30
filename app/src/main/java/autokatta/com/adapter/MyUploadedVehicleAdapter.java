@@ -107,9 +107,12 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
     private boolean[] itemsCheckedGroups;
     private boolean[] itemsCheckedStores;
 
-    public MyUploadedVehicleAdapter(Activity activity1, List<MyUploadedVehiclesResponse.Success> successList) {
+    public MyUploadedVehicleAdapter(Activity activity1, List<MyUploadedVehiclesResponse.Success> successList,
+                                    String prevGroupIds, String prevStoreIds) {
         this.activity = activity1;
         this.mMainList = successList;
+        this.prevGroupIds = prevGroupIds;
+        this.prevStoreIds = prevStoreIds;
         mConnectionDetector = new ConnectionDetector(activity);
         apiCall = new ApiCall(this.activity, this);
     }
@@ -141,9 +144,9 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
             holder.editkms.setText(mMainList.get(position).getHrsRunning());
         else
             holder.editkms.setText(mMainList.get(position).getKmsRunning());
-
+/*
         prevGroupIds = mMainList.get(position).getGroupIDs().replaceAll(" ", "");
-        prevStoreIds = mMainList.get(position).getStoreIDs().replaceAll(" ", "");
+        prevStoreIds = mMainList.get(position).getStoreIDs().replaceAll(" ", "");*/
         //To set Date
         try {
             //To set Date
@@ -628,7 +631,7 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
                             }
                         }
                         prevGroupIds = stringgroupids;
-                        setPrivacy(stringgroupids, "");
+                        setPrivacy(stringgroupids, prevStoreIds);
 
                         if (mSelectedItems.size() == 0) {
                             CustomToast.customToast(activity, "No Group Was Selected");
@@ -785,7 +788,7 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
                             }
                         }
                         prevStoreIds = stringstoreids;
-                        setPrivacy("", stringstoreids);
+                        setPrivacy(prevGroupIds, stringstoreids);
                         if (mSelectedItems.size() == 0) {
                             CustomToast.customToast(activity, "No store Was Selected");
                             stringstoreids = "";

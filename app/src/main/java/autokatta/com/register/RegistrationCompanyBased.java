@@ -164,7 +164,7 @@ public class RegistrationCompanyBased extends AppCompatActivity implements Reque
                     public boolean onKey(View view, int i, KeyEvent keyEvent) {
                         if ((keyEvent.getAction() == KeyEvent.ACTION_DOWN) &&
                                 (i == KeyEvent.KEYCODE_ENTER)) {
-                            autoSkills.setText(autoSkills.getText().toString() + ",");
+                            autoSkills.setText("" + autoSkills.getText().toString() + ",");
                             autoSkills.setSelection(autoSkills.getText().toString().length());
                             checkSkills();
                             return true;
@@ -187,7 +187,7 @@ public class RegistrationCompanyBased extends AppCompatActivity implements Reque
                     public boolean onKey(View view, int i, KeyEvent keyEvent) {
                         if ((keyEvent.getAction() == KeyEvent.ACTION_DOWN) &&
                                 (i == KeyEvent.KEYCODE_ENTER)) {
-                            autoDeals.setText(autoDeals.getText().toString() + ",");
+                            autoDeals.setText("" + autoDeals.getText().toString() + ",");
                             autoDeals.setSelection(autoDeals.getText().toString().length());
                             checkDeals();
                             return true;
@@ -303,7 +303,7 @@ public class RegistrationCompanyBased extends AppCompatActivity implements Reque
     Add Brand
      */
     private void AddBrand(String keyword, String title, int categoryId, int subCatID) {
-        mApiCall.addVersionModelBrand(keyword, title, categoryId, subCatID,0,0);
+        mApiCall.addVersionModelBrand(keyword, title, categoryId, subCatID, 0, 0);
     }
 
     @Override
@@ -580,7 +580,7 @@ public class RegistrationCompanyBased extends AppCompatActivity implements Reque
         } else if (error instanceof UnknownHostException) {
             CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
         } else {
-            Log.i("Check Class-", "Company Based Registration");
+            Log.i("Check Class-", "Registration Company Based ");
             error.printStackTrace();
         }
     }

@@ -38,7 +38,7 @@ import autokatta.com.response.GetStatesResponse;
 import autokatta.com.response.getDealsResponse;
 import retrofit2.Response;
 
-public class CompanyBasedRegistrationActivity extends AppCompatActivity implements RequestNotifier, View.OnClickListener ,Multispinner.MultiSpinnerListener,MultiSelectionSpinner.MultiSpinnerListener{
+public class CompanyBasedRegistrationActivity extends AppCompatActivity implements RequestNotifier, View.OnClickListener, Multispinner.MultiSpinnerListener, MultiSelectionSpinner.MultiSpinnerListener {
 
     AutoCompleteTextView autoCompany, autoDesignation;
     MultiAutoCompleteTextView autoSkills, autoDeals;
@@ -51,24 +51,23 @@ public class CompanyBasedRegistrationActivity extends AppCompatActivity implemen
     boolean dealflag = false;
     String Skills = "", Deals = "";
     String result = "";
-    int page = 2,RegiId;
+    int page = 2, RegiId;
     private String[] MODULE = null;
 
 
-    final ArrayList<String> mSkillList = new ArrayList<>();
+    final List<String> mSkillList = new ArrayList<>();
     final HashMap<String, String> mSkillList1 = new HashMap<>();
 
-    final ArrayList<String> mDealList = new ArrayList<>();
+    final List<String> mDealList = new ArrayList<>();
     final HashMap<String, String> mDealList1 = new HashMap<>();
 
-    final ArrayList<String> mCompanyList = new ArrayList<>();
+    final List<String> mCompanyList = new ArrayList<>();
     final HashMap<String, Integer> mCompanyList1 = new HashMap<>();
 
-    final HashMap<String,String> mdistList1 = new HashMap();
+    final HashMap<String, String> mdistList1 = new HashMap<>();
     final List<String> distNameList = new ArrayList<String>();
 
-
-    final HashMap<String, Integer> mStatelist1 = new HashMap();
+    final HashMap<String, Integer> mStatelist1 = new HashMap<>();
     final List<String> stateLst = new ArrayList<String>();
 
     List<String> parsedDataCompany = new ArrayList<>();
@@ -78,7 +77,7 @@ public class CompanyBasedRegistrationActivity extends AppCompatActivity implemen
     List<String> parsedDataStates = new ArrayList<>();
 
 
-    final ArrayList<String> mDesignationList = new ArrayList<>();
+    final List<String> mDesignationList = new ArrayList<>();
     final HashMap<String, String> mDesignationList1 = new HashMap<>();
 
 
@@ -139,7 +138,7 @@ public class CompanyBasedRegistrationActivity extends AppCompatActivity implemen
                 if ((keyEvent.getAction() == KeyEvent.ACTION_DOWN) &&
                         (i == KeyEvent.KEYCODE_ENTER)) {
 
-                    autoSkills.setText(autoSkills.getText().toString() + ",");
+                    autoSkills.setText("" + autoSkills.getText().toString() + ",");
                     autoSkills.setSelection(autoSkills.getText().toString().length());
                     checkSkills();
                     return true;
@@ -168,7 +167,7 @@ public class CompanyBasedRegistrationActivity extends AppCompatActivity implemen
                 if ((keyEvent.getAction() == KeyEvent.ACTION_DOWN) &&
                         (i == KeyEvent.KEYCODE_ENTER)) {
 
-                    autoDeals.setText(autoDeals.getText().toString() + ",");
+                    autoDeals.setText("" + autoDeals.getText().toString() + ",");
                     autoDeals.setSelection(autoDeals.getText().toString().length());
                     checkDeals();
                     return true;
@@ -330,8 +329,7 @@ public class CompanyBasedRegistrationActivity extends AppCompatActivity implemen
                         autoDeals.setAdapter(dataAdapter);
                     }
 
-                }
-                else if (response.body() instanceof GetDistrictsResponse) {
+                } else if (response.body() instanceof GetDistrictsResponse) {
                     GetDistrictsResponse mGetDistrict = (GetDistrictsResponse) response.body();
                     if (!mGetDistrict.getSuccess().isEmpty()) {
                         for (GetDistrictsResponse.Success DistrictResponse : mGetDistrict.getSuccess()) {
@@ -344,8 +342,7 @@ public class CompanyBasedRegistrationActivity extends AppCompatActivity implemen
                         spinDistrict.setItems(distNameList, "Select District", this);
                     }
 
-                }
-                else if (response.body() instanceof GetStatesResponse) {
+                } else if (response.body() instanceof GetStatesResponse) {
                     GetStatesResponse mGetState = (GetStatesResponse) response.body();
                     if (!mGetState.getSuccess().isEmpty()) {
                         for (GetStatesResponse.Success StateResponse : mGetState.getSuccess()) {
@@ -426,12 +423,12 @@ public class CompanyBasedRegistrationActivity extends AppCompatActivity implemen
                                     public void onClick(DialogInterface dialog,
                                                         int id) {
 
-                                    Bundle b = new Bundle();
+                                        Bundle b = new Bundle();
                                         b.putString("className", "interestbased");
-                                    CreateStoreFragment fr = new CreateStoreFragment();
-                                    fr.setArguments(b);
+                                        CreateStoreFragment fr = new CreateStoreFragment();
+                                        fr.setArguments(b);
                                         finish();
-                                    dialog.cancel();
+                                        dialog.cancel();
 
                                     }
                                 })
@@ -458,7 +455,7 @@ public class CompanyBasedRegistrationActivity extends AppCompatActivity implemen
             } else {
                 Toast.makeText(getApplicationContext(), "Please Check Whether all Fields Are filled ", Toast.LENGTH_LONG).show();
             }
-        }else {
+        } else {
             Toast.makeText(getApplicationContext(), "Somthing went wrong no response", Toast.LENGTH_LONG).show();
 
         }
@@ -506,8 +503,8 @@ public class CompanyBasedRegistrationActivity extends AppCompatActivity implemen
                 /******************************** Skills code *****************************************************/
 
                 String strSkill = autoSkills.getText().toString();
-                ArrayList<String> skillList = new ArrayList<>();
-                ArrayList<String> otherSkills = new ArrayList<>();
+                List<String> skillList = new ArrayList<>();
+                List<String> otherSkills = new ArrayList<>();
 
                 if (strSkill.endsWith(","))
                     strSkill = strSkill.substring(0, strSkill.length() - 1);
@@ -583,8 +580,8 @@ public class CompanyBasedRegistrationActivity extends AppCompatActivity implemen
 
 
                 String strDeal = autoDeals.getText().toString();
-                ArrayList<String> dealList = new ArrayList<>();
-                ArrayList<String> otherDeals = new ArrayList<>();
+                List<String> dealList = new ArrayList<>();
+                List<String> otherDeals = new ArrayList<>();
 
                 if (strDeal.endsWith(","))
                     strDeal = strDeal.substring(0, strDeal.length() - 1);
@@ -695,27 +692,23 @@ public class CompanyBasedRegistrationActivity extends AppCompatActivity implemen
 
                         autoCompany.setError("Please enter valid company");
                         autoCompany.requestFocus();
-                    }
-
-                    else if (found1) {
+                    } else if (found1) {
 
                         autoDesignation.setError("Please enter valid designation");
                         autoDesignation.requestFocus();
-                    } else
-                    if (strDesignation.equals("") || strDesignation.equals("null") || strDesignation.equals(null)) {
+                    } else if (strDesignation.equals("") || strDesignation.equals("null") || strDesignation.equals(null)) {
                         autoDesignation.setError("Enter Designation Name");
                         autoDesignation.requestFocus();
-                    }else if (strSkill.equals("") || strSkill.equals("null") || strSkill.equals(null)) {
+                    } else if (strSkill.equals("") || strSkill.equals("null") || strSkill.equals(null)) {
                         autoSkills.setError("Enter Skills Name");
                         autoSkills.requestFocus();
-                    }else if (strDeal.equals("") || strDeal.equals("null") || strDeal.equals(null)) {
+                    } else if (strDeal.equals("") || strDeal.equals("null") || strDeal.equals(null)) {
                         autoDeals.setError("Enter Deals Name");
                         autoDeals.requestFocus();
                     }
 
 
-                }else
-                {
+                } else {
                     mApiCall.updateRegistration(RegiId, page, strArea, strKms, strDistrict, strState, autoCompany.getText().toString(), autoDesignation.getText().toString(), Skills, Deals,
                             "", "", "");
                 }
@@ -746,12 +739,12 @@ public class CompanyBasedRegistrationActivity extends AppCompatActivity implemen
     public void onItemsSelected(boolean[] selected) {
 
     }
-    public void onBackPressed()
-    {
-        Intent i=new Intent(getApplicationContext(),ContinueNextRegistration.class);
+
+    public void onBackPressed() {
+        Intent i = new Intent(getApplicationContext(), ContinueNextRegistration.class);
         startActivity(i);
         finish();
-        }
-
     }
+
+}
 
