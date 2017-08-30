@@ -58,7 +58,7 @@ public class SearchPersonAdapter extends RecyclerView.Adapter<SearchPersonAdapte
 
         CardView mCardView;
         ImageView imgProfile;
-        TextView mTextName, mTextNumber, mTextStatus,mCity;
+        TextView mTextName, mTextNumber, mTextStatus,mCity,mCompany;
         Button btnFollow, btnUnfollow, btnsendmsg;
 
         private YoHolder(View itemView) {
@@ -68,6 +68,7 @@ public class SearchPersonAdapter extends RecyclerView.Adapter<SearchPersonAdapte
             mTextName = (TextView) itemView.findViewById(R.id.txtname);
             mTextNumber = (TextView) itemView.findViewById(R.id.txtnumber);
             mTextStatus = (TextView) itemView.findViewById(R.id.txtstatus);
+            mCompany = (TextView) itemView.findViewById(R.id.txtcompany);
             btnFollow = (Button) itemView.findViewById(R.id.btnfollow);
             btnUnfollow = (Button) itemView.findViewById(R.id.btnunfollow);
             btnsendmsg = (Button) itemView.findViewById(R.id.btnsendmsg);
@@ -99,7 +100,9 @@ public class SearchPersonAdapter extends RecyclerView.Adapter<SearchPersonAdapte
         holder.mTextName.setText(contactdata.get(position).getUsername());
         holder.mTextNumber.setText(contactdata.get(position).getContact());
         holder.mCity.setVisibility(VISIBLE);
+        holder.mCompany.setVisibility(VISIBLE);
         holder.mCity.setText(contactdata.get(position).getCity());
+        holder.mCompany.setText(contactdata.get(position).getCompany());
 
         if (contactdata.get(position).getMystatus()==null)
             holder.mTextStatus.setText("No Status");

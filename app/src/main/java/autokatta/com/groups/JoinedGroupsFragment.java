@@ -93,6 +93,8 @@ public class JoinedGroupsFragment extends Fragment implements SwipeRefreshLayout
                         modelGroups.setImage(joinedGroup.getImage());
                         modelGroups.setGroupCount(joinedGroup.getGroupcount());
                         modelGroups.setVehicleCount(joinedGroup.getVehiclecount());
+                        modelGroups.setServicecount(joinedGroup.getServicecount());
+                        modelGroups.setProductcount(joinedGroup.getProductcount());
                         mJoinedGroupsList.add(modelGroups);
                     }
                     mMyAdapter = new MyAdapter(getActivity(), mJoinedGroupsList, "JoinedGroups");

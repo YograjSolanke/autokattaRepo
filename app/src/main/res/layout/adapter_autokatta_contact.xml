@@ -65,6 +65,21 @@
                 android:layout_marginStart="5dp"
                 android:layout_toEndOf="@+id/profileImg"
                 android:layout_toStartOf="@+id/btnsendmsg"
+                android:text="@string/company_name"
+                android:visibility="gone"
+                android:textColor="#2C3343"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+
+            <TextView
+                android:id="@+id/txtcompany"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtcity"
+                android:layout_marginStart="5dp"
+                android:layout_toEndOf="@+id/profileImg"
+                android:layout_toStartOf="@+id/btnsendmsg"
                 android:text="@string/city"
                 android:visibility="gone"
                 android:textColor="#2C3343"
