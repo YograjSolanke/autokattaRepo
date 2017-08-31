@@ -23,6 +23,7 @@
     <color name="red">#FF0000</color>
     <color name="medium_sea_green">#3CB371</color>
 
+    <color name="color_sky">#2299de</color>
     <color name="high_bid">#e0eeee</color>
     <color name="above_bid">#faebd7</color>
     <color name="no_bid">#ffe4c4</color>

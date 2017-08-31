@@ -2,6 +2,9 @@ package autokatta.com.view;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
@@ -10,7 +13,9 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,6 +26,7 @@ import com.kaopiz.kprogresshud.KProgressHUD;
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
+import java.util.Locale;
 
 import autokatta.com.AutokattaMainActivity;
 import autokatta.com.R;
@@ -41,6 +47,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     String userName;
     String password;
     KProgressHUD hud;
+    SharedPreferences mSharedPreferences = null;
+    SharedPreferences.Editor mEditor;
+    String mMarathiStr, mEnglishStr;
+    Locale myLocale;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +58,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         setContentView(R.layout.activity_login);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        mSharedPreferences = getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE);
 
         session = new SessionManagement(getApplicationContext());
         if (session.isLoggedIn()) {
@@ -63,6 +74,94 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             mLogin.setOnClickListener(this);
             mRegistration.setOnClickListener(this);
             mForgetPassword.setOnClickListener(this);
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (mSharedPreferences.getBoolean("mChooseLanguage", true)) {
+            openDialog();
+            mEditor = mSharedPreferences.edit();
+            mEditor.putBoolean("mChooseLanguage", false);
+            mEditor.apply();
+        } else {
+            //Toast.makeText(getApplicationContext(), "Language Selected" + myLocale, Toast.LENGTH_SHORT).show();
+            Log.i("Language", "->" + myLocale);
+        }
+    }
+
+    private void openDialog() {
+        LayoutInflater layoutInflater = LayoutInflater.from(this);
+        View view = layoutInflater.inflate(R.layout.change_language_title, null);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Ayurveda Care");
+        builder.setIcon(R.drawable.logo48x48);
+        builder.setView(view);
+
+        final TextView mMarathi = (TextView) view.findViewById(R.id.marathi);
+        final TextView mEnglish = (TextView) view.findViewById(R.id.english);
+
+        mMarathi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mMarathiStr = mMarathi.getText().toString();
+                mMarathi.setBackgroundColor(Color.parseColor("#f7f7f7"));
+                setLocale("mr");
+            }
+        });
+
+        mEnglish.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mEnglishStr = mEnglish.getText().toString();
+                mEnglish.setBackgroundColor(Color.parseColor("#f7f7f7"));
+                setLocale("en");
+            }
+        });
+
+        builder.setCancelable(false)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Intent refresh = new Intent(getApplicationContext(), LoginActivity.class);
+                        startActivity(refresh);
+                        finish();
+                    }
+                }).setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.cancel();
+            }
+        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
+
+    private void setLocale(String language) {
+        myLocale = new Locale(language);
+        saveLocale(language);
+        Resources resources = getResources();
+        DisplayMetrics displayMetrics = resources.getDisplayMetrics();
+        Configuration configuration = resources.getConfiguration();
+        configuration.locale = myLocale;
+        resources.updateConfiguration(configuration, displayMetrics);
+    }
+
+    private void saveLocale(String language) {
+        SharedPreferences prefs = getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString("Language", language);
+        editor.apply();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        if (myLocale != null) {
+            newConfig.locale = myLocale;
+            Locale.setDefault(myLocale);
+            getResources().updateConfiguration(newConfig, getResources().getDisplayMetrics());
         }
     }
 

@@ -11,7 +11,11 @@ import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -36,8 +40,12 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class BackgroundService extends Service {
 
+    JSONArray jsonArray = new JSONArray();
+    final JSONObject json = new JSONObject();
     List<String> names = new ArrayList<>();
     List<String> numbers = new ArrayList<>();
+    List<String> lst = new ArrayList<>();
+    HashMap<String, String> key = new HashMap<>();
     String numberstring = "", namestring = "";
     DbOperation operation;
 
@@ -86,7 +94,18 @@ public class BackgroundService extends Service {
                                 , MODE_PRIVATE).getString("loginContact", ""))) {
                             names.add(name);
                             numbers.add(number);
+                            /*json.put(name,number);
+                            Cont cont = new Cont();
+                            List<Cont> contact = new ArrayList<>();
+                            Contacts contacts = new Contacts();
+                            cont.setName(name);
+                            cont.setName(number);
+                            contact.add(cont);
+                            contacts.setContacts(contact);*/
+
                         }
+                        /*jsonArray.put(json);
+                        Log.i("Name","Number->"+jsonArray);*/
                     }
                 } while (people.moveToNext());
                 people.close();
@@ -98,13 +117,13 @@ public class BackgroundService extends Service {
                         numberstring = numbers.get(i);
                         namestring = names.get(i);
                     } else {
-                        numberstring = numberstring + "," + numbers.get(i);
-                        namestring = namestring + "," + names.get(i);
+                        numberstring = numberstring + "❖" + numbers.get(i);
+                        namestring = namestring + "❖" + names.get(i);
                     }
                 }
 
-                System.out.println("numberString=" + numberstring);
-                System.out.println("numberString=" + namestring);
+                Log.i("numberString=", "->" + numberstring);
+                Log.i("numberString=", "->" + namestring);
 
             }
             getAutokattaContacts();

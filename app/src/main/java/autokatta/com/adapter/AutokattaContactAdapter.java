@@ -85,7 +85,6 @@ public class AutokattaContactAdapter extends RecyclerView.Adapter<AutokattaConta
             this.mActivity = mActivity;
             this.contactdata = contactdata;
             contactdata_copy = contactdata;
-            myContact = mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).getString("loginContact", "");
             apicall = new ApiCall(this.mActivity, this);
         } catch (ClassCastException e) {
             e.printStackTrace();
@@ -100,6 +99,7 @@ public class AutokattaContactAdapter extends RecyclerView.Adapter<AutokattaConta
 
     @Override
     public void onBindViewHolder(final AutokattaContactAdapter.YoHolder holder, int position) {
+        myContact = mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).getString("loginContact", "");
         holder.mTextName.setText(contactdata.get(position).getUsername());
         holder.mTextNumber.setText(contactdata.get(position).getContact());
         holder.imgCall.setVisibility(VISIBLE);

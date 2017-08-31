@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Autokatta</string>
+    <string name="about_us">आमच्या विषयी</string>
+    <string name="change_language">भाषा बदला</string>
+    <string name="about">विषयी</string>
+    <string name="home">होम</string>
+    <string name="username">मोबाईल नंबर</string>
+    <string name="password">पासवर्ड</string>
+</resources>

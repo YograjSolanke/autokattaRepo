@@ -55,6 +55,7 @@
     <string name="broadcast_message">My Broadcast Messages</string>
     <string name="business_chat">Business Chat</string>
     <string name="locality">Locality</string>
+    <string name="change_language">Change Language</string>
     <string name="sign_out">Sign Out</string>
     <string name="title_activity_user_profile">UserProfile</string>
     <string name="title_activity_my_autokatta_contacts">MyAutokattaContacts</string>
@@ -120,6 +121,10 @@
     <string name="followdate1">Follow-up Date<font color='#FF0000'>\u002A</font></string>
     <string name="date">Date</string>
     <string name="time">Time</string>
+
+    <string name="select_language">Select Language/आपली भाषा निवडा</string>
+    <string name="marathi">मराठी</string>
+    <string name="english">English</string>
 
     <!--Login Activity -->
     <string name="username">Mobile Number</string>

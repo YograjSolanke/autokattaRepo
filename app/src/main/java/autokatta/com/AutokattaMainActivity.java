@@ -8,6 +8,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.content.res.Resources;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -24,11 +27,14 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.iid.FirebaseInstanceId;
@@ -37,6 +43,8 @@ import com.google.zxing.integration.android.IntentResult;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.Locale;
 
 import autokatta.com.adapter.TabAdapter;
 import autokatta.com.apicall.ApiCall;
@@ -90,6 +98,9 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
     private IntentIntegrator qrScan;
     private ViewPager viewPager;
     TabLayout tabLayout;
+    Locale myLocale;
+    String mLanguage;
+    String mMarathiStr, mEnglishStr;
 
     private boolean isBackgroundServiceRunning(Class<?> serviceClass) {
         ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
@@ -110,6 +121,9 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         sharedPreferences = getSharedPreferences(getString(R.string.firstRun), MODE_PRIVATE);
+        mLanguage = getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("Language", "");
+        Log.i("Language", "->" + mLanguage);
+        setLocale(mLanguage);
         session = new SessionManagement(getApplicationContext());
         if (getSupportActionBar() != null) {
             getSupportActionBar().setElevation(0);
@@ -422,7 +436,9 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
                         } /*else if (menuItem.getItemId() == R.id.locality) {
                             startActivity(new Intent(AutokattaMainActivity.this, MapsActivity.class));
                             //startActivity(new Intent(AutokattaMainActivity.this, DeleteActivity.class));
-                        } */else if (menuItem.getItemId() == R.id.sign_out) {
+                        } */ else if (menuItem.getItemId() == R.id.change_language) {
+                            openDialog();
+                        } else if (menuItem.getItemId() == R.id.sign_out) {
                             AlertDialog.Builder alert = new AlertDialog.Builder(AutokattaMainActivity.this);
                             alert.setTitle(getString(R.string.alert_title));
                             alert.setMessage(getString(R.string.sign_out_message));
@@ -451,6 +467,68 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
                         return true;
                     }
                 });
+    }
+
+    private void setLocale(String language) {
+        myLocale = new Locale(language);
+        saveLocale(language);
+        Resources resources = getResources();
+        DisplayMetrics displayMetrics = resources.getDisplayMetrics();
+        Configuration configuration = resources.getConfiguration();
+        configuration.locale = myLocale;
+        resources.updateConfiguration(configuration, displayMetrics);
+    }
+
+    private void saveLocale(String language) {
+        mLanguage = language;
+        getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("Language", language).apply();
+    }
+
+    private void openDialog() {
+        LayoutInflater layoutInflater = LayoutInflater.from(this);
+        View view = layoutInflater.inflate(R.layout.change_language_title, null);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Ayurveda Care");
+        builder.setIcon(R.drawable.logo48x48);
+        builder.setView(view);
+
+        final TextView mMarathi = (TextView) view.findViewById(R.id.marathi);
+        final TextView mEnglish = (TextView) view.findViewById(R.id.english);
+
+        mMarathi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mMarathiStr = mMarathi.getText().toString();
+                mMarathi.setBackgroundColor(Color.parseColor("#f7f7f7"));
+                setLocale("mr");
+            }
+        });
+
+        mEnglish.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mEnglishStr = mEnglish.getText().toString();
+                mEnglish.setBackgroundColor(Color.parseColor("#f7f7f7"));
+                setLocale("en");
+            }
+        });
+
+        builder.setCancelable(false)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Intent refresh = new Intent(getApplicationContext(), AutokattaMainActivity.class);
+                        startActivity(refresh);
+                        finish();
+                    }
+                }).setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.cancel();
+            }
+        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 
     @Override
@@ -494,6 +572,14 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        // your code here, you can use newConfig.locale if you need to check the language
+        // or just re-set all the labels to desired string resource
+        super.onConfigurationChanged(newConfig);
     }
 
     /*
