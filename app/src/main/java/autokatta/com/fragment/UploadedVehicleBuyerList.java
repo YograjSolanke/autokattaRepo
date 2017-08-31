@@ -188,7 +188,7 @@ public class UploadedVehicleBuyerList extends Fragment implements RequestNotifie
                 if (!buyerResponse.getSuccess().getFound().isEmpty()) {
                     for (BuyerResponse.Success.Found found : buyerResponse.getSuccess().getFound()) {
 
-                        if (found.getVehicleId().equals(vehicle_id)) {
+                        if (found.getVehicleId() == vehicle_id) {
 
                             found.setSearchId(found.getSearchId());
                             found.setCategory(found.getCategory());

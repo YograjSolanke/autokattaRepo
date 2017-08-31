@@ -106,7 +106,7 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
 
                     for (BuyerResponse.Success.Found objectmatch : objsuccess.getFound()) {
 
-                        if (obj.getVehicleId().equals(objectmatch.getVehicleId())) {
+                        if (obj.getVehicleId() == objectmatch.getVehicleId()) {
 
                             objectmatch.setReceivername(objectmatch.getReceivername());
                             objectmatch.setReceiverPic(objectmatch.getReceiverPic());
@@ -218,7 +218,7 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
                         mRegno.setText(mainList.get(i).getRegistrationNumber());
 
                     }
-                    mKms.setText(mainList.get(i).getKmsRunning());
+                    mKms.setText(String.valueOf(mainList.get(i).getKmsRunning()));
                     mmatchCount.setText(String.valueOf(mainList.get(i).getFound().size()));
 
                     String count = String.valueOf(mainList.get(i).getFound().size());
@@ -351,8 +351,8 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
 
 
                         final String favStatus = mainList.get(i).getFound().get(j).getFavstatus();
-                        final String vehicle_idget = mainList.get(i).getFound().get(j).getVehicleId();
-                        final String search_idget = mainList.get(i).getFound().get(j).getSearchId();
+                        final int vehicle_idget = mainList.get(i).getFound().get(j).getVehicleId();
+                        final int search_idget = mainList.get(i).getFound().get(j).getSearchId();
                         final String lastcall = mainList.get(i).getFound().get(j).getLastcall();
 
                         if (favStatus.equalsIgnoreCase("yes")) {
@@ -557,8 +557,8 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
                         favouritebuyer.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                String searchid = mainList.get(finalI).getFound().get(finalJ).getSearchId();
-                                String BuyerId = mainList.get(finalI).getFound().get(finalJ).getVehicleId()
+                                String searchid = String.valueOf(mainList.get(finalI).getFound().get(finalJ).getSearchId());
+                                String BuyerId = String.valueOf(mainList.get(finalI).getFound().get(finalJ).getVehicleId())
                                         + "," + searchid;
                                 mApiCall.addToFavorite(myContact, BuyerId, 0, "", 0);
                                 favouritebuyer.setImageResource(R.drawable.fav2);

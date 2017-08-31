@@ -45,7 +45,6 @@ public class BuyerResponse {
         }
 
 
-
         public List<Found> getFound() {
             return found;
         }
@@ -68,9 +67,8 @@ public class BuyerResponse {
             }
 
             @SerializedName("search_id")
-
             @Expose
-            private String searchId;
+            private int searchId;
             @SerializedName("contact_no")
             @Expose
             private String contactNo;
@@ -166,7 +164,7 @@ public class BuyerResponse {
             private String hpcapacity;
             @SerializedName("no_of_owners")
             @Expose
-            private String noOfOwners;
+            private int noOfOwners;
             @SerializedName("hypothication")
             @Expose
             private String hypothication;
@@ -220,7 +218,7 @@ public class BuyerResponse {
             private String invoice;
             @SerializedName("vehicle_id")
             @Expose
-            private String vehicleId;
+            private int vehicleId;
             @SerializedName("receivername")
             @Expose
             private String receivername;
@@ -234,11 +232,11 @@ public class BuyerResponse {
             @Expose
             private String lastcall;
 
-            public String getSearchId() {
+            public int getSearchId() {
                 return searchId;
             }
 
-            public void setSearchId(String searchId) {
+            public void setSearchId(int searchId) {
                 this.searchId = searchId;
             }
 
@@ -490,11 +488,11 @@ public class BuyerResponse {
                 this.hpcapacity = hpcapacity;
             }
 
-            public String getNoOfOwners() {
+            public int getNoOfOwners() {
                 return noOfOwners;
             }
 
-            public void setNoOfOwners(String noOfOwners) {
+            public void setNoOfOwners(int noOfOwners) {
                 this.noOfOwners = noOfOwners;
             }
 
@@ -634,11 +632,11 @@ public class BuyerResponse {
                 this.invoice = invoice;
             }
 
-            public String getVehicleId() {
+            public int getVehicleId() {
                 return vehicleId;
             }
 
-            public void setVehicleId(String vehicleId) {
+            public void setVehicleId(int vehicleId) {
                 this.vehicleId = vehicleId;
             }
 
@@ -681,7 +679,7 @@ public class BuyerResponse {
 
             @SerializedName("vehicle_id")
             @Expose
-            private String vehicleId;
+            private int vehicleId;
             @SerializedName("title")
             @Expose
             private String title;
@@ -786,13 +784,13 @@ public class BuyerResponse {
             private String fiananceExchange;
             @SerializedName("kms_running")
             @Expose
-            private String kmsRunning;
+            private int kmsRunning;
             @SerializedName("Hrs_running")
             @Expose
             private String hrsRunning;
             @SerializedName("no_of_owners")
             @Expose
-            private String noOfOwners;
+            private int noOfOwners;
             @SerializedName("bodyManufacturer")
             @Expose
             private String bodyManufacturer;
@@ -864,10 +862,10 @@ public class BuyerResponse {
             private String boon;
             @SerializedName("viewcount")
             @Expose
-            private String viewcount;
+            private int viewcount;
             @SerializedName("callcount")
             @Expose
-            private String callcount;
+            private int callcount;
             @SerializedName("date")
             @Expose
             private String date;
@@ -893,11 +891,11 @@ public class BuyerResponse {
             @Expose
             private String currentdate;
 
-            public String getVehicleId() {
+            public int getVehicleId() {
                 return vehicleId;
             }
 
-            public void setVehicleId(String vehicleId) {
+            public void setVehicleId(int vehicleId) {
                 this.vehicleId = vehicleId;
             }
 
@@ -1173,11 +1171,11 @@ public class BuyerResponse {
                 this.fiananceExchange = fiananceExchange;
             }
 
-            public String getKmsRunning() {
+            public int getKmsRunning() {
                 return kmsRunning;
             }
 
-            public void setKmsRunning(String kmsRunning) {
+            public void setKmsRunning(int kmsRunning) {
                 this.kmsRunning = kmsRunning;
             }
 
@@ -1189,11 +1187,11 @@ public class BuyerResponse {
                 this.hrsRunning = hrsRunning;
             }
 
-            public String getNoOfOwners() {
+            public int getNoOfOwners() {
                 return noOfOwners;
             }
 
-            public void setNoOfOwners(String noOfOwners) {
+            public void setNoOfOwners(int noOfOwners) {
                 this.noOfOwners = noOfOwners;
             }
 
@@ -1381,19 +1379,19 @@ public class BuyerResponse {
                 this.boon = boon;
             }
 
-            public String getViewcount() {
+            public int getViewcount() {
                 return viewcount;
             }
 
-            public void setViewcount(String viewcount) {
+            public void setViewcount(int viewcount) {
                 this.viewcount = viewcount;
             }
 
-            public String getCallcount() {
+            public int getCallcount() {
                 return callcount;
             }
 
-            public void setCallcount(String callcount) {
+            public void setCallcount(int callcount) {
                 this.callcount = callcount;
             }
 

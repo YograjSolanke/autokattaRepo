@@ -22,6 +22,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
@@ -81,8 +82,8 @@ public class VehicleBuyerListAdapter extends RecyclerView.Adapter<VehicleBuyerLi
         //to set buyer last call date
         try {
 
-            DateFormat date = new SimpleDateFormat(" MMM dd ");
-            DateFormat time = new SimpleDateFormat(" hh:mm a");
+            DateFormat date = new SimpleDateFormat(" MMM dd ", Locale.getDefault());
+            DateFormat time = new SimpleDateFormat(" hh:mm a", Locale.getDefault());
 
 
             holder.namecity.setText("Last call on:" + date.format(object.getLastCallDateNew()) + time.format(object.getLastCallDateNew()));
@@ -201,7 +202,7 @@ public class VehicleBuyerListAdapter extends RecyclerView.Adapter<VehicleBuyerLi
                 Calendar c = Calendar.getInstance();
                 System.out.println("Current time => " + c.getTime());
 
-                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
                 calldate = df.format(c.getTime());
                 // formattedDate have current date/time
                 System.out.println("current time=============================" + calldate);
@@ -228,7 +229,7 @@ public class VehicleBuyerListAdapter extends RecyclerView.Adapter<VehicleBuyerLi
             public void onClick(View v) {
 
 
-                srchid = object.getSearchId();
+                srchid = String.valueOf(object.getSearchId());
                 BuyerId = vehicle_id + "," + srchid;
                 apicall.addToFavorite(myContact, BuyerId, 0, "", 0);
                 holder.favoritebuyer.setImageResource(R.drawable.fav2);
