@@ -27,6 +27,7 @@ import java.net.UnknownHostException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -73,6 +74,9 @@ public class StoreVehicleAdapter extends RecyclerView.Adapter<StoreVehicleAdapte
     private String stringgroupname = "";
     private int mVehicleId;
     private KProgressHUD hud;
+    private boolean[] itemsCheckedGroups;
+    private String prevGroupIds = "", prevStoreIds = "";
+
 
     public StoreVehicleAdapter(Activity activity, List<StoreInventoryResponse.Success.Vehicle> vehicleList, String myContact,
                                String storeContact) {
@@ -82,6 +86,7 @@ public class StoreVehicleAdapter extends RecyclerView.Adapter<StoreVehicleAdapte
         this.storeContact = storeContact;
         apiCall = new ApiCall(activity, this);
         connectionDetector = new ConnectionDetector(activity);
+
     }
 
     @Override
@@ -110,6 +115,8 @@ public class StoreVehicleAdapter extends RecyclerView.Adapter<StoreVehicleAdapte
         holder.Rto.setText(obj.getRto());
         holder.Regno.setText(obj.getRegno());
 
+        prevGroupIds = obj.getGroupIDs().replaceAll(" ", "");
+        prevStoreIds = obj.getStoreIDs().replaceAll(" ", "");
 
         if (myContact.equalsIgnoreCase(storeContact)) {
 
@@ -269,9 +276,9 @@ public class StoreVehicleAdapter extends RecyclerView.Adapter<StoreVehicleAdapte
                 public void onResponse(Call<ProfileGroupResponse> call, Response<ProfileGroupResponse> response) {
                     if (response.isSuccessful()) {
                         groupIdList.clear();
-                        groupIdList.clear();
                         groupTitleList.clear();
                         hud.dismiss();
+
                         ProfileGroupResponse mProfileGroupResponse = (ProfileGroupResponse) response.body();
                         for (ProfileGroupResponse.MyGroup success : mProfileGroupResponse.getSuccess().getMyGroups()) {
                             groupIdList.add(String.valueOf(success.getId()));
@@ -305,7 +312,8 @@ public class StoreVehicleAdapter extends RecyclerView.Adapter<StoreVehicleAdapte
                             });
                             alertDialog.show();
                         } else {
-                            alertBoxToSelectExcelSheet(groupTitleArray);
+                            itemsCheckedGroups = new boolean[groupTitleArray.length];
+                            alertBoxGroups(groupTitleArray);
                         }
                     } else {
                         hud.dismiss();
@@ -327,22 +335,33 @@ public class StoreVehicleAdapter extends RecyclerView.Adapter<StoreVehicleAdapte
     /*
     Alert Dialog
      */
-    private void alertBoxToSelectExcelSheet(final String[] groupTitleArray) {
+    private void alertBoxGroups(final String[] groupTitleArray) {
         final List<String> mSelectedItems = new ArrayList<>();
         mSelectedItems.clear();
+        String[] prearra = prevGroupIds.split(",");
+
+        for (int i = 0; i < groupIdList.size(); i++) {
+            if (Arrays.asList(prearra).contains(groupIdList.get(i))) {
+                itemsCheckedGroups[i] = true;
+                mSelectedItems.add(groupIdList.get(i));
+            } else
+                itemsCheckedGroups[i] = false;
+        }
 
         android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(activity);
 
         // set the dialog title
         builder.setTitle("Select Groups From Following")
                 .setCancelable(true)
-                .setMultiChoiceItems(groupTitleArray, null, new DialogInterface.OnMultiChoiceClickListener() {
+                .setMultiChoiceItems(groupTitleArray, itemsCheckedGroups, new DialogInterface.OnMultiChoiceClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which, boolean isChecked) {
                         if (isChecked) {
-                            mSelectedItems.add(groupTitleArray[which]);
-                        } else if (mSelectedItems.contains(groupTitleArray[which])) {
-                            mSelectedItems.remove(groupTitleArray[which]);
+                            mSelectedItems.add(groupIdArray[which]);
+                            itemsCheckedGroups[which] = true;
+                        } else if (mSelectedItems.contains(groupIdArray[which])) {
+                            mSelectedItems.remove(groupIdArray[which]);
+                            itemsCheckedGroups[which] = false;
                         }
                     }
                 })
@@ -351,11 +370,14 @@ public class StoreVehicleAdapter extends RecyclerView.Adapter<StoreVehicleAdapte
 
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
+
+                        System.out.println("selected ids=" + mSelectedItems);
                         stringgroupids = "";
                         stringgroupname = "";
+                        prevGroupIds = "";
                         for (int i = 0; i < mSelectedItems.size(); i++) {
-                            for (int j = 0; j < groupTitleArray.length; j++) {
-                                if (mSelectedItems.get(i).equals(groupTitleArray[j])) {
+                            for (int j = 0; j < groupIdArray.length; j++) {
+                                if (mSelectedItems.get(i).equals(groupIdArray[j])) {
                                     if (stringgroupids.equals("")) {
                                         stringgroupids = groupIdList.get(j);
                                         stringgroupname = groupTitleArray[j];
@@ -366,7 +388,9 @@ public class StoreVehicleAdapter extends RecyclerView.Adapter<StoreVehicleAdapte
                                 }
                             }
                         }
-                        setPrivacy(stringgroupids);
+                        prevGroupIds = stringgroupids;
+                        setPrivacy(stringgroupids, prevStoreIds);
+
                         if (mSelectedItems.size() == 0) {
                             CustomToast.customToast(activity, "No Group Was Selected");
                             stringgroupids = "";
@@ -383,17 +407,17 @@ public class StoreVehicleAdapter extends RecyclerView.Adapter<StoreVehicleAdapte
 
                 })
                 .show();
+
     }
 
     /*
 
      */
-    private void setPrivacy(String groupId) {
+    private void setPrivacy(String groupIds, String storeIds) {
         ApiCall apiCall = new ApiCall(activity, this);
         apiCall.VehiclePrivacy(activity.getSharedPreferences(activity.getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""),
-                mVehicleId, groupId, "");
+                mVehicleId, groupIds, storeIds);
     }
-
     @Override
     public int getItemCount() {
         return vehicleList.size();

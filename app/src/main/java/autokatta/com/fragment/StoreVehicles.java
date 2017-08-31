@@ -85,6 +85,7 @@ public class StoreVehicles extends Fragment implements SwipeRefreshLayout.OnRefr
     public void notifySuccess(Response<?> response) {
         if (response != null) {
             if (response.isSuccessful()) {
+
                 mSwipeRefreshLayout.setRefreshing(false);
                 vehicleList = new ArrayList<>();
                 mNoData.setVisibility(View.GONE);
@@ -110,6 +111,10 @@ public class StoreVehicles extends Fragment implements SwipeRefreshLayout.OnRefr
                         success.setKms(success.getKms());
                         success.setImages(success.getImages());
                         success.setDate(success.getDate().replaceAll("T", " "));
+
+                        success.setGroupIDs(success.getGroupIDs());
+                        success.setStoreIDs(success.getStoreIDs());
+
                         vehicleList.add(success);
                     }
                     adapter = new StoreVehicleAdapter(getActivity(), vehicleList, Sharedcontact, storeContact);

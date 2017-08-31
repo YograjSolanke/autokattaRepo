@@ -664,6 +664,12 @@ public class StoreInventoryResponse {
             @SerializedName("BuyerLeads")
             @Expose
             private String buyerLeads;
+            @SerializedName("storeIDs")
+            @Expose
+            private String storeIDs;
+            @SerializedName("groupIDs")
+            @Expose
+            private String groupIDs;
 
             public Integer getVehicleId() {
                 return vehicleId;
@@ -801,6 +807,21 @@ public class StoreInventoryResponse {
                 this.buyerLeads = buyerLeads;
             }
 
+            public String getStoreIDs() {
+                return storeIDs;
+            }
+
+            public void setStoreIDs(String storeIDs) {
+                this.storeIDs = storeIDs;
+            }
+
+            public String getGroupIDs() {
+                return groupIDs;
+            }
+
+            public void setGroupIDs(String groupIDs) {
+                this.groupIDs = groupIDs;
+            }
         }
 
     }

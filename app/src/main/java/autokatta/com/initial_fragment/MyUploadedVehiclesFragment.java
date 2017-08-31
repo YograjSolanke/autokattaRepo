@@ -126,7 +126,6 @@ public class MyUploadedVehiclesFragment extends Fragment implements RequestNotif
             if (response.isSuccessful()) {
                 mSwipeRefreshLayout.setRefreshing(false);
                 myUploadedVehiclesResponseList.clear();
-                String prevGroupIds = "", prevStoreIds = "";
                 MyUploadedVehiclesResponse myVehicleResponse = (MyUploadedVehiclesResponse) response.body();
                 if (!myVehicleResponse.getSuccess().isEmpty()) {
                     mNoData.setVisibility(View.GONE);
@@ -155,17 +154,16 @@ public class MyUploadedVehiclesFragment extends Fragment implements RequestNotif
                         myVehicleSuccess.setVersion(myVehicleSuccess.getVersion());
                         myVehicleSuccess.setRcAvailable(myVehicleSuccess.getRcAvailable());
                         myVehicleSuccess.setNoOfOwner(myVehicleSuccess.getNoOfOwner());
+
                         myVehicleSuccess.setGroupIDs(myVehicleSuccess.getGroupIDs());
                         myVehicleSuccess.setStoreIDs(myVehicleSuccess.getStoreIDs());
-                        prevGroupIds = myVehicleSuccess.getGroupIDs();
-                        prevStoreIds = myVehicleSuccess.getStoreIDs();
+
 
                         myUploadedVehiclesResponseList.add(myVehicleSuccess);
                     }
                     Log.i("size", String.valueOf(myUploadedVehiclesResponseList.size()));
                     mSwipeRefreshLayout.setRefreshing(false);
-                    MyUploadedVehicleAdapter adapter = new MyUploadedVehicleAdapter(getActivity(), myUploadedVehiclesResponseList,
-                            prevGroupIds, prevStoreIds);
+                    MyUploadedVehicleAdapter adapter = new MyUploadedVehicleAdapter(getActivity(), myUploadedVehiclesResponseList);
                     mRecyclerView.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
                 } else {
