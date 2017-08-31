@@ -1,18 +1,28 @@
 package autokatta.com.events;
 
+import android.content.DialogInterface;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.method.ScrollingMovementMethod;
+import android.view.Gravity;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.Scroller;
 import android.widget.TextView;
+
+import com.github.clans.fab.FloatingActionButton;
+import com.github.clans.fab.FloatingActionMenu;
 
 import autokatta.com.R;
 import autokatta.com.adapter.TabAdapterName;
 
-public class MyEndedLoanMelaPreviewActivity extends AppCompatActivity {
+public class MyEndedLoanMelaPreviewActivity extends AppCompatActivity implements View.OnClickListener {
     Bundle b = new Bundle();
     TextView mStartdate, mStartTime, mEndTime, mEndDate, mLocation, mtitle;
     String strTitle;
@@ -21,7 +31,10 @@ public class MyEndedLoanMelaPreviewActivity extends AppCompatActivity {
     String strEnddate;
     String strEndTime;
     String strLocation;
-    String strEndDateTime, strloanid;
+    String strEndDateTime, strloanid, strDetails;
+    FloatingActionMenu menuRed;
+    FloatingActionButton btnPreview;
+    ;
     TextView txtTimer;
     CollapsingToolbarLayout mCollapsingToolbar;
 
@@ -50,6 +63,8 @@ public class MyEndedLoanMelaPreviewActivity extends AppCompatActivity {
         mLocation = (TextView) findViewById(R.id.location);
         txtTimer = (TextView) findViewById(R.id.live_timer);
         mtitle = (TextView) findViewById(R.id.loan_text);
+        btnPreview = (FloatingActionButton) findViewById(R.id.preview);
+        btnPreview.setOnClickListener(this);
 
         //get Data from Adapter
         strTitle = getIntent().getExtras().getString("title");
@@ -60,11 +75,14 @@ public class MyEndedLoanMelaPreviewActivity extends AppCompatActivity {
         strLocation = getIntent().getExtras().getString("location");
         strEndDateTime = getIntent().getExtras().getString("enddatetime");
         strloanid = getIntent().getExtras().getString("loanid");
+        strDetails = getIntent().getExtras().getString("details");
 
 
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                menuRed = (FloatingActionMenu) findViewById(R.id.menu_red);
+                menuRed.setClosedOnTouchOutside(true);
                 //Set Data
                 mtitle.setText("Ended Loan Mela");
                 mCollapsingToolbar.setTitle("Title: " + strTitle);
@@ -107,5 +125,53 @@ public class MyEndedLoanMelaPreviewActivity extends AppCompatActivity {
         super.onBackPressed();
         finishActivity(1);
         overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+
+            case R.id.preview:
+
+                showDetails(strDetails);
+                break;
+        }
+
+
+    }
+
+    private void showDetails(String details) {
+
+        android.support.v7.app.AlertDialog dialog = new android.support.v7.app.AlertDialog.Builder(this)
+                .setTitle("Event Details")
+                .setMessage("YOUR_MSG")
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_info)
+                .show();
+        TextView textView = (TextView) dialog.findViewById(android.R.id.message);
+        //textView.setMaxLines(5);
+        if (textView != null) {
+            textView.setScroller(new Scroller(this));
+            textView.setVerticalScrollBarEnabled(true);
+            textView.setText(details);
+            textView.setMovementMethod(new ScrollingMovementMethod());
+
+            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT);
+            lp.setMarginStart(30);
+            textView.setBackgroundColor(Color.WHITE);
+            textView.setLayoutParams(lp);
+            textView.setPadding(40, 40, 40, 40);
+            textView.setGravity(Gravity.CENTER_VERTICAL);
+            textView.setTextColor(Color.BLACK);
+            textView.setTextSize(20);
+
+            dialog.setView(textView);
+        }
     }
 }

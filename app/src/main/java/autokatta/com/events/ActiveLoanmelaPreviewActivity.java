@@ -1,5 +1,7 @@
 package autokatta.com.events;
 
+import android.content.DialogInterface;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -8,8 +10,16 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.format.DateUtils;
+import android.text.method.ScrollingMovementMethod;
+import android.view.Gravity;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.Scroller;
 import android.widget.TextView;
+
+import com.github.clans.fab.FloatingActionButton;
+import com.github.clans.fab.FloatingActionMenu;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -18,7 +28,7 @@ import java.util.HashMap;
 import autokatta.com.R;
 import autokatta.com.adapter.TabAdapterName;
 
-public class ActiveLoanmelaPreviewActivity extends AppCompatActivity {
+public class ActiveLoanmelaPreviewActivity extends AppCompatActivity implements View.OnClickListener {
 
     ViewPager mViewPager;
     TabLayout mTabLayout;
@@ -30,8 +40,10 @@ public class ActiveLoanmelaPreviewActivity extends AppCompatActivity {
     String strStarttime;
     String strEnddate;
     String strEndTime;
+    FloatingActionMenu menuRed;
+    FloatingActionButton btnPreview;
     String strLocation;
-    String strEndDateTime;
+    String strEndDateTime, strDetails;
     private int strloanid = 0;
     TextView txtTimer;
     CountDownTimer cdt;
@@ -56,6 +68,8 @@ public class ActiveLoanmelaPreviewActivity extends AppCompatActivity {
         mCollapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         mStartdate = (TextView) findViewById(R.id.start_date);
         mStartTime = (TextView) findViewById(R.id.start_time);
+        btnPreview = (FloatingActionButton) findViewById(R.id.preview);
+        btnPreview.setOnClickListener(this);
         mEndTime = (TextView) findViewById(R.id.end_time);
         mEndDate = (TextView) findViewById(R.id.end_date);
         mLocation = (TextView) findViewById(R.id.location);
@@ -71,10 +85,14 @@ public class ActiveLoanmelaPreviewActivity extends AppCompatActivity {
         strEndTime = getIntent().getExtras().getString("endtime");
         strLocation = getIntent().getExtras().getString("location");
         strEndDateTime = getIntent().getExtras().getString("enddatetime");
+        strDetails = getIntent().getExtras().getString("details");
 
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
+
+                menuRed = (FloatingActionMenu) findViewById(R.id.menu_red);
+                menuRed.setClosedOnTouchOutside(true);
                 //Set Data
                 toolbar.setTitle("Loan Mela");
                 mCollapsingToolbar.setTitle("Title: " + strTitle);
@@ -172,5 +190,53 @@ public class ActiveLoanmelaPreviewActivity extends AppCompatActivity {
         super.onBackPressed();
         finishActivity(1);
         overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
+    }
+
+    @Override
+    public void onClick(View view) {
+
+        switch (view.getId()) {
+
+            case R.id.preview:
+
+                showDetails(strDetails);
+                break;
+        }
+
+    }
+
+    private void showDetails(String details) {
+
+        android.support.v7.app.AlertDialog dialog = new android.support.v7.app.AlertDialog.Builder(this)
+                .setTitle("Event Details")
+                .setMessage("YOUR_MSG")
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_info)
+                .show();
+        TextView textView = (TextView) dialog.findViewById(android.R.id.message);
+        //textView.setMaxLines(5);
+        if (textView != null) {
+            textView.setScroller(new Scroller(this));
+            textView.setVerticalScrollBarEnabled(true);
+            textView.setText(details);
+            textView.setMovementMethod(new ScrollingMovementMethod());
+
+            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT);
+            lp.setMarginStart(30);
+            textView.setBackgroundColor(Color.WHITE);
+            textView.setLayoutParams(lp);
+            textView.setPadding(40, 40, 40, 40);
+            textView.setGravity(Gravity.CENTER_VERTICAL);
+            textView.setTextColor(Color.BLACK);
+            textView.setTextSize(20);
+
+            dialog.setView(textView);
+        }
     }
 }

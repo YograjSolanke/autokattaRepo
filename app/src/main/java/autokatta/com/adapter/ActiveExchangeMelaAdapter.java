@@ -89,6 +89,7 @@ public class ActiveExchangeMelaAdapter extends RecyclerView.Adapter<ActiveExchan
                 b.putString("endtime", mMainlist.get(position).getEndTime());
                 b.putString("location", mMainlist.get(position).getLocation());
                 b.putString("enddatetime", mMainlist.get(position).getEndDateTime());
+                b.putString("details", mMainlist.get(position).getDetails());
                 b.putInt("exchangeid", mMainlist.get(position).getId());
 
                 ActivityOptions options = ActivityOptions.makeCustomAnimation(mActivity, R.anim.ok_left_to_right, R.anim.ok_right_to_left);

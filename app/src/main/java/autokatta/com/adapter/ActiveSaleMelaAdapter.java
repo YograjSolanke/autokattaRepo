@@ -94,6 +94,7 @@ public class ActiveSaleMelaAdapter extends RecyclerView.Adapter<ActiveSaleMelaAd
                 b.putString("endtime",mMainlist.get(position).getEndTime());
                 b.putString("location",mMainlist.get(position).getLocation());
                 b.putString("enddatetime", mMainlist.get(position).getEndDateTime());
+                b.putString("details", mMainlist.get(position).getDetails());
                 b.putInt("saleid",mMainlist.get(position).getId());
 
                 Log.i("hhhhhhhjjj", mMainlist.get(position).getEndDateTime());

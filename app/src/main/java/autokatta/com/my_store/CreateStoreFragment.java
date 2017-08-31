@@ -90,7 +90,7 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
     Button btnaddprofile, create, btnaddcover;
     CheckBox rbtstoreproduct, rbtstoreservice, rbtstorevehicle;
     String myContact, callFrom, lastWord = "", coverlastWord = "",
-            storetype = "", preLastWord = "", preCoverLastWord;
+            storetype = "", preLastWord = "", preCoverLastWord, brandtagpart = "", finalbrandtags = "";
     int store_id;
     //  MultiSelectionSpinnerForBrands brandSpinner;
     MultiSelectionSpinner weekspn;
@@ -101,6 +101,7 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
     Boolean typeproduct = false, typeservice = false, typevehicle = false;
     Bundle bundle = new Bundle();
     private ApiCall mApiCall;
+    final List<String> brandTags = new ArrayList<>();
     private GenericFunctions genericFunctions;
     private ImageUpload mImageUpload;
 
@@ -180,6 +181,7 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
             //create.setText("update");
             getActivity().setTitle("Update Store");
             // textstore.setText("Update Store");
+            getBrandTags();
 
             hud = KProgressHUD.create(getActivity())
                     .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
@@ -306,7 +308,7 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
                 Boolean flag = false;
                 Boolean flagtime = false;
                 String address = "", name = "", contact = "", location = "", website = "", storeDescription = "", workdays = "",
-                        stropen = "", strclose = "", category = "", finalbrandtags = "", strBrandSpinner = "";
+                        stropen = "", strclose = "", category = "", strBrandSpinner = "";
                 List<String> resultList;
 
                 address = storeaddress.getText().toString();
@@ -322,32 +324,44 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
 
 //                strBrandSpinner = brandSpinner.getSelectedItem().toString().replaceAll(" ", "");
 
-                List<String> tempbrands = new ArrayList<>();
+                ArrayList<String> tempbrands = new ArrayList<String>();
+
+
                 String textbrand = multiautobrand.getText().toString();
 
                 if (textbrand.endsWith(","))
                     textbrand = textbrand.substring(0, textbrand.length() - 1);
+
                 textbrand = textbrand.trim();
+
                 if (!textbrand.equals("")) {
+
                     String[] bparts = textbrand.split(",");
                     for (int o = 0; o < bparts.length; o++) {
-                        String brandtagpart = bparts[o].trim();
+                        brandtagpart = bparts[o].trim();
                         if (!brandtagpart.equals("") && !brandtagpart.equalsIgnoreCase(" "))
                             tempbrands.add(brandtagpart);
-                        if (!brandTagsList.contains(brandtagpart) && !brandtagpart.equals("") && !brandtagpart.equalsIgnoreCase(" ")) {
+                        if (!brandTags.contains(brandtagpart) && !brandtagpart.equals("") && !brandtagpart.equalsIgnoreCase(" ")) {
+                            System.out.println("brand tag going to add=" + brandtagpart);
                             try {
                                 addOtherBrandTags(brandtagpart);
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
+
+
                         }
+
                     }
                 }
+
+
                 for (int n = 0; n < tempbrands.size(); n++) {
                     if (finalbrandtags.equals(""))
                         finalbrandtags = tempbrands.get(n);
                     else
                         finalbrandtags = finalbrandtags + "," + tempbrands.get(n);
+
                 }
 
 
@@ -841,17 +855,15 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
                  */
                 if (response.body() instanceof BrandsTagResponse) {
                     BrandsTagResponse brandResponse = (BrandsTagResponse) response.body();
-                    brandTagsList.clear();
-                    brandtagIdList.clear();
+                    brandTags.clear();
                     if (!brandResponse.getSuccess().isEmpty()) {
                         for (BrandsTagResponse.Success message : brandResponse.getSuccess()) {
                             message.setTagID(message.getTagID());
                             message.setTagName(message.getTagName());
-                            //  brandtagIdList.add(message.getTagID());
-                            brandTagsList.add(message.getTagName());
+                            brandTags.add(message.getTagName());
                         }
                         if (getActivity() != null) {
-                            ArrayAdapter<String> dataadapter = new ArrayAdapter<>(getActivity(), R.layout.registration_spinner, brandTagsList);
+                            ArrayAdapter<String> dataadapter = new ArrayAdapter<>(getActivity(), R.layout.registration_spinner, brandTags);
                             multiautobrand.setAdapter(dataadapter);
                         }
                     } else

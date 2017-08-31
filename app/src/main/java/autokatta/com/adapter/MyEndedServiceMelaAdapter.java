@@ -96,6 +96,7 @@ public class MyEndedServiceMelaAdapter extends RecyclerView.Adapter<MyEndedServi
                 b.putString("endtime",mMainList.get(position).getEndTime());
                 b.putString("location",mMainList.get(position).getLocation());
                 b.putString("enddatetime",mMainList.get(position).getEndDateTime());
+                b.putString("details", mMainList.get(position).getDetails());
                 b.putString("serviceid",mMainList.get(position).getId());
                 ActivityOptions options = ActivityOptions.makeCustomAnimation(mActivity, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
 

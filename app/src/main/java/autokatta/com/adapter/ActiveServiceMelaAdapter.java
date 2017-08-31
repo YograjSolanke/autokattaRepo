@@ -93,6 +93,7 @@ public class ActiveServiceMelaAdapter extends RecyclerView.Adapter<ActiveService
                 b.putString("endtime",mMainlist.get(position).getEndTime());
                 b.putString("location",mMainlist.get(position).getLocation());
                 b.putString("enddatetime", mMainlist.get(position).getEndDateTime());
+                b.putString("details", mMainlist.get(position).getDetails());
                 b.putInt("serviceid",mMainlist.get(position).getId());
 
                 Log.i("hhhhhhhjjj", mMainlist.get(position).getEndDateTime());

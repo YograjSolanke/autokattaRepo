@@ -90,7 +90,26 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
     EditText productname, productprice, productdetails, producttype, writereview;
     Bundle b = new Bundle();
     //variables for getting data through bundle form adapter
-    String name, web, rating, pname, pprice, pdetails, ptags, ptype, plikecnt, pimages, plikestatus, action, pcategory, prating, receiver_contact, prate, prate1, prate2, prate3, brandtags_list;
+    String name;
+    String web;
+    Integer rating;
+    String pname;
+    Integer pprice;
+    String pdetails;
+    String ptags;
+    String ptype;
+    Integer plikecnt;
+    String pimages;
+    String plikestatus;
+    String action;
+    String pcategory;
+    Integer prating;
+    String receiver_contact;
+    Integer prate;
+    Integer prate1;
+    Integer prate2;
+    Integer prate3;
+    String brandtags_list;
     ImageView edit, check, callme, deleteproduct;
     String allDetails;
     final List<String> spnid = new ArrayList<>();
@@ -571,37 +590,37 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
 
 
                             //***************************setting previous rating*******************************
-                            if (!prate.equals("0")) {
-                                overallbar.setRating(Float.parseFloat(prate));
+                            if (prate != 0) {
+                                overallbar.setRating(prate);
 
                             }
-                            if (!prate1.equals("0")) {
-                                pricebar.setRating(Float.parseFloat(prate1));
-                                pricerate = Float.parseFloat(prate1);
+                            if (prate1 != 0) {
+                                pricebar.setRating(prate1);
+                                pricerate = Float.parseFloat(String.valueOf(prate1));
                             }
-                            if (!prate2.equals("0")) {
-                                qualitybar.setRating(Float.parseFloat(prate2));
-                                qualityrate = Float.parseFloat(prate2);
+                            if (prate2 != 0) {
+                                qualitybar.setRating(prate2);
+                                qualityrate = Float.parseFloat(String.valueOf(prate2));
                             }
-                            if (!prate3.equals("0")) {
-                                stockbar.setRating(Float.parseFloat(prate3));
-                                stockrate = Float.parseFloat(prate3);
+                            if (prate3 != 0) {
+                                stockbar.setRating(prate3);
+                                stockrate = Float.parseFloat(String.valueOf(prate3));
                             }
 
                             //rating conditions for store
-                            if (!rating.equals("null")) {
-                                storerating.setRating(Float.parseFloat(rating));
+                            if (rating != 0) {
+                                storerating.setRating(rating);
                             }
                             //rating conditions for product
 
-                            if (!prating.equals("null")) {
-                                productrating.setRating(Float.parseFloat(prating));
+                            if (prating != 0) {
+                                productrating.setRating(prating);
                             }
 
                             storename.setText(name);
                             website.setText(web);
                             productname.setText(pname);
-                            productprice.setText(pprice);
+                            productprice.setText(String.valueOf(pprice));
                             productdetails.setText(pdetails);
                             producttags.setText(ptags);
                             producttype.setText(ptype);
@@ -640,7 +659,7 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
 
 
                             //like code
-                            lcnt = Integer.parseInt(plikecnt);
+                            lcnt = plikecnt;
 
 
                         }
@@ -1079,11 +1098,11 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                 }
                 break;
             case R.id.btnfeedback:
-                if (prate.startsWith("0")) {
+                if (prate == 0) {
                     sendproductrating();
                     System.out.println("hiiii..............send rating called");
                 }
-                if (!prate.startsWith("0")) {
+                if (prate != 0) {
                     sendupdatedproductrating();
                     System.out.println("hiiii..............send updated product rating called");
                 }

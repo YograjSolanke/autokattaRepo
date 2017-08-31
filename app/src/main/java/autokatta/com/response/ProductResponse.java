@@ -13,6 +13,9 @@ public class ProductResponse {
     @SerializedName("Success")
     @Expose
     private List<Success> success = null;
+    @SerializedName("Error")
+    @Expose
+    private Object error;
 
     public List<Success> getSuccess() {
         return success;
@@ -22,60 +25,65 @@ public class ProductResponse {
         this.success = success;
     }
 
+    public Object getError() {
+        return error;
+    }
+
+    public void setError(Object error) {
+        this.error = error;
+    }
+
 
     public class Success {
 
-        @SerializedName("product_id")
-        @Expose
-        private int productId;
-        @SerializedName("store_id")
-        @Expose
-        private int storeId;
-        @SerializedName("product_type")
-        @Expose
-        private String productType;
-        @SerializedName("status")
-        @Expose
-        private String status;
-        @SerializedName("images")
-        @Expose
-        private String images;
-        @SerializedName("product_name")
-        @Expose
-        private String productName;
-        @SerializedName("price")
-        @Expose
-        private String price;
-        @SerializedName("category")
-        @Expose
-        private String category;
-        @SerializedName("product_details")
-        @Expose
-        private String productDetails;
-        @SerializedName("product_tags")
-        @Expose
-        private String productTags;
         @SerializedName("brandtags")
         @Expose
         private String brandtags;
+        @SerializedName("category")
+        @Expose
+        private String category;
         @SerializedName("created_date")
         @Expose
         private String createdDate;
-        @SerializedName("modified_date")
-        @Expose
-        private String modifiedDate;
-        @SerializedName("price_rating")
-        @Expose
-        private String priceRating;
-        @SerializedName("quality_rating")
-        @Expose
-        private String qualityRating;
-        @SerializedName("stock_rating")
-        @Expose
-        private String stockRating;
         @SerializedName("group_id")
         @Expose
         private String groupId;
+        @SerializedName("images")
+        @Expose
+        private String images;
+        @SerializedName("modified_date")
+        @Expose
+        private String modifiedDate;
+        @SerializedName("price")
+        @Expose
+        private Integer price;
+        @SerializedName("price_rating")
+        @Expose
+        private Integer priceRating;
+        @SerializedName("product_details")
+        @Expose
+        private String productDetails;
+        @SerializedName("product_id")
+        @Expose
+        private Integer productId;
+        @SerializedName("product_name")
+        @Expose
+        private String productName;
+        @SerializedName("product_type")
+        @Expose
+        private String productType;
+        @SerializedName("quality_rating")
+        @Expose
+        private Integer qualityRating;
+        @SerializedName("status")
+        @Expose
+        private String status;
+        @SerializedName("stock_rating")
+        @Expose
+        private Integer stockRating;
+        @SerializedName("store_id")
+        @Expose
+        private Integer storeId;
         @SerializedName("storeName")
         @Expose
         private String storeName;
@@ -85,91 +93,43 @@ public class ProductResponse {
         @SerializedName("storeWebsite")
         @Expose
         private String storeWebsite;
+        @SerializedName("storeOwner")
+        @Expose
+        private String storeOwner;
         @SerializedName("storeRating")
         @Expose
-        private String storeRating;
+        private Integer storeRating;
         @SerializedName("productlikecount")
         @Expose
-        private String productlikecount;
+        private Integer productlikecount;
         @SerializedName("productlikestatus")
         @Expose
         private String productlikestatus;
         @SerializedName("prate")
         @Expose
-        private String prate;
+        private Integer prate;
         @SerializedName("prate1")
         @Expose
-        private String prate1;
+        private Integer prate1;
         @SerializedName("prate2")
         @Expose
-        private String prate2;
+        private Integer prate2;
         @SerializedName("prate3")
         @Expose
-        private String prate3;
-        @SerializedName("storeOwner")
-        @Expose
-        private String storeOwner;
+        private Integer prate3;
         @SerializedName("productrating")
         @Expose
-        private String productrating;
+        private Integer productrating;
         @SerializedName("productTagNames")
         @Expose
         private String productTagNames;
 
-        public int getProductId() {
-            return productId;
+        public String getBrandtags() {
+            return brandtags;
         }
 
-        public void setProductId(int productId) {
-            this.productId = productId;
-        }
-
-        public int getStoreId() {
-            return storeId;
-        }
-
-        public void setStoreId(int storeId) {
-            this.storeId = storeId;
-        }
-
-        public String getProductType() {
-            return productType;
-        }
-
-        public void setProductType(String productType) {
-            this.productType = productType;
-        }
-
-        public String getStatus() {
-            return status;
-        }
-
-        public void setStatus(String status) {
-            this.status = status;
-        }
-
-        public String getImages() {
-            return images;
-        }
-
-        public void setImages(String images) {
-            this.images = images;
-        }
-
-        public String getProductName() {
-            return productName;
-        }
-
-        public void setProductName(String productName) {
-            this.productName = productName;
-        }
-
-        public String getPrice() {
-            return price;
-        }
-
-        public void setPrice(String price) {
-            this.price = price;
+        public void setBrandtags(String brandtags) {
+            this.brandtags = brandtags;
         }
 
         public String getCategory() {
@@ -180,44 +140,28 @@ public class ProductResponse {
             this.category = category;
         }
 
-        public String getProductDetails() {
-            return productDetails;
-        }
-
-        public String getStoreOwner() {
-            return storeOwner;
-        }
-
-        public void setStoreOwner(String storeOwner) {
-            this.storeOwner = storeOwner;
-        }
-
-        public void setProductDetails(String productDetails) {
-            this.productDetails = productDetails;
-        }
-
-        public String getProductTags() {
-            return productTags;
-        }
-
-        public void setProductTags(String productTags) {
-            this.productTags = productTags;
-        }
-
-        public String getBrandtags() {
-            return brandtags;
-        }
-
-        public void setBrandtags(String brandtags) {
-            this.brandtags = brandtags;
-        }
-
         public String getCreatedDate() {
             return createdDate;
         }
 
         public void setCreatedDate(String createdDate) {
             this.createdDate = createdDate;
+        }
+
+        public String getGroupId() {
+            return groupId;
+        }
+
+        public void setGroupId(String groupId) {
+            this.groupId = groupId;
+        }
+
+        public String getImages() {
+            return images;
+        }
+
+        public void setImages(String images) {
+            this.images = images;
         }
 
         public String getModifiedDate() {
@@ -228,36 +172,84 @@ public class ProductResponse {
             this.modifiedDate = modifiedDate;
         }
 
-        public String getPriceRating() {
+        public Integer getPrice() {
+            return price;
+        }
+
+        public void setPrice(Integer price) {
+            this.price = price;
+        }
+
+        public Integer getPriceRating() {
             return priceRating;
         }
 
-        public void setPriceRating(String priceRating) {
+        public void setPriceRating(Integer priceRating) {
             this.priceRating = priceRating;
         }
 
-        public String getQualityRating() {
+        public String getProductDetails() {
+            return productDetails;
+        }
+
+        public void setProductDetails(String productDetails) {
+            this.productDetails = productDetails;
+        }
+
+        public Integer getProductId() {
+            return productId;
+        }
+
+        public void setProductId(Integer productId) {
+            this.productId = productId;
+        }
+
+        public String getProductName() {
+            return productName;
+        }
+
+        public void setProductName(String productName) {
+            this.productName = productName;
+        }
+
+        public String getProductType() {
+            return productType;
+        }
+
+        public void setProductType(String productType) {
+            this.productType = productType;
+        }
+
+        public Integer getQualityRating() {
             return qualityRating;
         }
 
-        public void setQualityRating(String qualityRating) {
+        public void setQualityRating(Integer qualityRating) {
             this.qualityRating = qualityRating;
         }
 
-        public String getStockRating() {
+        public String getStatus() {
+            return status;
+        }
+
+        public void setStatus(String status) {
+            this.status = status;
+        }
+
+        public Integer getStockRating() {
             return stockRating;
         }
 
-        public void setStockRating(String stockRating) {
+        public void setStockRating(Integer stockRating) {
             this.stockRating = stockRating;
         }
 
-        public String getGroupId() {
-            return groupId;
+        public Integer getStoreId() {
+            return storeId;
         }
 
-        public void setGroupId(String groupId) {
-            this.groupId = groupId;
+        public void setStoreId(Integer storeId) {
+            this.storeId = storeId;
         }
 
         public String getStoreName() {
@@ -284,19 +276,27 @@ public class ProductResponse {
             this.storeWebsite = storeWebsite;
         }
 
-        public String getStoreRating() {
+        public String getStoreOwner() {
+            return storeOwner;
+        }
+
+        public void setStoreOwner(String storeOwner) {
+            this.storeOwner = storeOwner;
+        }
+
+        public Integer getStoreRating() {
             return storeRating;
         }
 
-        public void setStoreRating(String storeRating) {
+        public void setStoreRating(Integer storeRating) {
             this.storeRating = storeRating;
         }
 
-        public String getProductlikecount() {
+        public Integer getProductlikecount() {
             return productlikecount;
         }
 
-        public void setProductlikecount(String productlikecount) {
+        public void setProductlikecount(Integer productlikecount) {
             this.productlikecount = productlikecount;
         }
 
@@ -308,43 +308,43 @@ public class ProductResponse {
             this.productlikestatus = productlikestatus;
         }
 
-        public String getPrate() {
+        public Integer getPrate() {
             return prate;
         }
 
-        public void setPrate(String prate) {
+        public void setPrate(Integer prate) {
             this.prate = prate;
         }
 
-        public String getPrate1() {
+        public Integer getPrate1() {
             return prate1;
         }
 
-        public void setPrate1(String prate1) {
+        public void setPrate1(Integer prate1) {
             this.prate1 = prate1;
         }
 
-        public String getPrate2() {
+        public Integer getPrate2() {
             return prate2;
         }
 
-        public void setPrate2(String prate2) {
+        public void setPrate2(Integer prate2) {
             this.prate2 = prate2;
         }
 
-        public String getPrate3() {
+        public Integer getPrate3() {
             return prate3;
         }
 
-        public void setPrate3(String prate3) {
+        public void setPrate3(Integer prate3) {
             this.prate3 = prate3;
         }
 
-        public String getProductrating() {
+        public Integer getProductrating() {
             return productrating;
         }
 
-        public void setProductrating(String productrating) {
+        public void setProductrating(Integer productrating) {
             this.productrating = productrating;
         }
 
@@ -354,9 +354,7 @@ public class ProductResponse {
 
         public void setProductTagNames(String productTagNames) {
             this.productTagNames = productTagNames;
-        }
-
     }
 
-
+    }
 }
