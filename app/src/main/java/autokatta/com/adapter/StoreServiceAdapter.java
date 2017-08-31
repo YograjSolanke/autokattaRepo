@@ -81,6 +81,7 @@ public class StoreServiceAdapter extends RecyclerView.Adapter<StoreServiceAdapte
             holder.deleteproduct.setVisibility(View.VISIBLE);
         } else {
             holder.editdetails.setVisibility(View.GONE);
+            holder.mEnquiry.setVisibility(View.GONE);
         }
 
         holder.pname.setEnabled(false);

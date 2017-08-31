@@ -67,6 +67,7 @@ public class GroupProductAdapter extends RecyclerView.Adapter<GroupProductAdapte
     @Override
     public void onBindViewHolder(final GroupProductAdapter.ProductHolder holder, final int position) {
         mView = holder;
+
         List<String> images = new ArrayList<String>();
         final StoreInventoryResponse.Success.Product product = mMainList.get(position);
         holder.pname.setText(product.getName());
@@ -79,6 +80,10 @@ public class GroupProductAdapter extends RecyclerView.Adapter<GroupProductAdapte
 
         if (myContact.equals(product.getStorecontact()) && mGroupType.startsWith("MyGroup")) {
             holder.deleteproduct.setVisibility(View.VISIBLE);
+        }else
+        {
+            holder.mEdit.setVisibility(View.GONE);
+            holder.mEnquiry.setVisibility(View.GONE);
         }
 
         holder.pname.setEnabled(false);
@@ -120,7 +125,7 @@ public class GroupProductAdapter extends RecyclerView.Adapter<GroupProductAdapte
 
         }
 
-        holder.mCardView.setOnClickListener(new View.OnClickListener() {
+        holder.mDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 ActivityOptions options = ActivityOptions.makeCustomAnimation(activity, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
@@ -131,6 +136,29 @@ public class GroupProductAdapter extends RecyclerView.Adapter<GroupProductAdapte
             }
         });
 
+        holder.mEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ActivityOptions options = ActivityOptions.makeCustomAnimation(activity, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
+                int proId = product.getProductId();
+                Intent intent = new Intent(activity, ProductViewActivity.class);
+                intent.putExtra("product_id", proId);
+                intent.putExtra("editmode", "yes");
+                activity.startActivity(intent, options.toBundle());
+            }
+        });
+        /*
+        holder.mCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ActivityOptions options = ActivityOptions.makeCustomAnimation(activity, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
+                int proId = product.getProductId();
+                Intent intent = new Intent(activity, ProductViewActivity.class);
+                intent.putExtra("product_id", proId);
+                activity.startActivity(intent, options.toBundle());
+            }
+        });
+*/
         holder.deleteproduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -204,8 +232,8 @@ public class GroupProductAdapter extends RecyclerView.Adapter<GroupProductAdapte
 
     class ProductHolder extends RecyclerView.ViewHolder {
         TextView pname, pprice, pdetails, ptype, ptags, pCategoey;
-        ImageView image, deleteproduct;
-        Button viewdetails, sviewdetails, vehidetails;
+        ImageView image, deleteproduct,mEnquiry;
+        Button viewdetails, sviewdetails, vehidetails,mDetails,mEdit;
         RatingBar productrating;
         CardView mCardView;
 
@@ -218,9 +246,12 @@ public class GroupProductAdapter extends RecyclerView.Adapter<GroupProductAdapte
             pCategoey = (TextView) itemView.findViewById(R.id.editCategory);
             ptype = (TextView) itemView.findViewById(R.id.editproducttype);
             viewdetails = (Button) itemView.findViewById(R.id.btnviewdetails);
+            mDetails = (Button) itemView.findViewById(R.id.btnView);
+            mEdit = (Button) itemView.findViewById(R.id.btnEdit);
             image = (ImageView) itemView.findViewById(R.id.profile);
             productrating = (RatingBar) itemView.findViewById(R.id.productrating);
             deleteproduct = (ImageView) itemView.findViewById(R.id.deleteproduct);
+            mEnquiry = (ImageView) itemView.findViewById(R.id.enquiry);
             mCardView = (CardView) itemView.findViewById(R.id.card_view);
         }
     }

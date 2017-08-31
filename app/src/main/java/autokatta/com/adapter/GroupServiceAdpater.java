@@ -1,6 +1,7 @@
 package autokatta.com.adapter;
 
 import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.widget.CardView;
@@ -27,7 +28,7 @@ import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.StoreInventoryResponse;
-import autokatta.com.view.ServiceViewActivity;
+import autokatta.com.view.ProductViewActivity;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import retrofit2.Response;
 
@@ -61,6 +62,8 @@ public class GroupServiceAdpater extends RecyclerView.Adapter<GroupServiceAdpate
 
     @Override
     public void onBindViewHolder(final GroupServiceAdpater.ServiceHolder holder, final int position) {
+
+
         List<String> images = new ArrayList<String>();
         final StoreInventoryResponse.Success.Service service = mMainList.get(position);
         holder.pname.setText(service.getServiceName());
@@ -70,9 +73,17 @@ public class GroupServiceAdpater extends RecyclerView.Adapter<GroupServiceAdpate
         holder.ptype.setText(service.getServiceType());
         holder.pCategory.setText(service.getServicecategory());
         holder.productrating.setEnabled(false);
+
+       /*if other group edit buton and view button visiblity*/
         if (myContact.equals(service.getStorecontact()) && mGroupType.startsWith("MyGroup")) {
             holder.deleteproduct.setVisibility(View.VISIBLE);
+        }else
+        {
+            holder.mEdit.setVisibility(View.GONE);
+            holder.mEnquiry.setVisibility(View.GONE);
         }
+
+
         holder.pname.setEnabled(false);
         holder.pprice.setEnabled(false);
         holder.pdetails.setEnabled(false);
@@ -115,8 +126,30 @@ public class GroupServiceAdpater extends RecyclerView.Adapter<GroupServiceAdpate
             holder.productrating.setRating(Float.parseFloat(service.getServicerating()));
         }
 
+        holder.mDetails.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ActivityOptions options = ActivityOptions.makeCustomAnimation(activity, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
+                int proId = service.getServiceId();
+                Intent intent = new Intent(activity, ProductViewActivity.class);
+                intent.putExtra("product_id", proId);
+                activity.startActivity(intent, options.toBundle());
+            }
+        });
 
-        holder.viewdetails.setOnClickListener(new View.OnClickListener() {
+        holder.mEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ActivityOptions options = ActivityOptions.makeCustomAnimation(activity, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
+                int proId = service.getServiceId();
+                Intent intent = new Intent(activity, ProductViewActivity.class);
+                intent.putExtra("product_id", proId);
+                intent.putExtra("editmode", "yes");
+                activity.startActivity(intent, options.toBundle());
+            }
+        });
+
+      /*  holder.viewdetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 int serviceId = service.getServiceId();
@@ -125,7 +158,7 @@ public class GroupServiceAdpater extends RecyclerView.Adapter<GroupServiceAdpate
                 activity.startActivity(intent);
 
             }
-        });
+        });*/
 
         holder.deleteproduct.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -196,8 +229,8 @@ public class GroupServiceAdpater extends RecyclerView.Adapter<GroupServiceAdpate
 
     class ServiceHolder extends RecyclerView.ViewHolder {
         TextView pname, pprice, pdetails, ptype, ptags, pCategory;
-        ImageView image, deleteproduct;
-        Button sviewdetails, vehidetails;
+        ImageView image, deleteproduct,mEnquiry;
+        Button sviewdetails, vehidetails,mDetails,mEdit;
         RatingBar productrating;
         CardView viewdetails;
 
@@ -214,6 +247,10 @@ public class GroupServiceAdpater extends RecyclerView.Adapter<GroupServiceAdpate
             image = (ImageView) itemView.findViewById(R.id.profile);
             productrating = (RatingBar) itemView.findViewById(R.id.productrating);
             deleteproduct = (ImageView) itemView.findViewById(R.id.deleteproduct);
+            mDetails = (Button) itemView.findViewById(R.id.btnView);
+            mEdit = (Button) itemView.findViewById(R.id.btnEdit);
+            mEnquiry = (ImageView) itemView.findViewById(R.id.enquiry);
+
         }
     }
 }

@@ -916,6 +916,7 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
                 else if (response.body() instanceof GetVehicleColor) {
                     mVehicleColor.clear();
                     GetVehicleColor mGetVehicleColor = (GetVehicleColor) response.body();
+                    mVehicleColor.add("--Select Color--");
                     for (GetVehicleColor.Success success : mGetVehicleColor.getSuccess()) {
                         success.setColorId(success.getColorId());
                         success.setColor(success.getColor());
@@ -950,6 +951,7 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
                 else if (response.body() instanceof GetBodyTypeResponse) {
                     mBodyType.clear();
                     GetBodyTypeResponse mGetBodyTypeResponse = (GetBodyTypeResponse) response.body();
+                    mBodyType.add("--Select Body Type--");
                     for (GetBodyTypeResponse.Success success : mGetBodyTypeResponse.getSuccess()) {
                         success.setTitle(success.getTitle());
                         mBodyType.add(success.getTitle());
@@ -983,7 +985,7 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
                 else if (response.body() instanceof GetVehicleImplementsResponse) {
                     mVehicleImplements.clear();
                     GetVehicleImplementsResponse mGetVehicleImplementsResponse = (GetVehicleImplementsResponse) response.body();
-                    mVehicleImplements.add("Select Implements");
+                    mVehicleImplements.add("--Select Implements--");
                     for (GetVehicleImplementsResponse.Success success : mGetVehicleImplementsResponse.getSuccess()) {
                         success.setId(success.getId());
                         success.setImplementName(success.getImplementName());
