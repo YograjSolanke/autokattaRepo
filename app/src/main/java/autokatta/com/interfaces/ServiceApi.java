@@ -1271,4 +1271,6 @@ public interface ServiceApi {
     @POST("AddYourStatus")
     Call<String> _autokattaUploadStatus(@Query("SenderContact") String myContact, @Query("StatusText") String statusText,
                                         @Query("StatusImage") String statusImage, @Query("StatusVideo") String statusVideo);
+
+    Call<String> _autokattaSendQuotation(int vehicleId, int groupId, String reservePrice, String deadLineDate);
 }

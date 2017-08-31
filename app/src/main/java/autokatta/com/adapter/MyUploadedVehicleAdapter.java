@@ -459,7 +459,16 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
                         String strTitle = titleText.getText().toString();
                         String strPrice = edtResPrice.getText().toString();
                         String deadlineDate = edtDate.getText().toString();
-                        openDialog.dismiss();
+
+                        Log.i("groupId", String.valueOf(groupid));
+                        if (groupid == 0)
+                            CustomToast.customToast(activity, "please select Group to send quotation");
+                        else {
+                            /*apiCall.SendQuotation(mMainList.get(holder.getAdapterPosition()).getVehicleId(),
+                                    groupid, strPrice, deadlineDate);*/
+                            System.out.println(mMainList.get(holder.getAdapterPosition()).getVehicleId());
+                            openDialog.dismiss();
+                        }
                     }
                 });
                 openDialog.show();
@@ -845,12 +854,16 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
     @Override
     public void notifyString(String str) {
         if (str != null) {
-            if (str.equals("success")) {
-                CustomToast.customToast(activity, "vehicle deleted");
-            } else if (str.equals("success_notification")) {
-                CustomToast.customToast(activity, "notification sent");
-            } else if (str.equals("success_added")) {
-                CustomToast.customToast(activity, "data updated");
+            switch (str) {
+                case "success":
+                    CustomToast.customToast(activity, "vehicle deleted");
+                    break;
+                case "success_notification":
+                    CustomToast.customToast(activity, "notification sent");
+                    break;
+                case "success_added":
+                    CustomToast.customToast(activity, "data updated");
+                    break;
             }
         }
 
