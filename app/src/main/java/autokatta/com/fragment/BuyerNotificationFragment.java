@@ -174,7 +174,8 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
                     final ImageView muparrow = (ImageView) mLinearView.findViewById(R.id.postuparrow);
                     ViewFlipper mViewFlipperbuyer = (ViewFlipper) mLinearView.findViewById(R.id.buyervehicalimgflicker);
                     final RelativeLayout mLinearFirstArrow = (RelativeLayout) mLinearView.findViewById(R.id.linearFirst);
-                    final TextView mUploadDate = (TextView) mLinearView.findViewById(R.id.uploaddate);
+                    //final TextView mUploadDate = (TextView) mLinearView.findViewById(R.id.uploaddate);
+                    final TextView mUploadDate = (TextView) mLinearView.findViewById(R.id.strSearchDate);
                     //final ImageView mImageArrowFirst=(ImageView)mLinearView.findViewById(R.id.imageFirstArrow);
                     mLinearScrollSecond[i] = (LinearLayout) mLinearView.findViewById(R.id.linear_scroll);
 
@@ -244,7 +245,7 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
                         Date date = inputFormat.parse(mainList.get(i).getDate());
                         String output = outputFormat.format(date);
                         System.out.println("jjj" + output);
-                        mUploadDate.setText("Uploaded On :" + output);
+                        mUploadDate.setText(output);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -365,24 +366,46 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
 
                         //mItemNameCity.setText("Last call on: " + lastcall);
                         //to set buyer last call date
-                        try {
+                        /*try {
 
                             DateFormat date = new SimpleDateFormat(" MMM dd ", Locale.getDefault());
                             DateFormat time = new SimpleDateFormat(" hh:mm a", Locale.getDefault());
 
-                            DateFormat inputDate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                            DateFormat inputDate = new SimpleDateFormat("MM-dd-dd", Locale.getDefault());
                             DateFormat newDateFormat = new SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault());
 
-                            /*holder.uploadDates.setText(newDateFormat.format(inputDate.parse(mGetOwnVehiclesList.get(position).getUploaddate())));
+                            holder.uploadDates.setText(newDateFormat.format(inputDate.parse(mGetOwnVehiclesList.get(position).getUploaddate())));
 
                             mItemNameCity.setText("Last call on:" + date.format(lastcall) +
-                                    time.format(lastcall));*/
+                                    time.format(lastcall));
 
                             mItemNameCity.setText("Last call on:" + newDateFormat.format(inputDate.parse(lastcall)) + time.format(inputDate.parse(lastcall)));
 
                         } catch (Exception e) {
                             e.printStackTrace();
+                        }*/
+
+                        try {
+                            TimeZone utc = TimeZone.getTimeZone("etc/UTC");
+                            //format of date coming from services
+                            //DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",
+                            DateFormat inputFormat = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss a",
+                                    Locale.getDefault());
+                            inputFormat.setTimeZone(utc);
+                            //format of date which want to show
+                            DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy hh:mm a",
+                                    Locale.getDefault());
+                            outputFormat.setTimeZone(utc);
+
+                            Date date = inputFormat.parse(lastcall);
+                            String output = outputFormat.format(date);
+                            System.out.println("last call" + output);
+                            mItemNameCity.setText("" + "Last call on:" + output);
+//                            mItemNameCity.setText("Last call on:" + newDateFormat.format(inputDate.parse(lastcall)) + time.format(inputDate.parse(lastcall)));
+                        } catch (Exception e) {
+                            e.printStackTrace();
                         }
+
                         checkBox1.setText(mainList.get(i).getCategory());
                         checkBox2.setText(mainList.get(i).getManufacturer());
                         checkBox3.setText(mainList.get(i).getModel());
@@ -392,18 +415,18 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
                                 mainList.get(i).getRcAvailable().equalsIgnoreCase("") || mainList.get(i).getRcAvailable().equalsIgnoreCase("-"))
                             checkBoxRc.setText("RC avl-NA");
                         else
-                            checkBoxRc.setText("RC avl-" + mainList.get(i).getRcAvailable());
+                            checkBoxRc.setText("" + "RC avl-" + mainList.get(i).getRcAvailable());
 
                         if (mainList.get(i).getInsuranceValid().startsWith("-Select Insurance Valid-") ||
                                 mainList.get(i).getInsuranceValid().equalsIgnoreCase("") || mainList.get(i).getInsuranceValid().equalsIgnoreCase("-"))
                             checkBoxIns.setText("INS avl-NA");
                         else
-                            checkBoxIns.setText("INS avl-" + mainList.get(i).getInsuranceValid());
+                            checkBoxIns.setText("" + "INS avl-" + mainList.get(i).getInsuranceValid());
 
                         if (mainList.get(i).getHpCapacity().equalsIgnoreCase("-") || mainList.get(i).getHpCapacity().equalsIgnoreCase(""))
                             checkBoxHpcap.setText("Hp-NA");
                         else
-                            checkBoxHpcap.setText("Hp-" + mainList.get(i).getHpCapacity());
+                            checkBoxHpcap.setText("" + "Hp-" + mainList.get(i).getHpCapacity());
 
                         checkBox6.setText(itemcategory);
                         checkBox7.setText(itemBrand);
@@ -414,16 +437,16 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
                         if (itemrc.startsWith("-Select RC Available-") || itemrc.equalsIgnoreCase("") || itemrc.equalsIgnoreCase("-"))
                             checkBoxRcRight.setText("RC avl-NA");
                         else
-                            checkBoxRcRight.setText("RC avl-" + itemrc);
+                            checkBoxRcRight.setText("" + "RC avl-" + itemrc);
                         if (itemIns.startsWith("-Select Insurance Valid-") || itemIns.equalsIgnoreCase("") || itemIns.equalsIgnoreCase("-"))
                             checkBoxINSRight.setText("INS avl-NA");
                         else
-                            checkBoxINSRight.setText("INS avl-" + itemIns);
+                            checkBoxINSRight.setText("" + "INS avl-" + itemIns);
 
                         if (itemHp.equalsIgnoreCase("") || itemHp.equalsIgnoreCase("-"))
                             checkBoxHPcapRight.setText("Hp-NA");
                         else
-                            checkBoxHPcapRight.setText("Hp-" + itemHp);
+                            checkBoxHPcapRight.setText("" + "Hp-" + itemHp);
 
                         try {
 
