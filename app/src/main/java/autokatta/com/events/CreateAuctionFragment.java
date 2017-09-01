@@ -37,7 +37,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 import autokatta.com.R;
 import autokatta.com.Registration.Multispinner;
@@ -48,8 +50,8 @@ import autokatta.com.generic.SetMyDateAndTime;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.other.CustomToast;
-import autokatta.com.response.AllStatesResponse;
 import autokatta.com.response.AuctionCreateResponse;
+import autokatta.com.response.GetStatesResponse;
 import autokatta.com.response.SpecialClauseAddResponse;
 import autokatta.com.response.SpecialClauseGetResponse;
 import autokatta.com.view.MySavedAuctionEventActivity;
@@ -85,6 +87,8 @@ public class CreateAuctionFragment extends Fragment
     String ids = "", cluases = "", name, stdate, sttime, eddate, edtime, type, location, auctionCategory, stockLocation;
     String newSttime, newEdtime;
     private ConnectionDetector mConnectionDetector;
+    HashMap<String, Integer> mStatelist1 = new HashMap<>();
+    List<String> stateLst = new ArrayList<>();
 
     public CreateAuctionFragment() {
         //empty constructor
@@ -127,9 +131,10 @@ public class CreateAuctionFragment extends Fragment
         clauseList.setOnTouchListener(this);
 
         address.setAdapter(new GooglePlacesAdapter(getActivity(), R.layout.simple));
-        apiCall.getSpecialClauses("getClause","");
+        apiCall.getSpecialClauses("getClause", "");
 
-        apiCall.getAllStates();
+        //apiCall.getAllStates();
+        apiCall.getStates();
 
 
 //        //date comparision
@@ -169,7 +174,7 @@ public class CreateAuctionFragment extends Fragment
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 recieve = input.getText().toString();
-                                if (recieve.equals("")||recieve.startsWith(" ")&&recieve.endsWith(" "))
+                                if (recieve.equals("") || recieve.startsWith(" ") && recieve.endsWith(" "))
                                     CustomToast.customToast(getActivity(), "Please enter clause");
                                 else {
                                     //new AddClauseTask().execute();
@@ -207,10 +212,10 @@ public class CreateAuctionFragment extends Fragment
 
 
                     //date comparision
-                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
                     Date now = new Date();
                     String dateString = sdf.format(now);
-                    SimpleDateFormat tm = new SimpleDateFormat("hh:mm a");
+                    SimpleDateFormat tm = new SimpleDateFormat("hh:mm a", Locale.getDefault());
                     String time = tm.format(Calendar.getInstance().getTime());
 
                     System.out.println("current date=" + dateString);
@@ -241,7 +246,7 @@ public class CreateAuctionFragment extends Fragment
 
                     type = ((RadioButton) createAuctionView.findViewById(rgauctiontype.getCheckedRadioButtonId())).getText().toString();
 
-                    if (name.equals("")||name.startsWith(" ")&&name.endsWith(" ")) {
+                    if (name.equals("") || name.startsWith(" ") && name.endsWith(" ")) {
                         auctioname.setError("Enter auction title");
                         auctioname.requestFocus();
                         //CustomToast.customToast(getActivity(), "Enter auction title");
@@ -284,11 +289,11 @@ public class CreateAuctionFragment extends Fragment
                         address.setError("Please Select Location From Dropdown Only");
                         address.requestFocus();
                     } else if (stockLocation.equalsIgnoreCase("-Select State-") || stockLocation.equals("")) {
-                        CustomToast.customToast(getActivity(),  "Please select states ");
+                        CustomToast.customToast(getActivity(), "Please select states ");
                         stockLocationSpinner.requestFocus();
 
                     } else if (auctionCategory.equalsIgnoreCase("-Select Auction Category-")) {
-                        CustomToast.customToast(getActivity(),"Please select category of auction");
+                        CustomToast.customToast(getActivity(), "Please select category of auction");
                         auctionCategorySpinner.requestFocus();
                     } else {
 
@@ -318,7 +323,7 @@ public class CreateAuctionFragment extends Fragment
                         System.out.println(checkedids + "positionArray " + positionArray.length);
 
                         if (ids.equals(""))
-                            CustomToast.customToast(getActivity(),  "Please select atleast single clause");
+                            CustomToast.customToast(getActivity(), "Please select atleast single clause");
                         else {
                             final Dialog dialog = new Dialog(getActivity());
                             dialog.setTitle("Auction");
@@ -347,12 +352,9 @@ public class CreateAuctionFragment extends Fragment
                                 }
                             });
                             dialog.show();
-
                         }
                     }
-
                 }
-
 
                 break;
 
@@ -429,7 +431,6 @@ public class CreateAuctionFragment extends Fragment
 
                     if (!moduleResponse.getSuccess().isEmpty()) {
 
-
                         for (SpecialClauseGetResponse.Success message : moduleResponse.getSuccess()) {
                             id.add(message.getClauseId());
                             clause.add(message.getClause());
@@ -446,7 +447,7 @@ public class CreateAuctionFragment extends Fragment
                         String id = moduleResponse.getSuccess().getClauseID().toString();
                         Log.i("ClauseId", "->" + id);
                         CustomToast.customToast(getActivity(), "Clause Added Successfully");
-                        apiCall.getSpecialClauses("getClause","");
+                        apiCall.getSpecialClauses("getClause", "");
                     }
 
                 } else if (response.body() instanceof AuctionCreateResponse) {
@@ -498,7 +499,7 @@ public class CreateAuctionFragment extends Fragment
                                     .setNegativeButton("Later", new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int id) {
 
-                                            CustomToast.customToast(getActivity(),"Auction saved in my saved event");
+                                            CustomToast.customToast(getActivity(), "Auction saved in my saved event");
                                             Intent intent = new Intent(getActivity(), MySavedAuctionEventActivity.class);
                                             getActivity().startActivity(intent);
                                             getActivity().finish();
@@ -520,10 +521,10 @@ public class CreateAuctionFragment extends Fragment
 
                 //Color Response
 
-                else if (response.body() instanceof AllStatesResponse) {
+                /*else if (response.body() instanceof AllStatesResponse) {
                     Log.e("GetAllStates", "->");
                     final List<String> mStateList = new ArrayList<>();
-                    /*mStateList.clear();
+                    *//*mStateList.clear();
 
                     AllStatesResponse getStateResponse = (AllStatesResponse) response.body();
                     for (AllStatesResponse.Success success : getStateResponse.getSuccess()) {
@@ -535,7 +536,7 @@ public class CreateAuctionFragment extends Fragment
                         success.setStateId("1");
                         success.setStateName("Maharashtra");
                         mStateList.add(success.getStateName());
-                    }*/
+                    }*//*
                     mStateList.add("Maharashtra");
                     mStateList.add("GOA");
                     mStateList.add("Andhra Pradesh");
@@ -543,7 +544,7 @@ public class CreateAuctionFragment extends Fragment
                     Log.i("ListState", "->" + mStateList);
 
                     stockLocationSpinner.setItems(mStateList, "-Select State-", CreateAuctionFragment.this);
-                    /*multiSpinnercolor.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    *//*multiSpinnercolor.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                             if (position != 0) {
@@ -557,7 +558,23 @@ public class CreateAuctionFragment extends Fragment
                         public void onNothingSelected(AdapterView<?> parent) {
 
                         }
-                    });*/
+                    });*//*
+                }*/
+
+                else if (response.body() instanceof GetStatesResponse) {
+                    stateLst.clear();
+                    GetStatesResponse mGetState = (GetStatesResponse) response.body();
+                    if (!mGetState.getSuccess().isEmpty()) {
+                        for (GetStatesResponse.Success StateResponse : mGetState.getSuccess()) {
+                            StateResponse.setStateId(StateResponse.getStateId());
+                            StateResponse.setStateName(StateResponse.getStateName());
+                            stateLst.add(StateResponse.getStateName());
+                            mStatelist1.put(StateResponse.getStateName(), StateResponse.getStateId());
+                        }
+                        if (!stateLst.isEmpty()) {
+                            stockLocationSpinner.setItems(stateLst, "-Select State-", this);
+                        }
+                    }
                 }
 
             } else {
@@ -610,15 +627,15 @@ public class CreateAuctionFragment extends Fragment
 
         Activity activity;
         FragmentActivity fragmentActivity;
-        ArrayList<String> ids, clauses;
+        List<String> ids, clauses;
         boolean positionArray[];
 
         private LayoutInflater inflater = null;
 
-        ArrayList<Integer> checked_ids;
-        ArrayList<String> checked_clauses;
+        List<Integer> checked_ids;
+        List<String> checked_clauses;
 
-        public SpecialCluasesAdapter(Activity activity, ArrayList<String> ids, ArrayList<String> clauses) {
+        SpecialCluasesAdapter(Activity activity, List<String> ids, List<String> clauses) {
 
             this.activity = activity;
             this.ids = ids;

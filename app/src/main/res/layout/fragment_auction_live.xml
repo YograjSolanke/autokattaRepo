@@ -21,7 +21,7 @@
                 android:layout_height="40dp"
                 android:layout_marginStart="10dp"
                 android:contentDescription="@string/app_name"
-                android:src="@mipmap/auction" />
+                android:src="@mipmap/auctioncolor" />
 
             <TextView
                 android:id="@+id/auctionevent"
@@ -30,6 +30,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginStart="10dp"
                 android:layout_toEndOf="@+id/auctioneventimage"
+                android:layout_toStartOf="@+id/event_count"
                 android:text="@string/auction_event"
                 android:textColor="#2C3343"
                 android:textStyle="bold" />
@@ -92,6 +93,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginStart="10dp"
                 android:layout_toEndOf="@+id/loan_mela_image"
+                android:layout_toStartOf="@+id/loan_mela_count"
                 android:text="@string/loan_mela"
                 android:textColor="#2C3343"
                 android:textStyle="bold" />
@@ -153,7 +155,8 @@
                 android:layout_centerVertical="true"
                 android:layout_marginStart="10dp"
                 android:layout_toEndOf="@+id/exchange_event_image"
-                android:text="@string/exchange_event"
+                android:layout_toStartOf="@+id/exchange_event_count"
+                android:text="@string/exchange_mela"
                 android:textColor="#2C3343"
                 android:textStyle="bold" />
 
@@ -214,7 +217,8 @@
                 android:layout_centerVertical="true"
                 android:layout_marginStart="10dp"
                 android:layout_toEndOf="@+id/service_event_image"
-                android:text="@string/service_event"
+                android:layout_toStartOf="@+id/service_event_count"
+                android:text="@string/service_mela"
                 android:textColor="#2C3343"
                 android:textStyle="bold" />
 
@@ -275,7 +279,8 @@
                 android:layout_centerVertical="true"
                 android:layout_marginStart="10dp"
                 android:layout_toEndOf="@+id/sale_event_image"
-                android:text="@string/sale_event"
+                android:layout_toStartOf="@+id/sale_event_count"
+                android:text="@string/sale_mela"
                 android:textColor="#2C3343"
                 android:textStyle="bold" />
 

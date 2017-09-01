@@ -524,12 +524,12 @@
     <string name="event_details">Event Details</string>
     <string name="create">Create</string>
     <string name="auction_event">Auction Event</string>
-    <string name="loan_mela">Loan Mela</string>
-    <string name="service_mela">Service Mela</string>
+    <string name="loan_mela">Loan Mela Event</string>
+    <string name="service_mela">Service Mela Event</string>
     <string name="service_event">Service Event</string>
-    <string name="exchange_mela">Exchange Mela</string>
+    <string name="exchange_mela">Exchange Mela Event</string>
     <string name="exchange_event">Exchange Event</string>
-    <string name="sale_mela">Sale Mela</string>
+    <string name="sale_mela">Sale Mela Event</string>
     <string name="sale_event">Sale Event</string>
     <string name="event_click">Click on type of event you want to create</string>
     <string name="confirm_vehicles">Confirm Vehicles</string>
