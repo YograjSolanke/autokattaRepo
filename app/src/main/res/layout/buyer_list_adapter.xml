@@ -67,6 +67,19 @@
             android:src="@drawable/fav1"
             android:visibility="visible" />
 
+
+        <ImageView
+            android:id="@+id/unfavouritebuyer"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_below="@+id/buyertext"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_toStartOf="@+id/callbuyer"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/fav2"
+            android:visibility="gone" />
+
         <TextView
             android:id="@+id/buyerlocation"
             android:layout_width="wrap_content"

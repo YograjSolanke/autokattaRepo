@@ -316,6 +316,7 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
                         TextView lastcall = (TextView) mLinearView2.findViewById(R.id.lastcall);
                         ImageView mCallimg = (ImageView) mLinearView2.findViewById(R.id.sellcallimg);
                         final ImageView mFavimg = (ImageView) mLinearView2.findViewById(R.id.sellfevimg);
+                        final ImageView unmFavimg = (ImageView) mLinearView2.findViewById(R.id.sellunfevimg);
 
                         CheckBox checkBox1 = (CheckBox) mLinearView2.findViewById(R.id.sellcheckBox1);
                         CheckBox checkBox2 = (CheckBox) mLinearView2.findViewById(R.id.sellcheckBox2);
@@ -585,10 +586,11 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
 
 
                         if (mainList.get(finalI).getMatchedResult().get(finalJ).getFavstatus().equalsIgnoreCase("yes")) {
-                            mFavimg.setImageResource(R.drawable.fav2);
-                            mFavimg.setEnabled(false);
+                            mFavimg.setVisibility(View.GONE);
+                            unmFavimg.setVisibility(View.VISIBLE);
                         } else {
-                            mFavimg.setImageResource(R.drawable.fav1);
+                            mFavimg.setVisibility(View.VISIBLE);
+                            unmFavimg.setVisibility(View.GONE);
                         }
 
                         mFavimg.setOnClickListener(new View.OnClickListener() {
@@ -598,9 +600,26 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
                                 String SellerId = mainList.get(finalI).getMatchedResult().get(finalJ).getSearchId()
                                         + "," + VehiId;
                                 mApiCall.addToFavorite(myContact, "", 0, SellerId, 0);
-                                mFavimg.setImageResource(R.drawable.fav2);
+                                mFavimg.setVisibility(View.GONE);
+                                unmFavimg.setVisibility(View.VISIBLE);
 
                                 mainList.get(finalI).getMatchedResult().get(finalJ).setFavstatus("yes");
+                            }
+
+
+                        });
+
+
+                        unmFavimg.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                String VehiId = mainList.get(finalI).getMatchedResult().get(finalJ).getVehicleId();
+                                String SellerId = mainList.get(finalI).getMatchedResult().get(finalJ).getSearchId()
+                                        + "," + VehiId;
+                                mApiCall.removeFromFavorite(myContact, "", 0, SellerId, 0);
+                                mFavimg.setVisibility(View.GONE);
+                                unmFavimg.setVisibility(View.VISIBLE);
+                                mainList.get(finalI).getMatchedResult().get(finalJ).setFavstatus("no");
                             }
 
 

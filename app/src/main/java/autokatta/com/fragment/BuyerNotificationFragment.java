@@ -297,6 +297,7 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
                         final ImageView buyer_lead_image = (ImageView) mLinearView2.findViewById(R.id.buyer_lead_image);
                         final ImageView callbuyer = (ImageView) mLinearView2.findViewById(R.id.callbuyer);
                         final ImageView favouritebuyer = (ImageView) mLinearView2.findViewById(R.id.favouritebuyer);
+                        final ImageView unfavouritebuyer = (ImageView) mLinearView2.findViewById(R.id.unfavouritebuyer);
 
                         TextView mItemNameCity = (TextView) mLinearView2.findViewById(R.id.namecity);
                         CheckBox checkBox1 = (CheckBox) mLinearView2.findViewById(R.id.checkBox1);
@@ -357,10 +358,11 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
                         final String lastcall = mainList.get(i).getFound().get(j).getLastcall();
 
                         if (favStatus.equalsIgnoreCase("yes")) {
-                            favouritebuyer.setImageResource(R.drawable.fav2);
-                            favouritebuyer.setEnabled(false);
+                            unfavouritebuyer.setVisibility(View.VISIBLE);
+                            favouritebuyer.setVisibility(View.GONE);
                         } else {
-                            favouritebuyer.setImageResource(R.drawable.fav1);
+                            unfavouritebuyer.setVisibility(View.GONE);
+                            favouritebuyer.setVisibility(View.VISIBLE);
                         }
 
 
@@ -571,10 +573,11 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
 
 
                         if (mainList.get(finalI).getFound().get(finalJ).getFavstatus().equalsIgnoreCase("yes")) {
-                            favouritebuyer.setImageResource(R.drawable.fav2);
-                            favouritebuyer.setEnabled(false);
+                            unfavouritebuyer.setVisibility(View.VISIBLE);
+                            favouritebuyer.setVisibility(View.GONE);
                         } else {
-                            favouritebuyer.setImageResource(R.drawable.fav1);
+                            unfavouritebuyer.setVisibility(View.GONE);
+                            favouritebuyer.setVisibility(View.VISIBLE);
                         }
 
                         favouritebuyer.setOnClickListener(new View.OnClickListener() {
@@ -583,10 +586,32 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
                                 String searchid = String.valueOf(mainList.get(finalI).getFound().get(finalJ).getSearchId());
                                 String BuyerId = String.valueOf(mainList.get(finalI).getFound().get(finalJ).getVehicleId())
                                         + "," + searchid;
+
+
                                 mApiCall.addToFavorite(myContact, BuyerId, 0, "", 0);
-                                favouritebuyer.setImageResource(R.drawable.fav2);
+                                unfavouritebuyer.setVisibility(View.VISIBLE);
+                                favouritebuyer.setVisibility(View.GONE);
 
                                 mainList.get(finalI).getFound().get(finalJ).setFavstatus("yes");
+                            }
+
+
+                        });
+
+
+                        unfavouritebuyer.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                String searchid = String.valueOf(mainList.get(finalI).getFound().get(finalJ).getSearchId());
+                                String BuyerId = String.valueOf(mainList.get(finalI).getFound().get(finalJ).getVehicleId())
+                                        + "," + searchid;
+
+
+                                mApiCall.removeFromFavorite(myContact, BuyerId, 0, "", 0);
+                                favouritebuyer.setVisibility(View.VISIBLE);
+                                unfavouritebuyer.setVisibility(View.GONE);
+
+                                mainList.get(finalI).getFound().get(finalJ).setFavstatus("no");
                             }
 
 
@@ -628,6 +653,24 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
 
     @Override
     public void notifyString(String str) {
+
+        if (str != null) {
+            switch (str) {
+
+                case "success_favourite":
+                    CustomToast.customToast(getActivity(), "Favorite");
+                /*mLike.setVisibility(View.GONE);
+                mUnlike.setVisibility(View.VISIBLE);*/
+                    //mLikestr = "no";
+                    break;
+                case "success_remove":
+                    CustomToast.customToast(getActivity(), "Unfavorite");
+                /*mLike.setVisibility(View.GONE);
+                mUnlike.setVisibility(View.VISIBLE);*/
+                    //mLikestr = "no";
+                    break;
+            }
+        }
 
     }
 

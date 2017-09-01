@@ -57,7 +57,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dip"
                 android:layout_marginTop="2dip"
-                android:text="@string/brand"
+                android:text="@string/brand_no"
                 android:textColor="#808080"
                 android:textStyle="bold" />
 

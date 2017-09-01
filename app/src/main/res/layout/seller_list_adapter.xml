@@ -133,14 +133,14 @@
             android:visibility="visible" />
 
         <ImageView
-            android:id="@+id/deletefav"
+            android:id="@+id/sellunfevimg"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_below="@+id/sellvehicalimgflicker"
             android:layout_marginEnd="10dp"
             android:layout_marginTop="10dp"
             android:layout_toStartOf="@+id/sellcallimg"
-            android:background="@drawable/ic_delete"
+            android:background="@drawable/fav2"
             android:contentDescription="@string/app_name"
             android:visibility="gone" />
 

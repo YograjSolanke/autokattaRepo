@@ -20,6 +20,9 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+
 import java.io.File;
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
@@ -181,10 +184,10 @@ public class GroupNotificationAdapter extends RecyclerView.Adapter<RecyclerView.
                         notificationList.get(position).getSenderPicture().equals("null")) {
                     mGroupHolder.mUserPic.setBackgroundResource(R.mipmap.profile);
                 } else {
-                    /*Glide.with(mActivity)
-                            .load("http://autokatta.com/mobile/profile_profile_pics/" + notificationList.get(position).getSenderPicture())
+                    Glide.with(mActivity)
+                            .load(mActivity.getString(R.string.base_image_url) + notificationList.get(position).getSenderPicture())
                             .diskCacheStrategy(DiskCacheStrategy.ALL) //For caching diff versions of image.
-                            .into(mGroupHolder.mUserPic);*/
+                            .into(mGroupHolder.mUserPic);
                 }
 
                /* Group pic */
@@ -193,10 +196,10 @@ public class GroupNotificationAdapter extends RecyclerView.Adapter<RecyclerView.
                         notificationList.get(position).getGroupImage().equals("null")) {
                     mGroupHolder.mGroupImage.setBackgroundResource(R.drawable.group);
                 } else {
-                    /*Glide.with(mActivity)
-                            .load("http://autokatta.com/mobile/profile_profile_pics/" + notificationList.get(position).getGroupImage())
+                    Glide.with(mActivity)
+                            .load(mActivity.getString(R.string.base_image_url) + notificationList.get(position).getGroupImage())
                             .diskCacheStrategy(DiskCacheStrategy.ALL) //For caching diff versions of image.
-                            .into(mGroupHolder.mGroupImage);*/
+                            .into(mGroupHolder.mGroupImage);
                 }
 
                 /* Fav & Unfav Functionality */
@@ -276,10 +279,10 @@ public class GroupNotificationAdapter extends RecyclerView.Adapter<RecyclerView.
                         notificationList.get(position).getSenderPicture().equals("null")) {
                     mUpVehicleHolder.mUserPic.setBackgroundResource(R.drawable.logo48x48);
                 } else {
-                    /*Glide.with(mActivity)
-                            .load("http://autokatta.com/mobile/profile_profile_pics/" + notificationList.get(position).getSenderPicture())
+                    Glide.with(mActivity)
+                            .load(mActivity.getString(R.string.base_image_url) + notificationList.get(position).getSenderPicture())
                             .diskCacheStrategy(DiskCacheStrategy.ALL) //For caching diff versions of image.
-                            .into(mProfileHolder.mProfileImage);*/
+                            .into(mUpVehicleHolder.mUserPic);
                 }
 
         /* Vehicle pic */
@@ -289,10 +292,10 @@ public class GroupNotificationAdapter extends RecyclerView.Adapter<RecyclerView.
                         notificationList.get(position).getUpVehicleImage().equals("null")) {
                     mUpVehicleHolder.mVehicleImage.setBackgroundResource(R.drawable.vehiimg);
                 } else {
-                    /*Glide.with(mActivity)
-                            .load("http://autokatta.com/mobile/profile_profile_pics/" + notificationList.get(position).getUpVehicleImage())
+                    Glide.with(mActivity)
+                            .load(mActivity.getString(R.string.base_image_url) + notificationList.get(position).getUpVehicleImage())
                             .diskCacheStrategy(DiskCacheStrategy.ALL) //For caching diff versions of image.
-                            .into(mUpVehicleHolder.mVehicleImage);*/
+                            .into(mUpVehicleHolder.mVehicleImage);
                 }
 
                /* mUpVehicleHolder.mCall.setOnClickListener(new View.OnClickListener() {

@@ -31,6 +31,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Random;
 
 import autokatta.com.R;
@@ -107,7 +108,7 @@ public class CreateServiceMelaFragment extends Fragment implements RequestNotifi
         eventlocation.setAdapter(new GooglePlacesAdapter(getActivity(), R.layout.simple));
 
 
-        textevent.setText("Create Service Mela");
+        textevent.setText("Create Service Mela Event");
         picture.setImageResource(R.mipmap.service);
 
         return createServiceView;
@@ -151,10 +152,10 @@ public class CreateServiceMelaFragment extends Fragment implements RequestNotifi
                 }
 
                 //date comparision
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
                 Date now = new Date();
                 String dateString = sdf.format(now);
-                SimpleDateFormat tm = new SimpleDateFormat("hh:mm a");
+                SimpleDateFormat tm = new SimpleDateFormat("hh:mm a", Locale.getDefault());
                 String time = tm.format(Calendar.getInstance().getTime());
 
                 System.out.println("current date=" + dateString);
