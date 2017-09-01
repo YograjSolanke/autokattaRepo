@@ -244,7 +244,7 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
                         Date date = inputFormat.parse(mainList.get(i).getDate());
                         String output = outputFormat.format(date);
                         System.out.println("jjj" + output);
-                        mUploadDate.setText(output);
+                        mUploadDate.setText("Uploaded On :" + output);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

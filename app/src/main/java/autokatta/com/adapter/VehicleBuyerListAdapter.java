@@ -40,10 +40,10 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class VehicleBuyerListAdapter extends RecyclerView.Adapter<VehicleBuyerListAdapter.BuyerHolder> implements RequestNotifier {
     Activity activity;
-    List<BuyerResponse.Success.Found> foundList;
-    String vcategory, brand, vmodel, manufacture_year, rto_city;
-    String recieverContact, srchid, BuyerId;
-    String calldate;
+    private List<BuyerResponse.Success.Found> foundList;
+    private String vcategory, brand, vmodel, manufacture_year, rto_city;
+    private String recieverContact, srchid, BuyerId;
+    private String calldate;
     int vehicle_id;
     String myContact;
     ApiCall apicall;
@@ -61,15 +61,12 @@ public class VehicleBuyerListAdapter extends RecyclerView.Adapter<VehicleBuyerLi
         apicall = new ApiCall(activity, this);
         myContact = activity.getSharedPreferences(activity.getString(R.string.my_preference), MODE_PRIVATE)
                 .getString("loginContact", "");
-
-
     }
 
     @Override
     public VehicleBuyerListAdapter.BuyerHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.buyer_list_adapter, parent, false);
-        BuyerHolder holder = new BuyerHolder(view);
-        return holder;
+        return new BuyerHolder(view);
     }
 
     @Override
