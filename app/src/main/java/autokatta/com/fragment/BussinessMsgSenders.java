@@ -206,6 +206,8 @@ public class BussinessMsgSenders extends Fragment implements SwipeRefreshLayout.
                 for (BroadcastReceivedResponse.Success msenders : mGetBroadcastReceiver.getSuccess()) {
                     msenders.setSender(msenders.getSender());
                     msenders.setSendername(msenders.getSendername());
+                    msenders.setMessage(msenders.getMessage());
+                    msenders.setDate(msenders.getDate());
                     mSuccesses.add(msenders);
                 }
                 mMsgReplyAdapter = new BussinessMsgSendersAdapter(getActivity(), mSuccesses, product_id, service_id, vehicle_id,bundle_keyword,bundle_title,bundle_price,bundle_category,bundle_brand,bundle_model,image);

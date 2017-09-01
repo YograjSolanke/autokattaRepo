@@ -33,6 +33,13 @@ public class BroadcastReceivedResponse {
         @Expose
         private String sendername;
 
+        @SerializedName("message")
+        @Expose
+        private String message;
+        @SerializedName("date")
+        @Expose
+        private String date;
+
         public String getSender() {
             return sender;
         }
@@ -49,5 +56,20 @@ public class BroadcastReceivedResponse {
             this.sendername = sendername;
         }
 
+        public String getMessage() {
+            return message;
+        }
+
+        public void setMessage(String message) {
+            this.message = message;
+        }
+
+        public String getDate() {
+            return date;
+        }
+
+        public void setDate(String date) {
+            this.date = date;
+        }
     }
 }
