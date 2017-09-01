@@ -1,12 +1,14 @@
 package autokatta.com.fragment;
 
-import android.content.Context;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,6 +38,8 @@ import autokatta.com.other.CustomToast;
 import autokatta.com.response.WallResponse;
 import retrofit2.Response;
 
+import static android.content.Context.MODE_PRIVATE;
+
 /**
  * Created by ak-001 on 17/3/17.
  */
@@ -53,6 +57,9 @@ public class WallNotificationFragment extends Fragment implements SwipeRefreshLa
     private String mLoginContact = "";
     ConnectionDetector mConnectionDetector;
     Button mRetry;
+    Locale myLocale;
+    String mLanguage;
+    String mMarathiStr, mEnglishStr;
 
     public WallNotificationFragment() {
         //Empty Constructor...
@@ -87,8 +94,11 @@ public class WallNotificationFragment extends Fragment implements SwipeRefreshLa
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                mLoginContact = getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).
+                mLoginContact = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).
                         getString("loginContact", "");
+                mLanguage = getActivity().getSharedPreferences(getString(R.string.firstRun), MODE_PRIVATE).getString("Language", "");
+                Log.i("Language", "->" + mLanguage);
+                setLocale(mLanguage);
                 mNoData = (TextView) mWallNotify.findViewById(R.id.no_category);
                 layout = (LinearLayout) mWallNotify.findViewById(R.id.no_connection);
                 mRetry = (Button) mWallNotify.findViewById(R.id.retry);
@@ -145,6 +155,24 @@ public class WallNotificationFragment extends Fragment implements SwipeRefreshLa
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void setLocale(String language) {
+        Log.i("Languageset1", "->" + mLanguage);
+        myLocale = new Locale(language);
+        saveLocale(language);
+        Log.i("Languageset2", "->" + mLanguage);
+        Resources resources = getResources();
+        DisplayMetrics displayMetrics = resources.getDisplayMetrics();
+        Configuration configuration = resources.getConfiguration();
+        configuration.locale = myLocale;
+        resources.updateConfiguration(configuration, displayMetrics);
+    }
+
+    private void saveLocale(String language) {
+        mLanguage = language;
+        Log.i("Languagesave", "->" + mLanguage);
+        getActivity().getSharedPreferences(getString(R.string.firstRun), MODE_PRIVATE).edit().putString("Language", language).apply();
     }
 
     @Override

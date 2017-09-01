@@ -65,6 +65,9 @@ public class RegistrationCompanyBasedrequest {
     @SerializedName("Password")
     @Expose
     private String password;
+    @SerializedName("InterestIDs")
+    @Expose
+    private String interestIDs;
 
     public int getRegID() {
         return regID;
@@ -218,6 +221,14 @@ public class RegistrationCompanyBasedrequest {
         this.password = password;
     }
 
+    public String getInterestIDs() {
+        return interestIDs;
+    }
+
+    public void setInterestIDs(String interestIDs) {
+        this.interestIDs = interestIDs;
+    }
+
     //update registration in continue registration
     public RegistrationCompanyBasedrequest(Integer Regid, Integer page, String profileImage, String about, String website) {
         this.regID = Regid;
@@ -230,7 +241,7 @@ public class RegistrationCompanyBasedrequest {
     //update company based registration
     public RegistrationCompanyBasedrequest(Integer Regid, Integer page, String area, String bykm, String bydistrict,
                                            String bystate, String company, String designation, String skills, String deals,
-                                           String categoryName, String subCategoryName, String brandName) {
+                                           String categoryName, String subCategoryName, String brandName, String interest) {
         this.regID = Regid;
         this.pageNo = page;
         this.areaOfOperation = area;
@@ -244,5 +255,6 @@ public class RegistrationCompanyBasedrequest {
         this.categoryName = categoryName;
         this.subCategoryName = subCategoryName;
         this.brandName = brandName;
+        this.interestIDs = interest;
     }
 }

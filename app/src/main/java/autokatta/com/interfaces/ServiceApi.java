@@ -1273,4 +1273,8 @@ public interface ServiceApi {
                                         @Query("StatusImage") String statusImage, @Query("StatusVideo") String statusVideo);
 
     Call<String> _autokattaSendQuotation(int vehicleId, int groupId, String reservePrice, String deadLineDate);
+
+    //Get Interest
+    @GET("GetAllInterest")
+    Call<GetAllInterestResponse> _autokattaGetInterest();
 }

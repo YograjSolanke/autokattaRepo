@@ -120,11 +120,7 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
         setContentView(R.layout.activity_autokatta_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        sharedPreferences = getSharedPreferences(getString(R.string.firstRun), MODE_PRIVATE);
-        mLanguage = getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("Language", "");
-        Log.i("Language", "->" + mLanguage);
-        setLocale(mLanguage);
-        session = new SessionManagement(getApplicationContext());
+
         if (getSupportActionBar() != null) {
             getSupportActionBar().setElevation(0);
             getSupportActionBar().setHomeButtonEnabled(true);
@@ -133,6 +129,18 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
             //getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
         }
         fcmRegister();
+        sharedPreferences = getSharedPreferences(getString(R.string.firstRun), MODE_PRIVATE);
+        Log.i("Language", "->" + mLanguage);
+        session = new SessionManagement(getApplicationContext());
+        mLanguage = getSharedPreferences(getString(R.string.firstRun), MODE_PRIVATE).getString("Language", "");
+        setLocale(mLanguage);
+
+        /**
+         * Call this function whenever you want to check user login
+         * This will redirect user to LoginActivity is he is not
+         * logged in
+         * */
+        session.checkLogin();
         //intializing scan object
         qrScan = new IntentIntegrator(this);
 
@@ -369,6 +377,22 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
 
     }
 
+    /*
+    change language
+     */
+    public void changeLanguageClicked() {
+        String locale = (getResources().getConfiguration().locale.toString().toLowerCase().equals(Locale.US.toString().toLowerCase())) ? "mr" : Locale.US.toString();
+        Locale myLocale = new Locale(locale);
+        Resources res = getResources();
+        DisplayMetrics dm = res.getDisplayMetrics();
+        Configuration conf = res.getConfiguration();
+        conf.locale = myLocale;
+        res.updateConfiguration(conf, dm);
+        Intent refresh = new Intent(this, AutokattaMainActivity.class);
+        startActivity(refresh);
+        finish();
+    }
+
     private void setupViewPager(ViewPager viewPager) {
         TabAdapter adapter = new TabAdapter(getSupportFragmentManager());
         adapter.addFragment(new WallNotificationFragment());
@@ -469,68 +493,6 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
                 });
     }
 
-    private void setLocale(String language) {
-        myLocale = new Locale(language);
-        saveLocale(language);
-        Resources resources = getResources();
-        DisplayMetrics displayMetrics = resources.getDisplayMetrics();
-        Configuration configuration = resources.getConfiguration();
-        configuration.locale = myLocale;
-        resources.updateConfiguration(configuration, displayMetrics);
-    }
-
-    private void saveLocale(String language) {
-        mLanguage = language;
-        getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("Language", language).apply();
-    }
-
-    private void openDialog() {
-        LayoutInflater layoutInflater = LayoutInflater.from(this);
-        View view = layoutInflater.inflate(R.layout.change_language_title, null);
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Ayurveda Care");
-        builder.setIcon(R.drawable.logo48x48);
-        builder.setView(view);
-
-        final TextView mMarathi = (TextView) view.findViewById(R.id.marathi);
-        final TextView mEnglish = (TextView) view.findViewById(R.id.english);
-
-        mMarathi.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mMarathiStr = mMarathi.getText().toString();
-                mMarathi.setBackgroundColor(Color.parseColor("#f7f7f7"));
-                setLocale("mr");
-            }
-        });
-
-        mEnglish.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mEnglishStr = mEnglish.getText().toString();
-                mEnglish.setBackgroundColor(Color.parseColor("#f7f7f7"));
-                setLocale("en");
-            }
-        });
-
-        builder.setCancelable(false)
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        Intent refresh = new Intent(getApplicationContext(), AutokattaMainActivity.class);
-                        startActivity(refresh);
-                        finish();
-                    }
-                }).setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                dialogInterface.cancel();
-            }
-        });
-        AlertDialog alertDialog = builder.create();
-        alertDialog.show();
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -582,6 +544,67 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
         super.onConfigurationChanged(newConfig);
     }
 
+    private void setLocale(String language) {
+        myLocale = new Locale(language);
+        saveLocale(language);
+        Resources resources = getResources();
+        DisplayMetrics displayMetrics = resources.getDisplayMetrics();
+        Configuration configuration = resources.getConfiguration();
+        configuration.locale = myLocale;
+        resources.updateConfiguration(configuration, displayMetrics);
+    }
+
+    private void saveLocale(String language) {
+        mLanguage = language;
+        getSharedPreferences(getString(R.string.firstRun), MODE_PRIVATE).edit().putString("Language", language).apply();
+    }
+
+    private void openDialog() {
+        LayoutInflater layoutInflater = LayoutInflater.from(this);
+        View view = layoutInflater.inflate(R.layout.change_language_title, null);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Ayurveda Care");
+        builder.setIcon(R.drawable.logo48x48);
+        builder.setView(view);
+
+        final TextView mMarathi = (TextView) view.findViewById(R.id.marathi);
+        final TextView mEnglish = (TextView) view.findViewById(R.id.english);
+
+        mMarathi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mMarathiStr = mMarathi.getText().toString();
+                mMarathi.setBackgroundColor(Color.parseColor("#f7f7f7"));
+                setLocale("mr");
+            }
+        });
+
+        mEnglish.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mEnglishStr = mEnglish.getText().toString();
+                mEnglish.setBackgroundColor(Color.parseColor("#f7f7f7"));
+                setLocale("en");
+            }
+        });
+
+        builder.setCancelable(false)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Intent refresh = new Intent(getApplicationContext(), AutokattaMainActivity.class);
+                        finish();
+                        startActivity(refresh);
+                    }
+                }).setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.cancel();
+            }
+        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
     /*
     On Back Pressed...
      */
@@ -620,6 +643,9 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
     @Override
     protected void onResume() {
         super.onResume();
+        setLocale(mLanguage);
+        invalidateOptionsMenu();
+        //changeLanguageClicked();
         if (sharedPreferences.getBoolean("firstRun", true)) {
             //You can perform anything over here. This will call only first time
             startActivity(new Intent(getApplicationContext(), RegistrationContinue.class));

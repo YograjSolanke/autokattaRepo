@@ -10,36 +10,50 @@ import android.widget.Button;
 import com.google.android.flexbox.FlexboxLayout;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import autokatta.com.R;
+import autokatta.com.apicall.ApiCall;
+import autokatta.com.interfaces.RequestNotifier;
+import autokatta.com.response.GetAllInterestResponse;
 import fisk.chipcloud.ChipCloud;
 import fisk.chipcloud.ChipCloudConfig;
 import fisk.chipcloud.ChipListener;
+import retrofit2.Response;
 
-public class AddTags extends AppCompatActivity {
+public class AddTags extends AppCompatActivity implements RequestNotifier {
 
     private static final String TAG = "DemoActivity";
     ChipCloud chipCloud;
     List<String> lst = new ArrayList<>();
+    HashMap<String, Integer> hashMap = new HashMap<>();
+    List<String> mInterestResponse = new ArrayList<>();
     List<String> lst1 = new ArrayList<>();
+    String numberString = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_tags);
+        getInterest();
         Button mOk = (Button) findViewById(R.id.ok);
         mOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                numberString = "";
+                for (int i = 0; i < lst.size(); i++) {
+                    if (numberString.equalsIgnoreCase("")) {
+                        numberString = lst.get(i);
+                    } else {
+                        numberString = numberString + "," + lst.get(i);
+                    }
+                }
+                getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit()
+                        .putString("interest", numberString).apply();
                 finish();
             }
         });
-
-        lst1.add("1");
-        lst1.add("5");
-        lst1.add("7");
-        lst1.add("12");
         FlexboxLayout flexbox = (FlexboxLayout) findViewById(R.id.flexbox);
 
         ChipCloudConfig config = new ChipCloudConfig()
@@ -51,15 +65,15 @@ public class AddTags extends AppCompatActivity {
 
         chipCloud = new ChipCloud(this, flexbox, config);
 
-        chipCloud.addChip("HelloWorld!");
+        //chipCloud.addChip("HelloWorld!");
 
 
-        String[] demoArray = getResources().getStringArray(R.array.demo_array);
-        chipCloud.addChips(demoArray);
+        //String[] demoArray = getResources().getStringArray(R.array.demo_array);
 
-        for (int i = 0; i < lst1.size(); i++) {
+
+        /*for (int i = 0; i < lst1.size(); i++) {
             chipCloud.setChecked(Integer.parseInt(lst1.get(i)));
-        }
+        }*/
         //chipCloud.setChecked(2);
 
         //String label = chipCloud.getLabel(2);
@@ -69,19 +83,71 @@ public class AddTags extends AppCompatActivity {
             @Override
             public void chipCheckedChange(int index, boolean checked, boolean userClick) {
                 if (userClick) {
-                    Log.d(TAG, String.format("chipCheckedChange Label at index: %d checked: %s", index, checked));
-                    Log.i("asdf", "->" + chipCloud.getLabel(index));
+                    //Log.d(TAG, String.format("chipCheckedChange Label at index: %d checked: %s", index, checked));
+                    //Log.i("asdf", "->" + chipCloud.getLabel(index));
+                    String id = String.valueOf(hashMap.get(mInterestResponse.get(index)));
                     if (checked) {
-                        lst.add(chipCloud.getLabel(index));
-                        Log.i("added", "->" + lst.toString());
-                        Log.i("addedidx", "->" + index);
+                        lst.add(id);
+                        /*Log.i("added", "->" + lst.toString());
+                        Log.i("addedidx", "->" + id);*/
+
                     } else {
-                        lst.remove(chipCloud.getLabel(index));
-                        Log.i("removed", "->" + lst.toString());
-                        Log.i("removedidx", "->" + index);
+                        lst.remove(id);
+                        /*Log.i("removed", "->" + lst.toString());
+                        Log.i("removedidx", "->" + index);*/
                     }
                 }
             }
         });
+        if (getIntent().getExtras().getString("interest") != null) {
+            String interest = getIntent().getExtras().getString("interest");
+            Log.i("inter", "->" + interest);
+            String[] commaSplit = interest.split(",");
+            for (int i = 0; i < commaSplit.length; i++) {
+
+            }
+        } else {
+
+        }
+
+    }
+
+    private void getInterest() {
+        ApiCall apiCall = new ApiCall(this, this);
+        apiCall.getInterest();
+    }
+
+    @Override
+    public void notifySuccess(Response<?> response) {
+        if (response != null) {
+            if (response.isSuccessful()) {
+                GetAllInterestResponse interestResponse = (GetAllInterestResponse) response.body();
+                lst1.clear();
+                if (!interestResponse.getSuccess().isEmpty()) {
+                    for (GetAllInterestResponse.Success success : interestResponse.getSuccess()) {
+                        success.setInterestID(success.getInterestID());
+                        success.setTitle(success.getTitle());
+                        lst1.add(success.getTitle());
+                        hashMap.put(success.getTitle(), success.getInterestID());
+                    }
+                    mInterestResponse.addAll(lst1);
+                    chipCloud.addChips(lst1);
+                }
+            } else {
+
+            }
+        } else {
+
+        }
+    }
+
+    @Override
+    public void notifyError(Throwable error) {
+
+    }
+
+    @Override
+    public void notifyString(String str) {
+
     }
 }

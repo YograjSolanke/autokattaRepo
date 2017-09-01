@@ -375,9 +375,17 @@
 
             </RelativeLayout>
 
-            <me.gujun.android.taggroup.TagGroup
+            <TextView
+                android:id="@+id/count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/app_name"
+                android:textColor="@color/text_color"
+                android:layout_marginEnd="@dimen/activity_half_margin"
+                android:textSize="@dimen/text_about" />
+            <!--<me.gujun.android.taggroup.TagGroup
                 android:id="@+id/tag_group"
-                style="@style/TagGroup" />
+                style="@style/TagGroup" />-->
         </LinearLayout>
 
         <View

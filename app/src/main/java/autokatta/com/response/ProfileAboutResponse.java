@@ -83,6 +83,9 @@ public class ProfileAboutResponse {
         @SerializedName("skills")
         @Expose
         private String skills;
+        @SerializedName("interests")
+        @Expose
+        private String interests;
         @SerializedName("likecount")
         @Expose
         private String likecount;
@@ -95,8 +98,6 @@ public class ProfileAboutResponse {
         @SerializedName("followstatus")
         @Expose
         private String followstatus;
-
-
 
         public String getId() {
             return id;
@@ -282,5 +283,12 @@ public class ProfileAboutResponse {
             this.followstatus = followstatus;
         }
 
+        public String getInterests() {
+            return interests;
+        }
+
+        public void setInterests(String interests) {
+            this.interests = interests;
+        }
     }
 }

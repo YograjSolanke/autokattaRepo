@@ -710,7 +710,7 @@ public class CompanyBasedRegistrationActivity extends AppCompatActivity implemen
 
                 } else {
                     mApiCall.updateRegistration(RegiId, page, strArea, strKms, strDistrict, strState, autoCompany.getText().toString(), autoDesignation.getText().toString(), Skills, Deals,
-                            "", "", "");
+                            "", "", "", getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("interest", ""));
                 }
 
                 break;

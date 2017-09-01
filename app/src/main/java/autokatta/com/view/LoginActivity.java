@@ -58,7 +58,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         setContentView(R.layout.activity_login);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        mSharedPreferences = getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE);
+        mSharedPreferences = getSharedPreferences(getString(R.string.firstRun), MODE_PRIVATE);
 
         session = new SessionManagement(getApplicationContext());
         if (session.isLoggedIn()) {
@@ -149,7 +149,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void saveLocale(String language) {
-        SharedPreferences prefs = getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE);
+        SharedPreferences prefs = getSharedPreferences(getString(R.string.firstRun), MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString("Language", language);
         editor.apply();

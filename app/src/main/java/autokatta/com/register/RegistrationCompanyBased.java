@@ -902,7 +902,8 @@ public class RegistrationCompanyBased extends AppCompatActivity implements Reque
                                 startActivity(intent, options.toBundle());
                                 mApiCall.updateRegistration(regiId, page, strArea, strKms, strDistrict, strState,
                                         strCompany, strDesignation, strSkill, strDeal, categoryName,
-                                        subCategoryName, brandName);
+                                        subCategoryName, brandName,
+                                        getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("interest", ""));
                             }
                         })
                 .setNegativeButton("No",
@@ -915,7 +916,7 @@ public class RegistrationCompanyBased extends AppCompatActivity implements Reque
                                 startActivity(i, options.toBundle());
                                 mApiCall.updateRegistration(regiId, page, strArea, strKms, strDistrict, strState,
                                         strCompany, strDesignation, strSkill, strDeal, categoryName,
-                                        subCategoryName, brandName);
+                                        subCategoryName, brandName, getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("interest", ""));
                             }
                         });
 

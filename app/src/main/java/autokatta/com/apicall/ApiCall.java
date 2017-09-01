@@ -2591,7 +2591,7 @@ Upload Vehicle
 
     public void updateRegistration(int Regid, int page, String area, String bykm, String bydistrict,
                                    String bystate, String company, String designation, String skills, String deals,
-                                   String categoryName, String subCategoryName, String brandName) {
+                                   String categoryName, String subCategoryName, String brandName, String interest) {
         //JSON to Gson conversion
         Gson gson = new GsonBuilder()
                 .setLenient()
@@ -2607,7 +2607,7 @@ Upload Vehicle
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
                 RegistrationCompanyBasedrequest registrationCompanyBasedrequest = new RegistrationCompanyBasedrequest(Regid, page, area, bykm,
-                        bydistrict, bystate, company, designation, skills, deals, categoryName, subCategoryName, brandName);
+                        bydistrict, bystate, company, designation, skills, deals, categoryName, subCategoryName, brandName, interest);
 
                 Call<String> mUpdateRegistration = serviceApi._autokattaUpdateCompanyRegistration(registrationCompanyBasedrequest);
                 mUpdateRegistration.enqueue(new Callback<String>() {
@@ -8180,6 +8180,38 @@ get ExchangeMela Analytics Data
         }
     }
 
+    /*
+    Get All Interest...
+     */
+    public void getInterest() {
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<GetAllInterestResponse> mPostResponse = serviceApi._autokattaGetInterest();
+                mPostResponse.enqueue(new Callback<GetAllInterestResponse>() {
+                    @Override
+                    public void onResponse(Call<GetAllInterestResponse> call, Response<GetAllInterestResponse> response) {
+                        mNotifier.notifySuccess(response);
+                    }
+
+                    @Override
+                    public void onFailure(Call<GetAllInterestResponse> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+            } else {
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     /***
      * Retrofit Logs
      ***/

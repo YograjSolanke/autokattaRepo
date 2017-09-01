@@ -39,6 +39,7 @@ import autokatta.com.adapter.GooglePlacesAdapter;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.generic.GenericFunctions;
 import autokatta.com.interfaces.RequestNotifier;
+import autokatta.com.other.AddTags;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.CategoryResponse;
 import autokatta.com.response.GetCompaniesResponse;
@@ -61,12 +62,12 @@ public class About extends Fragment implements RequestNotifier {
     ImageView mDone;
     ImageView mEdit;
     EditText mWebsite, mEmail;
-    TextView mContact, mProfession, msubprofession, mEditTags;
+    TextView mContact, mProfession, msubprofession, mEditTags, mCount;
     AutoCompleteTextView mCompany, mDesignation, mCity;
     MultiAutoCompleteTextView mSkills;
     String newcompanyname, newdesignation, newskills, strCompany, strDesignation, strskills;
 
-    String userName, email, contact, profession, company, designation, subProfession, websitestr, city, skills;
+    String userName, email, contact, profession, company, designation, subProfession, websitestr, city, skills, interest;
     String mUpdatedEmail, mUpdatedProfession, mUpdatedCompany, mUpdatedDesignation, mUpdatedSkills, mUpdatedSkills1, mUpdatedCity, mUpdatedWebsite;
 
     final ArrayList<String> mSkillList = new ArrayList<>();
@@ -174,7 +175,7 @@ public class About extends Fragment implements RequestNotifier {
                         city = mProfileAboutResponse.getSuccess().get(0).getCity();
                         skills = mProfileAboutResponse.getSuccess().get(0).getSkills();
                         RegId = mProfileAboutResponse.getSuccess().get(0).getRegId();
-
+                        interest = mProfileAboutResponse.getSuccess().get(0).getInterests();
 
                         mContact.setText(contact);
                         Log.i("RegId-->", "   --->" + RegId);
@@ -197,6 +198,16 @@ public class About extends Fragment implements RequestNotifier {
                         mCompany.setText(company);
                         mDesignation.setText(designation);
                         mSkills.setText(skills);
+
+                        if (interest.contains(",")) {
+                            String[] commaSplit = interest.split(",");
+                            /*for (int i=0; i<commaSplit.length; i++){
+                                Log.i("Splited","->"+commaSplit[i]);
+                            }*/
+                            mCount.setText("You have added " + commaSplit.length + " interest");
+                        } else {
+                            mCount.setText("You have added " + interest.length() + " interest");
+                        }
                     }
                 } else if (response.body() instanceof GetCompaniesResponse) {
                     GetCompaniesResponse mGetCompanyList = (GetCompaniesResponse) response.body();
@@ -347,9 +358,10 @@ public class About extends Fragment implements RequestNotifier {
             public void run() {
                 Sharedcontact = getActivity().getSharedPreferences(getString(R.string.my_preference),
                         MODE_PRIVATE).getString("loginContact", "");
-                mTagGroup = (TagGroup) mAbout.findViewById(R.id.tag_group);
-                mTagGroup.setTags(tags);
+                //mTagGroup = (TagGroup) mAbout.findViewById(R.id.tag_group);
+                //mTagGroup.setTags(tags);
                 mContact = (TextView) mAbout.findViewById(R.id.contact_no);
+                mCount = (TextView) mAbout.findViewById(R.id.count);
                 mEditTags = (TextView) mAbout.findViewById(R.id.editTags);
                 mProfession = (TextView) mAbout.findViewById(R.id.worked_at);
                 msubprofession = (TextView) mAbout.findViewById(R.id.subprofession);
@@ -625,8 +637,11 @@ public class About extends Fragment implements RequestNotifier {
                 mEditTags.setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(getActivity(), EditTags.class);
+                        /*Intent intent = new Intent(getActivity(), EditTags.class);
                         intent.putExtra("stringArray", tags);
+                        startActivity(intent);*/
+                        Intent intent = new Intent(getActivity(), AddTags.class);
+                        intent.putExtra("interest", interest);
                         startActivity(intent);
                     }
                 });
