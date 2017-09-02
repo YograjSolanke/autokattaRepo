@@ -109,12 +109,21 @@ public class StoreInfo extends Fragment implements RequestNotifier, View.OnClick
                         storeName.setText(success.getName());
                         StoreContact = success.getContact();
                         storeLocation.setText(success.getLocation());
+                        if (!success.getWebsite().equals(""))
                         storeWebsite.setText(success.getWebsite());
+                        else
+                            storeWebsite.setText("No Website Found");
                         storeWorkDays.setText(success.getWorkingDays());
                         storeOpen.setText(success.getStoreOpenTime());
                         storeClose.setText(success.getStoreCloseTime());
+                        if (!success.getAddress().equals(""))
                         storeAddress.setText(success.getAddress());
+                        else
+                            storeAddress.setText("No Address");
+                        if (!success.getStoreDescription().equals(""))
                         storeDescription.setText(success.getStoreDescription());
+                        else
+                            storeDescription.setText("No Description");
                         storeType.setText(success.getStoreType());
                         storeServiceOffered.setText(success.getCategory());
                         editbrandtags.setText(success.getBrandtags());
