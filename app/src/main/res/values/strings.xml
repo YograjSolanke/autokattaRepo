@@ -246,6 +246,7 @@
     <string name="standard_cloud">Standard cloud using FlexboxLayout with dividerDrawable:</string>
     <string name="horizontalscrollview_example">HorizontalScrollView with useInsetPadding config:</string>
     <string-array name="demo_array">
+        <item>Select Interest From Given Tags Only</item>
         <item>Launch</item>
         <item>Review</item>
         <item>Demo</item>

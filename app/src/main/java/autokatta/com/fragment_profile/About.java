@@ -70,13 +70,13 @@ public class About extends Fragment implements RequestNotifier {
     String userName, email, contact, profession, company, designation, subProfession, websitestr, city, skills, interest;
     String mUpdatedEmail, mUpdatedProfession, mUpdatedCompany, mUpdatedDesignation, mUpdatedSkills, mUpdatedSkills1, mUpdatedCity, mUpdatedWebsite;
 
-    final ArrayList<String> mSkillList = new ArrayList<>();
+    final List<String> mSkillList = new ArrayList<>();
     final HashMap<String, String> mSkillList1 = new HashMap<>();
 
-    final ArrayList<String> mCompanyList = new ArrayList<>();
+    final List<String> mCompanyList = new ArrayList<>();
     final HashMap<String, Integer> mCompanyList1 = new HashMap<>();
 
-    final ArrayList<String> mDesignationList = new ArrayList<>();
+    final List<String> mDesignationList = new ArrayList<>();
     final HashMap<String, String> mDesignationList1 = new HashMap<>();
 
     List<String> parsedDataCompany = new ArrayList<>();
@@ -96,30 +96,6 @@ public class About extends Fragment implements RequestNotifier {
     LinearLayout mLinear;
     GenericFunctions mGenericFunctions;
     private TagGroup mTagGroup;
-    String tags[] = {"Launch",
-            "Review",
-            "Demo",
-            "News",
-            "Buying",
-            "Selling",
-            "Spare Parts",
-            "Vehicles",
-            "Accessories",
-            "New Vehicle",
-            "Used Vehicle",
-            "Auction",
-            "Racing",
-            "Auto Sports",
-            "Information",
-            "Jobs",
-            "Car pool",
-            "Others",
-            "2 wheelers",
-            "3 wheelers",
-            "Cars",
-            "Trucks",
-            "Transport & Cargo",
-            "Construction Equipment"};
 
     @Override
     public void onAttach(Context context) {
@@ -183,7 +159,7 @@ public class About extends Fragment implements RequestNotifier {
                         if (subProfession == null || subProfession.equalsIgnoreCase("Select Category")) {
                             msubprofession.setText("NA");
                         } else {
-                            msubprofession.setText("Sub Profession- " + subProfession);
+                            msubprofession.setText("" + "Sub Profession- " + subProfession);
                         }
                         mProfession.setText(profession);
                         if (profession != "Student" || !profession.equalsIgnoreCase("Student")) {
@@ -323,10 +299,10 @@ public class About extends Fragment implements RequestNotifier {
     public void notifyString(String str) {
         if (!str.equals("")) {
             if (str.equals("success_update")) {
-                CustomToast.customToast(getActivity(), "Profile Updated");
-                mApiCall.profileAbout(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""), getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""));
-             /*   mCity.setEnabled(false);
-                mCity.setFocusable(false);*/
+                if (isAdded())
+                    CustomToast.customToast(getActivity(), "Profile Updated");
+                mApiCall.profileAbout(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""),
+                        getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""));
             }
         }
     }
@@ -408,7 +384,7 @@ public class About extends Fragment implements RequestNotifier {
                     public boolean onKey(View view, int i, KeyEvent keyEvent) {
                         if ((keyEvent.getAction() == KeyEvent.ACTION_DOWN) &&
                                 (i == KeyEvent.KEYCODE_ENTER)) {
-                            mSkills.setText(mSkills.getText().toString() + ",");
+                            mSkills.setText("" + mSkills.getText().toString() + ",");
                             mSkills.setSelection(mSkills.getText().toString().length());
                             checkSkills();
                             return true;
@@ -447,6 +423,7 @@ public class About extends Fragment implements RequestNotifier {
                     public void onClick(View view) {
                         mDone.setVisibility(View.VISIBLE);
                         mEdit.setVisibility(View.GONE);
+                        mEditTags.setVisibility(View.VISIBLE);
                         if (profession.equalsIgnoreCase("Student")) {
                             student.setChecked(true);
                         } else if (profession.equalsIgnoreCase("Employee")) {
@@ -613,9 +590,16 @@ public class About extends Fragment implements RequestNotifier {
                                 mSkills.setError("Enter Skills Name");
                                 mSkills.requestFocus();
                             } else {
-                                mApiCall.updateProfile(RegId, mUpdatedEmail, mUpdatedCity, mUpdatedProfession, spinnervalue, mUpdatedWebsite, mUpdatedCompany, mUpdatedDesignation, mUpdatedSkills1);
+                                Log.i("InterestsAbout", getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
+                                        .getString("interest", interest));
+
+                                mApiCall.updateProfile(RegId, mUpdatedEmail, mUpdatedCity, mUpdatedProfession, spinnervalue, mUpdatedWebsite, mUpdatedCompany,
+                                        mUpdatedDesignation, mUpdatedSkills1, getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
+                                                .getString("interest", interest));
+
                                 mDone.setVisibility(View.GONE);
                                 mEdit.setVisibility(View.VISIBLE);
+                                mEditTags.setVisibility(View.GONE);
 
                                 mProfession.setEnabled(false);
                                 mContact.setEnabled(false);
@@ -637,9 +621,7 @@ public class About extends Fragment implements RequestNotifier {
                 mEditTags.setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        /*Intent intent = new Intent(getActivity(), EditTags.class);
-                        intent.putExtra("stringArray", tags);
-                        startActivity(intent);*/
+
                         Intent intent = new Intent(getActivity(), AddTags.class);
                         intent.putExtra("interest", interest);
                         startActivity(intent);
@@ -649,33 +631,9 @@ public class About extends Fragment implements RequestNotifier {
         });
     }
 
-   /* public void showMessage(Activity activity, String message) {
-        Snackbar snackbar = Snackbar.make(activity.findViewById(android.R.id.content),
-                message, Snackbar.LENGTH_LONG);
-        TextView textView = (TextView) snackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
-        textView.setTextColor(Color.RED);
-        snackbar.show();
+    @Override
+    public void onResume() {
+        super.onResume();
+        mApiCall.profileAbout(Sharedcontact, Sharedcontact);
     }
-
-    public void errorMessage(Activity activity, String message) {
-        Snackbar snackbar = Snackbar.make(activity.findViewById(android.R.id.content),
-                message, Snackbar.LENGTH_INDEFINITE)
-                .setAction("Retry", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        mApiCall.profileAbout(Sharedcontact, Sharedcontact);
-                        mApiCall.getSkills();
-                        mApiCall.getDesignation();
-                        mApiCall.getCompany();
-                        mApiCall.Categories("");
-                    }
-                });
-        // Changing message text color
-        snackbar.setActionTextColor(Color.BLUE);
-        // Changing action button text color
-        View sbView = snackbar.getView();
-        TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
-        textView.setTextColor(Color.WHITE);
-        snackbar.show();
-    }*/
 }

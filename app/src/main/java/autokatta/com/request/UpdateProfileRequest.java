@@ -37,13 +37,18 @@ public class UpdateProfileRequest {
     @Expose
     private String skills;
 
+    @SerializedName("InterestIDs")
+    @Expose
+    private String InterestIDs;
+
     public UpdateProfileRequest(int regID, String profilePicture, String userName) {
         this.regID = regID;
         this.profilePicture = profilePicture;
         this.userName = userName;
     }
 
-    public UpdateProfileRequest(int regID, String emialID, String city, String profession, String subProfession, String website, String companyName, String designation, String skills) {
+    public UpdateProfileRequest(int regID, String emialID, String city, String profession, String subProfession, String website, String companyName,
+                                String designation, String skills, String InterestIDs) {
         this.regID = regID;
         this.emialID = emialID;
         this.city = city;
@@ -53,8 +58,9 @@ public class UpdateProfileRequest {
         this.companyName = companyName;
         this.designation = designation;
         this.skills = skills;
-        this.userName=null;
-        this.profilePicture=null;
+        this.userName = null;
+        this.profilePicture = null;
+        this.InterestIDs = InterestIDs;
     }
 
     @SerializedName("ProfilePicture")
@@ -150,5 +156,17 @@ public class UpdateProfileRequest {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public void setRegID(int regID) {
+        this.regID = regID;
+    }
+
+    public String getInterestIDs() {
+        return InterestIDs;
+    }
+
+    public void setInterestIDs(String interestIDs) {
+        InterestIDs = interestIDs;
     }
 }

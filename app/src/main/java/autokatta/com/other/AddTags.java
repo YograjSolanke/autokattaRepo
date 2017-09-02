@@ -71,14 +71,20 @@ public class AddTags extends AppCompatActivity implements RequestNotifier {
 
         String[] demoArray = getResources().getStringArray(R.array.demo_array);
         chipCloud.addChips(demoArray);
+        chipCloud.deselectIndex(0);
 
         if (getIntent().getExtras() != null) {
-            String interest = getIntent().getExtras().getString("interest");
+            String interest = getIntent().getExtras().getString("interest", "");
             Log.i("inter", "->" + interest);
-            String[] commaSplit = interest.split(",");
-            for (int i = 0; i < commaSplit.length; i++) {
-                Log.i("intesadr", "->" + Integer.parseInt(commaSplit[i]));
-                chipCloud.setChecked(Integer.parseInt(commaSplit[i]));
+            String[] commaSplit = new String[0];
+            if (!interest.equalsIgnoreCase("")) {
+                commaSplit = interest.split(",");
+
+                for (int i = 0; i < commaSplit.length; i++) {
+                    Log.i("intesadr", "->" + Integer.parseInt(commaSplit[i]));
+                    chipCloud.setChecked(Integer.parseInt(commaSplit[i]));
+                    lst.add(commaSplit[i]);
+                }
             }
         } else {
 
@@ -92,7 +98,7 @@ public class AddTags extends AppCompatActivity implements RequestNotifier {
         chipCloud.setListener(new ChipListener() {
             @Override
             public void chipCheckedChange(int index, boolean checked, boolean userClick) {
-                if (userClick) {
+                if (userClick && index != 0) {
                     //Log.d(TAG, String.format("chipCheckedChange Label at index: %d checked: %s", index, checked));
                     //Log.i("asdf", "->" + chipCloud.getLabel(index));
                     //String id = String.valueOf(hashMap.get(mInterestResponse.get(index)));
