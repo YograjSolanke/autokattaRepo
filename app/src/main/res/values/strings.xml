@@ -270,6 +270,35 @@
         <item>Transport and Cargo</item>
         <item>Sabres of Paradise</item>
         <item>Construction Equipment</item>
+
+        <item>Health and Wellness</item>
+        <item>Auto Detailing styling</item>
+        <item>Electrical and Electronics</item>
+        <item>Route Maps and Holiday Discussions</item>
+        <item>Super Cars Section</item>
+        <item>Home Audio/Video</item>
+        <item>Product Announcements</item>
+        <item>Automotive News and General Discussions</item>
+        <item>FAQs</item>
+        <item>Indian Car Sales, Reports and Analysis</item>
+        <item>Photography</item>
+        <item>Bodywork and Interiors</item>
+        <item>Others</item>
+        <item>Technical Discussions</item>
+        <item>RTO, Law, Loans and Insurance</item>
+        <item>Handling (Suspension, Steering, Brakes etc)</item>
+        <item>Travelogues</item>
+        <item>4x4s and Off-Road</item>
+        <item>Engines and Transmissions</item>
+        <item>Traffic Lights</item>
+        <item>Electrical and Electronics</item>
+        <item>Alloys and Tyres</item>
+        <item>Bikes</item>
+        <item>Automotive Lighting</item>
+        <item>Racing</item>
+        <item>Product Review</item>
+        <item>Product Demo</item>
+        <item>Videos</item>
     </string-array>
     <string name="title_activity_location">LocationActivity</string>
     <string name="title_activity_edit_profile">EditProfile</string>
