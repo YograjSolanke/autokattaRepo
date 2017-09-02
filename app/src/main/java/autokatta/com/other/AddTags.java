@@ -36,7 +36,7 @@ public class AddTags extends AppCompatActivity implements RequestNotifier {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_tags);
-        getInterest();
+        //getInterest();
         Button mOk = (Button) findViewById(R.id.ok);
         mOk.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,6 +49,7 @@ public class AddTags extends AppCompatActivity implements RequestNotifier {
                         numberString = numberString + "," + lst.get(i);
                     }
                 }
+                Log.i("numberString", "->" + numberString);
                 getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit()
                         .putString("interest", numberString).apply();
                 finish();
@@ -63,17 +64,26 @@ public class AddTags extends AppCompatActivity implements RequestNotifier {
                 .uncheckedChipColor(Color.parseColor("#efefef"))
                 .uncheckedTextColor(Color.parseColor("#666666"));
 
-        chipCloud = new ChipCloud(this, flexbox, config);
+        chipCloud = new ChipCloud(getApplicationContext(), flexbox, config);
 
         //chipCloud.addChip("HelloWorld!");
 
 
-        //String[] demoArray = getResources().getStringArray(R.array.demo_array);
+        String[] demoArray = getResources().getStringArray(R.array.demo_array);
+        chipCloud.addChips(demoArray);
 
+        if (getIntent().getExtras() != null) {
+            String interest = getIntent().getExtras().getString("interest");
+            Log.i("inter", "->" + interest);
+            String[] commaSplit = interest.split(",");
+            for (int i = 0; i < commaSplit.length; i++) {
+                Log.i("intesadr", "->" + Integer.parseInt(commaSplit[i]));
+                chipCloud.setChecked(Integer.parseInt(commaSplit[i]));
+            }
+        } else {
 
-        /*for (int i = 0; i < lst1.size(); i++) {
-            chipCloud.setChecked(Integer.parseInt(lst1.get(i)));
-        }*/
+        }
+
         //chipCloud.setChecked(2);
 
         //String label = chipCloud.getLabel(2);
@@ -85,30 +95,20 @@ public class AddTags extends AppCompatActivity implements RequestNotifier {
                 if (userClick) {
                     //Log.d(TAG, String.format("chipCheckedChange Label at index: %d checked: %s", index, checked));
                     //Log.i("asdf", "->" + chipCloud.getLabel(index));
-                    String id = String.valueOf(hashMap.get(mInterestResponse.get(index)));
+                    //String id = String.valueOf(hashMap.get(mInterestResponse.get(index)));
                     if (checked) {
-                        lst.add(id);
-                        /*Log.i("added", "->" + lst.toString());
-                        Log.i("addedidx", "->" + id);*/
+                        lst.add(String.valueOf(index));
+                        Log.i("added", "->" + lst.toString());
+                        /*Log.i("addedidx", "->" + id);*/
 
                     } else {
-                        lst.remove(id);
-                        /*Log.i("removed", "->" + lst.toString());
-                        Log.i("removedidx", "->" + index);*/
+                        lst.remove(String.valueOf(index));
+                        Log.i("removed", "->" + lst.toString());
+                       /* Log.i("removedidx", "->" + index);*/
                     }
                 }
             }
         });
-        if (getIntent().getExtras().getString("interest") != null) {
-            String interest = getIntent().getExtras().getString("interest");
-            Log.i("inter", "->" + interest);
-            String[] commaSplit = interest.split(",");
-            for (int i = 0; i < commaSplit.length; i++) {
-
-            }
-        } else {
-
-        }
 
     }
 
@@ -132,6 +132,27 @@ public class AddTags extends AppCompatActivity implements RequestNotifier {
                     }
                     mInterestResponse.addAll(lst1);
                     chipCloud.addChips(lst1);
+                    try {
+                        if (getIntent().getExtras() != null) {
+                            List<Integer> list = new ArrayList<>();
+                            String interest = getIntent().getExtras().getString("interest");
+                            Log.i("inter", "->" + interest);
+                            String[] commaSplit = interest.split(",");
+                            /*for (int i = 1; i <= commaSplit.length; i++) {
+                                Log.i("intesadr", "->" + Integer.parseInt(commaSplit[i]));
+                                //list.add(Integer.parseInt(commaSplit[i]));
+                                if (Integer.parseInt(commaSplit[i]) ==24){
+                                    chipCloud.setChecked(5);
+                                }else {
+                                    chipCloud.setChecked(Integer.parseInt(commaSplit[i]));
+                                }
+                            }*/
+                        } else {
+
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             } else {
 
