@@ -24,10 +24,7 @@ import android.widget.TextView;
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import autokatta.com.R;
@@ -38,6 +35,8 @@ import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.SearchVehicleResponse;
 import retrofit2.Response;
+
+import static autokatta.com.R.id.search;
 
 /**
  * Created by ak-001 on 19/4/17.
@@ -116,6 +115,7 @@ public class SearchVehicle extends Fragment implements RequestNotifier {
         });
     }
 
+
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
@@ -158,7 +158,7 @@ public class SearchVehicle extends Fragment implements RequestNotifier {
                     allSearchDataArrayList.clear();
                     advanceSearch.setVisibility(View.VISIBLE);
                     for (SearchVehicleResponse.Success success : vehicleResponse.getSuccess()) {
-                        try {
+                      //  try {
                             success.setVehicleId(success.getVehicleId());
                             success.setTitle(success.getTitle());
                             success.setCategory(success.getCategory());
@@ -201,19 +201,21 @@ public class SearchVehicle extends Fragment implements RequestNotifier {
                             success.setUsername(success.getUsername());
                             success.setBuyerLeads(success.getBuyerLeads());
 
-                            String dates = success.getDate();
-                            DateFormat f = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-                            Date d = f.parse(dates);
+                           // String dates = success.getDate();
+                          //  DateFormat f = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+                           // Date d = f.parse(dates);
                             success.setDate(success.getDate());
 
                             allSearchDataArrayList.add(success);
 
-                        } catch (Exception e) {
+                      /*  } catch (Exception e) {
                             e.printStackTrace();
-                        }
+                        }*/
                     }
+                    Log.e("----------------", String.valueOf(allSearchDataArrayList.size()));
                     VehicleSearchAdapter adapter = new VehicleSearchAdapter(getActivity(), allSearchDataArrayList);
                     searchList.setAdapter(adapter);
+
 
                 } else {
                     mNoData.setVisibility(View.VISIBLE);
@@ -263,7 +265,7 @@ public class SearchVehicle extends Fragment implements RequestNotifier {
         searchMenuItem.expandActionView();
         setupSearchView();*/
 
-        final EditText editText = (EditText) searchMenuItem.getActionView().findViewById(R.id.search);
+        final EditText editText = (EditText) searchMenuItem.getActionView().findViewById(search);
         editText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -301,4 +303,5 @@ public class SearchVehicle extends Fragment implements RequestNotifier {
             }
         });
     }
+
 }

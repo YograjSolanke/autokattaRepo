@@ -140,7 +140,7 @@ public class VehicleDetailsTwo extends Fragment implements RequestNotifier {
                 GetVehicleByIdResponse mVehicleByIdResponse = (GetVehicleByIdResponse) response.body();
                 for (GetVehicleByIdResponse.VehicleDatum datum : mVehicleByIdResponse.getSuccess().getVehicleData()) {
 
-                    registrationdetails.setText(datum.getYearOfRegistration());
+                    regyeardetails.setText(datum.getYearOfRegistration());
 
                     if (datum.getInsuranceIdv() == null || datum.getInsuranceIdv().equalsIgnoreCase("")) {
                         insurencedetails.setText(getString(R.string.not_mentioned));
