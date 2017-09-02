@@ -274,9 +274,9 @@ public class LiveFragment extends Fragment implements RequestNotifier {
                         model.setUsername(success.getAuctioneer());
                         model.setName(success.getActionTitle());
                         model.setContact(success.getContact());
-                        model.setStartDate(success.getStartDate().replace("T00:00:00",""));
+                        model.setStartDate(success.getStartDate().replace("T00:00:00", ""));
                         model.setStartTime(success.getStartTime());
-                        model.setEndDate(success.getEndDate().replace("T00:00:00",""));
+                        model.setEndDate(success.getEndDate().replace("T00:00:00", ""));
                         model.setEndTime(success.getEndTime());
                         model.setAuctionType(success.getAuctionType());
                         model.setLocation(success.getLocation());
@@ -284,8 +284,8 @@ public class LiveFragment extends Fragment implements RequestNotifier {
                         model.setVehicleIds(success.getVehicleIds());
                         model.setNoOfVehicles(success.getNoOfVehicles());
                         model.setIgnoreGoingStatus(success.getIgnoreGoingStatus());
-                        model.setEndDateTime(success.getEndDateTime().replace("T"," "));
-                        model.setStartDateTime(success.getStartDateTime().replace("T"," "));
+                        model.setEndDateTime(success.getEndDateTime().replace("T", " "));
+                        model.setStartDateTime(success.getStartDateTime().replace("T", " "));
                         model.setOpenClose(success.getOpenClose());
                         model.setShowPrice(success.getShowPrice());
                         model.setBlackListStatus(success.getBlackListStatus());
@@ -308,30 +308,32 @@ public class LiveFragment extends Fragment implements RequestNotifier {
                 else if (response.body() instanceof GetLiveLoanEventsResponse) {
                     mLiveLoanEventList.clear();
                     GetLiveLoanEventsResponse mGetLiveLoanEventsResponse = (GetLiveLoanEventsResponse) response.body();
-                    for (GetLiveLoanEventsResponse.Success success : mGetLiveLoanEventsResponse.getSuccess()) {
-                        ModelLiveFragment model = new ModelLiveFragment();
-                        model.setLoan_id(success.getId());
-                        model.setUsername(success.getLoanOwnerName());
-                        model.setName(success.getName());
-                        model.setContact(success.getContact());
-                        model.setStartDate(success.getStartDate().replace("T00:00:00",""));
-                        model.setStartTime(success.getStartTime());
-                        model.setEndDate(success.getEndDate().replace("T00:00:00",""));
-                        model.setEndTime(success.getEndTime());
-                        model.setLocation(success.getLocation());
-                        model.setImage(success.getImage());
-                        model.setDetails(success.getDetails());
-                        model.setIgnoreGoingStatus(success.getIgnoreGoingStatus());
-                        model.setEndDateTime(success.getEndDateTime().replace("T"," "));
-                        model.setStartDateTime(success.getStartDateTime().replace("T"," "));
+                    if (mGetLiveLoanEventsResponse.getSuccess() != null) {
+                        for (GetLiveLoanEventsResponse.Success success : mGetLiveLoanEventsResponse.getSuccess()) {
+                            ModelLiveFragment model = new ModelLiveFragment();
+                            model.setLoan_id(success.getId());
+                            model.setUsername(success.getLoanOwnerName());
+                            model.setName(success.getName());
+                            model.setContact(success.getContact());
+                            model.setStartDate(success.getStartDate().replace("T00:00:00", ""));
+                            model.setStartTime(success.getStartTime());
+                            model.setEndDate(success.getEndDate().replace("T00:00:00", ""));
+                            model.setEndTime(success.getEndTime());
+                            model.setLocation(success.getLocation());
+                            model.setImage(success.getImage());
+                            model.setDetails(success.getDetails());
+                            model.setIgnoreGoingStatus(success.getIgnoreGoingStatus());
+                            model.setEndDateTime(success.getEndDateTime().replace("T", " "));
+                            model.setStartDateTime(success.getStartDateTime().replace("T", " "));
 
-                        model.setKeyWord("loan");
-                        mLiveLoanEventList.add(model);
+                            model.setKeyWord("loan");
+                            mLiveLoanEventList.add(model);
+                        }
+                        mLoanMelaCount.setText(String.valueOf(mLiveLoanEventList.size()));
+                        mAdapter = new AuctionNotificationAdapter(getActivity(), mLiveLoanEventList, "Live");
+                        mLoanMelaRecyclerView.setAdapter(mAdapter);
+                        mAdapter.notifyDataSetChanged();
                     }
-                    mLoanMelaCount.setText(String.valueOf(mLiveLoanEventList.size()));
-                    mAdapter = new AuctionNotificationAdapter(getActivity(), mLiveLoanEventList, "Live");
-                    mLoanMelaRecyclerView.setAdapter(mAdapter);
-                    mAdapter.notifyDataSetChanged();
                 }
                 //Exchange Event
                 else if (response.body() instanceof GetLiveExchangeEventsResponse) {
@@ -342,15 +344,15 @@ public class LiveFragment extends Fragment implements RequestNotifier {
                         model.setExchange_id(success.getId());
                         model.setContact(success.getContact());
                         model.setName(success.getName());
-                        model.setStartDate(success.getStartDate().replace("T00:00:00",""));
+                        model.setStartDate(success.getStartDate().replace("T00:00:00", ""));
                         model.setStartTime(success.getStartTime());
-                        model.setEndDate(success.getEndDate().replace("T00:00:00",""));
+                        model.setEndDate(success.getEndDate().replace("T00:00:00", ""));
                         model.setEndTime(success.getEndTime());
                         model.setLocation(success.getLocation());
                         model.setAddress(success.getAddress());
                         model.setImage(success.getImage());
-                        model.setStartDateTime(success.getStartDateTime().replace("T"," "));
-                        model.setEndDateTime(success.getEndDateTime().replace("T"," "));
+                        model.setStartDateTime(success.getStartDateTime().replace("T", " "));
+                        model.setEndDateTime(success.getEndDateTime().replace("T", " "));
                         model.setCreateDate(success.getCreateDate());
                         model.setDetails(success.getDetails());
                         model.setUsername(success.getExchangeOwnerName());
@@ -369,65 +371,69 @@ public class LiveFragment extends Fragment implements RequestNotifier {
                 else if (response.body() instanceof GetLiveSaleEventsResponse) {
                     mLiveSaleEventList.clear();
                     GetLiveSaleEventsResponse mGetLiveSaleEventsResponse = (GetLiveSaleEventsResponse) response.body();
-                    for (GetLiveSaleEventsResponse.Success success : mGetLiveSaleEventsResponse.getSuccess()) {
-                        ModelLiveFragment model = new ModelLiveFragment();
-                        model.setSale_id(success.getId());
-                        model.setContact(success.getContact());
-                        model.setName(success.getName());
-                        model.setStartDate(success.getStartDate().replace("T00:00:00",""));
-                        model.setStartTime(success.getStartTime());
-                        model.setEndDate(success.getEndDate().replace("T00:00:00",""));
-                        model.setEndTime(success.getEndTime());
-                        model.setLocation(success.getLocation());
-                        model.setAddress(success.getAddress());
-                        model.setImage(success.getImage());
-                        model.setStartDateTime(success.getStartDateTime().replace("T"," "));
-                        model.setEndDateTime(success.getEndDateTime().replace("T"," "));
-                        model.setCreateDate(success.getCreateDate());
-                        model.setDetails(success.getDetails());
-                        model.setUsername(success.getSaleOwnerName());
-                        model.setSaleOwnerName(success.getSaleOwnerName());
-                        model.setIgnoreGoingStatus(success.getIgnoreGoingStatus());
+                    if (mGetLiveSaleEventsResponse.getSuccess() != null) {
+                        for (GetLiveSaleEventsResponse.Success success : mGetLiveSaleEventsResponse.getSuccess()) {
+                            ModelLiveFragment model = new ModelLiveFragment();
+                            model.setSale_id(success.getId());
+                            model.setContact(success.getContact());
+                            model.setName(success.getName());
+                            model.setStartDate(success.getStartDate().replace("T00:00:00", ""));
+                            model.setStartTime(success.getStartTime());
+                            model.setEndDate(success.getEndDate().replace("T00:00:00", ""));
+                            model.setEndTime(success.getEndTime());
+                            model.setLocation(success.getLocation());
+                            model.setAddress(success.getAddress());
+                            model.setImage(success.getImage());
+                            model.setStartDateTime(success.getStartDateTime().replace("T", " "));
+                            model.setEndDateTime(success.getEndDateTime().replace("T", " "));
+                            model.setCreateDate(success.getCreateDate());
+                            model.setDetails(success.getDetails());
+                            model.setUsername(success.getSaleOwnerName());
+                            model.setSaleOwnerName(success.getSaleOwnerName());
+                            model.setIgnoreGoingStatus(success.getIgnoreGoingStatus());
 
-                        model.setKeyWord("sale");
-                        mLiveSaleEventList.add(model);
+                            model.setKeyWord("sale");
+                            mLiveSaleEventList.add(model);
+                        }
+                        mSaleEventCount.setText(String.valueOf(mLiveSaleEventList.size()));
+                        mAdapter = new AuctionNotificationAdapter(getActivity(), mLiveSaleEventList, "Live");
+                        mSaleEventRecyclerView.setAdapter(mAdapter);
+                        mAdapter.notifyDataSetChanged();
                     }
-                    mSaleEventCount.setText(String.valueOf(mLiveSaleEventList.size()));
-                    mAdapter = new AuctionNotificationAdapter(getActivity(), mLiveSaleEventList, "Live");
-                    mSaleEventRecyclerView.setAdapter(mAdapter);
-                    mAdapter.notifyDataSetChanged();
                 }
                 //Service Event
                 else if (response.body() instanceof GetLiveServiceEventsResponse) {
                     mLiveServiceEventList.clear();
                     GetLiveServiceEventsResponse mGetLiveServiceEventsResponse = (GetLiveServiceEventsResponse) response.body();
-                    for (GetLiveServiceEventsResponse.Success success : mGetLiveServiceEventsResponse.getSuccess()) {
-                        ModelLiveFragment model = new ModelLiveFragment();
-                        model.setService_id(success.getId());
-                        model.setContact(success.getContact());
-                        model.setName(success.getName());
-                        model.setStartDate(success.getStartDate().replace("T00:00:00",""));
-                        model.setStartTime(success.getStartTime());
-                        model.setEndDate(success.getEndDate().replace("T00:00:00",""));
-                        model.setEndTime(success.getEndTime());
-                        model.setLocation(success.getLocation());
-                        model.setAddress(success.getAddress());
-                        model.setImage(success.getImage());
-                        model.setStartDateTime(success.getStartDateTime().replace("T"," "));
-                        model.setEndDateTime(success.getEndDateTime().replace("T"," "));
-                        model.setCreateDate(success.getCreateDate());
-                        model.setDetails(success.getDetails());
-                        model.setUsername(success.getServiceOwnerName());
-                        model.setServiceOwnerName(success.getServiceOwnerName());
-                        model.setIgnoreGoingStatus(success.getIgnoreGoingStatus());
+                    if (mGetLiveServiceEventsResponse.getSuccess() != null) {
+                        for (GetLiveServiceEventsResponse.Success success : mGetLiveServiceEventsResponse.getSuccess()) {
+                            ModelLiveFragment model = new ModelLiveFragment();
+                            model.setService_id(success.getId());
+                            model.setContact(success.getContact());
+                            model.setName(success.getName());
+                            model.setStartDate(success.getStartDate().replace("T00:00:00", ""));
+                            model.setStartTime(success.getStartTime());
+                            model.setEndDate(success.getEndDate().replace("T00:00:00", ""));
+                            model.setEndTime(success.getEndTime());
+                            model.setLocation(success.getLocation());
+                            model.setAddress(success.getAddress());
+                            model.setImage(success.getImage());
+                            model.setStartDateTime(success.getStartDateTime().replace("T", " "));
+                            model.setEndDateTime(success.getEndDateTime().replace("T", " "));
+                            model.setCreateDate(success.getCreateDate());
+                            model.setDetails(success.getDetails());
+                            model.setUsername(success.getServiceOwnerName());
+                            model.setServiceOwnerName(success.getServiceOwnerName());
+                            model.setIgnoreGoingStatus(success.getIgnoreGoingStatus());
 
-                        model.setKeyWord("service");
-                        mLiveServiceEventList.add(model);
+                            model.setKeyWord("service");
+                            mLiveServiceEventList.add(model);
+                        }
+                        mServiceEventCount.setText(String.valueOf(mLiveServiceEventList.size()));
+                        mAdapter = new AuctionNotificationAdapter(getActivity(), mLiveServiceEventList, "Live");
+                        mServiceEventRecyclerView.setAdapter(mAdapter);
+                        mAdapter.notifyDataSetChanged();
                     }
-                    mServiceEventCount.setText(String.valueOf(mLiveServiceEventList.size()));
-                    mAdapter = new AuctionNotificationAdapter(getActivity(), mLiveServiceEventList, "Live");
-                    mServiceEventRecyclerView.setAdapter(mAdapter);
-                    mAdapter.notifyDataSetChanged();
                 }
 
             } else {
