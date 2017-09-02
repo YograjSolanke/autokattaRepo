@@ -144,8 +144,13 @@ public class CreateBroadcastGroupFragment extends Fragment implements RequestNot
                     }
                 }
                 if (groupTitle.equals("") || groupTitle.startsWith(" ") && groupTitle.endsWith(" ")) {
-                    if (isAdded())
+                    if (isAdded()) {
                         CustomToast.customToast(getActivity(), "Please enter group title");
+                    }
+                } else if (finalContacts.equals("")) {
+                    if (isAdded()) {
+                        CustomToast.customToast(getActivity(), "Please select Members To Add");
+                    }
                 } else {
                     //Toast.makeText(getActivity(), "Now web service call", Toast.LENGTH_LONG).show();
                     System.out.println("group id &&&&&ContactList:" + finalContacts + "Groupid" + group_id + "contact" + contact + "calltype" + calltype);
