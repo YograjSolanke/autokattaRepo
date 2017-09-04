@@ -1,5 +1,6 @@
 package autokatta.com.view;
 
+import android.animation.ValueAnimator;
 import android.app.ActivityOptions;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -16,6 +17,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -30,6 +32,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -94,12 +97,14 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
     ImageView img;
     CoordinatorLayout mUserParent;
     private ProgressDialog dialog;
+    AppBarLayout appBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile);
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        appBar = (AppBarLayout) findViewById(R.id.appbar);
         mfab_edit = (FloatingActionButton) findViewById(R.id.fab_edit_prof);
         mfab_done = (FloatingActionButton) findViewById(R.id.fab_edit_done);
         addVehicle = (com.github.clans.fab.FloatingActionButton) findViewById(R.id.add_vehicle);
@@ -861,5 +866,30 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
         }
 
         return inSampleSize;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        expandToolbar();
+    }
+
+    public void expandToolbar() {
+        CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) appBar.getLayoutParams();
+        final AppBarLayout.Behavior behavior = (AppBarLayout.Behavior) params.getBehavior();
+        if (behavior != null) {
+            ValueAnimator valueAnimator = ValueAnimator.ofInt();
+            valueAnimator.setInterpolator(new DecelerateInterpolator());
+            valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                @Override
+                public void onAnimationUpdate(ValueAnimator animation) {
+                    behavior.setTopAndBottomOffset((Integer) animation.getAnimatedValue());
+                    appBar.requestLayout();
+                }
+            });
+            valueAnimator.setIntValues(0, -900);
+            valueAnimator.setDuration(400);
+            valueAnimator.start();
+        }
     }
 }

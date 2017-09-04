@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+    app:layout_behavior="com.evs.demo.layout.FixedScrollingViewBehavior">
 
     <LinearLayout
         android:id="@+id/profileAbout"
@@ -33,6 +33,7 @@
                 android:layout_width="25dp"
                 android:layout_height="24dp"
                 android:contentDescription="@string/app_name"
+                android:focusableInTouchMode="true"
                 android:src="@drawable/ic_check_black_24dp"
                 android:visibility="gone" />
 
@@ -367,10 +368,10 @@
                     android:id="@+id/editTags"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/edit"
                     android:layout_alignParentEnd="true"
-                    android:textColor="@color/text_color"
                     android:layout_marginEnd="@dimen/activity_half_margin"
+                    android:text="@string/edit"
+                    android:textColor="@color/text_color"
                     android:textSize="@dimen/text_about" />
 
             </RelativeLayout>
@@ -379,9 +380,9 @@
                 android:id="@+id/count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/activity_half_margin"
                 android:text="@string/app_name"
                 android:textColor="@color/text_color"
-                android:layout_marginEnd="@dimen/activity_half_margin"
                 android:textSize="@dimen/text_about" />
             <!--<me.gujun.android.taggroup.TagGroup
                 android:id="@+id/tag_group"

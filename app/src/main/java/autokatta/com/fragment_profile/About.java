@@ -47,6 +47,7 @@ import autokatta.com.response.GetDesignationResponse;
 import autokatta.com.response.GetSkillsResponse;
 import autokatta.com.response.ProfileAboutResponse;
 import co.mobiwise.materialintro.animation.MaterialIntroListener;
+import co.mobiwise.materialintro.prefs.PreferencesManager;
 import co.mobiwise.materialintro.shape.Focus;
 import co.mobiwise.materialintro.shape.FocusGravity;
 import co.mobiwise.materialintro.view.MaterialIntroView;
@@ -654,6 +655,11 @@ public class About extends Fragment implements RequestNotifier, MaterialIntroLis
     @Override
     public void onResume() {
         super.onResume();
+        new PreferencesManager(getActivity().getApplicationContext()).resetAll();
+        //expandToolbar();
+        mDone.setFocusable(true);
+        mDone.setFocusableInTouchMode(true);
+        mDone.requestFocus();
         mApiCall.profileAbout(Sharedcontact, Sharedcontact);
         if (mDone.getVisibility() == View.VISIBLE)
             showIntro(mDone, INTRO_FOCUS_1, "Confirm event details first", Focus.MINIMUM);
@@ -663,4 +669,23 @@ public class About extends Fragment implements RequestNotifier, MaterialIntroLis
     public void onUserClicked(String s) {
 
     }
+
+   /* public void expandToolbar(){
+        CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) UserProfile.appBar.getLayoutParams();
+        final AppBarLayout.Behavior behavior = (AppBarLayout.Behavior) params.getBehavior();
+        if (behavior != null) {
+            ValueAnimator valueAnimator = ValueAnimator.ofInt();
+            valueAnimator.setInterpolator(new DecelerateInterpolator());
+            valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                @Override
+                public void onAnimationUpdate(ValueAnimator animation) {
+                    behavior.setTopAndBottomOffset((Integer) animation.getAnimatedValue());
+                    UserProfile.appBar.requestLayout();
+                }
+            });
+            valueAnimator.setIntValues(0, -900);
+            valueAnimator.setDuration(400);
+            valueAnimator.start();
+        }
+    }*/
 }
