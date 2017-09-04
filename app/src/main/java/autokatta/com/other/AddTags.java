@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
@@ -24,7 +25,6 @@ import retrofit2.Response;
 
 public class AddTags extends AppCompatActivity implements RequestNotifier {
 
-    private static final String TAG = "DemoActivity";
     ChipCloud chipCloud;
     List<String> lst = new ArrayList<>();
     HashMap<String, Integer> hashMap = new HashMap<>();
@@ -36,7 +36,12 @@ public class AddTags extends AppCompatActivity implements RequestNotifier {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_tags);
+        setTitle("Interest");
         //getInterest();
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setHomeButtonEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
         Button mOk = (Button) findViewById(R.id.ok);
         mOk.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -121,6 +126,23 @@ public class AddTags extends AppCompatActivity implements RequestNotifier {
     private void getInterest() {
         ApiCall apiCall = new ApiCall(this, this);
         apiCall.getInterest();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+        overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
     }
 
     @Override

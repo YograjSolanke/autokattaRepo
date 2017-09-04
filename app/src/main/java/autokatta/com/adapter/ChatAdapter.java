@@ -2,7 +2,6 @@ package autokatta.com.adapter;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -185,10 +184,10 @@ public class ChatAdapter extends BaseAdapter implements View.OnClickListener {
              //   b.putString("imgpath", "uploaded_broadcast_images/");
          //       FullImageActivity fragment = new FullImageActivity();
 
-                ActivityOptions options = ActivityOptions.makeCustomAnimation(activity, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
+                //ActivityOptions options = ActivityOptions.makeCustomAnimation(activity, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
                 Intent intent = new Intent(activity, FullImageActivity.class);
                 intent.putExtras(b);
-                activity.startActivity(intent, options.toBundle());
+                activity.startActivity(intent);
             }
         });
 
