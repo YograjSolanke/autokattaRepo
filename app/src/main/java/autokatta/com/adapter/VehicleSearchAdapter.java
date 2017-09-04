@@ -176,7 +176,7 @@ public class VehicleSearchAdapter extends BaseAdapter {
             public void onClick(View view) {
 
                 Bundle b = new Bundle();
-                b.putString("vehicle_id", obj.getVehicleId());
+                b.putInt("vehicle_id", obj.getVehicleId());
                 Intent intent = new Intent(activity, VehicleDetails.class);
                 intent.putExtras(b);
                 activity.startActivity(intent);

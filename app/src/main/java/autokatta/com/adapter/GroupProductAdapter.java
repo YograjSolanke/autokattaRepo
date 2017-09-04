@@ -68,6 +68,8 @@ public class GroupProductAdapter extends RecyclerView.Adapter<GroupProductAdapte
     public void onBindViewHolder(final GroupProductAdapter.ProductHolder holder, final int position) {
         mView = holder;
 
+        holder.mEnquiry.setVisibility(View.GONE);
+
         List<String> images = new ArrayList<String>();
         final StoreInventoryResponse.Success.Product product = mMainList.get(position);
         holder.pname.setText(product.getName());
@@ -83,7 +85,6 @@ public class GroupProductAdapter extends RecyclerView.Adapter<GroupProductAdapte
         }else
         {
             holder.mEdit.setVisibility(View.GONE);
-            holder.mEnquiry.setVisibility(View.GONE);
         }
 
         holder.pname.setEnabled(false);

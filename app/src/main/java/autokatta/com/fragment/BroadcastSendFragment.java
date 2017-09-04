@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,6 +15,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.net.ConnectException;
@@ -90,6 +92,34 @@ public class BroadcastSendFragment extends Fragment implements RequestNotifier, 
                 for (BroadcastSendResponse.Success success : mGetGroupVehiclesResponse.getSuccess()) {
                     success.setReceiver(success.getReceiver());
                     success.setReceivername(success.getReceivername());
+/*
+                    success.setMessage(success.getMessage());
+                    success.setDate(success.getDate());
+
+
+                    try {
+                        TimeZone utc = TimeZone.getTimeZone("etc/UTC");
+                        //format of date coming from services
+                        DateFormat inputFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss a", Locale.getDefault());
+                        *//*DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",
+                                Locale.getDefault());*//*
+                        inputFormat.setTimeZone(utc);
+
+                        //format of date which we want to show
+                        DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy hh:mm a", Locale.getDefault());
+                        *//*DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy hh:mm aa",
+                                Locale.getDefault());*//*
+                        outputFormat.setTimeZone(utc);
+
+                        Date date = inputFormat.parse(success.getDate());
+                        //System.out.println("jjj"+date);
+                        String output = outputFormat.format(date);
+                        //System.out.println(mainList.get(i).getDate()+" jjj " + output);
+                        success.setDate(output);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }*/
+
                     broadcastMessageArrayList.add(success);
                 }
 
@@ -153,12 +183,25 @@ public class BroadcastSendFragment extends Fragment implements RequestNotifier, 
 
         //ViewHolder Class
         public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
-            TextView msgFrom, msgFromCnt;
+           // TextView msgFrom, msgFromCnt;
+            TextView msgFrom, msgFromCnt, lastMsg, lastMsgTime;
+            ImageView profile, enquiry;
+            CardView mCardView;
 
             public MyViewHolder(View itemView) {
                 super(itemView);
-                msgFrom = (TextView) itemView.findViewById(R.id.msgFrom);
+                msgFrom = (TextView) itemView.findViewById(R.id.msgFrom1);
                 msgFromCnt = (TextView) itemView.findViewById(R.id.msgFromCnt);
+                lastMsg = (TextView) itemView.findViewById(R.id.msgText);
+                lastMsgTime = (TextView) itemView.findViewById(R.id.msgTime);
+                profile = (ImageView) itemView.findViewById(R.id.profile);
+                enquiry = (ImageView) itemView.findViewById(R.id.enquiry);
+                mCardView = (CardView) itemView.findViewById(R.id.mCardview);
+                msgFrom = (TextView) itemView.findViewById(R.id.msgFrom1);
+                msgFromCnt = (TextView) itemView.findViewById(R.id.msgFromCnt);
+
+                /*msgFrom = (TextView) itemView.findViewById(R.id.msgFrom);
+                msgFromCnt = (TextView) itemView.findViewById(R.id.msgFromCnt);*/
                 itemView.setOnClickListener(this);
                 itemView.setOnLongClickListener(this);
             }
@@ -195,7 +238,8 @@ public class BroadcastSendFragment extends Fragment implements RequestNotifier, 
 
         @Override
         public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.msg_sender_layout, parent, false);
+        //    View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.msg_sender_layout, parent, false);
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.bussiness_msg_senders, parent, false);
 
             return new MyViewHolder(view);
         }
@@ -203,6 +247,10 @@ public class BroadcastSendFragment extends Fragment implements RequestNotifier, 
         @Override
         public void onBindViewHolder(MyViewHolder holder, int position) {
             BroadcastSendResponse.Success broadcastMessageObj = broadcastMessageArrayList.get(position);
+
+            holder.enquiry.setVisibility(View.GONE);
+        //    holder.lastMsg.setText(broadcastMessageObj.getMessage());
+          //  holder.lastMsgTime.setText(broadcastMessageObj.getDate());
             holder.msgFromCnt.setText(broadcastMessageObj.getReceiver());
             holder.msgFrom.setText(broadcastMessageObj.getReceivername());
         }

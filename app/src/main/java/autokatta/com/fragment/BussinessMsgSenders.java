@@ -23,8 +23,13 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 
 import autokatta.com.R;
 import autokatta.com.adapter.BussinessMsgSendersAdapter;
@@ -208,6 +213,31 @@ public class BussinessMsgSenders extends Fragment implements SwipeRefreshLayout.
                     msenders.setSendername(msenders.getSendername());
                     msenders.setMessage(msenders.getMessage());
                     msenders.setDate(msenders.getDate());
+
+
+                    try {
+                        TimeZone utc = TimeZone.getTimeZone("etc/UTC");
+                        //format of date coming from services
+                        DateFormat inputFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss a", Locale.getDefault());
+                        /*DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",
+                                Locale.getDefault());*/
+                        inputFormat.setTimeZone(utc);
+
+                        //format of date which we want to show
+                        DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy hh:mm a", Locale.getDefault());
+                        /*DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy hh:mm aa",
+                                Locale.getDefault());*/
+                        outputFormat.setTimeZone(utc);
+
+                        Date date = inputFormat.parse(msenders.getDate());
+                        //System.out.println("jjj"+date);
+                        String output = outputFormat.format(date);
+                        //System.out.println(mainList.get(i).getDate()+" jjj " + output);
+                        msenders.setDate(output);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
                     mSuccesses.add(msenders);
                 }
                 mMsgReplyAdapter = new BussinessMsgSendersAdapter(getActivity(), mSuccesses, product_id, service_id, vehicle_id,bundle_keyword,bundle_title,bundle_price,bundle_category,bundle_brand,bundle_model,image);

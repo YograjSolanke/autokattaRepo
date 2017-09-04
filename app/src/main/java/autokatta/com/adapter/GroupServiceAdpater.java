@@ -63,6 +63,7 @@ public class GroupServiceAdpater extends RecyclerView.Adapter<GroupServiceAdpate
     @Override
     public void onBindViewHolder(final GroupServiceAdpater.ServiceHolder holder, final int position) {
 
+        holder.mEnquiry.setVisibility(View.GONE);
 
         List<String> images = new ArrayList<String>();
         final StoreInventoryResponse.Success.Service service = mMainList.get(position);
@@ -80,7 +81,6 @@ public class GroupServiceAdpater extends RecyclerView.Adapter<GroupServiceAdpate
         }else
         {
             holder.mEdit.setVisibility(View.GONE);
-            holder.mEnquiry.setVisibility(View.GONE);
         }
 
 

@@ -72,8 +72,8 @@ public class SearchProductAdapter extends BaseAdapter implements RequestNotifier
 
     private class YoHolder {
         TextView pname, pprice, pdetails, ptype, ptags, pCategoey;
-        ImageView image, deleteproduct;
-        Button viewdetails;
+        ImageView image, deleteproduct,mEnquiry;
+        Button viewdetails,mEdit;
         RatingBar productrating;
         CardView mCardView;
     }
@@ -92,11 +92,16 @@ public class SearchProductAdapter extends BaseAdapter implements RequestNotifier
             yoHolder.ptags = (TextView) convertView.findViewById(R.id.edittags);
             yoHolder.pCategoey = (TextView) convertView.findViewById(R.id.editCategory);
             yoHolder.ptype = (TextView) convertView.findViewById(R.id.editproducttype);
-            yoHolder.viewdetails = (Button) convertView.findViewById(R.id.btnviewdetails);
+            yoHolder.viewdetails = (Button) convertView.findViewById(R.id.btnView);
+            yoHolder.mEdit = (Button) convertView.findViewById(R.id.btnEdit);
             yoHolder.image = (ImageView) convertView.findViewById(R.id.profile);
             yoHolder.productrating = (RatingBar) convertView.findViewById(R.id.productrating);
             yoHolder.deleteproduct = (ImageView) convertView.findViewById(R.id.deleteproduct);
+            yoHolder.mEnquiry = (ImageView) convertView.findViewById(R.id.enquiry);
             yoHolder.mCardView = (CardView) convertView.findViewById(R.id.card_view);
+
+            yoHolder.mEnquiry.setVisibility(View.GONE);
+
             convertView.setTag(yoHolder);
         } else {
             yoHolder = (YoHolder) convertView.getTag();
@@ -116,6 +121,10 @@ public class SearchProductAdapter extends BaseAdapter implements RequestNotifier
 
         if (myContact.equals(product.getStorecontact())) {
             yoHolder.deleteproduct.setVisibility(View.VISIBLE);
+        }else
+        {
+            yoHolder.mEdit.setVisibility(View.GONE);
+            yoHolder.mEnquiry.setVisibility(View.GONE);
         }
 
         yoHolder.pname.setEnabled(false);
@@ -160,7 +169,7 @@ public class SearchProductAdapter extends BaseAdapter implements RequestNotifier
 
         }
 
-        yoHolder.mCardView.setOnClickListener(new View.OnClickListener() {
+        yoHolder.viewdetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 ActivityOptions options = ActivityOptions.makeCustomAnimation(activity, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
@@ -197,6 +206,19 @@ public class SearchProductAdapter extends BaseAdapter implements RequestNotifier
                             .setIcon(android.R.drawable.ic_dialog_alert)
                             .show();
                 }
+            }
+        });
+
+
+        yoHolder.mEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ActivityOptions options = ActivityOptions.makeCustomAnimation(activity, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
+                int proId = product.getProductId();
+                Intent intent = new Intent(activity, ProductViewActivity.class);
+                intent.putExtra("product_id", proId);
+                intent.putExtra("editmode", "yes");
+                activity.startActivity(intent, options.toBundle());
             }
         });
 
