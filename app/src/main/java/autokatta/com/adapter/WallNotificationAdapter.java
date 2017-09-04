@@ -10,6 +10,7 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -53,9 +54,13 @@ import autokatta.com.interfaces.ServiceApi;
 import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.WallResponse;
+import autokatta.com.view.GroupsActivity;
 import autokatta.com.view.OtherProfile;
+import autokatta.com.view.ProductViewActivity;
 import autokatta.com.view.ShareWithinAppActivity;
+import autokatta.com.view.StoreViewActivity;
 import autokatta.com.view.UserProfile;
+import autokatta.com.view.VehicleDetails;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -642,11 +647,12 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
         Log.i("Wall", "Adapter-LayoutNo ->" + holder.getItemViewType());
         mLoginContact = mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).
                 getString("loginContact", "");
+        SpannableStringBuilder sb = new SpannableStringBuilder();
         switch (holder.getItemViewType()) {
             case 1:
                 final ProfileNotifications mProfileHolder = (ProfileNotifications) holder;
                 Log.i("Wall", "Profile-LayType ->" + notificationList.get(position).getLayoutType());
-                SpannableStringBuilder sb = new SpannableStringBuilder();
+
                 if (notificationList.get(position).getLayoutType().equalsIgnoreCase("MyAction")) {
                     //mProfileHolder.mCall.setVisibility(View.GONE);
                     mProfileHolder.mRelativeLike.setVisibility(View.GONE);
@@ -659,26 +665,31 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                 sb.append(notificationList.get(position).getSenderName());
                 sb.append(" ");
                 sb.append(notificationList.get(position).getAction());
-                sb.append(" ");
+                sb.append("\n");
                 sb.append(notificationList.get(position).getReceiverName());
                 sb.append(" Profile");
 
                 sb.setSpan(new ClickableSpan() {
                     @Override
                     public void onClick(View widget) {
-                        Intent intent = new Intent(mActivity, OtherProfile.class);
-                        Bundle bundle = new Bundle();
-                        bundle.putString("contactOtherProfile", notificationList.get(mProfileHolder.getAdapterPosition()).getSender());
-                        intent.putExtras(bundle);
-                        mActivity.startActivity(intent);
+
+                        if (notificationList.get(mProfileHolder.getAdapterPosition()).getLayoutType().equalsIgnoreCase("MyAction")) {
+                            mActivity.startActivity(new Intent(mActivity, UserProfile.class));
+                        } else {
+                            Intent intent = new Intent(mActivity, OtherProfile.class);
+                            Bundle bundle = new Bundle();
+                            bundle.putString("contactOtherProfile", notificationList.get(mProfileHolder.getAdapterPosition()).getSender());
+                            intent.putExtras(bundle);
+                            mActivity.startActivity(intent);
+                        }
                     }
 
                     @Override
                     public void updateDrawState(TextPaint ds) {
                         ds.setUnderlineText(false);
-                        ds.setColor(mActivity.getResources().getColor(R.color.colorPrimaryDark));
+                        ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
                         ds.setFakeBoldText(true);
-                        ds.setTextSize((float) 30.0);
+                        ds.setTextSize((float) 35.0);
                         Log.i("TextSize", "->" + ds.getTextSize());
                     }
                 }, 0, notificationList.get(position).getSenderName().length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -687,14 +698,26 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                                @Override
                                public void onClick(View widget) {
                                    mActivity.startActivity(new Intent(mActivity, UserProfile.class));
+
+                                   if (notificationList.get(mProfileHolder.getAdapterPosition()).getLayoutType().equalsIgnoreCase("MyAction")) {
+                                       mActivity.startActivity(new Intent(mActivity, UserProfile.class));
+                                   } else if (notificationList.get(mProfileHolder.getAdapterPosition()).getLayoutType().equalsIgnoreCase("MyNotification")) {
+                                       mActivity.startActivity(new Intent(mActivity, UserProfile.class));
+                                   } else {
+                                       Intent intent = new Intent(mActivity, OtherProfile.class);
+                                       Bundle bundle = new Bundle();
+                                       bundle.putString("contactOtherProfile", notificationList.get(mProfileHolder.getAdapterPosition()).getReceiver());
+                                       intent.putExtras(bundle);
+                                       mActivity.startActivity(intent);
+                                   }
                                }
 
                                @Override
                                public void updateDrawState(TextPaint ds) {
                                    ds.setUnderlineText(false);
-                                   ds.setColor(mActivity.getResources().getColor(R.color.colorPrimaryDark));
+                                   ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
                                    ds.setFakeBoldText(true);
-                                   ds.setTextSize((float) 30.0);
+                                   ds.setTextSize((float) 35.0);
                                }
                            }, notificationList.get(position).getSenderName().length() + notificationList.get(position).getAction().length() + 2,
                         notificationList.get(position).getSenderName().length() +
@@ -935,9 +958,103 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                     mStoreHolder.mRelativeLike.setVisibility(View.VISIBLE);
                 }
 
-                mStoreHolder.mStoreActionName.setText(notificationList.get(position).getSenderName() + " "
-                        + notificationList.get(position).getAction() + "\n" + notificationList.get(position).getReceiverName() + " "
-                        + notificationList.get(position).getStoreName() + " " + "Store");
+                /*mStoreHolder.mStoreActionName.setText(notificationList.get(position).getSenderName() + " "
+                        + notificationList.get(position).getAction() + "\n"
+                        + notificationList.get(position).getReceiverName() + " "
+                        + notificationList.get(position).getStoreName() + " " + "Store");*/
+
+                sb = new SpannableStringBuilder();
+                sb.append(notificationList.get(position).getSenderName());
+                sb.append(" ");
+                sb.append(notificationList.get(position).getAction());
+                sb.append("\n");
+                sb.append(notificationList.get(position).getReceiverName());
+                sb.append(" ");
+                sb.append(notificationList.get(position).getStoreName());
+                sb.append(" Store");
+
+                sb.setSpan(new ClickableSpan() {
+                    @Override
+                    public void onClick(View widget) {
+
+                        if (notificationList.get(mStoreHolder.getAdapterPosition()).getLayoutType().equalsIgnoreCase("MyAction")) {
+                            mActivity.startActivity(new Intent(mActivity, UserProfile.class));
+                        } else {
+                            Intent intent = new Intent(mActivity, OtherProfile.class);
+                            Bundle bundle = new Bundle();
+                            bundle.putString("contactOtherProfile", notificationList.get(mStoreHolder.getAdapterPosition()).getSender());
+                            intent.putExtras(bundle);
+                            mActivity.startActivity(intent);
+                        }
+                    }
+
+                    @Override
+                    public void updateDrawState(TextPaint ds) {
+                        ds.setUnderlineText(false);
+                        ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
+                        ds.setFakeBoldText(true);
+                        ds.setTextSize((float) 35.0);
+                        Log.i("TextSize", "->" + ds.getTextSize());
+                    }
+                }, 0, notificationList.get(position).getSenderName().length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                sb.setSpan(new ClickableSpan() {
+                               @Override
+                               public void onClick(View widget) {
+
+                                   if (notificationList.get(mStoreHolder.getAdapterPosition()).getLayoutType().equalsIgnoreCase("MyAction") ||
+                                           notificationList.get(mStoreHolder.getAdapterPosition()).getLayoutType().equalsIgnoreCase("MyNotification")) {
+                                       mActivity.startActivity(new Intent(mActivity, UserProfile.class));
+                                   } else {
+                                       Intent intent = new Intent(mActivity, OtherProfile.class);
+                                       Bundle bundle = new Bundle();
+                                       bundle.putString("contactOtherProfile", notificationList.get(mStoreHolder.getAdapterPosition()).getReceiver());
+                                       intent.putExtras(bundle);
+                                       mActivity.startActivity(intent);
+                                   }
+                               }
+
+                               @Override
+                               public void updateDrawState(TextPaint ds) {
+                                   ds.setUnderlineText(false);
+                                   ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
+                                   ds.setFakeBoldText(true);
+                                   ds.setTextSize((float) 35.0);
+                               }
+                           }, notificationList.get(position).getSenderName().length() + notificationList.get(position).getAction().length() + 2,
+                        notificationList.get(position).getSenderName().length() +
+                                notificationList.get(position).getAction().length() + 2 + notificationList.get(position).getReceiverName().length()
+                        , Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                sb.setSpan(new ClickableSpan() {
+                               @Override
+                               public void onClick(View widget) {
+                                   Bundle b = new Bundle();
+                                   b.putInt("store_id", notificationList.get(mStoreHolder.getAdapterPosition()).getStoreID());
+                                   Intent intent = new Intent(mActivity, StoreViewActivity.class);
+                                   intent.putExtras(b);
+                                   mActivity.startActivity(intent);
+                               }
+
+                               @Override
+                               public void updateDrawState(TextPaint ds) {
+                                   ds.setUnderlineText(false);
+                                   ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
+                                   ds.setFakeBoldText(true);
+                                   ds.setTextSize((float) 35.0);
+                               }
+                           }, notificationList.get(position).getSenderName().length() + notificationList.get(position).getAction().length() +
+                                notificationList.get(position).getReceiverName().length() + 3,
+
+                        notificationList.get(position).getSenderName().length() +
+                                notificationList.get(position).getAction().length() +
+                                notificationList.get(position).getReceiverName().length() + 3 +
+                                notificationList.get(position).getStoreName().length() + 1
+                        , Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                mStoreHolder.mStoreActionName.setText(sb);
+                mStoreHolder.mStoreActionName.setMovementMethod(LinkMovementMethod.getInstance());
+                mStoreHolder.mStoreActionName.setHighlightColor(Color.TRANSPARENT);
 
                 mStoreHolder.mActionTime.setText(notificationList.get(position).getDateTime());
                 mStoreHolder.mStoreName.setText(notificationList.get(position).getStoreName());
@@ -1233,10 +1350,123 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                         mGroupNoOfServices;*/
                 final GroupNotifications mGroupHolder = (GroupNotifications) holder;
 
-                mGroupHolder.mActionName.setText(notificationList.get(position).getSenderName() + " " +
+                /*mGroupHolder.mActionName.setText(notificationList.get(position).getSenderName() + " " +
                         notificationList.get(position).getAction() + "\n" + notificationList.get(position).getReceiverName() +
                         " in " + notificationList.get(position).getGroupName()
-                        + " group");
+                        + " group");*/
+
+                sb = new SpannableStringBuilder();
+                sb.append(notificationList.get(position).getSenderName());
+                sb.append(" ");
+                sb.append(notificationList.get(position).getAction());
+                sb.append("\n");
+                sb.append(notificationList.get(position).getReceiverName());
+                sb.append(" in ");
+                sb.append(notificationList.get(position).getGroupName());
+                sb.append(" group");
+
+                sb.setSpan(new ClickableSpan() {
+                    @Override
+                    public void onClick(View widget) {
+                        /*Intent intent = new Intent(mActivity, OtherProfile.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putString("contactOtherProfile", notificationList.get(mGroupHolder.getAdapterPosition()).getSender());
+                        intent.putExtras(bundle);
+                        mActivity.startActivity(intent);*/
+
+                        if (notificationList.get(mGroupHolder.getAdapterPosition()).getLayoutType().equalsIgnoreCase("MyAction")) {
+                            mActivity.startActivity(new Intent(mActivity, UserProfile.class));
+                        } else {
+                            Intent intent = new Intent(mActivity, OtherProfile.class);
+                            Bundle bundle = new Bundle();
+                            bundle.putString("contactOtherProfile", notificationList.get(mGroupHolder.getAdapterPosition()).getSender());
+                            intent.putExtras(bundle);
+                            mActivity.startActivity(intent);
+                        }
+                    }
+
+                    @Override
+                    public void updateDrawState(TextPaint ds) {
+                        ds.setUnderlineText(false);
+                        ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
+                        ds.setFakeBoldText(true);
+                        ds.setTextSize((float) 35.0);
+                        Log.i("TextSize", "->" + ds.getTextSize());
+                    }
+                }, 0, notificationList.get(position).getSenderName().length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                sb.setSpan(new ClickableSpan() {
+                               @Override
+                               public void onClick(View widget) {
+                                   //mActivity.startActivity(new Intent(mActivity, UserProfile.class));
+                                   if (notificationList.get(mGroupHolder.getAdapterPosition()).getLayoutType().equalsIgnoreCase("MyAction") ||
+                                           notificationList.get(mGroupHolder.getAdapterPosition()).getLayoutType().equalsIgnoreCase("MyNotification")) {
+                                       mActivity.startActivity(new Intent(mActivity, UserProfile.class));
+                                   } else {
+                                       Intent intent = new Intent(mActivity, OtherProfile.class);
+                                       Bundle bundle = new Bundle();
+                                       bundle.putString("contactOtherProfile", notificationList.get(mGroupHolder.getAdapterPosition()).getReceiver());
+                                       intent.putExtras(bundle);
+                                       mActivity.startActivity(intent);
+                                   }
+                               }
+
+                               @Override
+                               public void updateDrawState(TextPaint ds) {
+                                   ds.setUnderlineText(false);
+                                   ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
+                                   ds.setFakeBoldText(true);
+                                   ds.setTextSize((float) 35.0);
+                               }
+                           }, notificationList.get(position).getSenderName().length() + notificationList.get(position).getAction().length() + 2,
+                        notificationList.get(position).getSenderName().length() +
+                                notificationList.get(position).getAction().length() + 2 + notificationList.get(position).getReceiverName().length()
+                        , Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                sb.setSpan(new ClickableSpan() {
+                               @Override
+                               public void onClick(View widget) {
+                                   //mActivity.startActivity(new Intent(mActivity, UserProfile.class));
+                                   Intent i = new Intent(mActivity, GroupsActivity.class);
+
+                                   if (notificationList.get(mGroupHolder.getAdapterPosition()).getLayoutType().equalsIgnoreCase("MyAction")) {
+                                       i.putExtra("grouptype", "MyGroup");
+                                       i.putExtra("className", "SimpleProfile");
+                                       i.putExtra("bundle_Contact", notificationList.get(mGroupHolder.getAdapterPosition()).getSender());
+
+                                   } else {
+                                       i.putExtra("grouptype", "OtherGroup");
+                                       i.putExtra("className", "OtherProfile");
+                                       i.putExtra("bundle_Contact", notificationList.get(mGroupHolder.getAdapterPosition()).getReceiver());
+                                   }
+
+                                   i.putExtra("bundle_GroupId", notificationList.get(mGroupHolder.getAdapterPosition()).getGroupID());
+                                   i.putExtra("bundle_GroupName", notificationList.get(mGroupHolder.getAdapterPosition()).getGroupName());
+                                   mActivity.startActivity(i);
+                               }
+
+                               @Override
+                               public void updateDrawState(TextPaint ds) {
+                                   ds.setUnderlineText(false);
+                                   ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
+                                   ds.setFakeBoldText(true);
+                                   ds.setTextSize((float) 35.0);
+                               }
+                           }, notificationList.get(position).getSenderName().length() + notificationList.get(position).getAction().length() +
+                                notificationList.get(position).getReceiverName().length() + 5,
+
+                        notificationList.get(position).getSenderName().length() +
+                                notificationList.get(position).getAction().length() +
+                                notificationList.get(position).getReceiverName().length() + 5 +
+                                notificationList.get(position).getGroupName().length() + 1
+                        , Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+
+                mGroupHolder.mActionName.setText(sb);
+                mGroupHolder.mActionName.setMovementMethod(LinkMovementMethod.getInstance());
+                mGroupHolder.mActionName.setHighlightColor(Color.TRANSPARENT);
+
+
                 mGroupHolder.mGroupName.setText(notificationList.get(position).getGroupName());
                 mGroupHolder.mActionTime.setText(notificationList.get(position).getDateTime());
                 mGroupHolder.mGroupMembers.setText(String.valueOf(notificationList.get(position).getGroupMembers()));
@@ -1323,9 +1553,105 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                     mVehicleHolder.mRelativeLike.setVisibility(View.VISIBLE);
                 }
 
-                mVehicleHolder.mActionName.setText(notificationList.get(position).getSenderName() + " "
-                        + notificationList.get(position).getAction() + "\n" + notificationList.get(position).getReceiverName() + " "
-                        + notificationList.get(position).getUpVehicleTitle() + " " + "Vehicle");
+                /*mVehicleHolder.mActionName.setText(notificationList.get(position).getSenderName()
+                        + " "
+                        + notificationList.get(position).getAction()
+                        + "\n"
+                        + notificationList.get(position).getReceiverName()
+                        + " "
+                        + notificationList.get(position).getUpVehicleTitle() + " " + "Vehicle");*/
+
+                sb = new SpannableStringBuilder();
+                sb.append(notificationList.get(position).getSenderName());
+                sb.append(" ");
+                sb.append(notificationList.get(position).getAction());
+                sb.append("\n");
+                sb.append(notificationList.get(position).getReceiverName());
+                sb.append(" ");
+                sb.append(notificationList.get(position).getUpVehicleTitle());
+                sb.append(" Vehicle");
+
+                sb.setSpan(new ClickableSpan() {
+                    @Override
+                    public void onClick(View widget) {
+
+                        if (notificationList.get(mVehicleHolder.getAdapterPosition()).getLayoutType().equalsIgnoreCase("MyAction")) {
+                            mActivity.startActivity(new Intent(mActivity, UserProfile.class));
+                        } else {
+                            Intent intent = new Intent(mActivity, OtherProfile.class);
+                            Bundle bundle = new Bundle();
+                            bundle.putString("contactOtherProfile", notificationList.get(mVehicleHolder.getAdapterPosition()).getSender());
+                            intent.putExtras(bundle);
+                            mActivity.startActivity(intent);
+                        }
+                    }
+
+                    @Override
+                    public void updateDrawState(TextPaint ds) {
+                        ds.setUnderlineText(false);
+                        ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
+                        ds.setFakeBoldText(true);
+                        ds.setTextSize((float) 35.0);
+                        Log.i("TextSize", "->" + ds.getTextSize());
+                    }
+                }, 0, notificationList.get(position).getSenderName().length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                sb.setSpan(new ClickableSpan() {
+                               @Override
+                               public void onClick(View widget) {
+
+                                   if (notificationList.get(mVehicleHolder.getAdapterPosition()).getLayoutType().equalsIgnoreCase("MyAction") ||
+                                           notificationList.get(mVehicleHolder.getAdapterPosition()).getLayoutType().equalsIgnoreCase("MyNotification")) {
+                                       mActivity.startActivity(new Intent(mActivity, UserProfile.class));
+                                   } else {
+                                       Intent intent = new Intent(mActivity, OtherProfile.class);
+                                       Bundle bundle = new Bundle();
+                                       bundle.putString("contactOtherProfile", notificationList.get(mVehicleHolder.getAdapterPosition()).getReceiver());
+                                       intent.putExtras(bundle);
+                                       mActivity.startActivity(intent);
+                                   }
+                               }
+
+                               @Override
+                               public void updateDrawState(TextPaint ds) {
+                                   ds.setUnderlineText(false);
+                                   ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
+                                   ds.setFakeBoldText(true);
+                                   ds.setTextSize((float) 35.0);
+                               }
+                           }, notificationList.get(position).getSenderName().length() + notificationList.get(position).getAction().length() + 2,
+                        notificationList.get(position).getSenderName().length() +
+                                notificationList.get(position).getAction().length() + 2 + notificationList.get(position).getReceiverName().length()
+                        , Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                sb.setSpan(new ClickableSpan() {
+                               @Override
+                               public void onClick(View widget) {
+                                   Intent intent = new Intent(mActivity, VehicleDetails.class);
+                                   intent.putExtra("vehicle_id", notificationList.get(mVehicleHolder.getAdapterPosition()).getUploadVehicleID());
+                                   mActivity.startActivity(intent);
+                               }
+
+                               @Override
+                               public void updateDrawState(TextPaint ds) {
+                                   ds.setUnderlineText(false);
+                                   ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
+                                   ds.setFakeBoldText(true);
+                                   ds.setTextSize((float) 33.0);
+                               }
+                           }, notificationList.get(position).getSenderName().length() + notificationList.get(position).getAction().length() +
+                                notificationList.get(position).getReceiverName().length() + 3,
+
+                        notificationList.get(position).getSenderName().length() +
+                                notificationList.get(position).getAction().length() +
+                                notificationList.get(position).getReceiverName().length() + 3 +
+                                notificationList.get(position).getUpVehicleTitle().length() + 1
+                        , Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                mVehicleHolder.mActionName.setText(sb);
+                mVehicleHolder.mActionName.setMovementMethod(LinkMovementMethod.getInstance());
+                mVehicleHolder.mActionName.setHighlightColor(Color.TRANSPARENT);
+
 
                 mVehicleHolder.mActionTime.setText(notificationList.get(position).getDateTime());
                 mVehicleHolder.mVehicleName.setText(notificationList.get(position).getUpVehicleTitle());
@@ -1639,6 +1965,188 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                         notificationList.get(position).getAction() + "\n" +
                         notificationList.get(position).getProductName()
                         + " product");
+
+                sb = new SpannableStringBuilder();
+
+                if (notificationList.get(position).getActionTitle().equalsIgnoreCase("added")) {
+                    sb.append(notificationList.get(position).getSenderName());
+                    sb.append(" ");
+                    sb.append(notificationList.get(position).getAction());
+                    sb.append("\n");
+                    sb.append(notificationList.get(position).getProductName());
+                    sb.append(" Product");
+
+
+                    sb.setSpan(new ClickableSpan() {
+                        @Override
+                        public void onClick(View widget) {
+
+                            if (notificationList.get(mProductHolder.getAdapterPosition()).getLayoutType().equalsIgnoreCase("MyAction")) {
+                                mActivity.startActivity(new Intent(mActivity, UserProfile.class));
+                            } else {
+                                Intent intent = new Intent(mActivity, OtherProfile.class);
+                                Bundle bundle = new Bundle();
+                                bundle.putString("contactOtherProfile", notificationList.get(mProductHolder.getAdapterPosition()).getSender());
+                                intent.putExtras(bundle);
+                                mActivity.startActivity(intent);
+                            }
+                        }
+
+                        @Override
+                        public void updateDrawState(TextPaint ds) {
+                            ds.setUnderlineText(false);
+                            ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
+                            ds.setFakeBoldText(true);
+                            ds.setTextSize((float) 35.0);
+                            Log.i("TextSize", "->" + ds.getTextSize());
+                        }
+                    }, 0, notificationList.get(position).getSenderName().length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                    /*sb.setSpan(new ClickableSpan() {
+                                   @Override
+                                   public void onClick(View widget) {
+
+                                       if (notificationList.get(mProductHolder.getAdapterPosition()).getLayoutType().equalsIgnoreCase("MyAction") ||
+                                               notificationList.get(mProductHolder.getAdapterPosition()).getLayoutType().equalsIgnoreCase("MyNotification")) {
+                                           mActivity.startActivity(new Intent(mActivity, UserProfile.class));
+                                       } else {
+                                           Intent intent = new Intent(mActivity, OtherProfile.class);
+                                           Bundle bundle = new Bundle();
+                                           bundle.putString("contactOtherProfile", notificationList.get(mProductHolder.getAdapterPosition()).getReceiver());
+                                           intent.putExtras(bundle);
+                                           mActivity.startActivity(intent);
+                                       }
+                                   }
+
+                                   @Override
+                                   public void updateDrawState(TextPaint ds) {
+                                       ds.setUnderlineText(false);
+                                       ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
+                                       ds.setFakeBoldText(true);
+                                       ds.setTextSize((float) 35.0);
+                                   }
+                               }, notificationList.get(position).getSenderName().length() + notificationList.get(position).getAction().length() + 2,
+                            notificationList.get(position).getSenderName().length() +
+                                    notificationList.get(position).getAction().length() + 2 + notificationList.get(position).getReceiverName().length()
+                            , Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);*/
+
+                    sb.setSpan(new ClickableSpan() {
+                                   @Override
+                                   public void onClick(View widget) {
+                                       Intent intent = new Intent(mActivity, ProductViewActivity.class);
+                                       intent.putExtra("product_id", notificationList.get(mProductHolder.getAdapterPosition()).getProductID());
+                                       mActivity.startActivity(intent);
+                                   }
+
+                                   @Override
+                                   public void updateDrawState(TextPaint ds) {
+                                       ds.setUnderlineText(false);
+                                       ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
+                                       ds.setFakeBoldText(true);
+                                       ds.setTextSize((float) 33.0);
+                                   }
+                               }, notificationList.get(position).getSenderName().length() +
+                                    notificationList.get(position).getAction().length() +
+                                    +2,
+
+                            notificationList.get(position).getSenderName().length() +
+                                    notificationList.get(position).getAction().length() +
+                                    2 +
+                                    notificationList.get(position).getProductName().length() + 1
+                            , Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                } else {
+                    sb.append(notificationList.get(position).getSenderName());
+                    sb.append(" ");
+                    sb.append(notificationList.get(position).getAction());
+                    sb.append("\n");
+                    sb.append(notificationList.get(position).getReceiverName());
+                    sb.append(" ");
+                    sb.append(notificationList.get(position).getProductName());
+                    sb.append(" Product");
+
+
+                    sb.setSpan(new ClickableSpan() {
+                        @Override
+                        public void onClick(View widget) {
+
+                            if (notificationList.get(mProductHolder.getAdapterPosition()).getLayoutType().equalsIgnoreCase("MyAction")) {
+                                mActivity.startActivity(new Intent(mActivity, UserProfile.class));
+                            } else {
+                                Intent intent = new Intent(mActivity, OtherProfile.class);
+                                Bundle bundle = new Bundle();
+                                bundle.putString("contactOtherProfile", notificationList.get(mProductHolder.getAdapterPosition()).getSender());
+                                intent.putExtras(bundle);
+                                mActivity.startActivity(intent);
+                            }
+                        }
+
+                        @Override
+                        public void updateDrawState(TextPaint ds) {
+                            ds.setUnderlineText(false);
+                            ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
+                            ds.setFakeBoldText(true);
+                            ds.setTextSize((float) 35.0);
+                            Log.i("TextSize", "->" + ds.getTextSize());
+                        }
+                    }, 0, notificationList.get(position).getSenderName().length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                    sb.setSpan(new ClickableSpan() {
+                                   @Override
+                                   public void onClick(View widget) {
+
+                                       if (notificationList.get(mProductHolder.getAdapterPosition()).getLayoutType().equalsIgnoreCase("MyAction") ||
+                                               notificationList.get(mProductHolder.getAdapterPosition()).getLayoutType().equalsIgnoreCase("MyNotification")) {
+                                           mActivity.startActivity(new Intent(mActivity, UserProfile.class));
+                                       } else {
+                                           Intent intent = new Intent(mActivity, OtherProfile.class);
+                                           Bundle bundle = new Bundle();
+                                           bundle.putString("contactOtherProfile", notificationList.get(mProductHolder.getAdapterPosition()).getReceiver());
+                                           intent.putExtras(bundle);
+                                           mActivity.startActivity(intent);
+                                       }
+                                   }
+
+                                   @Override
+                                   public void updateDrawState(TextPaint ds) {
+                                       ds.setUnderlineText(false);
+                                       ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
+                                       ds.setFakeBoldText(true);
+                                       ds.setTextSize((float) 35.0);
+                                   }
+                               }, notificationList.get(position).getSenderName().length() + notificationList.get(position).getAction().length() + 2,
+                            notificationList.get(position).getSenderName().length() +
+                                    notificationList.get(position).getAction().length() + 2 + notificationList.get(position).getReceiverName().length()
+                            , Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                    sb.setSpan(new ClickableSpan() {
+                                   @Override
+                                   public void onClick(View widget) {
+                                       Intent intent = new Intent(mActivity, ProductViewActivity.class);
+                                       intent.putExtra("product_id", notificationList.get(mProductHolder.getAdapterPosition()).getProductID());
+                                       mActivity.startActivity(intent);
+                                   }
+
+                                   @Override
+                                   public void updateDrawState(TextPaint ds) {
+                                       ds.setUnderlineText(false);
+                                       ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
+                                       ds.setFakeBoldText(true);
+                                       ds.setTextSize((float) 33.0);
+                                   }
+                               }, notificationList.get(position).getSenderName().length() + notificationList.get(position).getAction().length() +
+                                    notificationList.get(position).getReceiverName().length() + 3,
+
+                            notificationList.get(position).getSenderName().length() +
+                                    notificationList.get(position).getAction().length() +
+                                    notificationList.get(position).getReceiverName().length() + 3 +
+                                    notificationList.get(position).getProductName().length() + 1
+                            , Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                }
+
+                mProductHolder.mProductActionName.setText(sb);
+                mProductHolder.mProductActionName.setMovementMethod(LinkMovementMethod.getInstance());
+                mProductHolder.mProductActionName.setHighlightColor(Color.TRANSPARENT);
+
 
                 mProductHolder.mProductActionTime.setText(notificationList.get(position).getDateTime());
                 mProductHolder.mProductName.setText(notificationList.get(position).getProductName());
