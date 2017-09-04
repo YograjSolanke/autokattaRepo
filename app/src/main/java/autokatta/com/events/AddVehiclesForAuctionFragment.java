@@ -7,6 +7,7 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.text.InputType;
 import android.text.SpannableString;
@@ -33,6 +34,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import autokatta.com.R;
 import autokatta.com.adapter.AuctionAdminVehiclesAdapter;
@@ -273,8 +275,8 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
                 getIdsArray = getClauses.toArray(getIdsArray);
                 specialClausesIDUpdate = "";
                 specialClausesUpdate = "";
-                final ArrayList seletedItems = new ArrayList();
-                final ArrayList<String> selectedIds = new ArrayList<String>();
+                final List seletedItems = new ArrayList();
+                final List<String> selectedIds = new ArrayList<String>();
                 AlertDialog dialog = new AlertDialog.Builder(getActivity())
                         .setTitle("Select Special clauses")
                         .setCancelable(true)
@@ -329,10 +331,10 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
                 break;
 
             case R.id.btnbyteam:
-                btnbyteam.setTextColor(getResources().getColor(R.color.orange));
-                btnbyself.setTextColor(getResources().getColor(R.color.white));
-                btnbyadmin.setTextColor(getResources().getColor(R.color.white));
-                btnbyreauction.setTextColor(getResources().getColor(R.color.white));
+                btnbyteam.setTextColor(ContextCompat.getColor(getActivity(), R.color.orange));
+                btnbyself.setTextColor(ContextCompat.getColor(getActivity(), R.color.white));
+                btnbyadmin.setTextColor(ContextCompat.getColor(getActivity(), R.color.white));
+                btnbyreauction.setTextColor(ContextCompat.getColor(getActivity(), R.color.white));
                 byteam_listview.setVisibility(View.VISIBLE);
                 mNoData.setVisibility(View.VISIBLE);
                 byself_listview.setVisibility(View.GONE);
@@ -343,10 +345,10 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
                 break;
 
             case R.id.btnbyself:
-                btnbyteam.setTextColor(getResources().getColor(R.color.white));
-                btnbyself.setTextColor(getResources().getColor(R.color.orange));
-                btnbyadmin.setTextColor(getResources().getColor(R.color.white));
-                btnbyreauction.setTextColor(getResources().getColor(R.color.white));
+                btnbyteam.setTextColor(ContextCompat.getColor(getActivity(), R.color.white));
+                btnbyself.setTextColor(ContextCompat.getColor(getActivity(), R.color.orange));
+                btnbyadmin.setTextColor(ContextCompat.getColor(getActivity(), R.color.white));
+                btnbyreauction.setTextColor(ContextCompat.getColor(getActivity(), R.color.white));
                 byteam_listview.setVisibility(View.GONE);
                 if (selfadapter.getCount() != 0) {
                     byself_listview.setVisibility(View.VISIBLE);
@@ -360,10 +362,10 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
                 break;
 
             case R.id.btnbyadmin:
-                btnbyteam.setTextColor(getResources().getColor(R.color.white));
-                btnbyself.setTextColor(getResources().getColor(R.color.white));
-                btnbyadmin.setTextColor(getResources().getColor(R.color.orange));
-                btnbyreauction.setTextColor(getResources().getColor(R.color.white));
+                btnbyteam.setTextColor(ContextCompat.getColor(getActivity(), R.color.white));
+                btnbyself.setTextColor(ContextCompat.getColor(getActivity(), R.color.white));
+                btnbyadmin.setTextColor(ContextCompat.getColor(getActivity(), R.color.orange));
+                btnbyreauction.setTextColor(ContextCompat.getColor(getActivity(), R.color.white));
                 byteam_listview.setVisibility(View.GONE);
                 byself_listview.setVisibility(View.GONE);
                 if (adminadapter.getCount() != 0) {
@@ -378,10 +380,10 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
                 break;
 
             case R.id.btnbyreauction:
-                btnbyteam.setTextColor(getResources().getColor(R.color.white));
-                btnbyself.setTextColor(getResources().getColor(R.color.white));
-                btnbyadmin.setTextColor(getResources().getColor(R.color.white));
-                btnbyreauction.setTextColor(getResources().getColor(R.color.orange));
+                btnbyteam.setTextColor(ContextCompat.getColor(getActivity(), R.color.white));
+                btnbyself.setTextColor(ContextCompat.getColor(getActivity(), R.color.white));
+                btnbyadmin.setTextColor(ContextCompat.getColor(getActivity(), R.color.white));
+                btnbyreauction.setTextColor(ContextCompat.getColor(getActivity(), R.color.orange));
                 byteam_listview.setVisibility(View.GONE);
                 byself_listview.setVisibility(View.GONE);
                 byadmin_listview.setVisibility(View.GONE);
@@ -403,10 +405,10 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
 
 
                 //date comparision
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
                 Date now = new Date();
                 String dateString = sdf.format(now);
-                SimpleDateFormat tm = new SimpleDateFormat("hh:mm a");
+                SimpleDateFormat tm = new SimpleDateFormat("hh:mm a", Locale.getDefault());
                 String time = tm.format(Calendar.getInstance().getTime());
 
                 System.out.println("current date=" + dateString);
@@ -420,34 +422,42 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
                 endTimeUpdate = endTime.getText().toString();
                 if (auctionTitleUpdate.equals("")) {
                     auctionTitle.setError("Enter auction title");
-                    CustomToast.customToast(getActivity(), "Enter auction title");
+                    auctionTitle.requestFocus();
+                    //  CustomToast.customToast(getActivity(), "Enter auction title");
 //                    auctioname.setFocusable(true);
                 } else if (startDateUpdate.equals("")) {
-//                    startdate.setError("Enter start date");
-                    CustomToast.customToast(getActivity(), "Enter start date");
+                    startDate.setError("Enter start date");
+                    startDate.requestFocus();
+                    //  CustomToast.customToast(getActivity(), "Enter start date");
                 } else if (startTimeUpdate.equals("")) {
-//                    starttime.setError("Enter start time");
-                    CustomToast.customToast(getActivity(), "Enter start time");
+                    startTime.setError("Enter start time");
+                    startTime.requestFocus();
+                    // CustomToast.customToast(getActivity(), "Enter start time");
                 } else if (startDateUpdate.equals(dateString) && !genericFunctions.startTimeEndTimeValidation(time, startTimeUpdate)) {
                     //CustomToast.customToast(getActivity(), "time is invalid");
                     startTime.setError("Time is invalid");
                     startTime.requestFocus();
 
                 } else if (endDateUpdate.equals("")) {
-                    CustomToast.customToast(getActivity(), "Enter end date");
-//                    enddate.setError("Enter end date");
+                    //   CustomToast.customToast(getActivity(), "Enter end date");
+                    endDate.setError("Enter end date");
+                    endDate.requestFocus();
                 } else if (endTimeUpdate.equals("")) {
-                    CustomToast.customToast(getActivity(), "Enter end time");
-//                    endtime.setError("Enter end time");
+                    // CustomToast.customToast(getActivity(), "Enter end time");
+                    endTime.setError("Enter end time");
+                    endTime.requestFocus();
                 } else if (!genericFunctions.startDateValidatioon(startDateUpdate)) {
                     startDate.setError("Enter valid Date");
+                    startDate.requestFocus();
                 } else if (!genericFunctions.startDateEndDateValidation(endDateUpdate, startDateUpdate)) {
                     endDate.setError("Enter valid Date");
+                    endDate.requestFocus();
                 } else if (specialClausesIDUpdate.equals(""))
                     Toast.makeText(getActivity(), "Please select atleast one clause", Toast.LENGTH_LONG).show();
                 else if (startDateUpdate.equals(endDateUpdate)) {
                     if (!genericFunctions.startTimeEndTimeValidation(startTimeUpdate, endTimeUpdate)) {
                         endTime.setError("Enter valid time");
+                        endTime.requestFocus();
                     } else {
                         //new UpdateAuctionCreation().execute();
                         UpdateAuctionData();
@@ -461,6 +471,7 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
 
             case R.id.buttonnext:
                 if (donecheck.getVisibility() == View.VISIBLE) {
+                    if (isAdded())
                     CustomToast.customToast(getActivity(), "Please Confirm Auction Details");
                 } else {
                     List<AuctionAllVehicleData> finalVehiclesData = new ArrayList<>();
@@ -525,7 +536,7 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
 
     //alert box to get Excel sheet names
     public void alertBoxToSelectExcelSheet(final String[] choices) {
-        final ArrayList<String> mSelectedItems = new ArrayList<>();
+        final List<String> mSelectedItems = new ArrayList<>();
         mSelectedItems.clear();
         ExcelsheetName = "";
         android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(getActivity());
@@ -610,9 +621,9 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
                         AuctionAllVehicleData to get All vehicles data
                  */
                 if (response.body() instanceof AuctionAllVehicleResponse) {
-                    ArrayList<AuctionAllVehicleData> uploadedVehicleData = new ArrayList<>();
-                    ArrayList<AuctionAllVehicleData> reauctionAuctionAllVehicleData = new ArrayList<>();
-                    ArrayList<AuctionAllVehicleData> adminVehicleData = new ArrayList<>();
+                    List<AuctionAllVehicleData> uploadedVehicleData = new ArrayList<>();
+                    List<AuctionAllVehicleData> reauctionAuctionAllVehicleData = new ArrayList<>();
+                    List<AuctionAllVehicleData> adminVehicleData = new ArrayList<>();
                     AuctionAllVehicleResponse auctionAllVehicleResponse = (AuctionAllVehicleResponse) response.body();
                         /*
                         Uploaded vehicle data
@@ -787,7 +798,7 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
                  */
                 else if (response.body() instanceof AdminVehiclesResponse) {
                     AdminVehiclesResponse adminResponse = (AdminVehiclesResponse) response.body();
-                    ArrayList<AuctionAllVehicleData> adminData = new ArrayList<>();
+                    List<AuctionAllVehicleData> adminData = new ArrayList<>();
                     if (!adminResponse.getSuccess().isEmpty()) {
                         adminData.clear();
                         for (AdminVehiclesResponse.Success success : adminResponse.getSuccess()) {
@@ -839,7 +850,7 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
                  */
                 else if (response.body() instanceof AuctionReauctionVehicleResponse) {
                     AuctionReauctionVehicleResponse reauctionResponse = (AuctionReauctionVehicleResponse) response.body();
-                    ArrayList<AuctionAllVehicleData> reaucionData = new ArrayList<>();
+                    List<AuctionAllVehicleData> reaucionData = new ArrayList<>();
                     if (!reauctionResponse.getSuccess().isEmpty()) {
                         reaucionData.clear();
                         for (AuctionReauctionVehicleResponse.Success reauctionSuccess : reauctionResponse.getSuccess()) {

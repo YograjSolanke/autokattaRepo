@@ -12,8 +12,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 
 import autokatta.com.R;
 import autokatta.com.response.BroadcastReceivedResponse;
@@ -86,6 +91,27 @@ public class BussinessMsgSendersAdapter extends RecyclerView.Adapter<BussinessMs
         holder.msgFrom.setText(msendername);
         holder.lastMsg.setText(lastmsg);
         holder.lastMsgTime.setText(time);
+
+
+        try {
+            TimeZone utc = TimeZone.getTimeZone("etc/UTC");
+            //format of date coming from services
+            //DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",
+            DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss a",
+                    Locale.getDefault());
+            inputFormat.setTimeZone(utc);
+            //format of date which want to show
+            DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy hh:mm a",
+                    Locale.getDefault());
+            outputFormat.setTimeZone(utc);
+
+            Date date = inputFormat.parse(time);
+            String output = outputFormat.format(date);
+            System.out.println("jjj" + output);
+            holder.lastMsgTime.setText(output);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         holder.mCardView.setOnClickListener(new View.OnClickListener() {
             @Override
