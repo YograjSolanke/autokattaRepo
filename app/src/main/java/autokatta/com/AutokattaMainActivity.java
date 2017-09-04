@@ -563,7 +563,7 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
         LayoutInflater layoutInflater = LayoutInflater.from(this);
         View view = layoutInflater.inflate(R.layout.change_language_title, null);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Ayurveda Care");
+        builder.setTitle("Autokatta");
         builder.setIcon(R.drawable.logo48x48);
         builder.setView(view);
 
