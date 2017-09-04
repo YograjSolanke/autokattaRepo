@@ -46,6 +46,10 @@ import autokatta.com.response.GetCompaniesResponse;
 import autokatta.com.response.GetDesignationResponse;
 import autokatta.com.response.GetSkillsResponse;
 import autokatta.com.response.ProfileAboutResponse;
+import co.mobiwise.materialintro.animation.MaterialIntroListener;
+import co.mobiwise.materialintro.shape.Focus;
+import co.mobiwise.materialintro.shape.FocusGravity;
+import co.mobiwise.materialintro.view.MaterialIntroView;
 import me.gujun.android.taggroup.TagGroup;
 import retrofit2.Response;
 
@@ -56,7 +60,7 @@ import static autokatta.com.adapter.GooglePlacesAdapter.resultList;
  * Created by ak-001 on 18/3/17.
  */
 
-public class About extends Fragment implements RequestNotifier {
+public class About extends Fragment implements RequestNotifier, MaterialIntroListener {
     View mAbout;
     String[] MODULE = null;
     ImageView mDone;
@@ -96,6 +100,7 @@ public class About extends Fragment implements RequestNotifier {
     LinearLayout mLinear;
     GenericFunctions mGenericFunctions;
     private TagGroup mTagGroup;
+    private static final String INTRO_FOCUS_1 = "intro_focus_1";
 
     @Override
     public void onAttach(Context context) {
@@ -631,9 +636,31 @@ public class About extends Fragment implements RequestNotifier {
         });
     }
 
+    public void showIntro(View view, String id, String text, Focus focusType) {
+        new MaterialIntroView.Builder(getActivity())
+                .enableDotAnimation(false)
+                .setFocusGravity(FocusGravity.CENTER)
+                .setFocusType(focusType)
+                .setDelayMillis(200)
+                .enableFadeAnimation(true)
+                .setListener(this)
+                .performClick(true)
+                .setInfoText(text)
+                .setTarget(view)
+                .setUsageId(id) //THIS SHOULD BE UNIQUE ID
+                .show();
+    }
+
     @Override
     public void onResume() {
         super.onResume();
         mApiCall.profileAbout(Sharedcontact, Sharedcontact);
+        if (mDone.getVisibility() == View.VISIBLE)
+            showIntro(mDone, INTRO_FOCUS_1, "Confirm event details first", Focus.MINIMUM);
+    }
+
+    @Override
+    public void onUserClicked(String s) {
+
     }
 }
