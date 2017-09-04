@@ -66,6 +66,7 @@ dependencies {
     //for qr code scanner
 
     //for device installation error
+    //Material Showcase View
     compile 'com.kaopiz:kprogresshud:1.0.5'
     compile 'com.android.support:appcompat-v7:25.3.0'
     compile 'com.android.support.constraint:constraint-layout:1.0.1'
@@ -98,7 +99,6 @@ dependencies {
     compile 'com.codemybrainsout.onboarding:onboarder:1.0.3'
     compile 'me.gujun.android.taggroup:library:1.4@aar'
     compile 'com.github.paolorotolo:appintro:3.3.0'
-    //Material Showcase View
     compile 'com.github.iammert:MaterialIntroView:1.6.0'
     testCompile 'junit:junit:4.12'
 }
