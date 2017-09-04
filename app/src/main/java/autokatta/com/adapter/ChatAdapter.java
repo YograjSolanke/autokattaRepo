@@ -3,6 +3,7 @@ package autokatta.com.adapter;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +21,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import autokatta.com.R;
+import autokatta.com.other.FullImageActivity;
 import autokatta.com.response.BroadcastMessageResponse;
 
 
@@ -178,16 +180,14 @@ public class ChatAdapter extends BaseAdapter implements View.OnClickListener {
             @Override
             public void onClick(View v) {
                 Bundle b = new Bundle();
-                b.putString("images", chatMessageObj.getImage());
-                b.putString("imgpath", "uploaded_broadcast_images/");
-//                ImageSlider fragment = new ImageSlider();
-//                fragment.setArguments(b);
-//
-//                FragmentManager fragmentManager = ctx.getSupportFragmentManager();
-//                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//                fragmentTransaction.replace(R.id.containerView, fragment);
-//                fragmentTransaction.addToBackStack("imageslider");
-//                fragmentTransaction.commit();
+                b.putString("image", chatMessageObj.getImage());
+             //   b.putString("imgpath", "uploaded_broadcast_images/");
+         //       FullImageActivity fragment = new FullImageActivity();
+
+                //ActivityOptions options = ActivityOptions.makeCustomAnimation(activity, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
+                Intent intent = new Intent(activity, FullImageActivity.class);
+                intent.putExtras(b);
+                activity.startActivity(intent);
             }
         });
 
