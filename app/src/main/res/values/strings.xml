@@ -85,6 +85,7 @@
     <string name="group_alert"><font color='#FF0000'>1. IGNITION package of price is 750/- per month gives you unlimited uploads, Unlimited groups, unlimited stores. Payment options will be monthly, quarterly, half yearly and annually.</font></string>
     <!--User Profile-->
     <string name="create_store">Create Store</string>
+    <string name="unfollow">Un-follow</string>
     <string name="title_activity_upload_vehicle">UploadVehicle</string>
 
     <!-- Shared Preferences -->
