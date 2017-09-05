@@ -371,6 +371,7 @@
                     android:layout_alignParentEnd="true"
                     android:layout_marginEnd="@dimen/activity_half_margin"
                     android:text="@string/edit"
+                    android:visibility="gone"
                     android:textColor="@color/text_color"
                     android:textSize="@dimen/text_about" />
 

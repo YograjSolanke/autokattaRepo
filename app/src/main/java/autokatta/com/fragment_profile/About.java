@@ -487,6 +487,7 @@ public class About extends Fragment implements RequestNotifier, MaterialIntroLis
                         boolean webflag = false;
                         usertype.setVisibility(View.GONE);
                         spinner.setVisibility(View.GONE);
+                        mEditTags.setVisibility(View.GONE);
                         mUpdatedProfession = mProfession.getText().toString();
                         mUpdatedCity = mCity.getText().toString();
                         mUpdatedEmail = mEmail.getText().toString();
