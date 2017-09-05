@@ -647,12 +647,12 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
         Log.i("Wall", "Adapter-LayoutNo ->" + holder.getItemViewType());
         mLoginContact = mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).
                 getString("loginContact", "");
-        SpannableStringBuilder sb = new SpannableStringBuilder();
+        // SpannableStringBuilder sb = new SpannableStringBuilder();
         switch (holder.getItemViewType()) {
             case 1:
                 final ProfileNotifications mProfileHolder = (ProfileNotifications) holder;
                 Log.i("Wall", "Profile-LayType ->" + notificationList.get(position).getLayoutType());
-
+                SpannableStringBuilder sb1 = new SpannableStringBuilder();
                 if (notificationList.get(position).getLayoutType().equalsIgnoreCase("MyAction")) {
                     //mProfileHolder.mCall.setVisibility(View.GONE);
                     mProfileHolder.mRelativeLike.setVisibility(View.GONE);
@@ -662,14 +662,14 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                     mProfileHolder.mRelativeLike.setVisibility(View.VISIBLE);
                 }
 
-                sb.append(notificationList.get(position).getSenderName());
-                sb.append(" ");
-                sb.append(notificationList.get(position).getAction());
-                sb.append("\n");
-                sb.append(notificationList.get(position).getReceiverName());
-                sb.append(" Profile");
+                sb1.append(notificationList.get(position).getSenderName());
+                sb1.append(" ");
+                sb1.append(notificationList.get(position).getAction());
+                sb1.append("\n");
+                sb1.append(notificationList.get(position).getReceiverName());
+                sb1.append(" Profile");
 
-                sb.setSpan(new ClickableSpan() {
+                sb1.setSpan(new ClickableSpan() {
                     @Override
                     public void onClick(View widget) {
 
@@ -694,7 +694,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                     }
                 }, 0, notificationList.get(position).getSenderName().length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
-                sb.setSpan(new ClickableSpan() {
+                sb1.setSpan(new ClickableSpan() {
                                @Override
                                public void onClick(View widget) {
                                    mActivity.startActivity(new Intent(mActivity, UserProfile.class));
@@ -724,7 +724,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                                 notificationList.get(position).getAction().length() + 2 + notificationList.get(position).getReceiverName().length()
                         , Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
-                mProfileHolder.mProfileAction.setText(sb);
+                mProfileHolder.mProfileAction.setText(sb1);
                 mProfileHolder.mProfileAction.setMovementMethod(LinkMovementMethod.getInstance());
                 mProfileHolder.mProfileAction.setHighlightColor(Color.TRANSPARENT);
                 /*mProfileHolder.mProfileAction.setText(notificationList.get(position).getSenderName() + " "
@@ -948,6 +948,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
 
                 final StoreNotifications mStoreHolder = (StoreNotifications) holder;
                 Log.i("Wall", "Store-LayType ->" + notificationList.get(position).getLayoutType());
+                SpannableStringBuilder sb2 = new SpannableStringBuilder();
 
                 if (notificationList.get(position).getLayoutType().equalsIgnoreCase("MyAction")) {
                     //mStoreHolder.mCall.setVisibility(View.GONE);
@@ -963,17 +964,17 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                         + notificationList.get(position).getReceiverName() + " "
                         + notificationList.get(position).getStoreName() + " " + "Store");*/
 
-                sb = new SpannableStringBuilder();
-                sb.append(notificationList.get(position).getSenderName());
-                sb.append(" ");
-                sb.append(notificationList.get(position).getAction());
-                sb.append("\n");
-                sb.append(notificationList.get(position).getReceiverName());
-                sb.append(" ");
-                sb.append(notificationList.get(position).getStoreName());
-                sb.append(" Store");
+                sb2 = new SpannableStringBuilder();
+                sb2.append(notificationList.get(position).getSenderName());
+                sb2.append(" ");
+                sb2.append(notificationList.get(position).getAction());
+                sb2.append("\n");
+                sb2.append(notificationList.get(position).getReceiverName());
+                sb2.append(" ");
+                sb2.append(notificationList.get(position).getStoreName());
+                sb2.append(" Store");
 
-                sb.setSpan(new ClickableSpan() {
+                sb2.setSpan(new ClickableSpan() {
                     @Override
                     public void onClick(View widget) {
 
@@ -998,7 +999,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                     }
                 }, 0, notificationList.get(position).getSenderName().length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
-                sb.setSpan(new ClickableSpan() {
+                sb2.setSpan(new ClickableSpan() {
                                @Override
                                public void onClick(View widget) {
 
@@ -1026,7 +1027,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                                 notificationList.get(position).getAction().length() + 2 + notificationList.get(position).getReceiverName().length()
                         , Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
-                sb.setSpan(new ClickableSpan() {
+                sb2.setSpan(new ClickableSpan() {
                                @Override
                                public void onClick(View widget) {
                                    Bundle b = new Bundle();
@@ -1052,7 +1053,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                                 notificationList.get(position).getStoreName().length() + 1
                         , Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
-                mStoreHolder.mStoreActionName.setText(sb);
+                mStoreHolder.mStoreActionName.setText(sb2);
                 mStoreHolder.mStoreActionName.setMovementMethod(LinkMovementMethod.getInstance());
                 mStoreHolder.mStoreActionName.setHighlightColor(Color.TRANSPARENT);
 
@@ -1349,23 +1350,24 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                 TextView mActionName, mActionTime, mGroupName, mGroupMembers, mGroupNoOfVehicles, mGroupNoOfProducts,
                         mGroupNoOfServices;*/
                 final GroupNotifications mGroupHolder = (GroupNotifications) holder;
+                SpannableStringBuilder sb3 = new SpannableStringBuilder();
 
                 /*mGroupHolder.mActionName.setText(notificationList.get(position).getSenderName() + " " +
                         notificationList.get(position).getAction() + "\n" + notificationList.get(position).getReceiverName() +
                         " in " + notificationList.get(position).getGroupName()
                         + " group");*/
 
-                sb = new SpannableStringBuilder();
-                sb.append(notificationList.get(position).getSenderName());
-                sb.append(" ");
-                sb.append(notificationList.get(position).getAction());
-                sb.append("\n");
-                sb.append(notificationList.get(position).getReceiverName());
-                sb.append(" in ");
-                sb.append(notificationList.get(position).getGroupName());
-                sb.append(" group");
+                sb3 = new SpannableStringBuilder();
+                sb3.append(notificationList.get(position).getSenderName());
+                sb3.append(" ");
+                sb3.append(notificationList.get(position).getAction());
+                sb3.append("\n");
+                sb3.append(notificationList.get(position).getReceiverName());
+                sb3.append(" in ");
+                sb3.append(notificationList.get(position).getGroupName());
+                sb3.append(" group");
 
-                sb.setSpan(new ClickableSpan() {
+                sb3.setSpan(new ClickableSpan() {
                     @Override
                     public void onClick(View widget) {
                         /*Intent intent = new Intent(mActivity, OtherProfile.class);
@@ -1395,7 +1397,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                     }
                 }, 0, notificationList.get(position).getSenderName().length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
-                sb.setSpan(new ClickableSpan() {
+                sb3.setSpan(new ClickableSpan() {
                                @Override
                                public void onClick(View widget) {
                                    //mActivity.startActivity(new Intent(mActivity, UserProfile.class));
@@ -1423,7 +1425,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                                 notificationList.get(position).getAction().length() + 2 + notificationList.get(position).getReceiverName().length()
                         , Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
-                sb.setSpan(new ClickableSpan() {
+                sb3.setSpan(new ClickableSpan() {
                                @Override
                                public void onClick(View widget) {
                                    //mActivity.startActivity(new Intent(mActivity, UserProfile.class));
@@ -1462,7 +1464,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                         , Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
 
-                mGroupHolder.mActionName.setText(sb);
+                mGroupHolder.mActionName.setText(sb3);
                 mGroupHolder.mActionName.setMovementMethod(LinkMovementMethod.getInstance());
                 mGroupHolder.mActionName.setHighlightColor(Color.TRANSPARENT);
 
@@ -1541,6 +1543,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                 TextView mActionName, mActionTime, mVehicleRegistration, mVehicleName, mVehiclePrice, mVehicleBrand,
                         mVehicleModel, mVehicleYearOfMfg, mVehicleKmsHrs, mVehicleLocation, mRtoCity, mLikes, mShares;*/
 
+                SpannableStringBuilder sb4 = new SpannableStringBuilder();
                 final VehicleNotifications mVehicleHolder = (VehicleNotifications) holder;
                 Log.i("Wall", "Vehicle-LayType ->" + notificationList.get(position).getLayoutType());
 
@@ -1561,17 +1564,17 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                         + " "
                         + notificationList.get(position).getUpVehicleTitle() + " " + "Vehicle");*/
 
-                sb = new SpannableStringBuilder();
-                sb.append(notificationList.get(position).getSenderName());
-                sb.append(" ");
-                sb.append(notificationList.get(position).getAction());
-                sb.append("\n");
-                sb.append(notificationList.get(position).getReceiverName());
-                sb.append(" ");
-                sb.append(notificationList.get(position).getUpVehicleTitle());
-                sb.append(" Vehicle");
+                sb4 = new SpannableStringBuilder();
+                sb4.append(notificationList.get(position).getSenderName());
+                sb4.append(" ");
+                sb4.append(notificationList.get(position).getAction());
+                sb4.append("\n");
+                sb4.append(notificationList.get(position).getReceiverName());
+                sb4.append(" ");
+                sb4.append(notificationList.get(position).getUpVehicleTitle());
+                sb4.append(" Vehicle");
 
-                sb.setSpan(new ClickableSpan() {
+                sb4.setSpan(new ClickableSpan() {
                     @Override
                     public void onClick(View widget) {
 
@@ -1596,7 +1599,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                     }
                 }, 0, notificationList.get(position).getSenderName().length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
-                sb.setSpan(new ClickableSpan() {
+                sb4.setSpan(new ClickableSpan() {
                                @Override
                                public void onClick(View widget) {
 
@@ -1624,7 +1627,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                                 notificationList.get(position).getAction().length() + 2 + notificationList.get(position).getReceiverName().length()
                         , Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
-                sb.setSpan(new ClickableSpan() {
+                sb4.setSpan(new ClickableSpan() {
                                @Override
                                public void onClick(View widget) {
                                    Intent intent = new Intent(mActivity, VehicleDetails.class);
@@ -1648,7 +1651,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                                 notificationList.get(position).getUpVehicleTitle().length() + 1
                         , Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
-                mVehicleHolder.mActionName.setText(sb);
+                mVehicleHolder.mActionName.setText(sb4);
                 mVehicleHolder.mActionName.setMovementMethod(LinkMovementMethod.getInstance());
                 mVehicleHolder.mActionName.setHighlightColor(Color.TRANSPARENT);
 
@@ -1948,6 +1951,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                     RatingBar mProductRating;
                     TextView mProductActionName, mProductActionTime, mProductTitle, mProductName, mProductType, mLikes, mShares;*/
                 final ProductNotifications mProductHolder = (ProductNotifications) holder;
+                SpannableStringBuilder sb5 = new SpannableStringBuilder();
                 Log.i("Wall", "Product-LayType ->" + notificationList.get(position).getLayoutType());
                 if (notificationList.get(position).getLayoutType().equalsIgnoreCase("MyAction")) {
                     //mProductHolder.mProductCall.setVisibility(View.GONE);
@@ -1966,18 +1970,18 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                         notificationList.get(position).getProductName()
                         + " product");
 
-                sb = new SpannableStringBuilder();
+
 
                 if (notificationList.get(position).getActionTitle().equalsIgnoreCase("added")) {
-                    sb.append(notificationList.get(position).getSenderName());
-                    sb.append(" ");
-                    sb.append(notificationList.get(position).getAction());
-                    sb.append("\n");
-                    sb.append(notificationList.get(position).getProductName());
-                    sb.append(" Product");
+                    sb5.append(notificationList.get(position).getSenderName());
+                    sb5.append(" ");
+                    sb5.append(notificationList.get(position).getAction());
+                    sb5.append("\n");
+                    sb5.append(notificationList.get(position).getProductName());
+                    sb5.append(" Product");
 
 
-                    sb.setSpan(new ClickableSpan() {
+                    sb5.setSpan(new ClickableSpan() {
                         @Override
                         public void onClick(View widget) {
 
@@ -2030,7 +2034,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                                     notificationList.get(position).getAction().length() + 2 + notificationList.get(position).getReceiverName().length()
                             , Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);*/
 
-                    sb.setSpan(new ClickableSpan() {
+                    sb5.setSpan(new ClickableSpan() {
                                    @Override
                                    public void onClick(View widget) {
                                        Intent intent = new Intent(mActivity, ProductViewActivity.class);
@@ -2055,17 +2059,17 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                                     notificationList.get(position).getProductName().length() + 1
                             , Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                 } else {
-                    sb.append(notificationList.get(position).getSenderName());
-                    sb.append(" ");
-                    sb.append(notificationList.get(position).getAction());
-                    sb.append("\n");
-                    sb.append(notificationList.get(position).getReceiverName());
-                    sb.append(" ");
-                    sb.append(notificationList.get(position).getProductName());
-                    sb.append(" Product");
+                    sb5.append(notificationList.get(position).getSenderName());
+                    sb5.append(" ");
+                    sb5.append(notificationList.get(position).getAction());
+                    sb5.append("\n");
+                    sb5.append(notificationList.get(position).getReceiverName());
+                    sb5.append(" ");
+                    sb5.append(notificationList.get(position).getProductName());
+                    sb5.append(" Product");
 
 
-                    sb.setSpan(new ClickableSpan() {
+                    sb5.setSpan(new ClickableSpan() {
                         @Override
                         public void onClick(View widget) {
 
@@ -2090,7 +2094,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                         }
                     }, 0, notificationList.get(position).getSenderName().length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
-                    sb.setSpan(new ClickableSpan() {
+                    sb5.setSpan(new ClickableSpan() {
                                    @Override
                                    public void onClick(View widget) {
 
@@ -2118,7 +2122,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                                     notificationList.get(position).getAction().length() + 2 + notificationList.get(position).getReceiverName().length()
                             , Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
-                    sb.setSpan(new ClickableSpan() {
+                    sb5.setSpan(new ClickableSpan() {
                                    @Override
                                    public void onClick(View widget) {
                                        Intent intent = new Intent(mActivity, ProductViewActivity.class);
@@ -2143,7 +2147,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                             , Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                 }
 
-                mProductHolder.mProductActionName.setText(sb);
+                mProductHolder.mProductActionName.setText(sb5);
                 mProductHolder.mProductActionName.setMovementMethod(LinkMovementMethod.getInstance());
                 mProductHolder.mProductActionName.setHighlightColor(Color.TRANSPARENT);
 
@@ -2380,7 +2384,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                 RatingBar mServiceRating;
                 TextView mServiceActionName, mServiceActionTime, mServiceTitle, mServiceName, mServiceType, mLikes, mShares;*/
                 final ServiceNotifications mServiceHolder = (ServiceNotifications) holder;
-
+                SpannableStringBuilder sb6 = new SpannableStringBuilder();
                 Log.i("Wall", "Service-LayType ->" + notificationList.get(position).getLayoutType());
                 if (notificationList.get(position).getLayoutType().equalsIgnoreCase("MyAction")) {
                     //mServiceHolder.mServiceCall.setVisibility(View.GONE);
@@ -2631,6 +2635,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                 final PostNotifications mPostHolder = (PostNotifications) holder;
 
                 Log.i("Wall", "Post-LayType ->" + notificationList.get(position).getLayoutType());
+                SpannableStringBuilder sb7 = new SpannableStringBuilder();
 
                 if (notificationList.get(position).getLayoutType().equalsIgnoreCase("MyAction")) {
                     mPostHolder.mRelativeLike.setVisibility(View.GONE);
@@ -2724,6 +2729,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                 TextView mSearchActionName, mSearchActionTime, mSearchCategory, mSearchBrand, mSearchModel, mSearchPrice, mSearchYear,
                         mSearchDate, mSearchLeads;*/
                 final SearchNotifications mSearchHolder = (SearchNotifications) holder;
+                SpannableStringBuilder sb8 = new SpannableStringBuilder();
 
                 Log.i("Wall", "Search-LayType ->" + notificationList.get(position).getLayoutType());
 
@@ -2926,6 +2932,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
 
                 final ActiveNotifications mActiveHolder = (ActiveNotifications) holder;
                 Log.i("Wall", "Auction-LayType ->" + notificationList.get(position).getLayoutType());
+                SpannableStringBuilder sb9 = new SpannableStringBuilder();
 
                 if (notificationList.get(position).getLayoutType().equalsIgnoreCase("MyAction")) {
                     shareKey = "myauction";
@@ -3220,6 +3227,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                         mVehicleModel, mVehicleYearOfMfg, mVehicleKmsHrs, mVehicleLocation, mRtoCity, mLikes, mShares;*/
 
                 final UploadVehicleNotifications mUpVehicleHolder = (UploadVehicleNotifications) holder;
+                SpannableStringBuilder sb10 = new SpannableStringBuilder();
                 Log.i("Wall", "Vehicle-LayType ->" + notificationList.get(position).getLayoutType());
 
                 if (notificationList.get(position).getLayoutType().equalsIgnoreCase("MyAction")) {
@@ -3527,6 +3535,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
 
             case 11:
                 final ShareNotifications mShareolder = (ShareNotifications) holder;
+                SpannableStringBuilder sb11 = new SpannableStringBuilder();
 
                 mShareolder.mCaptionData.setText(notificationList.get(position).getShareSubData());
                 int sublayout = Integer.parseInt(notificationList.get(position).getSubLayout());
