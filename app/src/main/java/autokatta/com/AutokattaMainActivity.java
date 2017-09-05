@@ -399,7 +399,7 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
                     navigationView.getMenu().getItem(6).getSubMenu().getItem(3).setTitle("माझे जतन केलेले इव्हेंट");
                     navigationView.getMenu().getItem(6).getSubMenu().getItem(4).setTitle("माझे शेवटचा कार्यक्रम");
                     navigationView.getMenu().getItem(6).getSubMenu().getItem(5).setTitle("माझे ब्लॅकलिस्ट केलेले सदस्य");
-                    navigationView.getMenu().getItem(7).setTitle("माझे ब्लॅकलिस्ट केलेले सदस्य");
+                    navigationView.getMenu().getItem(7).setTitle("इतर");
                     navigationView.getMenu().getItem(7).getSubMenu().getItem(0).setTitle("ब्रॉडकास्ट गट");
                     navigationView.getMenu().getItem(7).getSubMenu().getItem(1).setTitle("माझे प्रसारण संदेश");
                     navigationView.getMenu().getItem(7).getSubMenu().getItem(2).setTitle("व्यवसाय चॅट");
