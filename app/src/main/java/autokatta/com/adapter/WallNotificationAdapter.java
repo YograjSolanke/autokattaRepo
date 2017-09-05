@@ -2733,9 +2733,43 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                 } else {
                     mPostHolder.mRelativeLike.setVisibility(View.VISIBLE);
                 }
+//
+//                mPostHolder.mAction.setText(notificationList.get(position).getSenderName() + " "
+//                        + notificationList.get(position).getAction() + " " + "status");
 
-                mPostHolder.mAction.setText(notificationList.get(position).getSenderName() + " "
-                        + notificationList.get(position).getAction() + " " + "status");
+                sb7.append(notificationList.get(position).getSenderName());
+                sb7.append(" ");
+                sb7.append(notificationList.get(position).getAction());
+                sb7.append(" Status");
+
+                sb7.setSpan(new ClickableSpan() {
+                    @Override
+                    public void onClick(View widget) {
+
+                        if (notificationList.get(mPostHolder.getAdapterPosition()).getLayoutType().equalsIgnoreCase("MyAction")) {
+                            mActivity.startActivity(new Intent(mActivity, UserProfile.class));
+                        } else {
+                            Intent intent = new Intent(mActivity, OtherProfile.class);
+                            Bundle bundle = new Bundle();
+                            bundle.putString("contactOtherProfile", notificationList.get(mPostHolder.getAdapterPosition()).getSender());
+                            intent.putExtras(bundle);
+                            mActivity.startActivity(intent);
+                        }
+                    }
+
+                    @Override
+                    public void updateDrawState(TextPaint ds) {
+                        ds.setUnderlineText(false);
+                        ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
+                        ds.setFakeBoldText(true);
+                        ds.setTextSize((float) 35.0);
+                        Log.i("TextSize", "->" + ds.getTextSize());
+                    }
+                }, 0, notificationList.get(position).getSenderName().length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                mPostHolder.mAction.setText(sb7);
+                mPostHolder.mAction.setMovementMethod(LinkMovementMethod.getInstance());
+                mPostHolder.mAction.setHighlightColor(Color.TRANSPARENT);
 
                 /*if (notificationList.get(position).getStatus().startsWith("http://")||notificationList.get(position).getStatus().startsWith("https://")){
                     mPreview.setVisibility(View.VISIBLE);
@@ -2751,7 +2785,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
 
                 mPostHolder.mActionTime.setText(notificationList.get(position).getDateTime());
                 mPostHolder.mStatusText.setText(notificationList.get(position).getStatus());
-                
+
                  /* Sender Profile Pic */
 
                 if (notificationList.get(position).getSenderPicture() == null ||
@@ -2773,7 +2807,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                         call(otherContact);
                     }
                 });*/
-                
+
                 /* Like & Unlike Functionality */
 
                 if (notificationList.get(position).getStatusLikeStatus().equalsIgnoreCase("yes")) {
@@ -2813,7 +2847,11 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                 break;
 
             case 8:
-
+                /*CardView mSearchCardView;
+                ImageView mUserPic;
+                ImageButton mSearchAutokattaShare, mCall, mSearchLike, mSearchUnlike, mSearchFavorite, mSearchUnfav;
+                TextView mSearchActionName, mSearchActionTime, mSearchCategory, mSearchBrand, mSearchModel, mSearchPrice, mSearchYear,
+                        mSearchDate, mSearchLeads;*/
                 final SearchNotifications mSearchHolder = (SearchNotifications) holder;
                 SpannableStringBuilder sb8 = new SpannableStringBuilder();
 
@@ -2828,8 +2866,43 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                     mSearchHolder.mRelativeLike.setVisibility(View.VISIBLE);
                 }
 
-                mSearchHolder.mSearchActionName.setText(notificationList.get(position).getSenderName() + " " +
-                        notificationList.get(position).getAction() + " " + "search");
+                sb8.append(notificationList.get(position).getSenderName());
+                sb8.append(" ");
+                sb8.append(notificationList.get(position).getAction());
+                sb8.append(" search");
+
+
+                sb8.setSpan(new ClickableSpan() {
+                    @Override
+                    public void onClick(View widget) {
+
+                        if (notificationList.get(mSearchHolder.getAdapterPosition()).getLayoutType().equalsIgnoreCase("MyAction")) {
+                            mActivity.startActivity(new Intent(mActivity, UserProfile.class));
+                        } else {
+                            Intent intent = new Intent(mActivity, OtherProfile.class);
+                            Bundle bundle = new Bundle();
+                            bundle.putString("contactOtherProfile", notificationList.get(mSearchHolder.getAdapterPosition()).getSender());
+                            intent.putExtras(bundle);
+                            mActivity.startActivity(intent);
+                        }
+                    }
+
+                    @Override
+                    public void updateDrawState(TextPaint ds) {
+                        ds.setUnderlineText(false);
+                        ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
+                        ds.setFakeBoldText(true);
+                        ds.setTextSize((float) 35.0);
+                        Log.i("TextSize", "->" + ds.getTextSize());
+                    }
+                }, 0, notificationList.get(position).getSenderName().length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                mSearchHolder.mSearchActionName.setText(sb8);
+                mSearchHolder.mSearchActionName.setMovementMethod(LinkMovementMethod.getInstance());
+                mSearchHolder.mSearchActionName.setHighlightColor(Color.TRANSPARENT);
+
+//                mSearchHolder.mSearchActionName.setText(notificationList.get(position).getSenderName() + " " +
+//                        notificationList.get(position).getAction() + " " + "search");
 
                 mSearchHolder.mSearchActionTime.setText(notificationList.get(position).getDateTime());
                 mSearchHolder.mSearchCategory.setText(notificationList.get(position).getSearchCategory());
@@ -2861,7 +2934,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                         call(otherContact);
                     }
                 });*/
-                
+
                 /* Like & Unlike Functionality */
 
                 if (notificationList.get(position).getSearchLikeStatus().equalsIgnoreCase("yes")) {
@@ -2995,6 +3068,12 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                                 intent.putExtra(Intent.EXTRA_SUBJECT, "Search list from Autokatta User");
                                 mActivity.startActivity(Intent.createChooser(intent, "Autokatta"));
 
+                                /*intent.setType("text/plain");
+                                intent.putExtra(Intent.EXTRA_SUBJECT, "Please Find Below Attachments");
+                                intent.putExtra(Intent.EXTRA_TEXT, allSearchDetails);
+                                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                                mActivity.startActivity(intent);*/
+
                                 dialog.dismiss();
                             }
 
@@ -3006,7 +3085,6 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
 
 
                 break;
-
             case 9:
 
 

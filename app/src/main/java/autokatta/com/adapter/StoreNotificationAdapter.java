@@ -5,10 +5,18 @@ import android.app.DownloadManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.Environment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
+import android.text.TextPaint;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,7 +44,10 @@ import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.WallResponse;
+import autokatta.com.view.OtherProfile;
 import autokatta.com.view.ShareWithinAppActivity;
+import autokatta.com.view.StoreViewActivity;
+import autokatta.com.view.UserProfile;
 import retrofit2.Response;
 
 /**
@@ -127,6 +138,7 @@ public class StoreNotificationAdapter extends RecyclerView.Adapter<RecyclerView.
 
         final StoreNotifications mStoreHolder = (StoreNotifications) holder;
         Log.i("Wall", "Store-LayType ->" + notificationList.get(position).getLayoutType());
+        SpannableStringBuilder sb2 = new SpannableStringBuilder();
 
         if (notificationList.get(position).getLayoutType().equalsIgnoreCase("MyAction")) {
             //mStoreHolder.mCall.setVisibility(View.GONE);
@@ -140,6 +152,106 @@ public class StoreNotificationAdapter extends RecyclerView.Adapter<RecyclerView.
         mStoreHolder.mStoreActionName.setText(notificationList.get(position).getSenderName() + " "
                 + notificationList.get(position).getAction() + " " + notificationList.get(position).getReceiverName() + " "
                 + notificationList.get(position).getStoreName() + " " + "Store");
+
+
+        //Spannable code here
+        sb2.append(notificationList.get(position).getSenderName());
+        sb2.append(" ");
+        sb2.append(notificationList.get(position).getAction());
+        sb2.append("\n");
+        sb2.append(notificationList.get(position).getReceiverName());
+        sb2.append(" ");
+        sb2.append(notificationList.get(position).getStoreName());
+        sb2.append(" Store");
+
+        sb2.setSpan(new ClickableSpan() {
+            @Override
+            public void onClick(View widget) {
+
+                if (notificationList.get(mStoreHolder.getAdapterPosition()).getLayoutType().equalsIgnoreCase("MyAction")) {
+                    mActivity.startActivity(new Intent(mActivity, UserProfile.class));
+                } else {
+                    Intent intent = new Intent(mActivity, OtherProfile.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("contactOtherProfile", notificationList.get(mStoreHolder.getAdapterPosition()).getSender());
+                    intent.putExtras(bundle);
+                    mActivity.startActivity(intent);
+                }
+            }
+
+            @Override
+            public void updateDrawState(TextPaint ds) {
+                ds.setUnderlineText(false);
+                ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
+                ds.setFakeBoldText(true);
+                ds.setTextSize((float) 35.0);
+                Log.i("TextSize", "->" + ds.getTextSize());
+            }
+        }, 0, notificationList.get(position).getSenderName().length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        sb2.setSpan(new ClickableSpan() {
+                        @Override
+                        public void onClick(View widget) {
+
+                            if (notificationList.get(mStoreHolder.getAdapterPosition()).getLayoutType().equalsIgnoreCase("MyAction") ||
+                                    notificationList.get(mStoreHolder.getAdapterPosition()).getLayoutType().equalsIgnoreCase("MyNotification")) {
+                                mActivity.startActivity(new Intent(mActivity, UserProfile.class));
+                            } else {
+                                Intent intent = new Intent(mActivity, OtherProfile.class);
+                                Bundle bundle = new Bundle();
+                                bundle.putString("contactOtherProfile", notificationList.get(mStoreHolder.getAdapterPosition()).getReceiver());
+                                intent.putExtras(bundle);
+                                mActivity.startActivity(intent);
+                            }
+                        }
+
+                        @Override
+                        public void updateDrawState(TextPaint ds) {
+                            ds.setUnderlineText(false);
+                            ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
+                            ds.setFakeBoldText(true);
+                            ds.setTextSize((float) 35.0);
+                        }
+                    }, notificationList.get(position).getSenderName().length() + notificationList.get(position).getAction().length() + 2,
+                notificationList.get(position).getSenderName().length() +
+                        notificationList.get(position).getAction().length() + 2 + notificationList.get(position).getReceiverName().length()
+                , Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        sb2.setSpan(new ClickableSpan() {
+                        @Override
+                        public void onClick(View widget) {
+                            Bundle b = new Bundle();
+                            b.putInt("store_id", notificationList.get(mStoreHolder.getAdapterPosition()).getStoreID());
+                            Intent intent = new Intent(mActivity, StoreViewActivity.class);
+                            intent.putExtras(b);
+                            mActivity.startActivity(intent);
+                        }
+
+                        @Override
+                        public void updateDrawState(TextPaint ds) {
+                            ds.setUnderlineText(false);
+                            ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
+                            ds.setFakeBoldText(true);
+                            ds.setTextSize((float) 35.0);
+                        }
+                    }, notificationList.get(position).getSenderName().length() + notificationList.get(position).getAction().length() +
+                        notificationList.get(position).getReceiverName().length() + 3,
+
+                notificationList.get(position).getSenderName().length() +
+                        notificationList.get(position).getAction().length() +
+                        notificationList.get(position).getReceiverName().length() + 3 +
+                        notificationList.get(position).getStoreName().length() + 1
+                , Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        mStoreHolder.mStoreActionName.setText(sb2);
+        mStoreHolder.mStoreActionName.setMovementMethod(LinkMovementMethod.getInstance());
+        mStoreHolder.mStoreActionName.setHighlightColor(Color.TRANSPARENT);
+
+
+
+
+
+
 
         mStoreHolder.mActionTime.setText(notificationList.get(position).getDateTime());
         mStoreHolder.mStoreName.setText(notificationList.get(position).getStoreName());

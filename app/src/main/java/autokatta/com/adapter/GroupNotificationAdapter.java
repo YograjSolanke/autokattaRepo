@@ -5,10 +5,18 @@ import android.app.DownloadManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.Environment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
+import android.text.TextPaint;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,7 +43,10 @@ import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.WallResponse;
+import autokatta.com.view.GroupsActivity;
+import autokatta.com.view.OtherProfile;
 import autokatta.com.view.ShareWithinAppActivity;
+import autokatta.com.view.UserProfile;
 import retrofit2.Response;
 
 /**
@@ -171,6 +182,134 @@ public class GroupNotificationAdapter extends RecyclerView.Adapter<RecyclerView.
                         notificationList.get(position).getAction() + " " + notificationList.get(position).getReceiverName() +
                         " in " + notificationList.get(position).getGroupName()
                         + " group");
+
+                //Spannable code here
+
+                SpannableStringBuilder sb3 = new SpannableStringBuilder();
+
+                /*mGroupHolder.mActionName.setText(notificationList.get(position).getSenderName() + " " +
+                        notificationList.get(position).getAction() + "\n" + notificationList.get(position).getReceiverName() +
+                        " in " + notificationList.get(position).getGroupName()
+                        + " group");*/
+
+                // sb3 = new SpannableStringBuilder();
+                sb3.append(notificationList.get(position).getSenderName());
+                sb3.append(" ");
+                sb3.append(notificationList.get(position).getAction());
+                sb3.append("\n");
+                sb3.append(notificationList.get(position).getReceiverName());
+                sb3.append(" in ");
+                sb3.append(notificationList.get(position).getGroupName());
+                sb3.append(" group");
+
+                sb3.setSpan(new ClickableSpan() {
+                    @Override
+                    public void onClick(View widget) {
+                        /*Intent intent = new Intent(mActivity, OtherProfile.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putString("contactOtherProfile", notificationList.get(mGroupHolder.getAdapterPosition()).getSender());
+                        intent.putExtras(bundle);
+                        mActivity.startActivity(intent);*/
+
+                        if (notificationList.get(mGroupHolder.getAdapterPosition()).getLayoutType().equalsIgnoreCase("MyAction")) {
+                            mActivity.startActivity(new Intent(mActivity, UserProfile.class));
+                        } else {
+                            Intent intent = new Intent(mActivity, OtherProfile.class);
+                            Bundle bundle = new Bundle();
+                            bundle.putString("contactOtherProfile", notificationList.get(mGroupHolder.getAdapterPosition()).getSender());
+                            intent.putExtras(bundle);
+                            mActivity.startActivity(intent);
+                        }
+                    }
+
+                    @Override
+                    public void updateDrawState(TextPaint ds) {
+                        ds.setUnderlineText(false);
+                        ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
+                        ds.setFakeBoldText(true);
+                        ds.setTextSize((float) 35.0);
+                        Log.i("TextSize", "->" + ds.getTextSize());
+                    }
+                }, 0, notificationList.get(position).getSenderName().length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                sb3.setSpan(new ClickableSpan() {
+                                @Override
+                                public void onClick(View widget) {
+                                    //mActivity.startActivity(new Intent(mActivity, UserProfile.class));
+                                    if (notificationList.get(mGroupHolder.getAdapterPosition()).getLayoutType().equalsIgnoreCase("MyAction") ||
+                                            notificationList.get(mGroupHolder.getAdapterPosition()).getLayoutType().equalsIgnoreCase("MyNotification")) {
+                                        mActivity.startActivity(new Intent(mActivity, UserProfile.class));
+                                    } else {
+                                        Intent intent = new Intent(mActivity, OtherProfile.class);
+                                        Bundle bundle = new Bundle();
+                                        bundle.putString("contactOtherProfile", notificationList.get(mGroupHolder.getAdapterPosition()).getReceiver());
+                                        intent.putExtras(bundle);
+                                        mActivity.startActivity(intent);
+                                    }
+                                }
+
+                                @Override
+                                public void updateDrawState(TextPaint ds) {
+                                    ds.setUnderlineText(false);
+                                    ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
+                                    ds.setFakeBoldText(true);
+                                    ds.setTextSize((float) 35.0);
+                                }
+                            }, notificationList.get(position).getSenderName().length() + notificationList.get(position).getAction().length() + 2,
+                        notificationList.get(position).getSenderName().length() +
+                                notificationList.get(position).getAction().length() + 2 + notificationList.get(position).getReceiverName().length()
+                        , Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                sb3.setSpan(new ClickableSpan() {
+                                @Override
+                                public void onClick(View widget) {
+                                    //mActivity.startActivity(new Intent(mActivity, UserProfile.class));
+                                    Intent i = new Intent(mActivity, GroupsActivity.class);
+
+                                    if (notificationList.get(mGroupHolder.getAdapterPosition()).getLayoutType().equalsIgnoreCase("MyAction")) {
+                                        i.putExtra("grouptype", "MyGroup");
+                                        i.putExtra("className", "SimpleProfile");
+                                        i.putExtra("bundle_Contact", notificationList.get(mGroupHolder.getAdapterPosition()).getSender());
+
+                                    } else {
+                                        i.putExtra("grouptype", "OtherGroup");
+                                        i.putExtra("className", "OtherProfile");
+                                        i.putExtra("bundle_Contact", notificationList.get(mGroupHolder.getAdapterPosition()).getReceiver());
+                                    }
+
+                                    i.putExtra("bundle_GroupId", notificationList.get(mGroupHolder.getAdapterPosition()).getGroupID());
+                                    i.putExtra("bundle_GroupName", notificationList.get(mGroupHolder.getAdapterPosition()).getGroupName());
+                                    mActivity.startActivity(i);
+                                }
+
+                                @Override
+                                public void updateDrawState(TextPaint ds) {
+                                    ds.setUnderlineText(false);
+                                    ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
+                                    ds.setFakeBoldText(true);
+                                    ds.setTextSize((float) 35.0);
+                                }
+                            }, notificationList.get(position).getSenderName().length() + notificationList.get(position).getAction().length() +
+                                notificationList.get(position).getReceiverName().length() + 5,
+
+                        notificationList.get(position).getSenderName().length() +
+                                notificationList.get(position).getAction().length() +
+                                notificationList.get(position).getReceiverName().length() + 5 +
+                                notificationList.get(position).getGroupName().length() + 1
+                        , Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+
+                mGroupHolder.mActionName.setText(sb3);
+                mGroupHolder.mActionName.setMovementMethod(LinkMovementMethod.getInstance());
+                mGroupHolder.mActionName.setHighlightColor(Color.TRANSPARENT);
+
+
+
+
+
+
+
+
                 mGroupHolder.mGroupName.setText(notificationList.get(position).getGroupName());
                 mGroupHolder.mActionTime.setText(notificationList.get(position).getDateTime());
                 mGroupHolder.mGroupMembers.setText(String.valueOf(notificationList.get(position).getGroupMembers()));
