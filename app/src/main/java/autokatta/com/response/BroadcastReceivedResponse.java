@@ -40,6 +40,19 @@ public class BroadcastReceivedResponse {
         @Expose
         private String date;
 
+        @SerializedName("profileImage")
+        @Expose
+        private String profileImage;
+
+
+        public String getProfileImage() {
+            return profileImage;
+        }
+
+        public void setProfileImage(String profileImage) {
+            this.profileImage = profileImage;
+        }
+
         public String getSender() {
             return sender;
         }

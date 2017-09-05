@@ -270,6 +270,7 @@
                     android:paddingEnd="3dp"
                     android:paddingStart="3dp"
                     android:textColor="#2C3343"
+                    android:visibility="gone"
                     android:textColorHint="#848484" />
 
                 <Spinner

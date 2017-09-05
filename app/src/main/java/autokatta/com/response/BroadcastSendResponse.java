@@ -33,6 +33,41 @@ public class BroadcastSendResponse {
         @SerializedName("receivername")
         @Expose
         private String receivername;
+        @SerializedName("message")
+        @Expose
+        private String message;
+        @SerializedName("date")
+        @Expose
+        private String date;
+
+        @SerializedName("profileImage")
+        @Expose
+        private String profileImage;
+
+
+        public String getProfileImage() {
+            return profileImage;
+        }
+
+        public void setProfileImage(String profileImage) {
+            this.profileImage = profileImage;
+        }
+
+        public String getMessage() {
+            return message;
+        }
+
+        public void setMessage(String message) {
+            this.message = message;
+        }
+
+        public String getDate() {
+            return date;
+        }
+
+        public void setDate(String date) {
+            this.date = date;
+        }
 
         public String getReceiver() {
             return receiver;

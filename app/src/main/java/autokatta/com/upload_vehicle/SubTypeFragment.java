@@ -197,7 +197,7 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
                         }
                     });
 
-                    mFuel.clear();
+          /*          mFuel.clear();
                     mFuel.add("-Select Fuel Type-");
                     mFuel.add("Petrol");
                     mFuel.add("Diesel");
@@ -211,7 +211,7 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
                         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                         mSetFuel.setAdapter(dataAdapter);
                     }
-
+*/
                      /*else if (Category.equalsIgnoreCase("Tractor") || Category.equalsIgnoreCase("Construction Equipment") ||
                             Category.equalsIgnoreCase("2 Wheeler")) {
 
@@ -268,7 +268,7 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
                         autoBodymanufacturer.setVisibility(View.VISIBLE);
                         autoSeatmanufacturer.setVisibility(View.VISIBLE);
                         getBodyAndSeatManufacturer();
-
+                        fuelType();
                         mBustypeSpinner.setVisibility(View.VISIBLE);
                         mAircondSpinner.setVisibility(View.VISIBLE);
                         edtSeatCap.setVisibility(View.VISIBLE);
@@ -282,8 +282,12 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
                         edtSetJib.setVisibility(View.GONE);
                         edtSetBoon.setVisibility(View.GONE);
                         mEmissionSpinner.setVisibility(View.VISIBLE);
+
                     } else if (Category.equalsIgnoreCase("Car")) {
                         //edtTyreContext.setVisibility(View.VISIBLE);
+                        fuelType();
+
+
                         mTransmissionSpinner.setVisibility(View.VISIBLE);
                         edtSeatCap.setVisibility(View.VISIBLE);
                         mDriveSpinner.setVisibility(View.VISIBLE);
@@ -319,7 +323,7 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
                         edtSetHpcapa.setVisibility(View.GONE);
                         mImplementSpinner.setVisibility(View.GONE);
                         edtTyreContext.setVisibility(View.GONE);
-
+                        mSetFuel.setVisibility(View.GONE);
                         mEmissionSpinner.setVisibility(View.GONE);
 
                 /* RC Text */
@@ -331,6 +335,7 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
                             mHypoSpinner.setVisibility(View.GONE);
                             mPermitSpinner.setVisibility(View.GONE);
                             mFitnessSpinner.setVisibility(View.GONE);
+                            mSetFuel.setVisibility(View.GONE);
                             RCText = "-Select Invoice Available-";
                         } else
                             RCText = "-Select RC Available-";
@@ -395,6 +400,8 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
 //                        }
 
                     } else if (Category.equalsIgnoreCase("Commercial Vehicle")) {
+                        fuelType();
+
                         edtTyreContext.setVisibility(View.GONE);
                         edtBody.setVisibility(View.VISIBLE);
                         mAircondSpinner.setVisibility(View.VISIBLE);
@@ -423,7 +430,7 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
                         edtSetJib.setVisibility(View.GONE);
                         edtSetBoon.setVisibility(View.GONE);
                         edtSeatCap.setVisibility(View.GONE);
-
+                        mSetFuel.setVisibility(View.GONE);
                         mPermitSpinner.setVisibility(View.GONE);
                         mFitnessSpinner.setVisibility(View.GONE);
                         relInsurance.setVisibility(View.GONE);
@@ -432,6 +439,18 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
 
                     } else if (Category.equalsIgnoreCase("2 Wheeler")) {
                         //edtTyreContext.setVisibility(View.GONE);
+                        mFuel.clear();
+                        mFuel.add("-Select Fuel Type-");
+                        mFuel.add("Petrol");
+                        mFuel.add("Electric");
+                        mFuel.add("Gas");
+
+                        if (getActivity() != null) {
+                            final ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(getActivity(),
+                                    android.R.layout.simple_spinner_item, mFuel);
+                            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                            mSetFuel.setAdapter(dataAdapter);
+                        }
 
                     /*23-8-17*/
                         mBustypeSpinner.setVisibility(View.GONE);
@@ -452,17 +471,20 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
                         /*edtTyreContext.setVisibility(View.VISIBLE);
                         edtApptext.setVisibility(View.VISIBLE);*/
 
+
+
                     /*23-8-17*/
                         mBustypeSpinner.setVisibility(View.GONE);
                         edtSetBoon.setVisibility(View.GONE);
                         edtSetJib.setVisibility(View.GONE);
-                        edtSetHpcapa.setVisibility(View.GONE);
+                        edtSetHpcapa.setVisibility(View.VISIBLE);
                         mImplementSpinner.setVisibility(View.GONE);
                         mInvoiceSpinner.setVisibility(View.GONE);
                         edtTyreContext.setVisibility(View.VISIBLE);
                         mEmissionSpinner.setVisibility(View.VISIBLE);
                         edtApptext.setVisibility(View.VISIBLE);
                         // seatrow.setVisibility(View.VISIBLE);
+                        fuelType();
                         mTaxValidSpinner.setVisibility(View.GONE);
                         mPermitSpinner.setVisibility(View.GONE);
                         mFitnessSpinner.setVisibility(View.GONE);
@@ -527,9 +549,10 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                            if (mInsuranceSpinner.getSelectedItem().toString().equalsIgnoreCase("Yes"))
+                            if (mInsuranceSpinner.getSelectedItem().toString().equalsIgnoreCase("Yes")) {
                                 relInsurance.setVisibility(View.VISIBLE);
-                            else {
+                                edtInsuranceIdv.setVisibility(View.VISIBLE);
+                            } else {
                                 relInsurance.setVisibility(View.GONE);
 
 //                                if (insOtherRow.getVisibility() == View.VISIBLE)
@@ -551,6 +574,24 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
         });
 
         return mSubtype;
+    }
+
+    /*Fuel type for other*/
+    private void fuelType() {
+        mFuel.clear();
+        mFuel.add("-Select Fuel Type-");
+        mFuel.add("Petrol");
+        mFuel.add("Diesel");
+        mFuel.add("CNG");
+        mFuel.add("LPG");
+        mFuel.add("Electric");
+        mFuel.add("Hybrid");
+        if (getActivity() != null) {
+            final ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(getActivity(),
+                    android.R.layout.simple_spinner_item, mFuel);
+            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            mSetFuel.setAdapter(dataAdapter);
+        }
     }
 
     /*

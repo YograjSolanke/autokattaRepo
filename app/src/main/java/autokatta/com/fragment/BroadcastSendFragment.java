@@ -18,11 +18,19 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 
 import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
@@ -30,6 +38,7 @@ import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.BroadcastSendResponse;
 import autokatta.com.view.ChatActivity;
+import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import retrofit2.Response;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -92,23 +101,22 @@ public class BroadcastSendFragment extends Fragment implements RequestNotifier, 
                 for (BroadcastSendResponse.Success success : mGetGroupVehiclesResponse.getSuccess()) {
                     success.setReceiver(success.getReceiver());
                     success.setReceivername(success.getReceivername());
-/*
                     success.setMessage(success.getMessage());
                     success.setDate(success.getDate());
-
+                    success.setProfileImage(success.getProfileImage());
 
                     try {
                         TimeZone utc = TimeZone.getTimeZone("etc/UTC");
                         //format of date coming from services
                         DateFormat inputFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss a", Locale.getDefault());
-                        *//*DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",
-                                Locale.getDefault());*//*
+                        /*DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",
+                                Locale.getDefault());*/
                         inputFormat.setTimeZone(utc);
 
                         //format of date which we want to show
                         DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy hh:mm a", Locale.getDefault());
-                        *//*DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy hh:mm aa",
-                                Locale.getDefault());*//*
+                        /*DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy hh:mm aa",
+                                Locale.getDefault());*/
                         outputFormat.setTimeZone(utc);
 
                         Date date = inputFormat.parse(success.getDate());
@@ -118,7 +126,8 @@ public class BroadcastSendFragment extends Fragment implements RequestNotifier, 
                         success.setDate(output);
                     } catch (Exception e) {
                         e.printStackTrace();
-                    }*/
+                    }
+
 
                     broadcastMessageArrayList.add(success);
                 }
@@ -249,10 +258,18 @@ public class BroadcastSendFragment extends Fragment implements RequestNotifier, 
             BroadcastSendResponse.Success broadcastMessageObj = broadcastMessageArrayList.get(position);
 
             holder.enquiry.setVisibility(View.GONE);
-        //    holder.lastMsg.setText(broadcastMessageObj.getMessage());
-          //  holder.lastMsgTime.setText(broadcastMessageObj.getDate());
+            holder.lastMsg.setText(broadcastMessageObj.getMessage());
+            holder.lastMsgTime.setText(broadcastMessageObj.getDate());
             holder.msgFromCnt.setText(broadcastMessageObj.getReceiver());
             holder.msgFrom.setText(broadcastMessageObj.getReceivername());
+
+            String dppath = activity.getString(R.string.base_image_url) +broadcastMessageObj.getProfileImage();
+            Glide.with(activity)
+                    .load(dppath)
+                    .bitmapTransform(new CropCircleTransformation(activity)) //To display image in Circular form.
+                    .diskCacheStrategy(DiskCacheStrategy.ALL) //For caching diff versions of image.
+                    .placeholder(R.drawable.logo)
+                    .into(holder.profile);
         }
 
         @Override

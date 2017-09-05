@@ -129,7 +129,7 @@
                 android:layout_alignParentEnd="true"
                 android:background="@drawable/buttonback"
                 android:gravity="center"
-                android:text="@string/follower"
+                android:text="@string/unfollow"
                 android:textColor="@android:color/white"
                 android:textSize="12sp"
                 android:visibility="gone" />

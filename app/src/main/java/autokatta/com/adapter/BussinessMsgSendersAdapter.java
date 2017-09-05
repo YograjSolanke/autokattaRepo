@@ -12,6 +12,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -25,6 +28,7 @@ import autokatta.com.response.BroadcastReceivedResponse;
 import autokatta.com.view.AddManualEnquiry;
 import autokatta.com.view.ChatActivity;
 import autokatta.com.view.OtherProfile;
+import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
 /**
  * Created by ak-005 on 10/4/17.
@@ -92,6 +96,12 @@ public class BussinessMsgSendersAdapter extends RecyclerView.Adapter<BussinessMs
         holder.lastMsg.setText(lastmsg);
         holder.lastMsgTime.setText(time);
 
+
+        Glide.with(mActivity)
+                .load(mActivity.getString(R.string.base_image_url)+mItemList.get(position).getProfileImage())
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .bitmapTransform(new CropCircleTransformation(mActivity))
+                .into(holder.profile);
 
         try {
             TimeZone utc = TimeZone.getTimeZone("etc/UTC");

@@ -19,6 +19,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+
 import java.net.SocketTimeoutException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -34,6 +37,7 @@ import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.BroadcastReceivedResponse;
 import autokatta.com.view.ChatActivity;
+import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import retrofit2.Response;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -99,6 +103,7 @@ public class BroadcastReceivedFragment extends Fragment implements RequestNotifi
                     success.setSendername(success.getSendername());
                     success.setMessage(success.getMessage());
                     success.setDate(success.getDate());
+                    success.setProfileImage(success.getProfileImage());
 
 
                     try {
@@ -248,8 +253,15 @@ public class BroadcastReceivedFragment extends Fragment implements RequestNotifi
             holder.lastMsg.setText(broadcastMessageObj.getMessage());
             holder.lastMsgTime.setText(broadcastMessageObj.getDate());
 
-            holder.msgFromCnt.setText(broadcastMessageObj.getSender());
-            holder.msgFrom.setText(broadcastMessageObj.getSendername());
+            String dppath = activity.getString(R.string.base_image_url) +broadcastMessageObj.getProfileImage();
+            Glide.with(activity)
+                    .load(dppath)
+                    .bitmapTransform(new CropCircleTransformation(activity)) //To display image in Circular form.
+                    .diskCacheStrategy(DiskCacheStrategy.ALL) //For caching diff versions of image.
+                    .placeholder(R.drawable.logo)
+                    .into(holder.profile);
+        //    holder.msgFromCnt.setText(broadcastMessageObj.getSender());
+          //  holder.msgFrom.setText(broadcastMessageObj.getSendername());
         }
 
         @Override

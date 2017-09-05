@@ -213,6 +213,7 @@ public class BussinessMsgSenders extends Fragment implements SwipeRefreshLayout.
                     msenders.setSendername(msenders.getSendername());
                     msenders.setMessage(msenders.getMessage());
                     msenders.setDate(msenders.getDate());
+                    msenders.setProfileImage(msenders.getProfileImage());
 
 
                     try {
