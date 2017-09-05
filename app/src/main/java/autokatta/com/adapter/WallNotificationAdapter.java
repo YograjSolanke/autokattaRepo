@@ -57,6 +57,7 @@ import autokatta.com.response.WallResponse;
 import autokatta.com.view.GroupsActivity;
 import autokatta.com.view.OtherProfile;
 import autokatta.com.view.ProductViewActivity;
+import autokatta.com.view.ServiceViewActivity;
 import autokatta.com.view.ShareWithinAppActivity;
 import autokatta.com.view.StoreViewActivity;
 import autokatta.com.view.UserProfile;
@@ -695,31 +696,31 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                 }, 0, notificationList.get(position).getSenderName().length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
                 sb1.setSpan(new ClickableSpan() {
-                               @Override
-                               public void onClick(View widget) {
-                                   mActivity.startActivity(new Intent(mActivity, UserProfile.class));
+                                @Override
+                                public void onClick(View widget) {
+                                    mActivity.startActivity(new Intent(mActivity, UserProfile.class));
 
-                                   if (notificationList.get(mProfileHolder.getAdapterPosition()).getLayoutType().equalsIgnoreCase("MyAction")) {
-                                       mActivity.startActivity(new Intent(mActivity, UserProfile.class));
-                                   } else if (notificationList.get(mProfileHolder.getAdapterPosition()).getLayoutType().equalsIgnoreCase("MyNotification")) {
-                                       mActivity.startActivity(new Intent(mActivity, UserProfile.class));
-                                   } else {
-                                       Intent intent = new Intent(mActivity, OtherProfile.class);
-                                       Bundle bundle = new Bundle();
-                                       bundle.putString("contactOtherProfile", notificationList.get(mProfileHolder.getAdapterPosition()).getReceiver());
-                                       intent.putExtras(bundle);
-                                       mActivity.startActivity(intent);
-                                   }
-                               }
+                                    if (notificationList.get(mProfileHolder.getAdapterPosition()).getLayoutType().equalsIgnoreCase("MyAction")) {
+                                        mActivity.startActivity(new Intent(mActivity, UserProfile.class));
+                                    } else if (notificationList.get(mProfileHolder.getAdapterPosition()).getLayoutType().equalsIgnoreCase("MyNotification")) {
+                                        mActivity.startActivity(new Intent(mActivity, UserProfile.class));
+                                    } else {
+                                        Intent intent = new Intent(mActivity, OtherProfile.class);
+                                        Bundle bundle = new Bundle();
+                                        bundle.putString("contactOtherProfile", notificationList.get(mProfileHolder.getAdapterPosition()).getReceiver());
+                                        intent.putExtras(bundle);
+                                        mActivity.startActivity(intent);
+                                    }
+                                }
 
-                               @Override
-                               public void updateDrawState(TextPaint ds) {
-                                   ds.setUnderlineText(false);
-                                   ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
-                                   ds.setFakeBoldText(true);
-                                   ds.setTextSize((float) 35.0);
-                               }
-                           }, notificationList.get(position).getSenderName().length() + notificationList.get(position).getAction().length() + 2,
+                                @Override
+                                public void updateDrawState(TextPaint ds) {
+                                    ds.setUnderlineText(false);
+                                    ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
+                                    ds.setFakeBoldText(true);
+                                    ds.setTextSize((float) 35.0);
+                                }
+                            }, notificationList.get(position).getSenderName().length() + notificationList.get(position).getAction().length() + 2,
                         notificationList.get(position).getSenderName().length() +
                                 notificationList.get(position).getAction().length() + 2 + notificationList.get(position).getReceiverName().length()
                         , Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -919,13 +920,6 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                                 intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                                 mActivity.startActivity(Intent.createChooser(intent, "Autokatta"));
 
-
-                                /*intent.setType("text/plain");
-                                intent.putExtra(Intent.EXTRA_SUBJECT, "Please Find Below Attachments");
-                                intent.putExtra(Intent.EXTRA_TEXT, allProfileDetails);
-                                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                                mActivity.startActivity(intent);*/
-
                                 dialog.dismiss();
                             }
 
@@ -939,12 +933,6 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                 break;
 
             case 2:
-               /* CardView mStoreCardView;
-                ImageView mProfilePic, mStoreImage;
-                ImageButton mShareAutokatta, mCall, mLike, mUnlike, mFollow, mUnfollow;
-                RatingBar mStoreRating;
-                TextView mStoreActionName, mActionTime, mStoreName, mStoreCategory, mStoreType, mStoreWebSite, mStoreTiming,
-                        mStoreWorkingDay, mStoreLocation, mFollowCount, mLikes, mShares;*/
 
                 final StoreNotifications mStoreHolder = (StoreNotifications) holder;
                 Log.i("Wall", "Store-LayType ->" + notificationList.get(position).getLayoutType());
@@ -1000,51 +988,51 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                 }, 0, notificationList.get(position).getSenderName().length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
                 sb2.setSpan(new ClickableSpan() {
-                               @Override
-                               public void onClick(View widget) {
+                                @Override
+                                public void onClick(View widget) {
 
-                                   if (notificationList.get(mStoreHolder.getAdapterPosition()).getLayoutType().equalsIgnoreCase("MyAction") ||
-                                           notificationList.get(mStoreHolder.getAdapterPosition()).getLayoutType().equalsIgnoreCase("MyNotification")) {
-                                       mActivity.startActivity(new Intent(mActivity, UserProfile.class));
-                                   } else {
-                                       Intent intent = new Intent(mActivity, OtherProfile.class);
-                                       Bundle bundle = new Bundle();
-                                       bundle.putString("contactOtherProfile", notificationList.get(mStoreHolder.getAdapterPosition()).getReceiver());
-                                       intent.putExtras(bundle);
-                                       mActivity.startActivity(intent);
-                                   }
-                               }
+                                    if (notificationList.get(mStoreHolder.getAdapterPosition()).getLayoutType().equalsIgnoreCase("MyAction") ||
+                                            notificationList.get(mStoreHolder.getAdapterPosition()).getLayoutType().equalsIgnoreCase("MyNotification")) {
+                                        mActivity.startActivity(new Intent(mActivity, UserProfile.class));
+                                    } else {
+                                        Intent intent = new Intent(mActivity, OtherProfile.class);
+                                        Bundle bundle = new Bundle();
+                                        bundle.putString("contactOtherProfile", notificationList.get(mStoreHolder.getAdapterPosition()).getReceiver());
+                                        intent.putExtras(bundle);
+                                        mActivity.startActivity(intent);
+                                    }
+                                }
 
-                               @Override
-                               public void updateDrawState(TextPaint ds) {
-                                   ds.setUnderlineText(false);
-                                   ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
-                                   ds.setFakeBoldText(true);
-                                   ds.setTextSize((float) 35.0);
-                               }
-                           }, notificationList.get(position).getSenderName().length() + notificationList.get(position).getAction().length() + 2,
+                                @Override
+                                public void updateDrawState(TextPaint ds) {
+                                    ds.setUnderlineText(false);
+                                    ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
+                                    ds.setFakeBoldText(true);
+                                    ds.setTextSize((float) 35.0);
+                                }
+                            }, notificationList.get(position).getSenderName().length() + notificationList.get(position).getAction().length() + 2,
                         notificationList.get(position).getSenderName().length() +
                                 notificationList.get(position).getAction().length() + 2 + notificationList.get(position).getReceiverName().length()
                         , Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
                 sb2.setSpan(new ClickableSpan() {
-                               @Override
-                               public void onClick(View widget) {
-                                   Bundle b = new Bundle();
-                                   b.putInt("store_id", notificationList.get(mStoreHolder.getAdapterPosition()).getStoreID());
-                                   Intent intent = new Intent(mActivity, StoreViewActivity.class);
-                                   intent.putExtras(b);
-                                   mActivity.startActivity(intent);
-                               }
+                                @Override
+                                public void onClick(View widget) {
+                                    Bundle b = new Bundle();
+                                    b.putInt("store_id", notificationList.get(mStoreHolder.getAdapterPosition()).getStoreID());
+                                    Intent intent = new Intent(mActivity, StoreViewActivity.class);
+                                    intent.putExtras(b);
+                                    mActivity.startActivity(intent);
+                                }
 
-                               @Override
-                               public void updateDrawState(TextPaint ds) {
-                                   ds.setUnderlineText(false);
-                                   ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
-                                   ds.setFakeBoldText(true);
-                                   ds.setTextSize((float) 35.0);
-                               }
-                           }, notificationList.get(position).getSenderName().length() + notificationList.get(position).getAction().length() +
+                                @Override
+                                public void updateDrawState(TextPaint ds) {
+                                    ds.setUnderlineText(false);
+                                    ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
+                                    ds.setFakeBoldText(true);
+                                    ds.setTextSize((float) 35.0);
+                                }
+                            }, notificationList.get(position).getSenderName().length() + notificationList.get(position).getAction().length() +
                                 notificationList.get(position).getReceiverName().length() + 3,
 
                         notificationList.get(position).getSenderName().length() +
@@ -1326,13 +1314,6 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                                 intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                                 mActivity.startActivity(Intent.createChooser(intent, "Autokatta"));
 
-
-                                /*intent.setType("text/plain");
-                                intent.putExtra(Intent.EXTRA_SUBJECT, "Please Find Below Attachments");
-                                intent.putExtra(Intent.EXTRA_TEXT, allStoreDetails);
-                                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                                mActivity.startActivity(intent);*/
-
                                 dialog.dismiss();
                             }
 
@@ -1345,10 +1326,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                 break;
 
             case 3:
-                /*ImageView mUserPic, mGroupImage;
-                ImageButton mGroupFavourite;
-                TextView mActionName, mActionTime, mGroupName, mGroupMembers, mGroupNoOfVehicles, mGroupNoOfProducts,
-                        mGroupNoOfServices;*/
+
                 final GroupNotifications mGroupHolder = (GroupNotifications) holder;
                 SpannableStringBuilder sb3 = new SpannableStringBuilder();
 
@@ -1370,11 +1348,6 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                 sb3.setSpan(new ClickableSpan() {
                     @Override
                     public void onClick(View widget) {
-                        /*Intent intent = new Intent(mActivity, OtherProfile.class);
-                        Bundle bundle = new Bundle();
-                        bundle.putString("contactOtherProfile", notificationList.get(mGroupHolder.getAdapterPosition()).getSender());
-                        intent.putExtras(bundle);
-                        mActivity.startActivity(intent);*/
 
                         if (notificationList.get(mGroupHolder.getAdapterPosition()).getLayoutType().equalsIgnoreCase("MyAction")) {
                             mActivity.startActivity(new Intent(mActivity, UserProfile.class));
@@ -1398,63 +1371,63 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                 }, 0, notificationList.get(position).getSenderName().length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
                 sb3.setSpan(new ClickableSpan() {
-                               @Override
-                               public void onClick(View widget) {
-                                   //mActivity.startActivity(new Intent(mActivity, UserProfile.class));
-                                   if (notificationList.get(mGroupHolder.getAdapterPosition()).getLayoutType().equalsIgnoreCase("MyAction") ||
-                                           notificationList.get(mGroupHolder.getAdapterPosition()).getLayoutType().equalsIgnoreCase("MyNotification")) {
-                                       mActivity.startActivity(new Intent(mActivity, UserProfile.class));
-                                   } else {
-                                       Intent intent = new Intent(mActivity, OtherProfile.class);
-                                       Bundle bundle = new Bundle();
-                                       bundle.putString("contactOtherProfile", notificationList.get(mGroupHolder.getAdapterPosition()).getReceiver());
-                                       intent.putExtras(bundle);
-                                       mActivity.startActivity(intent);
-                                   }
-                               }
+                                @Override
+                                public void onClick(View widget) {
+                                    //mActivity.startActivity(new Intent(mActivity, UserProfile.class));
+                                    if (notificationList.get(mGroupHolder.getAdapterPosition()).getLayoutType().equalsIgnoreCase("MyAction") ||
+                                            notificationList.get(mGroupHolder.getAdapterPosition()).getLayoutType().equalsIgnoreCase("MyNotification")) {
+                                        mActivity.startActivity(new Intent(mActivity, UserProfile.class));
+                                    } else {
+                                        Intent intent = new Intent(mActivity, OtherProfile.class);
+                                        Bundle bundle = new Bundle();
+                                        bundle.putString("contactOtherProfile", notificationList.get(mGroupHolder.getAdapterPosition()).getReceiver());
+                                        intent.putExtras(bundle);
+                                        mActivity.startActivity(intent);
+                                    }
+                                }
 
-                               @Override
-                               public void updateDrawState(TextPaint ds) {
-                                   ds.setUnderlineText(false);
-                                   ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
-                                   ds.setFakeBoldText(true);
-                                   ds.setTextSize((float) 35.0);
-                               }
-                           }, notificationList.get(position).getSenderName().length() + notificationList.get(position).getAction().length() + 2,
+                                @Override
+                                public void updateDrawState(TextPaint ds) {
+                                    ds.setUnderlineText(false);
+                                    ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
+                                    ds.setFakeBoldText(true);
+                                    ds.setTextSize((float) 35.0);
+                                }
+                            }, notificationList.get(position).getSenderName().length() + notificationList.get(position).getAction().length() + 2,
                         notificationList.get(position).getSenderName().length() +
                                 notificationList.get(position).getAction().length() + 2 + notificationList.get(position).getReceiverName().length()
                         , Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
                 sb3.setSpan(new ClickableSpan() {
-                               @Override
-                               public void onClick(View widget) {
-                                   //mActivity.startActivity(new Intent(mActivity, UserProfile.class));
-                                   Intent i = new Intent(mActivity, GroupsActivity.class);
+                                @Override
+                                public void onClick(View widget) {
+                                    //mActivity.startActivity(new Intent(mActivity, UserProfile.class));
+                                    Intent i = new Intent(mActivity, GroupsActivity.class);
 
-                                   if (notificationList.get(mGroupHolder.getAdapterPosition()).getLayoutType().equalsIgnoreCase("MyAction")) {
-                                       i.putExtra("grouptype", "MyGroup");
-                                       i.putExtra("className", "SimpleProfile");
-                                       i.putExtra("bundle_Contact", notificationList.get(mGroupHolder.getAdapterPosition()).getSender());
+                                    if (notificationList.get(mGroupHolder.getAdapterPosition()).getLayoutType().equalsIgnoreCase("MyAction")) {
+                                        i.putExtra("grouptype", "MyGroup");
+                                        i.putExtra("className", "SimpleProfile");
+                                        i.putExtra("bundle_Contact", notificationList.get(mGroupHolder.getAdapterPosition()).getSender());
 
-                                   } else {
-                                       i.putExtra("grouptype", "OtherGroup");
-                                       i.putExtra("className", "OtherProfile");
-                                       i.putExtra("bundle_Contact", notificationList.get(mGroupHolder.getAdapterPosition()).getReceiver());
-                                   }
+                                    } else {
+                                        i.putExtra("grouptype", "OtherGroup");
+                                        i.putExtra("className", "OtherProfile");
+                                        i.putExtra("bundle_Contact", notificationList.get(mGroupHolder.getAdapterPosition()).getReceiver());
+                                    }
 
-                                   i.putExtra("bundle_GroupId", notificationList.get(mGroupHolder.getAdapterPosition()).getGroupID());
-                                   i.putExtra("bundle_GroupName", notificationList.get(mGroupHolder.getAdapterPosition()).getGroupName());
-                                   mActivity.startActivity(i);
-                               }
+                                    i.putExtra("bundle_GroupId", notificationList.get(mGroupHolder.getAdapterPosition()).getGroupID());
+                                    i.putExtra("bundle_GroupName", notificationList.get(mGroupHolder.getAdapterPosition()).getGroupName());
+                                    mActivity.startActivity(i);
+                                }
 
-                               @Override
-                               public void updateDrawState(TextPaint ds) {
-                                   ds.setUnderlineText(false);
-                                   ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
-                                   ds.setFakeBoldText(true);
-                                   ds.setTextSize((float) 35.0);
-                               }
-                           }, notificationList.get(position).getSenderName().length() + notificationList.get(position).getAction().length() +
+                                @Override
+                                public void updateDrawState(TextPaint ds) {
+                                    ds.setUnderlineText(false);
+                                    ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
+                                    ds.setFakeBoldText(true);
+                                    ds.setTextSize((float) 35.0);
+                                }
+                            }, notificationList.get(position).getSenderName().length() + notificationList.get(position).getAction().length() +
                                 notificationList.get(position).getReceiverName().length() + 5,
 
                         notificationList.get(position).getSenderName().length() +
@@ -1536,12 +1509,6 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                 break;
 
             case 4:
-                /*CardView mVehicleCardView;
-                ImageView mUserPic, mVehicleImage;
-                ImageButton mVehicleAutokattaShare, mCall, mVehicleLike, mVehicleUnlike, mVehicleFavourite, mVehicleUnfav,
-                        mFollow, mUnfollow;
-                TextView mActionName, mActionTime, mVehicleRegistration, mVehicleName, mVehiclePrice, mVehicleBrand,
-                        mVehicleModel, mVehicleYearOfMfg, mVehicleKmsHrs, mVehicleLocation, mRtoCity, mLikes, mShares;*/
 
                 SpannableStringBuilder sb4 = new SpannableStringBuilder();
                 final VehicleNotifications mVehicleHolder = (VehicleNotifications) holder;
@@ -1600,49 +1567,49 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                 }, 0, notificationList.get(position).getSenderName().length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
                 sb4.setSpan(new ClickableSpan() {
-                               @Override
-                               public void onClick(View widget) {
+                                @Override
+                                public void onClick(View widget) {
 
-                                   if (notificationList.get(mVehicleHolder.getAdapterPosition()).getLayoutType().equalsIgnoreCase("MyAction") ||
-                                           notificationList.get(mVehicleHolder.getAdapterPosition()).getLayoutType().equalsIgnoreCase("MyNotification")) {
-                                       mActivity.startActivity(new Intent(mActivity, UserProfile.class));
-                                   } else {
-                                       Intent intent = new Intent(mActivity, OtherProfile.class);
-                                       Bundle bundle = new Bundle();
-                                       bundle.putString("contactOtherProfile", notificationList.get(mVehicleHolder.getAdapterPosition()).getReceiver());
-                                       intent.putExtras(bundle);
-                                       mActivity.startActivity(intent);
-                                   }
-                               }
+                                    if (notificationList.get(mVehicleHolder.getAdapterPosition()).getLayoutType().equalsIgnoreCase("MyAction") ||
+                                            notificationList.get(mVehicleHolder.getAdapterPosition()).getLayoutType().equalsIgnoreCase("MyNotification")) {
+                                        mActivity.startActivity(new Intent(mActivity, UserProfile.class));
+                                    } else {
+                                        Intent intent = new Intent(mActivity, OtherProfile.class);
+                                        Bundle bundle = new Bundle();
+                                        bundle.putString("contactOtherProfile", notificationList.get(mVehicleHolder.getAdapterPosition()).getReceiver());
+                                        intent.putExtras(bundle);
+                                        mActivity.startActivity(intent);
+                                    }
+                                }
 
-                               @Override
-                               public void updateDrawState(TextPaint ds) {
-                                   ds.setUnderlineText(false);
-                                   ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
-                                   ds.setFakeBoldText(true);
-                                   ds.setTextSize((float) 35.0);
-                               }
-                           }, notificationList.get(position).getSenderName().length() + notificationList.get(position).getAction().length() + 2,
+                                @Override
+                                public void updateDrawState(TextPaint ds) {
+                                    ds.setUnderlineText(false);
+                                    ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
+                                    ds.setFakeBoldText(true);
+                                    ds.setTextSize((float) 35.0);
+                                }
+                            }, notificationList.get(position).getSenderName().length() + notificationList.get(position).getAction().length() + 2,
                         notificationList.get(position).getSenderName().length() +
                                 notificationList.get(position).getAction().length() + 2 + notificationList.get(position).getReceiverName().length()
                         , Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
                 sb4.setSpan(new ClickableSpan() {
-                               @Override
-                               public void onClick(View widget) {
-                                   Intent intent = new Intent(mActivity, VehicleDetails.class);
-                                   intent.putExtra("vehicle_id", notificationList.get(mVehicleHolder.getAdapterPosition()).getUploadVehicleID());
-                                   mActivity.startActivity(intent);
-                               }
+                                @Override
+                                public void onClick(View widget) {
+                                    Intent intent = new Intent(mActivity, VehicleDetails.class);
+                                    intent.putExtra("vehicle_id", notificationList.get(mVehicleHolder.getAdapterPosition()).getUploadVehicleID());
+                                    mActivity.startActivity(intent);
+                                }
 
-                               @Override
-                               public void updateDrawState(TextPaint ds) {
-                                   ds.setUnderlineText(false);
-                                   ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
-                                   ds.setFakeBoldText(true);
-                                   ds.setTextSize((float) 33.0);
-                               }
-                           }, notificationList.get(position).getSenderName().length() + notificationList.get(position).getAction().length() +
+                                @Override
+                                public void updateDrawState(TextPaint ds) {
+                                    ds.setUnderlineText(false);
+                                    ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
+                                    ds.setFakeBoldText(true);
+                                    ds.setTextSize((float) 33.0);
+                                }
+                            }, notificationList.get(position).getSenderName().length() + notificationList.get(position).getAction().length() +
                                 notificationList.get(position).getReceiverName().length() + 3,
 
                         notificationList.get(position).getSenderName().length() +
@@ -1927,12 +1894,6 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                                 intent.putExtra(Intent.EXTRA_SUBJECT, "Please Find Below Attachments");
                                 mActivity.startActivity(Intent.createChooser(intent, "Autokatta"));
 
-                                /*intent.setType("text/plain");
-                                intent.putExtra(Intent.EXTRA_SUBJECT, "Please Find Below Attachments");
-                                intent.putExtra(Intent.EXTRA_TEXT, allVehicleDetails);
-                                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                                mActivity.startActivity(intent);*/
-
                                 dialog.dismiss();
                             }
 
@@ -1945,11 +1906,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                 break;
 
             case 5:
-                /*CardView mProductCardView;
-                    ImageView mUserPic, mProductImage;
-                    ImageButton mProductAutokattaShare, mProductOtherShare, mCall, mLike, mProductFav, mProductUnfav;
-                    RatingBar mProductRating;
-                    TextView mProductActionName, mProductActionTime, mProductTitle, mProductName, mProductType, mLikes, mShares;*/
+
                 final ProductNotifications mProductHolder = (ProductNotifications) holder;
                 SpannableStringBuilder sb5 = new SpannableStringBuilder();
                 Log.i("Wall", "Product-LayType ->" + notificationList.get(position).getLayoutType());
@@ -1965,14 +1922,13 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                     mProductHolder.mRelativeLike.setVisibility(View.VISIBLE);
                 }
 
-                mProductHolder.mProductActionName.setText(notificationList.get(position).getSenderName() + " " +
+               /* mProductHolder.mProductActionName.setText(notificationList.get(position).getSenderName() + " " +
                         notificationList.get(position).getAction() + "\n" +
                         notificationList.get(position).getProductName()
-                        + " product");
+                        + " product");*/
 
 
-
-                if (notificationList.get(position).getActionTitle().equalsIgnoreCase("added")) {
+                if (notificationList.get(position).getAction().equalsIgnoreCase("added")) {
                     sb5.append(notificationList.get(position).getSenderName());
                     sb5.append(" ");
                     sb5.append(notificationList.get(position).getAction());
@@ -2035,21 +1991,21 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                             , Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);*/
 
                     sb5.setSpan(new ClickableSpan() {
-                                   @Override
-                                   public void onClick(View widget) {
-                                       Intent intent = new Intent(mActivity, ProductViewActivity.class);
-                                       intent.putExtra("product_id", notificationList.get(mProductHolder.getAdapterPosition()).getProductID());
-                                       mActivity.startActivity(intent);
-                                   }
+                                    @Override
+                                    public void onClick(View widget) {
+                                        Intent intent = new Intent(mActivity, ProductViewActivity.class);
+                                        intent.putExtra("product_id", notificationList.get(mProductHolder.getAdapterPosition()).getProductID());
+                                        mActivity.startActivity(intent);
+                                    }
 
-                                   @Override
-                                   public void updateDrawState(TextPaint ds) {
-                                       ds.setUnderlineText(false);
-                                       ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
-                                       ds.setFakeBoldText(true);
-                                       ds.setTextSize((float) 33.0);
-                                   }
-                               }, notificationList.get(position).getSenderName().length() +
+                                    @Override
+                                    public void updateDrawState(TextPaint ds) {
+                                        ds.setUnderlineText(false);
+                                        ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
+                                        ds.setFakeBoldText(true);
+                                        ds.setTextSize((float) 33.0);
+                                    }
+                                }, notificationList.get(position).getSenderName().length() +
                                     notificationList.get(position).getAction().length() +
                                     +2,
 
@@ -2095,49 +2051,49 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                     }, 0, notificationList.get(position).getSenderName().length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
                     sb5.setSpan(new ClickableSpan() {
-                                   @Override
-                                   public void onClick(View widget) {
+                                    @Override
+                                    public void onClick(View widget) {
 
-                                       if (notificationList.get(mProductHolder.getAdapterPosition()).getLayoutType().equalsIgnoreCase("MyAction") ||
-                                               notificationList.get(mProductHolder.getAdapterPosition()).getLayoutType().equalsIgnoreCase("MyNotification")) {
-                                           mActivity.startActivity(new Intent(mActivity, UserProfile.class));
-                                       } else {
-                                           Intent intent = new Intent(mActivity, OtherProfile.class);
-                                           Bundle bundle = new Bundle();
-                                           bundle.putString("contactOtherProfile", notificationList.get(mProductHolder.getAdapterPosition()).getReceiver());
-                                           intent.putExtras(bundle);
-                                           mActivity.startActivity(intent);
-                                       }
-                                   }
+                                        if (notificationList.get(mProductHolder.getAdapterPosition()).getLayoutType().equalsIgnoreCase("MyAction") ||
+                                                notificationList.get(mProductHolder.getAdapterPosition()).getLayoutType().equalsIgnoreCase("MyNotification")) {
+                                            mActivity.startActivity(new Intent(mActivity, UserProfile.class));
+                                        } else {
+                                            Intent intent = new Intent(mActivity, OtherProfile.class);
+                                            Bundle bundle = new Bundle();
+                                            bundle.putString("contactOtherProfile", notificationList.get(mProductHolder.getAdapterPosition()).getReceiver());
+                                            intent.putExtras(bundle);
+                                            mActivity.startActivity(intent);
+                                        }
+                                    }
 
-                                   @Override
-                                   public void updateDrawState(TextPaint ds) {
-                                       ds.setUnderlineText(false);
-                                       ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
-                                       ds.setFakeBoldText(true);
-                                       ds.setTextSize((float) 35.0);
-                                   }
-                               }, notificationList.get(position).getSenderName().length() + notificationList.get(position).getAction().length() + 2,
+                                    @Override
+                                    public void updateDrawState(TextPaint ds) {
+                                        ds.setUnderlineText(false);
+                                        ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
+                                        ds.setFakeBoldText(true);
+                                        ds.setTextSize((float) 35.0);
+                                    }
+                                }, notificationList.get(position).getSenderName().length() + notificationList.get(position).getAction().length() + 2,
                             notificationList.get(position).getSenderName().length() +
                                     notificationList.get(position).getAction().length() + 2 + notificationList.get(position).getReceiverName().length()
                             , Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
                     sb5.setSpan(new ClickableSpan() {
-                                   @Override
-                                   public void onClick(View widget) {
-                                       Intent intent = new Intent(mActivity, ProductViewActivity.class);
-                                       intent.putExtra("product_id", notificationList.get(mProductHolder.getAdapterPosition()).getProductID());
-                                       mActivity.startActivity(intent);
-                                   }
+                                    @Override
+                                    public void onClick(View widget) {
+                                        Intent intent = new Intent(mActivity, ProductViewActivity.class);
+                                        intent.putExtra("product_id", notificationList.get(mProductHolder.getAdapterPosition()).getProductID());
+                                        mActivity.startActivity(intent);
+                                    }
 
-                                   @Override
-                                   public void updateDrawState(TextPaint ds) {
-                                       ds.setUnderlineText(false);
-                                       ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
-                                       ds.setFakeBoldText(true);
-                                       ds.setTextSize((float) 33.0);
-                                   }
-                               }, notificationList.get(position).getSenderName().length() + notificationList.get(position).getAction().length() +
+                                    @Override
+                                    public void updateDrawState(TextPaint ds) {
+                                        ds.setUnderlineText(false);
+                                        ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
+                                        ds.setFakeBoldText(true);
+                                        ds.setTextSize((float) 33.0);
+                                    }
+                                }, notificationList.get(position).getSenderName().length() + notificationList.get(position).getAction().length() +
                                     notificationList.get(position).getReceiverName().length() + 3,
 
                             notificationList.get(position).getSenderName().length() +
@@ -2360,13 +2316,6 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                                 intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                                 mActivity.startActivity(Intent.createChooser(intent, "Autokatta"));
 
-
-                                /*intent.setType("text/plain");
-                                intent.putExtra(Intent.EXTRA_SUBJECT, "Please Find Below Attachments");
-                                intent.putExtra(Intent.EXTRA_TEXT, allProductDetails);
-                                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                                mActivity.startActivity(intent);*/
-
                                 dialog.dismiss();
                             }
 
@@ -2379,10 +2328,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                 break;
 
             case 6:
-                /*ImageView mServicePic, mServiceImage;
-                ImageButton mServiceAutokatta, mServiceOther, mCall, mLike, mServiceFavourite;
-                RatingBar mServiceRating;
-                TextView mServiceActionName, mServiceActionTime, mServiceTitle, mServiceName, mServiceType, mLikes, mShares;*/
+
                 final ServiceNotifications mServiceHolder = (ServiceNotifications) holder;
                 SpannableStringBuilder sb6 = new SpannableStringBuilder();
                 Log.i("Wall", "Service-LayType ->" + notificationList.get(position).getLayoutType());
@@ -2398,10 +2344,161 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                     mServiceHolder.mRelativeLike.setVisibility(View.VISIBLE);
                 }
 
-                mServiceHolder.mServiceActionName.setText(notificationList.get(position).getSenderName() + " " +
+                /*mServiceHolder.mServiceActionName.setText(notificationList.get(position).getSenderName() + " " +
                         notificationList.get(position).getAction() + "\n" +
                         notificationList.get(position).getServiceName()
-                        + " service");
+                        + " service");*/
+
+                if (notificationList.get(position).getAction().equalsIgnoreCase("added")) {
+                    sb6.append(notificationList.get(position).getSenderName());
+                    sb6.append(" ");
+                    sb6.append(notificationList.get(position).getAction());
+                    sb6.append("\n");
+                    sb6.append(notificationList.get(position).getServiceName());
+                    sb6.append(" Service");
+
+
+                    sb6.setSpan(new ClickableSpan() {
+                        @Override
+                        public void onClick(View widget) {
+
+                            if (notificationList.get(mServiceHolder.getAdapterPosition()).getLayoutType().equalsIgnoreCase("MyAction")) {
+                                mActivity.startActivity(new Intent(mActivity, UserProfile.class));
+                            } else {
+                                Intent intent = new Intent(mActivity, OtherProfile.class);
+                                Bundle bundle = new Bundle();
+                                bundle.putString("contactOtherProfile", notificationList.get(mServiceHolder.getAdapterPosition()).getSender());
+                                intent.putExtras(bundle);
+                                mActivity.startActivity(intent);
+                            }
+                        }
+
+                        @Override
+                        public void updateDrawState(TextPaint ds) {
+                            ds.setUnderlineText(false);
+                            ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
+                            ds.setFakeBoldText(true);
+                            ds.setTextSize((float) 35.0);
+                            Log.i("TextSize", "->" + ds.getTextSize());
+                        }
+                    }, 0, notificationList.get(position).getSenderName().length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                    sb6.setSpan(new ClickableSpan() {
+                                    @Override
+                                    public void onClick(View widget) {
+                                        Intent intent = new Intent(mActivity, ServiceViewActivity.class);
+                                        intent.putExtra("service_id", notificationList.get(mServiceHolder.getAdapterPosition()).getServiceID());
+                                        mActivity.startActivity(intent);
+                                    }
+
+                                    @Override
+                                    public void updateDrawState(TextPaint ds) {
+                                        ds.setUnderlineText(false);
+                                        ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
+                                        ds.setFakeBoldText(true);
+                                        ds.setTextSize((float) 33.0);
+                                    }
+                                }, notificationList.get(position).getSenderName().length() +
+                                    notificationList.get(position).getAction().length() +
+                                    +2,
+
+                            notificationList.get(position).getSenderName().length() +
+                                    notificationList.get(position).getAction().length() +
+                                    2 +
+                                    notificationList.get(position).getServiceName().length() + 1
+                            , Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                } else {
+                    sb6.append(notificationList.get(position).getSenderName());
+                    sb6.append(" ");
+                    sb6.append(notificationList.get(position).getAction());
+                    sb6.append("\n");
+                    sb6.append(notificationList.get(position).getReceiverName());
+                    sb6.append(" ");
+                    sb6.append(notificationList.get(position).getServiceName());
+                    sb6.append(" Service");
+
+
+                    sb6.setSpan(new ClickableSpan() {
+                        @Override
+                        public void onClick(View widget) {
+
+                            if (notificationList.get(mServiceHolder.getAdapterPosition()).getLayoutType().equalsIgnoreCase("MyAction")) {
+                                mActivity.startActivity(new Intent(mActivity, UserProfile.class));
+                            } else {
+                                Intent intent = new Intent(mActivity, OtherProfile.class);
+                                Bundle bundle = new Bundle();
+                                bundle.putString("contactOtherProfile", notificationList.get(mServiceHolder.getAdapterPosition()).getSender());
+                                intent.putExtras(bundle);
+                                mActivity.startActivity(intent);
+                            }
+                        }
+
+                        @Override
+                        public void updateDrawState(TextPaint ds) {
+                            ds.setUnderlineText(false);
+                            ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
+                            ds.setFakeBoldText(true);
+                            ds.setTextSize((float) 35.0);
+                            Log.i("TextSize", "->" + ds.getTextSize());
+                        }
+                    }, 0, notificationList.get(position).getSenderName().length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                    sb6.setSpan(new ClickableSpan() {
+                                    @Override
+                                    public void onClick(View widget) {
+
+                                        if (notificationList.get(mServiceHolder.getAdapterPosition()).getLayoutType().equalsIgnoreCase("MyAction") ||
+                                                notificationList.get(mServiceHolder.getAdapterPosition()).getLayoutType().equalsIgnoreCase("MyNotification")) {
+                                            mActivity.startActivity(new Intent(mActivity, UserProfile.class));
+                                        } else {
+                                            Intent intent = new Intent(mActivity, OtherProfile.class);
+                                            Bundle bundle = new Bundle();
+                                            bundle.putString("contactOtherProfile", notificationList.get(mServiceHolder.getAdapterPosition()).getReceiver());
+                                            intent.putExtras(bundle);
+                                            mActivity.startActivity(intent);
+                                        }
+                                    }
+
+                                    @Override
+                                    public void updateDrawState(TextPaint ds) {
+                                        ds.setUnderlineText(false);
+                                        ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
+                                        ds.setFakeBoldText(true);
+                                        ds.setTextSize((float) 35.0);
+                                    }
+                                }, notificationList.get(position).getSenderName().length() + notificationList.get(position).getAction().length() + 2,
+                            notificationList.get(position).getSenderName().length() +
+                                    notificationList.get(position).getAction().length() + 2 + notificationList.get(position).getReceiverName().length()
+                            , Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                    sb6.setSpan(new ClickableSpan() {
+                                    @Override
+                                    public void onClick(View widget) {
+                                        Intent intent = new Intent(mActivity, ServiceViewActivity.class);
+                                        intent.putExtra("service_id", notificationList.get(mServiceHolder.getAdapterPosition()).getServiceID());
+                                        mActivity.startActivity(intent);
+                                    }
+
+                                    @Override
+                                    public void updateDrawState(TextPaint ds) {
+                                        ds.setUnderlineText(false);
+                                        ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
+                                        ds.setFakeBoldText(true);
+                                        ds.setTextSize((float) 33.0);
+                                    }
+                                }, notificationList.get(position).getSenderName().length() + notificationList.get(position).getAction().length() +
+                                    notificationList.get(position).getReceiverName().length() + 3,
+
+                            notificationList.get(position).getSenderName().length() +
+                                    notificationList.get(position).getAction().length() +
+                                    notificationList.get(position).getReceiverName().length() + 3 +
+                                    notificationList.get(position).getServiceName().length() + 1
+                            , Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                }
+
+                mServiceHolder.mServiceActionName.setText(sb6);
+                mServiceHolder.mServiceActionName.setMovementMethod(LinkMovementMethod.getInstance());
+                mServiceHolder.mServiceActionName.setHighlightColor(Color.TRANSPARENT);
 
                 mServiceHolder.mServiceActionTime.setText(notificationList.get(position).getDateTime());
                 mServiceHolder.mServiceName.setText(notificationList.get(position).getServiceName());
@@ -2613,13 +2710,6 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                                 intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                                 mActivity.startActivity(Intent.createChooser(intent, "Autokatta"));
 
-
-                                /*intent.setType("text/plain");
-                                intent.putExtra(Intent.EXTRA_SUBJECT, "Please Find Below Attachments");
-                                intent.putExtra(Intent.EXTRA_TEXT, allServiceDetails);
-                                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                                mActivity.startActivity(intent);*/
-
                                 dialog.dismiss();
                             }
 
@@ -2723,11 +2813,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                 break;
 
             case 8:
-                /*CardView mSearchCardView;
-                ImageView mUserPic;
-                ImageButton mSearchAutokattaShare, mCall, mSearchLike, mSearchUnlike, mSearchFavorite, mSearchUnfav;
-                TextView mSearchActionName, mSearchActionTime, mSearchCategory, mSearchBrand, mSearchModel, mSearchPrice, mSearchYear,
-                        mSearchDate, mSearchLeads;*/
+
                 final SearchNotifications mSearchHolder = (SearchNotifications) holder;
                 SpannableStringBuilder sb8 = new SpannableStringBuilder();
 
@@ -2908,12 +2994,6 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                                 intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                                 intent.putExtra(Intent.EXTRA_SUBJECT, "Search list from Autokatta User");
                                 mActivity.startActivity(Intent.createChooser(intent, "Autokatta"));
-
-                                /*intent.setType("text/plain");
-                                intent.putExtra(Intent.EXTRA_SUBJECT, "Please Find Below Attachments");
-                                intent.putExtra(Intent.EXTRA_TEXT, allSearchDetails);
-                                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                                mActivity.startActivity(intent);*/
 
                                 dialog.dismiss();
                             }
@@ -3197,12 +3277,6 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                                 intent.putExtra(Intent.EXTRA_SUBJECT, "Please Find Below Attachments");
                                 mActivity.startActivity(Intent.createChooser(intent, "Autokatta"));
 
-                                /*intent.setType("text/plain");
-                                intent.putExtra(Intent.EXTRA_SUBJECT, "Please Find Below Attachments");
-                                intent.putExtra(Intent.EXTRA_TEXT, allVehicleDetails);
-                                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                                mActivity.startActivity(intent);*/
-
                                 dialog.dismiss();
                             }
 
@@ -3219,12 +3293,6 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                 break;
 
             case 10:
-                /*CardView mVehicleCardView;
-                ImageView mUserPic, mVehicleImage;
-                ImageButton mVehicleAutokattaShare, mCall, mVehicleLike, mVehicleUnlike, mVehicleFavourite, mVehicleUnfav,
-                        mFollow, mUnfollow;
-                TextView mActionName, mActionTime, mVehicleRegistration, mVehicleName, mVehiclePrice, mVehicleBrand,
-                        mVehicleModel, mVehicleYearOfMfg, mVehicleKmsHrs, mVehicleLocation, mRtoCity, mLikes, mShares;*/
 
                 final UploadVehicleNotifications mUpVehicleHolder = (UploadVehicleNotifications) holder;
                 SpannableStringBuilder sb10 = new SpannableStringBuilder();
@@ -3517,12 +3585,6 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                                 intent.putExtra(Intent.EXTRA_SUBJECT, "Please Find Below Attachments");
                                 mActivity.startActivity(Intent.createChooser(intent, "Autokatta"));
 
-                                /*intent.setType("text/plain");
-                                intent.putExtra(Intent.EXTRA_SUBJECT, "Please Find Below Attachments");
-                                intent.putExtra(Intent.EXTRA_TEXT, allVehicleDetails);
-                                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                                mActivity.startActivity(intent);*/
-
                                 dialog.dismiss();
                             }
 
@@ -3592,39 +3654,21 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
             switch (str) {
                 case "success_follow":
                     CustomToast.customToast(mActivity, "Following");
-                /*mFollow.setVisibility(View.GONE);
-                mUnFollow.setVisibility(View.VISIBLE);
-                mFolllowstr = "yes";*/
                     break;
                 case "success_unfollow":
                     CustomToast.customToast(mActivity, "UnFollowing");
-                /*mFollow.setVisibility(View.VISIBLE);
-                mUnFollow.setVisibility(View.GONE);
-                mFolllowstr = "no";*/
                     break;
                 case "success_like":
                     CustomToast.customToast(mActivity, "Liked");
-                /*mLike.setVisibility(View.VISIBLE);
-                mUnlike.setVisibility(View.GONE);*/
-                    //mLikestr = "yes";
                     break;
                 case "success_unlike":
                     CustomToast.customToast(mActivity, "Unliked");
-                /*mLike.setVisibility(View.GONE);
-                mUnlike.setVisibility(View.VISIBLE);*/
-                    //mLikestr = "no";
                     break;
                 case "success_favourite":
                     CustomToast.customToast(mActivity, "Favorite");
-                /*mLike.setVisibility(View.GONE);
-                mUnlike.setVisibility(View.VISIBLE);*/
-                    //mLikestr = "no";
                     break;
                 case "success_remove":
                     CustomToast.customToast(mActivity, "Unfavorite");
-                /*mLike.setVisibility(View.GONE);
-                mUnlike.setVisibility(View.VISIBLE);*/
-                    //mLikestr = "no";
                     break;
             }
         }
