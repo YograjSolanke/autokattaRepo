@@ -153,7 +153,9 @@
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         app:layout_anchor="@id/other_store_tabs"
-        fab:menu_colorNormal="#DA4339"
+        fab:menu_colorNormal="#5176C9"
+        fab:menu_colorPressed="#5176C9"
+        fab:menu_colorRipple="#5176C9"
         fab:menu_labels_ellipsize="end"
         fab:menu_labels_singleLine="true">
 
@@ -164,6 +166,9 @@
             android:src="@drawable/ic_cart_plus"
             android:visibility="gone"
             fab:fab_label="Add"
+            fab:fab_colorNormal="#5176C9"
+            fab:fab_colorPressed="#5176C9"
+            fab:fab_colorRipple="#5176C9"
             fab:fab_size="mini" />
 
         <com.github.clans.fab.FloatingActionButton
@@ -173,6 +178,9 @@
             android:src="@mipmap/ic_account_multiple_plus"
             android:visibility="gone"
             fab:fab_label="Add Product Team"
+            fab:fab_colorNormal="#5176C9"
+            fab:fab_colorPressed="#5176C9"
+            fab:fab_colorRipple="#5176C9"
             fab:fab_size="mini" />
 
         <com.github.clans.fab.FloatingActionButton
@@ -182,6 +190,9 @@
             android:src="@mipmap/ic_account_multiple_plus"
             android:visibility="gone"
             fab:fab_label="Add Service Team"
+            fab:fab_colorNormal="#5176C9"
+            fab:fab_colorPressed="#5176C9"
+            fab:fab_colorRipple="#5176C9"
             fab:fab_size="mini" />
 
         <com.github.clans.fab.FloatingActionButton
@@ -191,6 +202,9 @@
             android:src="@mipmap/ic_account_multiple_plus"
             android:visibility="gone"
             fab:fab_label="Add Vehicle Team"
+            fab:fab_colorNormal="#5176C9"
+            fab:fab_colorPressed="#5176C9"
+            fab:fab_colorRipple="#5176C9"
             fab:fab_size="mini" />
 
         <com.github.clans.fab.FloatingActionButton
@@ -198,6 +212,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_map_marker"
+            fab:fab_colorNormal="#5176C9"
+            fab:fab_colorPressed="#5176C9"
+            fab:fab_colorRipple="#5176C9"
             fab:fab_label="Google Map"
             fab:fab_size="mini" />
 

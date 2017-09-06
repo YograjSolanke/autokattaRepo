@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/myGroup"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:fab="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/myGroup"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefreshLayout"
@@ -26,8 +27,10 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_gravity="bottom|end"
-        android:background="@color/red"
+        fab:fab_colorNormal="#5176C9"
+        fab:fab_colorPressed="#5176C9"
+        fab:fab_colorRipple="#5176C9"
         android:layout_margin="@dimen/fab_margin"
-        android:src="@mipmap/ic_plus"
+        android:src="@mipmap/ic_create_group"
         android:visibility="visible"/>
 </RelativeLayout>

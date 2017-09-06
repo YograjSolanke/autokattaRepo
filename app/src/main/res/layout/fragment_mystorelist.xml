@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:fab="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                xmlns:fab="http://schemas.android.com/apk/res-auto"
+                android:orientation="vertical">
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefreshLayoutMyStoreList"
@@ -25,8 +25,11 @@
         android:layout_alignEnd="@id/swipeRefreshLayoutMyStoreList"
         android:layout_gravity="end"
         android:layout_margin="@dimen/fab_margin"
-        android:src="@mipmap/ic_plus"
-        fab:fab_colorNormal="#DA4339" />
+        android:src="@mipmap/ic_create_store"
+        fab:fab_colorNormal="#5176C9"
+        fab:fab_colorPressed="#5176C9"
+        fab:fab_colorRipple="#5176C9"
+        />
 
     <include layout="@layout/error_view" />
 

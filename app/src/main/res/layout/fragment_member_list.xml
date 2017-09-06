@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+                xmlns:fab="http://schemas.android.com/apk/res-auto"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefreshLayout"
@@ -23,9 +25,11 @@
         android:layout_gravity="end|bottom"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
-        android:background="@color/red"
+        fab:fab_colorNormal="#5176C9"
+        fab:fab_colorPressed="#5176C9"
+        fab:fab_colorRipple="#5176C9"
         android:layout_margin="@dimen/fab_margin"
-        android:src="@mipmap/ic_plus" />
+        android:src="@mipmap/ic_add_group_member" />
 
     <include layout="@layout/error_view" />
 

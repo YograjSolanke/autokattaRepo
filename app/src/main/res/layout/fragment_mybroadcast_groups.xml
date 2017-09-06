@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                xmlns:fab="http://schemas.android.com/apk/res-auto">
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefreshLayoutBGroup"
@@ -56,6 +57,8 @@
         android:layout_alignParentEnd="true"
         android:layout_gravity="end|bottom"
         android:layout_margin="@dimen/fab_margin"
-        android:background="@color/red"
-        android:src="@mipmap/ic_account_multiple_plus" />
+        fab:fab_colorNormal="#5176C9"
+        fab:fab_colorPressed="#5176C9"
+        fab:fab_colorRipple="#5176C9"
+        android:src="@mipmap/ic_add_broadcast_group" />
 </RelativeLayout>
