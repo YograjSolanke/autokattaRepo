@@ -3389,7 +3389,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                         + "'" + notificationList.get(position).getGroupName() + "'"
                         + " Group");*/
 
-                sb10 = new SpannableStringBuilder();
+                //sb10 = new SpannableStringBuilder();
                 sb10.append(notificationList.get(position).getSenderName());
                 sb10.append(" ");
                 sb10.append(notificationList.get(position).getAction());
