@@ -77,8 +77,11 @@ import autokatta.com.view.MySearchActivity;
 import autokatta.com.view.MyStoreListActivity;
 import autokatta.com.view.MyUpcomingEventsTabActivity;
 import autokatta.com.view.MyUploadedVehiclesActivity;
+import autokatta.com.view.OtherProfile;
+import autokatta.com.view.ProductViewActivity;
 import autokatta.com.view.SearchStoreActivity;
 import autokatta.com.view.SearchVehicleActivity;
+import autokatta.com.view.ServiceViewActivity;
 import autokatta.com.view.StoreViewActivity;
 import autokatta.com.view.UserProfile;
 import autokatta.com.view.VehicleDetails;
@@ -162,6 +165,7 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
         ab.setHomeAsUpIndicator(R.mipmap.ic_menu);
         ab.setDisplayHomeAsUpEnabled(true);*/
 
+
         /*
         For share contents...
          */
@@ -169,46 +173,65 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
         if (data != null) {
             Log.i("URI", "->" + data.toString());
             String[] commaSplit = data.toString().split("/");
-            int storeId = Integer.parseInt(commaSplit[5]);
-            if (commaSplit[3].equals("store")) {
-                Log.i("store", "->" + commaSplit[3]);
-                Bundle mBundle = new Bundle();
-                mBundle.putString("action", commaSplit[4]);
-                mBundle.putInt("store_id", storeId);
-                mBundle.putString("StoreContact", commaSplit[6]);
-                Intent store = new Intent(getApplicationContext(), StoreViewActivity.class);
-                store.putExtras(mBundle);
-                startActivity(store);
-            } /*else if (commaSplit[3].equals("profile")) {
-                Log.i("profile", "->" + commaSplit[3]);
-                Other_profile mOtherProfile = new Other_profile();
-                Bundle mBundle = new Bundle();
-                mBundle.putString("uri", data.toString());
-                mBundle.putString("contact", commaSplit[5]);
-                mOtherProfile.setArguments(mBundle);
-                FragmentManager mFragmentManager = getSupportFragmentManager();
-                FragmentTransaction mFragmentTransaction = mFragmentManager.beginTransaction();
-                mFragmentTransaction.replace(R.id.containerView, mOtherProfile).commit();
-            } */ else if (commaSplit[3].equals("vehicle")) {
-                Log.i("vehicle", "->" + commaSplit[3]);
-                int vehicleId = Integer.parseInt(commaSplit[5]);
-                Bundle mBundle = new Bundle();
-                mBundle.putString("uri", data.toString());
-                mBundle.putInt("vehicle_id", vehicleId);
-                Intent vehicle = new Intent(getApplicationContext(), VehicleDetails.class);
-                vehicle.putExtras(mBundle);
-                startActivity(vehicle);
-            } /*else if (commaSplit[3].equals("upvehicle")) {
-                Log.i("up", "->" + commaSplit[3]);
-                Vehical_Details mVehical_details = new Vehical_Details();
-                Bundle mBundle = new Bundle();
-                mBundle.putString("uri", data.toString());
-                mBundle.putString("Vehical_id", commaSplit[4]);
-                mVehical_details.setArguments(mBundle);
-                FragmentManager mFragmentManager = getSupportFragmentManager();
-                FragmentTransaction mFragmentTransaction = mFragmentManager.beginTransaction();
-                mFragmentTransaction.replace(R.id.containerView, mVehical_details).commit();
-            }*/
+
+            switch (commaSplit[3]) {
+                case "store": {
+                    int storeId = Integer.parseInt(commaSplit[5]);
+                    Log.i("store", "->" + commaSplit[3]);
+                    Bundle mBundle = new Bundle();
+                    mBundle.putString("action", commaSplit[4]);
+                    mBundle.putInt("store_id", storeId);
+                    mBundle.putString("StoreContact", commaSplit[6]);
+                    Intent store = new Intent(getApplicationContext(), StoreViewActivity.class);
+                    store.putExtras(mBundle);
+                    startActivity(store);
+                    break;
+                }
+                case "profile": {
+                    Log.i("profile", "->" + commaSplit[3]);
+                    String otherContact = commaSplit[5];
+
+                    Intent intent = new Intent(getApplicationContext(), OtherProfile.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("contactOtherProfile", otherContact);
+                    bundle.putString("uri", data.toString());
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+
+                    break;
+                }
+                case "vehicle": {
+                    Log.i("vehicle", "->" + commaSplit[3]);
+                    int vehicleId = Integer.parseInt(commaSplit[5]);
+                    Bundle mBundle = new Bundle();
+                    mBundle.putString("uri", data.toString());
+                    mBundle.putInt("vehicle_id", vehicleId);
+                    Intent vehicle = new Intent(getApplicationContext(), VehicleDetails.class);
+                    vehicle.putExtras(mBundle);
+                    startActivity(vehicle);
+                    break;
+                }
+                case "product": {
+                    Log.i("product", "->" + commaSplit[3]);
+                    int productId = Integer.parseInt(commaSplit[4]);
+                    Bundle mBundle = new Bundle();
+                    Intent intent = new Intent(getApplicationContext(), ProductViewActivity.class);
+                    intent.putExtra("product_id", productId);
+                    mBundle.putString("uri", data.toString());
+                    startActivity(intent);
+                    break;
+                }
+                case "service": {
+                    Log.i("service", "->" + commaSplit[3]);
+                    int serviceId = Integer.parseInt(commaSplit[4]);
+                    Bundle mBundle = new Bundle();
+                    Intent intent = new Intent(getApplicationContext(), ServiceViewActivity.class);
+                    intent.putExtra("service_id", serviceId);
+                    mBundle.putString("uri", data.toString());
+                    startActivity(intent);
+                    break;
+                }
+            }
         }
 
 
