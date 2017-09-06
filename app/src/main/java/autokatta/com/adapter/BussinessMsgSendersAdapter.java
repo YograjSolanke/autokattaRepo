@@ -84,7 +84,7 @@ public class BussinessMsgSendersAdapter extends RecyclerView.Adapter<BussinessMs
     }
 
     @Override
-    public void onBindViewHolder(final BussinessMsgSendersAdapter.MyViewHolder holder, int position) {
+    public void onBindViewHolder(final BussinessMsgSendersAdapter.MyViewHolder holder, final int position) {
 
         msender = mItemList.get(position).getSender();
         msendername = mItemList.get(position).getSendername();
@@ -130,6 +130,7 @@ public class BussinessMsgSendersAdapter extends RecyclerView.Adapter<BussinessMs
                 Bundle b = new Bundle();
                 b.putString("sender", holder.msgFromCnt.getText().toString());
                 b.putString("sendername", holder.msgFrom.getText().toString());
+                b.putString("senderLocation", mItemList.get(position).getLocation());
                 b.putInt("product_id", product_id);
                 b.putInt("service_id", service_id);
                 b.putInt("vehicle_id", vehicle_id);

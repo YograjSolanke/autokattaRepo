@@ -77,11 +77,11 @@ public class ChatActivity extends AppCompatActivity implements RequestNotifier, 
     ArrayList<BroadcastMessageResponse.Success> chatlist = new ArrayList<>();
     //  MultipartEntity entity;
     String lastWord = "";
-    String Sendercontact, sendername;
+    String Sendercontact, sendername, senderLocation;
     ChatAdapter adapter;
     Bitmap bitmap;
     String myContact;
-    TextView Title, Category, Brand, Model, Keyword, price, chatwithtext;
+    TextView Title, Category, Brand, Model, Keyword, price, chatwithtext, chatWithLocation;
     ImageView Image;
     RelativeLayout relCategory, relBrand, relModel, relPrice, MainRel, relativeprofile;
    /* String vehi_img_url = getString(R.string.base_image_url);
@@ -106,6 +106,7 @@ public class ChatActivity extends AppCompatActivity implements RequestNotifier, 
         listView = (ListView) findViewById(R.id.msgview);
         msgFrom = (TextView) findViewById(R.id.msgFrom);
         chatwithtext = (TextView) findViewById(R.id.chatwithtext);
+        chatWithLocation = (TextView) findViewById(R.id.chatwithLocation);
         apiCall = new ApiCall(this, this);
         Keyword = (TextView) findViewById(R.id.keyword);
         Title = (TextView) findViewById(R.id.settitle);
@@ -131,6 +132,7 @@ public class ChatActivity extends AppCompatActivity implements RequestNotifier, 
             product_id = getIntent().getExtras().getInt("product_id");
             service_id = getIntent().getExtras().getInt("service_id");
             vehicle_id = getIntent().getExtras().getInt("vehicle_id");
+            // senderLocation = getIntent().getExtras().getString("senderLocation");
 
             setTitle(sendername);
             chatwithtext.setText(sendername);
@@ -183,11 +185,14 @@ public class ChatActivity extends AppCompatActivity implements RequestNotifier, 
                             message.setReceiver(message.getReceiver());
                             message.setMessage(message.getMessage());
                             message.setImage(message.getImage());
+                            message.setSenderProfileImage(message.getSenderProfileImage());
+                            senderLocation = message.getSenderLocation();
+                            chatWithLocation.setText(senderLocation);
                             Date d = null;
                             try {
 
-                                d = f.parse(message.getDate().replace("T"," "));
-                                Log.i("dateeeeeeeeeeeee",message.getDate());
+                                d = f.parse(message.getDate1().replace("T", " "));
+                                Log.i("dateeeeeeeeeeeee", message.getDate1());
                                 System.out.println("asdfghjklllllllllll"+d);
                             } catch (ParseException e) {
                                 e.printStackTrace();

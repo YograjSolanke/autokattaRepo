@@ -16,6 +16,9 @@ public class BroadcastMessageResponse {
     @SerializedName("Success")
     @Expose
     private List<Success> success = null;
+    @SerializedName("Error")
+    @Expose
+    private Object error;
 
     public List<Success> getSuccess() {
         return success;
@@ -25,38 +28,17 @@ public class BroadcastMessageResponse {
         this.success = success;
     }
 
+    public Object getError() {
+        return error;
+    }
+
+    public void setError(Object error) {
+        this.error = error;
+    }
+
+
     public class Success {
 
-        @SerializedName("Msg_id")
-        @Expose
-        private String msgId;
-        @SerializedName("Broadcast_Msg_id")
-        @Expose
-        private String broadcastMsgId;
-        @SerializedName("sender")
-        @Expose
-        private String sender;
-        @SerializedName("receiver")
-        @Expose
-        private String receiver;
-        @SerializedName("message")
-        @Expose
-        private String message;
-        @SerializedName("image")
-        @Expose
-        private String image;
-        @SerializedName("product_id")
-        @Expose
-        private String productId;
-        @SerializedName("service_id")
-        @Expose
-        private String serviceId;
-        @SerializedName("vehicle_id")
-        @Expose
-        private int vehicleId;
-        @SerializedName("date_1")
-        @Expose
-        private String date;
 
         public Date getNewDate() {
             return newDate;
@@ -68,44 +50,77 @@ public class BroadcastMessageResponse {
 
         private Date newDate;
 
-        public String getMsgId() {
+
+        @SerializedName("Msg_id")
+        @Expose
+        private Integer msgId;
+        @SerializedName("Broadcast_Msg_id")
+        @Expose
+        private Integer broadcastMsgId;
+        @SerializedName("date_1")
+        @Expose
+        private String date1;
+        @SerializedName("date")
+        @Expose
+        private String date;
+        @SerializedName("image")
+        @Expose
+        private String image;
+        @SerializedName("message")
+        @Expose
+        private String message;
+        @SerializedName("product_id")
+        @Expose
+        private Integer productId;
+        @SerializedName("receiver")
+        @Expose
+        private String receiver;
+        @SerializedName("sender")
+        @Expose
+        private String sender;
+        @SerializedName("senderLocation")
+        @Expose
+        private String senderLocation;
+        @SerializedName("senderProfileImage")
+        @Expose
+        private String senderProfileImage;
+        @SerializedName("service_id")
+        @Expose
+        private Integer serviceId;
+        @SerializedName("vehicle_id")
+        @Expose
+        private Integer vehicleId;
+
+        public Integer getMsgId() {
             return msgId;
         }
 
-        public void setMsgId(String msgId) {
+        public void setMsgId(Integer msgId) {
             this.msgId = msgId;
         }
 
-        public String getBroadcastMsgId() {
+        public Integer getBroadcastMsgId() {
             return broadcastMsgId;
         }
 
-        public void setBroadcastMsgId(String broadcastMsgId) {
+        public void setBroadcastMsgId(Integer broadcastMsgId) {
             this.broadcastMsgId = broadcastMsgId;
         }
 
-        public String getSender() {
-            return sender;
+        public String getDate1() {
+            return date1;
         }
 
-        public void setSender(String sender) {
-            this.sender = sender;
+        public void setDate1(String date1) {
+            this.date1 = date1;
         }
 
-        public String getReceiver() {
-            return receiver;
+        public String getDate() {
+            return date;
         }
 
-        public void setReceiver(String receiver) {
-            this.receiver = receiver;
-        }
-
-        public String getMessage() {
-            return message;
-        }
-
-        public void setMessage(String message) {
-            this.message = message;
+        public void setDate(String date) {
+            this.date = date;
         }
 
         public String getImage() {
@@ -116,36 +131,68 @@ public class BroadcastMessageResponse {
             this.image = image;
         }
 
-        public String getProductId() {
+        public String getMessage() {
+            return message;
+        }
+
+        public void setMessage(String message) {
+            this.message = message;
+        }
+
+        public Integer getProductId() {
             return productId;
         }
 
-        public void setProductId(String productId) {
+        public void setProductId(Integer productId) {
             this.productId = productId;
         }
 
-        public String getServiceId() {
+        public String getReceiver() {
+            return receiver;
+        }
+
+        public void setReceiver(String receiver) {
+            this.receiver = receiver;
+    }
+
+        public String getSender() {
+            return sender;
+        }
+
+        public void setSender(String sender) {
+            this.sender = sender;
+        }
+
+        public String getSenderLocation() {
+            return senderLocation;
+        }
+
+        public void setSenderLocation(String senderLocation) {
+            this.senderLocation = senderLocation;
+        }
+
+        public String getSenderProfileImage() {
+            return senderProfileImage;
+        }
+
+        public void setSenderProfileImage(String senderProfileImage) {
+            this.senderProfileImage = senderProfileImage;
+        }
+
+        public Integer getServiceId() {
             return serviceId;
         }
 
-        public void setServiceId(String serviceId) {
+        public void setServiceId(Integer serviceId) {
             this.serviceId = serviceId;
         }
 
-        public int getVehicleId() {
+        public Integer getVehicleId() {
             return vehicleId;
         }
 
-        public void setVehicleId(int vehicleId) {
+        public void setVehicleId(Integer vehicleId) {
             this.vehicleId = vehicleId;
-        }
-
-        public String getDate() {
-            return date;
-        }
-
-        public void setDate(String date) {
-            this.date = date;
         }
 
     }

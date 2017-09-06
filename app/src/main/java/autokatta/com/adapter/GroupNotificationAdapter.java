@@ -47,6 +47,7 @@ import autokatta.com.view.GroupsActivity;
 import autokatta.com.view.OtherProfile;
 import autokatta.com.view.ShareWithinAppActivity;
 import autokatta.com.view.UserProfile;
+import autokatta.com.view.VehicleDetails;
 import retrofit2.Response;
 
 /**
@@ -227,7 +228,7 @@ public class GroupNotificationAdapter extends RecyclerView.Adapter<RecyclerView.
                         ds.setUnderlineText(false);
                         ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
                         ds.setFakeBoldText(true);
-                        ds.setTextSize((float) 35.0);
+                        ds.setTextSize((float) 31.0);
                         Log.i("TextSize", "->" + ds.getTextSize());
                     }
                 }, 0, notificationList.get(position).getSenderName().length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -253,7 +254,7 @@ public class GroupNotificationAdapter extends RecyclerView.Adapter<RecyclerView.
                                     ds.setUnderlineText(false);
                                     ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
                                     ds.setFakeBoldText(true);
-                                    ds.setTextSize((float) 35.0);
+                                    ds.setTextSize((float) 31.0);
                                 }
                             }, notificationList.get(position).getSenderName().length() + notificationList.get(position).getAction().length() + 2,
                         notificationList.get(position).getSenderName().length() +
@@ -287,7 +288,7 @@ public class GroupNotificationAdapter extends RecyclerView.Adapter<RecyclerView.
                                     ds.setUnderlineText(false);
                                     ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
                                     ds.setFakeBoldText(true);
-                                    ds.setTextSize((float) 35.0);
+                                    ds.setTextSize((float) 31.0);
                                 }
                             }, notificationList.get(position).getSenderName().length() + notificationList.get(position).getAction().length() +
                                 notificationList.get(position).getReceiverName().length() + 5,
@@ -380,6 +381,7 @@ public class GroupNotificationAdapter extends RecyclerView.Adapter<RecyclerView.
                 final UploadVehicleNotifications mUpVehicleHolder = (UploadVehicleNotifications) holder;
 
                 Log.i("Wall", "Vehicle-LayType ->" + notificationList.get(position).getLayoutType());
+                SpannableStringBuilder sb10 = new SpannableStringBuilder();
 
                 if (notificationList.get(position).getLayoutType().equalsIgnoreCase("MyAction")) {
                     //mStoreHolder.mCall.setVisibility(View.GONE);
@@ -390,12 +392,122 @@ public class GroupNotificationAdapter extends RecyclerView.Adapter<RecyclerView.
                     mUpVehicleHolder.mRelativeLike.setVisibility(View.VISIBLE);
                 }
 
-                mUpVehicleHolder.mActionName.setText(notificationList.get(position).getSenderName() + " "
-                        + notificationList.get(position).getAction() + " "
-                        + "'" + notificationList.get(position).getUpVehicleTitle() + "'"
-                        + " Vehicle In"
-                        + "'" + notificationList.get(position).getGroupName() + "'"
-                        + " Group");
+//                mUpVehicleHolder.mActionName.setText(notificationList.get(position).getSenderName() + " "
+//                        + notificationList.get(position).getAction() + " "
+//                        + "'" + notificationList.get(position).getUpVehicleTitle() + "'"
+//                        + " Vehicle In"
+//                        + "'" + notificationList.get(position).getGroupName() + "'"
+//                        + " Group");
+
+                //Spannable code here
+                // sb10 = new SpannableStringBuilder();
+                sb10.append(notificationList.get(position).getSenderName());
+                sb10.append(" ");
+                sb10.append(notificationList.get(position).getAction());
+                sb10.append("\n");
+                sb10.append(notificationList.get(position).getUpVehicleTitle());
+                sb10.append(" Vehicle In ");
+                sb10.append(notificationList.get(position).getGroupName());
+                sb10.append(" Group");
+
+        /* sender name */
+                sb10.setSpan(new ClickableSpan() {
+                    @Override
+                    public void onClick(View widget) {
+
+                        if (notificationList.get(mUpVehicleHolder.getAdapterPosition()).getLayoutType().equalsIgnoreCase("MyAction")) {
+                            mActivity.startActivity(new Intent(mActivity, UserProfile.class));
+                        } else {
+                            Intent intent = new Intent(mActivity, OtherProfile.class);
+                            Bundle bundle = new Bundle();
+                            bundle.putString("contactOtherProfile", notificationList.get(mUpVehicleHolder.getAdapterPosition()).getSender());
+                            intent.putExtras(bundle);
+                            mActivity.startActivity(intent);
+                        }
+                    }
+
+                    @Override
+                    public void updateDrawState(TextPaint ds) {
+                        ds.setUnderlineText(false);
+                        ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
+                        ds.setFakeBoldText(true);
+                        ds.setTextSize((float) 31.0);
+                        Log.i("TextSize", "->" + ds.getTextSize());
+                    }
+                }, 0, notificationList.get(position).getSenderName().length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        /* vehicle name */
+                sb10.setSpan(new ClickableSpan() {
+                                 @Override
+                                 public void onClick(View widget) {
+
+                                     Intent intent = new Intent(mActivity, VehicleDetails.class);
+                                     intent.putExtra("vehicle_id", notificationList.get(mUpVehicleHolder.getAdapterPosition()).getUploadVehicleID());
+                                     mActivity.startActivity(intent);
+                                 }
+
+                                 @Override
+                                 public void updateDrawState(TextPaint ds) {
+                                     ds.setUnderlineText(false);
+                                     ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
+                                     ds.setFakeBoldText(true);
+                                     ds.setTextSize((float) 31.0);
+                                 }
+                             }, notificationList.get(position).getSenderName().length() +
+                                notificationList.get(position).getAction().length() + 2,
+
+                        notificationList.get(position).getSenderName().length() +
+                                notificationList.get(position).getAction().length() + 2 +
+                                notificationList.get(position).getUpVehicleTitle().length()
+                        , Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        /* group name */
+                sb10.setSpan(new ClickableSpan() {
+                                 @Override
+                                 public void onClick(View widget) {
+                                     Intent i = new Intent(mActivity, GroupsActivity.class);
+
+                                     if (notificationList.get(mUpVehicleHolder.getAdapterPosition()).getLayoutType().equalsIgnoreCase("MyAction")) {
+                                         i.putExtra("grouptype", "MyGroup");
+                                         i.putExtra("className", "SimpleProfile");
+                                         i.putExtra("bundle_Contact", notificationList.get(mUpVehicleHolder.getAdapterPosition()).getSender());
+
+                                     } else {
+                                         i.putExtra("grouptype", "OtherGroup");
+                                         i.putExtra("className", "OtherProfile");
+                                         i.putExtra("bundle_Contact", notificationList.get(mUpVehicleHolder.getAdapterPosition()).getReceiver());
+                                     }
+
+                                     i.putExtra("bundle_GroupId", notificationList.get(mUpVehicleHolder.getAdapterPosition()).getGroupID());
+                                     i.putExtra("bundle_GroupName", notificationList.get(mUpVehicleHolder.getAdapterPosition()).getGroupName());
+                                     mActivity.startActivity(i);
+                                 }
+
+                                 @Override
+                                 public void updateDrawState(TextPaint ds) {
+                                     ds.setUnderlineText(false);
+                                     ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
+                                     ds.setFakeBoldText(true);
+                                     ds.setTextSize((float) 31.0);
+                                 }
+                             }, notificationList.get(position).getSenderName().length() +
+                                notificationList.get(position).getAction().length() +
+                                notificationList.get(position).getUpVehicleTitle().length() + 14,
+
+                        notificationList.get(position).getSenderName().length() +
+                                notificationList.get(position).getAction().length() +
+                                notificationList.get(position).getUpVehicleTitle().length() + 14 +
+                                notificationList.get(position).getGroupName().length() + 1
+                        , Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                mUpVehicleHolder.mActionName.setText(sb10);
+                mUpVehicleHolder.mActionName.setMovementMethod(LinkMovementMethod.getInstance());
+                mUpVehicleHolder.mActionName.setHighlightColor(Color.TRANSPARENT);
+
+
+
+
+
 
                 mUpVehicleHolder.mActionTime.setText(notificationList.get(position).getDateTime());
                 mUpVehicleHolder.mVehicleName.setText(notificationList.get(position).getUpVehicleTitle());

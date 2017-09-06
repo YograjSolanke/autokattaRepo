@@ -104,6 +104,7 @@ public class BroadcastReceivedFragment extends Fragment implements RequestNotifi
                     success.setMessage(success.getMessage());
                     success.setDate(success.getDate());
                     success.setProfileImage(success.getProfileImage());
+                    success.setLocation(success.getLocation());
 
 
                     try {
@@ -212,6 +213,7 @@ public class BroadcastReceivedFragment extends Fragment implements RequestNotifi
                 Bundle b = new Bundle();
                 b.putString("sender", broadcastMessageArrayList.get(getAdapterPosition()).getSender());
                 b.putString("sendername", broadcastMessageArrayList.get(getAdapterPosition()).getSendername());
+                b.putString("senderLocation", broadcastMessageArrayList.get(getAdapterPosition()).getLocation());
                 b.putInt("product_id", 0);
                 b.putInt("service_id", 0);
                 b.putInt("vehicle_id", 0);

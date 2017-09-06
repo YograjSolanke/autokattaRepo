@@ -105,6 +105,7 @@ public class BroadcastSendFragment extends Fragment implements RequestNotifier, 
                     success.setDate(success.getDate());
                     success.setProfileImage(success.getProfileImage());
 
+
                     try {
                         TimeZone utc = TimeZone.getTimeZone("etc/UTC");
                         //format of date coming from services
@@ -221,6 +222,7 @@ public class BroadcastSendFragment extends Fragment implements RequestNotifier, 
                 Bundle b = new Bundle();
                 b.putString("sender", broadcastMessageArrayList.get(getAdapterPosition()).getReceiver());
                 b.putString("sendername", broadcastMessageArrayList.get(getAdapterPosition()).getReceivername());
+                b.putString("senderLocation", "");
                 b.putInt("product_id", 0);
                 b.putInt("service_id", 0);
                 b.putInt("vehicle_id", 0);
