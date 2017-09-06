@@ -10,9 +10,9 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -34,7 +34,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.TextView;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.google.firebase.iid.FirebaseInstanceId;
@@ -616,10 +616,23 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
         builder.setIcon(R.drawable.logo48x48);
         builder.setView(view);
 
-        final TextView mMarathi = (TextView) view.findViewById(R.id.marathi);
-        final TextView mEnglish = (TextView) view.findViewById(R.id.english);
+        //final TextView mMarathi = (TextView) view.findViewById(R.id.marathi);
+        //final TextView mEnglish = (TextView) view.findViewById(R.id.english);
+        RadioGroup mRadioGroup = (RadioGroup) view.findViewById(R.id.myRadioGroup);
+        mRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
+                if (checkedId == R.id.english) {
+                    setLocale("en");
+                } else if (checkedId == R.id.marathi) {
+                    setLocale("mr");
+                } else if (checkedId == R.id.hindi) {
+                    setLocale("hi");
+                }
+            }
+        });
 
-        mMarathi.setOnClickListener(new View.OnClickListener() {
+        /*mMarathi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mMarathiStr = mMarathi.getText().toString();
@@ -635,7 +648,7 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
                 mEnglish.setBackgroundColor(Color.parseColor("#f7f7f7"));
                 setLocale("en");
             }
-        });
+        });*/
 
         builder.setCancelable(false)
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {

@@ -7,6 +7,7 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.IdRes;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
@@ -19,6 +20,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.kaopiz.kprogresshud.KProgressHUD;
@@ -99,10 +101,23 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         builder.setIcon(R.drawable.logo48x48);
         builder.setView(view);
 
-        final TextView mMarathi = (TextView) view.findViewById(R.id.marathi);
-        final TextView mEnglish = (TextView) view.findViewById(R.id.english);
+        //final TextView mMarathi = (TextView) view.findViewById(R.id.marathi);
+        //final TextView mEnglish = (TextView) view.findViewById(R.id.english);
 
-        mMarathi.setOnClickListener(new View.OnClickListener() {
+        RadioGroup mRadioGroup = (RadioGroup) view.findViewById(R.id.myRadioGroup);
+        mRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
+                if (checkedId == R.id.english) {
+                    setLocale("en");
+                } else if (checkedId == R.id.marathi) {
+                    setLocale("mr");
+                } else if (checkedId == R.id.hindi) {
+                    setLocale("hi");
+                }
+            }
+        });
+        /*mMarathi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mMarathiStr = mMarathi.getText().toString();
@@ -118,7 +133,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 mEnglish.setBackgroundColor(Color.parseColor("#f7f7f7"));
                 setLocale("en");
             }
-        });
+        });*/
 
         builder.setCancelable(false)
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {

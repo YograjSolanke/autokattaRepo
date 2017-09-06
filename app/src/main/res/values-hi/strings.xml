@@ -74,8 +74,7 @@
     <string name="exchange">"अदला-बदली"</string>
     <string name="finance">"वित्त"</string>
     <string name="company_name">"कंपनी का नाम"</string>
-    <string name="designation">"पद
-"</string>
+    <string name="designation">"पद"</string>
     <string name="skills">"कौशल"</string>
     <string name="contact_no">"संपर्क"</string>
     <string name="contact_enquiry">"संपर्क करें<font color='#FF0000'>\u002A</font>"</string>
@@ -90,8 +89,8 @@
     <string name="title_activity_upload_vehicle">"UploadVehicle"</string>
 
     <!-- Shared Preferences -->
-    <string name="my_preference">"Autokatta"</string>
-    <string name="firstRun">"पहला रन"</string>
+    <string name="my_preference">Autokatta</string>
+    <string name="firstRun">FirstRun</string>
     <string name="category">"वर्ग"</string>
     <string name="alert_dialog_title">"कृपया चुनें"</string>
     <string name="positive_button_text">"चुनते हैं"</string>

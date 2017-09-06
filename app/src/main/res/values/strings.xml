@@ -126,6 +126,7 @@
     <string name="select_language">Select Language/आपली भाषा निवडा</string>
     <string name="marathi">मराठी</string>
     <string name="english">English</string>
+    <string name="hindi">हिंदी</string>
 
     <!--Login Activity -->
     <string name="username">Mobile Number</string>
