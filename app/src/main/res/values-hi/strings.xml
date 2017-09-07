@@ -125,7 +125,7 @@
 
     <string name="select_language">"भाषा चुनें / अपनी भाषा चुनें"</string>
     <string name="marathi">"मराठी"</string>
-    <string name="english">"अंग्रेज़ी"</string>
+    <string name="english">English</string>
 
     <!--Login Activity -->
     <string name="username">"मोबाइल नंबर"</string>

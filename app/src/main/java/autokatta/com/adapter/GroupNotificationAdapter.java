@@ -23,6 +23,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.MimeTypeMap;
 import android.webkit.URLUtil;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -114,8 +115,8 @@ public class GroupNotificationAdapter extends RecyclerView.Adapter<RecyclerView.
     private static class UploadVehicleNotifications extends RecyclerView.ViewHolder {
         CardView mVehicleCardView;
         ImageView mUserPic, mVehicleImage;
-        ImageButton mVehicleAutokattaShare, mCall, mVehicleLike, mVehicleUnlike, mVehicleFavourite, mVehicleUnfav,
-                mFollow, mUnfollow;
+        ImageButton mVehicleAutokattaShare, mCall, mVehicleFavourite, mVehicleUnfav;
+        Button mVehicleLike, mVehicleUnlike, mFollow, mUnfollow;
         TextView mActionName, mActionTime, mVehicleRegistration, mVehicleName, mVehiclePrice, mVehicleBrand,
                 mVehicleModel, mVehicleYearOfMfg, mVehicleKmsHrs, mVehicleLocation, mRtoCity, mLikes, mShares, mFollowCount;
         RelativeLayout mRelativeLike;
@@ -130,13 +131,12 @@ public class GroupNotificationAdapter extends RecyclerView.Adapter<RecyclerView.
 
             mVehicleAutokattaShare = (ImageButton) upVehicleView.findViewById(R.id.share_autokatta);
             //mCall = (ImageButton) upVehicleView.findViewById(R.id.call);
-            mVehicleLike = (ImageButton) upVehicleView.findViewById(R.id.like);
-            mVehicleUnlike = (ImageButton) upVehicleView.findViewById(R.id.unlike);
+            mVehicleLike = (Button) upVehicleView.findViewById(R.id.like);
+            mVehicleUnlike = (Button) upVehicleView.findViewById(R.id.unlike);
             mVehicleFavourite = (ImageButton) upVehicleView.findViewById(R.id.vehicle_favourite);
             mVehicleUnfav = (ImageButton) upVehicleView.findViewById(R.id.vehicle_unfavourite);
-            mFollow = (ImageButton) upVehicleView.findViewById(R.id.follow_vehicle);
-            mUnfollow = (ImageButton) upVehicleView.findViewById(R.id.unfollow_vehicle);
-
+            mFollow = (Button) upVehicleView.findViewById(R.id.follow);
+            mUnfollow = (Button) upVehicleView.findViewById(R.id.unfollow);
 
             mVehicleRegistration = (TextView) upVehicleView.findViewById(R.id.vehicle_registration);
             mVehicleName = (TextView) upVehicleView.findViewById(R.id.vehicle_name);
@@ -150,7 +150,7 @@ public class GroupNotificationAdapter extends RecyclerView.Adapter<RecyclerView.
             mLikes = (TextView) upVehicleView.findViewById(R.id.likes);
             mShares = (TextView) upVehicleView.findViewById(R.id.share);
             mFollowCount = (TextView) upVehicleView.findViewById(R.id.followcnt);
-            mRelativeLike = (RelativeLayout) upVehicleView.findViewById(R.id.rlLike);
+            //mRelativeLike = (RelativeLayout) upVehicleView.findViewById(R.id.rlLike);
         }
     }
 
@@ -385,11 +385,11 @@ public class GroupNotificationAdapter extends RecyclerView.Adapter<RecyclerView.
 
                 if (notificationList.get(position).getLayoutType().equalsIgnoreCase("MyAction")) {
                     //mStoreHolder.mCall.setVisibility(View.GONE);
-                    mUpVehicleHolder.mRelativeLike.setVisibility(View.GONE);
+                    // mUpVehicleHolder.mRelativeLike.setVisibility(View.GONE);
 
                 } else {
                     //mStoreHolder.mCall.setVisibility(View.VISIBLE);
-                    mUpVehicleHolder.mRelativeLike.setVisibility(View.VISIBLE);
+                    // mUpVehicleHolder.mRelativeLike.setVisibility(View.VISIBLE);
                 }
 
 //                mUpVehicleHolder.mActionName.setText(notificationList.get(position).getSenderName() + " "

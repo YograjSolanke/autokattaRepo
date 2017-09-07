@@ -201,10 +201,11 @@
     <string name="title_activity_other_profile">OtherProfile</string>
 
     <!--Status -->
-    <string name="likes">Likes</string>
+    <string name="likes">Like</string>
     <string name="share">Share</string>
     <string name="cap_share">SHARE</string>
     <string name="follower">Followers</string>
+    <string name="follow">Follow</string>
     <string name="title_activity_auction_container">AuctionContainer</string>
     <string name="title_activity_preview_live_events">PreviewLiveEvents</string>
     <string name="title_activity_preview_going_events">PreviewGoingEvents</string>
