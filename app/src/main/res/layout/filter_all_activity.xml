@@ -276,7 +276,7 @@
                         android:layout_alignParentStart="true"
                         android:layout_below="@+id/textView"
                         android:layout_marginTop="10dip"
-                        android:background="@drawable/button_background"
+                        android:background="@color/background"
                         android:text="+ City"
                         android:textAllCaps="false"
                         android:textColor="@color/white"
@@ -393,7 +393,7 @@
                         android:layout_alignParentStart="true"
                         android:layout_below="@+id/checkRTO"
                         android:layout_marginTop="20dip"
-                        android:background="@drawable/button_background"
+                        android:background="@color/background"
                         android:text="+RTOcity"
                         android:textAllCaps="false"
                         android:textColor="@color/white"
@@ -498,7 +498,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_marginStart="20dip"
+                        android:layout_marginStart="10dip"
                         android:layout_toEndOf="@+id/man_year_text"
                         android:text=""
                         android:textColor="#2C3343" />
@@ -558,7 +558,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentTop="true"
-                        android:layout_marginStart="20dip"
+                        android:layout_marginStart="10dip"
                         android:layout_toEndOf="@+id/reg_year_text"
                         android:text=""
                         android:textColor="#2C3343" />
@@ -615,7 +615,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentTop="true"
-                        android:layout_marginStart="95dip"
+                        android:layout_marginStart="45dip"
                         android:text=""
                         android:textColor="#2C3343" />
 
@@ -672,7 +672,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentTop="true"
-                        android:layout_marginStart="45dip"
+                        android:layout_marginStart="10dip"
                         android:layout_toEndOf="@+id/kms_hrs_running_text"
                         android:text=""
                         android:textColor="#2C3343" />
@@ -730,7 +730,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentTop="true"
-                        android:layout_marginStart="45dip"
+                        android:layout_marginStart="10dip"
                         android:layout_toEndOf="@+id/textViewh"
                         android:text=""
                         android:textColor="#2C3343" />
@@ -788,7 +788,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentTop="true"
-                        android:layout_marginStart="45dip"
+                        android:layout_marginStart="10dip"
                         android:layout_toEndOf="@+id/minhpcapacity"
                         android:text=""
                         android:textColor="#2C3343" />
@@ -869,7 +869,7 @@
                         android:id="@+id/BtnMoreOptions"
                         android:layout_width="wrap_content"
                         android:layout_height="40dp"
-                        android:background="@drawable/button_background"
+                        android:background="@color/background"
                         android:ems="10"
                         android:text="@string/more_options"
                         android:textAllCaps="false"
@@ -1005,15 +1005,14 @@
                             android:textColor="#2C3343"
                             android:textSize="15sp" />
 
-                        <EditText
-                            android:id="@+id/bodyEdit1"
+                        <Spinner
+                            android:id="@+id/bodytypespinner"
                             android:layout_width="200dip"
                             android:layout_height="40dip"
                             android:layout_alignParentEnd="true"
                             android:layout_alignParentTop="true"
                             android:background="#80bebebe"
                             android:ems="10"
-                            android:hint="@string/body_type"
                             android:textColor="#2C3343" />
                     </RelativeLayout>
                 </TableRow>
@@ -1579,7 +1578,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dip"
-                    android:visibility="visible">
+                    android:visibility="gone">
 
                     <LinearLayout
                         android:id="@+id/tyreLinear"
@@ -1627,7 +1626,7 @@
                         android:layout_marginBottom="5dip"
                         android:layout_marginStart="1dp"
                         android:layout_weight="0.50"
-                        android:background="@drawable/button_background"
+                        android:background="@color/background"
                         android:text="Apply Search"
                         android:textAllCaps="false"
                         android:textColor="@color/white"

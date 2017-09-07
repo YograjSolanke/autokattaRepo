@@ -43,6 +43,7 @@ import autokatta.com.generic.RangeSeekBar;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.ColorResponse;
+import autokatta.com.response.GetBodyTypeResponse;
 import autokatta.com.response.GetRTOCityResponse;
 import autokatta.com.response.GetVehicleBrandResponse;
 import autokatta.com.response.GetVehicleListResponse;
@@ -53,9 +54,9 @@ import retrofit2.Response;
 
 public class SearchVehicleActivity extends AppCompatActivity implements MultiSelectionSpinner.MultiSpinnerListener, RequestNotifier, Multispinner.MultiSpinnerListener {
 
-    EditText useEdit, seatingEdit, transmissionEdit, impletementEdit, bodyEdit, boatEdit, rvEdit;
+    EditText useEdit, seatingEdit, transmissionEdit, impletementEdit, boatEdit, rvEdit;
     Button BtnRefresh, BtnApplySearch, BtnMoreOptions, btnCity, btnRto;
-    Spinner rcSpinner, insuranceSpinner, ownerSpinner, hypoSpinner, brandSpinner, modelSpinner, allcategorySpinner, subcategorySpinner, versionSpinner,
+    Spinner mBodyTypeSpinner, rcSpinner, insuranceSpinner, ownerSpinner, hypoSpinner, brandSpinner, modelSpinner, allcategorySpinner, subcategorySpinner, versionSpinner,
             tax_validitySpinner, fitness_validitySpinner, permit_validitySpinner, driveSpinner, bus_typeSpinner, airSpinner, invoiceSpinner, financeSpinner;
     MultiSelectionSpinner spinnerfual;
 
@@ -83,7 +84,7 @@ public class SearchVehicleActivity extends AppCompatActivity implements MultiSel
 
     List<String> fuals = new ArrayList<>();
     List<String> colors = new ArrayList<>();
-
+    List<String> mBodyType = new ArrayList<>();
     List<String> mList = new ArrayList<>();
     List<String> mList1 = new ArrayList<>();
     List<String> mList2 = new ArrayList<>();
@@ -148,6 +149,7 @@ public class SearchVehicleActivity extends AppCompatActivity implements MultiSel
         rowimpl = (RelativeLayout) findViewById(R.id.rowimpl);
         rowtyre = (RelativeLayout) findViewById(R.id.rowtyre);
         rowimpl = (RelativeLayout) findViewById(R.id.rowimpl);
+        rowtyre.setVisibility(View.GONE);
 
 
         BtnMoreOptions = (Button) findViewById(R.id.BtnMoreOptions);
@@ -196,7 +198,7 @@ public class SearchVehicleActivity extends AppCompatActivity implements MultiSel
 
         moresearchlinear = (LinearLayout) findViewById(R.id.moresearchlinear);
 
-        bodyEdit = (EditText) findViewById(R.id.bodyEdit1);
+        mBodyTypeSpinner = (Spinner) findViewById(R.id.bodytypespinner);
         boatEdit = (EditText) findViewById(R.id.boatEdit1);
         rvEdit = (EditText) findViewById(R.id.rvEdit1);
         seatingEdit = (EditText) findViewById(R.id.seatsEdit1);
@@ -252,6 +254,7 @@ public class SearchVehicleActivity extends AppCompatActivity implements MultiSel
                     getVehicleCategory();
                     getRTOCity();
                     getColors();
+                    getBodyTypes();
 
                     autoCity.setAdapter(new GooglePlacesAdapter(getApplicationContext(), R.layout.registration_spinner));
                     autoCity1.setAdapter(new GooglePlacesAdapter(getApplicationContext(), R.layout.registration_spinner));
@@ -315,14 +318,16 @@ public class SearchVehicleActivity extends AppCompatActivity implements MultiSel
         rangeSeekBar1.setSelectedMinValue(regyear1);
         rangeSeekBar1.setSelectedMaxValue(regyear);
 
+        man_yr_fromTxt.setText(String.valueOf(regyear1));
+        man_yr_toTxt.setText(String.valueOf(regyear));
         rangeSeekBar1.setOnRangeSeekBarChangeListener(new RangeSeekBar.OnRangeSeekBarChangeListener<Integer>() {
 
             @Override
             public void onRangeSeekBarValuesChanged(RangeSeekBar<?> bar,
                                                     Integer minValue, Integer maxValue) {
                 // TODO Auto-generated method stub
-                man_yr_fromTxt.setText("" + minValue);
-                man_yr_toTxt.setText("" + maxValue);
+                man_yr_fromTxt.setText(String.valueOf(minValue));
+                man_yr_toTxt.setText(String.valueOf(maxValue));
                 Log.i("RAnge is :", "User selected new range values: MIN=" + minValue + ", MAX=" + maxValue);
             }
         });
@@ -356,11 +361,13 @@ public class SearchVehicleActivity extends AppCompatActivity implements MultiSel
         /**********************Range bar for price*****************************/
         RangeSeekBar<Integer> rangeSeekBar2 = new RangeSeekBar<Integer>(getApplicationContext());
         // Set the range
-        int minprice = 50000;
+        int minprice = 0;
         int maxprice = 1000000;
         rangeSeekBar2.setRangeValues(minprice, maxprice);
         rangeSeekBar2.setSelectedMinValue(minprice);
         rangeSeekBar2.setSelectedMaxValue(maxprice);
+        pricefromTxt.setText(String.valueOf(minprice));
+        pricetoTxt.setText(String.valueOf(maxprice));
 
         rangeSeekBar2.setOnRangeSeekBarChangeListener(new RangeSeekBar.OnRangeSeekBarChangeListener<Integer>() {
 
@@ -368,8 +375,8 @@ public class SearchVehicleActivity extends AppCompatActivity implements MultiSel
             public void onRangeSeekBarValuesChanged(RangeSeekBar<?> bar,
                                                     Integer minValue, Integer maxValue) {
                 // TODO Auto-generated method stub
-                pricefromTxt.setText("" + minValue);
-                pricetoTxt.setText("" + maxValue);
+                pricefromTxt.setText(String.valueOf(minValue));
+                pricetoTxt.setText(String.valueOf(maxValue));
                 Log.i("RAnge is :", "User selected new range values: MIN=" + minValue + ", MAX=" + maxValue);
             }
         });
@@ -381,11 +388,13 @@ public class SearchVehicleActivity extends AppCompatActivity implements MultiSel
         /**********************KMS Running*****************************/
         RangeSeekBar<Integer> rangeSeekBar3 = new RangeSeekBar<Integer>(getApplicationContext());
         // Set the range
-        int min = 10000;
+        int min = 0;
         int max = 100000;
         rangeSeekBar3.setRangeValues(min, max);
         rangeSeekBar3.setSelectedMinValue(min);
         rangeSeekBar3.setSelectedMaxValue(max);
+        kms_fromTxt.setText(String.valueOf(min));
+        kms_toTxt.setText(String.valueOf(max));
 
         rangeSeekBar3.setOnRangeSeekBarChangeListener(new RangeSeekBar.OnRangeSeekBarChangeListener<Integer>() {
 
@@ -393,8 +402,8 @@ public class SearchVehicleActivity extends AppCompatActivity implements MultiSel
             public void onRangeSeekBarValuesChanged(RangeSeekBar<?> bar,
                                                     Integer minValue, Integer maxValue) {
                 // TODO Auto-generated method stub
-                kms_fromTxt.setText("" + minValue);
-                kms_toTxt.setText("" + maxValue);
+                kms_fromTxt.setText(String.valueOf(minValue));
+                kms_toTxt.setText(String.valueOf(maxValue));
                 Log.i("RAnge is :", "User selected new range values: MIN=" + minValue + ", MAX=" + maxValue);
             }
         });
@@ -412,14 +421,17 @@ public class SearchVehicleActivity extends AppCompatActivity implements MultiSel
         rangeSeekBarhrs.setSelectedMinValue(minhr);
         rangeSeekBarhrs.setSelectedMaxValue(maxhr);
 
+        hrs_fromTxt.setText(String.valueOf(minhr));
+        hrs_toTxt.setText(String.valueOf(maxhr));
+
         rangeSeekBarhrs.setOnRangeSeekBarChangeListener(new RangeSeekBar.OnRangeSeekBarChangeListener<Integer>() {
 
             @Override
             public void onRangeSeekBarValuesChanged(RangeSeekBar<?> bar,
                                                     Integer minValue, Integer maxValue) {
                 // TODO Auto-generated method stub
-                hrs_fromTxt.setText("" + minValue);
-                hrs_toTxt.setText("" + maxValue);
+                hrs_fromTxt.setText(String.valueOf(minValue));
+                hrs_toTxt.setText(String.valueOf(maxValue));
                 Log.i("Range is :", "User selected new range values: MIN=" + minValue + ", MAX=" + maxValue);
             }
         });
@@ -435,6 +447,8 @@ public class SearchVehicleActivity extends AppCompatActivity implements MultiSel
         rangeSeekBarhpcap.setRangeValues(minhpcap, maxhpcap);
         rangeSeekBarhpcap.setSelectedMinValue(minhpcap);
         rangeSeekBarhpcap.setSelectedMaxValue(maxhpcap);
+        maxhpcapcityTxt.setText(String.valueOf(minhpcap));
+        maxhpcapcity.setText(String.valueOf(maxhpcap));
 
         rangeSeekBarhpcap.setOnRangeSeekBarChangeListener(new RangeSeekBar.OnRangeSeekBarChangeListener<Integer>() {
 
@@ -442,8 +456,8 @@ public class SearchVehicleActivity extends AppCompatActivity implements MultiSel
             public void onRangeSeekBarValuesChanged(RangeSeekBar<?> bar,
                                                     Integer minValue, Integer maxValue) {
                 // TODO Auto-generated method stub
-                maxhpcapcityTxt.setText("" + minValue);
-                maxhpcapcity.setText("" + maxValue);
+                maxhpcapcityTxt.setText(String.valueOf(minValue));
+                maxhpcapcity.setText(String.valueOf(maxValue));
                 Log.i("RAnge is :", "User selected new range values: MIN=" + minValue + ", MAX=" + maxValue);
             }
         });
@@ -454,19 +468,21 @@ public class SearchVehicleActivity extends AppCompatActivity implements MultiSel
         /**********************tyre condition*****************************/
         RangeSeekBar<Integer> rangeSeekBar4 = new RangeSeekBar<Integer>(getApplicationContext());
         // Set the range
-        int minkm = 10000;
+        int minkm = 0;
         int maxkm = 100000;
         rangeSeekBar4.setRangeValues(minkm, maxkm);
         rangeSeekBar4.setSelectedMinValue(minkm);
         rangeSeekBar4.setSelectedMaxValue(maxkm);
+        tyre_fromTxt.setText(String.valueOf(minkm));
+        tyre_toTxt.setText(String.valueOf(maxkm));
 
         rangeSeekBar4.setOnRangeSeekBarChangeListener(new RangeSeekBar.OnRangeSeekBarChangeListener<Integer>() {
 
             @Override
             public void onRangeSeekBarValuesChanged(RangeSeekBar<?> bar,
                                                     Integer minValue, Integer maxValue) {
-                tyre_fromTxt.setText("" + minValue);
-                tyre_toTxt.setText("" + maxValue);
+                tyre_fromTxt.setText(String.valueOf(minValue));
+                tyre_toTxt.setText(String.valueOf(maxValue));
                 Log.i("RAnge is :", "User selected new range values: MIN=" + minValue + ", MAX=" + maxValue);
             }
         });
@@ -669,6 +685,7 @@ public class SearchVehicleActivity extends AppCompatActivity implements MultiSel
                                 rowaircondition.setVisibility(View.GONE);
                                 rowboattype.setVisibility(View.GONE);
                                 rowrvtype.setVisibility(View.GONE);
+                                rowbody.setVisibility(View.VISIBLE);
                                 rowseat.setVisibility(View.GONE);
                                 rowdrive.setVisibility(View.GONE);
                                 rowtransmission.setVisibility(View.GONE);
@@ -776,7 +793,7 @@ public class SearchVehicleActivity extends AppCompatActivity implements MultiSel
                 seatingEdit.setText("");
                 transmissionEdit.setText("");
                 impletementEdit.setText("");
-                bodyEdit.setText("");
+                mBodyTypeSpinner.setSelection(0);
                 boatEdit.setText("");
                 rvEdit.setText("");
 
@@ -883,7 +900,7 @@ public class SearchVehicleActivity extends AppCompatActivity implements MultiSel
             use1 = useEdit.getText().toString();
             rv1 = rvEdit.getText().toString();
             boat1 = boatEdit.getText().toString();
-            body1 = bodyEdit.getText().toString();
+            body1 = mBodyTypeSpinner.getSelectedItem().toString();
             transmission1 = transmissionEdit.getText().toString();
             seating1 = seatingEdit.getText().toString();
             implement1 = impletementEdit.getText().toString();
@@ -1023,6 +1040,14 @@ public class SearchVehicleActivity extends AppCompatActivity implements MultiSel
 
     private void getVehicleCategory() {
         mApiCall.getVehicleList();
+    }
+
+    /*
+  Get Body Types...
+   */
+    private void getBodyTypes() {
+
+        mApiCall.getBodyType();
     }
 
     /*
@@ -1404,6 +1429,41 @@ public class SearchVehicleActivity extends AppCompatActivity implements MultiSel
                     autoRTO2.setAdapter(dataAdapter);
                     autoRTO3.setAdapter(dataAdapter);
                     autoRTO4.setAdapter(dataAdapter);
+                }
+
+                //Body Type
+                else if (response.body() instanceof GetBodyTypeResponse) {
+                    mBodyType.clear();
+                    GetBodyTypeResponse mGetBodyTypeResponse = (GetBodyTypeResponse) response.body();
+                    mBodyType.add("--Select Body Type--");
+                    for (GetBodyTypeResponse.Success success : mGetBodyTypeResponse.getSuccess()) {
+                        success.setTitle(success.getTitle());
+                        mBodyType.add(success.getTitle());
+                    }
+
+                    ArrayAdapter<String> adapter = new ArrayAdapter<>(getApplicationContext(),
+                            R.layout.registration_spinner, mBodyType);
+                    //adapter.setDropDownViewResource(R.layout.registration_spinner);
+                    mBodyTypeSpinner.setAdapter(adapter);
+
+                    mBodyTypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                            if (position != 0) {
+                                String bodyType = mBodyTypeSpinner.getSelectedItem().toString();
+                                int bodyTypeid = mBodyTypeSpinner.getSelectedItemPosition();
+
+                                getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_bodyType", bodyType).apply();
+
+                                System.out.println("Body Type is::" + bodyType);
+                            }
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> parent) {
+
+                        }
+                    });
                 }
 
                 //

@@ -30,6 +30,8 @@ import autokatta.com.response.StoreInventoryResponse;
 import autokatta.com.response.StoreInventoryResponse.Success.Service;
 import retrofit2.Response;
 
+import static android.content.Context.MODE_PRIVATE;
+
 /**
  * Created by ak-005 on 22/5/17.
  */
@@ -44,7 +46,7 @@ public class MemberServicesFragment extends Fragment implements SwipeRefreshLayo
     LinearLayoutManager mLayoutManager;
     StoreServiceAdapter adapter;
     TextView mNoData;
-    String mBundleContact;
+    String mBundleContact, myContact;
     ConnectionDetector mTestConnection;
     boolean _hasLoadedOnce = false;
     Activity activity;
@@ -115,7 +117,7 @@ public class MemberServicesFragment extends Fragment implements SwipeRefreshLayo
                         storeContact = success.getStorecontact();
                         serviceList.add(success);
                     }
-                    adapter = new StoreServiceAdapter(getActivity(), serviceList, mBundleContact, storeContact);
+                    adapter = new StoreServiceAdapter(getActivity(), serviceList, myContact, storeContact);
                     mRecyclerView.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
                 } else {
@@ -186,6 +188,7 @@ public class MemberServicesFragment extends Fragment implements SwipeRefreshLayo
                 Bundle getBundle = getArguments();
                 mGroupId = getBundle.getInt("bundle_GroupId");
                 mBundleContact = getBundle.getString("Rcontact");
+                myContact = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "");
 
                 mSwipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
                         android.R.color.holo_green_light,

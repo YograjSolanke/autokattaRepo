@@ -1,6 +1,5 @@
 package autokatta.com.search;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -42,6 +41,7 @@ import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.ColorResponse;
+import autokatta.com.response.GetBodyTypeResponse;
 import autokatta.com.response.GetRTOCityResponse;
 import autokatta.com.response.GetVehicleBrandResponse;
 import autokatta.com.response.GetVehicleListResponse;
@@ -49,6 +49,8 @@ import autokatta.com.response.GetVehicleModelResponse;
 import autokatta.com.response.GetVehicleSubTypeResponse;
 import autokatta.com.response.GetVehicleVersionResponse;
 import retrofit2.Response;
+
+import static android.content.Context.MODE_PRIVATE;
 
 /**
  * Created by ak-001 on 19/4/17.
@@ -62,9 +64,9 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
 
     FloatingActionButton getHelp;
 
-    EditText useEdit, seatingEdit, transmissionEdit, impletementEdit, bodyEdit, boatEdit, rvEdit;
+    EditText useEdit, seatingEdit, transmissionEdit, impletementEdit, boatEdit, rvEdit;
     Button BtnRefresh, BtnApplySearch, BtnMoreOptions, btnCity, btnRto;
-    Spinner rc, insurance, owner, hypo, brand, model, allcategory, subcategory, version;
+    Spinner rc, insurance, owner, hypo, brand, model, allcategory, subcategory, version, mBodyTypeSpinner;
     Spinner tax_validity, fitness_validity, permit_validity, drive, bus_type, air, invoice, finance;
     MultiSelectionSpinner spinnerfual;
 
@@ -76,7 +78,7 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
     private RadioButton radioPermitButton;
     Multispinner multiSpinnercolor;
     LinearLayout moresearchlinear;
-
+    List<String> mBodyType = new ArrayList<>();
     TableRow rowFinacial, rowCategory, rowSubcat, rowPermit, rowBrand, rowModel, rowVersion, rowCity, rowRTO, rowManyr, rowmanyr1, rowREGyr, rowREGyr1, rowPrice, rowprice1, rowKms, rowkms1, rowhrs, rowhrstb, rowhpcapacity, rowhpcap, rowowners;
 
     TableRow rowInvoice, rowbustype, rowaircondition, rowbody, rowboattype, rowrvtype, rowcolor, rowrc, rowinsurance1, rowhypo, rowtax, rowfitness, rowpermit, rowfual, rowseat, rowdrive, rowtransmission, rowuse, rowimpl, rowtyre, rowtyrerange;
@@ -96,15 +98,17 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
 
     int counter = 0;
     int counter1 = 0;
-    ConnectionDetector mConnectionDetector = new ConnectionDetector(getActivity());
+    ConnectionDetector mConnectionDetector;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
 
         final View root = inflater.inflate(R.layout.filter_all_activity, container, false);
-        prefs = getActivity().getSharedPreferences(MyContactPREFERENCES, Context.MODE_PRIVATE);
+        prefs = getActivity().getSharedPreferences(MyContactPREFERENCES, MODE_PRIVATE);
         contact = prefs.getString("contact", "");
+
+        mConnectionDetector = new ConnectionDetector(getActivity());
 
         TextView financetxt = (TextView) root.findViewById(R.id.financetxt);
         TextView messageText = (TextView) root.findViewById(R.id.messageText);
@@ -152,6 +156,7 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
         rowimpl = (TableRow) root.findViewById(R.id.rowimpl);
         rowtyre = (TableRow) root.findViewById(R.id.rowtyre);
         rowimpl = (TableRow) root.findViewById(R.id.rowimpl);
+        rowtyre.setVisibility(View.GONE);
 
 
         BtnMoreOptions = (Button) root.findViewById(R.id.BtnMoreOptions);
@@ -197,7 +202,7 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
 
         moresearchlinear = (LinearLayout) root.findViewById(R.id.moresearchlinear);
 
-        bodyEdit = (EditText) root.findViewById(R.id.bodyEdit1);
+        mBodyTypeSpinner = (Spinner) root.findViewById(R.id.bodytypespinner);
         boatEdit = (EditText) root.findViewById(R.id.boatEdit1);
         rvEdit = (EditText) root.findViewById(R.id.rvEdit1);
         seatingEdit = (EditText) root.findViewById(R.id.seatsEdit1);
@@ -259,6 +264,7 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
                 getAllCategory();
                 getRTOCity();
                 callColorWebservices();
+                getBodyTypes();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -463,14 +469,17 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
             rangeSeekBar1.setSelectedMinValue(regyear1);
             rangeSeekBar1.setSelectedMaxValue(regyear);
 
+            man_yr_from.setText(String.valueOf(regyear1));
+            man_yr_to.setText(String.valueOf(regyear));
+
             rangeSeekBar1.setOnRangeSeekBarChangeListener(new RangeSeekBar.OnRangeSeekBarChangeListener<Integer>() {
 
                 @Override
                 public void onRangeSeekBarValuesChanged(RangeSeekBar<?> bar,
                                                         Integer minValue, Integer maxValue) {
                     // TODO Auto-generated method stub
-                    man_yr_from.setText("" + minValue);
-                    man_yr_to.setText("" + maxValue);
+                    man_yr_from.setText(String.valueOf(minValue));
+                    man_yr_to.setText(String.valueOf(maxValue));
                     Log.i("RAnge is :", "User selected new range values: MIN=" + minValue + ", MAX=" + maxValue);
                 }
             });
@@ -493,8 +502,8 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
                 public void onRangeSeekBarValuesChanged(RangeSeekBar<?> bar,
                                                         Integer minValue, Integer maxValue) {
                     // TODO Auto-generated method stub
-                    reg_yr_from.setText("" + minValue);
-                    reg_yr_to.setText("" + maxValue);
+                    reg_yr_from.setText(String.valueOf(minValue));
+                    reg_yr_to.setText(String.valueOf(maxValue));
                     Log.i("RAnge is :", "User selected new range values: MIN=" + minValue + ", MAX=" + maxValue);
                 }
             });
@@ -505,11 +514,13 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
             /**********************Range bar for price*****************************/
             RangeSeekBar<Integer> rangeSeekBar2 = new RangeSeekBar<Integer>(getActivity());
             // Set the range
-            int minprice = 50000;
+            int minprice = 0;
             int maxprice = 1000000;
             rangeSeekBar2.setRangeValues(minprice, maxprice);
             rangeSeekBar2.setSelectedMinValue(minprice);
             rangeSeekBar2.setSelectedMaxValue(maxprice);
+            pricefrom.setText(String.valueOf(minprice));
+            priceto.setText(String.valueOf(maxprice));
 
             rangeSeekBar2.setOnRangeSeekBarChangeListener(new RangeSeekBar.OnRangeSeekBarChangeListener<Integer>() {
 
@@ -517,8 +528,8 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
                 public void onRangeSeekBarValuesChanged(RangeSeekBar<?> bar,
                                                         Integer minValue, Integer maxValue) {
                     // TODO Auto-generated method stub
-                    pricefrom.setText("" + minValue);
-                    priceto.setText("" + maxValue);
+                    pricefrom.setText(String.valueOf(minValue));
+                    priceto.setText(String.valueOf(maxValue));
                     Log.i("RAnge is :", "User selected new range values: MIN=" + minValue + ", MAX=" + maxValue);
                 }
             });
@@ -530,11 +541,13 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
             /**********************KMS Running*****************************/
             RangeSeekBar<Integer> rangeSeekBar3 = new RangeSeekBar<Integer>(getActivity());
             // Set the range
-            int min = 10000;
+            int min = 0;
             int max = 100000;
             rangeSeekBar3.setRangeValues(min, max);
             rangeSeekBar3.setSelectedMinValue(min);
             rangeSeekBar3.setSelectedMaxValue(max);
+            kms_from.setText(String.valueOf(min));
+            kms_to.setText(String.valueOf(max));
 
             rangeSeekBar3.setOnRangeSeekBarChangeListener(new RangeSeekBar.OnRangeSeekBarChangeListener<Integer>() {
 
@@ -542,8 +555,8 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
                 public void onRangeSeekBarValuesChanged(RangeSeekBar<?> bar,
                                                         Integer minValue, Integer maxValue) {
                     // TODO Auto-generated method stub
-                    kms_from.setText("" + minValue);
-                    kms_to.setText("" + maxValue);
+                    kms_from.setText(String.valueOf(minValue));
+                    kms_to.setText(String.valueOf(maxValue));
                     Log.i("RAnge is :", "User selected new range values: MIN=" + minValue + ", MAX=" + maxValue);
                 }
             });
@@ -561,14 +574,17 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
             rangeSeekBarhrs.setSelectedMinValue(minhr);
             rangeSeekBarhrs.setSelectedMaxValue(maxhr);
 
+            hrs_from.setText(String.valueOf(minhr));
+            hrs_to.setText(String.valueOf(maxhr));
+
             rangeSeekBarhrs.setOnRangeSeekBarChangeListener(new RangeSeekBar.OnRangeSeekBarChangeListener<Integer>() {
 
                 @Override
                 public void onRangeSeekBarValuesChanged(RangeSeekBar<?> bar,
                                                         Integer minValue, Integer maxValue) {
                     // TODO Auto-generated method stub
-                    hrs_from.setText("" + minValue);
-                    hrs_to.setText("" + maxValue);
+                    hrs_from.setText(String.valueOf(minValue));
+                    hrs_to.setText(String.valueOf(maxValue));
                     Log.i("Range is :", "User selected new range values: MIN=" + minValue + ", MAX=" + maxValue);
                 }
             });
@@ -585,14 +601,17 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
             rangeSeekBarhpcap.setSelectedMinValue(minhpcap);
             rangeSeekBarhpcap.setSelectedMaxValue(maxhpcap);
 
+            minihpcapacity.setText(String.valueOf(minhpcap));
+            maxhpcapcity.setText(String.valueOf(maxhpcap));
+
             rangeSeekBarhpcap.setOnRangeSeekBarChangeListener(new RangeSeekBar.OnRangeSeekBarChangeListener<Integer>() {
 
                 @Override
                 public void onRangeSeekBarValuesChanged(RangeSeekBar<?> bar,
                                                         Integer minValue, Integer maxValue) {
                     // TODO Auto-generated method stub
-                    minihpcapacity.setText("" + minValue);
-                    maxhpcapcity.setText("" + maxValue);
+                    minihpcapacity.setText(String.valueOf(minValue));
+                    maxhpcapcity.setText(String.valueOf(maxValue));
                     Log.i("RAnge is :", "User selected new range values: MIN=" + minValue + ", MAX=" + maxValue);
                 }
             });
@@ -603,19 +622,22 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
             /**********************tyre condition*****************************/
             RangeSeekBar<Integer> rangeSeekBar4 = new RangeSeekBar<Integer>(getActivity());
             // Set the range
-            int minkm = 10000;
+            int minkm = 0;
             int maxkm = 100000;
             rangeSeekBar4.setRangeValues(minkm, maxkm);
             rangeSeekBar4.setSelectedMinValue(minkm);
             rangeSeekBar4.setSelectedMaxValue(maxkm);
+
+            tyre_from.setText(String.valueOf(minkm));
+            tyre_to.setText(String.valueOf(maxkm));
 
             rangeSeekBar4.setOnRangeSeekBarChangeListener(new RangeSeekBar.OnRangeSeekBarChangeListener<Integer>() {
 
                 @Override
                 public void onRangeSeekBarValuesChanged(RangeSeekBar<?> bar,
                                                         Integer minValue, Integer maxValue) {
-                    tyre_from.setText("" + minValue);
-                    tyre_to.setText("" + maxValue);
+                    tyre_from.setText(String.valueOf(minValue));
+                    tyre_to.setText(String.valueOf(maxValue));
                     Log.i("RAnge is :", "User selected new range values: MIN=" + minValue + ", MAX=" + maxValue);
                 }
             });
@@ -663,7 +685,7 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
                                     rowfitness.setVisibility(View.GONE);
                                     rowtax.setVisibility(View.GONE);
                                 }
-                            } else if (Category.equals(" Construction Equipment ")) {
+                            } else if (Category.equals("Construction Equipment")) {
                                 String subCategory = subcategory.getSelectedItem().toString();
                                 rowbustype.setVisibility(View.GONE);
                                 rowaircondition.setVisibility(View.GONE);
@@ -700,6 +722,7 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
                                 rowboattype.setVisibility(View.GONE);
                                 rowrvtype.setVisibility(View.GONE);
                                 rowseat.setVisibility(View.GONE);
+                                rowbody.setVisibility(View.VISIBLE);
                                 rowdrive.setVisibility(View.GONE);
                                 rowtransmission.setVisibility(View.GONE);
                                 rowuse.setVisibility(View.GONE);
@@ -795,7 +818,7 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
                     seatingEdit.setText("");
                     transmissionEdit.setText("");
                     impletementEdit.setText("");
-                    bodyEdit.setText("");
+                    mBodyTypeSpinner.setSelection(0);
                     boatEdit.setText("");
                     rvEdit.setText("");
 
@@ -803,29 +826,7 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
                 }
             });
 
-            /*getHelp.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
 
-                    final Dialog openDialog = new Dialog(getActivity());
-                    openDialog.setContentView(R.layout.customdialog_help);
-
-                    TextView dialogText = (TextView) openDialog.findViewById(R.id.dialog_text);
-                    ImageView dialogImage = (ImageView) openDialog.findViewById(R.id.dialog_image);
-                    Button dialogClose = (Button) openDialog.findViewById(R.id.dialog_button);
-
-                    openDialog.setTitle("Help");
-                    dialogText.setText(Html.fromHtml("<HTML><HEAD></HEAD><BODY>" + "Filter Activity " + "</BODY></HTML>"));
-
-                    dialogClose.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            openDialog.dismiss();
-                        }
-                    });
-                    openDialog.show();
-                }
-            });*/
         }
 
 
@@ -848,6 +849,14 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
     private void getAllCategory() {
         ApiCall mApiCall = new ApiCall(getActivity(), this);
         mApiCall.getVehicleList();
+    }
+
+    /*
+    Get Body Types...
+     */
+    private void getBodyTypes() {
+        ApiCall mApiCall = new ApiCall(getActivity(), this);
+        mApiCall.getBodyType();
     }
 
     /*
@@ -957,7 +966,7 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
             use1 = useEdit.getText().toString();
             rv1 = rvEdit.getText().toString();
             boat1 = boatEdit.getText().toString();
-            body1 = bodyEdit.getText().toString();
+            body1 = mBodyTypeSpinner.getSelectedItem().toString();
             transmission1 = transmissionEdit.getText().toString();
             seating1 = seatingEdit.getText().toString();
             implement1 = impletementEdit.getText().toString();
@@ -1403,11 +1412,11 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
                 return false;
             }
         });
-        bodyEdit.setOnKeyListener(new View.OnKeyListener() {
+        mBodyTypeSpinner.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if (keyCode == KeyEvent.KEYCODE_BACK) {
-                    bodyEdit.clearFocus();
+                    mBodyTypeSpinner.clearFocus();
                 }
                 return false;
             }
@@ -1619,8 +1628,8 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
                             vehicles_id.add(success.getId());
                             vehicles.add(success.getName());
                         }
-                        spinnervalues = new String[vehicles_id.size()];
-                        spinnervalues = vehicles_id.toArray(spinnervalues);
+//                        spinnervalues = new String[vehicles_id.size()];
+//                        spinnervalues = vehicles_id.toArray(spinnervalues);
                         if (isAdded()) {
                             ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(),
                                     android.R.layout.simple_spinner_item, vehicles);
@@ -1670,8 +1679,8 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
                             brand_id.add(success.getBrandId());
                             brands.add(success.getBrandTitle());
                         }
-                        spinnervalues = new String[brand_id.size()];
-                        spinnervalues = brand_id.toArray(spinnervalues);
+//                        spinnervalues = new String[brand_id.size()];
+//                        spinnervalues = brand_id.toArray(spinnervalues);
                         if (isAdded()) {
                             ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(),
                                     android.R.layout.simple_spinner_item, brands);
@@ -1706,8 +1715,8 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
                             model_id.add(success.getModelId());
                             models.add(success.getModelTitle());
                         }
-                        spinnervalues = new String[model_id.size()];
-                        spinnervalues = model_id.toArray(spinnervalues);
+//                        spinnervalues = new String[model_id.size()];
+//                        spinnervalues = model_id.toArray(spinnervalues);
                         if (isAdded()) {
                             ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(),
                                     android.R.layout.simple_spinner_item, models);
@@ -1743,9 +1752,9 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
                             version_id.add(success.getVersionId());
                             versions.add(success.getVersion());
                         }
-
-                        spinnervalues = new String[version_id.size()];
-                        spinnervalues = version_id.toArray(spinnervalues);
+//
+//                        spinnervalues = new String[version_id.size()];
+//                        spinnervalues = version_id.toArray(spinnervalues);
                         if (isAdded()) {
                             ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(),
                                     android.R.layout.simple_spinner_item, versions);
@@ -1792,6 +1801,40 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
                             autoRTO4.setAdapter(dataAdapter);
                         }
                     }
+                }
+                //Body Type
+                else if (response.body() instanceof GetBodyTypeResponse) {
+                    mBodyType.clear();
+                    GetBodyTypeResponse mGetBodyTypeResponse = (GetBodyTypeResponse) response.body();
+                    mBodyType.add("--Select Body Type--");
+                    for (GetBodyTypeResponse.Success success : mGetBodyTypeResponse.getSuccess()) {
+                        success.setTitle(success.getTitle());
+                        mBodyType.add(success.getTitle());
+                    }
+                    if (getActivity() != null) {
+                        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
+                                android.R.layout.simple_spinner_item, mBodyType);
+                        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        mBodyTypeSpinner.setAdapter(adapter);
+                    }
+                    mBodyTypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                            if (position != 0) {
+                                String bodyType = mBodyTypeSpinner.getSelectedItem().toString();
+                                int bodyTypeid = mBodyTypeSpinner.getSelectedItemPosition();
+
+                                getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_bodyType", bodyType).apply();
+
+                                System.out.println("Body Type is::" + bodyType);
+                            }
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> parent) {
+
+                        }
+                    });
                 }
 
             } else {
