@@ -24,6 +24,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nguyenhoanglam.imagepicker.activity.ImagePicker;
@@ -78,7 +79,7 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
      */
     AutoCompleteTextView mLocation, autoBodymanufacturer, autoSeatmanufacturer;
     AutoCompleteTextView mRTOcity;
-    String subCategory, Category, permit;
+    String subCategory, Category, permit, uploadauctioncat;
     CheckBox checkBox1;
     EditText registernumber, edtInsuranceIdv, edtTaxPaidDate, edtFitnessDate, edtChasis, edtEngine, edtInsuranceDate, edtPermitDate;
     AlertDialog alertDialog;
@@ -88,6 +89,7 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
     Button btnBody, btnRefreshBody;
     LinearLayout linearBody;
     Spinner mBustypeSpinner, mAircondSpinner, mInvoiceSpinner;
+    TextView mCategory;
 
     @Nullable
     @Override
@@ -95,6 +97,7 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
         mSubtype = inflater.inflate(R.layout.fragment_subtype_fragment, container, false);
         mUploadVehicle = (Button) mSubtype.findViewById(R.id.upload_vehicle);
         checkBox1 = (CheckBox) mSubtype.findViewById(R.id.checkBox1);
+        mCategory = (TextView) mSubtype.findViewById(R.id.categorytext1);
         mRTOcity = (AutoCompleteTextView) mSubtype.findViewById(R.id.rtoautocompletetext);
         mLocation = (AutoCompleteTextView) mSubtype.findViewById(R.id.autolocation);
         registernumber = (EditText) mSubtype.findViewById(R.id.registernumber);
@@ -161,6 +164,10 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
         Category = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("upload_categoryName", null);
         subCategory = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("upload_subCatName", null);
         permit = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("upload_permit", null);
+        uploadauctioncat = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("upload_auction_categoryName", null);
+
+        mCategory.setText(Category + "->" + uploadauctioncat);
+
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -282,6 +289,7 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
                         edtSetJib.setVisibility(View.GONE);
                         edtSetBoon.setVisibility(View.GONE);
                         mEmissionSpinner.setVisibility(View.VISIBLE);
+                        mBodyTypeSpinner.setVisibility(View.GONE);
 
                     } else if (Category.equalsIgnoreCase("Car")) {
                         //edtTyreContext.setVisibility(View.VISIBLE);
@@ -304,6 +312,7 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
                         mInvoiceSpinner.setVisibility(View.GONE);
                         mEmissionSpinner.setVisibility(View.VISIBLE);
                         edtTyreContext.setVisibility(View.VISIBLE);
+                        mBodyTypeSpinner.setVisibility(View.GONE);
 
                         if (permit.equalsIgnoreCase("Private")) {
                             mTaxValidSpinner.setVisibility(View.GONE);
@@ -325,6 +334,7 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
                         edtTyreContext.setVisibility(View.GONE);
                         mSetFuel.setVisibility(View.GONE);
                         mEmissionSpinner.setVisibility(View.GONE);
+                        mBodyTypeSpinner.setVisibility(View.GONE);
 
                 /* RC Text */
                         String RCText = "";
@@ -417,6 +427,7 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
                         edtSetJib.setVisibility(View.GONE);
                         edtSetBoon.setVisibility(View.GONE);
                         edtTyreContext.setVisibility(View.VISIBLE);
+                        mBodyTypeSpinner.setVisibility(View.VISIBLE);
                     } else if (Category.equalsIgnoreCase("Tractor")) {
                         edtTyreContext.setVisibility(View.VISIBLE);
                         mImplementSpinner.setVisibility(View.VISIBLE);
@@ -436,6 +447,7 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
                         relInsurance.setVisibility(View.GONE);
 
                         mEmissionSpinner.setVisibility(View.GONE);
+                        mBodyTypeSpinner.setVisibility(View.GONE);
 
                     } else if (Category.equalsIgnoreCase("2 Wheeler")) {
                         //edtTyreContext.setVisibility(View.GONE);
@@ -466,6 +478,7 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
                         mTaxValidSpinner.setVisibility(View.GONE);
                         mPermitSpinner.setVisibility(View.GONE);
                         mFitnessSpinner.setVisibility(View.GONE);
+                        mBodyTypeSpinner.setVisibility(View.GONE);
 
                     } else if (Category.equalsIgnoreCase("3 Wheeler")) {
                         /*edtTyreContext.setVisibility(View.VISIBLE);
@@ -488,6 +501,7 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
                         mTaxValidSpinner.setVisibility(View.GONE);
                         mPermitSpinner.setVisibility(View.GONE);
                         mFitnessSpinner.setVisibility(View.GONE);
+                        mBodyTypeSpinner.setVisibility(View.GONE);
 
                     } else if (Category.equalsIgnoreCase("Cranes")) {
                         edtTyreContext.setVisibility(View.VISIBLE);
@@ -495,6 +509,7 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
                         edtSetHpcapa.setVisibility(View.VISIBLE);
                         edtSetJib.setVisibility(View.VISIBLE);
                         edtSetBoon.setVisibility(View.VISIBLE);
+                        mBodyTypeSpinner.setVisibility(View.GONE);
                     }
 
                     mTaxValidSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
