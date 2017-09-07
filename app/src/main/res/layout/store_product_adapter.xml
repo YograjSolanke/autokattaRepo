@@ -33,11 +33,11 @@
 
             <ImageView
                 android:id="@+id/deleteproduct"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="33dp"
+                android:layout_height="33dp"
                 android:layout_alignParentEnd="true"
                 android:contentDescription="@string/app_name"
-                android:src="@drawable/ic_delete"
+                android:src="@mipmap/ic_delete"
                 android:visibility="gone" />
 
             <ImageView

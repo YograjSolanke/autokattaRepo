@@ -5,6 +5,7 @@ import android.app.DownloadManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -139,6 +140,14 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
                     tabLayout = (TabLayout) findViewById(R.id.other_store_tabs);
                     mAutoshare = (FloatingActionButton) findViewById(R.id.autokatta_share);
                     mShare = (FloatingActionButton) findViewById(R.id.share);
+
+                    mShare.setLabelTextColor(Color.BLACK);
+                    mAutoshare.setLabelTextColor(Color.BLACK);
+                    mTeamProduct.setLabelTextColor(Color.BLACK);
+                    mTeamServices.setLabelTextColor(Color.BLACK);
+                    mTeamVehicle.setLabelTextColor(Color.BLACK);
+                    mGoogleMap.setLabelTextColor(Color.BLACK);
+                    mAdd.setLabelTextColor(Color.BLACK);
 
                     mMyStoreHome = new MyStoreHome();
 

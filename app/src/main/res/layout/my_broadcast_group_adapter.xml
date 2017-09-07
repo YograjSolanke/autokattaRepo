@@ -22,10 +22,10 @@
             <ImageView
                 android:id="@+id/editgroup"
                 android:layout_width="25dp"
-                android:layout_height="15dp"
+                android:layout_height="25dp"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
-                android:src="@drawable/edit" />
+                android:src="@mipmap/ic_edit" />
 
             <CheckedTextView
                 android:id="@+id/txtname"

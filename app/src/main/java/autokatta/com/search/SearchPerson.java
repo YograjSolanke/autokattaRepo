@@ -169,9 +169,11 @@ public class SearchPerson extends Fragment implements RequestNotifier {
                     filterImg.setVisibility(View.GONE);
                 }
             } else {
+                if (isAdded())
                 CustomToast.customToast(getActivity(), getString(R.string._404));
             }
         } else {
+            if (isAdded())
             CustomToast.customToast(getActivity(), getString(R.string.no_response));
         }
     }

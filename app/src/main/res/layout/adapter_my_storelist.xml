@@ -180,12 +180,12 @@
 
                     <ImageView
                         android:id="@+id/storedelete"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
                         android:layout_alignParentEnd="true"
                         android:layout_marginEnd="5dp"
                         android:contentDescription="@string/app_name"
-                        android:src="@drawable/ic_delete" />
+                        android:src="@mipmap/ic_delete" />
                 </RelativeLayout>
             </RelativeLayout>
 

@@ -39,12 +39,12 @@
 
         <ImageView
             android:id="@+id/deletegroup"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_gravity="center"
             android:layout_weight="1"
             android:contentDescription="@string/app_name"
-            android:src="@android:drawable/ic_menu_delete"
+            android:src="@mipmap/ic_delete"
             android:visibility="gone" />
 
     </LinearLayout>
@@ -60,5 +60,5 @@
         fab:fab_colorNormal="#5176C9"
         fab:fab_colorPressed="#5176C9"
         fab:fab_colorRipple="#5176C9"
-        android:src="@mipmap/ic_add_broadcast_group" />
+        android:src="@mipmap/add_broadcast_group" />
 </RelativeLayout>

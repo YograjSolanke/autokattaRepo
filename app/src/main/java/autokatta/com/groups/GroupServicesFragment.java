@@ -65,7 +65,7 @@ public class GroupServicesFragment extends Fragment implements SwipeRefreshLayou
     private void getServices(int GroupId) {
         if (mTestConnection.isConnectedToInternet()) {
             ApiCall apiCall = new ApiCall(getActivity(), this);
-            apiCall.getGroupService(GroupId, myContact);
+            apiCall.getGroupService(GroupId, "");
         } else {
             CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         }

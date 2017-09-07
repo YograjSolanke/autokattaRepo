@@ -84,6 +84,11 @@ public class VehicleDetails extends AppCompatActivity implements RequestNotifier
         mAutoshare.setOnClickListener(this);
         mChat.setOnClickListener(this);
 
+        mChat.setLabelTextColor(Color.BLACK);
+        mCall.setLabelTextColor(Color.BLACK);
+        mShare.setLabelTextColor(Color.BLACK);
+        mAutoshare.setLabelTextColor(Color.BLACK);
+
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -192,11 +197,11 @@ public class VehicleDetails extends AppCompatActivity implements RequestNotifier
 
                     if (mLikestr.equalsIgnoreCase("no")) {
                         mLike.setLabelText("Like");
-                        mLike.setLabelTextColor(Color.WHITE);
+                        mLike.setLabelTextColor(Color.BLACK);
                         mFab.setClosedOnTouchOutside(true);
                     } else {
                         mLike.setLabelText("Liked");
-                        mLike.setLabelTextColor(Color.RED);
+                        mLike.setLabelTextColor(Color.BLUE);
                         mFab.setClosedOnTouchOutside(true);
                     }
 
@@ -288,12 +293,12 @@ public class VehicleDetails extends AppCompatActivity implements RequestNotifier
             if (str.equals("success_like")) {
                 CustomToast.customToast(getApplicationContext(), " Liked Successfully");
                 mLike.setLabelText("Liked");
-                mLike.setLabelTextColor(Color.RED);
+                mLike.setLabelTextColor(Color.BLUE);
                 mLikestr = "yes";
             } else if (str.equals("success_unlike")) {
                 CustomToast.customToast(getApplicationContext(), " UnLiked Successfully");
                 mLike.setLabelText("Like");
-                mLike.setLabelTextColor(Color.WHITE);
+                mLike.setLabelTextColor(Color.BLACK);
                 mLikestr = "no";
             } else if (str.equals("success_message_saved")) {
                 CustomToast.customToast(getApplicationContext(), "Enquiry Sent");

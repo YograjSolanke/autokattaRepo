@@ -40,7 +40,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="100dp"
-                android:layout_marginTop="0dp"
+                android:layout_marginTop="7dp"
                 android:text="Medium Text"
                 android:textColor="#000000"
                 android:textSize="15sp"
@@ -172,11 +172,11 @@
 
             <ImageView
                 android:id="@+id/edtVehicle"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentTop="true"
-                android:background="@drawable/edit"
+                android:background="@mipmap/ic_edit"
                 android:contentDescription="@string/app_name" />
 
         </RelativeLayout>

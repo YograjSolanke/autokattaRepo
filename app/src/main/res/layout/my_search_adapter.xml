@@ -63,7 +63,7 @@
                     android:layout_alignParentEnd="true"
                     android:contentDescription="@string/app_name"
                     android:padding="7dp"
-                    android:src="@drawable/ic_mode_edit_black_24dp" />
+                    android:src="@mipmap/ic_edit" />
 
                 <ImageView
                     android:id="@+id/deletevehi"
@@ -73,7 +73,7 @@
                     android:layout_below="@+id/editpen"
                     android:contentDescription="@string/app_name"
                     android:padding="7dp"
-                    android:src="@drawable/ic_delete" />
+                    android:src="@mipmap/ic_delete" />
 
                 <ImageView
                     android:id="@+id/sharesearch"

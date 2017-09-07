@@ -67,6 +67,7 @@ public class OtherProfile extends AppCompatActivity implements RequestNotifier, 
         mLike = (FloatingActionButton) findViewById(R.id.like_l);
         mFollow = (FloatingActionButton) findViewById(R.id.follow_f);
 
+        mCall.setLabelTextColor(Color.BLACK);
         mCall.setOnClickListener(this);
         mLike.setOnClickListener(this);
         mFollow.setOnClickListener(this);
@@ -154,20 +155,20 @@ public class OtherProfile extends AppCompatActivity implements RequestNotifier, 
 
                     if (mLikestr.equalsIgnoreCase("no")) {
                         mLike.setLabelText("Like");
-                        mLike.setLabelTextColor(Color.WHITE);
+                        mLike.setLabelTextColor(Color.BLACK);
                         menuRed.setClosedOnTouchOutside(true);
                     } else {
                         mLike.setLabelText("Liked");
-                        mLike.setLabelTextColor(Color.RED);
+                        mLike.setLabelTextColor(Color.BLUE);
                         menuRed.setClosedOnTouchOutside(true);
                     }
                     if (mFolllowstr.equalsIgnoreCase("no")) {
                         mFollow.setLabelText("Follow");
-                        mFollow.setLabelTextColor(Color.WHITE);
+                        mFollow.setLabelTextColor(Color.BLACK);
                         menuRed.setClosedOnTouchOutside(true);
                     } else {
                         mFollow.setLabelText("Following");
-                        mFollow.setLabelTextColor(Color.RED);
+                        mFollow.setLabelTextColor(Color.BLUE);
                         menuRed.setClosedOnTouchOutside(true);
                     }
                 }
@@ -197,22 +198,22 @@ public class OtherProfile extends AppCompatActivity implements RequestNotifier, 
             if (str.equals("success_follow")) {
                 CustomToast.customToast(getApplicationContext(), " Following Successfully");
                 mFollow.setLabelText("Following");
-                mFollow.setLabelTextColor(Color.RED);
+                mFollow.setLabelTextColor(Color.BLUE);
                 mFolllowstr = "yes";
             } else if (str.equals("success_unfollow")) {
                 CustomToast.customToast(getApplicationContext(), " UnFollowed Successfully");
                 mFollow.setLabelText("Follow");
-                mFollow.setLabelTextColor(Color.WHITE);
+                mFollow.setLabelTextColor(Color.BLACK);
                 mFolllowstr = "no";
             } else if (str.equals("success_like")) {
                 CustomToast.customToast(getApplicationContext(), " Liked Successfully");
                 mLike.setLabelText("Liked");
-                mLike.setLabelTextColor(Color.RED);
+                mLike.setLabelTextColor(Color.BLUE);
                 mLikestr = "yes";
             } else if (str.equals("success_unlike")) {
                 CustomToast.customToast(getApplicationContext(), " UnLiked Successfully");
                 mLike.setLabelText("Like");
-                mLike.setLabelTextColor(Color.WHITE);
+                mLike.setLabelTextColor(Color.BLACK);
                 mLikestr = "no";
             }
         }

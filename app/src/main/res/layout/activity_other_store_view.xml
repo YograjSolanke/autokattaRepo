@@ -153,6 +153,9 @@
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         app:layout_anchor="@id/other_store_tabs"
+        fab:menu_labels_colorNormal="#A2C7D3"
+        fab:menu_labels_colorPressed="#A2C7D3"
+        fab:menu_labels_colorRipple="#A2C7D3"
         fab:menu_colorNormal="#5176C9"
         fab:menu_colorPressed="#5176C9"
         fab:menu_colorRipple="#5176C9"
@@ -256,6 +259,9 @@
             android:layout_height="wrap_content"
             android:src="@android:drawable/ic_menu_share"
             fab:fab_label="Share"
+            fab:fab_colorNormal="#5176C9"
+            fab:fab_colorPressed="#5176C9"
+            fab:fab_colorRipple="#5176C9"
             fab:fab_size="mini" />
 
         <com.github.clans.fab.FloatingActionButton
@@ -263,6 +269,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/autoshare"
+            fab:fab_colorNormal="#5176C9"
+            fab:fab_colorPressed="#5176C9"
+            fab:fab_colorRipple="#5176C9"
             fab:fab_label="Share"
             fab:fab_size="mini" />
 

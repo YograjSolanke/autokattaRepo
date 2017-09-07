@@ -217,6 +217,10 @@ public class EndedAuctionAdapter extends RecyclerView.Adapter<EndedAuctionAdapte
             timer = (TextView) itemview.findViewById(R.id.timer);
             mAuction_category = (TextView) itemview.findViewById(R.id.auction_category);
             mStockLocation = (TextView) itemview.findViewById(R.id.stockLocation);
+
+            btnCluse.setLabelTextColor(Color.BLACK);
+            btnPreview.setLabelTextColor(Color.BLACK);
+            btnReport.setLabelTextColor(Color.BLACK);
         }
     }
 }

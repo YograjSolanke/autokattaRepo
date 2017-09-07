@@ -20,7 +20,7 @@
             android:layout_alignParentEnd="true"
             android:layout_marginRight="10dp"
             android:contentDescription="@string/app_name"
-            android:src="@drawable/ic_mode_edit_black_24dp"
+            android:src="@mipmap/ic_edit"
             android:visibility="gone" />
 
         <ImageView

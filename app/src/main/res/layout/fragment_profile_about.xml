@@ -23,10 +23,11 @@
 
             <ImageView
                 android:id="@+id/edit"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
+                android:layout_width="33dp"
+                android:layout_height="33dp"
+                android:layout_marginRight="10dp"
                 android:contentDescription="@string/app_name"
-                android:src="@android:drawable/ic_menu_edit" />
+                android:src="@mipmap/ic_edit" />
 
             <ImageView
                 android:id="@+id/done"
