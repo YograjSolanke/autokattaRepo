@@ -151,7 +151,7 @@
                 android:layout_gravity="end"
                 android:layout_weight="0.3"
                 android:contentDescription="@string/app_name"
-                android:src="@drawable/ic_phone_black_24dp" />
+                android:src="@mipmap/new_call" />
 
         </LinearLayout>
 
