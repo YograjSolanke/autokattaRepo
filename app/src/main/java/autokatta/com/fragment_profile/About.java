@@ -16,6 +16,7 @@ import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -64,7 +65,7 @@ import static autokatta.com.adapter.GooglePlacesAdapter.resultList;
 public class About extends Fragment implements RequestNotifier, MaterialIntroListener {
     View mAbout;
     String[] MODULE = null;
-    ImageView mDone;
+    Button mDone;
     ImageView mEdit;
     EditText mWebsite, mEmail;
     TextView mContact, mProfession, msubprofession, mEditTags, mCount;
@@ -353,7 +354,7 @@ public class About extends Fragment implements RequestNotifier, MaterialIntroLis
                 mCompany = (AutoCompleteTextView) mAbout.findViewById(R.id.company_name);
                 mDesignation = (AutoCompleteTextView) mAbout.findViewById(R.id.designation);
                 mSkills = (MultiAutoCompleteTextView) mAbout.findViewById(R.id.skills);
-                mDone = (ImageView) mAbout.findViewById(R.id.done);
+                mDone = (Button) mAbout.findViewById(R.id.done);
                 mEdit = (ImageView) mAbout.findViewById(R.id.edit);
                 usertype = (RadioGroup) mAbout.findViewById(R.id.usertype);
                 student = (RadioButton) mAbout.findViewById(R.id.student);
@@ -361,11 +362,9 @@ public class About extends Fragment implements RequestNotifier, MaterialIntroLis
                 selfemployee = (RadioButton) mAbout.findViewById(R.id.selfemployee);
                 spinner = (Spinner) mAbout.findViewById(R.id.spinner);
                 spinner.setVisibility(View.GONE);
-
                 mLinear = (LinearLayout) mAbout.findViewById(R.id.profileAbout);
 
                 mGenericFunctions = new GenericFunctions();
-
 
                 mApiCall.profileAbout(Sharedcontact, Sharedcontact);
                 mApiCall.getSkills();
@@ -663,7 +662,7 @@ public class About extends Fragment implements RequestNotifier, MaterialIntroLis
         mDone.requestFocus();
         mApiCall.profileAbout(Sharedcontact, Sharedcontact);
         if (mDone.getVisibility() == View.VISIBLE)
-            showIntro(mDone, INTRO_FOCUS_1, "Confirm event details first", Focus.MINIMUM);
+            showIntro(mDone, INTRO_FOCUS_1, "Please click this...to update profile", Focus.NORMAL);
     }
 
     @Override

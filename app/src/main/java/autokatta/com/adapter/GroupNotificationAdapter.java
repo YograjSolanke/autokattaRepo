@@ -3,7 +3,6 @@ package autokatta.com.adapter;
 import android.app.Activity;
 import android.app.DownloadManager;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
@@ -11,6 +10,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
@@ -19,6 +19,7 @@ import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.MimeTypeMap;
@@ -115,8 +116,8 @@ public class GroupNotificationAdapter extends RecyclerView.Adapter<RecyclerView.
     private static class UploadVehicleNotifications extends RecyclerView.ViewHolder {
         CardView mVehicleCardView;
         ImageView mUserPic, mVehicleImage;
-        ImageButton mVehicleAutokattaShare, mCall, mVehicleFavourite, mVehicleUnfav;
-        Button mVehicleLike, mVehicleUnlike, mFollow, mUnfollow;
+        ImageButton mVehicleFavourite, mVehicleUnfav;
+        Button mVehicleLike, mVehicleUnlike, mFollow, mUnfollow, mVehicleShare;
         TextView mActionName, mActionTime, mVehicleRegistration, mVehicleName, mVehiclePrice, mVehicleBrand,
                 mVehicleModel, mVehicleYearOfMfg, mVehicleKmsHrs, mVehicleLocation, mRtoCity, mLikes, mShares, mFollowCount;
         RelativeLayout mRelativeLike;
@@ -129,7 +130,7 @@ public class GroupNotificationAdapter extends RecyclerView.Adapter<RecyclerView.
             mActionName = (TextView) upVehicleView.findViewById(R.id.action_name);
             mVehicleImage = (ImageView) upVehicleView.findViewById(R.id.vehicle_image);
 
-            mVehicleAutokattaShare = (ImageButton) upVehicleView.findViewById(R.id.share_autokatta);
+            mVehicleShare = (Button) upVehicleView.findViewById(R.id.shares);
             //mCall = (ImageButton) upVehicleView.findViewById(R.id.call);
             mVehicleLike = (Button) upVehicleView.findViewById(R.id.like);
             mVehicleUnlike = (Button) upVehicleView.findViewById(R.id.unlike);
@@ -303,12 +304,6 @@ public class GroupNotificationAdapter extends RecyclerView.Adapter<RecyclerView.
                 mGroupHolder.mActionName.setText(sb3);
                 mGroupHolder.mActionName.setMovementMethod(LinkMovementMethod.getInstance());
                 mGroupHolder.mActionName.setHighlightColor(Color.TRANSPARENT);
-
-
-
-
-
-
 
 
                 mGroupHolder.mGroupName.setText(notificationList.get(position).getGroupName());
@@ -505,10 +500,6 @@ public class GroupNotificationAdapter extends RecyclerView.Adapter<RecyclerView.
                 mUpVehicleHolder.mActionName.setHighlightColor(Color.TRANSPARENT);
 
 
-
-
-
-
                 mUpVehicleHolder.mActionTime.setText(notificationList.get(position).getDateTime());
                 mUpVehicleHolder.mVehicleName.setText(notificationList.get(position).getUpVehicleTitle());
                 mUpVehicleHolder.mVehicleRegistration.setText(notificationList.get(position).getUpVehicleRegNo());
@@ -683,14 +674,96 @@ public class GroupNotificationAdapter extends RecyclerView.Adapter<RecyclerView.
                     }
                 });
 
-                mUpVehicleHolder.mVehicleAutokattaShare.setOnClickListener(new View.OnClickListener() {
+                mUpVehicleHolder.mVehicleShare.setOnClickListener(new View.OnClickListener() {
                     String imageFilePath = "", imagename;
                     Intent intent = new Intent(Intent.ACTION_SEND);
 
                     @Override
                     public void onClick(View v) {
                         //shareProfileData();
-                        android.support.v7.app.AlertDialog.Builder alert = new android.support.v7.app.AlertDialog.Builder(mActivity);
+                        PopupMenu mPopupMenu = new PopupMenu(mActivity, mUpVehicleHolder.mVehicleShare);
+                        mPopupMenu.getMenuInflater().inflate(R.menu.more_menu, mPopupMenu.getMenu());
+                        mPopupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                            @Override
+                            public boolean onMenuItemClick(MenuItem item) {
+                                switch (item.getItemId()) {
+                                    case R.id.autokatta:
+                                        String allVehicleDetails = mUpVehicleHolder.mVehicleName.getText().toString() + "=" +
+                                                mUpVehicleHolder.mVehiclePrice.getText().toString() + "=" +
+                                                mUpVehicleHolder.mVehicleBrand.getText().toString() + "=" +
+                                                mUpVehicleHolder.mVehicleModel.getText().toString() + "=" +
+                                                mUpVehicleHolder.mVehicleYearOfMfg.getText().toString() + "=" +
+                                                mUpVehicleHolder.mVehicleKmsHrs.getText().toString() + "=" +
+                                                mUpVehicleHolder.mRtoCity.getText().toString() + "=" +
+                                                mUpVehicleHolder.mVehicleLocation.getText().toString() + "=" +
+                                                mUpVehicleHolder.mVehicleRegistration.getText().toString() + "=" +
+                                                notificationList.get(mUpVehicleHolder.getAdapterPosition()).getUpVehicleImage() + "=" +
+                                                notificationList.get(mUpVehicleHolder.getAdapterPosition()).getUpVehicleLikeCount();
+
+                                        mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                                                putString("Share_sharedata", allVehicleDetails).apply();
+                                        mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                                                putInt("Share_vehicle_id", notificationList.get(mUpVehicleHolder.getAdapterPosition()).getUploadVehicleID()).apply();
+                                        mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                                                putString("Share_keyword", "vehicle").apply();
+
+                                        Intent i = new Intent(mActivity, ShareWithinAppActivity.class);
+                                        mActivity.startActivity(i);
+                                        break;
+
+                                    case R.id.other:
+                                        if (notificationList.get(mUpVehicleHolder.getAdapterPosition()).getUpVehicleImage().equalsIgnoreCase("") ||
+                                                notificationList.get(mUpVehicleHolder.getAdapterPosition()).getUpVehicleImage().equalsIgnoreCase(null) ||
+                                                notificationList.get(mUpVehicleHolder.getAdapterPosition()).getUpVehicleImage().equalsIgnoreCase("null")) {
+                                            imagename = mActivity.getString(R.string.base_image_url) + "logo48x48.png";
+                                        } else {
+                                            imagename = mActivity.getString(R.string.base_image_url) + notificationList.get(mUpVehicleHolder.getAdapterPosition()).getUpVehicleImage();
+                                        }
+                                        Log.e("TAG", "img : " + imagename);
+
+                                        DownloadManager.Request request = new DownloadManager.Request(
+                                                Uri.parse(imagename));
+                                        request.allowScanningByMediaScanner();
+                                        String filename = URLUtil.guessFileName(imagename, null, MimeTypeMap.getFileExtensionFromUrl(imagename));
+                                        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, filename);
+                                        Log.e("ShareImagePath :", filename);
+                                        Log.e("TAG", "img : " + imagename);
+
+                                        DownloadManager manager = (DownloadManager) mActivity.getApplication()
+                                                .getSystemService(Context.DOWNLOAD_SERVICE);
+
+                                        Log.e("TAG", "img URL: " + imagename);
+
+                                        manager.enqueue(request);
+
+                                        imageFilePath = "/storage/emulated/0/Download/" + filename;
+                                        System.out.println("ImageFilePath:" + imageFilePath);
+
+                                        String allVehicleDetailss = "Vehicle Title : " + mUpVehicleHolder.mVehicleName.getText().toString() + "\n" +
+                                                "Vehicle Brand : " + mUpVehicleHolder.mVehicleBrand.getText().toString() + "\n" +
+                                                "Vehicle Model : " + mUpVehicleHolder.mVehicleModel.getText().toString() + "\n" +
+                                                "Year Of Mfg : " + mUpVehicleHolder.mVehicleYearOfMfg.getText().toString() + "\n" +
+                                                "Rto city : " + mUpVehicleHolder.mRtoCity.getText().toString() + "\n" +
+                                                "Location : " + mUpVehicleHolder.mVehicleLocation.getText().toString() + "\n" +
+                                                "Registeration No : " + mUpVehicleHolder.mVehicleRegistration.getText().toString() + "\n" +
+                                                "Likes : " + notificationList.get(mUpVehicleHolder.getAdapterPosition()).getUpVehicleLikeCount();
+
+                                        intent.setType("text/plain");
+                                        intent.putExtra(Intent.EXTRA_TEXT, "Please visit and Follow my vehicle on Autokatta. Stay connected for Product and Service updates and enquiries"
+                                                + "\n" + "http://autokatta.com/vehicle/main/" + notificationList.get(mUpVehicleHolder.getAdapterPosition()).getUploadVehicleID() + "/" + mLoginContact
+                                                + "\n" + "\n" + allVehicleDetailss);
+                                        intent.setType("image/jpeg");
+                                        intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(imageFilePath)));
+                                        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                                        intent.putExtra(Intent.EXTRA_SUBJECT, "Please Find Below Attachments");
+                                        mActivity.startActivity(Intent.createChooser(intent, "Autokatta"));
+                                        break;
+                                }
+                                return false;
+                            }
+                        });
+                        mPopupMenu.show(); //showing popup menu
+                        /*android.support.v7.app.AlertDialog.Builder alert = new android.support.v7.app.AlertDialog.Builder(mActivity);
                         alert.setTitle("Share");
                         alert.setMessage("with Autokatta or to other?");
                         alert.setIconAttribute(android.R.attr.alertDialogIcon);
@@ -779,18 +852,18 @@ public class GroupNotificationAdapter extends RecyclerView.Adapter<RecyclerView.
                                 intent.putExtra(Intent.EXTRA_SUBJECT, "Please Find Below Attachments");
                                 mActivity.startActivity(Intent.createChooser(intent, "Autokatta"));
 
-                                /*intent.setType("text/plain");
+                                *//*intent.setType("text/plain");
                                 intent.putExtra(Intent.EXTRA_SUBJECT, "Please Find Below Attachments");
                                 intent.putExtra(Intent.EXTRA_TEXT, allVehicleDetails);
                                 intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                                mActivity.startActivity(intent);*/
+                                mActivity.startActivity(intent);*//*
 
                                 dialog.dismiss();
                             }
 
                         });
                         alert.create();
-                        alert.show();
+                        alert.show();*/
                     }
                 });
                 break;
