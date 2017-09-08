@@ -1,5 +1,6 @@
 package autokatta.com.upload_vehicle;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -53,6 +54,7 @@ public class PriceFragment extends Fragment implements RequestNotifier, View.OnC
     Button btnUpload;
     List<Integer> priceList = new ArrayList<>();
     ApiCall apiCall;
+    private ProgressDialog dialog;
 
     public PriceFragment() {
         //empty constructor
@@ -88,6 +90,9 @@ public class PriceFragment extends Fragment implements RequestNotifier, View.OnC
 
         apiCall = new ApiCall(getActivity(), this);
         btnUpload.setOnClickListener(this);
+
+        dialog = new ProgressDialog(getActivity());
+        dialog.setMessage("Loading...");
 
         myContact = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "7841023392");
 
@@ -204,7 +209,7 @@ public class PriceFragment extends Fragment implements RequestNotifier, View.OnC
     }
 
     private void getPrice(int categoryId, int subCategoryId, int brandId, int modelId, int versionId, String mfgYear, String rtoCity) {
-
+        dialog.show();
         apiCall.SuggestedPrice(categoryId, subCategoryId, brandId, modelId, versionId, mfgYear, rtoCity);
     }
 
@@ -234,6 +239,9 @@ public class PriceFragment extends Fragment implements RequestNotifier, View.OnC
             if (response.isSuccessful()) {
 
                 if (response.body() instanceof PriceSuggestionResponse) {
+                    if (dialog.isShowing()) {
+                        dialog.dismiss();
+                    }
                     PriceSuggestionResponse priceSuggestionResponse = (PriceSuggestionResponse) response.body();
                     Log.i("response", response.body().toString());
                     if (!priceSuggestionResponse.getSuccess().isEmpty()) {
@@ -241,7 +249,7 @@ public class PriceFragment extends Fragment implements RequestNotifier, View.OnC
                         for (PriceSuggestionResponse.Success success : priceSuggestionResponse.getSuccess()) {
                             success.setPriceSuggestion(success.getPriceSuggestion());
                             String i = success.getPriceSuggestion();
-                            if (!i.equals(""))
+                            if (!i.equals("") && !success.getPriceSuggestion().equals("0"))
                                 priceList.add(Integer.valueOf(success.getPriceSuggestion()));
                         }
 
@@ -268,28 +276,26 @@ public class PriceFragment extends Fragment implements RequestNotifier, View.OnC
                             maxprice.setText(String.valueOf(priceList.get(maxsize - 1)));
 
                             priceseekbar.setProgress(priceList.get(0)); // or any other value
-
+                            edtPrice.setText("0");
                             priceseekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
                                 int seekBarProgress = 0;
 
                                 @Override
                                 public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-
                                     seekBarProgress = progress;
-                                    edtPrice.setText("" + seekBarProgress);
+                                    edtPrice.setText(String.valueOf(seekBarProgress));
                                 }
 
 
                                 @Override
                                 public void onStartTrackingTouch(SeekBar seekBar) {
-                                    edtPrice.setText("" + seekBarProgress);
+                                    edtPrice.setText(String.valueOf(seekBarProgress));
                                 }
 
                                 @Override
                                 public void onStopTrackingTouch(SeekBar seekBar) {
-
-                                    edtPrice.setText("" + seekBarProgress);
+                                    edtPrice.setText(String.valueOf(seekBarProgress));
                                     if (isAdded())
                                         CustomToast.customToast(getActivity(), "Progresss" + seekBarProgress);
                                 }
@@ -354,6 +360,9 @@ public class PriceFragment extends Fragment implements RequestNotifier, View.OnC
 
     @Override
     public void notifyError(Throwable error) {
+        if (dialog.isShowing()) {
+            dialog.dismiss();
+        }
         if (error instanceof SocketTimeoutException) {
             if (isAdded())
                 CustomToast.customToast(getActivity(), getString(R.string._404_));
