@@ -12,9 +12,11 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.MimeTypeMap;
@@ -59,7 +61,7 @@ public class MyStoreListAdapter extends RecyclerView.Adapter<MyStoreListAdapter.
     static class YoHolder extends RecyclerView.ViewHolder {
         CardView mCardView;
         TextView stname, stlocation, stwebsite, storetiming, stlike, stshare, stfollow, stworkdays, serviceOffered;
-        ImageView img, storedelete;
+        ImageView img, storedelete, storeShare;
         RatingBar storerating;
         LinearLayout linearlike, linearunlike, linearshare, linearshare1, linearfollow, linearunfollow;
 
@@ -74,6 +76,7 @@ public class MyStoreListAdapter extends RecyclerView.Adapter<MyStoreListAdapter.
             serviceOffered = (TextView) itemView.findViewById(R.id.servicesOffered);
             stworkdays = (TextView) itemView.findViewById(R.id.editworkingdays);
             img = (ImageView) itemView.findViewById(R.id.profile);
+            storeShare = (ImageView) itemView.findViewById(R.id.storeShare);
             storerating = (RatingBar) itemView.findViewById(R.id.storerating);
             storedelete = (ImageView) itemView.findViewById(R.id.storedelete);
             stlike = (TextView) itemView.findViewById(R.id.textlike);
@@ -115,7 +118,7 @@ public class MyStoreListAdapter extends RecyclerView.Adapter<MyStoreListAdapter.
     }
 
     @Override
-    public void onBindViewHolder(final MyStoreListAdapter.YoHolder holder, final int position) {
+    public void onBindViewHolder(final MyStoreListAdapter.YoHolder holder, int position) {
         myContact = mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).
                 getString("loginContact", "");
         Typeface tf = Typeface.createFromAsset(mActivity.getAssets(), "font/Roboto-Light.ttf");
@@ -130,8 +133,8 @@ public class MyStoreListAdapter extends RecyclerView.Adapter<MyStoreListAdapter.
         //   holder.stshare.setText("share "+sshare);
         holder.stworkdays.setText(mStoreList.get(position).getWorkingDays());
         holder.storerating.setEnabled(false);
-        if (!(mStoreList.get(position).getRating() == null) && !mStoreList.get(position).getRating().equals("null"))
-            holder.storerating.setRating((Float) mStoreList.get(position).getRating());
+        if (mStoreList.get(position).getRating() != 0)
+            holder.storerating.setRating(mStoreList.get(position).getRating());
 
 
         if (mStoreList.get(position).getWebsite() == null || mStoreList.get(position).getWebsite().isEmpty() ||
@@ -166,10 +169,10 @@ public class MyStoreListAdapter extends RecyclerView.Adapter<MyStoreListAdapter.
                                 .setMessage("Are You Sure You Want To Delete This Store?")
                                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int which) {
-                                        deleteStore(mStoreList.get(position).getId());
-                                        mStoreList.remove(position);
-                                        notifyItemRemoved(position);
-                                        notifyItemRangeChanged(position, mStoreList.size());
+                                        deleteStore(mStoreList.get(holder.getAdapterPosition()).getId());
+                                        mStoreList.remove(holder.getAdapterPosition());
+                                        notifyItemRemoved(holder.getAdapterPosition());
+                                        notifyItemRangeChanged(holder.getAdapterPosition(), mStoreList.size());
                                     }
                                 })
 
@@ -200,83 +203,183 @@ public class MyStoreListAdapter extends RecyclerView.Adapter<MyStoreListAdapter.
             }
         });
 
-
-        holder.linearshare1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                String imageshare = "";
-                imageshare = "http://autokatta.com/mobile/store_profiles/" + mStoreList.get(position).getStoreImage();
-
-                imageshare = imageshare.replaceAll(" ", "%20");
-                System.out.println("image============" + imageshare);
-
-                String timing = mStoreList.get(position).getStoreOpenTime() + " To " + mStoreList.get(position).getStoreCloseTime();
-
-                strDetailsShare = mStoreList.get(position).getName() + "=" + mStoreList.get(position).getWebsite() + "="
-                        + timing + "=" + mStoreList.get(position).getWorkingDays() + "="
-                        + mStoreList.get(position).getStoreType() + "=" + mStoreList.get(position).getLocation() + "="
-                        + mStoreList.get(position).getStoreImage() + "=" + mStoreList.get(position).getRating() + "="
-                        + mStoreList.get(position).getLikecount() + "=" + mStoreList.get(position).getFollowcount();
-
-                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                        putString("Share_sharedata", strDetailsShare).apply();
-                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                        putInt("Share_store_id", mStoreList.get(position).getId()).apply();
-                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                        putString("Share_keyword", "store").apply();
-
-                mActivity.startActivity(new Intent(mActivity, ShareWithinAppActivity.class));
-                //mActivity.finish();
-
-            }
-        });
-
-
-        holder.linearshare.setOnClickListener(new View.OnClickListener() {
+        holder.storeShare.setOnClickListener(new View.OnClickListener() {
 
             Intent intent = new Intent(Intent.ACTION_SEND);
             String imageFilePath = "", imagename = "";
-
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
 
-                if (mStoreList.get(position).getStoreImage().equalsIgnoreCase("") || mStoreList.get(position).getStoreImage().equalsIgnoreCase(null) ||
-                        mStoreList.get(position).getStoreImage().equalsIgnoreCase("null")) {
-                    imagename = mActivity.getString(R.string.base_image_url) + "logo48x48.png";
-                } else {
-                    imagename = mActivity.getString(R.string.base_image_url) + mStoreList.get(position).getStoreImage();
-                }
-                Log.e("TAG", "img : " + imagename);
+                PopupMenu mPopupMenu = new PopupMenu(mActivity, holder.storeShare);
+                mPopupMenu.getMenuInflater().inflate(R.menu.more_menu, mPopupMenu.getMenu());
+                mPopupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        switch (item.getItemId()) {
+                            case R.id.autokatta:
 
-                DownloadManager.Request request = new DownloadManager.Request(
-                        Uri.parse(imagename));
-                request.allowScanningByMediaScanner();
-                String filename = URLUtil.guessFileName(imagename, null, MimeTypeMap.getFileExtensionFromUrl(imagename));
-                request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, filename);
-                Log.e("ShareImagePath :", filename);
-                Log.e("TAG", "img : " + imagename);
 
-                DownloadManager manager = (DownloadManager) mActivity.getApplication()
-                        .getSystemService(Context.DOWNLOAD_SERVICE);
+                                String imageshare = "";
+                                imageshare = mActivity.getString(R.string.base_image_url) + mStoreList.get(holder.getAdapterPosition()).getStoreImage();
 
-                Log.e("TAG", "img URL: " + imagename);
+                                imageshare = imageshare.replaceAll(" ", "%20");
+                                System.out.println("image============" + imageshare);
 
-                manager.enqueue(request);
+                                String timing = mStoreList.get(holder.getAdapterPosition()).getStoreOpenTime() + " To " + mStoreList.get(holder.getAdapterPosition()).getStoreCloseTime();
 
-                imageFilePath = "/storage/emulated/0/Download/" + filename;
-                System.out.println("ImageFilePath:" + imageFilePath);
+                                strDetailsShare = mStoreList.get(holder.getAdapterPosition()).getName() + "=" + mStoreList.get(holder.getAdapterPosition()).getWebsite() + "="
+                                        + timing + "=" + mStoreList.get(holder.getAdapterPosition()).getWorkingDays() + "="
+                                        + mStoreList.get(holder.getAdapterPosition()).getStoreType() + "=" + mStoreList.get(holder.getAdapterPosition()).getLocation() + "="
+                                        + mStoreList.get(holder.getAdapterPosition()).getStoreImage() + "=" + mStoreList.get(holder.getAdapterPosition()).getRating() + "="
+                                        + mStoreList.get(holder.getAdapterPosition()).getLikecount() + "=" + mStoreList.get(holder.getAdapterPosition()).getFollowcount();
 
-                intent.setType("text/plain");
-                intent.putExtra(Intent.EXTRA_TEXT, "Please visit and Follow my store on Autokatta. Stay connected for Product and Service updates and enquiries"
-                        + "\n" + "http://autokatta.com/store/main/" + mStoreList.get(position).getId() + "/" + myContact);
-                intent.setType("image/jpeg");
-                intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(imageFilePath)));
-                mActivity.startActivity(Intent.createChooser(intent, "Autokatta"));
+                                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                                        putString("Share_sharedata", strDetailsShare).apply();
+                                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                                        putInt("Share_store_id", mStoreList.get(holder.getAdapterPosition()).getId()).apply();
+                                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                                        putString("Share_keyword", "store").apply();
+
+                                mActivity.startActivity(new Intent(mActivity, ShareWithinAppActivity.class));
+                                break;
+
+                            case R.id.other:
+
+                                if (mStoreList.get(holder.getAdapterPosition()).getStoreImage().equalsIgnoreCase("") || mStoreList.get(holder.getAdapterPosition()).getStoreImage().equalsIgnoreCase(null) ||
+                                        mStoreList.get(holder.getAdapterPosition()).getStoreImage().equalsIgnoreCase("null")) {
+                                    imagename = mActivity.getString(R.string.base_image_url) + "logo48x48.png";
+                                } else {
+                                    imagename = mActivity.getString(R.string.base_image_url) + mStoreList.get(holder.getAdapterPosition()).getStoreImage();
+                                }
+                                Log.e("TAG", "img : " + imagename);
+
+                                DownloadManager.Request request = new DownloadManager.Request(
+                                        Uri.parse(imagename));
+                                request.allowScanningByMediaScanner();
+                                String filename = URLUtil.guessFileName(imagename, null, MimeTypeMap.getFileExtensionFromUrl(imagename));
+                                request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, filename);
+                                Log.e("ShareImagePath :", filename);
+                                Log.e("TAG", "img : " + imagename);
+
+                                DownloadManager manager = (DownloadManager) mActivity.getApplication()
+                                        .getSystemService(Context.DOWNLOAD_SERVICE);
+
+                                Log.e("TAG", "img URL: " + imagename);
+
+                                manager.enqueue(request);
+
+                                imageFilePath = "/storage/emulated/0/Download/" + filename;
+                                System.out.println("ImageFilePath:" + imageFilePath);
+
+
+                                String timing1 = mStoreList.get(holder.getAdapterPosition()).getStoreOpenTime() + " To " + mStoreList.get(holder.getAdapterPosition()).getStoreCloseTime();
+
+                                String allStoreDetailss = "Store name : " + mStoreList.get(holder.getAdapterPosition()).getName().toString() + "\n" +
+                                        "Store type : " + mStoreList.get(holder.getAdapterPosition()).getStoreType().toString() + "\n" +
+                                        "Ratings : " + mStoreList.get(holder.getAdapterPosition()).getRating().toString() + "\n" +
+                                        "Likes : " + mStoreList.get(holder.getAdapterPosition()).getLikecount() + "\n" +
+                                        "Website : " + mStoreList.get(holder.getAdapterPosition()).getWebsite() + "\n" +
+                                        "Timing : " + timing1 + "\n" +
+                                        "Working Days : " + mStoreList.get(holder.getAdapterPosition()).getWorkingDays().toString() + "\n" +
+                                        "Location : " + mStoreList.get(holder.getAdapterPosition()).getLocation().toString();
+
+                                intent.setType("text/plain");
+                                intent.putExtra(Intent.EXTRA_TEXT, "Please visit and Follow my store on Autokatta. Stay connected for Product and Service updates and enquiries"
+                                        + "\n" + "http://autokatta.com/store/main/" + mStoreList.get(holder.getAdapterPosition()).getId()
+                                        + "/" + mStoreList.get(holder.getAdapterPosition()).getContact()
+                                        + "\n" + "\n" + allStoreDetailss);
+                                intent.setType("image/jpeg");
+                                intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(imageFilePath)));
+                                intent.putExtra(Intent.EXTRA_SUBJECT, "Please Find Below Attachments");
+                                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                                mActivity.startActivity(Intent.createChooser(intent, "Autokatta"));
+                                break;
+                        }
+                        return false;
+                    }
+                });
+                mPopupMenu.show(); //showing popup menu
 
             }
-
         });
+
+
+//        holder.linearshare1.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                String imageshare = "";
+//                imageshare = "http://autokatta.com/mobile/store_profiles/" + mStoreList.get(position).getStoreImage();
+//
+//                imageshare = imageshare.replaceAll(" ", "%20");
+//                System.out.println("image============" + imageshare);
+//
+//                String timing = mStoreList.get(position).getStoreOpenTime() + " To " + mStoreList.get(position).getStoreCloseTime();
+//
+//                strDetailsShare = mStoreList.get(position).getName() + "=" + mStoreList.get(position).getWebsite() + "="
+//                        + timing + "=" + mStoreList.get(position).getWorkingDays() + "="
+//                        + mStoreList.get(position).getStoreType() + "=" + mStoreList.get(position).getLocation() + "="
+//                        + mStoreList.get(position).getStoreImage() + "=" + mStoreList.get(position).getRating() + "="
+//                        + mStoreList.get(position).getLikecount() + "=" + mStoreList.get(position).getFollowcount();
+//
+//                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+//                        putString("Share_sharedata", strDetailsShare).apply();
+//                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+//                        putInt("Share_store_id", mStoreList.get(position).getId()).apply();
+//                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+//                        putString("Share_keyword", "store").apply();
+//
+//                mActivity.startActivity(new Intent(mActivity, ShareWithinAppActivity.class));
+//                //mActivity.finish();
+//
+//            }
+//        });
+//
+//
+//        holder.linearshare.setOnClickListener(new View.OnClickListener() {
+//
+//            Intent intent = new Intent(Intent.ACTION_SEND);
+//            String imageFilePath = "", imagename = "";
+//
+//            @Override
+//            public void onClick(View v) {
+//
+//                if (mStoreList.get(position).getStoreImage().equalsIgnoreCase("") || mStoreList.get(position).getStoreImage().equalsIgnoreCase(null) ||
+//                        mStoreList.get(position).getStoreImage().equalsIgnoreCase("null")) {
+//                    imagename = mActivity.getString(R.string.base_image_url) + "logo48x48.png";
+//                } else {
+//                    imagename = mActivity.getString(R.string.base_image_url) + mStoreList.get(position).getStoreImage();
+//                }
+//                Log.e("TAG", "img : " + imagename);
+//
+//                DownloadManager.Request request = new DownloadManager.Request(
+//                        Uri.parse(imagename));
+//                request.allowScanningByMediaScanner();
+//                String filename = URLUtil.guessFileName(imagename, null, MimeTypeMap.getFileExtensionFromUrl(imagename));
+//                request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, filename);
+//                Log.e("ShareImagePath :", filename);
+//                Log.e("TAG", "img : " + imagename);
+//
+//                DownloadManager manager = (DownloadManager) mActivity.getApplication()
+//                        .getSystemService(Context.DOWNLOAD_SERVICE);
+//
+//                Log.e("TAG", "img URL: " + imagename);
+//
+//                manager.enqueue(request);
+//
+//                imageFilePath = "/storage/emulated/0/Download/" + filename;
+//                System.out.println("ImageFilePath:" + imageFilePath);
+//
+//                intent.setType("text/plain");
+//                intent.putExtra(Intent.EXTRA_TEXT, "Please visit and Follow my store on Autokatta. Stay connected for Product and Service updates and enquiries"
+//                        + "\n" + "http://autokatta.com/store/main/" + mStoreList.get(position).getId() + "/" + myContact);
+//                intent.setType("image/jpeg");
+//                intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(imageFilePath)));
+//                mActivity.startActivity(Intent.createChooser(intent, "Autokatta"));
+//
+//            }
+//
+//        });
 
         /***Card Click Listener***/
         holder.mCardView.setOnClickListener(new View.OnClickListener() {

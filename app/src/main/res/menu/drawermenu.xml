@@ -8,34 +8,35 @@
 
     <item
         android:id="@+id/profile"
-        android:icon="@mipmap/ic_account"
+        android:icon="@mipmap/ic_drawer_profile"
         android:title="@string/my_profile" />
 
     <item
         android:id="@+id/my_contacts"
-        android:icon="@mipmap/ic_contacts"
+        android:icon="@mipmap/ic_drawer_contact"
         android:title="@string/autokatta_contacts" />
 
     <item
         android:id="@+id/group"
-        android:icon="@mipmap/ic_group"
+        android:icon="@mipmap/ic_drawer_group"
         android:title="@string/groups" />
 
     <item android:title="@string/store">
         <menu>
+
             <item
                 android:id="@+id/my_store"
-                android:icon="@mipmap/ic_cart"
+                android:icon="@mipmap/ic_drawer_my_store"
                 android:title="@string/my_store" />
 
             <item
                 android:id="@+id/browse_store"
-                android:icon="@mipmap/ic_cart"
+                android:icon="@mipmap/ic_browse_store"
                 android:title="@string/browse_store" />
 
             <item
                 android:id="@+id/search_store"
-                android:icon="@mipmap/ic_cart"
+                android:icon="@mipmap/ic_drawer_store_search"
                 android:title="@string/search_store" />
 
         </menu>
@@ -45,21 +46,21 @@
         <menu>
             <item
                 android:id="@+id/upload_vehicle"
-                android:icon="@mipmap/ic_car"
+                android:icon="@mipmap/ic_drawer_upload_vehicle"
                 android:title="@string/upload_vehicle" />
 
             <item
                 android:id="@+id/search_vehicle"
-                android:icon="@mipmap/ic_car"
+                android:icon="@mipmap/ic_drawer_vehicl_search"
                 android:title="@string/search_vehicle" />
             <item
                 android:id="@+id/my_search"
-                android:icon="@mipmap/ic_car"
+                android:icon="@mipmap/ic_drawer_my_search"
                 android:title="@string/my_search" />
 
             <item
                 android:id="@+id/my_vehicle"
-                android:icon="@mipmap/ic_car"
+                android:icon="@mipmap/ic_drawer_inventory"
                 android:title="@string/my_inventory_catalog" />
 
         </menu>
@@ -70,32 +71,32 @@
 
             <item
                 android:id="@+id/create_event"
-                android:icon="@mipmap/ic_calendar_check"
+                android:icon="@mipmap/ic_drawer_create_event"
                 android:title="@string/create_event" />
 
             <item
                 android:id="@+id/active_event"
-                android:icon="@mipmap/ic_calendar_check"
+                android:icon="@mipmap/ic_drawer_active_events"
                 android:title="@string/my_active_event" />
 
             <item
                 android:id="@+id/upcoming_event"
-                android:icon="@mipmap/ic_calendar_check"
+                android:icon="@mipmap/ic_drawer_upcoming"
                 android:title="@string/my_upcoming_event" />
 
             <item
                 android:id="@+id/saved_event"
-                android:icon="@mipmap/ic_calendar_check"
+                android:icon="@mipmap/ic_drawer_saved_events"
                 android:title="@string/my_saved_event" />
 
             <item
                 android:id="@+id/ended_event"
-                android:icon="@mipmap/ic_calendar_check"
+                android:icon="@mipmap/ic_drawer_ended_events"
                 android:title="@string/ended_event" />
 
             <item
                 android:id="@+id/black_list_contact"
-                android:icon="@mipmap/ic_cancel"
+                android:icon="@mipmap/ic_drawer_blacklist"
                 android:title="@string/black_listed_members" />
         </menu>
     </item>
@@ -105,17 +106,17 @@
 
             <item
                 android:id="@+id/broadcast_groups"
-                android:icon="@mipmap/ic_radio_tower"
+                android:icon="@mipmap/ic_drawer_broadcast_g"
                 android:title="@string/broadcast_groups" />
 
             <item
                 android:id="@+id/my_broadcast_message"
-                android:icon="@mipmap/ic_tooltip"
+                android:icon="@mipmap/ic_drawer_broadcast_msg"
                 android:title="@string/broadcast_message" />
 
             <item
                 android:id="@+id/business_Chat"
-                android:icon="@mipmap/ic_wechat"
+                android:icon="@mipmap/ic_drawer_bussiness_chat"
                 android:title="@string/business_chat" />
           <!--  <item
                 android:id="@+id/locality"
@@ -124,7 +125,7 @@
 
             <item
                 android:id="@+id/change_language"
-                android:icon="@drawable/ic_translate"
+                android:icon="@mipmap/ic_drawer_language"
                 android:title="@string/change_language" />
 
         </menu>

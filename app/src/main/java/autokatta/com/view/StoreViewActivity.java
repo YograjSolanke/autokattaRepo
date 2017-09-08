@@ -16,6 +16,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -81,7 +82,7 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
     TabLayout tabLayout;
     RatingBar csbar, qwbar, frbar, prbar, tmbar, overallbar;
     Float csrate = 0.0f, qwrate = 0.0f, frrate = 0.0f, prrate = 0.0f, tmrate = 0.0f, total = 0.0f, count = 0.0f;
-    FloatingActionButton mCall, mLike, mFollow, mRate, mGoogleMap, mAdd, mAutoshare, mShare, mTeamProduct, mTeamServices, mTeamVehicle;
+    FloatingActionButton mCall, mLike, mFollow, mRate, mGoogleMap, mAdd, mShare, mTeamProduct, mTeamServices, mTeamVehicle;
     MyStoreHome mMyStoreHome;
     StoreInfo storeInfo;
     StoreProducts storeProducts;
@@ -138,11 +139,9 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
                     mOtherPicture = (ImageView) findViewById(R.id.other_store_image);
                     viewPager = (ViewPager) findViewById(R.id.other_store_viewpager);
                     tabLayout = (TabLayout) findViewById(R.id.other_store_tabs);
-                    mAutoshare = (FloatingActionButton) findViewById(R.id.autokatta_share);
                     mShare = (FloatingActionButton) findViewById(R.id.share);
 
                     mShare.setLabelTextColor(Color.BLACK);
-                    mAutoshare.setLabelTextColor(Color.BLACK);
                     mTeamProduct.setLabelTextColor(Color.BLACK);
                     mTeamServices.setLabelTextColor(Color.BLACK);
                     mTeamVehicle.setLabelTextColor(Color.BLACK);
@@ -284,9 +283,6 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
         mTeamServices.setOnClickListener(this);
         mTeamVehicle.setOnClickListener(this);
         mShare.setOnClickListener(this);
-        mAutoshare.setOnClickListener(this);
-
-
     }
 
     public void hideFloatingButton() {
@@ -505,33 +501,6 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-//            case R.id.call_c:
-//                call();
-//                break;
-//            case R.id.like_l:
-//                if (mLikestr.equalsIgnoreCase("no")) {
-//                    mApiCall.otherStoreLike(mLoginContact, mOtherContact, "2", store_id);
-//                    menuRed.setClosedOnTouchOutside(true);
-//                } else {
-//                    mApiCall.otherStoreUnlike(mLoginContact, mOtherContact, "2", store_id);
-//                    menuRed.setClosedOnTouchOutside(true);
-//                }
-//
-//                break;
-//            case R.id.follow_f:
-//                if (mFolllowstr.equalsIgnoreCase("no")) {
-//                    mApiCall.otherStoreFollow(mLoginContact, mOtherContact, "2", store_id);
-//                    menuRed.setClosedOnTouchOutside(true);
-//                } else {
-//                    mApiCall.otherStoreUnFollow(mLoginContact, mOtherContact, "2", store_id);
-//                    menuRed.setClosedOnTouchOutside(true);
-//                }
-//                break;
-//            case R.id.rate:
-//                filterResult();
-//                menuRed.setClosedOnTouchOutside(true);
-//                break;
-
             case R.id.gotoMap:
                 drawMap(storelattitude, storelongitude);
                 menuRed.setClosedOnTouchOutside(true);
@@ -542,38 +511,102 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
                 break;
 
             case R.id.share:
-                Intent intent = new Intent(Intent.ACTION_SEND);
-                String imageFilePath = "", imagename = "";
-                if (storeImage.equalsIgnoreCase("") || storeImage.equalsIgnoreCase(null) ||
-                        storeImage.equalsIgnoreCase("null")) {
-                    imagename = getString(R.string.base_image_url) + "logo48x48.png";
-                } else {
-                    imagename = getString(R.string.base_image_url) + storeImage;
-                }
-                Log.e("TAG", "img : " + imagename);
-                DownloadManager.Request request = new DownloadManager.Request(
-                        Uri.parse(imagename));
-                request.allowScanningByMediaScanner();
-                String filename = URLUtil.guessFileName(imagename, null, MimeTypeMap.getFileExtensionFromUrl(imagename));
-                request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, filename);
-                Log.e("ShareImagePath :", filename);
-                Log.e("TAG", "img : " + imagename);
 
-                DownloadManager manager = (DownloadManager) getApplication()
-                        .getSystemService(Context.DOWNLOAD_SERVICE);
-                Log.e("TAG", "img URL: " + imagename);
-                manager.enqueue(request);
 
-                imageFilePath = "/storage/emulated/0/Download/" + filename;
-                System.out.println("ImageFilePath:" + imageFilePath);
+                PopupMenu mPopupMenu = new PopupMenu(this, mShare);
+                mPopupMenu.getMenuInflater().inflate(R.menu.more_menu, mPopupMenu.getMenu());
+                mPopupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        switch (item.getItemId()) {
 
-                intent.setType("text/plain");
-                intent.putExtra(Intent.EXTRA_TEXT, "Please visit and Follow my store on Autokatta. Stay connected for Product and Service updates and enquiries"
-                        + "\n" + "http://autokatta.com/store/main/" + store_id + "/" + myContact);
-                intent.setType("image/jpeg");
-                intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(imageFilePath)));
-                startActivity(Intent.createChooser(intent, "Autokatta"));
 
+                            case R.id.autokatta:
+
+
+                                String imageshare = "";
+                                imageshare = getString(R.string.base_image_url) + storeImage;
+
+                                imageshare = imageshare.replaceAll(" ", "%20");
+                                System.out.println("image============" + imageshare);
+
+                                strDetailsShare = storeName + "=" + storeWebsite + "="
+                                        + storeTiming + "=" + storeWorkingDays + "="
+                                        + storeType + "=" + storeLocation + "="
+                                        + storeImage + "=" + String.valueOf(storeRating) + "="
+                                        + storeLikeCount + "=" + storeFollowCount;
+
+
+                                getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                                        putString("Share_sharedata", strDetailsShare).apply();
+                                getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                                        putInt("Share_store_id", store_id).apply();
+                                getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                                        putString("Share_keyword", "store").apply();
+                                startActivity(new Intent(StoreViewActivity.this, ShareWithinAppActivity.class));
+                                break;
+
+                            case R.id.other:
+                                String imageFilePath = "", imagename = "";
+                                Intent intent = new Intent(Intent.ACTION_SEND);
+                                if (storeImage.equalsIgnoreCase("") || storeImage.equalsIgnoreCase(null) ||
+                                        storeImage.equalsIgnoreCase("null")) {
+                                    imagename = getString(R.string.base_image_url) + "logo48x48.png";
+                                } else {
+                                    imagename = getString(R.string.base_image_url) + storeImage;
+                                }
+                                Log.e("TAG", "img : " + imagename);
+
+                                DownloadManager.Request request = new DownloadManager.Request(
+                                        Uri.parse(imagename));
+                                request.allowScanningByMediaScanner();
+                                String filename = URLUtil.guessFileName(imagename, null, MimeTypeMap.getFileExtensionFromUrl(imagename));
+                                request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, filename);
+                                Log.e("ShareImagePath :", filename);
+                                Log.e("TAG", "img : " + imagename);
+
+                                DownloadManager manager = (DownloadManager) getApplication()
+                                        .getSystemService(Context.DOWNLOAD_SERVICE);
+
+                                Log.e("TAG", "img URL: " + imagename);
+
+                                manager.enqueue(request);
+
+                                imageFilePath = "/storage/emulated/0/Download/" + filename;
+                                System.out.println("ImageFilePath:" + imageFilePath);
+
+                                strDetailsShare = storeName + "=" + storeWebsite + "="
+                                        + storeTiming + "=" + storeWorkingDays + "="
+                                        + storeType + "=" + storeLocation + "="
+                                        + storeImage + "=" + String.valueOf(storeRating) + "="
+                                        + storeLikeCount + "=" + storeFollowCount;
+
+
+                                String allStoreDetailss = "Store name : " + storeName + "\n" +
+                                        "Store type : " + storeType + "\n" +
+                                        "Ratings : " + storeRating + "\n" +
+                                        "Likes : " + storeLikeCount + "\n" +
+                                        "Website : " + storeWebsite + "\n" +
+                                        "Timing : " + storeTiming + "\n" +
+                                        "Working Days : " + storeWorkingDays + "\n" +
+                                        "Location : " + storeLocation;
+
+                                intent.setType("text/plain");
+                                intent.putExtra(Intent.EXTRA_TEXT, "Please visit and Follow my store on Autokatta. Stay connected for Product and Service updates and enquiries"
+                                        + "\n" + "http://autokatta.com/store/main/" + store_id
+                                        + "/" + mOtherContact
+                                        + "\n" + "\n" + allStoreDetailss);
+                                intent.setType("image/jpeg");
+                                intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(imageFilePath)));
+                                intent.putExtra(Intent.EXTRA_SUBJECT, "Please Find Below Attachments");
+                                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                                startActivity(Intent.createChooser(intent, "Autokatta"));
+                                break;
+                        }
+                        return false;
+                    }
+                });
+                mPopupMenu.show(); //showing popup menu
                 break;
             case R.id.autokatta_share:
 

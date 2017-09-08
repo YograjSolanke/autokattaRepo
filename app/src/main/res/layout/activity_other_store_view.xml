@@ -221,59 +221,27 @@
             fab:fab_label="Google Map"
             fab:fab_size="mini" />
 
-        <!--<com.github.clans.fab.FloatingActionButton-->
-        <!--android:id="@+id/rate"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:src="@drawable/ic_star_half"-->
-        <!--fab:fab_label="Rate"-->
-        <!--fab:fab_size="mini" />-->
-
-        <!--<com.github.clans.fab.FloatingActionButton-->
-        <!--android:id="@+id/call_c"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:src="@android:drawable/ic_menu_call"-->
-        <!--fab:fab_label="Call"-->
-        <!--fab:fab_size="mini" />-->
-
-        <!--<com.github.clans.fab.FloatingActionButton-->
-        <!--android:id="@+id/like_l"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:src="@mipmap/like"-->
-        <!--fab:fab_label="Like"-->
-        <!--fab:fab_size="mini" />-->
-
-        <!--<com.github.clans.fab.FloatingActionButton-->
-        <!--android:id="@+id/follow_f"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:src="@mipmap/ic_follow"-->
-        <!--fab:fab_label="Follow"-->
-        <!--fab:fab_size="mini" />-->
-
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/share"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@android:drawable/ic_menu_share"
+            android:src="@mipmap/new_share"
             fab:fab_label="Share"
             fab:fab_colorNormal="#5176C9"
             fab:fab_colorPressed="#5176C9"
             fab:fab_colorRipple="#5176C9"
             fab:fab_size="mini" />
 
-        <com.github.clans.fab.FloatingActionButton
-            android:id="@+id/autokatta_share"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/autoshare"
-            fab:fab_colorNormal="#5176C9"
-            fab:fab_colorPressed="#5176C9"
-            fab:fab_colorRipple="#5176C9"
-            fab:fab_label="Share"
-            fab:fab_size="mini" />
+        <!--<com.github.clans.fab.FloatingActionButton-->
+        <!--android:id="@+id/autokatta_share"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:src="@drawable/autoshare"-->
+        <!--fab:fab_colorNormal="#5176C9"-->
+        <!--fab:fab_colorPressed="#5176C9"-->
+        <!--fab:fab_colorRipple="#5176C9"-->
+        <!--fab:fab_label="Share"-->
+        <!--fab:fab_size="mini" />-->
 
     </com.github.clans.fab.FloatingActionMenu>
 </android.support.design.widget.CoordinatorLayout>

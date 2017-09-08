@@ -270,7 +270,7 @@ public class SearchVehicleActivity extends AppCompatActivity implements MultiSel
 
         /*Set Searced Values for Edit Vehicle search*/
         /*to do as all data does not come from web service so all values are not set*/
-        if (!getIntent().getExtras().equals(null) & getIntent().getExtras().getString("className").equalsIgnoreCase("MySearchAdapter")) {
+        if (getIntent().getExtras() != null & getIntent().getExtras().getString("className", "").equalsIgnoreCase("MySearchAdapter")) {
             mCategory = getIntent().getExtras().getString("category");
             mBrand = getIntent().getExtras().getString("brand");
             mModel = getIntent().getExtras().getString("model");
@@ -645,7 +645,7 @@ public class SearchVehicleActivity extends AppCompatActivity implements MultiSel
                                 }
 
                                 break;
-                            case " Construction Equipment ":
+                            case "Construction Equipment":
 
                                 String subCategory = subcategorySpinner.getSelectedItem().toString();
 
@@ -883,7 +883,10 @@ public class SearchVehicleActivity extends AppCompatActivity implements MultiSel
             hpcap1 = maxhpcapcityTxt.getText().toString();
             hpcap2 = maxhpcapcity.getText().toString();
 
-            owner1 = Integer.parseInt(ownerSpinner.getSelectedItem().toString());
+            int ownerPos = ownerSpinner.getSelectedItemPosition();
+            if (ownerPos != 0)
+                owner1 = Integer.parseInt(ownerSpinner.getSelectedItem().toString());
+
             price1 = pricefromTxt.getText().toString();
             price2 = pricetoTxt.getText().toString();
             city2 = autoRTO.getText().toString();
@@ -1163,7 +1166,7 @@ public class SearchVehicleActivity extends AppCompatActivity implements MultiSel
                                     getSubCategoryTask(vehicle_id);
 
 
-                                    if (Category.equals("Tractor") || Category.equals("Cranes") || Category.equalsIgnoreCase(" Construction Equipment ")) {
+                                    if (Category.equals("Tractor") || Category.equals("Cranes") || Category.equalsIgnoreCase("Construction Equipment")) {
 
                                         rowKms.setVisibility(View.GONE);
                                         rowkms1.setVisibility(View.GONE);
@@ -1465,8 +1468,6 @@ public class SearchVehicleActivity extends AppCompatActivity implements MultiSel
                         }
                     });
                 }
-
-                //
 
             } else
                 CustomToast.customToast(getApplicationContext(), getString(R.string._404));

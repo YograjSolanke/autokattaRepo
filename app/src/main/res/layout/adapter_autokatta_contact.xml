@@ -92,6 +92,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/txtcity"
                 android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
                 android:layout_toEndOf="@+id/profileImg"
                 android:layout_toStartOf="@+id/btnsendmsg"
                 android:text="@string/selectStatus"
@@ -101,14 +102,15 @@
 
             <ImageView
                 android:id="@+id/callImg"
-                android:layout_width="40dp"
-                android:layout_height="50dp"
+                android:layout_width="50dp"
+                android:layout_height="60dp"
                 android:layout_alignParentEnd="true"
                 android:layout_marginEnd="90dp"
+                android:layout_marginStart="5dp"
                 android:contentDescription="@string/app_name"
                 android:padding="5dp"
                 android:visibility="gone"
-                android:src="@android:drawable/ic_menu_call" />
+                android:src="@mipmap/new_call" />
 
             <Button
                 android:id="@+id/btnfollow"
@@ -119,7 +121,7 @@
                 android:gravity="center"
                 android:text="Follow+"
                 android:textColor="@android:color/white"
-                android:textSize="15sp"
+                android:textSize="12sp"
                 android:visibility="visible" />
 
             <Button

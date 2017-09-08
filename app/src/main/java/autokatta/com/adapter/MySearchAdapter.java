@@ -10,9 +10,11 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -20,7 +22,9 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.net.ConnectException;
 import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -85,14 +89,14 @@ public class MySearchAdapter extends RecyclerView.Adapter<MySearchAdapter.Search
         }
 
         //To Check Favourite Status
-        if (mMainlist.get(position).getSearchstatus().equals("yes")) {
-            holder.unfavImg.setVisibility(View.VISIBLE);
-            holder.favImg.setVisibility(View.GONE);
-        }
-
-        if (mMainlist.get(position).getSearchstatus().equals("no")) {
+        if (mMainlist.get(position).getSearchstatus().equalsIgnoreCase("yes")) {
             holder.unfavImg.setVisibility(View.GONE);
             holder.favImg.setVisibility(View.VISIBLE);
+        }
+
+        if (mMainlist.get(position).getSearchstatus().equalsIgnoreCase("no")) {
+            holder.unfavImg.setVisibility(View.VISIBLE);
+            holder.favImg.setVisibility(View.GONE);
         }
 
         holder.textcategory.setText(mMainlist.get(position).getCategory());
@@ -213,19 +217,34 @@ public class MySearchAdapter extends RecyclerView.Adapter<MySearchAdapter.Search
         });
 
         //Make my search as favourites
-        holder.favImg.setOnClickListener(new View.OnClickListener() {
+        holder.unfavImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 SearchId = mMainlist.get(holder.getAdapterPosition()).getSearchId();
                 apiCall.addToFavorite(myContact, "", SearchId, "", 0);
-                holder.favImg.setVisibility(View.INVISIBLE);
-                holder.unfavImg.setVisibility(View.VISIBLE);
+                holder.favImg.setVisibility(View.VISIBLE);
+                holder.unfavImg.setVisibility(View.GONE);
                 mMainlist.get(holder.getAdapterPosition()).setSearchstatus("yes");
                 mMainlist.set(holder.getAdapterPosition(), mMainlist.get(holder.getAdapterPosition()));
                 // obj.searchFavouritestatus.set(position, "yes");
 
             }
         });
+
+        holder.favImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SearchId = mMainlist.get(holder.getAdapterPosition()).getSearchId();
+                apiCall.removeFromFavorite(myContact, "", SearchId, "", 0);
+                holder.favImg.setVisibility(View.GONE);
+                holder.unfavImg.setVisibility(View.VISIBLE);
+                mMainlist.get(holder.getAdapterPosition()).setSearchstatus("no");
+                mMainlist.set(holder.getAdapterPosition(), mMainlist.get(holder.getAdapterPosition()));
+                // obj.searchFavouritestatus.set(position, "yes");
+
+            }
+        });
+
 //
 //        //Stop notification related to my search
         holder.Stopsearch.setOnClickListener(new View.OnClickListener() {
@@ -292,29 +311,62 @@ public class MySearchAdapter extends RecyclerView.Adapter<MySearchAdapter.Search
 
         //Share my search
         holder.share.setOnClickListener(new View.OnClickListener() {
+            String imageFilePath = "", imagename;
+            Intent intent = new Intent(Intent.ACTION_SEND);
+
             @Override
             public void onClick(View v) {
+                PopupMenu mPopupMenu = new PopupMenu(activity, holder.share);
+                mPopupMenu.getMenuInflater().inflate(R.menu.more_menu, mPopupMenu.getMenu());
+                mPopupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        switch (item.getItemId()) {
+                            case R.id.autokatta:
+                                String allSearchDetails = holder.textcategory.getText().toString() + "=" +
+                                        holder.textbrand.getText().toString() + "=" +
+                                        holder.textmodel.getText().toString() + "=" +
+                                        holder.textprice.getText().toString() + "=" +
+                                        holder.textyear.getText().toString() + "=" +
+                                        holder.textsearchdate.getText().toString() + "=" +
+                                        holder.BuyerLeads.getText().toString();
 
-                Intent intent = new Intent(Intent.ACTION_SEND);
 
-                String allSearchDetails = "Search Category : " + holder.textcategory.getText().toString() + "\n" +
-                        "Search Brand : " + holder.textbrand.getText().toString() + "\n" +
-                        "Search Model : " + holder.textmodel.getText().toString() + "\n" +
-                        "Year Of Mfg : " + holder.textyear.getText().toString() + "\n" +
-                        "Price : " + holder.textprice.getText().toString() + "\n" +
-                        "Leads : " + holder.BuyerLeads.getText().toString() + "\n" +
-                        "Date : " + holder.textsearchdate.getText().toString();
+                                System.out.println("all search detailssss======Auto " + allSearchDetails);
 
-                System.out.println("all search detailssss======Other " + allSearchDetails);
+                                activity.getSharedPreferences(activity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                                        putString("Share_sharedata", allSearchDetails).apply();
+                                activity.getSharedPreferences(activity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                                        putInt("Share_search_id", mMainlist.get(holder.getAdapterPosition()).getSearchId()).apply();
+                                activity.getSharedPreferences(activity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                                        putString("Share_keyword", "mysearch").apply();
 
-                intent.setType("text/plain");
+
+                                Intent i = new Intent(activity, ShareWithinAppActivity.class);
+                                activity.startActivity(i);
+                                break;
+
+                            case R.id.other:
+                                Intent intent = new Intent(Intent.ACTION_SEND);
+
+                                String allSearchDetailss = "Search Category : " + holder.textcategory.getText().toString() + "\n" +
+                                        "Search Brand : " + holder.textbrand.getText().toString() + "\n" +
+                                        "Search Model : " + holder.textmodel.getText().toString() + "\n" +
+                                        "Year Of Mfg : " + holder.textyear.getText().toString() + "\n" +
+                                        "Price : " + holder.textprice.getText().toString() + "\n" +
+                                        "Leads : " + holder.BuyerLeads.getText().toString() + "\n" +
+                                        "Date : " + holder.textsearchdate.getText().toString();
+
+                                System.out.println("all search detailssss======Other " + allSearchDetailss);
+
+                                intent.setType("text/plain");
                                 /*intent.putExtra(Intent.EXTRA_TEXT, "Please visit and Follow my vehicle on Autokatta. Stay connected for Product and Service updates and enquiries"
                                         + "\n" + "http://autokatta.com/vehicle/main/" + notificationList.get(holder.getAdapterPosition()).getSearchId() + "/" + mLoginContact
                                         + "\n" + "\n" + allSearchDetails);*/
-                intent.putExtra(Intent.EXTRA_TEXT, allSearchDetails);
-                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                intent.putExtra(Intent.EXTRA_SUBJECT, "Search list from Autokatta User");
-                activity.startActivity(Intent.createChooser(intent, "Autokatta"));
+                                intent.putExtra(Intent.EXTRA_TEXT, allSearchDetailss);
+                                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                                intent.putExtra(Intent.EXTRA_SUBJECT, "Search list from Autokatta User");
+                                activity.startActivity(Intent.createChooser(intent, "Autokatta"));
 
                                 /*intent.setType("text/plain");
                                 intent.putExtra(Intent.EXTRA_SUBJECT, "Please Find Below Attachments");
@@ -322,38 +374,14 @@ public class MySearchAdapter extends RecyclerView.Adapter<MySearchAdapter.Search
                                 intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                                 mActivity.startActivity(intent);*/
 
-
+                                break;
+                        }
+                        return false;
+                    }
+                });
+                mPopupMenu.show(); //showing popup menu
             }
         });
-
-        holder.share1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                String allSearchDetails = holder.textcategory.getText().toString() + "=" +
-                        holder.textbrand.getText().toString() + "=" +
-                        holder.textmodel.getText().toString() + "=" +
-                        holder.textprice.getText().toString() + "=" +
-                        holder.textyear.getText().toString() + "=" +
-                        holder.textsearchdate.getText().toString() + "=" +
-                        holder.BuyerLeads.getText().toString();
-
-
-                System.out.println("all search detailssss======Auto " + allSearchDetails);
-
-                activity.getSharedPreferences(activity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                        putString("Share_sharedata", allSearchDetails).apply();
-                activity.getSharedPreferences(activity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                        putInt("Share_search_id", mMainlist.get(holder.getAdapterPosition()).getSearchId()).apply();
-                activity.getSharedPreferences(activity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                        putString("Share_keyword", "mysearch").apply();
-
-
-                Intent i = new Intent(activity, ShareWithinAppActivity.class);
-                activity.startActivity(i);
-            }
-        });
-
 
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -395,7 +423,7 @@ public class MySearchAdapter extends RecyclerView.Adapter<MySearchAdapter.Search
     static class SearchHolder extends RecyclerView.ViewHolder {
 
         TextView textcategory, textbrand, textmodel, textprice, textyear, textsearchdate, BuyerLeads, Stopdate;
-        ImageView editImg, deleteData, favImg, unfavImg, share, share1;
+        ImageView editImg, deleteData, favImg, unfavImg, share;
         Button Stopsearch, Startsearch;
         RelativeLayout relativeLayout;
         CardView cardView;
@@ -416,7 +444,6 @@ public class MySearchAdapter extends RecyclerView.Adapter<MySearchAdapter.Search
             favImg = (ImageView) itemView.findViewById(R.id.favsearch);
             unfavImg = (ImageView) itemView.findViewById(R.id.unfavsearch);
             share = (ImageView) itemView.findViewById(R.id.sharesearch);
-            share1 = (ImageView) itemView.findViewById(R.id.sharesearch1);
             Stopsearch = (Button) itemView.findViewById(R.id.stopsearch);
             Startsearch = (Button) itemView.findViewById(R.id.startsearch);
 
@@ -440,12 +467,15 @@ public class MySearchAdapter extends RecyclerView.Adapter<MySearchAdapter.Search
             CustomToast.customToast(activity, activity.getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
             CustomToast.customToast(activity, activity.getString(R.string.no_response));
+        } else if (error instanceof ConnectException) {
+            CustomToast.customToast(activity, activity.getString(R.string.no_internet));
+        } else if (error instanceof UnknownHostException) {
+            CustomToast.customToast(activity, activity.getString(R.string.no_internet));
         } else {
-            Log.i("Check Class-", "MySearchAdapter");
+            Log.i("Check Class-"
+                    , "My Search Adapter");
             error.printStackTrace();
         }
-
-
     }
 
     @Override
@@ -464,7 +494,10 @@ public class MySearchAdapter extends RecyclerView.Adapter<MySearchAdapter.Search
                     CustomToast.customToast(activity, "Notification Started");
                     break;
                 case "success_favourite":
-                    CustomToast.customToast(activity, "Favourite data send");
+                    CustomToast.customToast(activity, "Favourite");
+                    break;
+                case "success_remove":
+                    CustomToast.customToast(activity, "Unfavorite");
                     break;
             }
 
