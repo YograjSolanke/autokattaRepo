@@ -25,6 +25,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import autokatta.com.R;
 import autokatta.com.adapter.SavedSearchSellerListAdapter;
@@ -44,7 +45,6 @@ import static android.content.Context.MODE_PRIVATE;
 public class SavedSearchSellerListFragment extends Fragment implements RequestNotifier, SwipeRefreshLayout.OnRefreshListener {
 
     public SavedSearchSellerListFragment() {
-
     }
 
     SwipeRefreshLayout mSwipeRefreshLayout;
@@ -59,12 +59,11 @@ public class SavedSearchSellerListFragment extends Fragment implements RequestNo
     String b_category, b_brand, b_model, b_version, b_manu_year, b_rto_city, b_price;
     TextView textcategory, textbrand, textmodel, textprice, textyear, textsearchdate, BuyerLeads, Stopdate;
     int b_search_id;
-    ImageView editImg, deleteData, favImg, unfavImg, share, autoshare;
+    ImageView editImg, deleteData, favImg, unfavImg, autoshare;
     Button Stopsearch, Startsearch;
     RelativeLayout relativeLayout1, relativeLayout2;
     ConnectionDetector mTestConnection;
 
-    @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         myVehicles = inflater.inflate(R.layout.saved_search_seller_list, container, false);
@@ -82,7 +81,7 @@ public class SavedSearchSellerListFragment extends Fragment implements RequestNo
         mNoData.setVisibility(View.GONE);
 
         mSharedPreferences = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE);
-        myContact = mSharedPreferences.getString("loginContact", "7841023392");
+        myContact = mSharedPreferences.getString("loginContact", "");
 
         mSwipeRefreshLayout = (SwipeRefreshLayout) myVehicles.findViewById(R.id.swipeRefreshLayoutMySearchSellerlst);
         mRecyclerView = (RecyclerView) myVehicles.findViewById(R.id.sellerlist);
@@ -100,8 +99,7 @@ public class SavedSearchSellerListFragment extends Fragment implements RequestNo
         deleteData = (ImageView) myVehicles.findViewById(R.id.deletevehi);
         favImg = (ImageView) myVehicles.findViewById(R.id.favsearch);
         unfavImg = (ImageView) myVehicles.findViewById(R.id.unfavsearch);
-        share = (ImageView) myVehicles.findViewById(R.id.sharesearch);
-        autoshare = (ImageView) myVehicles.findViewById(R.id.sharesearch1);
+        autoshare = (ImageView) myVehicles.findViewById(R.id.sharesearch);
         Stopsearch = (Button) myVehicles.findViewById(R.id.stopsearch);
         Startsearch = (Button) myVehicles.findViewById(R.id.startsearch);
 
@@ -162,7 +160,6 @@ public class SavedSearchSellerListFragment extends Fragment implements RequestNo
         deleteData.setVisibility(View.GONE);
         favImg.setVisibility(View.GONE);
         unfavImg.setVisibility(View.GONE);
-        share.setVisibility(View.GONE);
         autoshare.setVisibility(View.GONE);
 
 
@@ -174,8 +171,8 @@ public class SavedSearchSellerListFragment extends Fragment implements RequestNo
             ApiCall apiCall = new ApiCall(getActivity(), this);
             apiCall.getSavedSearchSellerList(myContact);
         } else {
-            CustomToast.customToast(getActivity(),getString(R.string.no_internet));
-            // errorMessage(getActivity(), getString(R.string.no_internet));
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         }
     }
 
@@ -187,7 +184,7 @@ public class SavedSearchSellerListFragment extends Fragment implements RequestNo
     @Override
     public void notifySuccess(Response<?> response) {
 
-        DateFormat f = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        DateFormat f = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.getDefault());
 
         if (response != null) {
             if (response.isSuccessful()) {
@@ -243,24 +240,27 @@ public class SavedSearchSellerListFragment extends Fragment implements RequestNo
                         mRecyclerView.setAdapter(adapter);
                         adapter.notifyDataSetChanged();
                     } else {
-                        CustomToast.customToast(getActivity(), "No Seller Leads Found");
+                        if (isAdded())
+                            CustomToast.customToast(getActivity(), "No Seller Leads Found");
                         mSwipeRefreshLayout.setRefreshing(false);
                         mNoData.setVisibility(View.VISIBLE);
                     }
                 } else {
-                    CustomToast.customToast(getActivity(), "No Seller Leads Found");
+                    //CustomToast.customToast(getActivity(), "No Seller Leads Found");
                     mSwipeRefreshLayout.setRefreshing(false);
                     mNoData.setVisibility(View.VISIBLE);
                 }
 
             } else {
                 mSwipeRefreshLayout.setRefreshing(false);
-                CustomToast.customToast(getActivity(), getString(R.string._404));
+                if (isAdded())
+                    CustomToast.customToast(getActivity(), getString(R.string._404));
             }
 
 
         } else {
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string.no_response));
         }
 
     }
@@ -269,20 +269,20 @@ public class SavedSearchSellerListFragment extends Fragment implements RequestNo
     public void notifyError(Throwable error) {
         mSwipeRefreshLayout.setRefreshing(false);
         if (error instanceof SocketTimeoutException) {
-            CustomToast.customToast(getActivity(),getString(R.string._404_));
-            //   showMessage(getActivity(), getString(R.string._404_));
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
-            CustomToast.customToast(getActivity(),getString(R.string.no_response));
-            // showMessage(getActivity(), getString(R.string.no_response));
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            CustomToast.customToast(getActivity(),getString(R.string.no_response));
-            //   showMessage(getActivity(), getString(R.string.no_response));
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
-            CustomToast.customToast(getActivity(),getString(R.string.no_internet));
-            //   errorMessage(getActivity(), getString(R.string.no_internet));
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
-            CustomToast.customToast(getActivity(),getString(R.string.no_internet));
-            //   errorMessage(getActivity(), getString(R.string.no_internet));
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         } else {
             Log.i("Check Class-", "SavedSearchSellerListFragment Fragment");
             error.printStackTrace();
@@ -305,30 +305,4 @@ public class SavedSearchSellerListFragment extends Fragment implements RequestNo
             }
         }
     }
-
-   /* public void showMessage(Activity activity, String message) {
-        Snackbar snackbar = Snackbar.make(activity.findViewById(android.R.id.content),
-                message, Snackbar.LENGTH_LONG);
-        TextView textView = (TextView) snackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
-        textView.setTextColor(Color.RED);
-        snackbar.show();
-    }
-
-    public void errorMessage(Activity activity, String message) {
-        Snackbar snackbar = Snackbar.make(activity.findViewById(android.R.id.content),
-                message, Snackbar.LENGTH_INDEFINITE)
-                .setAction("Retry", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        getSellerdata(myContact);
-                    }
-                });
-        // Changing message text color
-        snackbar.setActionTextColor(Color.BLUE);
-        // Changing action button text color
-        View sbView = snackbar.getView();
-        TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
-        textView.setTextColor(Color.WHITE);
-        snackbar.show();
-    }*/
 }

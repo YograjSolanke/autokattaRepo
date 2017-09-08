@@ -1,9 +1,12 @@
 package autokatta.com.search;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.text.Html;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -59,11 +62,7 @@ import static android.content.Context.MODE_PRIVATE;
 public class FilterFragment extends Fragment implements Multispinner.MultiSpinnerListener, MultiSelectionSpinner.MultiSpinnerListener, RequestNotifier {
 
     SharedPreferences prefs;
-    public static final String MyContactPREFERENCES = "contact No";
-    String contact;
-
     FloatingActionButton getHelp;
-
     EditText useEdit, seatingEdit, transmissionEdit, impletementEdit, boatEdit, rvEdit;
     Button BtnRefresh, BtnApplySearch, BtnMoreOptions, btnCity, btnRto;
     Spinner rc, insurance, owner, hypo, brand, model, allcategory, subcategory, version, mBodyTypeSpinner;
@@ -83,15 +82,15 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
 
     TableRow rowInvoice, rowbustype, rowaircondition, rowbody, rowboattype, rowrvtype, rowcolor, rowrc, rowinsurance1, rowhypo, rowtax, rowfitness, rowpermit, rowfual, rowseat, rowdrive, rowtransmission, rowuse, rowimpl, rowtyre, rowtyrerange;
 
-    String action, Scategory, Sbrand, Smodel, Sprice, Syear, Sid = "", Category, subCategory, hrs1, hrs2, hpcap1, hpcap2;
+    String action, Scategory, Sbrand, Smodel, Sprice, Syear, Category, subCategory, hrs1, hrs2, hpcap1, hpcap2;
     int position_brand_id, position_model_id;
     String spinnervalues[];
 
-    String city1, city2, city11, city12, city13, city14, city21, city22, city23, city24, brand1, model1, color1, version1, man_yr1, man_yr2, reg_yr1, reg1, reg_yr2, rc1, insurance1, kms1, kms2, hypo1, owner1, price1, price2;
+    String city1, city2, city11, city12, city13, city14, city21, city22, city23, city24, brand1, model1, color1, version1, man_yr1, man_yr2, reg_yr1, reg1, reg_yr2, rc1, insurance1, kms1, kms2, hypo1, price1, price2;
     String permit1, tax_validity1, fitness_validity1, permit_validity1, drive1, fual1, bus_type1, air1, invoice1;
 
-    String use1, seating1, transmission1, implement1, body1, boat1, rv1, finance1, tyre1, tyre2;
-    int count = 0, vehicle_id, sub_category_id;
+    String use1, seating1, transmission1, implement1, body1, boat1, rv1, finance1, tyre1, tyre2, callPermission, myContact;
+    int count = 0, owner1 = 0, Sid, vehicle_id, sub_category_id;
 
     final List<String> fuals = new ArrayList<String>();
     List<String> colors = new ArrayList<String>();
@@ -105,8 +104,7 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
         super.onCreateView(inflater, container, savedInstanceState);
 
         final View root = inflater.inflate(R.layout.filter_all_activity, container, false);
-        prefs = getActivity().getSharedPreferences(MyContactPREFERENCES, MODE_PRIVATE);
-        contact = prefs.getString("contact", "");
+        myContact = getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).getString("loginContact", "");
 
         mConnectionDetector = new ConnectionDetector(getActivity());
 
@@ -250,7 +248,7 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
             Smodel = b.getString("model");
             Sprice = b.getString("price");
             Syear = b.getString("year");
-            Sid = b.getString("search_id");
+            Sid = b.getInt("search_id");
             System.out.println("Search Id....: " + Sid);
         }
 
@@ -410,15 +408,15 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
                     }
 
                     if (finance1.startsWith("-Select")) {
-                        Toast.makeText(getActivity(), "Please provide fianance required or not", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity(), "Please provide finance required or not", Toast.LENGTH_SHORT).show();
                     } else if (Category.equals("-Select Category-")) {
-                        Toast.makeText(getActivity(), "select catagory", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity(), "select catagory", Toast.LENGTH_SHORT).show();
                     } else if (subcategory.getSelectedItem().toString().equals("-Select subcategory-")) {
-                        Toast.makeText(getActivity(), "select subcatagory", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity(), "select subcatagory", Toast.LENGTH_SHORT).show();
                     } else if (brand.getSelectedItem().toString().equals("-Select Brand-")) {
-                        Toast.makeText(getActivity(), "select brand", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity(), "select brand", Toast.LENGTH_SHORT).show();
                     } else if (model.getSelectedItem().toString().equals("-Select Models-")) {
-                        Toast.makeText(getActivity(), "select model", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity(), "select model", Toast.LENGTH_SHORT).show();
                     } else {
                         applySearch();
                     }
@@ -657,116 +655,124 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
                             moresearchlinear.setVisibility(View.VISIBLE);
                             Category = allcategory.getSelectedItem().toString();
 
-                            if (Category.equals("Bus")) {
-                                rowInvoice.setVisibility(View.GONE);
-                                rowbody.setVisibility(View.GONE);
-                                rowboattype.setVisibility(View.GONE);
-                                rowrvtype.setVisibility(View.GONE);
-                                rowdrive.setVisibility(View.GONE);
-                                rowtransmission.setVisibility(View.GONE);
-                                rowuse.setVisibility(View.GONE);
-                                rowimpl.setVisibility(View.GONE);
-                            } else if (Category.equals("Car")) {
-                                rowInvoice.setVisibility(View.GONE);
-                                rowbustype.setVisibility(View.GONE);
-                                rowbody.setVisibility(View.GONE);
-                                rowboattype.setVisibility(View.GONE);
-                                rowrvtype.setVisibility(View.GONE);
-                                rowuse.setVisibility(View.GONE);
-                                rowimpl.setVisibility(View.GONE);
-
-                                radioPermitGroup = (RadioGroup) root.findViewById(R.id.radiopermit);
-                                int selectedId = radioPermitGroup.getCheckedRadioButtonId();
-                                radioPermitButton = (RadioButton) root.findViewById(selectedId);
-                                permit1 = radioPermitButton.getText().toString();
-
-                                if (permit1.equalsIgnoreCase("Private")) {
-                                    rowpermit.setVisibility(View.GONE);
-                                    rowfitness.setVisibility(View.GONE);
-                                    rowtax.setVisibility(View.GONE);
-                                }
-                            } else if (Category.equals("Construction Equipment")) {
-                                String subCategory = subcategory.getSelectedItem().toString();
-                                rowbustype.setVisibility(View.GONE);
-                                rowaircondition.setVisibility(View.GONE);
-                                rowbody.setVisibility(View.GONE);
-                                rowboattype.setVisibility(View.GONE);
-                                rowrvtype.setVisibility(View.GONE);
-                                rowcolor.setVisibility(View.GONE);
-                                rowseat.setVisibility(View.GONE);
-                                rowdrive.setVisibility(View.GONE);
-                                rowtransmission.setVisibility(View.GONE);
-                                rowuse.setVisibility(View.GONE);
-                                rowimpl.setVisibility(View.GONE);
-
-                                if (subCategory.equals("Excavator") || subCategory.equals("Skid Steers") || subCategory.equals("Crawlers")
-                                        || subCategory.equals("Dozer") || subCategory.equals("Concrete Mixers") || subCategory.equals("Road Rollers")
-                                        || subCategory.equals("Milling Equipment") || subCategory.equals("Trenches")) {
-                                    rowInvoice.setVisibility(View.VISIBLE);
-                                    rowpermit.setVisibility(View.GONE);
-                                    rowfitness.setVisibility(View.GONE);
-                                    rowtax.setVisibility(View.GONE);
-                                    rowrc.setVisibility(View.GONE);
-                                } else {
-                                    rowrc.setVisibility(View.VISIBLE);
-                                    rowpermit.setVisibility(View.VISIBLE);
-                                    rowfitness.setVisibility(View.VISIBLE);
-                                    rowtax.setVisibility(View.VISIBLE);
+                            switch (Category) {
+                                case "Bus":
                                     rowInvoice.setVisibility(View.GONE);
-                                }
+                                    rowbody.setVisibility(View.GONE);
+                                    rowboattype.setVisibility(View.GONE);
+                                    rowrvtype.setVisibility(View.GONE);
+                                    rowdrive.setVisibility(View.GONE);
+                                    rowtransmission.setVisibility(View.GONE);
+                                    rowuse.setVisibility(View.GONE);
+                                    rowimpl.setVisibility(View.GONE);
+                                    break;
+                                case "Car":
+                                    rowInvoice.setVisibility(View.GONE);
+                                    rowbustype.setVisibility(View.GONE);
+                                    rowbody.setVisibility(View.GONE);
+                                    rowboattype.setVisibility(View.GONE);
+                                    rowrvtype.setVisibility(View.GONE);
+                                    rowuse.setVisibility(View.GONE);
+                                    rowimpl.setVisibility(View.GONE);
 
-                            } else if (Category.equals("Commercial Vehicle")) {
-                                rowInvoice.setVisibility(View.GONE);
-                                rowbustype.setVisibility(View.GONE);
-                                rowaircondition.setVisibility(View.GONE);
-                                rowboattype.setVisibility(View.GONE);
-                                rowrvtype.setVisibility(View.GONE);
-                                rowseat.setVisibility(View.GONE);
-                                rowbody.setVisibility(View.VISIBLE);
-                                rowdrive.setVisibility(View.GONE);
-                                rowtransmission.setVisibility(View.GONE);
-                                rowuse.setVisibility(View.GONE);
-                                rowimpl.setVisibility(View.GONE);
+                                    radioPermitGroup = (RadioGroup) root.findViewById(R.id.radiopermit);
+                                    int selectedId = radioPermitGroup.getCheckedRadioButtonId();
+                                    radioPermitButton = (RadioButton) root.findViewById(selectedId);
+                                    permit1 = radioPermitButton.getText().toString();
 
-                            } else if (Category.equals("Tractor")) {
-                                rowInvoice.setVisibility(View.GONE);
-                                rowbustype.setVisibility(View.GONE);
-                                rowaircondition.setVisibility(View.GONE);
-                                rowbody.setVisibility(View.GONE);
-                                rowboattype.setVisibility(View.GONE);
-                                rowrvtype.setVisibility(View.GONE);
-                                rowcolor.setVisibility(View.GONE);
-                                rowseat.setVisibility(View.GONE);
-                                rowdrive.setVisibility(View.GONE);
-                                rowtransmission.setVisibility(View.GONE);
+                                    if (permit1.equalsIgnoreCase("Private")) {
+                                        rowpermit.setVisibility(View.GONE);
+                                        rowfitness.setVisibility(View.GONE);
+                                        rowtax.setVisibility(View.GONE);
+                                    }
+                                    break;
+                                case "Construction Equipment":
+                                    String subCategory = subcategory.getSelectedItem().toString();
+                                    rowbustype.setVisibility(View.GONE);
+                                    rowaircondition.setVisibility(View.GONE);
+                                    rowbody.setVisibility(View.GONE);
+                                    rowboattype.setVisibility(View.GONE);
+                                    rowrvtype.setVisibility(View.GONE);
+                                    rowcolor.setVisibility(View.GONE);
+                                    rowseat.setVisibility(View.GONE);
+                                    rowdrive.setVisibility(View.GONE);
+                                    rowtransmission.setVisibility(View.GONE);
+                                    rowuse.setVisibility(View.GONE);
+                                    rowimpl.setVisibility(View.GONE);
 
-                            } else if (Category.equals("2 Wheeler")) {
-                                rowInvoice.setVisibility(View.GONE);
-                                rowbustype.setVisibility(View.GONE);
-                                rowaircondition.setVisibility(View.GONE);
-                                rowbody.setVisibility(View.GONE);
-                                rowboattype.setVisibility(View.GONE);
-                                rowrvtype.setVisibility(View.GONE);
-                                rowtax.setVisibility(View.GONE);
-                                rowfitness.setVisibility(View.GONE);
-                                rowpermit.setVisibility(View.GONE);
-                                rowseat.setVisibility(View.GONE);
-                                rowdrive.setVisibility(View.GONE);
-                                rowtransmission.setVisibility(View.GONE);
-                                rowuse.setVisibility(View.GONE);
-                                rowimpl.setVisibility(View.GONE);
+                                    if (subCategory.equals("Excavator") || subCategory.equals("Skid Steers") || subCategory.equals("Crawlers")
+                                            || subCategory.equals("Dozer") || subCategory.equals("Concrete Mixers") || subCategory.equals("Road Rollers")
+                                            || subCategory.equals("Milling Equipment") || subCategory.equals("Trenches")) {
+                                        rowInvoice.setVisibility(View.VISIBLE);
+                                        rowpermit.setVisibility(View.GONE);
+                                        rowfitness.setVisibility(View.GONE);
+                                        rowtax.setVisibility(View.GONE);
+                                        rowrc.setVisibility(View.GONE);
+                                    } else {
+                                        rowrc.setVisibility(View.VISIBLE);
+                                        rowpermit.setVisibility(View.VISIBLE);
+                                        rowfitness.setVisibility(View.VISIBLE);
+                                        rowtax.setVisibility(View.VISIBLE);
+                                        rowInvoice.setVisibility(View.GONE);
+                                    }
 
-                            } else if (Category.equals("3 Wheeler")) {
-                                rowInvoice.setVisibility(View.GONE);
-                                rowbustype.setVisibility(View.GONE);
-                                rowaircondition.setVisibility(View.GONE);
-                                rowbody.setVisibility(View.GONE);
-                                rowboattype.setVisibility(View.GONE);
-                                rowrvtype.setVisibility(View.GONE);
-                                rowdrive.setVisibility(View.GONE);
-                                rowtransmission.setVisibility(View.GONE);
-                                rowuse.setVisibility(View.GONE);
-                                rowimpl.setVisibility(View.GONE);
+                                    break;
+                                case "Commercial Vehicle":
+                                    rowInvoice.setVisibility(View.GONE);
+                                    rowbustype.setVisibility(View.GONE);
+                                    rowaircondition.setVisibility(View.GONE);
+                                    rowboattype.setVisibility(View.GONE);
+                                    rowrvtype.setVisibility(View.GONE);
+                                    rowseat.setVisibility(View.GONE);
+                                    rowbody.setVisibility(View.VISIBLE);
+                                    rowdrive.setVisibility(View.GONE);
+                                    rowtransmission.setVisibility(View.GONE);
+                                    rowuse.setVisibility(View.GONE);
+                                    rowimpl.setVisibility(View.GONE);
+
+                                    break;
+                                case "Tractor":
+                                    rowInvoice.setVisibility(View.GONE);
+                                    rowbustype.setVisibility(View.GONE);
+                                    rowaircondition.setVisibility(View.GONE);
+                                    rowbody.setVisibility(View.GONE);
+                                    rowboattype.setVisibility(View.GONE);
+                                    rowrvtype.setVisibility(View.GONE);
+                                    rowcolor.setVisibility(View.GONE);
+                                    rowseat.setVisibility(View.GONE);
+                                    rowdrive.setVisibility(View.GONE);
+                                    rowtransmission.setVisibility(View.GONE);
+
+                                    break;
+                                case "2 Wheeler":
+                                    rowInvoice.setVisibility(View.GONE);
+                                    rowbustype.setVisibility(View.GONE);
+                                    rowaircondition.setVisibility(View.GONE);
+                                    rowbody.setVisibility(View.GONE);
+                                    rowboattype.setVisibility(View.GONE);
+                                    rowrvtype.setVisibility(View.GONE);
+                                    rowtax.setVisibility(View.GONE);
+                                    rowfitness.setVisibility(View.GONE);
+                                    rowpermit.setVisibility(View.GONE);
+                                    rowseat.setVisibility(View.GONE);
+                                    rowdrive.setVisibility(View.GONE);
+                                    rowtransmission.setVisibility(View.GONE);
+                                    rowuse.setVisibility(View.GONE);
+                                    rowimpl.setVisibility(View.GONE);
+
+                                    break;
+                                case "3 Wheeler":
+                                    rowInvoice.setVisibility(View.GONE);
+                                    rowbustype.setVisibility(View.GONE);
+                                    rowaircondition.setVisibility(View.GONE);
+                                    rowbody.setVisibility(View.GONE);
+                                    rowboattype.setVisibility(View.GONE);
+                                    rowrvtype.setVisibility(View.GONE);
+                                    rowdrive.setVisibility(View.GONE);
+                                    rowtransmission.setVisibility(View.GONE);
+                                    rowuse.setVisibility(View.GONE);
+                                    rowimpl.setVisibility(View.GONE);
+                                    break;
                             }
                         } else
                             moresearchlinear.setVisibility(View.GONE);
@@ -799,8 +805,6 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
                     air.setSelection(0);
                     invoice.setSelection(0);
 
-                    //AutoCompleteTextView  , autoRTO,,,autoCity3,autoCity4,autoRTO1,,,;
-
                     autoCity.setText("");
                     autoCity1.setText("");
                     autoCity2.setText("");
@@ -811,8 +815,6 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
                     autoRTO2.setText("");
                     autoRTO3.setText("");
                     autoRTO4.setText("");
-
-                    //EditText ,,,,,,;
 
                     useEdit.setText("");
                     seatingEdit.setText("");
@@ -825,11 +827,7 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
                     getfual();
                 }
             });
-
-
         }
-
-
         return root;
     }
 
@@ -935,7 +933,10 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
             hpcap1 = minihpcapacity.getText().toString();
             hpcap2 = maxhpcapcity.getText().toString();
 
-            owner1 = owner.getSelectedItem().toString();
+            int ownerPos = owner.getSelectedItemPosition();
+            if (ownerPos != 0)
+                owner1 = Integer.parseInt(owner.getSelectedItem().toString());
+
             price1 = pricefrom.getText().toString();
             price2 = priceto.getText().toString();
             city2 = autoRTO.getText().toString();
@@ -1056,130 +1057,48 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
             e.printStackTrace();
 
         }
-
-
-        SaveSearchTask();
+        RequestAlertBox();
 
     }
 
-    private void SaveSearchTask() {
-       /* StringRequest stringRequest = new StringRequest(Request.Method.POST,
-                "http://autokatta.com/mobile/saveSearch.php",
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        System.out.println("onResponse:SaveSearchTask:" + response);
+    private void RequestAlertBox() {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
 
-                        try {
-                            if (response.startsWith("New record created successfully")) {
 
-                                FragmentManager mFragmentManager;
-                                FragmentTransaction mFragmentTransaction;
-                                Toast.makeText(getActivity(), "Your search saved successfully! you will get notification soon..!", Toast.LENGTH_SHORT).show();
+        alertDialogBuilder
+                .setMessage("Want a call back ?")
+                .setCancelable(true)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
 
-                                Bundle b = new Bundle();
-                                b.putInt("call", 0);
-
-                                TabFragment fr = new TabFragment();
-                                fr.setArguments(b);
-                                mFragmentManager = getActivity().getSupportFragmentManager();
-                                mFragmentTransaction = mFragmentManager.beginTransaction();
-                                mFragmentTransaction.replace(R.id.containerView, fr).commit();
-
-                            } else if (response.startsWith("success in update")) {
-                                FragmentManager mFragmentManager;
-                                FragmentTransaction mFragmentTransaction;
-                                Toast.makeText(getActivity(), "Your search updated successfully! you will get notification soon..!", Toast.LENGTH_SHORT).show();
-
-                                sqlite_obj.open();
-                                SQlitewallDB.DatabaseHelper obg = new SQlitewallDB.DatabaseHelper(getActivity());
-                                obg.updateMySearch(Sid, Category, brand1, model1, price1, man_yr1 + "-" + man_yr2);
-
-                                sqlite_obj.close();
-
-                                Bundle b = new Bundle();
-                                b.putInt("call", 0);
-
-                                TabFragment fr = new TabFragment();
-                                fr.setArguments(b);
-                                mFragmentManager = getActivity().getSupportFragmentManager();
-                                mFragmentTransaction = mFragmentManager.beginTransaction();
-                                mFragmentTransaction.replace(R.id.containerView, fr).commit();
-                            }
-
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-
+                        callPermission = "Yes";
+                        SaveSearchTask();
+                        dialog.cancel();
 
                     }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                System.out.println("onError:SaveSearchTask:" + error.getMessage());
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("contact", contact);
-                params.put("category", Category);
-                params.put("subcategory", subCategory);
-                params.put("brand", brand1);
-                params.put("model", model1);
-                params.put("version", version1);
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
 
-                params.put("color", color1);
-                params.put("man_year", man_yr1 + "-" + man_yr2);
-                params.put("reg_year", reg_yr1 + "-" + reg_yr2);
-                params.put("insurance", insurance1);
-                params.put("kms_running", kms1 + "-" + kms2);
-                params.put("hrs_running", hrs1 + "-" + hrs2);
-                params.put("hpcapacity", hpcap1 + "-" + hpcap2);
-                params.put("owners", owner1);
-                params.put("price", price1 + "-" + price2);
-                params.put("tyre_condition", tyre1 + "-" + tyre2);
+                        callPermission = "No";
+                        SaveSearchTask();
+                        dialog.cancel();
 
-                params.put("city", city1);
-                params.put("city1", city11);
-                params.put("city2", city12);
-                params.put("city3", city13);
-                params.put("city4", city14);
-                params.put("RTO_city", city2);
-                params.put("RTO_city1", city21);
-                params.put("RTO_city2", city22);
-                params.put("RTO_city3", city23);
-                params.put("RTO_city4", city24);
+                    }
+                });
 
-                params.put("rc_available", rc1);
-                params.put("ins_valid", insurance1);
-                params.put("tax_validity", tax_validity1);
-                params.put("fitness_validity", fitness_validity1);
-                params.put("permit_validity", permit_validity1);
-                params.put("fual", fual1);
-                params.put("seat_cap", seating1);
-                params.put("permit", permit1);
-                params.put("hypothetication", hypo1);
-                params.put("drive", drive1);
-                params.put("finance", finance1);
-                params.put("transmission", transmission1);
-                params.put("body_type", body1);
-                params.put("boat_type", boat1);
-                params.put("rv_type", rv1);
-                params.put("application", use1);
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
 
-                params.put("implements", implement1);
-                params.put("bus_type", bus_type1);
-                params.put("air_condition", air1);
-                params.put("invoice", invoice1);
-                params.put("keyword", action);
-                params.put("search_id", Sid);
-
-                return params;
-            }
-        };
-        requestQueue.add(stringRequest);*/
-
+    private void SaveSearchTask() {
+        ApiCall mApiCall = new ApiCall(getActivity(), this);
+        mApiCall.saveMySearch(myContact, Category, subCategory, brand1, model1, version1, color1,
+                man_yr1 + "-" + man_yr2, insurance1, kms1 + "-" + kms2,
+                hrs1 + "-" + hrs2, hpcap1 + "-" + hpcap2, owner1, price1 + "-" + price2, tyre1 + "-" + tyre2,
+                city1, city11, city12, city13, city14, city2, city21, city22, city23, city24, rc1, insurance1,
+                tax_validity1, fitness_validity1, permit_validity1, fual1, seating1, permit1, hypo1, drive1, finance1, transmission1,
+                body1, boat1, rv1, use1, implement1, bus_type1, air1, invoice1, action, Sid, callPermission);
     }
 
 
@@ -1567,6 +1486,7 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
                     final List<Integer> vehicle_iddd = new ArrayList<>();
                     GetVehicleListResponse listResponse = (GetVehicleListResponse) response.body();
                     if (!listResponse.getSuccess().isEmpty()) {
+                        vehicles.add("-Select Category-");
                         for (GetVehicleListResponse.Success success : listResponse.getSuccess()) {
                             vehicle_iddd.add(success.getId());
                             vehicles.add(success.getName());
@@ -1596,7 +1516,7 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
                                 else
                                     rowPermit.setVisibility(View.GONE);
 
-                                if (Category.equals("Tractor") || Category.equals("Cranes") || Category.equalsIgnoreCase(" Construction Equipment ")) {
+                                if (Category.equals("Tractor") || Category.equals("Cranes") || Category.equalsIgnoreCase("Construction Equipment")) {
                                     rowKms.setVisibility(View.GONE);
                                     rowkms1.setVisibility(View.GONE);
                                     rowhrs.setVisibility(View.VISIBLE);
@@ -1624,6 +1544,8 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
                     final List<Integer> vehicles_id = new ArrayList<>();
                     GetVehicleSubTypeResponse subTypeResponse = (GetVehicleSubTypeResponse) response.body();
                     if (!subTypeResponse.getSuccess().isEmpty()) {
+                        vehicles.add("-Select subcategory-");
+
                         for (GetVehicleSubTypeResponse.Success success : subTypeResponse.getSuccess()) {
                             vehicles_id.add(success.getId());
                             vehicles.add(success.getName());
@@ -1675,6 +1597,7 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
                     final List<Integer> brand_id = new ArrayList<>();
                     GetVehicleBrandResponse brandResponse = (GetVehicleBrandResponse) response.body();
                     if (!brandResponse.getSuccess().isEmpty()) {
+                        brands.add("-Select Brand-");
                         for (GetVehicleBrandResponse.Success success : brandResponse.getSuccess()) {
                             brand_id.add(success.getBrandId());
                             brands.add(success.getBrandTitle());
@@ -1711,6 +1634,7 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
                     final List<Integer> model_id = new ArrayList<>();
                     GetVehicleModelResponse modelResponse = (GetVehicleModelResponse) response.body();
                     if (!modelResponse.getSuccess().isEmpty()) {
+                        models.add("-Select Models-");
                         for (GetVehicleModelResponse.Success success : modelResponse.getSuccess()) {
                             model_id.add(success.getModelId());
                             models.add(success.getModelTitle());
@@ -1748,6 +1672,7 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
                     final List<Integer> version_id = new ArrayList<Integer>();
                     GetVehicleVersionResponse versionResponse = (GetVehicleVersionResponse) response.body();
                     if (!versionResponse.getSuccess().isEmpty()) {
+                        versions.add("-Select Version-");
                         for (GetVehicleVersionResponse.Success success : versionResponse.getSuccess()) {
                             version_id.add(success.getVersionId());
                             versions.add(success.getVersion());

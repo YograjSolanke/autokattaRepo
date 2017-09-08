@@ -9,9 +9,11 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.MimeTypeMap;
@@ -621,7 +623,7 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
     */
     private static class MySearch extends RecyclerView.ViewHolder {
         TextView mCategory, mBrand, mModel, mPrice, mYear, mSearchDate, mLeads, mStopdate;
-        ImageView editImg, deleteImg, favImg, unfavImg, share, mAutokattaShare;
+        ImageView editImg, deleteImg, favImg, unfavImg, mAutokattaShare;
         Button Stopsearch, Startsearch;
         RelativeLayout relativeLayout, relativeSearchTitle;
         CardView cardView;
@@ -640,8 +642,7 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
             deleteImg = (ImageView) itemView.findViewById(R.id.deletevehi);
             favImg = (ImageView) itemView.findViewById(R.id.favsearch);
             unfavImg = (ImageView) itemView.findViewById(R.id.unfavsearch);
-            share = (ImageView) itemView.findViewById(R.id.sharesearch);
-            mAutokattaShare = (ImageView) itemView.findViewById(R.id.sharesearch1);
+            mAutokattaShare = (ImageView) itemView.findViewById(R.id.sharesearch);
             Stopsearch = (Button) itemView.findViewById(R.id.stopsearch);
             Startsearch = (Button) itemView.findViewById(R.id.startsearch);
 
@@ -649,9 +650,6 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
             relativeSearchTitle = (RelativeLayout) itemView.findViewById(R.id.reltitlerow);
             mStopdate = (TextView) itemView.findViewById(R.id.txtdate);
             cardView = (CardView) itemView.findViewById(R.id.card_view);
-
-            share.setVisibility(View.GONE);
-
 
         }
     }
@@ -2930,64 +2928,54 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
 
                     @Override
                     public void onClick(View v) {
-                        //shareProfileData();
-                        android.support.v7.app.AlertDialog.Builder alert = new android.support.v7.app.AlertDialog.Builder(mActivity);
-                        alert.setTitle("Share");
-                        alert.setMessage("with Autokatta or to other?");
-                        alert.setIconAttribute(android.R.attr.alertDialogIcon);
-
-                        alert.setPositiveButton("Autokatta", new DialogInterface.OnClickListener() {
+                        PopupMenu mPopupMenu = new PopupMenu(mActivity, mySearchHolder.mAutokattaShare);
+                        mPopupMenu.getMenuInflater().inflate(R.menu.more_menu, mPopupMenu.getMenu());
+                        mPopupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                             @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
-                                String allSearchDetails = mySearchHolder.mCategory.getText().toString() + "=" +
-                                        mySearchHolder.mBrand.getText().toString() + "=" +
-                                        mySearchHolder.mModel.getText().toString() + "=" +
-                                        mySearchHolder.mPrice.getText().toString() + "=" +
-                                        mySearchHolder.mYear.getText().toString() + "=" +
-                                        mySearchHolder.mSearchDate.getText().toString() + "=" +
-                                        mySearchHolder.mLeads.getText().toString();
-
-
-                                System.out.println("all search detailssss======Auto " + allSearchDetails);
-
-                                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                                        putString("Share_sharedata", allSearchDetails).apply();
-                                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                                        putInt("Share_search_id", notificationList.get(mySearchHolder.getAdapterPosition()).getSearchId()).apply();
-                                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                                        putString("Share_keyword", "mysearch").apply();
+                            public boolean onMenuItemClick(MenuItem item) {
+                                switch (item.getItemId()) {
+                                    case R.id.autokatta:
+                                        String allSearchDetails = mySearchHolder.mCategory.getText().toString() + "=" +
+                                                mySearchHolder.mBrand.getText().toString() + "=" +
+                                                mySearchHolder.mModel.getText().toString() + "=" +
+                                                mySearchHolder.mPrice.getText().toString() + "=" +
+                                                mySearchHolder.mYear.getText().toString() + "=" +
+                                                mySearchHolder.mSearchDate.getText().toString() + "=" +
+                                                mySearchHolder.mLeads.getText().toString();
 
 
-                                Intent i = new Intent(mActivity, ShareWithinAppActivity.class);
-                                mActivity.startActivity(i);
-                                dialog.dismiss();
-                            }
-                        });
+                                        System.out.println("all search detailssss======Auto " + allSearchDetails);
 
-                        alert.setNegativeButton("Other", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
+                                        mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                                                putString("Share_sharedata", allSearchDetails).apply();
+                                        mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                                                putInt("Share_search_id", notificationList.get(mySearchHolder.getAdapterPosition()).getSearchId()).apply();
+                                        mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                                                putString("Share_keyword", "mysearch").apply();
 
+                                        Intent i = new Intent(mActivity, ShareWithinAppActivity.class);
+                                        mActivity.startActivity(i);
+                                        break;
 
-                                String allSearchDetails = "Search Category : " + mySearchHolder.mCategory.getText().toString() + "\n" +
-                                        "Search Brand : " + mySearchHolder.mBrand.getText().toString() + "\n" +
-                                        "Search Model : " + mySearchHolder.mModel.getText().toString() + "\n" +
-                                        "Year Of Mfg : " + mySearchHolder.mYear.getText().toString() + "\n" +
-                                        "Price : " + mySearchHolder.mPrice.getText().toString() + "\n" +
-                                        "Leads : " + mySearchHolder.mLeads.getText().toString() + "\n" +
-                                        "Date : " + mySearchHolder.mSearchDate.getText().toString();
+                                    case R.id.other:
+                                        String allSearchDetailss = "Search Category : " + mySearchHolder.mCategory.getText().toString() + "\n" +
+                                                "Search Brand : " + mySearchHolder.mBrand.getText().toString() + "\n" +
+                                                "Search Model : " + mySearchHolder.mModel.getText().toString() + "\n" +
+                                                "Year Of Mfg : " + mySearchHolder.mYear.getText().toString() + "\n" +
+                                                "Price : " + mySearchHolder.mPrice.getText().toString() + "\n" +
+                                                "Leads : " + mySearchHolder.mLeads.getText().toString() + "\n" +
+                                                "Date : " + mySearchHolder.mSearchDate.getText().toString();
 
-                                System.out.println("all search detailssss======Other " + allSearchDetails);
+                                        System.out.println("all search detailssss======Other " + allSearchDetailss);
 
-                                intent.setType("text/plain");
+                                        intent.setType("text/plain");
                                 /*intent.putExtra(Intent.EXTRA_TEXT, "Please visit and Follow my vehicle on Autokatta. Stay connected for Product and Service updates and enquiries"
                                         + "\n" + "http://autokatta.com/vehicle/main/" + notificationList.get(mySearchHolder.getAdapterPosition()).getSearchId() + "/" + mLoginContact
                                         + "\n" + "\n" + allSearchDetails);*/
-                                intent.putExtra(Intent.EXTRA_TEXT, allSearchDetails);
-                                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                                intent.putExtra(Intent.EXTRA_SUBJECT, "Search list from Autokatta User");
-                                mActivity.startActivity(Intent.createChooser(intent, "Autokatta"));
+                                        intent.putExtra(Intent.EXTRA_TEXT, allSearchDetailss);
+                                        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                                        intent.putExtra(Intent.EXTRA_SUBJECT, "Search list from Autokatta User");
+                                        mActivity.startActivity(Intent.createChooser(intent, "Autokatta"));
 
                                 /*intent.setType("text/plain");
                                 intent.putExtra(Intent.EXTRA_SUBJECT, "Please Find Below Attachments");
@@ -2995,19 +2983,16 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
                                 intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                                 mActivity.startActivity(intent);*/
 
-                                dialog.dismiss();
+                                        break;
+                                }
+                                return false;
                             }
-
                         });
-                        alert.create();
-                        alert.show();
+                        mPopupMenu.show(); //showing popup menu
                     }
                 });
 
-
                 break;
-
-
         }
     }
 
