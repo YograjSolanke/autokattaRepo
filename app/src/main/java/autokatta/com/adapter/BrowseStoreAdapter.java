@@ -9,16 +9,17 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.MimeTypeMap;
 import android.webkit.URLUtil;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -288,94 +289,99 @@ public class BrowseStoreAdapter extends RecyclerView.Adapter<BrowseStoreAdapter.
             }
         });
 
-        holder.linearshare1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                String timing = success.getStoreOpenTime() + "" + success.getStoreCloseTime();
-                allDetails = success.getStoreName() + "=" +
-                        success.getWebsite() + "="
-                        + timing + "=" +
-                        success.getWorkingDays() + "=" +
-                        "" + "=" +
-                        success.getLocation() + "=" +
-                        success.getStoreImage() + "=" +
-                        success.getRating() + "=" +
-                        success.getLikecount() + "=" +
-                        success.getFollowcount();
-
-
-                activity.getSharedPreferences(activity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                        putString("Share_sharedata", allDetails).apply();
-                activity.getSharedPreferences(activity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                        putInt("Share_store_id", success.getStoreId()).apply();
-                activity.getSharedPreferences(activity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                        putString("Share_keyword", "store").apply();
-
-                Intent i = new Intent(activity, ShareWithinAppActivity.class);
-                activity.startActivity(i);
-                //activity.finish();
-
-            }
-        });
-//
-//
-        holder.linearshare.setOnClickListener(new View.OnClickListener() {
+        holder.mShare.setOnClickListener(new View.OnClickListener() {
+            String imageFilePath = "", imagename;
             Intent intent = new Intent(Intent.ACTION_SEND);
-            String imageFilePath;
 
             @Override
             public void onClick(View v) {
-                if (success.getStoreImage().equalsIgnoreCase("") || success.getStoreImage().equalsIgnoreCase(null) ||
-                        success.getStoreImage().equalsIgnoreCase("null")) {
-                    image = activity.getString(R.string.base_image_url) + "logo48x48.png";
-                } else {
-                    image = activity.getString(R.string.base_image_url) + success.getStoreImage();
-                }
-                Log.e("TAG", "img : " + image);
+                //shareProfileData();
+                PopupMenu mPopupMenu = new PopupMenu(activity, holder.mShare);
+                mPopupMenu.getMenuInflater().inflate(R.menu.more_menu, mPopupMenu.getMenu());
+                mPopupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        switch (item.getItemId()) {
+                            case R.id.autokatta:
+                                String timing = success.getStoreOpenTime() + "" + success.getStoreCloseTime();
+                                allDetails = success.getStoreName() + "=" +
+                                        success.getWebsite() + "="
+                                        + timing + "=" +
+                                        success.getWorkingDays() + "=" +
+                                        "" + "=" +
+                                        success.getLocation() + "=" +
+                                        success.getStoreImage() + "=" +
+                                        success.getRating() + "=" +
+                                        success.getLikecount() + "=" +
+                                        success.getFollowcount();
 
-                DownloadManager.Request request = new DownloadManager.Request(
-                        Uri.parse(image));
-                request.allowScanningByMediaScanner();
-                String filename = URLUtil.guessFileName(String.valueOf(image), null, MimeTypeMap.getFileExtensionFromUrl(image));
-                request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, filename);
-                Log.e("ShareImagePath :", filename);
-                Log.e("TAG", "img : " + image);
 
-                DownloadManager manager = (DownloadManager) activity.getApplication()
-                        .getSystemService(Context.DOWNLOAD_SERVICE);
+                                activity.getSharedPreferences(activity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                                        putString("Share_sharedata", allDetails).apply();
+                                activity.getSharedPreferences(activity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                                        putInt("Share_store_id", success.getStoreId()).apply();
+                                activity.getSharedPreferences(activity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                                        putString("Share_keyword", "store").apply();
 
-                Log.e("TAG", "img URL: " + image);
+                                Intent i = new Intent(activity, ShareWithinAppActivity.class);
+                                activity.startActivity(i);
+                                break;
 
-                manager.enqueue(request);
+                            case R.id.other:
+                                if (success.getStoreImage().equalsIgnoreCase("") || success.getStoreImage().equalsIgnoreCase(null) ||
+                                        success.getStoreImage().equalsIgnoreCase("null")) {
+                                    imagename = activity.getString(R.string.base_image_url) + "logo48x48.png";
+                                } else {
+                                    imagename = activity.getString(R.string.base_image_url) + success.getStoreImage();
+                                }
+                                Log.e("TAG", "img : " + imagename);
 
-                imageFilePath = "/storage/emulated/0/Download/" + filename;
-                System.out.println("ImageFilePath:" + imageFilePath);
+                                DownloadManager.Request request = new DownloadManager.Request(
+                                        Uri.parse(imagename));
+                                request.allowScanningByMediaScanner();
+                                String filename = URLUtil.guessFileName(imagename, null, MimeTypeMap.getFileExtensionFromUrl(imagename));
+                                request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, filename);
+                                Log.e("ShareImagePath :", filename);
+                                Log.e("TAG", "img : " + imagename);
 
-                String allStoreDetails = "Store name : " + holder.storename.getText().toString() + "\n" +
-                        "Store type : " + holder.storetype.getText().toString() + "\n" +
-                        "Ratings : " + holder.storerating.getRating() + "\n" +
-                        "Likes : " + success.getLikecount() + "\n" +
-                        "Website : " + holder.storewebsite.getText().toString() + "\n" +
-                        "Timing : " + holder.storetiming.getText().toString() + "\n" +
-                        "Working Days : " + holder.storeworkingdays.getText().toString() + "\n" +
-                        "Location : " + holder.storelocation.getText().toString();
+                                DownloadManager manager = (DownloadManager) activity.getApplication()
+                                        .getSystemService(Context.DOWNLOAD_SERVICE);
 
-                System.out.println("all store detailssss======Other " + allStoreDetails);
+                                Log.e("TAG", "img URL: " + imagename);
 
-                intent.setType("text/plain");
-                intent.putExtra(Intent.EXTRA_TEXT, "Please visit and Follow my store on Autokatta. Stay connected for Product and Service updates and enquiries"
-                        + "\n" + "http://autokatta.com/store/main/" + success.getStoreId()
-                        + "/" + success.getContactNo()
-                        + "\n" + "\n" + allStoreDetails);
-                intent.setType("image/jpeg");
-                intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(imageFilePath)));
-                intent.putExtra(Intent.EXTRA_SUBJECT, "Please Find Below Attachments");
-                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                activity.startActivity(Intent.createChooser(intent, "Autokatta"));
+                                manager.enqueue(request);
+
+                                imageFilePath = "/storage/emulated/0/Download/" + filename;
+                                System.out.println("ImageFilePath:" + imageFilePath);
+
+                                String allStoreDetails = "Store name : " + holder.storename.getText().toString() + "\n" +
+                                        "Store type : " + holder.storetype.getText().toString() + "\n" +
+                                        "Ratings : " + holder.storerating.getRating() + "\n" +
+                                        "Likes : " + success.getLikecount() + "\n" +
+                                        "Website : " + holder.storewebsite.getText().toString() + "\n" +
+                                        "Timing : " + holder.storetiming.getText().toString() + "\n" +
+                                        "Working Days : " + holder.storeworkingdays.getText().toString() + "\n" +
+                                        "Location : " + holder.storelocation.getText().toString();
+
+
+                                intent.setType("text/plain");
+                                intent.putExtra(Intent.EXTRA_TEXT, "Please visit and Follow my store on Autokatta. Stay connected for Product and Service updates and enquiries"
+                                        + "\n" + "http://autokatta.com/store/main/" + success.getStoreId()
+                                        + "/" + success.getContactNo()
+                                        + "\n" + "\n" + allStoreDetails);
+                                intent.setType("image/jpeg");
+                                intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(imageFilePath)));
+                                intent.putExtra(Intent.EXTRA_SUBJECT, "Please Find Below Attachments");
+                                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                                activity.startActivity(Intent.createChooser(intent, "Autokatta"));
+                                break;
+                        }
+                        return false;
+                    }
+                });
+                mPopupMenu.show(); //showing popup menu
             }
         });
-
 
     }
 
@@ -404,8 +410,9 @@ public class BrowseStoreAdapter extends RecyclerView.Adapter<BrowseStoreAdapter.
         ImageView store_image, call_image;
         TextView btnlike, btnfollow;
         RatingBar storerating;
-        LinearLayout linearlike, linearunlike, linearfollow, linearunfollow;
+        Button linearlike, linearunlike, linearfollow, linearunfollow;
         TextView linearshare, linearshare1, mRatingCount, mStoreTime, productCount, serviceCount;
+        Button mShare;
         Button btndetail;
         CardView mCardView;
 
@@ -420,6 +427,7 @@ public class BrowseStoreAdapter extends RecyclerView.Adapter<BrowseStoreAdapter.
             storeservices = (TextView) itemView.findViewById(R.id.storeservices);
             storeworkingdays = (TextView) itemView.findViewById(R.id.storeworkingdays);
             mRatingCount = (TextView) itemView.findViewById(R.id.rating_count);
+            mShare = (Button) itemView.findViewById(R.id.linear_share);
 
             store_image = (ImageView) itemView.findViewById(R.id.storeprofileimage);
             call_image = (ImageView) itemView.findViewById(R.id.call_image);
@@ -428,10 +436,10 @@ public class BrowseStoreAdapter extends RecyclerView.Adapter<BrowseStoreAdapter.
             btnfollow = (TextView) itemView.findViewById(R.id.follow);
             linearshare = (TextView) itemView.findViewById(R.id.share_clk);
             linearshare1 = (TextView) itemView.findViewById(R.id.autokatta_share_clk);
-            linearlike = (LinearLayout) itemView.findViewById(R.id.rellike);
-            linearunlike = (LinearLayout) itemView.findViewById(R.id.relunlike);
-            linearfollow = (LinearLayout) itemView.findViewById(R.id.linear_follow);
-            linearunfollow = (LinearLayout) itemView.findViewById(R.id.linear_unfollow);
+            linearlike = (Button) itemView.findViewById(R.id.rellike);
+            linearunlike = (Button) itemView.findViewById(R.id.relunlike);
+            linearfollow = (Button) itemView.findViewById(R.id.linear_follow);
+            linearunfollow = (Button) itemView.findViewById(R.id.linear_unfollow);
             mCardView = (CardView) itemView.findViewById(R.id.card_view);
             productCount = (TextView) itemView.findViewById(R.id.productCount);
             serviceCount = (TextView) itemView.findViewById(R.id.serviceCount);

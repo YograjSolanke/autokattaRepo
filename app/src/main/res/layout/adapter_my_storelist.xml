@@ -131,10 +131,11 @@
 
                     <TextView
                         android:id="@+id/editwebsite"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/autolocation"
                         android:drawableStart="@mipmap/web"
+                        android:layout_toLeftOf="@+id/storeShare"
                         android:fontFamily="sans-serif"
                         android:gravity="start"
                         android:text="@string/website" />
@@ -186,6 +187,18 @@
                         android:layout_marginEnd="5dp"
                         android:contentDescription="@string/app_name"
                         android:src="@mipmap/ic_delete" />
+
+                    <ImageView
+                        android:id="@+id/storeShare"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:layout_below="@+id/storedelete"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginEnd="5dp"
+                        android:contentDescription="@string/app_name"
+                        android:src="@mipmap/new_share" />
+
+
                 </RelativeLayout>
             </RelativeLayout>
 
@@ -206,6 +219,7 @@
                 android:layout_marginTop="@dimen/margin_small"
                 android:baselineAligned="false"
                 android:gravity="center"
+                android:visibility="gone"
                 android:orientation="horizontal"
                 android:weightSum="4">
 

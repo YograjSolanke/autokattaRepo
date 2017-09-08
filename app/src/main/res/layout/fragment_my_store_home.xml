@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <ImageView
             android:id="@+id/other_store_image"
@@ -127,21 +127,21 @@
             <ImageView
                 android:id="@+id/like"
                 android:layout_width="match_parent"
-                android:layout_height="25dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:contentDescription="@string/app_name"
-                android:src="@drawable/ic_thumb_like"
+                android:src="@mipmap/you_like"
                 android:visibility="gone" />
 
             <ImageView
                 android:id="@+id/unlike"
                 android:layout_width="match_parent"
-                android:layout_height="25dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:contentDescription="@string/app_name"
-                android:src="@mipmap/ic_thumb_unlike"
+                android:src="@mipmap/unlike"
                 android:visibility="visible" />
 
             <ImageView
@@ -156,21 +156,21 @@
             <ImageView
                 android:id="@+id/unfollow"
                 android:layout_width="match_parent"
-                android:layout_height="25dp"
+                android:layout_height="35dp"
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:contentDescription="@string/app_name"
-                android:src="@mipmap/ic_comment_account"
+                android:src="@mipmap/new_follow"
                 android:visibility="visible" />
 
             <ImageView
                 android:id="@+id/follow"
                 android:layout_width="match_parent"
-                android:layout_height="25dp"
+                android:layout_height="35dp"
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:contentDescription="@string/app_name"
-                android:src="@mipmap/ic_comment_check"
+                android:src="@mipmap/unfollow"
                 android:visibility="gone" />
 
             <!--<LinearLayout

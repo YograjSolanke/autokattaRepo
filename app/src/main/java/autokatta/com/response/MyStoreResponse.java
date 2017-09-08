@@ -64,7 +64,7 @@ public class MyStoreResponse {
         private String modifiedDate;
         @SerializedName("rating")
         @Expose
-        private Object rating;
+        private Integer rating;
         @SerializedName("Status")
         @Expose
         private Object status;
@@ -206,11 +206,11 @@ public class MyStoreResponse {
             this.modifiedDate = modifiedDate;
         }
 
-        public Object getRating() {
+        public Integer getRating() {
             return rating;
         }
 
-        public void setRating(Object rating) {
+        public void setRating(Integer rating) {
             this.rating = rating;
         }
 
