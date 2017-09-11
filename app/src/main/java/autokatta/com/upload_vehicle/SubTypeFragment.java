@@ -183,6 +183,8 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
                         mRTOcity.setVisibility(View.GONE);
                         registernumber.setVisibility(View.GONE);
                         checkBox1.setVisibility(View.GONE);
+
+
                     }
 
                     mLocation.setAdapter(new GooglePlacesAdapter(getActivity(), R.layout.addproductspinner_color));
@@ -323,7 +325,7 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
                         String RCInvoiceText;
                         edtTyreContext.setVisibility(View.GONE);
                         mInvoiceSpinner.setVisibility(View.VISIBLE);
-                        edtSetHpcapa.setVisibility(View.VISIBLE);
+                        edtSetHpcapa.setVisibility(View.GONE);
 
                     /*23-8-17*/
                         mBustypeSpinner.setVisibility(View.GONE);
@@ -335,6 +337,12 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
                         mSetFuel.setVisibility(View.GONE);
                         mEmissionSpinner.setVisibility(View.GONE);
                         mBodyTypeSpinner.setVisibility(View.GONE);
+                        mAircondSpinner.setVisibility(View.GONE);
+                        mDriveSpinner.setVisibility(View.GONE);
+                        mTransmissionSpinner.setVisibility(View.GONE);
+
+
+
 
                 /* RC Text */
                         String RCText = "";
@@ -479,6 +487,9 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
                         mPermitSpinner.setVisibility(View.GONE);
                         mFitnessSpinner.setVisibility(View.GONE);
                         mBodyTypeSpinner.setVisibility(View.GONE);
+                        mDriveSpinner.setVisibility(View.GONE);
+                        mAircondSpinner.setVisibility(View.GONE);
+                        edtSeatCap.setVisibility(View.GONE);
 
                     } else if (Category.equalsIgnoreCase("3 Wheeler")) {
                         /*edtTyreContext.setVisibility(View.VISIBLE);
@@ -496,6 +507,8 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
                         edtTyreContext.setVisibility(View.VISIBLE);
                         mEmissionSpinner.setVisibility(View.VISIBLE);
                         edtApptext.setVisibility(View.VISIBLE);
+                        mAircondSpinner.setVisibility(View.GONE);
+
                         // seatrow.setVisibility(View.VISIBLE);
                         fuelType();
                         mTaxValidSpinner.setVisibility(View.GONE);
@@ -510,6 +523,9 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
                         edtSetJib.setVisibility(View.VISIBLE);
                         edtSetBoon.setVisibility(View.VISIBLE);
                         mBodyTypeSpinner.setVisibility(View.GONE);
+                        mDriveSpinner.setVisibility(View.GONE);
+                        mAircondSpinner.setVisibility(View.GONE);
+                        edtSeatCap.setVisibility(View.GONE);
                     }
 
                     mTaxValidSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

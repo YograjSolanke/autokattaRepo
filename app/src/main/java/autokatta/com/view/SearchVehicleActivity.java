@@ -723,6 +723,8 @@ public class SearchVehicleActivity extends AppCompatActivity implements MultiSel
                                 rowtransmission.setVisibility(View.GONE);
                                 rowuse.setVisibility(View.GONE);
                                 rowimpl.setVisibility(View.GONE);
+                                airSpinner.setVisibility(View.GONE);
+
 
                                 break;
                             case "3 Wheeler":
