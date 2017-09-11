@@ -80,6 +80,7 @@ public class MyStoreListActivity extends AppCompatActivity {
                 getFragmentManager().popBackStack();
             } else {
                 super.onBackPressed();
+
             }
         }
     }

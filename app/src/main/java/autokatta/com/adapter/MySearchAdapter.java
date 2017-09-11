@@ -107,16 +107,7 @@ public class MySearchAdapter extends RecyclerView.Adapter<MySearchAdapter.Search
         holder.BuyerLeads.setText(mMainlist.get(position).getBuyerLeads());
 
         //To set Date
-        /*try {
-            DateFormat date = new SimpleDateFormat(" MMM dd ");
-            DateFormat time = new SimpleDateFormat(" hh:mm a");
-            holder.textsearchdate.setText(date.format(mMainlist.get(position).getSearchDateNew()) +
-                    time.format(mMainlist.get(position).getSearchDateNew()));
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-*/
         try {
             TimeZone utc = TimeZone.getTimeZone("etc/UTC");
             //format of date coming from services
@@ -137,15 +128,6 @@ public class MySearchAdapter extends RecyclerView.Adapter<MySearchAdapter.Search
         }
 
         //To set LastDate
-        /*try {
-            DateFormat date1 = new SimpleDateFormat(" MMM dd ");
-            DateFormat time1 = new SimpleDateFormat(" hh:mm a");
-            holder.Stopdate.setText(date1.format(mMainlist.get(position).getStopDateNew()) +
-                    time1.format(mMainlist.get(position).getStopDateNew()));
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }*/
 
         try {
             TimeZone utc = TimeZone.getTimeZone("etc/UTC");
@@ -226,7 +208,6 @@ public class MySearchAdapter extends RecyclerView.Adapter<MySearchAdapter.Search
                 holder.unfavImg.setVisibility(View.GONE);
                 mMainlist.get(holder.getAdapterPosition()).setSearchstatus("yes");
                 mMainlist.set(holder.getAdapterPosition(), mMainlist.get(holder.getAdapterPosition()));
-                // obj.searchFavouritestatus.set(position, "yes");
 
             }
         });
@@ -240,7 +221,6 @@ public class MySearchAdapter extends RecyclerView.Adapter<MySearchAdapter.Search
                 holder.unfavImg.setVisibility(View.VISIBLE);
                 mMainlist.get(holder.getAdapterPosition()).setSearchstatus("no");
                 mMainlist.set(holder.getAdapterPosition(), mMainlist.get(holder.getAdapterPosition()));
-                // obj.searchFavouritestatus.set(position, "yes");
 
             }
         });
@@ -388,7 +368,6 @@ public class MySearchAdapter extends RecyclerView.Adapter<MySearchAdapter.Search
             public void onClick(View v) {
                 if (holder.BuyerLeads.getText().toString().equalsIgnoreCase("0")) {
                     CustomToast.customToast(activity, "No leads found");
-                    //Snackbar.make(v, "No leads found", Snackbar.LENGTH_SHORT).show();
                 } else {
                     SearchId = mMainlist.get(holder.getAdapterPosition()).getSearchId();
                     Bundle b = new Bundle();
@@ -406,7 +385,7 @@ public class MySearchAdapter extends RecyclerView.Adapter<MySearchAdapter.Search
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                     fragmentTransaction.replace(R.id.mysearchFrame, frag2);
                     fragmentTransaction.addToBackStack("mysearchsellerlist");
-                    fragmentTransaction.commit(); //
+                    fragmentTransaction.commit();
                 }
             }
         });

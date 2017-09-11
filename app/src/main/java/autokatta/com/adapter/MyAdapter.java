@@ -50,15 +50,12 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> impl
     private Context mContext;
     private List<ModelGroups> mItemList = new ArrayList<>();
     private String GroupType, keyword, mGroupName, mGroupImage;
-    int mGroupid;
+    private int mGroupid;
     private MyViewHolder view;
 
-    // Provide a reference to the views for each data item
-    // Complex data items may need more than one view per item, and
-    // you provide access to all the views for a data item in a view holder
     static class MyViewHolder extends RecyclerView.ViewHolder {
         CardView mCardView;
-        TextView mGroupTitleID, mMemberCount, mEditMemberCount, mVehicleCount, mEditVehicleCount,mProductcount,mServicecount;
+        TextView mGroupTitleID, mMemberCount, mEditMemberCount, mVehicleCount, mEditVehicleCount, mProductcount, mServicecount;
         ImageView mGroupIcon, mGroupEdit, mGroupDelete;
 
         MyViewHolder(View itemView) {
@@ -72,8 +69,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> impl
             mGroupIcon = (ImageView) itemView.findViewById(R.id.group_icon);
             mGroupEdit = (ImageView) itemView.findViewById(R.id.group_edit);
             mGroupDelete = (ImageView) itemView.findViewById(R.id.group_delete);
-            mProductcount= (TextView) itemView.findViewById(R.id.edit_product_count);
-            mServicecount= (TextView) itemView.findViewById(R.id.edit_service_count);
+            mProductcount = (TextView) itemView.findViewById(R.id.edit_product_count);
+            mServicecount = (TextView) itemView.findViewById(R.id.edit_service_count);
         }
     }
 
@@ -90,16 +87,13 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> impl
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        // create a new view
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.custom_card_joined_group, parent, false);
-        // set the view's size, margins, paddings and layout parameters
-        MyViewHolder vh = new MyViewHolder(v);
-        return vh;
+        return new MyViewHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, final int position) {
+    public void onBindViewHolder(final MyViewHolder holder, int position) {
         final int safePosition = holder.getAdapterPosition();
         view = holder;
         holder.mGroupTitleID.setText(mItemList.get(position).getTitle());
@@ -111,9 +105,9 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> impl
         holder.mGroupEdit.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                mGroupid = mItemList.get(position).getId();
-                mGroupName = mItemList.get(position).getTitle();
-                mGroupImage = mItemList.get(position).getImage();
+                mGroupid = mItemList.get(holder.getAdapterPosition()).getId();
+                mGroupName = mItemList.get(holder.getAdapterPosition()).getTitle();
+                mGroupImage = mItemList.get(holder.getAdapterPosition()).getImage();
 
                 GroupEditFragment frag = new GroupEditFragment();
                 Bundle bundle = new Bundle();
@@ -122,9 +116,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> impl
                 bundle.putString("bundle_image", mGroupImage);
                 frag.setArguments(bundle);
 
-                /*FragmentManager fragmentManager = ((FragmentActivity) mActivity).getSupportFragmentManager();
-                FragmentTransaction mTransaction = fragmentManager.beginTransaction();
-                mTransaction.replace(R.id.group_container, frag).commit();*/
                 ((FragmentActivity) mActivity).getSupportFragmentManager().beginTransaction().
                         replace(R.id.group_container, frag, "groupEdit")
                         .addToBackStack("groupEdit")
@@ -137,7 +128,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> impl
         holder.mGroupDelete.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                mGroupid = mItemList.get(position).getId();
+                mGroupid = mItemList.get(holder.getAdapterPosition()).getId();
                 new AlertDialog.Builder(mContext)
                         .setTitle("Delete")
                         .setMessage("Are you sure you want to delete this Group?")
@@ -168,8 +159,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> impl
             }
 
         });
-        //holder.mGroupEdit.setOnClickListener(this);
-//        holder.mEditVehicleCount.setText(mItemList.get(position).getVehicleCount());
 
         /***Card Click Listener***/
         holder.mCardView.setOnClickListener(new OnClickListener() {
@@ -180,7 +169,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> impl
                 mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), MODE_PRIVATE).edit()
                         .putString("grouptype", GroupType).apply();*/
                 ActivityOptions options = ActivityOptions.makeCustomAnimation(mActivity, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
-                mGroupid = mItemList.get(position).getId();
+                mGroupid = mItemList.get(holder.getAdapterPosition()).getId();
                 Intent intent = new Intent(mActivity, GroupsActivity.class);
                 //intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT | Intent.FLAG_ACTIVITY_PREVIOUS_IS_TOP);
                 //intent.putExtras();
@@ -191,7 +180,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> impl
                 }
                 intent.putExtra("className", "MyAdapter");
                 intent.putExtra("bundle_GroupId", mGroupid);
-                intent.putExtra("bundle_GroupName", mItemList.get(position).getTitle());
+                intent.putExtra("bundle_GroupName", mItemList.get(holder.getAdapterPosition()).getTitle());
                 mActivity.startActivity(intent, options.toBundle());
             }
         });
@@ -203,7 +192,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> impl
                 mItemList.get(position).getImage().equals("null")) {
             holder.mGroupIcon.setBackgroundResource(R.mipmap.ic_launcher);
         } else {
-            //mItemList.get(position).getImage() = mItemList.get(position).getImage().replaceAll(" ", "%20");
             String dppath = mActivity.getString(R.string.base_image_url) + mItemList.get(position).getImage();
             Glide.with(mActivity)
                     .load(dppath)
@@ -256,38 +244,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> impl
             CustomToast.customToast(mActivity, mActivity.getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
             CustomToast.customToast(mActivity, mActivity.getString(R.string.no_internet));
-            //mNoInternetIcon.setVisibility(View.VISIBLE);
-//            Snackbar snackbar = Snackbar.make(view.mCardView, mActivity.getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
-//                    .setAction("Go Online", new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View view) {
-//                            mActivity.startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
-//                        }
-//                    });
-//            // Changing message text color
-//            snackbar.setActionTextColor(Color.RED);
-//            // Changing action button text color
-//            View sbView = snackbar.getView();
-//            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
-//            textView.setTextColor(Color.YELLOW);
-//            snackbar.show();
         } else if (error instanceof UnknownHostException) {
             CustomToast.customToast(mActivity, mActivity.getString(R.string.no_response));
-            //mNoInternetIcon.setVisibility(View.VISIBLE);
-//            Snackbar snackbar = Snackbar.make(view.mCardView, mActivity.getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
-//                    .setAction("Go Online", new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View view) {
-//                            mActivity.startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
-//                        }
-//                    });
-//            // Changing message text color
-//            snackbar.setActionTextColor(Color.RED);
-//            // Changing action button text color
-//            View sbView = snackbar.getView();
-//            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
-//            textView.setTextColor(Color.YELLOW);
-//            snackbar.show();
         } else {
             Log.i("Check Class-", "My Adapter");
             error.printStackTrace();
@@ -299,8 +257,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> impl
         if (str != null) {
             if (str.equals("success")) {
                 CustomToast.customToast(mActivity, "Group deleted");
-               /* Intent i = new Intent(mActivity, GroupTabs.class);
-                mActivity.startActivity(i);*/
             }
         } else {
             CustomToast.customToast(mActivity, mActivity.getString(R.string.no_response));

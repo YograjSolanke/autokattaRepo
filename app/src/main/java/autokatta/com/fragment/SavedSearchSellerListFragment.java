@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -63,6 +64,7 @@ public class SavedSearchSellerListFragment extends Fragment implements RequestNo
     Button Stopsearch, Startsearch;
     RelativeLayout relativeLayout1, relativeLayout2;
     ConnectionDetector mTestConnection;
+    LinearLayout llSearchDate, llBuyerLead;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -105,6 +107,8 @@ public class SavedSearchSellerListFragment extends Fragment implements RequestNo
 
         relativeLayout1 = (RelativeLayout) myVehicles.findViewById(R.id.relbutton);
         relativeLayout2 = (RelativeLayout) myVehicles.findViewById(R.id.relnote);
+        llSearchDate = (LinearLayout) myVehicles.findViewById(R.id.llDate);
+        llBuyerLead = (LinearLayout) myVehicles.findViewById(R.id.llLeads);
         Stopdate = (TextView) myVehicles.findViewById(R.id.txtdate);
 
         mRecyclerView.setHasFixedSize(true);
@@ -161,6 +165,8 @@ public class SavedSearchSellerListFragment extends Fragment implements RequestNo
         favImg.setVisibility(View.GONE);
         unfavImg.setVisibility(View.GONE);
         autoshare.setVisibility(View.GONE);
+        llSearchDate.setVisibility(View.GONE);
+        llBuyerLead.setVisibility(View.GONE);
 
 
     }
