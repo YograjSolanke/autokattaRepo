@@ -143,11 +143,20 @@ public class StoreInfo extends Fragment implements RequestNotifier, View.OnClick
                     if (!adminResponse.getSuccess().isEmpty()) {
                         storeAdmins = "";
                         for (StoreOldAdminResponse.Success success : adminResponse.getSuccess()) {
-                            if (storeAdmins.equals(""))
-                                storeAdmins = success.getAdmin();
-                            else
-                                storeAdmins = storeAdmins + "," + success.getAdmin();
+                            String admin = success.getAdmin();
+                            String[] arr = admin.split(",");
+
+                            for (int i = 0; i < arr.length; i++) {
+                                String[] join = arr[i].split("-");
+                                if (storeAdmins.equals(""))
+                                    storeAdmins = join[2] + "-" + join[1];
+                                else
+                                    storeAdmins = storeAdmins + "," + join[2] + "-" + join[1];
+
+                            }
+
                         }
+
 
                         System.out.println("alreadyadmin=" + storeAdmins);
                         adminContacts.setText(storeAdmins);
