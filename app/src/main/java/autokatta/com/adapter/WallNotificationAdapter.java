@@ -165,7 +165,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
     private static class StoreNotifications extends RecyclerView.ViewHolder {
         CardView mStoreCardView;
         ImageView mProfilePic, mStoreImage;
-        ImageButton mStoreAutokattaShare, mCall, mLike, mUnlike, mFollow, mUnfollow, mStoreFav, mStoreUnfav;
+        ImageButton mStoreFav, mStoreUnfav;
         Button mStoreLike, mStoreUnlike, mStoreFollow, mStoreUnfollow, mStoreShare;
         RatingBar mStoreRating;
         TextView mStoreActionName, mActionTime, mStoreName, mStoreCategory, mStoreType, mStoreWebSite, mStoreTiming,
@@ -178,7 +178,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
             mProfilePic = (ImageView) storeView.findViewById(R.id.store_pic);
             mStoreImage = (ImageView) storeView.findViewById(R.id.store_image);
 
-            mStoreAutokattaShare = (ImageButton) storeView.findViewById(R.id.share_autokatta);
+            // mStoreAutokattaShare = (ImageButton) storeView.findViewById(R.id.share_autokatta);
             //mCall = (ImageButton) storeView.findViewById(R.id.call);
             //mLike = (ImageButton) storeView.findViewById(R.id.like);
             //mUnlike = (ImageButton) storeView.findViewById(R.id.unlike);
@@ -244,8 +244,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
     private static class VehicleNotifications extends RecyclerView.ViewHolder {
         CardView mVehicleCardView;
         ImageView mUserPic, mVehicleImage;
-        ImageButton mVehicleAutokattaShare, mCall, mVehicleFavourite, mVehicleUnfav,
-                mFollow, mUnfollow;
+        ImageButton mVehicleFavourite, mVehicleUnfav;
 
         Button mVehicleLike, mVehicleUnlike, mVehicleFollow, mVehicleUnfollow, mVehicleShare;
         TextView mActionName, mActionTime, mVehicleRegistration, mVehicleName, mVehiclePrice, mVehicleBrand,
@@ -260,7 +259,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
             mActionName = (TextView) upVehicleView.findViewById(R.id.action_name);
             mVehicleImage = (ImageView) upVehicleView.findViewById(R.id.vehicle_image);
 
-            mVehicleAutokattaShare = (ImageButton) upVehicleView.findViewById(R.id.share_autokatta);
+            // mVehicleAutokattaShare = (ImageButton) upVehicleView.findViewById(R.id.share_autokatta);
             //mCall = (ImageButton) upVehicleView.findViewById(R.id.call);
             mVehicleLike = (Button) upVehicleView.findViewById(R.id.like);
             mVehicleUnlike = (Button) upVehicleView.findViewById(R.id.unlike);
@@ -292,8 +291,8 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
     private static class ProductNotifications extends RecyclerView.ViewHolder {
         CardView mProductCardView;
         ImageView mUserPic, mProductImage;
-        Button mProductAutokattaShare, mProductCall, mProductLike, mProductFav, mProductUnfav,
-                mProductUnlike, mProductShare;
+        Button mProductLike, mProductUnlike, mProductShare;
+        ImageButton mProductFav, mProductUnfav;
         RatingBar mProductRating;
         TextView mProductActionName, mProductActionTime, mProductTitle, mProductName, mProductType, mLikes, mShares;
         RelativeLayout mRelativeLike;
@@ -304,7 +303,6 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
             mUserPic = (ImageView) productView.findViewById(R.id.product_pro_pic);
             mProductImage = (ImageView) productView.findViewById(R.id.product_image);
 
-            mProductAutokattaShare = (Button) productView.findViewById(R.id.shares);
             //mProductCall = (ImageButton) productView.findViewById(R.id.call);
             mProductLike = (Button) productView.findViewById(R.id.like);
             mProductUnlike = (Button) productView.findViewById(R.id.unlike);
@@ -317,8 +315,8 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
             mProductType = (TextView) productView.findViewById(R.id.product_type);
             mLikes = (TextView) productView.findViewById(R.id.likes);
             mShares = (TextView) productView.findViewById(R.id.share);
-            mProductFav = (Button) productView.findViewById(R.id.product_favourite);
-            mProductUnfav = (Button) productView.findViewById(R.id.product_unfavourite);
+            mProductFav = (ImageButton) productView.findViewById(R.id.product_favourite);
+            mProductUnfav = (ImageButton) productView.findViewById(R.id.product_unfavourite);
             mProductShare = (Button) productView.findViewById(R.id.shares);
             //mRelativeLike = (RelativeLayout) productView.findViewById(R.id.rlLike);
         }
@@ -330,7 +328,8 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
     private static class ServiceNotifications extends RecyclerView.ViewHolder {
         CardView mServiceCardView;
         ImageView mUserPic, mServiceImage;
-        Button mServiceShare, mServiceCall, mServiceLike, mServiceUnlike, mServiceFavourite, mServiceUnfav;
+        Button mServiceShare, mServiceCall, mServiceLike, mServiceUnlike;
+        ImageButton mServiceFavourite, mServiceUnfav;
         RatingBar mServiceRating;
         TextView mServiceActionName, mServiceActionTime, mServiceTitle, mServiceName, mServiceType, mLikes, mShares;
         RelativeLayout mRelativeLike;
@@ -354,8 +353,8 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
             mServiceType = (TextView) serviceView.findViewById(R.id.service_type);
             mLikes = (TextView) serviceView.findViewById(R.id.likes);
             mShares = (TextView) serviceView.findViewById(R.id.share);
-            mServiceFavourite = (Button) serviceView.findViewById(R.id.service_favourite);
-            mServiceUnfav = (Button) serviceView.findViewById(R.id.service_unfavourite);
+            mServiceFavourite = (ImageButton) serviceView.findViewById(R.id.service_favourite);
+            mServiceUnfav = (ImageButton) serviceView.findViewById(R.id.service_unfavourite);
             //mRelativeLike = (RelativeLayout) serviceView.findViewById(R.id.rlLike);
         }
     }
@@ -392,7 +391,8 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
     private static class SearchNotifications extends RecyclerView.ViewHolder {
         CardView mSearchCardView;
         ImageView mUserPic;
-        Button mSearchShare, mCall, mSearchLike, mSearchUnlike, mSearchFavorite, mSearchUnfav;
+        Button mSearchShare, mCall, mSearchLike, mSearchUnlike;
+        ImageButton mSearchFavorite, mSearchUnfav;
         TextView mSearchActionName, mSearchActionTime, mSearchCategory, mSearchBrand, mSearchModel, mSearchPrice, mSearchYear,
                 mSearchDate, mSearchLeads;
         RelativeLayout mRelativeLike;
@@ -406,8 +406,8 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
             //mCall = (ImageButton) searchView.findViewById(R.id.call);
             mSearchLike = (Button) searchView.findViewById(R.id.like);
             mSearchUnlike = (Button) searchView.findViewById(R.id.unlike);
-            mSearchFavorite = (Button) searchView.findViewById(R.id.search_favourite);
-            mSearchUnfav = (Button) searchView.findViewById(R.id.search_unfavourite);
+            mSearchFavorite = (ImageButton) searchView.findViewById(R.id.search_favourite);
+            mSearchUnfav = (ImageButton) searchView.findViewById(R.id.search_unfavourite);
 
             mSearchActionName = (TextView) searchView.findViewById(R.id.search_action_names);
             mSearchActionTime = (TextView) searchView.findViewById(R.id.search_action_time);
@@ -428,7 +428,8 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
     private static class ActiveNotifications extends RecyclerView.ViewHolder {
         CardView mAuctionCardView;
         ImageView mUserPic;
-        Button mAuctionShare, mAuctionFavourite, mAuctionUnfav;
+        Button mAuctionShare;
+        ImageButton mAuctionFavourite, mAuctionUnfav;
         Button mAuctionGoing, mAuctionIgnore;
         TextView mAuctionActionName, mAuctionActionTime, mAuctionTitle, mAuctionNoOfVehicles, mAuctionEndDate, mAuctionEndTime,
                 mAuctionType, mAuctionGoingCount, mAuctionIgnoreCount;
@@ -439,8 +440,8 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
             mUserPic = (ImageView) activeView.findViewById(R.id.user_pro_pic);
 
             mAuctionShare = (Button) activeView.findViewById(R.id.shares);
-            mAuctionFavourite = (Button) activeView.findViewById(R.id.active_favourite);
-            mAuctionUnfav = (Button) activeView.findViewById(R.id.active_unfavourite);
+            mAuctionFavourite = (ImageButton) activeView.findViewById(R.id.active_favourite);
+            mAuctionUnfav = (ImageButton) activeView.findViewById(R.id.active_unfavourite);
             mAuctionGoing = (Button) activeView.findViewById(R.id.btn_going);
             mAuctionIgnore = (Button) activeView.findViewById(R.id.btn_ignore);
 

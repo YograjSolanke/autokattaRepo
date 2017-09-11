@@ -311,6 +311,36 @@
                 </LinearLayout>
             </LinearLayout>
 
+            <RelativeLayout
+                android:id="@+id/fav_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true">
+
+                <ImageButton
+                    android:id="@+id/active_favourite"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_width="@dimen/cards_button_width"
+                    android:layout_height="@dimen/card_title_height"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="@dimen/layout_top"
+                    android:contentDescription="@string/app_name"
+                    android:visibility="gone"
+                    android:src="@mipmap/new_favourite_clk" />
+
+                <ImageButton
+                    android:id="@+id/active_unfavourite"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_width="@dimen/cards_button_width"
+                    android:layout_height="@dimen/card_title_height"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="@dimen/layout_top"
+                    android:contentDescription="@string/app_name"
+                    android:visibility="visible"
+                    android:src="@mipmap/new_favourite" />
+
+            </RelativeLayout>
+
             <View
                 android:id="@+id/view2"
                 android:layout_width="match_parent"
@@ -324,9 +354,9 @@
                 android:layout_below="@+id/view2"
                 android:baselineAligned="false"
                 android:orientation="horizontal"
-                android:weightSum="2">
+                android:weightSum="1">
 
-                <LinearLayout
+                <!--<LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -354,7 +384,7 @@
                         android:textStyle="bold"
                         android:visibility="gone" />
 
-                </LinearLayout>
+                </LinearLayout>-->
 
                 <LinearLayout
                     android:layout_width="match_parent"

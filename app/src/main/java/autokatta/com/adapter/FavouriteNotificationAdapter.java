@@ -3,7 +3,6 @@ package autokatta.com.adapter;
 import android.app.Activity;
 import android.app.DownloadManager;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -81,8 +80,8 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
     private static class ProfileNotifications extends RecyclerView.ViewHolder {
         CardView mProfileCardView;
         ImageView mProfilePic, mProfileImage;
-        ImageButton mShareAutokatta, mCall, mDelete, mFav;
-        Button mLike, mUnlike;
+        ImageButton mFav, mUnfav;
+        Button mProfileLike, mProfileUnlike, mProfileFollow, mProfileUnfollow, mProfileShare;
         TextView mProfileAction, mActionTime, mProfileTitle, mUserName, mProfileWorkAt, mProfileWebSite, mLocation,
                 mFollowCount, mLikes, mShares;
         RelativeLayout mRelativeLike;
@@ -102,24 +101,29 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
             mFollowCount = (TextView) profileView.findViewById(R.id.followcnt);
             mLikes = (TextView) profileView.findViewById(R.id.likes);
             mShares = (TextView) profileView.findViewById(R.id.share);
-            mShareAutokatta = (ImageButton) profileView.findViewById(R.id.share_autokatta);
-            //mCall = (ImageButton) profileView.findViewById(R.id.call);
-            mLike = (Button) profileView.findViewById(R.id.like);
-            mUnlike = (Button) profileView.findViewById(R.id.unlike);
-            //mFav = (ImageButton) profileView.findViewById(R.id.profile_favourite);
-            //mDelete = (ImageButton) profileView.findViewById(R.id.profile_unfavourite);
+            mProfileLike = (Button) profileView.findViewById(R.id.like);
+            mProfileUnlike = (Button) profileView.findViewById(R.id.unlike);
+            mProfileFollow = (Button) profileView.findViewById(R.id.follow);
+            mProfileUnfollow = (Button) profileView.findViewById(R.id.unfollow);
+            mProfileShare = (Button) profileView.findViewById(R.id.shares);
+            mFav = (ImageButton) profileView.findViewById(R.id.profile_favourite);
+            mUnfav = (ImageButton) profileView.findViewById(R.id.profile_unfavourite);
             //mRelativeLike = (RelativeLayout) profileView.findViewById(R.id.rlLike);
+            //mDelete = (ImageButton) profileView.findViewById(R.id.profile_unfavourite);
         }
     }
 
     /*
     Store Notification Class...
      */
+    /*
+    Store Notification Class...
+     */
     private static class StoreNotifications extends RecyclerView.ViewHolder {
         CardView mStoreCardView;
         ImageView mProfilePic, mStoreImage;
-        ImageButton mStoreAutokattaShare, mCall, mStoreFav, mStoreUnfav;
-        Button mLike, mUnlike, mFollow, mUnfollow;
+        ImageButton mStoreFav, mStoreUnfav;
+        Button mStoreLike, mStoreUnlike, mStoreFollow, mStoreUnfollow, mStoreShare;
         RatingBar mStoreRating;
         TextView mStoreActionName, mActionTime, mStoreName, mStoreCategory, mStoreType, mStoreWebSite, mStoreTiming,
                 mStoreWorkingDay, mStoreLocation, mFollowCount, mLikes, mShares;
@@ -131,12 +135,18 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
             mProfilePic = (ImageView) storeView.findViewById(R.id.store_pic);
             mStoreImage = (ImageView) storeView.findViewById(R.id.store_image);
 
-            mStoreAutokattaShare = (ImageButton) storeView.findViewById(R.id.share_autokatta);
+            // mStoreAutokattaShare = (ImageButton) storeView.findViewById(R.id.share_autokatta);
             //mCall = (ImageButton) storeView.findViewById(R.id.call);
-            mLike = (Button) storeView.findViewById(R.id.like);
-            mUnlike = (Button) storeView.findViewById(R.id.unlike);
-            mFollow = (Button) storeView.findViewById(R.id.follow);
-            mUnfollow = (Button) storeView.findViewById(R.id.unfollow);
+            //mLike = (ImageButton) storeView.findViewById(R.id.like);
+            //mUnlike = (ImageButton) storeView.findViewById(R.id.unlike);
+            //mFollow = (ImageButton) storeView.findViewById(R.id.follow_store);
+            //mUnfollow = (ImageButton) storeView.findViewById(R.id.unfollow_store);
+            mStoreLike = (Button) storeView.findViewById(R.id.unlike);
+            mStoreUnlike = (Button) storeView.findViewById(R.id.like);
+            mStoreFollow = (Button) storeView.findViewById(R.id.follow);
+            mStoreUnfollow = (Button) storeView.findViewById(R.id.unfollow);
+            mStoreShare = (Button) storeView.findViewById(R.id.shares);
+
             mStoreRating = (RatingBar) storeView.findViewById(R.id.store_rating);
             mStoreFav = (ImageButton) storeView.findViewById(R.id.store_favourite);
             mStoreUnfav = (ImageButton) storeView.findViewById(R.id.store_unfavourite);
@@ -191,9 +201,9 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
     private static class VehicleNotifications extends RecyclerView.ViewHolder {
         CardView mVehicleCardView;
         ImageView mUserPic, mVehicleImage;
-        ImageButton mVehicleAutokattaShare, mCall, mVehicleFavourite, mVehicleUnfav;
+        ImageButton mVehicleFavourite, mVehicleUnfav;
 
-        Button mVehicleLike, mVehicleUnlike, mFollow, mUnfollow;
+        Button mVehicleLike, mVehicleUnlike, mVehicleFollow, mVehicleUnfollow, mVehicleShare;
         TextView mActionName, mActionTime, mVehicleRegistration, mVehicleName, mVehiclePrice, mVehicleBrand,
                 mVehicleModel, mVehicleYearOfMfg, mVehicleKmsHrs, mVehicleLocation, mRtoCity, mLikes, mShares, mFollowCount;
         RelativeLayout mRelativeLike;
@@ -206,14 +216,15 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
             mActionName = (TextView) upVehicleView.findViewById(R.id.action_name);
             mVehicleImage = (ImageView) upVehicleView.findViewById(R.id.vehicle_image);
 
-            mVehicleAutokattaShare = (ImageButton) upVehicleView.findViewById(R.id.share_autokatta);
+            // mVehicleAutokattaShare = (ImageButton) upVehicleView.findViewById(R.id.share_autokatta);
             //mCall = (ImageButton) upVehicleView.findViewById(R.id.call);
             mVehicleLike = (Button) upVehicleView.findViewById(R.id.like);
             mVehicleUnlike = (Button) upVehicleView.findViewById(R.id.unlike);
             mVehicleFavourite = (ImageButton) upVehicleView.findViewById(R.id.vehicle_favourite);
             mVehicleUnfav = (ImageButton) upVehicleView.findViewById(R.id.vehicle_unfavourite);
-            mFollow = (Button) upVehicleView.findViewById(R.id.follow);
-            mUnfollow = (Button) upVehicleView.findViewById(R.id.unfollow);
+            mVehicleFollow = (Button) upVehicleView.findViewById(R.id.follow);
+            mVehicleUnfollow = (Button) upVehicleView.findViewById(R.id.unfollow);
+            mVehicleShare = (Button) upVehicleView.findViewById(R.id.shares);
 
             mVehicleRegistration = (TextView) upVehicleView.findViewById(R.id.vehicle_registration);
             mVehicleName = (TextView) upVehicleView.findViewById(R.id.vehicle_name);
@@ -237,8 +248,8 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
     private static class ProductNotifications extends RecyclerView.ViewHolder {
         CardView mProductCardView;
         ImageView mUserPic, mProductImage;
-        ImageButton mProductAutokattaShare, mDelete;
-        Button mProductLike, mProductFav, mProductUnlike;
+        Button mProductLike, mProductUnlike, mProductShare;
+        ImageButton mProductFav, mProductUnfav;
         RatingBar mProductRating;
         TextView mProductActionName, mProductActionTime, mProductTitle, mProductName, mProductType, mLikes, mShares;
         RelativeLayout mRelativeLike;
@@ -249,7 +260,6 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
             mUserPic = (ImageView) productView.findViewById(R.id.product_pro_pic);
             mProductImage = (ImageView) productView.findViewById(R.id.product_image);
 
-            mProductAutokattaShare = (ImageButton) productView.findViewById(R.id.share_autokatta);
             //mProductCall = (ImageButton) productView.findViewById(R.id.call);
             mProductLike = (Button) productView.findViewById(R.id.like);
             mProductUnlike = (Button) productView.findViewById(R.id.unlike);
@@ -262,11 +272,13 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
             mProductType = (TextView) productView.findViewById(R.id.product_type);
             mLikes = (TextView) productView.findViewById(R.id.likes);
             mShares = (TextView) productView.findViewById(R.id.share);
-            mProductFav = (Button) productView.findViewById(R.id.product_favourite);
-            //mDelete = (ImageButton) productView.findViewById(R.id.product_unfavourite);
+            mProductFav = (ImageButton) productView.findViewById(R.id.product_favourite);
+            mProductUnfav = (ImageButton) productView.findViewById(R.id.product_unfavourite);
+            mProductShare = (Button) productView.findViewById(R.id.shares);
             //mRelativeLike = (RelativeLayout) productView.findViewById(R.id.rlLike);
         }
     }
+
 
     /*
     Service Notification Class...
@@ -274,8 +286,8 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
     private static class ServiceNotifications extends RecyclerView.ViewHolder {
         CardView mServiceCardView;
         ImageView mUserPic, mServiceImage;
-        ImageButton mServiceAutokattaShare, mServiceCall;
-        Button mServiceLike, mServiceUnlike, mServiceFavourite, mDelete;
+        Button mServiceShare, mServiceCall, mServiceLike, mServiceUnlike;
+        ImageButton mServiceFavourite, mServiceUnfav;
         RatingBar mServiceRating;
         TextView mServiceActionName, mServiceActionTime, mServiceTitle, mServiceName, mServiceType, mLikes, mShares;
         RelativeLayout mRelativeLike;
@@ -286,7 +298,7 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
             mUserPic = (ImageView) serviceView.findViewById(R.id.service_pro_pic);
             mServiceImage = (ImageView) serviceView.findViewById(R.id.service_image);
 
-            mServiceAutokattaShare = (ImageButton) serviceView.findViewById(R.id.share_autokatta);
+            mServiceShare = (Button) serviceView.findViewById(R.id.shares);
             //mServiceCall = (ImageButton) serviceView.findViewById(R.id.call);
             mServiceLike = (Button) serviceView.findViewById(R.id.like);
             mServiceUnlike = (Button) serviceView.findViewById(R.id.unlike);
@@ -299,8 +311,8 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
             mServiceType = (TextView) serviceView.findViewById(R.id.service_type);
             mLikes = (TextView) serviceView.findViewById(R.id.likes);
             mShares = (TextView) serviceView.findViewById(R.id.share);
-            mServiceFavourite = (Button) serviceView.findViewById(R.id.service_favourite);
-            mDelete = (Button) serviceView.findViewById(R.id.service_unfavourite);
+            mServiceFavourite = (ImageButton) serviceView.findViewById(R.id.service_favourite);
+            mServiceUnfav = (ImageButton) serviceView.findViewById(R.id.service_unfavourite);
             //mRelativeLike = (RelativeLayout) serviceView.findViewById(R.id.rlLike);
         }
     }
@@ -320,8 +332,8 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
     private static class SearchNotifications extends RecyclerView.ViewHolder {
         CardView mSearchCardView;
         ImageView mUserPic;
-        ImageButton mSearchAutokattaShare, mCall;
-        Button mSearchLike, mSearchUnlike, mSearchFavorite, mSearchUnfav;
+        Button mSearchShare, mCall, mSearchLike, mSearchUnlike;
+        ImageButton mSearchFavorite, mSearchUnfav;
         TextView mSearchActionName, mSearchActionTime, mSearchCategory, mSearchBrand, mSearchModel, mSearchPrice, mSearchYear,
                 mSearchDate, mSearchLeads;
         RelativeLayout mRelativeLike;
@@ -331,12 +343,12 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
             mSearchCardView = (CardView) searchView.findViewById(R.id.search_card_view);
             mUserPic = (ImageView) searchView.findViewById(R.id.profile_pro_pic);
 
-            mSearchAutokattaShare = (ImageButton) searchView.findViewById(R.id.share_autokatta);
+            mSearchShare = (Button) searchView.findViewById(R.id.shares);
             //mCall = (ImageButton) searchView.findViewById(R.id.call);
             mSearchLike = (Button) searchView.findViewById(R.id.like);
             mSearchUnlike = (Button) searchView.findViewById(R.id.unlike);
-            mSearchFavorite = (Button) searchView.findViewById(R.id.search_favourite);
-            mSearchUnfav = (Button) searchView.findViewById(R.id.search_unfavourite);
+            mSearchFavorite = (ImageButton) searchView.findViewById(R.id.search_favourite);
+            mSearchUnfav = (ImageButton) searchView.findViewById(R.id.search_unfavourite);
 
             mSearchActionName = (TextView) searchView.findViewById(R.id.search_action_names);
             mSearchActionTime = (TextView) searchView.findViewById(R.id.search_action_time);
@@ -348,7 +360,6 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
             mSearchDate = (TextView) searchView.findViewById(R.id.search_date);
             mSearchLeads = (TextView) searchView.findViewById(R.id.search_leads);
             //mRelativeLike = (RelativeLayout) searchView.findViewById(R.id.rlLike);
-
         }
     }
 
@@ -358,8 +369,9 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
     private static class ActiveNotifications extends RecyclerView.ViewHolder {
         CardView mAuctionCardView;
         ImageView mUserPic;
-        ImageButton mAuctionAutokattaShare;
-        Button mAuctionGoing, mAuctionIgnore, mAuctionFavourite, mAuctionUnfav;
+        Button mAuctionShare;
+        ImageButton mAuctionFavourite, mAuctionUnfav;
+        Button mAuctionGoing, mAuctionIgnore;
         TextView mAuctionActionName, mAuctionActionTime, mAuctionTitle, mAuctionNoOfVehicles, mAuctionEndDate, mAuctionEndTime,
                 mAuctionType, mAuctionGoingCount, mAuctionIgnoreCount;
 
@@ -368,9 +380,9 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
             mAuctionCardView = (CardView) activeView.findViewById(R.id.auction_card_view);
             mUserPic = (ImageView) activeView.findViewById(R.id.user_pro_pic);
 
-            mAuctionAutokattaShare = (ImageButton) activeView.findViewById(R.id.share_autokatta);
-            mAuctionFavourite = (Button) activeView.findViewById(R.id.active_favourite);
-            mAuctionUnfav = (Button) activeView.findViewById(R.id.active_unfavourite);
+            mAuctionShare = (Button) activeView.findViewById(R.id.shares);
+            mAuctionFavourite = (ImageButton) activeView.findViewById(R.id.active_favourite);
+            mAuctionUnfav = (ImageButton) activeView.findViewById(R.id.active_unfavourite);
             mAuctionGoing = (Button) activeView.findViewById(R.id.btn_going);
             mAuctionIgnore = (Button) activeView.findViewById(R.id.btn_ignore);
 
@@ -392,8 +404,8 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
     private static class UploadVehicleNotifications extends RecyclerView.ViewHolder {
         CardView mVehicleCardView;
         ImageView mUserPic, mVehicleImage;
-        ImageButton mVehicleAutokattaShare, mCall, mVehicleFavourite, mVehicleUnfav;
-        Button mVehicleLike, mVehicleUnlike, mFollow, mUnfollow;
+        ImageButton mVehicleFavourite, mVehicleUnfav;
+        Button mFollow, mUnfollow, mVehicleLike, mVehicleUnlike, mVehicleShare;
         TextView mActionName, mActionTime, mVehicleRegistration, mVehicleName, mVehiclePrice, mVehicleBrand,
                 mVehicleModel, mVehicleYearOfMfg, mVehicleKmsHrs, mVehicleLocation, mRtoCity, mLikes, mShares, mFollowCount;
         RelativeLayout mRelativeLike;
@@ -406,7 +418,7 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
             mActionName = (TextView) upVehicleView.findViewById(R.id.action_name);
             mVehicleImage = (ImageView) upVehicleView.findViewById(R.id.vehicle_image);
 
-            mVehicleAutokattaShare = (ImageButton) upVehicleView.findViewById(R.id.share_autokatta);
+            mVehicleShare = (Button) upVehicleView.findViewById(R.id.shares);
             //mCall = (ImageButton) upVehicleView.findViewById(R.id.call);
             mVehicleLike = (Button) upVehicleView.findViewById(R.id.like);
             mVehicleUnlike = (Button) upVehicleView.findViewById(R.id.unlike);
@@ -414,7 +426,6 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
             mVehicleUnfav = (ImageButton) upVehicleView.findViewById(R.id.vehicle_unfavourite);
             mFollow = (Button) upVehicleView.findViewById(R.id.follow);
             mUnfollow = (Button) upVehicleView.findViewById(R.id.unfollow);
-
 
             mVehicleRegistration = (TextView) upVehicleView.findViewById(R.id.vehicle_registration);
             mVehicleName = (TextView) upVehicleView.findViewById(R.id.vehicle_name);
@@ -744,7 +755,7 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
 //                    mProfileHolder.mCall.setVisibility(View.GONE);
 //                else
 //                    mProfileHolder.mCall.setVisibility(View.VISIBLE);
-                mProfileHolder.mDelete.setImageResource(R.drawable.ic_delete);
+                mProfileHolder.mUnfav.setImageResource(R.drawable.ic_delete);
 
                 mProfileHolder.mProfileAction.setText(notificationList.get(position).getSendername() + " "
                         + notificationList.get(position).getAction() + " " + notificationList.get(position).getReceivername() + " " + "Profile");
@@ -778,20 +789,20 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
 
      /* Like & Unlike Functionality */
                 if (notificationList.get(position).getSenderlikestatus().equalsIgnoreCase("yes")) {
-                    mProfileHolder.mLike.setVisibility(View.VISIBLE);
-                    mProfileHolder.mUnlike.setVisibility(View.GONE);
+                    mProfileHolder.mProfileLike.setVisibility(View.VISIBLE);
+                    mProfileHolder.mProfileUnlike.setVisibility(View.GONE);
                 } else {
-                    mProfileHolder.mUnlike.setVisibility(View.VISIBLE);
-                    mProfileHolder.mLike.setVisibility(View.GONE);
+                    mProfileHolder.mProfileUnlike.setVisibility(View.VISIBLE);
+                    mProfileHolder.mProfileLike.setVisibility(View.GONE);
                 }
 
-                mProfileHolder.mLike.setOnClickListener(new View.OnClickListener() {
+                mProfileHolder.mProfileLike.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         //Unlike web service
                         String otherContact = notificationList.get(mProfileHolder.getAdapterPosition()).getSender();
-                        mProfileHolder.mLike.setVisibility(View.GONE);
-                        mProfileHolder.mUnlike.setVisibility(View.VISIBLE);
+                        mProfileHolder.mProfileLike.setVisibility(View.GONE);
+                        mProfileHolder.mProfileUnlike.setVisibility(View.VISIBLE);
                         mApiCall.UnLike(mLoginContact, otherContact, "1", 0, 0, 0, 0, 0, 0, 0);
                         profile_likecountint = notificationList.get(mProfileHolder.getAdapterPosition()).getSenderlikecount();
                         profile_likecountint = profile_likecountint - 1;
@@ -801,13 +812,13 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
                     }
                 });
 
-                mProfileHolder.mUnlike.setOnClickListener(new View.OnClickListener() {
+                mProfileHolder.mProfileUnlike.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         //Like web service
                         String otherContact = notificationList.get(mProfileHolder.getAdapterPosition()).getSender();
-                        mProfileHolder.mUnlike.setVisibility(View.GONE);
-                        mProfileHolder.mLike.setVisibility(View.VISIBLE);
+                        mProfileHolder.mProfileUnlike.setVisibility(View.GONE);
+                        mProfileHolder.mProfileLike.setVisibility(View.VISIBLE);
                         mApiCall.Like(mLoginContact, otherContact, "1", 0, 0, 0, 0, 0, 0, 0);
                         profile_likecountint = notificationList.get(mProfileHolder.getAdapterPosition()).getSenderlikecount();
                         profile_likecountint = profile_likecountint + 1;
@@ -817,7 +828,7 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
                     }
                 });
 
-                mProfileHolder.mDelete.setOnClickListener(new View.OnClickListener() {
+                mProfileHolder.mUnfav.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         //Unfavorite web service
@@ -831,109 +842,94 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
                 });
 
 
-                mProfileHolder.mShareAutokatta.setOnClickListener(new View.OnClickListener() {
+                mProfileHolder.mProfileShare.setOnClickListener(new View.OnClickListener() {
                     String imageFilePath = "", imagename;
                     Intent intent = new Intent(Intent.ACTION_SEND);
 
                     @Override
                     public void onClick(View v) {
-                        //shareProfileData();
-                        android.support.v7.app.AlertDialog.Builder alert = new android.support.v7.app.AlertDialog.Builder(mActivity);
-                        alert.setTitle("Share");
-                        alert.setMessage("with Autokatta or to other?");
-                        alert.setIconAttribute(android.R.attr.alertDialogIcon);
-
-                        alert.setPositiveButton("Autokatta", new DialogInterface.OnClickListener() {
+                        PopupMenu mPopupMenu = new PopupMenu(mActivity, mProfileHolder.mProfileShare);
+                        mPopupMenu.getMenuInflater().inflate(R.menu.more_menu, mPopupMenu.getMenu());
+                        mPopupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                             @Override
-                            public void onClick(DialogInterface dialog, int which) {
+                            public boolean onMenuItemClick(MenuItem item) {
+                                switch (item.getItemId()) {
+                                    case R.id.autokatta:
+                                        String allProfileDetails = mProfileHolder.mUserName.getText().toString() + "=" +
+                                                mProfileHolder.mProfileWorkAt.getText().toString() + "=" +
+                                                mProfileHolder.mProfileWebSite.getText().toString() + "=" +
+                                                mProfileHolder.mLocation.getText().toString() + "=" +
+                                                notificationList.get(mProfileHolder.getAdapterPosition()).getSenderPic() + "=" +
+                                                notificationList.get(mProfileHolder.getAdapterPosition()).getSenderlikecount() + "=" +
+                                                notificationList.get(mProfileHolder.getAdapterPosition()).getSenderfollowcount();
 
-                                String allProfileDetails = mProfileHolder.mUserName.getText().toString() + "=" +
-                                        mProfileHolder.mProfileWorkAt.getText().toString() + "=" +
-                                        mProfileHolder.mProfileWebSite.getText().toString() + "=" +
-                                        mProfileHolder.mLocation.getText().toString() + "=" +
-                                        notificationList.get(mProfileHolder.getAdapterPosition()).getSenderPic() + "=" +
-                                        notificationList.get(mProfileHolder.getAdapterPosition()).getSenderlikecount() + "=" +
-                                        notificationList.get(mProfileHolder.getAdapterPosition()).getSenderfollowcount();
+                                        System.out.println("all sender detailssss======Auto " + allProfileDetails);
 
-                                System.out.println("all sender detailssss======Auto " + allProfileDetails);
+                                        mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                                                putString("Share_sharedata", allProfileDetails).apply();
+                                        mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                                                putString("Share_profile_contact", notificationList.get(mProfileHolder.getAdapterPosition()).getSender()).apply();
+                                        mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                                                putString("Share_keyword", "profile").apply();
 
-                                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                                        putString("Share_sharedata", allProfileDetails).apply();
-                                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                                        putString("Share_profile_contact", notificationList.get(mProfileHolder.getAdapterPosition()).getSender()).apply();
-                                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                                        putString("Share_keyword", "profile").apply();
+                                        Intent i = new Intent(mActivity, ShareWithinAppActivity.class);
+                                        mActivity.startActivity(i);
+                                        break;
 
-                                Intent i = new Intent(mActivity, ShareWithinAppActivity.class);
-                                mActivity.startActivity(i);
-                                dialog.dismiss();
-                            }
-                        });
+                                    case R.id.other:
+                                        if (notificationList.get(mProfileHolder.getAdapterPosition()).getSenderPic().equalsIgnoreCase("") ||
+                                                notificationList.get(mProfileHolder.getAdapterPosition()).getSenderPic().equalsIgnoreCase(null) ||
+                                                notificationList.get(mProfileHolder.getAdapterPosition()).getSenderPic().equalsIgnoreCase("null")) {
+                                            imagename = mActivity.getString(R.string.base_image_url) + "logo48x48.png";
+                                        } else {
+                                            imagename = mActivity.getString(R.string.base_image_url) + notificationList.get(mProfileHolder.getAdapterPosition()).getSenderPic();
+                                        }
+                                        Log.e("TAG", "img : " + imagename);
 
-                        alert.setNegativeButton("Other", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                if (notificationList.get(mProfileHolder.getAdapterPosition()).getSenderPic().equalsIgnoreCase("") ||
-                                        notificationList.get(mProfileHolder.getAdapterPosition()).getSenderPic().equalsIgnoreCase(null) ||
-                                        notificationList.get(mProfileHolder.getAdapterPosition()).getSenderPic().equalsIgnoreCase("null")) {
-                                    imagename = mActivity.getString(R.string.base_image_url) + "logo48x48.png";
-                                } else {
-                                    imagename = mActivity.getString(R.string.base_image_url) + notificationList.get(mProfileHolder.getAdapterPosition()).getSenderPic();
-                                }
-                                Log.e("TAG", "img : " + imagename);
+                                        DownloadManager.Request request = new DownloadManager.Request(
+                                                Uri.parse(imagename));
+                                        request.allowScanningByMediaScanner();
+                                        String filename = URLUtil.guessFileName(imagename, null, MimeTypeMap.getFileExtensionFromUrl(imagename));
+                                        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, filename);
+                                        Log.e("ShareImagePath :", filename);
+                                        Log.e("TAG", "img : " + imagename);
 
-                                DownloadManager.Request request = new DownloadManager.Request(
-                                        Uri.parse(imagename));
-                                request.allowScanningByMediaScanner();
-                                String filename = URLUtil.guessFileName(imagename, null, MimeTypeMap.getFileExtensionFromUrl(imagename));
-                                request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, filename);
-                                Log.e("ShareImagePath :", filename);
-                                Log.e("TAG", "img : " + imagename);
+                                        DownloadManager manager = (DownloadManager) mActivity.getApplication()
+                                                .getSystemService(Context.DOWNLOAD_SERVICE);
 
-                                DownloadManager manager = (DownloadManager) mActivity.getApplication()
-                                        .getSystemService(Context.DOWNLOAD_SERVICE);
+                                        Log.e("TAG", "img URL: " + imagename);
 
-                                Log.e("TAG", "img URL: " + imagename);
+                                        manager.enqueue(request);
 
-                                manager.enqueue(request);
+                                        imageFilePath = "/storage/emulated/0/Download/" + filename;
+                                        System.out.println("ImageFilePath:" + imageFilePath);
 
-                                imageFilePath = "/storage/emulated/0/Download/" + filename;
-                                System.out.println("ImageFilePath:" + imageFilePath);
-
-                                String allProfileDetails = "Username : " + mProfileHolder.mUserName.getText().toString() + "\n" +
-                                        "Profession : " + mProfileHolder.mProfileWorkAt.getText().toString() + "\n" +
-                                        "Website : " + mProfileHolder.mProfileWebSite.getText().toString() + "\n" +
-                                        "Address : " + mProfileHolder.mLocation.getText().toString() /*+ "\n" +
+                                        String allProfileDetailss = "Username : " + mProfileHolder.mUserName.getText().toString() + "\n" +
+                                                "Profession : " + mProfileHolder.mProfileWorkAt.getText().toString() + "\n" +
+                                                "Website : " + mProfileHolder.mProfileWebSite.getText().toString() + "\n" +
+                                                "Address : " + mProfileHolder.mLocation.getText().toString() /*+ "\n" +
                                         notificationList.get(mProfileHolder.getAdapterPosition()).getSenderLikeCount() + "\n"+
                                         notificationList.get(mProfileHolder.getAdapterPosition()).getSenderFollowCount()*/;
 
-                                System.out.println("all sender detailssss======Other " + allProfileDetails);
+                                        System.out.println("all sender detailssss======Other " + allProfileDetailss);
 
-                                intent.setType("text/plain");
-                                intent.putExtra(Intent.EXTRA_TEXT, "Please visit and Follow my profile on Autokatta. Stay connected for Product and Service updates and enquiries"
-                                        + "\n" + "http://autokatta.com/profile/other/" + notificationList.get(mProfileHolder.getAdapterPosition()).getSender()
-                                        + "\n" + "\n" + allProfileDetails);
-                                intent.setType("image/jpeg");
-                                intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(imageFilePath)));
-                                intent.putExtra(Intent.EXTRA_SUBJECT, "Please Find Below Attachments");
-                                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                                mActivity.startActivity(Intent.createChooser(intent, "Autokatta"));
+                                        intent.setType("text/plain");
+                                        intent.putExtra(Intent.EXTRA_TEXT, "Please visit and Follow my profile on Autokatta. Stay connected for Product and Service updates and enquiries"
+                                                + "\n" + "http://autokatta.com/profile/other/" + notificationList.get(mProfileHolder.getAdapterPosition()).getSender()
+                                                + "\n" + "\n" + allProfileDetailss);
+                                        intent.setType("image/jpeg");
+                                        intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(imageFilePath)));
+                                        intent.putExtra(Intent.EXTRA_SUBJECT, "Please Find Below Attachments");
+                                        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                                        mActivity.startActivity(Intent.createChooser(intent, "Autokatta"));
 
-
-                                /*intent.setType("text/plain");
-                                intent.putExtra(Intent.EXTRA_SUBJECT, "Please Find Below Attachments");
-                                intent.putExtra(Intent.EXTRA_TEXT, allProfileDetails);
-                                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                                mActivity.startActivity(intent);*/
-
-                                dialog.dismiss();
+                                        break;
+                                }
+                                return false;
                             }
-
                         });
-                        alert.create();
-                        alert.show();
+                        mPopupMenu.show(); //showing popup menu
                     }
-
                 });
                 break;
 
@@ -1008,21 +1004,21 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
      /* Like & Unlike Functionality */
 
                 if (notificationList.get(position).getStorelikestatus().equalsIgnoreCase("yes")) {
-                    mStoreHolder.mLike.setVisibility(View.VISIBLE);
-                    mStoreHolder.mUnlike.setVisibility(View.GONE);
+                    mStoreHolder.mStoreLike.setVisibility(View.VISIBLE);
+                    mStoreHolder.mStoreUnlike.setVisibility(View.GONE);
                 } else {
-                    mStoreHolder.mUnlike.setVisibility(View.VISIBLE);
-                    mStoreHolder.mLike.setVisibility(View.GONE);
+                    mStoreHolder.mStoreUnlike.setVisibility(View.VISIBLE);
+                    mStoreHolder.mStoreLike.setVisibility(View.GONE);
                 }
 
-                mStoreHolder.mLike.setOnClickListener(new View.OnClickListener() {
+                mStoreHolder.mStoreLike.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         //Unlike web service
                         String otherContact = notificationList.get(mStoreHolder.getAdapterPosition()).getStoreContact();
                         int storeId = notificationList.get(mStoreHolder.getAdapterPosition()).getStoreId();
-                        mStoreHolder.mLike.setVisibility(View.GONE);
-                        mStoreHolder.mUnlike.setVisibility(View.VISIBLE);
+                        mStoreHolder.mStoreLike.setVisibility(View.GONE);
+                        mStoreHolder.mStoreUnlike.setVisibility(View.VISIBLE);
                         mApiCall.UnLike(mLoginContact, otherContact, "2", storeId, 0, 0, 0, 0, 0, 0);
                         store_likecountint = notificationList.get(mStoreHolder.getAdapterPosition()).getStorelikecount();
                         store_likecountint = store_likecountint - 1;
@@ -1032,14 +1028,14 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
                     }
                 });
 
-                mStoreHolder.mUnlike.setOnClickListener(new View.OnClickListener() {
+                mStoreHolder.mStoreUnlike.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         //Like web service
                         String otherContact = notificationList.get(mStoreHolder.getAdapterPosition()).getStoreContact();
                         int storeId = notificationList.get(mStoreHolder.getAdapterPosition()).getStoreId();
-                        mStoreHolder.mUnlike.setVisibility(View.GONE);
-                        mStoreHolder.mLike.setVisibility(View.VISIBLE);
+                        mStoreHolder.mStoreUnlike.setVisibility(View.GONE);
+                        mStoreHolder.mStoreLike.setVisibility(View.VISIBLE);
                         mApiCall.Like(mLoginContact, otherContact, "2", storeId, 0, 0, 0, 0, 0, 0);
                         store_likecountint = notificationList.get(mStoreHolder.getAdapterPosition()).getStorelikecount();
                         store_likecountint = store_likecountint + 1;
@@ -1052,21 +1048,21 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
         /* Follow & UnfollowFunctionality */
 
                 if (notificationList.get(position).getStorefollowstatus().equalsIgnoreCase("yes")) {
-                    mStoreHolder.mFollow.setVisibility(View.VISIBLE);
-                    mStoreHolder.mUnfollow.setVisibility(View.GONE);
+                    mStoreHolder.mStoreFollow.setVisibility(View.VISIBLE);
+                    mStoreHolder.mStoreUnfollow.setVisibility(View.GONE);
                 } else {
-                    mStoreHolder.mUnfollow.setVisibility(View.VISIBLE);
-                    mStoreHolder.mFollow.setVisibility(View.GONE);
+                    mStoreHolder.mStoreUnfollow.setVisibility(View.VISIBLE);
+                    mStoreHolder.mStoreFollow.setVisibility(View.GONE);
                 }
 
-                mStoreHolder.mFollow.setOnClickListener(new View.OnClickListener() {
+                mStoreHolder.mStoreFollow.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         //Unfollow web service
                         String otherContact = notificationList.get(mStoreHolder.getAdapterPosition()).getStoreContact();
                         int storeId = notificationList.get(mStoreHolder.getAdapterPosition()).getStoreId();
-                        mStoreHolder.mFollow.setVisibility(View.GONE);
-                        mStoreHolder.mUnfollow.setVisibility(View.VISIBLE);
+                        mStoreHolder.mStoreFollow.setVisibility(View.GONE);
+                        mStoreHolder.mStoreUnfollow.setVisibility(View.VISIBLE);
 
                         mApiCall.UnFollow(mLoginContact, otherContact, "2", storeId, 0, 0, 0);
                         store_followcountint = notificationList.get(mStoreHolder.getAdapterPosition()).getStorefollowcount();
@@ -1078,14 +1074,14 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
                     }
                 });
 
-                mStoreHolder.mUnfollow.setOnClickListener(new View.OnClickListener() {
+                mStoreHolder.mStoreUnfollow.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         //Follow web service
                         String otherContact = notificationList.get(mStoreHolder.getAdapterPosition()).getStoreContact();
                         int storeId = notificationList.get(mStoreHolder.getAdapterPosition()).getStoreId();
-                        mStoreHolder.mUnfollow.setVisibility(View.GONE);
-                        mStoreHolder.mFollow.setVisibility(View.VISIBLE);
+                        mStoreHolder.mStoreUnfollow.setVisibility(View.GONE);
+                        mStoreHolder.mStoreFollow.setVisibility(View.VISIBLE);
 
                         mApiCall.Follow(mLoginContact, otherContact, "2", storeId, 0, 0, 0);
                         store_followcountint = notificationList.get(mStoreHolder.getAdapterPosition()).getStorefollowcount();
@@ -1109,114 +1105,101 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
                     }
                 });
 
-                mStoreHolder.mStoreAutokattaShare.setOnClickListener(new View.OnClickListener() {
+                mStoreHolder.mStoreShare.setOnClickListener(new View.OnClickListener() {
                     String imageFilePath = "", imagename;
                     Intent intent = new Intent(Intent.ACTION_SEND);
 
                     @Override
                     public void onClick(View v) {
                         //shareProfileData();
-                        android.support.v7.app.AlertDialog.Builder alert = new android.support.v7.app.AlertDialog.Builder(mActivity);
-                        alert.setTitle("Share");
-                        alert.setMessage("with Autokatta or to other?");
-                        alert.setIconAttribute(android.R.attr.alertDialogIcon);
-
-                        alert.setPositiveButton("Autokatta", new DialogInterface.OnClickListener() {
+                        PopupMenu mPopupMenu = new PopupMenu(mActivity, mStoreHolder.mStoreShare);
+                        mPopupMenu.getMenuInflater().inflate(R.menu.more_menu, mPopupMenu.getMenu());
+                        mPopupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                             @Override
-                            public void onClick(DialogInterface dialog, int which) {
+                            public boolean onMenuItemClick(MenuItem item) {
+                                switch (item.getItemId()) {
+                                    case R.id.autokatta:
+                                        String allStoreDetails = mStoreHolder.mStoreName.getText().toString() + "=" +
+                                                mStoreHolder.mStoreWebSite.getText().toString() + "=" +
+                                                mStoreHolder.mStoreTiming.getText().toString() + "=" +
+                                                mStoreHolder.mStoreWorkingDay.getText().toString() + "=" +
+                                                mStoreHolder.mStoreType.getText().toString() + "=" +
+                                                mStoreHolder.mStoreLocation.getText().toString() + "=" +
+                                                notificationList.get(mStoreHolder.getAdapterPosition()).getStoreImage() + "=" +
+                                                mStoreHolder.mStoreRating.getRating() + "=" +
+                                                notificationList.get(mStoreHolder.getAdapterPosition()).getStorelikecount() + "=" +
+                                                notificationList.get(mStoreHolder.getAdapterPosition()).getStorefollowcount();
 
-                                String allStoreDetails = mStoreHolder.mStoreName.getText().toString() + "=" +
-                                        mStoreHolder.mStoreWebSite.getText().toString() + "=" +
-                                        mStoreHolder.mStoreTiming.getText().toString() + "=" +
-                                        mStoreHolder.mStoreWorkingDay.getText().toString() + "=" +
-                                        mStoreHolder.mStoreType.getText().toString() + "=" +
-                                        mStoreHolder.mStoreLocation.getText().toString() + "=" +
-                                        notificationList.get(mStoreHolder.getAdapterPosition()).getStoreImage() + "=" +
-                                        mStoreHolder.mStoreRating.getRating() + "=" +
-                                        notificationList.get(mStoreHolder.getAdapterPosition()).getStorelikecount() + "=" +
-                                        notificationList.get(mStoreHolder.getAdapterPosition()).getStorefollowcount();
+                                        System.out.println("all store detailssss======Auto " + allStoreDetails);
 
-                                System.out.println("all store detailssss======Auto " + allStoreDetails);
-
-                                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                                        putString("Share_sharedata", allStoreDetails).apply();
-                                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                                        putInt("Share_store_id", notificationList.get(mStoreHolder.getAdapterPosition()).getStoreId()).apply();
-                                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                                        putString("Share_keyword", "store").apply();
+                                        mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                                                putString("Share_sharedata", allStoreDetails).apply();
+                                        mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                                                putInt("Share_store_id", notificationList.get(mStoreHolder.getAdapterPosition()).getStoreId()).apply();
+                                        mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                                                putString("Share_keyword", "store").apply();
 
 
-                                Intent i = new Intent(mActivity, ShareWithinAppActivity.class);
-                                mActivity.startActivity(i);
-                                dialog.dismiss();
-                            }
-                        });
+                                        Intent i = new Intent(mActivity, ShareWithinAppActivity.class);
+                                        mActivity.startActivity(i);
+                                        break;
 
-                        alert.setNegativeButton("Other", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                if (notificationList.get(mStoreHolder.getAdapterPosition()).getStoreImage().equalsIgnoreCase("") ||
-                                        notificationList.get(mStoreHolder.getAdapterPosition()).getStoreImage().equalsIgnoreCase(null) ||
-                                        notificationList.get(mStoreHolder.getAdapterPosition()).getStoreImage().equalsIgnoreCase("null")) {
-                                    imagename = mActivity.getString(R.string.base_image_url) + "logo48x48.png";
-                                } else {
-                                    imagename = mActivity.getString(R.string.base_image_url) + notificationList.get(mStoreHolder.getAdapterPosition()).getStoreImage();
+                                    case R.id.other:
+                                        if (notificationList.get(mStoreHolder.getAdapterPosition()).getStoreImage().equalsIgnoreCase("") ||
+                                                notificationList.get(mStoreHolder.getAdapterPosition()).getStoreImage().equalsIgnoreCase(null) ||
+                                                notificationList.get(mStoreHolder.getAdapterPosition()).getStoreImage().equalsIgnoreCase("null")) {
+                                            imagename = mActivity.getString(R.string.base_image_url) + "logo48x48.png";
+                                        } else {
+                                            imagename = mActivity.getString(R.string.base_image_url) + notificationList.get(mStoreHolder.getAdapterPosition()).getStoreImage();
+                                        }
+                                        Log.e("TAG", "img : " + imagename);
+
+                                        DownloadManager.Request request = new DownloadManager.Request(
+                                                Uri.parse(imagename));
+                                        request.allowScanningByMediaScanner();
+                                        String filename = URLUtil.guessFileName(imagename, null, MimeTypeMap.getFileExtensionFromUrl(imagename));
+                                        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, filename);
+                                        Log.e("ShareImagePath :", filename);
+                                        Log.e("TAG", "img : " + imagename);
+
+                                        DownloadManager manager = (DownloadManager) mActivity.getApplication()
+                                                .getSystemService(Context.DOWNLOAD_SERVICE);
+
+                                        Log.e("TAG", "img URL: " + imagename);
+
+                                        manager.enqueue(request);
+
+                                        imageFilePath = "/storage/emulated/0/Download/" + filename;
+                                        System.out.println("ImageFilePath:" + imageFilePath);
+
+                                        String allStoreDetailss = "Store name : " + mStoreHolder.mStoreName.getText().toString() + "\n" +
+                                                "Store type : " + mStoreHolder.mStoreType.getText().toString() + "\n" +
+                                                "Ratings : " + mStoreHolder.mStoreRating.getRating() + "\n" +
+                                                "Likes : " + notificationList.get(mStoreHolder.getAdapterPosition()).getStorelikecount() + "\n" +
+                                                "Website : " + mStoreHolder.mStoreWebSite.getText().toString() + "\n" +
+                                                "Timing : " + mStoreHolder.mStoreTiming.getText().toString() + "\n" +
+                                                "Working Days : " + mStoreHolder.mStoreWorkingDay.getText().toString() + "\n" +
+                                                "Location : " + mStoreHolder.mStoreLocation.getText().toString();
+
+                                        System.out.println("all store detailssss======Other " + allStoreDetailss);
+
+                                        intent.setType("text/plain");
+                                        intent.putExtra(Intent.EXTRA_TEXT, "Please visit and Follow my store on Autokatta. Stay connected for Product and Service updates and enquiries"
+                                                + "\n" + "http://autokatta.com/store/main/" + notificationList.get(mStoreHolder.getAdapterPosition()).getStoreId()
+                                                + "/" + notificationList.get(mStoreHolder.getAdapterPosition()).getStoreContact()
+                                                + "\n" + "\n" + allStoreDetailss);
+                                        intent.setType("image/jpeg");
+                                        intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(imageFilePath)));
+                                        intent.putExtra(Intent.EXTRA_SUBJECT, "Please Find Below Attachments");
+                                        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                                        mActivity.startActivity(Intent.createChooser(intent, "Autokatta"));
+
+                                        break;
                                 }
-                                Log.e("TAG", "img : " + imagename);
-
-                                DownloadManager.Request request = new DownloadManager.Request(
-                                        Uri.parse(imagename));
-                                request.allowScanningByMediaScanner();
-                                String filename = URLUtil.guessFileName(imagename, null, MimeTypeMap.getFileExtensionFromUrl(imagename));
-                                request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, filename);
-                                Log.e("ShareImagePath :", filename);
-                                Log.e("TAG", "img : " + imagename);
-
-                                DownloadManager manager = (DownloadManager) mActivity.getApplication()
-                                        .getSystemService(Context.DOWNLOAD_SERVICE);
-
-                                Log.e("TAG", "img URL: " + imagename);
-
-                                manager.enqueue(request);
-
-                                imageFilePath = "/storage/emulated/0/Download/" + filename;
-                                System.out.println("ImageFilePath:" + imageFilePath);
-
-                                String allStoreDetails = "Store name : " + mStoreHolder.mStoreName.getText().toString() + "\n" +
-                                        "Store type : " + mStoreHolder.mStoreType.getText().toString() + "\n" +
-                                        "Ratings : " + mStoreHolder.mStoreRating.getRating() + "\n" +
-                                        "Likes : " + notificationList.get(mStoreHolder.getAdapterPosition()).getStorelikecount() + "\n" +
-                                        "Website : " + mStoreHolder.mStoreWebSite.getText().toString() + "\n" +
-                                        "Timing : " + mStoreHolder.mStoreTiming.getText().toString() + "\n" +
-                                        "Working Days : " + mStoreHolder.mStoreWorkingDay.getText().toString() + "\n" +
-                                        "Location : " + mStoreHolder.mStoreLocation.getText().toString();
-
-                                System.out.println("all store detailssss======Other " + allStoreDetails);
-
-                                intent.setType("text/plain");
-                                intent.putExtra(Intent.EXTRA_TEXT, "Please visit and Follow my store on Autokatta. Stay connected for Product and Service updates and enquiries"
-                                        + "\n" + "http://autokatta.com/store/main/" + notificationList.get(mStoreHolder.getAdapterPosition()).getStoreId()
-                                        + "/" + notificationList.get(mStoreHolder.getAdapterPosition()).getStoreContact()
-                                        + "\n" + "\n" + allStoreDetails);
-                                intent.setType("image/jpeg");
-                                intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(imageFilePath)));
-                                intent.putExtra(Intent.EXTRA_SUBJECT, "Please Find Below Attachments");
-                                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                                mActivity.startActivity(Intent.createChooser(intent, "Autokatta"));
-
-
-                                /*intent.setType("text/plain");
-                                intent.putExtra(Intent.EXTRA_SUBJECT, "Please Find Below Attachments");
-                                intent.putExtra(Intent.EXTRA_TEXT, allStoreDetails);
-                                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                                mActivity.startActivity(intent);*/
-
-                                dialog.dismiss();
+                                return false;
                             }
-
                         });
-                        alert.create();
-                        alert.show();
+                        mPopupMenu.show(); //showing popup menu
                     }
                 });
 
@@ -1382,21 +1365,21 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
         /* Follow & Unfollow Functionality */
 
                 if (notificationList.get(position).getUpVehicleFollowStatus().equalsIgnoreCase("yes")) {
-                    mVehicleHolder.mFollow.setVisibility(View.VISIBLE);
-                    mVehicleHolder.mUnfollow.setVisibility(View.GONE);
+                    mVehicleHolder.mVehicleFollow.setVisibility(View.VISIBLE);
+                    mVehicleHolder.mVehicleUnfollow.setVisibility(View.GONE);
                 } else {
-                    mVehicleHolder.mUnfollow.setVisibility(View.VISIBLE);
-                    mVehicleHolder.mFollow.setVisibility(View.GONE);
+                    mVehicleHolder.mVehicleUnfollow.setVisibility(View.VISIBLE);
+                    mVehicleHolder.mVehicleFollow.setVisibility(View.GONE);
                 }
 
-                mVehicleHolder.mFollow.setOnClickListener(new View.OnClickListener() {
+                mVehicleHolder.mVehicleFollow.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         //Unfollow web service
                         String otherContact = notificationList.get(mVehicleHolder.getAdapterPosition()).getUpVehicleContact();
                         int vehicleId = notificationList.get(mVehicleHolder.getAdapterPosition()).getVehicleId();
-                        mVehicleHolder.mFollow.setVisibility(View.GONE);
-                        mVehicleHolder.mUnfollow.setVisibility(View.VISIBLE);
+                        mVehicleHolder.mVehicleFollow.setVisibility(View.GONE);
+                        mVehicleHolder.mVehicleUnfollow.setVisibility(View.VISIBLE);
 
                         mApiCall.UnFollow(mLoginContact, otherContact, "4", 0, vehicleId, 0, 0);
                         vehicle_followcountint = notificationList.get(mVehicleHolder.getAdapterPosition()).getUpVehicleFollowCount();
@@ -1408,14 +1391,14 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
                     }
                 });
 
-                mVehicleHolder.mUnfollow.setOnClickListener(new View.OnClickListener() {
+                mVehicleHolder.mVehicleUnfollow.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         //Follow web service
                         String otherContact = notificationList.get(mVehicleHolder.getAdapterPosition()).getUpVehicleContact();
                         int vehicleId = notificationList.get(mVehicleHolder.getAdapterPosition()).getVehicleId();
-                        mVehicleHolder.mUnfollow.setVisibility(View.GONE);
-                        mVehicleHolder.mFollow.setVisibility(View.VISIBLE);
+                        mVehicleHolder.mVehicleUnfollow.setVisibility(View.GONE);
+                        mVehicleHolder.mVehicleFollow.setVisibility(View.VISIBLE);
 
                         mApiCall.Follow(mLoginContact, otherContact, "4", 0, vehicleId, 0, 0);
                         vehicle_followcountint = notificationList.get(mVehicleHolder.getAdapterPosition()).getUpVehicleFollowCount();
@@ -1439,114 +1422,103 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
                     }
                 });
 
-                mVehicleHolder.mVehicleAutokattaShare.setOnClickListener(new View.OnClickListener() {
+
+                mVehicleHolder.mVehicleShare.setOnClickListener(new View.OnClickListener() {
                     String imageFilePath = "", imagename;
                     Intent intent = new Intent(Intent.ACTION_SEND);
 
                     @Override
                     public void onClick(View v) {
-                        //shareProfileData();
-                        android.support.v7.app.AlertDialog.Builder alert = new android.support.v7.app.AlertDialog.Builder(mActivity);
-                        alert.setTitle("Share");
-                        alert.setMessage("with Autokatta or to other?");
-                        alert.setIconAttribute(android.R.attr.alertDialogIcon);
-
-                        alert.setPositiveButton("Autokatta", new DialogInterface.OnClickListener() {
+                        PopupMenu mPopupMenu = new PopupMenu(mActivity, mVehicleHolder.mVehicleShare);
+                        mPopupMenu.getMenuInflater().inflate(R.menu.more_menu, mPopupMenu.getMenu());
+                        mPopupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                             @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
-                                String allVehicleDetails = mVehicleHolder.mVehicleName.getText().toString() + "=" +
-                                        mVehicleHolder.mVehiclePrice.getText().toString() + "=" +
-                                        mVehicleHolder.mVehicleBrand.getText().toString() + "=" +
-                                        mVehicleHolder.mVehicleModel.getText().toString() + "=" +
-                                        mVehicleHolder.mVehicleYearOfMfg.getText().toString() + "=" +
-                                        mVehicleHolder.mVehicleKmsHrs.getText().toString() + "=" +
-                                        mVehicleHolder.mRtoCity.getText().toString() + "=" +
-                                        mVehicleHolder.mVehicleLocation.getText().toString() + "=" +
-                                        mVehicleHolder.mVehicleRegistration.getText().toString() + "=" +
-                                        notificationList.get(mVehicleHolder.getAdapterPosition()).getUpVehicleImage() + "=" +
-                                        notificationList.get(mVehicleHolder.getAdapterPosition()).getUpVehicleLikeCount();
-
-
-                                System.out.println("all vehicle detailssss======Auto " + allVehicleDetails);
-
-                                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                                        putString("Share_sharedata", allVehicleDetails).apply();
-                                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                                        putInt("Share_vehicle_id", notificationList.get(mVehicleHolder.getAdapterPosition()).getVehicleId()).apply();
-                                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                                        putString("Share_keyword", "vehicle").apply();
+                            public boolean onMenuItemClick(MenuItem item) {
+                                switch (item.getItemId()) {
+                                    case R.id.autokatta:
+                                        String allVehicleDetails = mVehicleHolder.mVehicleName.getText().toString() + "=" +
+                                                mVehicleHolder.mVehiclePrice.getText().toString() + "=" +
+                                                mVehicleHolder.mVehicleBrand.getText().toString() + "=" +
+                                                mVehicleHolder.mVehicleModel.getText().toString() + "=" +
+                                                mVehicleHolder.mVehicleYearOfMfg.getText().toString() + "=" +
+                                                mVehicleHolder.mVehicleKmsHrs.getText().toString() + "=" +
+                                                mVehicleHolder.mRtoCity.getText().toString() + "=" +
+                                                mVehicleHolder.mVehicleLocation.getText().toString() + "=" +
+                                                mVehicleHolder.mVehicleRegistration.getText().toString() + "=" +
+                                                notificationList.get(mVehicleHolder.getAdapterPosition()).getUpVehicleImage() + "=" +
+                                                notificationList.get(mVehicleHolder.getAdapterPosition()).getUpVehicleLikeCount();
 
 
-                                Intent i = new Intent(mActivity, ShareWithinAppActivity.class);
-                                mActivity.startActivity(i);
-                                dialog.dismiss();
-                            }
-                        });
+                                        System.out.println("all vehicle detailssss======Auto " + allVehicleDetails);
 
-                        alert.setNegativeButton("Other", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                if (notificationList.get(mVehicleHolder.getAdapterPosition()).getUpVehicleImage().equalsIgnoreCase("") ||
-                                        notificationList.get(mVehicleHolder.getAdapterPosition()).getUpVehicleImage().equalsIgnoreCase(null) ||
-                                        notificationList.get(mVehicleHolder.getAdapterPosition()).getUpVehicleImage().equalsIgnoreCase("null")) {
-                                    imagename = mActivity.getString(R.string.base_image_url) + "logo48x48.png";
-                                } else {
-                                    imagename = mActivity.getString(R.string.base_image_url) + notificationList.get(mVehicleHolder.getAdapterPosition()).getUpVehicleImage();
+                                        mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                                                putString("Share_sharedata", allVehicleDetails).apply();
+                                        mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                                                putInt("Share_vehicle_id", notificationList.get(mVehicleHolder.getAdapterPosition()).getVehicleId()).apply();
+                                        mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                                                putString("Share_keyword", "vehicle").apply();
+
+
+                                        Intent i = new Intent(mActivity, ShareWithinAppActivity.class);
+                                        mActivity.startActivity(i);
+
+                                        break;
+
+                                    case R.id.other:
+                                        if (notificationList.get(mVehicleHolder.getAdapterPosition()).getUpVehicleImage().equalsIgnoreCase("") ||
+                                                notificationList.get(mVehicleHolder.getAdapterPosition()).getUpVehicleImage().equalsIgnoreCase(null) ||
+                                                notificationList.get(mVehicleHolder.getAdapterPosition()).getUpVehicleImage().equalsIgnoreCase("null")) {
+                                            imagename = mActivity.getString(R.string.base_image_url) + "logo48x48.png";
+                                        } else {
+                                            imagename = mActivity.getString(R.string.base_image_url) + notificationList.get(mVehicleHolder.getAdapterPosition()).getUpVehicleImage();
+                                        }
+                                        Log.e("TAG", "img : " + imagename);
+
+                                        DownloadManager.Request request = new DownloadManager.Request(
+                                                Uri.parse(imagename));
+                                        request.allowScanningByMediaScanner();
+                                        String filename = URLUtil.guessFileName(imagename, null, MimeTypeMap.getFileExtensionFromUrl(imagename));
+                                        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, filename);
+                                        Log.e("ShareImagePath :", filename);
+                                        Log.e("TAG", "img : " + imagename);
+
+                                        DownloadManager manager = (DownloadManager) mActivity.getApplication()
+                                                .getSystemService(Context.DOWNLOAD_SERVICE);
+
+                                        Log.e("TAG", "img URL: " + imagename);
+
+                                        manager.enqueue(request);
+
+                                        imageFilePath = "/storage/emulated/0/Download/" + filename;
+                                        System.out.println("ImageFilePath:" + imageFilePath);
+
+                                        String allVehicleDetailss = "Vehicle Title : " + mVehicleHolder.mVehicleName.getText().toString() + "\n" +
+                                                "Vehicle Brand : " + mVehicleHolder.mVehicleBrand.getText().toString() + "\n" +
+                                                "Vehicle Model : " + mVehicleHolder.mVehicleModel.getText().toString() + "\n" +
+                                                "Year Of Mfg : " + mVehicleHolder.mVehicleYearOfMfg.getText().toString() + "\n" +
+                                                "Rto city : " + mVehicleHolder.mRtoCity.getText().toString() + "\n" +
+                                                "Location : " + mVehicleHolder.mVehicleLocation.getText().toString() + "\n" +
+                                                "Registeration No : " + mVehicleHolder.mVehicleRegistration.getText().toString() + "\n" +
+                                                "Likes : " + notificationList.get(mVehicleHolder.getAdapterPosition()).getUpVehicleLikeCount();
+
+                                        System.out.println("all vehicle detailssss======Other " + allVehicleDetailss);
+
+                                        intent.setType("text/plain");
+                                        intent.putExtra(Intent.EXTRA_TEXT, "Please visit and Follow my vehicle on Autokatta. Stay connected for Product and Service updates and enquiries"
+                                                + "\n" + "http://autokatta.com/vehicle/main/" + notificationList.get(mVehicleHolder.getAdapterPosition()).getVehicleId() + "/" + mLoginContact
+                                                + "\n" + "\n" + allVehicleDetailss);
+                                        intent.setType("image/jpeg");
+                                        intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(imageFilePath)));
+                                        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                                        intent.putExtra(Intent.EXTRA_SUBJECT, "Please Find Below Attachments");
+                                        mActivity.startActivity(Intent.createChooser(intent, "Autokatta"));
+
+                                        break;
                                 }
-                                Log.e("TAG", "img : " + imagename);
-
-                                DownloadManager.Request request = new DownloadManager.Request(
-                                        Uri.parse(imagename));
-                                request.allowScanningByMediaScanner();
-                                String filename = URLUtil.guessFileName(imagename, null, MimeTypeMap.getFileExtensionFromUrl(imagename));
-                                request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, filename);
-                                Log.e("ShareImagePath :", filename);
-                                Log.e("TAG", "img : " + imagename);
-
-                                DownloadManager manager = (DownloadManager) mActivity.getApplication()
-                                        .getSystemService(Context.DOWNLOAD_SERVICE);
-
-                                Log.e("TAG", "img URL: " + imagename);
-
-                                manager.enqueue(request);
-
-                                imageFilePath = "/storage/emulated/0/Download/" + filename;
-                                System.out.println("ImageFilePath:" + imageFilePath);
-
-                                String allVehicleDetails = "Vehicle Title : " + mVehicleHolder.mVehicleName.getText().toString() + "\n" +
-                                        "Vehicle Brand : " + mVehicleHolder.mVehicleBrand.getText().toString() + "\n" +
-                                        "Vehicle Model : " + mVehicleHolder.mVehicleModel.getText().toString() + "\n" +
-                                        "Year Of Mfg : " + mVehicleHolder.mVehicleYearOfMfg.getText().toString() + "\n" +
-                                        "Rto city : " + mVehicleHolder.mRtoCity.getText().toString() + "\n" +
-                                        "Location : " + mVehicleHolder.mVehicleLocation.getText().toString() + "\n" +
-                                        "Registeration No : " + mVehicleHolder.mVehicleRegistration.getText().toString() + "\n" +
-                                        "Likes : " + notificationList.get(mVehicleHolder.getAdapterPosition()).getUpVehicleLikeCount();
-
-                                System.out.println("all vehicle detailssss======Other " + allVehicleDetails);
-
-                                intent.setType("text/plain");
-                                intent.putExtra(Intent.EXTRA_TEXT, "Please visit and Follow my vehicle on Autokatta. Stay connected for Product and Service updates and enquiries"
-                                        + "\n" + "http://autokatta.com/vehicle/main/" + notificationList.get(mVehicleHolder.getAdapterPosition()).getVehicleId() + "/" + mLoginContact
-                                        + "\n" + "\n" + allVehicleDetails);
-                                intent.setType("image/jpeg");
-                                intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(imageFilePath)));
-                                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                                intent.putExtra(Intent.EXTRA_SUBJECT, "Please Find Below Attachments");
-                                mActivity.startActivity(Intent.createChooser(intent, "Autokatta"));
-
-                                /*intent.setType("text/plain");
-                                intent.putExtra(Intent.EXTRA_SUBJECT, "Please Find Below Attachments");
-                                intent.putExtra(Intent.EXTRA_TEXT, allVehicleDetails);
-                                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                                mActivity.startActivity(intent);*/
-
-                                dialog.dismiss();
+                                return false;
                             }
-
                         });
-                        alert.create();
-                        alert.show();
+                        mPopupMenu.show(); //showing popup menu
                     }
                 });
 
@@ -1555,7 +1527,7 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
             case 5:
                 final ProductNotifications mProductHolder = (ProductNotifications) holder;
 
-                mProductHolder.mDelete.setImageResource(R.drawable.ic_delete);
+                mProductHolder.mProductUnfav.setImageResource(R.drawable.ic_delete);
 
                 /*Log.i("Favorite", "Product-LayType ->" + notificationList.get(position).getLayoutType());
                 if (notificationList.get(position).getLayoutType().equalsIgnoreCase("MyAction")) {
@@ -1661,7 +1633,7 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
                 });
 
 
-                mProductHolder.mDelete.setOnClickListener(new View.OnClickListener() {
+                mProductHolder.mProductUnfav.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         //Un Favorite web service
@@ -1673,109 +1645,93 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
                     }
                 });
 
-                mProductHolder.mProductAutokattaShare.setOnClickListener(new View.OnClickListener() {
+                mProductHolder.mProductShare.setOnClickListener(new View.OnClickListener() {
                     String imageFilePath = "", imagename;
                     Intent intent = new Intent(Intent.ACTION_SEND);
 
                     @Override
                     public void onClick(View v) {
-                        //shareProfileData();
-                        android.support.v7.app.AlertDialog.Builder alert = new android.support.v7.app.AlertDialog.Builder(mActivity);
-                        alert.setTitle("Share");
-                        alert.setMessage("with Autokatta or to other?");
-                        alert.setIconAttribute(android.R.attr.alertDialogIcon);
-
-                        alert.setPositiveButton("Autokatta", new DialogInterface.OnClickListener() {
+                        PopupMenu mPopupMenu = new PopupMenu(mActivity, mProductHolder.mProductShare);
+                        mPopupMenu.getMenuInflater().inflate(R.menu.more_menu, mPopupMenu.getMenu());
+                        mPopupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                             @Override
-                            public void onClick(DialogInterface dialog, int which) {
+                            public boolean onMenuItemClick(MenuItem item) {
+                                switch (item.getItemId()) {
+                                    case R.id.autokatta:
+                                        String allProductDetails = mProductHolder.mProductName.getText().toString() + "=" +
+                                                mProductHolder.mProductType.getText().toString() + "=" +
+                                                mProductHolder.mProductRating.getRating() + "=" +
+                                                notificationList.get(mProductHolder.getAdapterPosition()).getProductlikecount() + "=" +
+                                                notificationList.get(mProductHolder.getAdapterPosition()).getProductimages();
 
-                                String allProductDetails = mProductHolder.mProductName.getText().toString() + "=" +
-                                        mProductHolder.mProductType.getText().toString() + "=" +
-                                        mProductHolder.mProductRating.getRating() + "=" +
-                                        notificationList.get(mProductHolder.getAdapterPosition()).getProductlikecount() + "=" +
-                                        notificationList.get(mProductHolder.getAdapterPosition()).getProductimages();
+                                        System.out.println("all product detailssss======Auto " + allProductDetails);
 
-                                System.out.println("all product detailssss======Auto " + allProductDetails);
-
-                                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                                        putString("Share_sharedata", allProductDetails).apply();
-                                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                                        putInt("Share_product_id", notificationList.get(mProductHolder.getAdapterPosition()).getProductId()).apply();
-                                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                                        putString("Share_keyword", "product").apply();
+                                        mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                                                putString("Share_sharedata", allProductDetails).apply();
+                                        mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                                                putInt("Share_product_id", notificationList.get(mProductHolder.getAdapterPosition()).getProductId()).apply();
+                                        mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                                                putString("Share_keyword", "product").apply();
 
 
-                                Intent i = new Intent(mActivity, ShareWithinAppActivity.class);
-                                mActivity.startActivity(i);
-                                dialog.dismiss();
-                            }
-                        });
+                                        Intent i = new Intent(mActivity, ShareWithinAppActivity.class);
+                                        mActivity.startActivity(i);
+                                        break;
+                                    case R.id.other:
+                                        if (notificationList.get(mProductHolder.getAdapterPosition()).getProductimages().equalsIgnoreCase("") ||
+                                                notificationList.get(mProductHolder.getAdapterPosition()).getProductimages().equalsIgnoreCase(null) ||
+                                                notificationList.get(mProductHolder.getAdapterPosition()).getProductimages().equalsIgnoreCase("null")) {
+                                            imagename = mActivity.getString(R.string.base_image_url) + "logo48x48.png";
+                                        } else {
+                                            imagename = mActivity.getString(R.string.base_image_url) + notificationList.get(mProductHolder.getAdapterPosition()).getProductimages();
+                                        }
+                                        Log.e("TAG", "img : " + imagename);
 
-                        alert.setNegativeButton("Other", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                if (notificationList.get(mProductHolder.getAdapterPosition()).getProductimages().equalsIgnoreCase("") ||
-                                        notificationList.get(mProductHolder.getAdapterPosition()).getProductimages().equalsIgnoreCase(null) ||
-                                        notificationList.get(mProductHolder.getAdapterPosition()).getProductimages().equalsIgnoreCase("null")) {
-                                    imagename = mActivity.getString(R.string.base_image_url) + "logo48x48.png";
-                                } else {
-                                    imagename = mActivity.getString(R.string.base_image_url) + notificationList.get(mProductHolder.getAdapterPosition()).getProductimages();
-                                }
-                                Log.e("TAG", "img : " + imagename);
+                                        DownloadManager.Request request = new DownloadManager.Request(
+                                                Uri.parse(imagename));
+                                        request.allowScanningByMediaScanner();
+                                        String filename = URLUtil.guessFileName(imagename, null, MimeTypeMap.getFileExtensionFromUrl(imagename));
+                                        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, filename);
+                                        Log.e("ShareImagePath :", filename);
+                                        Log.e("TAG", "img : " + imagename);
 
-                                DownloadManager.Request request = new DownloadManager.Request(
-                                        Uri.parse(imagename));
-                                request.allowScanningByMediaScanner();
-                                String filename = URLUtil.guessFileName(imagename, null, MimeTypeMap.getFileExtensionFromUrl(imagename));
-                                request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, filename);
-                                Log.e("ShareImagePath :", filename);
-                                Log.e("TAG", "img : " + imagename);
+                                        DownloadManager manager = (DownloadManager) mActivity.getApplication()
+                                                .getSystemService(Context.DOWNLOAD_SERVICE);
 
-                                DownloadManager manager = (DownloadManager) mActivity.getApplication()
-                                        .getSystemService(Context.DOWNLOAD_SERVICE);
+                                        Log.e("TAG", "img URL: " + imagename);
 
-                                Log.e("TAG", "img URL: " + imagename);
+                                        manager.enqueue(request);
 
-                                manager.enqueue(request);
+                                        imageFilePath = "/storage/emulated/0/Download/" + filename;
+                                        System.out.println("ImageFilePath:" + imageFilePath);
 
-                                imageFilePath = "/storage/emulated/0/Download/" + filename;
-                                System.out.println("ImageFilePath:" + imageFilePath);
-
-                                String allProductDetails = "Product name : " + mProductHolder.mProductName.getText().toString() + "\n" +
-                                        "Product type : " + mProductHolder.mProductType.getText().toString() + "\n" +
-                                        "Ratings : " + mProductHolder.mProductRating.getRating() + "\n" +
-                                        "Likes : " + notificationList.get(mProductHolder.getAdapterPosition()).getProductlikecount() /*+ "\n" +
+                                        String allProductDetailss = "Product name : " + mProductHolder.mProductName.getText().toString() + "\n" +
+                                                "Product type : " + mProductHolder.mProductType.getText().toString() + "\n" +
+                                                "Ratings : " + mProductHolder.mProductRating.getRating() + "\n" +
+                                                "Likes : " + notificationList.get(mProductHolder.getAdapterPosition()).getProductlikecount() /*+ "\n" +
                                         notificationList.get(mProfileHolder.getAdapterPosition()).getSenderLikeCount() + "\n"+
                                         notificationList.get(mProfileHolder.getAdapterPosition()).getSenderFollowCount()*/;
 
-                                System.out.println("all product detailssss======Other " + allProductDetails);
+                                        System.out.println("all product detailssss======Other " + allProductDetailss);
 
-                                intent.setType("text/plain");
+                                        intent.setType("text/plain");
 
-                                intent.putExtra(Intent.EXTRA_TEXT, "Please visit and Follow my store on Autokatta. Stay connected for Product and Service updates and enquiries"
-                                        + "\n" + "http://autokatta.com/product/" + notificationList.get(mProductHolder.getAdapterPosition()).getProductId()
-                                        //  + "/" + notificationList.get(mProductHolder.getAdapterPosition()).getStoreContact()
-                                        + "\n" + "\n" + allProductDetails);
+                                        intent.putExtra(Intent.EXTRA_TEXT, "Please visit and Follow my store on Autokatta. Stay connected for Product and Service updates and enquiries"
+                                                + "\n" + "http://autokatta.com/product/" + notificationList.get(mProductHolder.getAdapterPosition()).getProductId()
+                                                //  + "/" + notificationList.get(mProductHolder.getAdapterPosition()).getStoreContact()
+                                                + "\n" + "\n" + allProductDetailss);
 
-                                intent.setType("image/jpeg");
-                                intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(imageFilePath)));
-                                intent.putExtra(Intent.EXTRA_SUBJECT, "Please Find Below Attachments");
-                                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                                mActivity.startActivity(Intent.createChooser(intent, "Autokatta"));
-
-
-                                /*intent.setType("text/plain");
-                                intent.putExtra(Intent.EXTRA_SUBJECT, "Please Find Below Attachments");
-                                intent.putExtra(Intent.EXTRA_TEXT, allProductDetails);
-                                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                                mActivity.startActivity(intent);*/
-
-                                dialog.dismiss();
+                                        intent.setType("image/jpeg");
+                                        intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(imageFilePath)));
+                                        intent.putExtra(Intent.EXTRA_SUBJECT, "Please Find Below Attachments");
+                                        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                                        mActivity.startActivity(Intent.createChooser(intent, "Autokatta"));
+                                        break;
+                                }
+                                return false;
                             }
-
                         });
-                        alert.create();
-                        alert.show();
+                        mPopupMenu.show(); //showing popup menu
                     }
                 });
 
@@ -1889,7 +1845,7 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
                     }
                 });
 
-                mServiceHolder.mDelete.setOnClickListener(new View.OnClickListener() {
+                mServiceHolder.mServiceUnfav.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         //un Favorite web service
@@ -1901,109 +1857,93 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
                     }
                 });
 
-
-                mServiceHolder.mServiceAutokattaShare.setOnClickListener(new View.OnClickListener() {
+                mServiceHolder.mServiceShare.setOnClickListener(new View.OnClickListener() {
                     String imageFilePath = "", imagename;
                     Intent intent = new Intent(Intent.ACTION_SEND);
 
                     @Override
                     public void onClick(View v) {
                         //shareProfileData();
-                        android.support.v7.app.AlertDialog.Builder alert = new android.support.v7.app.AlertDialog.Builder(mActivity);
-                        alert.setTitle("Share");
-                        alert.setMessage("with Autokatta or to other?");
-                        alert.setIconAttribute(android.R.attr.alertDialogIcon);
-
-                        alert.setPositiveButton("Autokatta", new DialogInterface.OnClickListener() {
+                        PopupMenu mPopupMenu = new PopupMenu(mActivity, mServiceHolder.mServiceShare);
+                        mPopupMenu.getMenuInflater().inflate(R.menu.more_menu, mPopupMenu.getMenu());
+                        mPopupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                             @Override
-                            public void onClick(DialogInterface dialog, int which) {
+                            public boolean onMenuItemClick(MenuItem item) {
+                                switch (item.getItemId()) {
+                                    case R.id.autokatta:
+                                        String allServiceDetails = mServiceHolder.mServiceName.getText().toString() + "=" +
+                                                mServiceHolder.mServiceType.getText().toString() + "=" +
+                                                mServiceHolder.mServiceRating.getRating() + "=" +
+                                                notificationList.get(mServiceHolder.getAdapterPosition()).getServicelikecount() + "=" +
+                                                notificationList.get(mServiceHolder.getAdapterPosition()).getServiceimages();
 
-                                String allServiceDetails = mServiceHolder.mServiceName.getText().toString() + "=" +
-                                        mServiceHolder.mServiceType.getText().toString() + "=" +
-                                        mServiceHolder.mServiceRating.getRating() + "=" +
-                                        notificationList.get(mServiceHolder.getAdapterPosition()).getServicelikecount() + "=" +
-                                        notificationList.get(mServiceHolder.getAdapterPosition()).getServiceimages();
+                                        System.out.println("all service detailssss======Auto " + allServiceDetails);
 
-                                System.out.println("all service detailssss======Auto " + allServiceDetails);
-
-                                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                                        putString("Share_sharedata", allServiceDetails).apply();
-                                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                                        putInt("Share_service_id", notificationList.get(mServiceHolder.getAdapterPosition()).getServiceId()).apply();
-                                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                                        putString("Share_keyword", "service").apply();
+                                        mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                                                putString("Share_sharedata", allServiceDetails).apply();
+                                        mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                                                putInt("Share_service_id", notificationList.get(mServiceHolder.getAdapterPosition()).getServiceId()).apply();
+                                        mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                                                putString("Share_keyword", "service").apply();
 
 
-                                Intent i = new Intent(mActivity, ShareWithinAppActivity.class);
-                                mActivity.startActivity(i);
-                                dialog.dismiss();
-                            }
-                        });
+                                        Intent i = new Intent(mActivity, ShareWithinAppActivity.class);
+                                        mActivity.startActivity(i);
+                                        break;
+                                    case R.id.other:
+                                        if (notificationList.get(mServiceHolder.getAdapterPosition()).getServiceimages().equalsIgnoreCase("") ||
+                                                notificationList.get(mServiceHolder.getAdapterPosition()).getServiceimages().equalsIgnoreCase(null) ||
+                                                notificationList.get(mServiceHolder.getAdapterPosition()).getServiceimages().equalsIgnoreCase("null")) {
+                                            imagename = mActivity.getString(R.string.base_image_url) + "logo48x48.png";
+                                        } else {
+                                            imagename = mActivity.getString(R.string.base_image_url) + notificationList.get(mServiceHolder.getAdapterPosition()).getServiceimages();
+                                        }
+                                        Log.e("TAG", "img : " + imagename);
 
-                        alert.setNegativeButton("Other", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
+                                        DownloadManager.Request request = new DownloadManager.Request(
+                                                Uri.parse(imagename));
+                                        request.allowScanningByMediaScanner();
+                                        String filename = URLUtil.guessFileName(imagename, null, MimeTypeMap.getFileExtensionFromUrl(imagename));
+                                        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, filename);
+                                        Log.e("ShareImagePath :", filename);
+                                        Log.e("TAG", "img : " + imagename);
 
-                                if (notificationList.get(mServiceHolder.getAdapterPosition()).getServiceimages().equalsIgnoreCase("") ||
-                                        notificationList.get(mServiceHolder.getAdapterPosition()).getServiceimages().equalsIgnoreCase(null) ||
-                                        notificationList.get(mServiceHolder.getAdapterPosition()).getServiceimages().equalsIgnoreCase("null")) {
-                                    imagename = mActivity.getString(R.string.base_image_url) + "logo48x48.png";
-                                } else {
-                                    imagename = mActivity.getString(R.string.base_image_url) + notificationList.get(mServiceHolder.getAdapterPosition()).getServiceimages();
-                                }
-                                Log.e("TAG", "img : " + imagename);
+                                        DownloadManager manager = (DownloadManager) mActivity.getApplication()
+                                                .getSystemService(Context.DOWNLOAD_SERVICE);
 
-                                DownloadManager.Request request = new DownloadManager.Request(
-                                        Uri.parse(imagename));
-                                request.allowScanningByMediaScanner();
-                                String filename = URLUtil.guessFileName(imagename, null, MimeTypeMap.getFileExtensionFromUrl(imagename));
-                                request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, filename);
-                                Log.e("ShareImagePath :", filename);
-                                Log.e("TAG", "img : " + imagename);
+                                        Log.e("TAG", "img URL: " + imagename);
 
-                                DownloadManager manager = (DownloadManager) mActivity.getApplication()
-                                        .getSystemService(Context.DOWNLOAD_SERVICE);
+                                        manager.enqueue(request);
 
-                                Log.e("TAG", "img URL: " + imagename);
+                                        imageFilePath = "/storage/emulated/0/Download/" + filename;
+                                        System.out.println("ImageFilePath:" + imageFilePath);
 
-                                manager.enqueue(request);
-
-                                imageFilePath = "/storage/emulated/0/Download/" + filename;
-                                System.out.println("ImageFilePath:" + imageFilePath);
-
-                                String allServiceDetails = "Service name : " + mServiceHolder.mServiceName.getText().toString() + "\n" +
-                                        "Service type : " + mServiceHolder.mServiceType.getText().toString() + "\n" +
-                                        "Ratings : " + mServiceHolder.mServiceRating.getRating() + "\n" +
-                                        "Likes : " + notificationList.get(mServiceHolder.getAdapterPosition()).getServicelikecount() /*+ "\n" +
+                                        String allServiceDetailss = "Service name : " + mServiceHolder.mServiceName.getText().toString() + "\n" +
+                                                "Service type : " + mServiceHolder.mServiceType.getText().toString() + "\n" +
+                                                "Ratings : " + mServiceHolder.mServiceRating.getRating() + "\n" +
+                                                "Likes : " + notificationList.get(mServiceHolder.getAdapterPosition()).getServicelikecount() /*+ "\n" +
                                         notificationList.get(mProfileHolder.getAdapterPosition()).getSenderLikeCount() + "\n"+
                                         notificationList.get(mProfileHolder.getAdapterPosition()).getSenderFollowCount()*/;
 
-                                System.out.println("all service detailssss======Other " + allServiceDetails);
+                                        System.out.println("all service detailssss======Other " + allServiceDetailss);
 
-                                intent.setType("text/plain");
+                                        intent.setType("text/plain");
 
-                                intent.putExtra(Intent.EXTRA_TEXT, "Please visit and Follow my store on Autokatta. Stay connected for Product and Service updates and enquiries"
-                                        + "\n" + "http://autokatta.com/service/" + notificationList.get(mServiceHolder.getAdapterPosition()).getServiceId()
-                                        //  + "/" + notificationList.get(mServiceHolder.getAdapterPosition()).getStoreContact()
-                                        + "\n" + "\n" + allServiceDetails);
-                                intent.setType("image/jpeg");
-                                intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(imageFilePath)));
-                                intent.putExtra(Intent.EXTRA_SUBJECT, "Please Find Below Attachments");
-                                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                                mActivity.startActivity(Intent.createChooser(intent, "Autokatta"));
-
-
-                                /*intent.setType("text/plain");
-                                intent.putExtra(Intent.EXTRA_SUBJECT, "Please Find Below Attachments");
-                                intent.putExtra(Intent.EXTRA_TEXT, allServiceDetails);
-                                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                                mActivity.startActivity(intent);*/
-                                dialog.dismiss();
+                                        intent.putExtra(Intent.EXTRA_TEXT, "Please visit and Follow my store on Autokatta. Stay connected for Product and Service updates and enquiries"
+                                                + "\n" + "http://autokatta.com/service/" + notificationList.get(mServiceHolder.getAdapterPosition()).getServiceId()
+                                                //  + "/" + notificationList.get(mServiceHolder.getAdapterPosition()).getStoreContact()
+                                                + "\n" + "\n" + allServiceDetailss);
+                                        intent.setType("image/jpeg");
+                                        intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(imageFilePath)));
+                                        intent.putExtra(Intent.EXTRA_SUBJECT, "Please Find Below Attachments");
+                                        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                                        mActivity.startActivity(Intent.createChooser(intent, "Autokatta"));
+                                        break;
+                                }
+                                return false;
                             }
-
                         });
-                        alert.create();
-                        alert.show();
+                        mPopupMenu.show();
                     }
                 });
 
@@ -2102,82 +2042,72 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
                     }
                 });
 
-                mSearchHolder.mSearchAutokattaShare.setOnClickListener(new View.OnClickListener() {
+
+                mSearchHolder.mSearchShare.setOnClickListener(new View.OnClickListener() {
                     Intent intent = new Intent(Intent.ACTION_SEND);
 
                     @Override
                     public void onClick(View v) {
                         //shareProfileData();
-                        android.support.v7.app.AlertDialog.Builder alert = new android.support.v7.app.AlertDialog.Builder(mActivity);
-                        alert.setTitle("Share");
-                        alert.setMessage("with Autokatta or to other?");
-                        alert.setIconAttribute(android.R.attr.alertDialogIcon);
-
-                        alert.setPositiveButton("Autokatta", new DialogInterface.OnClickListener() {
+                        PopupMenu mPopupMenu = new PopupMenu(mActivity, mSearchHolder.mSearchShare);
+                        mPopupMenu.getMenuInflater().inflate(R.menu.more_menu, mPopupMenu.getMenu());
+                        mPopupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                             @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
-                                String allSearchDetails = mSearchHolder.mSearchCategory.getText().toString() + "=" +
-                                        mSearchHolder.mSearchBrand.getText().toString() + "=" +
-                                        mSearchHolder.mSearchModel.getText().toString() + "=" +
-                                        mSearchHolder.mSearchPrice.getText().toString() + "=" +
-                                        mSearchHolder.mSearchYear.getText().toString() + "=" +
-                                        mSearchHolder.mSearchDate.getText().toString() + "=" +
-                                        mSearchHolder.mSearchLeads.getText().toString();
-
-
-                                System.out.println("all search detailssss======Auto " + allSearchDetails);
-
-                                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                                        putString("Share_sharedata", allSearchDetails).apply();
-                                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                                        putInt("Share_search_id", notificationList.get(mSearchHolder.getAdapterPosition()).getSearchId()).apply();
-                                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                                        putString("Share_keyword", "mysearch").apply();
+                            public boolean onMenuItemClick(MenuItem item) {
+                                switch (item.getItemId()) {
+                                    case R.id.autokatta:
+                                        String allSearchDetails = mSearchHolder.mSearchCategory.getText().toString() + "=" +
+                                                mSearchHolder.mSearchBrand.getText().toString() + "=" +
+                                                mSearchHolder.mSearchModel.getText().toString() + "=" +
+                                                mSearchHolder.mSearchPrice.getText().toString() + "=" +
+                                                mSearchHolder.mSearchYear.getText().toString() + "=" +
+                                                mSearchHolder.mSearchDate.getText().toString() + "=" +
+                                                mSearchHolder.mSearchLeads.getText().toString();
 
 
-                                Intent i = new Intent(mActivity, ShareWithinAppActivity.class);
-                                mActivity.startActivity(i);
-                                dialog.dismiss();
-                            }
-                        });
+                                        System.out.println("all search detailssss======Auto " + allSearchDetails);
 
-                        alert.setNegativeButton("Other", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
+                                        mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                                                putString("Share_sharedata", allSearchDetails).apply();
+                                        mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                                                putInt("Share_search_id", notificationList.get(mSearchHolder.getAdapterPosition()).getSearchId()).apply();
+                                        mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                                                putString("Share_keyword", "mysearch").apply();
 
 
-                                String allSearchDetails = "Search Category : " + mSearchHolder.mSearchCategory.getText().toString() + "\n" +
-                                        "Search Brand : " + mSearchHolder.mSearchBrand.getText().toString() + "\n" +
-                                        "Search Model : " + mSearchHolder.mSearchModel.getText().toString() + "\n" +
-                                        "Year Of Mfg : " + mSearchHolder.mSearchYear.getText().toString() + "\n" +
-                                        "Price : " + mSearchHolder.mSearchPrice.getText().toString() + "\n" +
-                                        "Leads : " + mSearchHolder.mSearchLeads.getText().toString() + "\n" +
-                                        "Date : " + mSearchHolder.mSearchDate.getText().toString();
+                                        Intent i = new Intent(mActivity, ShareWithinAppActivity.class);
+                                        mActivity.startActivity(i);
+                                        break;
+                                    case R.id.other:
+                                        String allSearchDetailss = "Search Category : " + mSearchHolder.mSearchCategory.getText().toString() + "\n" +
+                                                "Search Brand : " + mSearchHolder.mSearchBrand.getText().toString() + "\n" +
+                                                "Search Model : " + mSearchHolder.mSearchModel.getText().toString() + "\n" +
+                                                "Year Of Mfg : " + mSearchHolder.mSearchYear.getText().toString() + "\n" +
+                                                "Price : " + mSearchHolder.mSearchPrice.getText().toString() + "\n" +
+                                                "Leads : " + mSearchHolder.mSearchLeads.getText().toString() + "\n" +
+                                                "Date : " + mSearchHolder.mSearchDate.getText().toString();
 
-                                System.out.println("all search detailssss======Other " + allSearchDetails);
+                                        System.out.println("all search detailssss======Other " + allSearchDetailss);
 
-                                intent.setType("text/plain");
+                                        intent.setType("text/plain");
                                 /*intent.putExtra(Intent.EXTRA_TEXT, "Please visit and Follow my vehicle on Autokatta. Stay connected for Product and Service updates and enquiries"
                                         + "\n" + "http://autokatta.com/vehicle/main/" + notificationList.get(mSearchHolder.getAdapterPosition()).getSearchId() + "/" + mLoginContact
                                         + "\n" + "\n" + allSearchDetails);*/
-                                intent.putExtra(Intent.EXTRA_TEXT, allSearchDetails);
-                                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                                intent.putExtra(Intent.EXTRA_SUBJECT, "Search list from Autokatta User");
-                                mActivity.startActivity(Intent.createChooser(intent, "Autokatta"));
-
-                                /*intent.setType("text/plain");
+                                        intent.putExtra(Intent.EXTRA_TEXT, allSearchDetailss);
+                                        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                                        intent.putExtra(Intent.EXTRA_SUBJECT, "Search list from Autokatta User");
+                                        mActivity.startActivity(Intent.createChooser(intent, "Autokatta"));
+                                        /*intent.setType("text/plain");
                                 intent.putExtra(Intent.EXTRA_SUBJECT, "Please Find Below Attachments");
                                 intent.putExtra(Intent.EXTRA_TEXT, allSearchDetails);
                                 intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                                 mActivity.startActivity(intent);*/
-
-                                dialog.dismiss();
+                                        break;
+                                }
+                                return false;
                             }
-
                         });
-                        alert.create();
-                        alert.show();
+                        mPopupMenu.show();
                     }
                 });
 
@@ -2354,114 +2284,101 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
                     }
                 });
 
-                mUpVehicleHolder.mVehicleAutokattaShare.setOnClickListener(new View.OnClickListener() {
+
+                mUpVehicleHolder.mVehicleShare.setOnClickListener(new View.OnClickListener() {
                     String imageFilePath = "", imagename;
                     Intent intent = new Intent(Intent.ACTION_SEND);
 
                     @Override
                     public void onClick(View v) {
                         //shareProfileData();
-                        android.support.v7.app.AlertDialog.Builder alert = new android.support.v7.app.AlertDialog.Builder(mActivity);
-                        alert.setTitle("Share");
-                        alert.setMessage("with Autokatta or to other?");
-                        alert.setIconAttribute(android.R.attr.alertDialogIcon);
-
-                        alert.setPositiveButton("Autokatta", new DialogInterface.OnClickListener() {
+                        PopupMenu mPopupMenu = new PopupMenu(mActivity, mUpVehicleHolder.mVehicleShare);
+                        mPopupMenu.getMenuInflater().inflate(R.menu.more_menu, mPopupMenu.getMenu());
+                        mPopupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                             @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
-                                String allVehicleDetails = mUpVehicleHolder.mVehicleName.getText().toString() + "=" +
-                                        mUpVehicleHolder.mVehiclePrice.getText().toString() + "=" +
-                                        mUpVehicleHolder.mVehicleBrand.getText().toString() + "=" +
-                                        mUpVehicleHolder.mVehicleModel.getText().toString() + "=" +
-                                        mUpVehicleHolder.mVehicleYearOfMfg.getText().toString() + "=" +
-                                        mUpVehicleHolder.mVehicleKmsHrs.getText().toString() + "=" +
-                                        mUpVehicleHolder.mRtoCity.getText().toString() + "=" +
-                                        mUpVehicleHolder.mVehicleLocation.getText().toString() + "=" +
-                                        mUpVehicleHolder.mVehicleRegistration.getText().toString() + "=" +
-                                        notificationList.get(mUpVehicleHolder.getAdapterPosition()).getUpVehicleImage() + "=" +
-                                        notificationList.get(mUpVehicleHolder.getAdapterPosition()).getUpVehicleLikeCount();
-
-
-                                System.out.println("all vehicle detailssss======Auto " + allVehicleDetails);
-
-                                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                                        putString("Share_sharedata", allVehicleDetails).apply();
-                                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                                        putInt("Share_vehicle_id", notificationList.get(mUpVehicleHolder.getAdapterPosition()).getVehicleId()).apply();
-                                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                                        putString("Share_keyword", "vehicle").apply();
+                            public boolean onMenuItemClick(MenuItem item) {
+                                switch (item.getItemId()) {
+                                    case R.id.autokatta:
+                                        String allVehicleDetails = mUpVehicleHolder.mVehicleName.getText().toString() + "=" +
+                                                mUpVehicleHolder.mVehiclePrice.getText().toString() + "=" +
+                                                mUpVehicleHolder.mVehicleBrand.getText().toString() + "=" +
+                                                mUpVehicleHolder.mVehicleModel.getText().toString() + "=" +
+                                                mUpVehicleHolder.mVehicleYearOfMfg.getText().toString() + "=" +
+                                                mUpVehicleHolder.mVehicleKmsHrs.getText().toString() + "=" +
+                                                mUpVehicleHolder.mRtoCity.getText().toString() + "=" +
+                                                mUpVehicleHolder.mVehicleLocation.getText().toString() + "=" +
+                                                mUpVehicleHolder.mVehicleRegistration.getText().toString() + "=" +
+                                                notificationList.get(mUpVehicleHolder.getAdapterPosition()).getUpVehicleImage() + "=" +
+                                                notificationList.get(mUpVehicleHolder.getAdapterPosition()).getUpVehicleLikeCount();
 
 
-                                Intent i = new Intent(mActivity, ShareWithinAppActivity.class);
-                                mActivity.startActivity(i);
-                                dialog.dismiss();
-                            }
-                        });
+                                        System.out.println("all vehicle detailssss======Auto " + allVehicleDetails);
 
-                        alert.setNegativeButton("Other", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                if (notificationList.get(mUpVehicleHolder.getAdapterPosition()).getUpVehicleImage().equalsIgnoreCase("") ||
-                                        notificationList.get(mUpVehicleHolder.getAdapterPosition()).getUpVehicleImage().equalsIgnoreCase(null) ||
-                                        notificationList.get(mUpVehicleHolder.getAdapterPosition()).getUpVehicleImage().equalsIgnoreCase("null")) {
-                                    imagename = mActivity.getString(R.string.base_image_url) + "logo48x48.png";
-                                } else {
-                                    imagename = mActivity.getString(R.string.base_image_url) + notificationList.get(mUpVehicleHolder.getAdapterPosition()).getUpVehicleImage();
+                                        mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                                                putString("Share_sharedata", allVehicleDetails).apply();
+                                        mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                                                putInt("Share_vehicle_id", notificationList.get(mUpVehicleHolder.getAdapterPosition()).getVehicleId()).apply();
+                                        mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                                                putString("Share_keyword", "vehicle").apply();
+
+
+                                        Intent i = new Intent(mActivity, ShareWithinAppActivity.class);
+                                        mActivity.startActivity(i);
+                                        break;
+                                    case R.id.other:
+                                        if (notificationList.get(mUpVehicleHolder.getAdapterPosition()).getUpVehicleImage().equalsIgnoreCase("") ||
+                                                notificationList.get(mUpVehicleHolder.getAdapterPosition()).getUpVehicleImage().equalsIgnoreCase(null) ||
+                                                notificationList.get(mUpVehicleHolder.getAdapterPosition()).getUpVehicleImage().equalsIgnoreCase("null")) {
+                                            imagename = mActivity.getString(R.string.base_image_url) + "logo48x48.png";
+                                        } else {
+                                            imagename = mActivity.getString(R.string.base_image_url) + notificationList.get(mUpVehicleHolder.getAdapterPosition()).getUpVehicleImage();
+                                        }
+                                        Log.e("TAG", "img : " + imagename);
+
+                                        DownloadManager.Request request = new DownloadManager.Request(
+                                                Uri.parse(imagename));
+                                        request.allowScanningByMediaScanner();
+                                        String filename = URLUtil.guessFileName(imagename, null, MimeTypeMap.getFileExtensionFromUrl(imagename));
+                                        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, filename);
+                                        Log.e("ShareImagePath :", filename);
+                                        Log.e("TAG", "img : " + imagename);
+
+                                        DownloadManager manager = (DownloadManager) mActivity.getApplication()
+                                                .getSystemService(Context.DOWNLOAD_SERVICE);
+
+                                        Log.e("TAG", "img URL: " + imagename);
+
+                                        manager.enqueue(request);
+
+                                        imageFilePath = "/storage/emulated/0/Download/" + filename;
+                                        System.out.println("ImageFilePath:" + imageFilePath);
+
+                                        String allVehicleDetailss = "Vehicle Title : " + mUpVehicleHolder.mVehicleName.getText().toString() + "\n" +
+                                                "Vehicle Brand : " + mUpVehicleHolder.mVehicleBrand.getText().toString() + "\n" +
+                                                "Vehicle Model : " + mUpVehicleHolder.mVehicleModel.getText().toString() + "\n" +
+                                                "Year Of Mfg : " + mUpVehicleHolder.mVehicleYearOfMfg.getText().toString() + "\n" +
+                                                "Rto city : " + mUpVehicleHolder.mRtoCity.getText().toString() + "\n" +
+                                                "Location : " + mUpVehicleHolder.mVehicleLocation.getText().toString() + "\n" +
+                                                "Registeration No : " + mUpVehicleHolder.mVehicleRegistration.getText().toString() + "\n" +
+                                                "Likes : " + notificationList.get(mUpVehicleHolder.getAdapterPosition()).getUpVehicleLikeCount();
+
+                                        System.out.println("all vehicle detailssss======Other " + allVehicleDetailss);
+
+                                        intent.setType("text/plain");
+                                        intent.putExtra(Intent.EXTRA_TEXT, "Please visit and Follow my vehicle on Autokatta. Stay connected for Product and Service updates and enquiries"
+                                                + "\n" + "http://autokatta.com/vehicle/main/" + notificationList.get(mUpVehicleHolder.getAdapterPosition()).getVehicleId() + "/" + mLoginContact
+                                                + "\n" + "\n" + allVehicleDetailss);
+                                        intent.setType("image/jpeg");
+                                        intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(imageFilePath)));
+                                        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                                        intent.putExtra(Intent.EXTRA_SUBJECT, "Please Find Below Attachments");
+                                        mActivity.startActivity(Intent.createChooser(intent, "Autokatta"));
+                                        break;
                                 }
-                                Log.e("TAG", "img : " + imagename);
-
-                                DownloadManager.Request request = new DownloadManager.Request(
-                                        Uri.parse(imagename));
-                                request.allowScanningByMediaScanner();
-                                String filename = URLUtil.guessFileName(imagename, null, MimeTypeMap.getFileExtensionFromUrl(imagename));
-                                request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, filename);
-                                Log.e("ShareImagePath :", filename);
-                                Log.e("TAG", "img : " + imagename);
-
-                                DownloadManager manager = (DownloadManager) mActivity.getApplication()
-                                        .getSystemService(Context.DOWNLOAD_SERVICE);
-
-                                Log.e("TAG", "img URL: " + imagename);
-
-                                manager.enqueue(request);
-
-                                imageFilePath = "/storage/emulated/0/Download/" + filename;
-                                System.out.println("ImageFilePath:" + imageFilePath);
-
-                                String allVehicleDetails = "Vehicle Title : " + mUpVehicleHolder.mVehicleName.getText().toString() + "\n" +
-                                        "Vehicle Brand : " + mUpVehicleHolder.mVehicleBrand.getText().toString() + "\n" +
-                                        "Vehicle Model : " + mUpVehicleHolder.mVehicleModel.getText().toString() + "\n" +
-                                        "Year Of Mfg : " + mUpVehicleHolder.mVehicleYearOfMfg.getText().toString() + "\n" +
-                                        "Rto city : " + mUpVehicleHolder.mRtoCity.getText().toString() + "\n" +
-                                        "Location : " + mUpVehicleHolder.mVehicleLocation.getText().toString() + "\n" +
-                                        "Registeration No : " + mUpVehicleHolder.mVehicleRegistration.getText().toString() + "\n" +
-                                        "Likes : " + notificationList.get(mUpVehicleHolder.getAdapterPosition()).getUpVehicleLikeCount();
-
-                                System.out.println("all vehicle detailssss======Other " + allVehicleDetails);
-
-                                intent.setType("text/plain");
-                                intent.putExtra(Intent.EXTRA_TEXT, "Please visit and Follow my vehicle on Autokatta. Stay connected for Product and Service updates and enquiries"
-                                        + "\n" + "http://autokatta.com/vehicle/main/" + notificationList.get(mUpVehicleHolder.getAdapterPosition()).getVehicleId() + "/" + mLoginContact
-                                        + "\n" + "\n" + allVehicleDetails);
-                                intent.setType("image/jpeg");
-                                intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(imageFilePath)));
-                                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                                intent.putExtra(Intent.EXTRA_SUBJECT, "Please Find Below Attachments");
-                                mActivity.startActivity(Intent.createChooser(intent, "Autokatta"));
-
-                                /*intent.setType("text/plain");
-                                intent.putExtra(Intent.EXTRA_SUBJECT, "Please Find Below Attachments");
-                                intent.putExtra(Intent.EXTRA_TEXT, allVehicleDetails);
-                                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                                mActivity.startActivity(intent);*/
-
-                                dialog.dismiss();
+                                return false;
                             }
-
                         });
-                        alert.create();
-                        alert.show();
+                        mPopupMenu.show();
                     }
                 });
 

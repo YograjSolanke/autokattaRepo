@@ -376,7 +376,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:contentDescription="@string/app_name"
-                    android:src="@drawable/ic_thumb_unlike" />
+                    android:src="@mipmap/unlike" />
 
                 <TextView
                     android:id="@+id/liketxt"
@@ -404,7 +404,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:contentDescription="@string/app_name"
-                    android:src="@drawable/ic_thumb_like" />
+                    android:src="@mipmap/you_like" />
 
                 <TextView
                     android:id="@+id/unlikeimg"
@@ -419,55 +419,12 @@
 
             </LinearLayout>
 
-            <!-- <LinearLayout
-                 android:id="@+id/relunlike"
-                 android:layout_width="wrap_content"
-                 android:layout_height="match_parent"
-                 android:layout_marginStart="10dp"
-                 android:layout_weight="1"
-                 android:layout_gravity="center"
-                 android:visibility="gone">
-
-                 <ImageView
-                     android:id="@+id/unlikeimg"
-                     android:layout_width="wrap_content"
-                     android:layout_height="wrap_content"
-                     android:background="@drawable/unlikethumb"
-                     android:contentDescription="@string/app_name" />
-
-                 <TextView
-                     android:id="@+id/unlike"
-                     android:layout_width="wrap_content"
-                     android:layout_height="wrap_content"
-                     android:layout_marginStart="5dp"
-                     android:layout_gravity="center"
-                     android:text="Unlike"
-                     android:textColor="@color/red" />
-
-             </LinearLayout>-->
-            <!--</RelativeLayout>-->
 
             <View
                 android:layout_width="1dp"
                 android:layout_height="20dp"
                 android:layout_gravity="center"
                 android:background="#cccccc" />
-
-            <!-- <ImageButton
-                 android:id="@+id/call"
-                 style="?android:attr/borderlessButtonStyle"
-                 android:layout_width="@dimen/cards_button_width"
-                 android:layout_height="match_parent"
-                 android:layout_marginEnd="30dp"
-                 android:contentDescription="@string/app_name"
-                 android:tint="@color/button_grey"
-                 app:srcCompat="@android:drawable/ic_menu_call" />-->
-
-            <!--   <View
-                   android:layout_width="1dp"
-                   android:layout_height="20dp"
-                   android:layout_gravity="center"
-                   android:background="#cccccc" />-->
 
             <LinearLayout
                 android:id="@+id/share"
@@ -484,7 +441,7 @@
                     android:layout_height="match_parent"
                     android:contentDescription="@string/app_name"
                     android:tint="@color/button_grey"
-                    app:srcCompat="@android:drawable/ic_menu_share" />
+                    app:srcCompat="@mipmap/new_share" />
 
                 <TextView
                     android:id="@+id/share_other_txt"
@@ -503,33 +460,6 @@
                 android:layout_gravity="center"
                 android:background="#cccccc" />
 
-            <LinearLayout
-                android:id="@+id/share_autokatta_layout"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:layout_marginStart="10dp"
-                android:layout_weight="1">
-
-                <ImageButton
-                    android:id="@+id/share_autokatta"
-                    style="?android:attr/borderlessButtonStyle"
-                    android:layout_width="@dimen/cards_button_width"
-                    android:layout_height="match_parent"
-                    android:contentDescription="@string/app_name"
-                    app:srcCompat="@drawable/autoshare" />
-
-                <TextView
-                    android:id="@+id/share_autokatta_txt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="5dp"
-                    android:text="@string/share"
-                    android:textColor="#808080"
-                    android:textSize="17sp" />
-
-            </LinearLayout>
         </LinearLayout>
 
         <View
