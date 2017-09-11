@@ -63,8 +63,7 @@ public class BrowseStoreAdapter extends RecyclerView.Adapter<BrowseStoreAdapter.
     @Override
     public BrowseStoreAdapter.StoreHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.browse_store_adapter, parent, false);
-        StoreHolder holder = new StoreHolder(view);
-        return holder;
+        return new StoreHolder(view);
     }
 
     @Override

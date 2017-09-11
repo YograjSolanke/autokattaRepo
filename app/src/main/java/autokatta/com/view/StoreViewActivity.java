@@ -1,6 +1,5 @@
 package autokatta.com.view;
 
-import android.app.ActivityOptions;
 import android.app.DownloadManager;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -608,26 +607,6 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
                 });
                 mPopupMenu.show(); //showing popup menu
                 break;
-            case R.id.autokatta_share:
-
-                strDetailsShare = storeName + "=" + storeWebsite + "="
-                        + storeTiming + "=" + storeWorkingDays + "="
-                        + storeType + "=" + storeLocation + "="
-                        + storeImage + "=" + String.valueOf(storeRating) + "="
-                        + storeLikeCount + "=" + storeFollowCount;
-
-                getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                        putString("Share_sharedata", strDetailsShare).apply();
-                getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                        putInt("Share_store_id", store_id).apply();
-                getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                        putString("Share_keyword", "store").apply();
-
-                ActivityOptions options = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.ok_left_to_right,
-                        R.anim.ok_right_to_left);
-                startActivity(new Intent(StoreViewActivity.this, ShareWithinAppActivity.class), options.toBundle());
-                break;
-
             case R.id.add_product_team:
                 CustomToast.customToast(getApplicationContext(), "Coming soon... please be connected for update..");
                 break;

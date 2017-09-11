@@ -14,6 +14,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
@@ -51,7 +52,7 @@ public class VehicleDetails extends AppCompatActivity implements RequestNotifier
     CollapsingToolbarLayout collapsingToolbar;
     String name;
     FloatingActionMenu mFab;
-    FloatingActionButton mLike, mCall, mAutoshare, mShare, mChat;
+    FloatingActionButton mLike, mCall, mShare, mChat;
     String Title, mPrice, mBrand, mModel, mYear, mKms, mRTO_City, mAddress, mRegistration, mSendImage, imgUrl;
     String contact, mLikestr, prefcontact, allDetails;
     ApiCall mApiCall;
@@ -72,7 +73,6 @@ public class VehicleDetails extends AppCompatActivity implements RequestNotifier
         mFab = (FloatingActionMenu) findViewById(R.id.menu_red);
         mCall = (FloatingActionButton) findViewById(R.id.call_c);
         mLike = (FloatingActionButton) findViewById(R.id.like_l);
-        mAutoshare = (FloatingActionButton) findViewById(R.id.autokatta_share);
         mShare = (FloatingActionButton) findViewById(R.id.share);
         mChat = (FloatingActionButton) findViewById(R.id.chat_c);
 
@@ -81,13 +81,11 @@ public class VehicleDetails extends AppCompatActivity implements RequestNotifier
         mLike.setOnClickListener(this);
         mFab.setOnClickListener(this);
         mShare.setOnClickListener(this);
-        mAutoshare.setOnClickListener(this);
         mChat.setOnClickListener(this);
 
         mChat.setLabelTextColor(Color.BLACK);
         mCall.setLabelTextColor(Color.BLACK);
         mShare.setLabelTextColor(Color.BLACK);
-        mAutoshare.setLabelTextColor(Color.BLACK);
 
         runOnUiThread(new Runnable() {
             @Override
@@ -345,76 +343,91 @@ public class VehicleDetails extends AppCompatActivity implements RequestNotifier
                 }
                 break;
             case R.id.share:
-                String imageFilePath;
-                Intent intent = new Intent(Intent.ACTION_SEND);
-                if (mSendImage.equalsIgnoreCase("") || mSendImage.equalsIgnoreCase(null)) {
-                    imgUrl = getString(R.string.base_image_url) + "logo48x48.png";
-                } else {
-                    imgUrl = getString(R.string.base_image_url) + mSendImage;
-                }
-                Log.e("TAG", "dp : " + imgUrl);
-                DownloadManager.Request request = new DownloadManager.Request(
-                        Uri.parse(imgUrl));
-                request.allowScanningByMediaScanner();
-                String filename = URLUtil.guessFileName(imgUrl, null, MimeTypeMap.getFileExtensionFromUrl(imgUrl));
-                request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, filename);
-                Log.e("ShareImagePath :", filename);
-                Log.e("TAG", "dp : " + imgUrl);
-                DownloadManager manager = (DownloadManager) getApplication()
-                        .getSystemService(Context.DOWNLOAD_SERVICE);
+                //
+                PopupMenu mPopupMenu = new PopupMenu(this, mShare);
+                mPopupMenu.getMenuInflater().inflate(R.menu.more_menu, mPopupMenu.getMenu());
+                mPopupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        switch (item.getItemId()) {
+                            case R.id.autokatta:
+                                allDetails = Title + "=" +
+                                        mPrice + "=" +
+                                        mBrand + "=" +
+                                        mModel + "=" +
+                                        mYear + "=" +
+                                        mKms + "=" +
+                                        mRTO_City + "=" +
+                                        mAddress + "=" +
+                                        mRegistration + "=" +
+                                        mSendImage + "=" +
+                                        prefcontact + "=" +
+                                        "0";
 
-                Log.e("TAG", "dp URL: " + imgUrl);
-                manager.enqueue(request);
-                imageFilePath = "/storage/emulated/0/Download/" + filename;
-                System.out.println("ImageFilePath:" + imageFilePath);
+                                getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                                        putString("Share_sharedata", allDetails).apply();
+                                getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                                        putInt("Share_vehicle_id", mVehicle_Id).apply();
+                                getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                                        putString("Share_keyword", "vehicle").apply();
 
-                String allGroupVehicleDetails =
-                        "Vehicle Title : " + Title + "\n" +
-                                "Vehicle Price : " + mPrice + "\n" +
-                                "Vehicle Brand : " + mBrand + "\n" +
-                                "Vehicle Model : " + mModel + "\n" +
-                                "Vehicle Manufacturing Year : " + mYear + "\n" +
-                                "Vehicle Running (Km/Hr) : " + mKms + "\n" +
-                                "RTO City : " + mRTO_City + "\n" +
-                                "Vehicle Location City : " + mAddress + "\n" +
-                                "Vehicle Registration Number : " + mRegistration + "\n" +
-                                "Contact : " + prefcontact;
+                                Intent i = new Intent(getApplicationContext(), ShareWithinAppActivity.class);
+                                startActivity(i);
+                                finish();
+                                break;
 
-                intent.setType("text/plain");
-                intent.putExtra(Intent.EXTRA_TEXT, "Please visit and Follow my vehicle on Autokatta. Stay connected for Product and Service updates and enquiries"
-                        + "\n" + "http://autokatta.com/vehicle/main/" + mVehicle_Id + "/" + prefcontact
-                        + "\n" + "\n" + allGroupVehicleDetails);
-                intent.setType("image/jpeg");
-                intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(imageFilePath)));
-                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                intent.putExtra(Intent.EXTRA_SUBJECT, "Please Find Below Attachments");
-                startActivity(Intent.createChooser(intent, "Autokatta"));
+                            case R.id.other:
+                                String imageFilePath;
+                                Intent intent = new Intent(Intent.ACTION_SEND);
+                                if (mSendImage.equalsIgnoreCase("") || mSendImage.equalsIgnoreCase(null)) {
+                                    imgUrl = getString(R.string.base_image_url) + "logo48x48.png";
+                                } else {
+                                    imgUrl = getString(R.string.base_image_url) + mSendImage;
+                                }
+                                Log.e("TAG", "dp : " + imgUrl);
+                                DownloadManager.Request request = new DownloadManager.Request(
+                                        Uri.parse(imgUrl));
+                                request.allowScanningByMediaScanner();
+                                String filename = URLUtil.guessFileName(imgUrl, null, MimeTypeMap.getFileExtensionFromUrl(imgUrl));
+                                request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, filename);
+                                Log.e("ShareImagePath :", filename);
+                                Log.e("TAG", "dp : " + imgUrl);
+                                DownloadManager manager = (DownloadManager) getApplication()
+                                        .getSystemService(Context.DOWNLOAD_SERVICE);
 
-                break;
-            case R.id.autokatta_share:
-                allDetails = Title + "=" +
-                        mPrice + "=" +
-                        mBrand + "=" +
-                        mModel + "=" +
-                        mYear + "=" +
-                        mKms + "=" +
-                        mRTO_City + "=" +
-                        mAddress + "=" +
-                        mRegistration + "=" +
-                        mSendImage + "=" +
-                        prefcontact + "=" +
-                        "0";
+                                Log.e("TAG", "dp URL: " + imgUrl);
+                                manager.enqueue(request);
+                                imageFilePath = "/storage/emulated/0/Download/" + filename;
+                                System.out.println("ImageFilePath:" + imageFilePath);
 
-                getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                        putString("Share_sharedata", allDetails).apply();
-                getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                        putInt("Share_vehicle_id", mVehicle_Id).apply();
-                getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                        putString("Share_keyword", "vehicle").apply();
+                                String allGroupVehicleDetails =
+                                        "Vehicle Title : " + Title + "\n" +
+                                                "Vehicle Price : " + mPrice + "\n" +
+                                                "Vehicle Brand : " + mBrand + "\n" +
+                                                "Vehicle Model : " + mModel + "\n" +
+                                                "Vehicle Manufacturing Year : " + mYear + "\n" +
+                                                "Vehicle Running (Km/Hr) : " + mKms + "\n" +
+                                                "RTO City : " + mRTO_City + "\n" +
+                                                "Vehicle Location City : " + mAddress + "\n" +
+                                                "Vehicle Registration Number : " + mRegistration + "\n" +
+                                                "Contact : " + prefcontact;
 
-                Intent i = new Intent(getApplicationContext(), ShareWithinAppActivity.class);
-                startActivity(i);
-                finish();
+                                intent.setType("text/plain");
+                                intent.putExtra(Intent.EXTRA_TEXT, "Please visit and Follow my vehicle on Autokatta. Stay connected for Product and Service updates and enquiries"
+                                        + "\n" + "http://autokatta.com/vehicle/main/" + mVehicle_Id + "/" + prefcontact
+                                        + "\n" + "\n" + allGroupVehicleDetails);
+                                intent.setType("image/jpeg");
+                                intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(imageFilePath)));
+                                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                                intent.putExtra(Intent.EXTRA_SUBJECT, "Please Find Below Attachments");
+                                startActivity(Intent.createChooser(intent, "Autokatta"));
+                                break;
+                        }
+                        return false;
+                    }
+                });
+                mPopupMenu.show(); //showing popup menu
+
                 break;
         }
     }

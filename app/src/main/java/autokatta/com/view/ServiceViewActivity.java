@@ -12,6 +12,7 @@ import android.os.Environment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -119,7 +120,7 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
     private ProgressDialog dialog;
     Button submitfeedback;
     RelativeLayout relativerate;
-    LinearLayout linearlike, linearunlike, linearshare, linearshare1, linearreview;
+    Button linearlike, linearunlike, linearshare;
     int lcnt;
     Button post, btnchat;
     String reviewstring = "";
@@ -190,11 +191,9 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
         callme = (ImageView) findViewById(R.id.call);
         textlike = (TextView) findViewById(R.id.txtlike);
         textshare = (TextView) findViewById(R.id.txtshare);
-        linearlike = (LinearLayout) findViewById(R.id.linearlike);
-        linearunlike = (LinearLayout) findViewById(R.id.linearunlike);
-        linearshare = (LinearLayout) findViewById(R.id.linearshare);
-        linearshare1 = (LinearLayout) findViewById(R.id.linearshare1);
-        linearreview = (LinearLayout) findViewById(R.id.linearreview);
+        linearlike = (Button) findViewById(R.id.linearlike);
+        linearunlike = (Button) findViewById(R.id.linearunlike);
+        linearshare = (Button) findViewById(R.id.linearshare);
         post = (Button) findViewById(R.id.btnpost);
         btnchat = (Button) findViewById(R.id.btnchat);
         photocount = (TextView) findViewById(R.id.no_of_photos);
@@ -222,7 +221,6 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
 
         edit.setOnClickListener(this);
         check.setOnClickListener(this);
-        linearreview.setOnClickListener(this);
         callme.setOnClickListener(this);
         post.setOnClickListener(this);
         btnchat.setOnClickListener(this);
@@ -230,7 +228,6 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
         linearlike.setOnClickListener(this);
         linearunlike.setOnClickListener(this);
         submitfeedback.setOnClickListener(this);
-        linearshare1.setOnClickListener(this);
         linearshare.setOnClickListener(this);
         mUploadGroup.setOnClickListener(this);
 
@@ -742,7 +739,7 @@ Get Admin data...
                                 relativerate.setVisibility(View.GONE);
                                 relativewritereview.setVisibility(View.GONE);
                                 linearlike.setEnabled(false);
-                                linearreview.setEnabled(false);
+
 
                             } else {
                                 callme.setVisibility(View.VISIBLE);
@@ -795,7 +792,7 @@ Get Admin data...
                             }
 
                             sliderLayout = (SliderLayout) findViewById(R.id.slider);
-                            if (!simages.equals("") && !simages.equals("null") && simages != null) {
+                            if (!simages.equals("") || !simages.equals("null") || simages != null) {
                                 //silder code?????????????????????????????????????????????????????????????????
                                 Hash_file_maps = new HashMap<String, String>();
 
@@ -1116,22 +1113,6 @@ Get Admin data...
                 else
                     getCallContactList();
 
-
-//                // @Here are the list of items to be shown in the list
-//                if (storecontact.contains(",")) {
-//                    final String[] items = storecontact.split(",");
-//                    AlertDialog.Builder builder = new AlertDialog.Builder(ServiceViewActivity.this);
-//                    builder.setTitle("Make your selection");
-//                    builder.setItems(items, new DialogInterface.OnClickListener() {
-//                        public void onClick(DialogInterface dialog, int item) {
-//                            call(items[item]);
-//                            dialog.dismiss();
-//
-//                        }
-//                    }).show();
-//                } else {
-//                    call(storecontact);
-//                }
                 break;
 
             case R.id.btnpost:
@@ -1217,76 +1198,95 @@ Get Admin data...
                 }
                 break;
 
-            case R.id.linearshare1:
-                allDetails = sname + "=" + stype + "=" + srating + "=" + slikecnt + "=" + imageslist;
-                getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                        putString("Share_sharedata", allDetails).apply();
-                getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                        putInt("Share_service_id", service_id).apply();
-                getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                        putString("Share_keyword", "service").apply();
-
-                ActivityOptions options = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.ok_left_to_right,
-                        R.anim.ok_right_to_left);
-                startActivity(new Intent(getApplicationContext(), ShareWithinAppActivity.class), options.toBundle());
-                break;
-
             case R.id.linearshare:
-                Intent intent = new Intent(Intent.ACTION_SEND);
-                String imageFilePath;
-                String singleImage;
-                if (simages.contains(",")) {
-                    String[] items = simages.split(",");
-                    singleImage = items[0];
+
+                PopupMenu mPopupMenu = new PopupMenu(this, linearshare);
+                mPopupMenu.getMenuInflater().inflate(R.menu.more_menu, mPopupMenu.getMenu());
+                mPopupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        switch (item.getItemId()) {
+                            case R.id.autokatta:
+
+                                allDetails = sname + "=" + stype + "=" + srating + "=" + slikecnt + "=" + imageslist;
+                                getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                                        putString("Share_sharedata", allDetails).apply();
+                                getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                                        putInt("Share_service_id", service_id).apply();
+                                getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                                        putString("Share_keyword", "service").apply();
+
+                                ActivityOptions options = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.ok_left_to_right,
+                                        R.anim.ok_right_to_left);
+                                startActivity(new Intent(getApplicationContext(), ShareWithinAppActivity.class), options.toBundle());
+                                break;
+
+
+                            case R.id.other:
+
+                                Intent intent = new Intent(Intent.ACTION_SEND);
+                                String imageFilePath;
+                                String singleImage;
+                                if (simages.contains(",")) {
+                                    String[] items = simages.split(",");
+                                    singleImage = items[0];
                             /*for (String item : items) {
                                 notification.setUpVehicleImage(item);
                             }*/
-                } else {
-                    singleImage = simages;
-                }
+                                } else {
+                                    singleImage = simages;
+                                }
 
 
-                if (simages.equalsIgnoreCase("") || simages.equalsIgnoreCase(null) ||
-                        simages.equalsIgnoreCase("null")) {
-                    imagename = getString(R.string.base_image_url) + "logo48x48.png";
-                } else {
-                    imagename = getString(R.string.base_image_url) + singleImage;
-                }
+                                if (simages.equalsIgnoreCase("") || simages.equalsIgnoreCase(null) ||
+                                        simages.equalsIgnoreCase("null")) {
+                                    imagename = getString(R.string.base_image_url) + "logo48x48.png";
+                                } else {
+                                    imagename = getString(R.string.base_image_url) + singleImage;
+                                }
 
-                Log.e("TAG", "img : " + simagename);
+                                Log.e("TAG", "img : " + imagename);
 
-                DownloadManager.Request request = new DownloadManager.Request(
-                        Uri.parse(simagename));
-                request.allowScanningByMediaScanner();
-                String filename = URLUtil.guessFileName(simagename, null, MimeTypeMap.getFileExtensionFromUrl(simagename));
-                request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, filename);
-                Log.e("ShareImagePath :", filename);
-                Log.e("TAG", "img : " + simagename);
+                                DownloadManager.Request request = new DownloadManager.Request(
+                                        Uri.parse(imagename));
+                                request.allowScanningByMediaScanner();
+                                String filename = URLUtil.guessFileName(imagename, null, MimeTypeMap.getFileExtensionFromUrl(imagename));
+                                request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, filename);
+                                Log.e("ShareImagePath :", filename);
+                                Log.e("TAG", "img : " + imagename);
 
-                DownloadManager manager = (DownloadManager) getApplication()
-                        .getSystemService(Context.DOWNLOAD_SERVICE);
+                                DownloadManager manager = (DownloadManager) getApplication()
+                                        .getSystemService(Context.DOWNLOAD_SERVICE);
 
-                Log.e("TAG", "img URL: " + simagename);
+                                Log.e("TAG", "img URL: " + imagename);
 
-                manager.enqueue(request);
+                                manager.enqueue(request);
 
-                imageFilePath = "/storage/emulated/0/Download/" + filename;
-                System.out.println("ImageFilePath:" + imageFilePath);
-                String allStoreDetails = "Service name : " + sname + "\n" +
-                        "Service type : " + stype + "\n" +
-                        "Ratings : " + srating + "\n" +
-                        "Likes : " + slikecnt;
+                                imageFilePath = "/storage/emulated/0/Download/" + filename;
+                                System.out.println("ImageFilePath:" + imageFilePath);
+                                String allStoreDetails = "Service name : " + sname + "\n" +
+                                        "Service type : " + stype + "\n" +
+                                        "Ratings : " + srating + "\n" +
+                                        "Likes : " + slikecnt;
 
-                //  allDetails = sname + "=" + stype + "=" + srating + "=" + slikecnt + "=" + imageslist;
-                intent.setType("text/plain");
-                intent.putExtra(Intent.EXTRA_TEXT, "Please visit and Follow my Services on Autokatta. Stay connected for Product and Service updates and enquiries"
-                        + "\n" + "http://autokatta.com/service/" + id
-                        + "\n" + "\n" + allStoreDetails);
-                intent.setType("image/jpeg");
-                intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(imageFilePath)));
-                intent.putExtra(Intent.EXTRA_SUBJECT, "Please Find Below Attachments");
-                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                startActivity(Intent.createChooser(intent, "Autokatta"));
+                                //  allDetails = sname + "=" + stype + "=" + srating + "=" + slikecnt + "=" + imageslist;
+                                intent.setType("text/plain");
+                                intent.putExtra(Intent.EXTRA_TEXT, "Please visit and Follow my Services on Autokatta. Stay connected for Product and Service updates and enquiries"
+                                        + "\n" + "http://autokatta.com/service/" + id
+                                        + "\n" + "\n" + allStoreDetails);
+                                intent.setType("image/jpeg");
+                                intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(imageFilePath)));
+                                intent.putExtra(Intent.EXTRA_SUBJECT, "Please Find Below Attachments");
+                                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                                startActivity(Intent.createChooser(intent, "Autokatta"));
+
+                                break;
+                        }
+                        return false;
+                    }
+                });
+                mPopupMenu.show(); //showing popup menu
+
                 break;
 
             case R.id.btnfeedback:

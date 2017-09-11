@@ -13,6 +13,7 @@ import android.os.Environment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -118,7 +119,7 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
     String imagename = "", reviewstring = "", editMode = "", brandtagpart = "", finalbrandtags = "";
 
     int lcnt;
-    LinearLayout linearlike, linearshare, linearshare1, linearunlike, linearreview;
+    Button linearlike, linearshare, linearunlike;
     final List<String> brandTags = new ArrayList<>();
 
     // SharedPreferences settings;
@@ -197,11 +198,10 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
         post = (Button) findViewById(R.id.btnpost);
         btnchat = (Button) findViewById(R.id.btnchat);
         seellreview = (Button) findViewById(R.id.btnseeall);
-        linearlike = (LinearLayout) findViewById(R.id.linearlike);
-        linearunlike = (LinearLayout) findViewById(R.id.linearunlike);
-        linearshare = (LinearLayout) findViewById(R.id.linearshare);
-        linearshare1 = (LinearLayout) findViewById(R.id.linearshare1);
-        linearreview = (LinearLayout) findViewById(R.id.linearreview);
+        linearlike = (Button) findViewById(R.id.linearlike);
+        linearunlike = (Button) findViewById(R.id.linearunlike);
+        linearshare = (Button) findViewById(R.id.linearshare);
+
 
         spinCategory = (Spinner) findViewById(R.id.spincategory);
         spinnerlayout = (RelativeLayout) findViewById(R.id.linearcategory);
@@ -232,7 +232,6 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
 
         edit.setOnClickListener(this);
         check.setOnClickListener(this);
-        linearreview.setOnClickListener(this);
         callme.setOnClickListener(this);
         post.setOnClickListener(this);
         btnchat.setOnClickListener(this);
@@ -240,7 +239,6 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
         linearlike.setOnClickListener(this);
         linearunlike.setOnClickListener(this);
         submitfeedback.setOnClickListener(this);
-        linearshare1.setOnClickListener(this);
         linearshare.setOnClickListener(this);
         seellreview.setOnClickListener(this);
         mUploadGroup.setOnClickListener(this);
@@ -572,11 +570,10 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                                 relativerate.setVisibility(View.GONE);
                                 relativewritereview.setVisibility(View.GONE);
                                 //  linearlike.setEnabled(false);
-                                linearreview.setEnabled(false);
+
                             } else {
                                 callme.setVisibility(View.VISIBLE);
                                 relativerate.setVisibility(View.VISIBLE);
-                                linearreview.setEnabled(true);
                                 edit.setVisibility(View.GONE);
                                 deleteproduct.setVisibility(View.GONE);
                                 if (plikestatus.equals("yes")) {
@@ -665,7 +662,7 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                         }
 
                         sliderLayout = (SliderLayout) findViewById(R.id.slider);
-                        if (!pimages.equals("") && !pimages.equals("null") && pimages != null) {
+                        if (!pimages.equals("") || !pimages.equals("null") || pimages != null) {
 
                             Hash_file_maps = new HashMap<>();
                             String dp_path = getString(R.string.base_image_url);
@@ -1107,79 +1104,98 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                     System.out.println("hiiii..............send updated product rating called");
                 }
                 break;
-            case R.id.linearshare1:
-
-                allDetails = pname + "=" + ptype + "=" + prating + "=" + plikecnt + "=" + imageslist;
-
-                getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                        putString("Share_sharedata", allDetails).apply();
-                getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                        putInt("Share_product_id", product_id).apply();
-                getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                        putString("Share_keyword", "product").apply();
-
-                ActivityOptions options = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.ok_left_to_right,
-                        R.anim.ok_right_to_left);
-                startActivity(new Intent(getApplicationContext(), ShareWithinAppActivity.class), options.toBundle());
-
-                break;
             case R.id.linearshare:
 
-                Intent intent = new Intent(Intent.ACTION_SEND);
-                String imageFilePath, singleImage;
+                PopupMenu mPopupMenu = new PopupMenu(this, linearshare);
+                mPopupMenu.getMenuInflater().inflate(R.menu.more_menu, mPopupMenu.getMenu());
+                mPopupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        switch (item.getItemId()) {
+                            case R.id.autokatta:
 
-                if (pimages.contains(",")) {
-                    String[] items = pimages.split(",");
-                    singleImage = items[0];
+                                allDetails = pname + "=" + ptype + "=" + prating + "=" + plikecnt + "=" + imageslist;
+
+                                getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                                        putString("Share_sharedata", allDetails).apply();
+                                getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                                        putInt("Share_product_id", product_id).apply();
+                                getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                                        putString("Share_keyword", "product").apply();
+
+                                ActivityOptions options = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.ok_left_to_right,
+                                        R.anim.ok_right_to_left);
+                                startActivity(new Intent(getApplicationContext(), ShareWithinAppActivity.class), options.toBundle());
+                                break;
+
+                            case R.id.other:
+
+
+                                Intent intent = new Intent(Intent.ACTION_SEND);
+                                String imageFilePath, singleImage;
+
+                                if (pimages.contains(",")) {
+                                    String[] items = pimages.split(",");
+                                    singleImage = items[0];
                             /*for (String item : items) {
                                 notification.setUpVehicleImage(item);
                             }*/
-                } else {
-                    singleImage = pimages;
-                }
+                                } else {
+                                    singleImage = pimages;
+                                }
 
 
-                if (pimages.equalsIgnoreCase("") || pimages.equalsIgnoreCase(null) ||
-                        pimages.equalsIgnoreCase("null")) {
-                    imagename = getString(R.string.base_image_url) + "logo48x48.png";
-                } else {
-                    imagename = getString(R.string.base_image_url) + singleImage;
-                }
-                Log.e("TAG", "img : " + imagename);
-                DownloadManager.Request request = new DownloadManager.Request(
-                        Uri.parse(imagename));
-                request.allowScanningByMediaScanner();
-                String filename = URLUtil.guessFileName(imagename, null, MimeTypeMap.getFileExtensionFromUrl(imagename));
-                request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, filename);
-                Log.e("ShareImagePath :", filename);
-                Log.e("TAG", "img : " + imagename);
+                                if (pimages.equalsIgnoreCase("") || pimages.equalsIgnoreCase(null) ||
+                                        pimages.equalsIgnoreCase("null")) {
+                                    imagename = getString(R.string.base_image_url) + "logo48x48.png";
+                                } else {
+                                    imagename = getString(R.string.base_image_url) + singleImage;
+                                }
+                                Log.e("TAG", "img : " + imagename);
+                                DownloadManager.Request request = new DownloadManager.Request(
+                                        Uri.parse(imagename));
+                                request.allowScanningByMediaScanner();
+                                String filename = URLUtil.guessFileName(imagename, null, MimeTypeMap.getFileExtensionFromUrl(imagename));
+                                request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, filename);
+                                Log.e("ShareImagePath :", filename);
+                                Log.e("TAG", "img : " + imagename);
 
-                DownloadManager manager = (DownloadManager) getApplication()
-                        .getSystemService(Context.DOWNLOAD_SERVICE);
+                                DownloadManager manager = (DownloadManager) getApplication()
+                                        .getSystemService(Context.DOWNLOAD_SERVICE);
 
-                Log.e("TAG", "img URL: " + imagename);
+                                Log.e("TAG", "img URL: " + imagename);
 
-                manager.enqueue(request);
+                                manager.enqueue(request);
 
-                imageFilePath = "/storage/emulated/0/Download/" + filename;
-                System.out.println("ImageFilePath:" + imageFilePath);
+                                imageFilePath = "/storage/emulated/0/Download/" + filename;
+                                System.out.println("ImageFilePath:" + imageFilePath);
 
-                String allStoreDetails = "Product name : " + pname + "\n" +
-                        "Product type : " + ptype + "\n" +
-                        "Ratings : " + prating + "\n" +
-                        "Likes : " + plikecnt;
+                                String allStoreDetails = "Product name : " + pname + "\n" +
+                                        "Product type : " + ptype + "\n" +
+                                        "Ratings : " + prating + "\n" +
+                                        "Likes : " + plikecnt;
 
-                intent.setType("text/plain");
-                intent.putExtra(Intent.EXTRA_TEXT, "Please visit and Follow my product on Autokatta. Stay connected for Product and Service updates and enquiries"
-                        + "\n" + "http://autokatta.com/product/" + product_id
-                        + "\n" + "\n" + allStoreDetails);
-                intent.setType("image/jpeg");
-                intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(imageFilePath)));
-                intent.putExtra(Intent.EXTRA_SUBJECT, "Please Find Below Attachments");
-                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                startActivity(Intent.createChooser(intent, "Autokatta"));
+                                intent.setType("text/plain");
+                                intent.putExtra(Intent.EXTRA_TEXT, "Please visit and Follow my product on Autokatta. Stay connected for Product and Service updates and enquiries"
+                                        + "\n" + "http://autokatta.com/product/" + product_id
+                                        + "\n" + "\n" + allStoreDetails);
+                                intent.setType("image/jpeg");
+                                intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(imageFilePath)));
+                                intent.putExtra(Intent.EXTRA_SUBJECT, "Please Find Below Attachments");
+                                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                                startActivity(Intent.createChooser(intent, "Autokatta"));
+
+
+                                break;
+                        }
+                        return false;
+                    }
+                });
+                mPopupMenu.show(); //showing popup menu
+
 
                 break;
+
             case R.id.btnseeall:
 
 

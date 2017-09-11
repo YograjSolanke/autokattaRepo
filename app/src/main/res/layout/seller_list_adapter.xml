@@ -117,7 +117,7 @@
             android:layout_below="@+id/sellvehicalimgflicker"
             android:layout_marginEnd="10dip"
             android:layout_marginTop="10dp"
-            android:background="@drawable/call_icon"
+            android:background="@mipmap/new_call"
             android:contentDescription="@string/app_name" />
 
         <ImageView

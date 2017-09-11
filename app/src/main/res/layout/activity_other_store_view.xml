@@ -225,7 +225,7 @@
             android:id="@+id/share"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/new_share"
+            android:src="@mipmap/new_share_white"
             fab:fab_label="Share"
             fab:fab_colorNormal="#5176C9"
             fab:fab_colorPressed="#5176C9"

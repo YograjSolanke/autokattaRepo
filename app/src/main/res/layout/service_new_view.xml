@@ -102,7 +102,7 @@
             android:layout_marginEnd="5dp"
             android:layout_marginTop="10dp"
             android:contentDescription="@string/app_name"
-            android:src="@drawable/call_icon"
+            android:src="@mipmap/new_call"
             android:visibility="gone" />
 
         <RatingBar
@@ -246,156 +246,216 @@
                         android:layout_marginTop="5dp"
                         android:background="#cccccc" />
 
+
                     <LinearLayout
-
-                        android:id="@+id/relalike2"
                         android:layout_width="match_parent"
-                        android:layout_height="35dp"
+                        android:layout_height="wrap_content"
                         android:layout_below="@+id/v2"
-                        android:background="#80bebebe"
-                        android:orientation="horizontal">
+                        android:id="@+id/relalike2"
+                        android:baselineAligned="false"
+                        android:orientation="horizontal"
+                        android:weightSum="2">
 
                         <LinearLayout
-                            android:id="@+id/linearlike"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            android:layout_weight="1"
-                            android:gravity="center">
-
-                            <ImageView
-                                android:id="@+id/likeimg"
-                                android:layout_width="20dp"
-                                android:layout_height="20dp"
-                                android:background="@drawable/likeicon"
-                                android:contentDescription="@string/app_name" />
-
-                            <TextView
-                                android:id="@+id/liketxt"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="5dp"
-                                android:text="Like"
-                                android:textColor="#2C3343" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:id="@+id/linearunlike"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
                             android:gravity="center"
-                            android:visibility="gone">
+                            android:layout_weight="1"
+                            android:visibility="visible">
 
-                            <ImageView
-                                android:id="@+id/unlikeimg"
-                                android:layout_width="20dp"
-                                android:layout_height="20dp"
-                                android:background="@drawable/unlikethumb" />
-
-                            <TextView
-                                android:id="@+id/unliketxt"
-                                android:layout_width="60dp"
+                            <Button
+                                android:id="@+id/linearlike"
+                                style="?android:attr/button"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="5dp"
-                                android:contentDescription="@string/app_name"
-                                android:text="Unlike"
-                                android:textColor="@color/red" />
+                                android:background="@android:color/transparent"
+                                android:drawableStart="@mipmap/unlike"
+                                android:text="@string/likes"
+                                android:visibility="visible" />
+
+                            <Button
+                                android:id="@+id/linearunlike"
+                                style="?android:attr/button"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@android:color/transparent"
+                                android:drawableStart="@mipmap/you_like"
+                                android:text="@string/likes"
+                                android:textColor="#5176c9"
+                                android:textStyle="bold"
+                                android:visibility="gone" />
 
                         </LinearLayout>
-
-                        <View
-                            android:layout_width="1dp"
-                            android:layout_height="20dp"
-                            android:layout_gravity="center"
-                            android:background="@color/black" />
 
 
                         <LinearLayout
-                            android:id="@+id/linearshare"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            android:layout_weight="1"
-                            android:gravity="center">
+                            android:gravity="center"
+                            android:layout_weight="1">
 
-                            <ImageView
-                                android:id="@+id/shareimg"
-                                android:layout_width="20dp"
-                                android:layout_height="20dp"
-                                android:background="@android:drawable/ic_menu_share"
-                                android:contentDescription="@string/app_name" />
-
-                            <TextView
-                                android:id="@+id/sharetxt"
+                            <Button
+                                android:id="@+id/linearshare"
+                                style="?android:attr/button"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="5dp"
-                                android:text="Share"
-                                android:textColor="#2C3343" />
-
+                                android:layout_gravity="center"
+                                android:background="@android:color/transparent"
+                                android:drawableStart="@mipmap/new_share"
+                                android:text="Share" />
                         </LinearLayout>
-
-                        <View
-                            android:layout_width="1dp"
-                            android:layout_height="20dp"
-                            android:layout_gravity="center"
-                            android:background="@color/black" />
-
-
-                        <LinearLayout
-                            android:id="@+id/linearshare1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            android:layout_weight="1"
-                            android:gravity="center">
-
-                            <ImageView
-                                android:id="@+id/shareimg1"
-                                android:layout_width="20dp"
-                                android:layout_height="20dp"
-                                android:background="@drawable/autoshare"
-                                android:contentDescription="@string/app_name" />
-
-                            <TextView
-                                android:id="@+id/sharetxt1"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="5dp"
-                                android:text="Share"
-                                android:textColor="#2C3343" />
-
-                        </LinearLayout>
-
-                        <View
-                            android:layout_width="1dp"
-                            android:layout_height="20dp"
-                            android:layout_gravity="center"
-                            android:background="@color/black" />
-
-
-                        <LinearLayout
-                            android:id="@+id/linearreview"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            android:layout_weight="1"
-                            android:gravity="center">
-
-
-                            <TextView
-                                android:id="@+id/reviewtxt"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="5dp"
-                                android:text="Review"
-                                android:textColor="#2C3343" />
-
-                        </LinearLayout>
-
                     </LinearLayout>
+
+                    <!--<LinearLayout-->
+
+                    <!--android:id="@+id/relalike2"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="35dp"-->
+                    <!--android:layout_below="@+id/v2"-->
+                    <!--android:background="#80bebebe"-->
+                    <!--android:orientation="horizontal">-->
+
+                    <!--<LinearLayout-->
+                    <!--android:id="@+id/linearlike"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginTop="5dp"-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:gravity="center">-->
+
+                    <!--<ImageView-->
+                    <!--android:id="@+id/likeimg"-->
+                    <!--android:layout_width="20dp"-->
+                    <!--android:layout_height="20dp"-->
+                    <!--android:background="@drawable/likeicon"-->
+                    <!--android:contentDescription="@string/app_name" />-->
+
+                    <!--<TextView-->
+                    <!--android:id="@+id/liketxt"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginStart="5dp"-->
+                    <!--android:text="Like"-->
+                    <!--android:textColor="#2C3343" />-->
+
+                    <!--</LinearLayout>-->
+
+                    <!--<LinearLayout-->
+                    <!--android:id="@+id/linearunlike"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:gravity="center"-->
+                    <!--android:visibility="gone">-->
+
+                    <!--<ImageView-->
+                    <!--android:id="@+id/unlikeimg"-->
+                    <!--android:layout_width="20dp"-->
+                    <!--android:layout_height="20dp"-->
+                    <!--android:background="@drawable/unlikethumb" />-->
+
+                    <!--<TextView-->
+                    <!--android:id="@+id/unliketxt"-->
+                    <!--android:layout_width="60dp"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginStart="5dp"-->
+                    <!--android:contentDescription="@string/app_name"-->
+                    <!--android:text="Unlike"-->
+                    <!--android:textColor="@color/red" />-->
+
+                    <!--</LinearLayout>-->
+
+                    <!--<View-->
+                    <!--android:layout_width="1dp"-->
+                    <!--android:layout_height="20dp"-->
+                    <!--android:layout_gravity="center"-->
+                    <!--android:background="@color/black" />-->
+
+
+                    <!--<LinearLayout-->
+                    <!--android:id="@+id/linearshare"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginTop="5dp"-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:gravity="center">-->
+
+                    <!--<ImageView-->
+                    <!--android:id="@+id/shareimg"-->
+                    <!--android:layout_width="20dp"-->
+                    <!--android:layout_height="20dp"-->
+                    <!--android:background="@android:drawable/ic_menu_share"-->
+                    <!--android:contentDescription="@string/app_name" />-->
+
+                    <!--<TextView-->
+                    <!--android:id="@+id/sharetxt"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginStart="5dp"-->
+                    <!--android:text="Share"-->
+                    <!--android:textColor="#2C3343" />-->
+
+                    <!--</LinearLayout>-->
+
+                    <!--<View-->
+                    <!--android:layout_width="1dp"-->
+                    <!--android:layout_height="20dp"-->
+                    <!--android:layout_gravity="center"-->
+                    <!--android:background="@color/black" />-->
+
+
+                    <!--<LinearLayout-->
+                    <!--android:id="@+id/linearshare1"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginTop="5dp"-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:gravity="center">-->
+
+                    <!--<ImageView-->
+                    <!--android:id="@+id/shareimg1"-->
+                    <!--android:layout_width="20dp"-->
+                    <!--android:layout_height="20dp"-->
+                    <!--android:background="@drawable/autoshare"-->
+                    <!--android:contentDescription="@string/app_name" />-->
+
+                    <!--<TextView-->
+                    <!--android:id="@+id/sharetxt1"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginStart="5dp"-->
+                    <!--android:text="Share"-->
+                    <!--android:textColor="#2C3343" />-->
+
+                    <!--</LinearLayout>-->
+
+                    <!--<View-->
+                    <!--android:layout_width="1dp"-->
+                    <!--android:layout_height="20dp"-->
+                    <!--android:layout_gravity="center"-->
+                    <!--android:background="@color/black" />-->
+
+
+                    <!--<LinearLayout-->
+                    <!--android:id="@+id/linearreview"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginTop="5dp"-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:gravity="center">-->
+
+
+                    <!--<TextView-->
+                    <!--android:id="@+id/reviewtxt"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginStart="5dp"-->
+                    <!--android:text="Review"-->
+                    <!--android:textColor="#2C3343" />-->
+
+                    <!--</LinearLayout>-->
+
+                    <!--</LinearLayout>-->
 
                     <View
                         android:id="@+id/v3"

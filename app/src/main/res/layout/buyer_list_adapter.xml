@@ -52,7 +52,7 @@
             android:layout_below="@+id/buyertext"
             android:layout_marginTop="5dp"
             android:contentDescription="@string/app_name"
-            android:src="@drawable/call_icon"
+            android:src="@mipmap/new_call"
             android:visibility="visible" />
 
         <ImageView
