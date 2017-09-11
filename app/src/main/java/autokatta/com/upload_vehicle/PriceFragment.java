@@ -234,10 +234,8 @@ public class PriceFragment extends Fragment implements RequestNotifier, View.OnC
 
     @Override
     public void notifySuccess(Response<?> response) {
-
         if (response != null) {
             if (response.isSuccessful()) {
-
                 if (response.body() instanceof PriceSuggestionResponse) {
                     if (dialog.isShowing()) {
                         dialog.dismiss();

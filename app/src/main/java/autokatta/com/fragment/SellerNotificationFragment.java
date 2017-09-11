@@ -121,12 +121,10 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
     public void notifySuccess(Response<?> response) {
         DateFormat f = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.getDefault());
         if (response.isSuccessful()) {
-
             if (response.isSuccessful()) {
                 Log.i("seller Response", "" + response);
                 SellerResponse object = (SellerResponse) response.body();
                 SellerResponse.Success objsuccess = object.getSuccess();
-
                 for (SellerResponse.Success.SavedSearch obj : objsuccess.getSavedSearch()) {
                     childlist = new ArrayList<>();
                     obj.setCategory(obj.getCategory());

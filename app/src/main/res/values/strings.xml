@@ -123,6 +123,9 @@
     <string name="date">Date</string>
     <string name="time">Time</string>
 
+    <string name="select_option">Select Option</string>
+    <string name="show_qr">Show QR Code</string>
+    <string name="scan_qr">Scan QR Code</string>
     <string name="select_language">Select Language/आपली भाषा निवडा</string>
     <string name="marathi">मराठी</string>
     <string name="english">English</string>

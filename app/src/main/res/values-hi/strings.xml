@@ -123,6 +123,7 @@
     <string name="date">"तारीख"</string>
     <string name="time">"समय  "</string>
 
+    <string name="select_option">विकल्प चुनें</string>
     <string name="select_language">"भाषा चुनें / अपनी भाषा चुनें"</string>
     <string name="marathi">"मराठी"</string>
     <string name="english">English</string>

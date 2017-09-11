@@ -59,6 +59,7 @@ import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.PostStatus;
 import autokatta.com.other.SearchActivity;
 import autokatta.com.other.SessionManagement;
+import autokatta.com.other.ShowQrCode;
 import autokatta.com.register.RegistrationContinue;
 import autokatta.com.response.ModelFirebase;
 import autokatta.com.view.BlackListedMemberActivity;
@@ -102,7 +103,7 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
     TabLayout tabLayout;
     Locale myLocale;
     String mLanguage;
-    String mMarathiStr, mEnglishStr;
+    AlertDialog alertDialog;
 
     private boolean isBackgroundServiceRunning(Class<?> serviceClass) {
         ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
@@ -600,7 +601,28 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
                 return true;
 
             case R.id.qr_code_scan:
-                qrScan.initiateScan();
+                LayoutInflater layoutInflater = LayoutInflater.from(this);
+                View view = layoutInflater.inflate(R.layout.qr_code_choice_layout, null);
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("Autokatta");
+                builder.setIcon(R.drawable.logo48x48);
+                builder.setView(view);
+
+                RadioGroup mRadioGroup = (RadioGroup) view.findViewById(R.id.myQrGroup);
+                mRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
+                        if (checkedId == R.id.show) {
+                            startActivity(new Intent(getApplicationContext(), ShowQrCode.class));
+                            alertDialog.dismiss();
+                        } else if (checkedId == R.id.scan) {
+                            qrScan.initiateScan();
+                            alertDialog.dismiss();
+                        }
+                    }
+                });
+                alertDialog = builder.create();
+                alertDialog.show();
                 return true;
         }
 

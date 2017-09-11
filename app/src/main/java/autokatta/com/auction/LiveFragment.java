@@ -437,8 +437,8 @@ public class LiveFragment extends Fragment implements RequestNotifier {
                 }
 
             } else {
-                if (isAdded())
-                    CustomToast.customToast(getActivity(), getString(R.string._404));
+                /*if (isAdded())
+                    CustomToast.customToast(getActivity(), getString(R.string._404));*/
             }
         } else {
             if (isAdded())

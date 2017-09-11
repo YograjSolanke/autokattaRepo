@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/card_margin">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="1dp"
+        android:text="@string/select_option"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@color/medium_sea_green" />
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="0.1dp"
+        android:background="@android:color/black" />
+
+    <RadioGroup
+        android:id="@+id/myQrGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:checkedButton="@+id/sound"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/show"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/show_qr"
+            android:checked="false"
+            android:textColor="@color/color_sky" />
+
+        <RadioButton
+            android:id="@+id/scan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/scan_qr"
+            android:checked="false"
+            android:textColor="@color/color_sky" />
+
+    </RadioGroup>
+</LinearLayout>
