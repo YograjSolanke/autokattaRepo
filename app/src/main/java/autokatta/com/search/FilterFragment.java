@@ -759,6 +759,7 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
                                     rowtransmission.setVisibility(View.GONE);
                                     rowuse.setVisibility(View.GONE);
                                     rowimpl.setVisibility(View.GONE);
+                                    air.setVisibility(View.GONE);
 
                                     break;
                                 case "3 Wheeler":
