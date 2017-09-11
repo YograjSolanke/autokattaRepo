@@ -135,7 +135,7 @@
         <menu>
             <item
                 android:id="@+id/sign_out"
-                android:icon="@mipmap/profile"
+                android:icon="@mipmap/signout"
                 android:title="@string/sign_out" />
         </menu>
     </item>
