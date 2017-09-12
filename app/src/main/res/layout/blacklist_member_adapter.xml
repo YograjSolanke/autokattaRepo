@@ -72,7 +72,7 @@
                 android:layout_height="40dp"
                 android:layout_alignParentEnd="true"
                 android:contentDescription="@string/app_name"
-                android:src="@android:drawable/ic_menu_call" />
+                android:src="@mipmap/new_call" />
 
             <Button
                 android:id="@+id/btnremove"

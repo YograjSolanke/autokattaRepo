@@ -34,8 +34,9 @@
                 android:id="@+id/image"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
+                android:contentDescription="@string/app_name"
                 android:src="@drawable/group" />
 
             <RelativeLayout
@@ -43,9 +44,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/keyword"
-                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
                 android:layout_marginTop="5dp"
-                android:layout_toRightOf="@+id/image"
+                android:layout_toEndOf="@+id/image"
                 android:visibility="visible">
 
                 <TextView
@@ -66,8 +67,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"
-                    android:layout_toRightOf="@+id/titletext"
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@+id/titletext"
                     android:textColor="#2C3343"
                     android:textColorHint="#000000"
                     android:textSize="12sp" />
@@ -79,9 +80,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/relative1"
-                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
                 android:layout_marginTop="5dp"
-                android:layout_toRightOf="@+id/image"
+                android:layout_toEndOf="@+id/image"
                 android:visibility="visible">
 
                 <TextView
@@ -102,8 +103,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"
-                    android:layout_toRightOf="@+id/categorytext"
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@+id/categorytext"
                     android:textColor="#2C3343"
                     android:textColorHint="#000000"
                     android:textSize="12sp" />
@@ -114,9 +115,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/relative2"
-                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
                 android:layout_marginTop="5dp"
-                android:layout_toRightOf="@+id/image"
+                android:layout_toEndOf="@+id/image"
                 android:visibility="visible">
 
                 <TextView
@@ -137,8 +138,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"
-                    android:layout_toRightOf="@+id/brandtext"
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@+id/brandtext"
                     android:textColor="#2C3343"
                     android:textColorHint="#000000"
                     android:textSize="12sp" />
@@ -149,9 +150,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/relative3"
-                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
                 android:layout_marginTop="5dp"
-                android:layout_toRightOf="@+id/image"
+                android:layout_toEndOf="@+id/image"
                 android:visibility="visible">
 
                 <TextView
@@ -172,8 +173,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"
-                    android:layout_toRightOf="@+id/modeltext"
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@+id/modeltext"
                     android:textColor="#2C3343"
                     android:textColorHint="#000000"
                     android:textSize="12sp" />
@@ -184,9 +185,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/relative4"
-                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
                 android:layout_marginTop="5dp"
-                android:layout_toRightOf="@+id/image"
+                android:layout_toEndOf="@+id/image"
                 android:visibility="visible">
 
                 <TextView
@@ -207,8 +208,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"
-                    android:layout_toRightOf="@+id/pricetext"
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@+id/pricetext"
                     android:textColor="#2C3343"
                     android:textColorHint="#000000"
                     android:textSize="12sp" />

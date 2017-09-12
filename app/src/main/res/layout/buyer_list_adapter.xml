@@ -64,7 +64,7 @@
             android:layout_marginTop="5dp"
             android:layout_toStartOf="@+id/callbuyer"
             android:contentDescription="@string/app_name"
-            android:src="@drawable/fav1"
+            android:src="@mipmap/new_favourite"
             android:visibility="visible" />
 
 
@@ -77,7 +77,7 @@
             android:layout_marginTop="5dp"
             android:layout_toStartOf="@+id/callbuyer"
             android:contentDescription="@string/app_name"
-            android:src="@drawable/fav2"
+            android:src="@mipmap/new_favourite_clk"
             android:visibility="gone" />
 
         <TextView

@@ -21,34 +21,34 @@
             android:padding="5dp">
 
             <TextView
+                android:id="@+id/textName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:layout_toStartOf="@+id/call"
                 android:text="@string/names"
-                android:id="@+id/textName"
-                android:layout_toLeftOf="@+id/call"
-                android:layout_marginRight="5dp"
                 android:textSize="15sp"
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/textRole"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/name"
-                android:layout_toLeftOf="@+id/call"
-                android:layout_marginRight="5dp"
                 android:layout_below="@+id/textName"
-                android:id="@+id/textRole"
+                android:layout_marginEnd="5dp"
+                android:layout_toStartOf="@+id/call"
+                android:text="@string/name"
                 android:textSize="12sp" />
 
 
             <ImageView
+                android:id="@+id/call"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/call"
-                android:src="@mipmap/call"
-                android:layout_centerVertical="true"
                 android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true" />
+                android:layout_centerVertical="true"
+                android:contentDescription="@string/app_name"
+                android:src="@mipmap/new_call" />
         </RelativeLayout>
 
 

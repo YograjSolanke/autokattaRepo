@@ -7,26 +7,6 @@
     android:layout_height="match_parent"
     tools:context="autokatta.com.auction.PreviewLiveEvents">
 
-    <!--<android.support.v4.widget.NestedScrollView
-        android:id="@+id/nested_scroll_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="39dp"
-        android:fillViewport="true"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-        <LinearLayout
-            android:id="@+id/linear_layout_android"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">-->
-
-    <!--<ListView
-        android:id="@+id/listView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#fff"
-        android:dividerHeight="1dp" />-->
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/auction_event_recycler_view"
@@ -36,10 +16,6 @@
         android:fillViewport="true"
         android:scrollbars="vertical"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
-
-    <!--</LinearLayout>
-
-</android.support.v4.widget.NestedScrollView>-->
 
     <LinearLayout
         android:id="@+id/btnlinear"
@@ -316,18 +292,6 @@
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
 
-    <!-- <include layout="@layout/content_preview_live_events" />-->
-
-    <!--<android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        app:layout_anchor="@id/appbar"
-        app:layout_anchorGravity="end|top"
-        app:srcCompat="@android:drawable/ic_dialog_email" />-->
-
     <com.github.clans.fab.FloatingActionMenu
         android:id="@+id/menu_red"
         android:layout_width="wrap_content"
@@ -343,7 +307,7 @@
             android:id="@+id/call_c"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@android:drawable/ic_menu_call"
+            android:src="@mipmap/new_call_white"
             fab:fab_label="Call"
             fab:fab_size="mini" />
 

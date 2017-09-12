@@ -80,67 +80,48 @@
         android:paddingBottom="10dp"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        fab:menu_labels_ellipsize="end"
-        fab:menu_labels_colorNormal="#A2C7D3"
-        fab:menu_labels_colorPressed="#A2C7D3"
-        fab:menu_labels_colorRipple="#A2C7D3"
         fab:menu_colorNormal="#5176C9"
         fab:menu_colorPressed="#5176C9"
         fab:menu_colorRipple="#5176C9"
+        fab:menu_labels_colorNormal="#A2C7D3"
+        fab:menu_labels_colorPressed="#A2C7D3"
+        fab:menu_labels_colorRipple="#A2C7D3"
+        fab:menu_labels_ellipsize="end"
         fab:menu_labels_singleLine="true">
 
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/call_c"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@android:drawable/ic_menu_call"
-            fab:fab_label="Call"
+            android:src="@mipmap/new_call_white"
             fab:fab_colorNormal="#5176C9"
             fab:fab_colorPressed="#5176C9"
             fab:fab_colorRipple="#5176C9"
+            fab:fab_label="Call"
             fab:fab_size="mini" />
 
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/like_l"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/like"
-            fab:fab_label="Like"
+            android:src="@mipmap/new_like_white"
             fab:fab_colorNormal="#5176C9"
             fab:fab_colorPressed="#5176C9"
             fab:fab_colorRipple="#5176C9"
+            fab:fab_label="Like"
             fab:fab_size="mini" />
 
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/follow_f"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/ic_follow"
-            fab:fab_label="Follow"
+            android:src="@mipmap/new_follow_white"
             fab:fab_colorNormal="#5176C9"
             fab:fab_colorPressed="#5176C9"
             fab:fab_colorRipple="#5176C9"
+            fab:fab_label="Follow"
             fab:fab_size="mini" />
 
     </com.github.clans.fab.FloatingActionMenu>
-
-
-    <!-- <android.support.design.widget.FloatingActionButton
-         android:id="@+id/follow"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:layout_margin="@dimen/fab_margin"
-         app:srcCompat="@mipmap/ic_follow"
-         app:layout_anchor="@id/appbar"
-         app:layout_anchorGravity="bottom|right|end" />
-
-     <android.support.design.widget.FloatingActionButton
-         android:id="@+id/like"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:layout_margin="@dimen/fab_margin"
-         app:srcCompat="@mipmap/like"
-         app:layout_anchorGravity="bottom|left|start"
-         app:layout_anchor="@id/appbar"/>-->
 
 </android.support.design.widget.CoordinatorLayout>

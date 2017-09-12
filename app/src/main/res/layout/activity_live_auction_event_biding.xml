@@ -156,9 +156,9 @@
                         android:layout_centerVertical="true"
                         android:layout_marginStart="10dp"
                         android:layout_toEndOf="@+id/active"
-                        android:textStyle="bold"
                         android:text="category"
-                        android:textColor="@color/white" />
+                        android:textColor="@color/white"
+                        android:textStyle="bold" />
 
                 </RelativeLayout>
 
@@ -202,6 +202,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
                         android:layout_toEndOf="@+id/and2"
+                        android:layout_toStartOf="@+id/live_timer"
                         android:text="@string/times"
                         android:textColor="@color/white" />
 
@@ -307,18 +308,6 @@
     </android.support.design.widget.AppBarLayout>
 
 
-    <!-- <include layout="@layout/content_preview_live_events" />-->
-
-    <!--<android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        app:layout_anchor="@id/appbar"
-        app:layout_anchorGravity="end|top"
-        app:srcCompat="@android:drawable/ic_dialog_email" />-->
-
     <com.github.clans.fab.FloatingActionMenu
         android:id="@+id/menu_red"
         android:layout_width="wrap_content"
@@ -334,7 +323,7 @@
             android:id="@+id/call_c"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@android:drawable/ic_menu_call"
+            android:src="@mipmap/new_call_white"
             app:layout_anchorGravity="end|top|right"
             fab:fab_label="Call"
             fab:fab_size="mini" />

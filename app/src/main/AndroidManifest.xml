@@ -654,11 +654,6 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".search.SearchDemo"
-            android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize" />
-        <activity
             android:name=".view.EnquiredPersonsActivity"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
             android:screenOrientation="portrait"

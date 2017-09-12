@@ -1102,9 +1102,9 @@ Get Admin data...
                 }
                 break;
 
-            case R.id.linearreview:
+            /*case R.id.linearreview:
                 relativewritereview.setVisibility(View.VISIBLE);
-                break;
+                break;*/
 
             case R.id.call:
 

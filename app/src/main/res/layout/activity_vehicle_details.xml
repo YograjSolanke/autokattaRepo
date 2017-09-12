@@ -128,7 +128,7 @@
             android:id="@+id/like_l"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/like"
+            android:src="@mipmap/new_like_white"
             fab:fab_label="Like"
             fab:fab_colorNormal="#5176C9"
             fab:fab_colorPressed="#5176C9"
