@@ -1,6 +1,5 @@
 package autokatta.com.adapter;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -19,6 +18,8 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 import autokatta.com.R;
 import autokatta.com.other.FullImageActivity;
@@ -32,24 +33,19 @@ public class ChatAdapter extends BaseAdapter implements View.OnClickListener {
 
 
     private Activity activity;
-    private static LayoutInflater inflater = null;
-    private TextView chattext, dateNtime, dateTextview, imagetimetext;
-    private ImageView image;
-    String contactnumber;
-    LinearLayout imagelayout;
+    private LayoutInflater inflater = null;
+    private String contactnumber;
     DateFormat date, time;
-    ArrayList<String> hashMapDate;
-    ArrayList<String> hashMapposition;
+    private List<String> hashMapDate;
+    private List<String> hashMapposition;
 
 
-    ArrayList<BroadcastMessageResponse.Success> locallist = new ArrayList<>();
+    private List<BroadcastMessageResponse.Success> locallist = new ArrayList<>();
 
-    //new constuctr
-    @SuppressLint("SimpleDateFormat")
-    public ChatAdapter(Activity activity, String contactnumber, ArrayList<BroadcastMessageResponse.Success> locallist) {
+    public ChatAdapter(Activity activity, String contactnumber, List<BroadcastMessageResponse.Success> locallist) {
 
-        date = new SimpleDateFormat(" MMM dd yyyy");
-        time = new SimpleDateFormat(" hh:mm aa");
+        date = new SimpleDateFormat(" MMM dd yyyy", Locale.getDefault());
+        time = new SimpleDateFormat(" hh:mm aa", Locale.getDefault());
 
 
         this.activity = activity;
@@ -64,7 +60,6 @@ public class ChatAdapter extends BaseAdapter implements View.OnClickListener {
                 hashMapposition.add(String.valueOf(i));
             }
         }
-
 
         /***********  Layout inflator to call external xml layout () ***********/
         inflater = (LayoutInflater) this.activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -101,7 +96,6 @@ public class ChatAdapter extends BaseAdapter implements View.OnClickListener {
      *********/
     public static class ViewHolder {
 
-
     }
 
     @Override
@@ -114,12 +108,12 @@ public class ChatAdapter extends BaseAdapter implements View.OnClickListener {
         } else {
             row = inflater.inflate(R.layout.left, parent, false);
         }
-        chattext = (TextView) row.findViewById(R.id.msgr);
-        dateNtime = (TextView) row.findViewById(R.id.dateNtime);
-        imagetimetext = (TextView) row.findViewById(R.id.imagetime);
-        dateTextview = (TextView) row.findViewById(R.id.dateTextview);
-        image = (ImageView) row.findViewById(R.id.image);
-        imagelayout = (LinearLayout) row.findViewById(R.id.imagelayout);
+        TextView chattext = (TextView) row.findViewById(R.id.msgr);
+        TextView dateNtime = (TextView) row.findViewById(R.id.dateNtime);
+        TextView imagetimetext = (TextView) row.findViewById(R.id.imagetime);
+        TextView dateTextview = (TextView) row.findViewById(R.id.dateTextview);
+        ImageView image = (ImageView) row.findViewById(R.id.image);
+        LinearLayout imagelayout = (LinearLayout) row.findViewById(R.id.imagelayout);
         chattext.setText(chatMessageObj.getMessage());
         dateNtime.setText(time.format(chatMessageObj.getNewDate()));
         if (chatMessageObj.getMessage().equals("") &&
@@ -140,36 +134,14 @@ public class ChatAdapter extends BaseAdapter implements View.OnClickListener {
             dateTextview.setVisibility(View.GONE);
         }
 
-
-//        if(chatMessageObj.image.equals("")||chatMessageObj.image.equals("null")||chatMessageObj.image.equals(""))
-//        {
-//            //yoHolder.productImage.setBackgroundResource(R.drawable.store);
-//            imagelayout.setVisibility(View.GONE);
-//        }
-//        else
-//        {
-//            try {
-//                Picasso.with(activity)
-//                        .load("http://autokatta.com/mobile/uploaded_broadcast_images/"+chatMessageObj.image)
-//                        .into(image);
-//
-//            } catch (Exception e) {
-//                System.out.println("Error in uploading images");
-//            }
-//        }
-
-
         //Glide code for image downloading
         if (chatMessageObj.getImage()==null || chatMessageObj.getImage().isEmpty()) {
-            //yoHolder.productImage.setBackgroundResource(R.drawable.store);
             imagelayout.setVisibility(View.GONE);
         } else {
             Glide.with(activity)
                     .load(activity.getString(R.string.base_image_url) + chatMessageObj.getImage())
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .placeholder(R.drawable.logo)
-                    //.animate(R.anim.zoomin)
-                    //.error(R.drawable.blocked)
                     .into(image);
         }
 
@@ -181,10 +153,6 @@ public class ChatAdapter extends BaseAdapter implements View.OnClickListener {
             public void onClick(View v) {
                 Bundle b = new Bundle();
                 b.putString("image", chatMessageObj.getImage());
-             //   b.putString("imgpath", "uploaded_broadcast_images/");
-         //       FullImageActivity fragment = new FullImageActivity();
-
-                //ActivityOptions options = ActivityOptions.makeCustomAnimation(activity, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
                 Intent intent = new Intent(activity, FullImageActivity.class);
                 intent.putExtras(b);
                 activity.startActivity(intent);
