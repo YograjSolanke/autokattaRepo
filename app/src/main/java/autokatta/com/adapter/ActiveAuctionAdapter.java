@@ -12,19 +12,20 @@ import android.os.CountDownTimer;
 import android.os.Environment;
 import android.os.Handler;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateUtils;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.MimeTypeMap;
 import android.webkit.URLUtil;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.Scroller;
 import android.widget.TextView;
 
@@ -217,75 +218,89 @@ public class ActiveAuctionAdapter extends RecyclerView.Adapter<ActiveAuctionAdap
         });
 
 
-        holder.relativeshare.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-
-                allDetails = auctionDetailsArrayList.get(position).getActionTitle() + "="
-                        + auctionDetailsArrayList.get(position).getNoOfVehicle() + "="
-                        + auctionDetailsArrayList.get(position).getEndDate() + "=" +
-                        auctionDetailsArrayList.get(position).getEndTime() + "=" +
-                        auctionDetailsArrayList.get(position).getAuctionType() + "=" +
-                        "0" + "=" + "0" + "=" + "a";
-                String mAuction = "auction";
-
-
-                activity.getSharedPreferences(activity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                        putString("Share_sharedata", allDetails).apply();
-                activity.getSharedPreferences(activity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                        putInt("Share_auction_id", auctionDetailsArrayList.get(position).getAuctionId()).apply();
-                activity.getSharedPreferences(activity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                        putString("Share_keyword", mAuction).apply();
-
-                Intent i = new Intent(activity, ShareWithinAppActivity.class);
-                activity.startActivity(i);
-                //activity.finish();
-            }
-        });
-
         holder.btnshare.setOnClickListener(new View.OnClickListener() {
-
-            String imageFilePath = "", imagename = activity.getString(R.string.base_image_url) + "logo48x48.png";
+            String imageFilePath = "", imagename;
             Intent intent = new Intent(Intent.ACTION_SEND);
 
             @Override
             public void onClick(View v) {
+                //shareProfileData();
+                PopupMenu mPopupMenu = new PopupMenu(activity, holder.btnshare);
+                mPopupMenu.getMenuInflater().inflate(R.menu.more_menu, mPopupMenu.getMenu());
+                mPopupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        switch (item.getItemId()) {
+                            case R.id.autokatta:
+                                allDetails = auctionDetailsArrayList.get(position).getActionTitle() + "="
+                                        + auctionDetailsArrayList.get(position).getNoOfVehicle() + "="
+                                        + auctionDetailsArrayList.get(position).getEndDate() + "=" +
+                                        auctionDetailsArrayList.get(position).getEndTime() + "=" +
+                                        auctionDetailsArrayList.get(position).getAuctionType() + "=" +
+                                        "0" + "=" + "0" + "=" + "a";
+                                String mAuction = "auction";
 
-                allDetails = "Auction Title: " + auctionDetailsArrayList.get(position).getActionTitle() + "\n" +
-                        "No Of Vehicle: " + auctionDetailsArrayList.get(position).getNoOfVehicle() + "\n" +
-                        "Auction End Date: " + auctionDetailsArrayList.get(position).getEndDate() + "\n" +
-                        "Auction End Time: " + auctionDetailsArrayList.get(position).getEndTime() + "\n" +
-                        "Auction Type: " + auctionDetailsArrayList.get(position).getAuctionType() + "\n";
 
-                Log.e("TAG", "img : " + imagename);
+                                activity.getSharedPreferences(activity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                                        putString("Share_sharedata", allDetails).apply();
+                                activity.getSharedPreferences(activity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                                        putInt("Share_auction_id", auctionDetailsArrayList.get(position).getAuctionId()).apply();
+                                activity.getSharedPreferences(activity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                                        putString("Share_keyword", mAuction).apply();
 
-                DownloadManager.Request request = new DownloadManager.Request(
-                        Uri.parse(imagename));
-                request.allowScanningByMediaScanner();
-                String filename = URLUtil.guessFileName(imagename, null, MimeTypeMap.getFileExtensionFromUrl(imagename));
-                request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, filename);
-                Log.e("ShareImagePath :", filename);
-                Log.e("TAG", "img : " + imagename);
+                                Intent i = new Intent(activity, ShareWithinAppActivity.class);
+                                activity.startActivity(i);
+                                //activity.finish();
+                                break;
 
-                DownloadManager manager = (DownloadManager) activity.getApplication()
-                        .getSystemService(Context.DOWNLOAD_SERVICE);
+                            case R.id.other:
 
-                Log.e("TAG", "img URL: " + imagename);
 
-                manager.enqueue(request);
+                                String imageFilePath = "", imagename = activity.getString(R.string.base_image_url) + "logo48x48.png";
+                                Intent intent = new Intent(Intent.ACTION_SEND);
 
-                imageFilePath = "/storage/emulated/0/Download/" + filename;
-                System.out.println("ImageFilePath:" + imageFilePath);
 
-                intent.setType("text/plain");
-                intent.putExtra(Intent.EXTRA_TEXT, allDetails);
-                intent.setType("image/jpeg");
-                intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(imageFilePath)));
-                activity.startActivity(Intent.createChooser(intent, "Autokatta"));
+                                allDetails = "Auction Title: " + auctionDetailsArrayList.get(position).getActionTitle() + "\n" +
+                                        "No Of Vehicle: " + auctionDetailsArrayList.get(position).getNoOfVehicle() + "\n" +
+                                        "Auction End Date: " + auctionDetailsArrayList.get(position).getEndDate() + "\n" +
+                                        "Auction End Time: " + auctionDetailsArrayList.get(position).getEndTime() + "\n" +
+                                        "Auction Type: " + auctionDetailsArrayList.get(position).getAuctionType() + "\n";
 
+                                Log.e("TAG", "img : " + imagename);
+
+                                DownloadManager.Request request = new DownloadManager.Request(
+                                        Uri.parse(imagename));
+                                request.allowScanningByMediaScanner();
+                                String filename = URLUtil.guessFileName(imagename, null, MimeTypeMap.getFileExtensionFromUrl(imagename));
+                                request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, filename);
+                                Log.e("ShareImagePath :", filename);
+                                Log.e("TAG", "img : " + imagename);
+
+                                DownloadManager manager = (DownloadManager) activity.getApplication()
+                                        .getSystemService(Context.DOWNLOAD_SERVICE);
+
+                                Log.e("TAG", "img URL: " + imagename);
+
+                                manager.enqueue(request);
+
+                                imageFilePath = "/storage/emulated/0/Download/" + filename;
+                                System.out.println("ImageFilePath:" + imageFilePath);
+
+                                intent.setType("text/plain");
+                                intent.putExtra(Intent.EXTRA_TEXT, allDetails);
+                                intent.setType("image/jpeg");
+                                intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(imageFilePath)));
+                                activity.startActivity(Intent.createChooser(intent, "Autokatta"));
+
+                                break;
+                        }
+                        return false;
+                    }
+                });
+                mPopupMenu.show(); //showing popup menu
             }
         });
+
 
     }
 
@@ -300,7 +315,7 @@ public class ActiveAuctionAdapter extends RecyclerView.Adapter<ActiveAuctionAdap
                 auction_starttime, mAuction_category, mStockLocation;
         TextView timer;
         Button preview, btnshare, btnclause;
-        RelativeLayout relativeshare;
+
 
         AuctionHolder(View view) {
             super(view);
@@ -314,7 +329,6 @@ public class ActiveAuctionAdapter extends RecyclerView.Adapter<ActiveAuctionAdap
             preview = (Button) view.findViewById(R.id.button);
 
             btnshare = (Button) view.findViewById(R.id.share);
-            relativeshare = (RelativeLayout) view.findViewById(R.id.relativeshare);
             timer = (TextView) view.findViewById(R.id.timer);
             btnclause = (Button) view.findViewById(R.id.btnclauses);
             mAuction_category = (TextView) view.findViewById(R.id.auction_category);

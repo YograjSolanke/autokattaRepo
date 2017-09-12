@@ -38,6 +38,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 import java.util.Random;
 
 import autokatta.com.R;
@@ -170,7 +171,7 @@ public class ChatActivity extends AppCompatActivity implements RequestNotifier, 
 
     @Override
     public void notifySuccess(Response<?> response) {
-        DateFormat f = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+        DateFormat f = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
         if (response != null) {
             if (response.isSuccessful()) {
                 /*
@@ -191,9 +192,9 @@ public class ChatActivity extends AppCompatActivity implements RequestNotifier, 
                             Date d = null;
                             try {
 
-                                d = f.parse(message.getDate1().replace("T", " "));
+                                d = f.parse(message.getDate());
                                 Log.i("dateeeeeeeeeeeee", message.getDate1());
-                                System.out.println("asdfghjklllllllllll"+d);
+
                             } catch (ParseException e) {
                                 e.printStackTrace();
                             }

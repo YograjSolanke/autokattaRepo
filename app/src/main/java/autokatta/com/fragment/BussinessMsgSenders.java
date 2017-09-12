@@ -220,7 +220,7 @@ public class BussinessMsgSenders extends Fragment implements SwipeRefreshLayout.
                     try {
                         TimeZone utc = TimeZone.getTimeZone("etc/UTC");
                         //format of date coming from services
-                        DateFormat inputFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss a", Locale.getDefault());
+                        DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss a", Locale.getDefault());
                         /*DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",
                                 Locale.getDefault());*/
                         inputFormat.setTimeZone(utc);

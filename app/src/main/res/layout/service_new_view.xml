@@ -466,8 +466,8 @@
 
                     <ImageView
                         android:id="@+id/checkservice"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
                         android:layout_alignParentEnd="true"
                         android:layout_below="@+id/v3"
                         android:layout_marginEnd="5dp"
@@ -478,26 +478,26 @@
 
                     <ImageView
                         android:id="@+id/editservice"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:layout_below="@+id/v3"
                         android:layout_marginEnd="5dp"
                         android:layout_marginTop="5dp"
                         android:contentDescription="@string/app_name"
-                        android:src="@drawable/edit"
+                        android:src="@mipmap/ic_edit"
                         android:visibility="gone" />
 
                     <ImageView
                         android:id="@+id/deleteservice"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_marginEnd="5dp"
                         android:layout_marginTop="5dp"
                         android:layout_below="@+id/v3"
                         android:layout_toLeftOf="@+id/editservice"
                         android:contentDescription="@string/app_name"
-                        android:src="@drawable/ic_delete"
+                        android:src="@mipmap/ic_delete"
                         android:visibility="gone" />
 
 

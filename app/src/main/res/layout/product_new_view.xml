@@ -336,7 +336,7 @@
                         android:layout_marginTop="5dp"
                         android:layout_below="@+id/v3"
                         android:contentDescription="@string/app_name"
-                        android:src="@drawable/edit"
+                        android:src="@mipmap/ic_edit"
                         android:visibility="gone" />
 
                     <ImageView
@@ -348,7 +348,7 @@
                         android:layout_marginTop="5dp"
                         android:layout_toStartOf="@+id/editproduct"
                         android:contentDescription="@string/app_name"
-                        android:src="@drawable/ic_delete"
+                        android:src="@mipmap/ic_delete"
                         android:visibility="gone" />
 
                     <RelativeLayout
