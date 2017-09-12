@@ -107,7 +107,7 @@ public class JoinedGroupsFragment extends Fragment implements SwipeRefreshLayout
                 }
             } else {
                 mSwipeRefreshLayout.setRefreshing(false);
-                CustomToast.customToast(getActivity(), getString(R.string._404_));
+                //CustomToast.customToast(getActivity(), getString(R.string._404_));
             }
         } else {
             mSwipeRefreshLayout.setRefreshing(false);

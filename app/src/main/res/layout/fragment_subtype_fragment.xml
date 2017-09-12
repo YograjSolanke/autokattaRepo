@@ -637,7 +637,7 @@
                     android:layout_height="40dip"
                     android:layout_marginTop="5dp"
                     android:background="#80bebebe"
-                    android:hint="@string/color"
+                    android:hint="@string/fuel"
                     android:paddingEnd="3dp"
                     android:paddingStart="3dp"
                     android:textColor="#2C3343"

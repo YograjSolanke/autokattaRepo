@@ -106,7 +106,8 @@ public class MyGroupsFragment extends Fragment implements SwipeRefreshLayout.OnR
                 }
             } else {
                 mSwipeRefreshLayout.setRefreshing(false);
-                CustomToast.customToast(getActivity(),getString(R.string._404_));
+                //if (isAdded())
+                //CustomToast.customToast(getActivity(),getString(R.string._404_));
                 //showMessage(activity, getString(R.string._404_));
             }
         } else {

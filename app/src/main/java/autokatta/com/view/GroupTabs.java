@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
@@ -15,6 +16,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import autokatta.com.R;
+import autokatta.com.app_info.GroupAppIntro;
 import autokatta.com.broadcastreceiver.Receiver;
 import autokatta.com.initial_fragment.CreateGroupFragment;
 import autokatta.com.initial_fragment.GroupMyJoined;
@@ -26,6 +28,8 @@ public class GroupTabs extends AppCompatActivity {
     boolean isNetworkAvailable;
     String networkStatus;
     CoordinatorLayout mLayout;
+    SharedPreferences sharedPreferences = null;
+    SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +37,7 @@ public class GroupTabs extends AppCompatActivity {
         setContentView(R.layout.activity_group_tabs);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        sharedPreferences = getSharedPreferences(getString(R.string.firstRun), MODE_PRIVATE);
         setTitle("My Groups");
         mLayout = (CoordinatorLayout) findViewById(R.id.activity_group_tabs);
         IntentFilter intentFilter = new IntentFilter(Receiver.NETWORK_AVAILABLE_ACTION);
@@ -76,6 +80,17 @@ public class GroupTabs extends AppCompatActivity {
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (sharedPreferences.getBoolean("groupFirstRun", true)) {
+            startActivity(new Intent(getApplicationContext(), GroupAppIntro.class));
+            editor = sharedPreferences.edit();
+            editor.putBoolean("groupFirstRun", false);
+            editor.apply();
+        }
     }
 
     @Override

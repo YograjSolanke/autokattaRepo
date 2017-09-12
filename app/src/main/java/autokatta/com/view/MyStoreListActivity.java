@@ -1,5 +1,7 @@
 package autokatta.com.view;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -8,11 +10,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import autokatta.com.R;
+import autokatta.com.app_info.CreateStoreAppIntro;
 import autokatta.com.initial_fragment.MyStoreListFragment;
 import autokatta.com.my_store.CreateStoreFragment;
 
 public class MyStoreListActivity extends AppCompatActivity {
 
+    SharedPreferences sharedPreferences = null;
+    SharedPreferences.Editor editor;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,7 +25,7 @@ public class MyStoreListActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         setTitle("My Store");
-
+        sharedPreferences = getSharedPreferences(getString(R.string.firstRun), MODE_PRIVATE);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setHomeButtonEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -68,6 +73,16 @@ public class MyStoreListActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (sharedPreferences.getBoolean("myStoreListFirstRun", true)) {
+            startActivity(new Intent(getApplicationContext(), CreateStoreAppIntro.class));
+            editor = sharedPreferences.edit();
+            editor.putBoolean("myStoreListFirstRun", false);
+            editor.apply();
+        }
+    }
 
     @Override
     public void onBackPressed() {

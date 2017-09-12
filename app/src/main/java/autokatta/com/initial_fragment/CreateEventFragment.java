@@ -46,7 +46,7 @@ public class CreateEventFragment extends Fragment implements View.OnClickListene
         textExchangeMela.setOnClickListener(this);
         textSaleMela.setOnClickListener(this);
         textServiceMela.setOnClickListener(this);
-        showMessage();
+        //showMessage();
         return mCreateEventFragment;
     }
 

@@ -202,12 +202,12 @@
                 </RelativeLayout>
             </RelativeLayout>
 
-            <View
+            <!--<View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:layout_below="@+id/main_view"
                 android:layout_gravity="center"
-                android:background="#cccccc" />
+                android:background="#cccccc" />-->
 
             <LinearLayout
                 android:id="@+id/action_buttons"

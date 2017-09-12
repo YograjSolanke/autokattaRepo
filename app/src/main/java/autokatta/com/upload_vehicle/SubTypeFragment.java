@@ -296,8 +296,6 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
                     } else if (Category.equalsIgnoreCase("Car")) {
                         //edtTyreContext.setVisibility(View.VISIBLE);
                         fuelType();
-
-
                         mTransmissionSpinner.setVisibility(View.VISIBLE);
                         edtSeatCap.setVisibility(View.VISIBLE);
                         mDriveSpinner.setVisibility(View.VISIBLE);
@@ -326,7 +324,7 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
                         edtTyreContext.setVisibility(View.GONE);
                         mInvoiceSpinner.setVisibility(View.VISIBLE);
                         edtSetHpcapa.setVisibility(View.GONE);
-
+                        fuelType();
                     /*23-8-17*/
                         mBustypeSpinner.setVisibility(View.GONE);
                         edtSetBoon.setVisibility(View.GONE);
@@ -340,10 +338,6 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
                         mAircondSpinner.setVisibility(View.GONE);
                         mDriveSpinner.setVisibility(View.GONE);
                         mTransmissionSpinner.setVisibility(View.GONE);
-
-
-
-
                 /* RC Text */
                         String RCText = "";
                         if (subCategory.equals("Excavator") || subCategory.equals("Skid Steers") || subCategory.equals("Crawlers")
@@ -419,7 +413,6 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
 
                     } else if (Category.equalsIgnoreCase("Commercial Vehicle")) {
                         fuelType();
-
                         edtTyreContext.setVisibility(View.GONE);
                         edtBody.setVisibility(View.VISIBLE);
                         mAircondSpinner.setVisibility(View.VISIBLE);
@@ -443,7 +436,7 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
                         edtSetHpcapa.setVisibility(View.VISIBLE);
                         mDriveSpinner.setVisibility(View.VISIBLE);
                         mTransmissionSpinner.setVisibility(View.GONE);
-
+                        fuelType();
                     /*23-8-17*/
                         mBustypeSpinner.setVisibility(View.GONE);
                         edtSetJib.setVisibility(View.GONE);
@@ -453,7 +446,7 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
                         mPermitSpinner.setVisibility(View.GONE);
                         mFitnessSpinner.setVisibility(View.GONE);
                         relInsurance.setVisibility(View.GONE);
-
+                        mAircondSpinner.setVisibility(View.GONE);
                         mEmissionSpinner.setVisibility(View.GONE);
                         mBodyTypeSpinner.setVisibility(View.GONE);
 
@@ -495,8 +488,6 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
                         /*edtTyreContext.setVisibility(View.VISIBLE);
                         edtApptext.setVisibility(View.VISIBLE);*/
 
-
-
                     /*23-8-17*/
                         mBustypeSpinner.setVisibility(View.GONE);
                         edtSetBoon.setVisibility(View.GONE);
@@ -517,6 +508,7 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
                         mBodyTypeSpinner.setVisibility(View.GONE);
 
                     } else if (Category.equalsIgnoreCase("Cranes")) {
+                        fuelType();
                         edtTyreContext.setVisibility(View.VISIBLE);
                         mInvoiceSpinner.setVisibility(View.VISIBLE);
                         edtSetHpcapa.setVisibility(View.VISIBLE);

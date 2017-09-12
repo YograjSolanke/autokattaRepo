@@ -16,8 +16,10 @@ public class UploadVehicleAppIntro extends AppIntro {
     public void init(@Nullable Bundle savedInstanceState) {
 //adding the three slides for introduction app you can ad as many you needed
         addSlide(AppIntroSlider.newInstance(R.layout.app_intro_upload_vehicle_one));
-        addSlide(AppIntroSlider.newInstance(R.layout.app_intro_upload_vehicle_one));
-        addSlide(AppIntroSlider.newInstance(R.layout.app_intro_upload_vehicle_one));
+        addSlide(AppIntroSlider.newInstance(R.layout.app_intro_upload_vehicle_two));
+        addSlide(AppIntroSlider.newInstance(R.layout.app_intro_upload_vehicle_pay_one));
+        addSlide(AppIntroSlider.newInstance(R.layout.app_intro_upload_vehicle_pay_two));
+        addSlide(AppIntroSlider.newInstance(R.layout.app_intro_upload_vehicle_pay_three));
 
         // Show and Hide Skip and Done buttons
         showStatusBar(false);

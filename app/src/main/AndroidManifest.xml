@@ -514,7 +514,7 @@
              Note that the API key is linked to the encryption key used to sign the APK.
              You need a different API key for each encryption key, including the release key that is used to
              sign the APK for publishing.
-             You can define the keys for the debug and release targets in src/debug/ and src/release/. 
+             You can define the keys for the debug and release targets in src/debug/ and src/release/.
         -->
         <!-- Google Location Api Key -->
         <meta-data
@@ -672,16 +672,19 @@
             android:name=".app_info.GradientBackgroundExampleActivity"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
             android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".app_info.ManualAppIntro"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
             android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".app_info.MyInventoryAppIntro"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
             android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".app_info.UploadVehicleAppIntro"
@@ -693,16 +696,37 @@
             android:name=".app_info.SearchVehicleAppIntro"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
             android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".app_info.SearchStoreAppIntro"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
             android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".app_info.BrowseStoreAppIntro"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
             android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".app_info.CreateStoreAppIntro"
+            android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".app_info.CreateEventAppIntro"
+            android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".app_info.GroupAppIntro"
+            android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".fragment_profile.EditTags"

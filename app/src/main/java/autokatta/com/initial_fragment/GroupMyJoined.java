@@ -35,7 +35,7 @@ public class GroupMyJoined extends Fragment {
         }
         TabLayout tabLayout = (TabLayout) mGroupMyJoined.findViewById(R.id.activity_groups_tab);
         tabLayout.setupWithViewPager(mviewPager);
-        showMessage();
+        //showMessage();
         return mGroupMyJoined;
     }
 
