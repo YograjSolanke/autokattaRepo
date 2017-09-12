@@ -118,7 +118,7 @@ public class PriceFragment extends Fragment implements RequestNotifier, View.OnC
         strRegmonth = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("upload_registerMonth", null);
         strRegyear = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("upload_registerYear", null);
         strHrs = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("upload_Hrs", null);
-        //strKms = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("upload_Kms", null);
+        strKms = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getLong("upload_Kms", 0);
         strInvoice = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("upload_invoice", null);
         strLocation = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("upload_Location", null);
         strRto = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("upload_Rto", null);
@@ -220,15 +220,14 @@ public class PriceFragment extends Fragment implements RequestNotifier, View.OnC
                 strMakeyear, strColor, strRegno,
                 strRc, strInsurance, strInsuranceIdv, strTaxvalid,
                 strTaxDate, strFitnessvalid, strPermitvalid,
-                strPermit, strFitnessvalid, strFuel, strSeatcap,
-                strPermitDate, strFinancestatus, strKms, strHrs,
+                strPermitDate, strFitnessDate, strFuel, strSeatcap,
+                strPermit, strFinancestatus, strKms, strHrs,
                 strOwner, strBodyMfg, strSeatMfg,
                 strHypo, strEngine, strChasis, edtPrice.getText().toString(), imageNames,
                 strDrive, strTrans, strBodytype, "", "",
                 strApp, strTyreContext, strBustype, strAir,
                 strInvoice, strImplement, strGroupprivacy, strHp, strJib,
-                strBoon, strBrakename, strPumpname, strInsuDate, strEmission,
-                strFinancestatus, strExhangestatus, strStearing,
+                strBoon, strBrakename, strPumpname, strInsuDate, strEmission, strExhangestatus, strStearing,
                 strCategoryId, strSubcategoryId, strBrandId, strModelId, strVersionId);
     }
 

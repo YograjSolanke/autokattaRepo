@@ -8045,14 +8045,14 @@ get ExchangeMela Analytics Data
                                   String strLocation, String strRegmonth, String strRegyear, String strMakemonth,
                                   String strMakeyear, String strColor, String strRegno, String strRc, String strInsurance,
                                   String strInsuranceIdv, String strTaxvalid, String strTaxDate, String strFitnessvalid,
-                                  String strPermitvalid, String strPermit, String strFitnessvalid1, String strFuel,
-                                  String strSeatcap, String strPermitDate, String strFinancestatus, double strKms, String strHrs,
+                                  String strPermitvalid, String strPermitDate, String strFitnessvalidDate, String strFuel,
+                                  String strSeatcap, String strPermit, String strFinancestatus, double strKms, String strHrs,
                                   int strOwner, String strBodyMfg, String strSeatMfg, String strHypo, String strEngine,
                                   String strChasis, String s, String strImages, String strDrive, String strTrans,
                                   String strBodytype, String s1, String s2, String strApp, String strTyreContext,
                                   String strBustype, String strAir, String strInvoice, String strImplement, String strGroupprivacy,
                                   String strHp, String strJib, String strBoon, String strBrakename, String strPumpname,
-                                  String strInsuDate, String strEmission, String strFinancestatus1, String strExhangestatus,
+                                  String strInsuDate, String strEmission, String strExhangestatus,
                                   String strStearing, int strCategoryId, int strSubcategoryId, int strBrandId,
                                   int strModelId, int strVersionId) {
 
@@ -8069,14 +8069,14 @@ get ExchangeMela Analytics Data
                         strLocation, strRegmonth, strRegyear, strMakemonth,
                         strMakeyear, strColor, strRegno, strRc, strInsurance,
                         strInsuranceIdv, strTaxvalid, strTaxDate, strFitnessvalid,
-                        strPermitvalid, strPermit, strFitnessvalid1, strFuel,
-                        strSeatcap, strPermitDate, strFinancestatus, strKms, strHrs,
+                        strPermitvalid, strPermitDate, strFitnessvalidDate, strFuel,
+                        strSeatcap, strPermit, strFinancestatus, strKms, strHrs,
                         strOwner, strBodyMfg, strSeatMfg, strHypo, strEngine,
                         strChasis, s, strImages, strDrive, strTrans,
                         strBodytype, s1, s2, strApp, strTyreContext,
                         strBustype, strAir, strInvoice, strImplement, strGroupprivacy,
                         strHp, strJib, strBoon, strBrakename, strPumpname,
-                        strInsuDate, strEmission, strFinancestatus1, strExhangestatus,
+                        strInsuDate, strEmission, strExhangestatus,
                         strStearing, strCategoryId, strSubcategoryId, strBrandId,
                         strModelId, strVersionId);
 
@@ -8214,6 +8214,7 @@ get ExchangeMela Analytics Data
             e.printStackTrace();
         }
     }
+
     /***
      * Retrofit Logs
      ***/

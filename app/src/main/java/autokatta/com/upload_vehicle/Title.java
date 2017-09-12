@@ -1218,8 +1218,8 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
 
                 String strTitle = "", strGroupPriavcy = "", strStorePrivacy = "", strFinanceStatus = "", strExchangeStatus = "",
                         permit = "", strMakemonth = "", strMakeyear = "", strRegisterMonth = "", strRegisterYear = "",
-                        strHrs = "", strKms = "", brandstr = "", modelstr = "", versionstr = "";
-
+                        strHrs = "", brandstr = "", modelstr = "", versionstr = "";
+                int strKms = 0;
                 strTitle = title.getText().toString();
                 /*strMakemonth = mMakeMonth.getText().toString();
                 strMakeyear = mMakeYear.getText().toString();
@@ -1237,7 +1237,7 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                 int reg_yearposition = myp1.getSelectedYearPosition();
 
                 strHrs = mHrs.getText().toString();
-                strKms = mKms.getText().toString();
+                strKms = Integer.parseInt(mKms.getText().toString());
 
                 if (radioButton1.isChecked()) {
                     strGroupPriavcy = "Yes";
@@ -1344,7 +1344,7 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                     getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_registerYear", strRegisterYear).apply();
 
                     getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_Hrs", strHrs).apply();
-                    getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_Kms", strKms).apply();
+                    getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putLong("upload_Kms", strKms).apply();
 
 
                     FragmentManager manager = getFragmentManager();

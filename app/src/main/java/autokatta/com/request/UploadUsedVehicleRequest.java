@@ -749,24 +749,13 @@ public class UploadUsedVehicleRequest {
     }
 
 
-/*
-    private String title, myContact, category, sub_category, model, manufacturer, Version, rto_city, location_city,
-            month_of_registration, year_of_registration, month_of_manufacture, year_of_manufacture, color, registration_number,
-            rc_available, insurance_valid, insurance_idv, tax_validity, tax_paid_upto, fitness_validity, permit_validity,
-            permit_yesno, fitness_yesno, fual_type, seating_capacity, permit, fiananceExchange, kms_running, Hrs_running,
-            no_of_owners, bodyManufacturer, seatManufacturer, hypothication, engine_no, chassis_no, price, image, drive,
-            transmission, body_type, boat_type, rv_type, application, tyre_condition, bus_type, air_condition, invoice,
-            implementss, privacy, hp_capacity, JIB, Boon, brakes, pump, insuranceDate, emissionVersion, financeStatus,
-            exchangeStatus, steering, category_id, sub_cat_id, BrandID, ModelID, VersionId;
-*/
-
     public UploadUsedVehicleRequest(String title, String myContact, String category, String sub_category, String model,
                                     String manufacturer, String Version, String rto_city, String location_city,
                                     String month_of_registration, String year_of_registration, String month_of_manufacture,
                                     String year_of_manufacture, String color, String registration_number,
                                     String rc_available, String insurance_valid, String insurance_idv, String tax_validity,
-                                    String tax_paid_upto, String fitness_validity, String permit_validity,
-                                    String permit_yesno, String fitness_yesno, String fual_type, String seating_capacity,
+                                    String tax_date, String fitness_yesno, String permit_yesno,
+                                    String permit_validity, String fitness_validity, String fual_type, String seating_capacity,
                                     String permit, String fiananceExchange, double kms_running, String Hrs_running,
                                     int no_of_owners, String bodyManufacturer, String seatManufacturer,
                                     String hypothication, String engine_no, String chassis_no, String price, String image,
@@ -774,7 +763,7 @@ public class UploadUsedVehicleRequest {
                                     String application, String tyre_condition, String bus_type, String air_condition,
                                     String invoice, String implementss, String privacy, String hp_capacity, String JIB,
                                     String Boon, String brakes, String pump, String insuranceDate, String emissionVersion,
-                                    String financeStatus, String exchangeStatus, String steering,
+                                    String exchangeStatus, String steering,
                                     int category_id, int sub_cat_id, int BrandID, int ModelID, int VersionId) {
         this.title = title;
         this.contact = myContact;
@@ -794,8 +783,8 @@ public class UploadUsedVehicleRequest {
         this.rcAvailable = rc_available;
         this.insuranceValid = insurance_valid;
         this.insuranceIdv = insurance_idv;
-        this.taxValidity = tax_validity;
-        this.taxPaid = tax_paid_upto;
+        this.taxValidity = tax_date;
+        this.taxPaid = tax_validity;
         this.fitnessValidity = fitness_validity;
         this.permitValidity = permit_validity;
         this.permitYesNo = permit_yesno;
@@ -833,7 +822,6 @@ public class UploadUsedVehicleRequest {
         this.pump = pump;
         this.insuranceDate = insuranceDate;
         this.emmission = emissionVersion;
-        this.financeStatus = financeStatus;
         this.exchangeStatus = exchangeStatus;
         this.steering = steering;
         this.categoryID = category_id;
