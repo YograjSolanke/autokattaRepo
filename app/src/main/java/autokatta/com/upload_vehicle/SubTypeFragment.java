@@ -320,6 +320,7 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
                             mFitnessSpinner.setVisibility(View.GONE);
                         }
                     } else if (Category.equalsIgnoreCase("Construction Equipment")) {
+
                         String RCInvoiceText;
                         edtTyreContext.setVisibility(View.GONE);
                         mInvoiceSpinner.setVisibility(View.VISIBLE);
@@ -430,14 +431,19 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
                         edtTyreContext.setVisibility(View.VISIBLE);
                         mBodyTypeSpinner.setVisibility(View.VISIBLE);
                     } else if (Category.equalsIgnoreCase("Tractor")) {
+
+                        fuelType();
+                        mSetFuel.setVisibility(View.GONE);
                         edtTyreContext.setVisibility(View.VISIBLE);
-                        mImplementSpinner.setVisibility(View.VISIBLE);
+                        mImplementSpinner.setVisibility(View.GONE);
+                        edtImplementStr.setVisibility(View.VISIBLE);
                         edtApptext.setVisibility(View.VISIBLE);
                         edtSetHpcapa.setVisibility(View.VISIBLE);
                         mDriveSpinner.setVisibility(View.VISIBLE);
                         mTransmissionSpinner.setVisibility(View.GONE);
-                        fuelType();
-                    /*23-8-17*/
+                        mAircondSpinner.setVisibility(View.GONE);
+                        mDriveSpinner.setVisibility(View.GONE);
+                        /*23-8-17*/
                         mBustypeSpinner.setVisibility(View.GONE);
                         edtSetJib.setVisibility(View.GONE);
                         edtSetBoon.setVisibility(View.GONE);
@@ -446,7 +452,6 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
                         mPermitSpinner.setVisibility(View.GONE);
                         mFitnessSpinner.setVisibility(View.GONE);
                         relInsurance.setVisibility(View.GONE);
-                        mAircondSpinner.setVisibility(View.GONE);
                         mEmissionSpinner.setVisibility(View.GONE);
                         mBodyTypeSpinner.setVisibility(View.GONE);
 
@@ -518,6 +523,7 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
                         mDriveSpinner.setVisibility(View.GONE);
                         mAircondSpinner.setVisibility(View.GONE);
                         edtSeatCap.setVisibility(View.GONE);
+                        mSetFuel.setVisibility(View.GONE);
                     }
 
                     mTaxValidSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import autokatta.com.R;
-import autokatta.com.response.GetPersonDataResponse;
+import autokatta.com.response.GetManualEnquiryPersonDataResponse;
 
 /**
  * Created by ak-003 on 22/6/17.
@@ -21,15 +21,16 @@ import autokatta.com.response.GetPersonDataResponse;
 public class GetPersonsEnquiriesAdapter extends RecyclerView.Adapter<GetPersonsEnquiriesAdapter.EnquiriesView> {
 
     Activity mActivity;
-    List<GetPersonDataResponse.Success> list = new ArrayList<>();
-    private String strId, strKeyword, strTitle;
+    List<GetManualEnquiryPersonDataResponse.Success> list = new ArrayList<>();
+    private String strId, strKeyword, strTitle,bundlecontact;
 
-    public GetPersonsEnquiriesAdapter(Activity mActivity, List<GetPersonDataResponse.Success> list, String strId, String strKeyword, String strTitle) {
+    public GetPersonsEnquiriesAdapter(Activity mActivity, List<GetManualEnquiryPersonDataResponse.Success> list, String strId, String strKeyword, String strTitle,String bundlecontact) {
         this.mActivity = mActivity;
         this.list = list;
         this.strId = strId;
         this.strKeyword = strKeyword;
         this.strTitle = strTitle;
+        this.bundlecontact = bundlecontact;
     }
 
     class EnquiriesView extends RecyclerView.ViewHolder {
@@ -58,11 +59,11 @@ public class GetPersonsEnquiriesAdapter extends RecyclerView.Adapter<GetPersonsE
 
     @Override
     public void onBindViewHolder(GetPersonsEnquiriesAdapter.EnquiriesView holder, int position) {
-        holder.mContact.setText(list.get(position).getContactNo());
-        holder.mFollowUpDate.setText(list.get(position).getNextFollowupDate());
-        holder.mLastEnquiry.setText(list.get(position).getLastEnquiryDate());
-        holder.mEnquiryStatus.setText(list.get(position).getCustEnquiryStatus());
-        holder.mDiscussion.setText(list.get(position).getLastDiscussion());
+        holder.mContact.setText(bundlecontact);
+        holder.mFollowUpDate.setText(list.get(position).getNextFollowUpDate());
+        holder.mLastEnquiry.setText(list.get(position).getCreatedDate());
+        holder.mEnquiryStatus.setText(list.get(position).getEnquiryStatus());
+        holder.mDiscussion.setText(list.get(position).getDiscussion());
     }
 
     @Override

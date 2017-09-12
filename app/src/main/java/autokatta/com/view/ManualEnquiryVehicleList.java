@@ -61,7 +61,8 @@ public class ManualEnquiryVehicleList extends AppCompatActivity implements Reque
             custContact = getIntent().getExtras().getString("custContact");
             custAddress = getIntent().getExtras().getString("custAddress");
             custFullAddress = getIntent().getExtras().getString("custFullAddress");
-            custInventoryType = getIntent().getExtras().getString("custInventoryType");
+            custInventoryType = getIntent().getExtras().getString("spinnerValue");
+          //  custInventoryType = getIntent().getExtras().getString("custInventoryType");
             custEnquiryStatus = getIntent().getExtras().getString("custEnquiryStatus");
             discussion = getIntent().getExtras().getString("discussion");
             nextFollowupDate = getIntent().getExtras().getString("nextFollowupDate");

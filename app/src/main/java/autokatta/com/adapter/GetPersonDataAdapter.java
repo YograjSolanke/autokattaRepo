@@ -133,6 +133,9 @@ public class GetPersonDataAdapter extends RecyclerView.Adapter<GetPersonDataAdap
                 intent.putExtra("id", strId);
                 intent.putExtra("keyword", strKeyword);
                 intent.putExtra("name", strTitle);
+                intent.putExtra("contact", holder.mContact.getText().toString());
+                intent.putExtra("custname", holder.mPersonName.getText().toString());
+                intent.putExtra("address", holder.mAddress.getText().toString());
 
                 mActivity.startActivity(intent);
             }

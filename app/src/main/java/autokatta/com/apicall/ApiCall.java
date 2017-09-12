@@ -8215,6 +8215,79 @@ get ExchangeMela Analytics Data
         }
     }
 
+      /*
+      Get Manual Enquiry person Details...
+    */
+
+    public void getManualEnquiryPersonData(String contact,String ids,String mycontact,String keyword) {
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<GetManualEnquiryPersonDataResponse> mServiceMelaResponse = serviceApi.GetManualEnquiryPersonData(contact, ids,mycontact,keyword);
+                mServiceMelaResponse.enqueue(new Callback<GetManualEnquiryPersonDataResponse>() {
+                    @Override
+                    public void onResponse(Call<GetManualEnquiryPersonDataResponse> call, Response<GetManualEnquiryPersonDataResponse> response) {
+                        mNotifier.notifySuccess(response);
+                    }
+
+                    @Override
+                    public void onFailure(Call<GetManualEnquiryPersonDataResponse> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+            } else
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
+    /*
+      Add Manual Enquiry person Details...
+    */
+
+    public void addManualEnquiryPersonData(String contact,String enquiry_status,String mycontact,String keyword,String discussion,String nextfollowupdate,String ids) {
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                //JSON to Gson conversion
+                Gson gson = new GsonBuilder()
+                        .setLenient()
+                        .create();
+
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create(gson))
+                        .client(initLog().build())
+                        .build();
+
+
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<String> mServiceMelaResponse = serviceApi.AddManualEnquiryPersonData(contact, enquiry_status, mycontact,keyword,discussion,nextfollowupdate,ids);
+                mServiceMelaResponse.enqueue(new Callback<String>() {
+                    @Override
+                    public void onResponse(Call<String> call, Response<String> response) {
+                        mNotifier.notifyString(response.body());
+                    }
+
+                    @Override
+                    public void onFailure(Call<String> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+            } else
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     /***
      * Retrofit Logs
      ***/

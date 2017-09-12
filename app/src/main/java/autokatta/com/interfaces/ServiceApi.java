@@ -1277,4 +1277,21 @@ public interface ServiceApi {
     //Get Interest
     @GET("GetAllInterest")
     Call<GetAllInterestResponse> _autokattaGetInterest();
+
+
+    //Get Manual enquiry persons Data...
+    @GET("GetManualEnquiryPersonData")
+    Call<GetManualEnquiryPersonDataResponse> GetManualEnquiryPersonData(@Query("Contact") String Contact ,@Query("Idslist") String Idslist ,
+                                                  @Query("MyContact") String MyContact, @Query("Keyword") String keyword);
+
+
+    //Get Manual enquiry persons Data...
+    @POST("AddManualEnquiryPersonData")
+    Call<String> AddManualEnquiryPersonData(@Query("Contact") String Contact ,@Query("EnquiryStatus") String EnquiryStatus ,
+                                                  @Query("MyContact") String MyContact, @Query("Keyword") String keyword,
+                                                  @Query("Discussion") String Discussion, @Query("NextFollowUpDate") String NextFollowUpDate,
+                                                  @Query("Idslist") String Idslist);
+
+
+
 }

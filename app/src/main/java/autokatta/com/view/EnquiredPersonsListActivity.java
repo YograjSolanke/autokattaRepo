@@ -39,20 +39,22 @@ import autokatta.com.generic.SetMyDateAndTime;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.other.CustomToast;
-import autokatta.com.response.GetPersonDataResponse;
+import autokatta.com.response.GetManualEnquiryPersonDataResponse;
 import retrofit2.Response;
 
 public class EnquiredPersonsListActivity extends AppCompatActivity implements RequestNotifier, SwipeRefreshLayout.OnRefreshListener {
 
     SwipeRefreshLayout mSwipeRefreshLayout;
     RecyclerView mPersonRecyclerView;
-    List<GetPersonDataResponse.Success> mList = new ArrayList<>();
+    List<GetManualEnquiryPersonDataResponse.Success> mList = new ArrayList<>();
     RelativeLayout mRelativeLayout;
     private String strId, strKeyword, strTitle;
-    TextView mNoData, mTitletxt, mTypetxt;
+    TextView mNoData, mTitletxt, mTypetxt,mAddress,mContact,mCustname;
     ConnectionDetector mConnectionDetector;
     private ProgressDialog dialog;
     FloatingActionButton fabAddNewEnquiry;
+    String bundlecontact,bundleAddress,bundleCustname;
+    String strNewDiscussion = "", strNewFollowDate = "", strNewStatus = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +73,10 @@ public class EnquiredPersonsListActivity extends AppCompatActivity implements Re
                 strId = getIntent().getExtras().getString("id");
                 strKeyword = getIntent().getExtras().getString("keyword");
                 strTitle = getIntent().getExtras().getString("name");
+                bundlecontact = getIntent().getExtras().getString("contact");
+                bundleAddress = getIntent().getExtras().getString("address");
+                bundleCustname = getIntent().getExtras().getString("custname");
+
 
                 mNoData = (TextView) findViewById(R.id.no_category);
 
@@ -79,10 +85,15 @@ public class EnquiredPersonsListActivity extends AppCompatActivity implements Re
                 mRelativeLayout = (RelativeLayout) findViewById(R.id.personList_enquiry_frame);
                 mTypetxt = (TextView) findViewById(R.id.type);
                 mTitletxt = (TextView) findViewById(R.id.title);
+                mAddress = (TextView) findViewById(R.id.address);
+                mContact = (TextView) findViewById(R.id.contact);
+                mCustname = (TextView) findViewById(R.id.custname);
                 fabAddNewEnquiry = (FloatingActionButton) findViewById(R.id.fabAddNewEnquiry);
 
                 mTypetxt.setText(strKeyword);
                 mTitletxt.setText(strTitle);
+                mAddress.setText(bundleAddress);
+                mCustname.setText(bundleCustname);
 
                 dialog = new ProgressDialog(EnquiredPersonsListActivity.this);
                 dialog.setMessage("Loading...");
@@ -155,7 +166,7 @@ public class EnquiredPersonsListActivity extends AppCompatActivity implements Re
         if (mConnectionDetector.isConnectedToInternet()) {
             dialog.show();
             ApiCall mApiCall = new ApiCall(this, this);
-            mApiCall.getPersonData(id, keyword);
+            mApiCall.getManualEnquiryPersonData(bundlecontact,id,getSharedPreferences(getString(R.string.my_preference),MODE_PRIVATE).getString("loginContact", ""), keyword);
         } else {
             CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
         }
@@ -173,32 +184,32 @@ public class EnquiredPersonsListActivity extends AppCompatActivity implements Re
                 mList.clear();
 
                 /*Person's information */
-                if (response.body() instanceof GetPersonDataResponse) {
-                    GetPersonDataResponse mPersonDataResponse = (GetPersonDataResponse) response.body();
+                if (response.body() instanceof GetManualEnquiryPersonDataResponse) {
+                    GetManualEnquiryPersonDataResponse mPersonDataResponse = (GetManualEnquiryPersonDataResponse) response.body();
                     if (mPersonDataResponse.getSuccess() != null) {
 
                         if (!mPersonDataResponse.getSuccess().isEmpty()) {
 
                             mNoData.setVisibility(View.GONE);
-                            for (GetPersonDataResponse.Success success : mPersonDataResponse.getSuccess()) {
+                            for (GetManualEnquiryPersonDataResponse.Success success : mPersonDataResponse.getSuccess()) {
                                 //success.setUsername(success.getUsername());
 
-                                if (success.getUsername().equals("") || success.getUsername().isEmpty())
-                                    success.setUsername("Unknown");
+                                if (success.getCustomerName().equals("") || success.getCustomerName().isEmpty())
+                                    success.setCustomerName("Unknown");
                                 else
-                                    success.setUsername(success.getUsername());
-                                success.setContactNo(success.getContactNo());
-                                success.setCity(success.getCity());
-                                success.setProfilePic(success.getProfilePic());
-                                success.setNextFollowupDate(success.getNextFollowupDate());
-                                success.setIsPresent(success.getIsPresent());
+                                    success.setCustomerName(success.getCustomerName());
+                                    success.setDiscussion(success.getDiscussion());
+                                    success.setCreatedDate(success.getCreatedDate());
+                                    success.setEnquiryStatus(success.getEnquiryStatus());
+                                    success.setNextFollowUpDate(success.getNextFollowUpDate());
+                                    success.setInventoryType(success.getInventoryType());
                                 mList.add(success);
                             }
-                            GetPersonsEnquiriesAdapter adapter = new GetPersonsEnquiriesAdapter(this, mList, strId, strKeyword, strTitle);
+                            GetPersonsEnquiriesAdapter adapter = new GetPersonsEnquiriesAdapter(this, mList, strId, strKeyword, strTitle,bundlecontact);
                             mPersonRecyclerView.setAdapter(adapter);
                             adapter.notifyDataSetChanged();
                         } else {
-                            Snackbar.make(mRelativeLayout, mPersonDataResponse.getError(), Snackbar.LENGTH_SHORT).show();
+                             Snackbar.make(mRelativeLayout, getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
                             mNoData.setVisibility(View.VISIBLE);
                         }
                     }
@@ -267,7 +278,19 @@ public class EnquiredPersonsListActivity extends AppCompatActivity implements Re
 
     @Override
     public void notifyString(String str) {
-
+            if (str!=null)
+            {
+                if (str.equalsIgnoreCase("success")) {
+                    Snackbar.make(mRelativeLayout, "Enquiry Added Successfully", Snackbar.LENGTH_SHORT).show();
+                    getPersonData(strId,strKeyword);
+                }else
+                {
+                    Snackbar.make(mRelativeLayout, getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
+                }
+            }else
+            {
+                Snackbar.make(mRelativeLayout, getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
+            }
     }
 
 
@@ -302,7 +325,7 @@ public class EnquiredPersonsListActivity extends AppCompatActivity implements Re
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-                String strNewDiscussion = "", strNewFollowDate = "", strNewStatus = "";
+
 
                 strNewDiscussion = edtDiscussion.getText().toString();
                 strNewFollowDate = edtDate.getText().toString();
@@ -324,6 +347,7 @@ public class EnquiredPersonsListActivity extends AppCompatActivity implements Re
                 } else {
                     strNewStatus = spnStatus.getSelectedItem().toString();
                     Log.i("Result", "-" + strNewDiscussion + "\n" + strNewFollowDate + "\n" + strNewStatus);
+                    addPersonsenquiry();
                     openDialog.dismiss();
                 }
             }
@@ -331,6 +355,17 @@ public class EnquiredPersonsListActivity extends AppCompatActivity implements Re
         openDialog.show();
     }
 
+
+    public void addPersonsenquiry()
+    {
+        if (mConnectionDetector.isConnectedToInternet()) {
+            dialog.show();
+            ApiCall mApiCall = new ApiCall(this, this);
+            mApiCall.addManualEnquiryPersonData(bundlecontact,strNewStatus,getSharedPreferences(getString(R.string.my_preference),MODE_PRIVATE).getString("loginContact", ""), strKeyword,strNewDiscussion,strNewFollowDate,strId);
+        } else {
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
+        }
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
