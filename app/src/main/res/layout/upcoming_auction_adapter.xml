@@ -19,11 +19,9 @@
             android:layout_height="wrap_content">
 
             <RelativeLayout
-
                 android:id="@+id/relativelayoutmain"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-
 
                 <RelativeLayout
                     android:id="@+id/rl1"
@@ -266,17 +264,6 @@
                         android:textColor="@color/white"
                         android:textSize="16sp" />
 
-                    <Button
-                        android:id="@+id/share"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="1dp"
-                        android:layout_weight="1"
-                        android:background="@drawable/buttonback"
-                        android:text="@string/share"
-                        android:textColor="@color/white"
-                        android:textSize="16sp" />
-
                     <RelativeLayout
                         android:id="@+id/relativeshare"
                         android:layout_width="wrap_content"
@@ -292,7 +279,7 @@
                             android:layout_marginStart="2dp"
                             android:background="@drawable/buttonback"
                             android:contentDescription="@string/app_name"
-                            android:src="@drawable/autoshare"
+                            android:src="@mipmap/new_share_white"
                             android:text="@string/share"
                             android:textAllCaps="false"
                             android:textColor="@color/white" />

@@ -321,7 +321,6 @@
                     android:id="@+id/fuelType"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/fuelSystem"
                     android:layout_alignStart="@+id/fuelSystem"
                     android:layout_alignTop="@+id/fuelTypetxt"
                     android:text="@string/app_name"
@@ -350,7 +349,6 @@
                     android:id="@+id/alternatefuel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/fuelSystem"
                     android:layout_alignStart="@+id/fuelSystem"
                     android:layout_alignTop="@+id/alternatefueltxt"
                     android:layout_below="@+id/vfuelsystem"
@@ -370,7 +368,6 @@
                     android:id="@+id/mileagetxt"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
                     android:layout_below="@+id/valternatefuel"
                     android:layout_marginStart="5dp"
@@ -382,7 +379,6 @@
                     android:id="@+id/mileage"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/fuelSystem"
                     android:layout_alignStart="@+id/fuelSystem"
                     android:layout_alignTop="@+id/mileagetxt"
                     android:text="@string/app_name"
@@ -412,7 +408,6 @@
                     android:id="@+id/tankcapacity"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/fuelSystem"
                     android:layout_alignStart="@+id/fuelSystem"
                     android:layout_alignTop="@+id/tankcapacitytxt"
                     android:text="@string/app_name"
@@ -442,7 +437,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="5dp"
                     android:text="Seafty"
@@ -467,7 +461,6 @@
                     android:text="Airbags  : "
                     android:textColor="#2C3343" />
 
-
                 <View
                     android:id="@+id/view5"
                     android:layout_width="1dp"
@@ -484,7 +477,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:layout_toRightOf="@+id/view5"
+                    android:layout_toEndOf="@+id/view5"
                     android:text="@string/app_name"
                     android:textColor="#2C3343" />
 
@@ -495,7 +488,6 @@
                     android:layout_below="@+id/airbags"
                     android:layout_marginTop="5dp"
                     android:background="#cccccc" />
-
 
                 <TextView
                     android:id="@+id/dualStagetxt"
@@ -511,7 +503,6 @@
                     android:id="@+id/dualStage"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/airbags"
                     android:layout_alignStart="@+id/airbags"
                     android:layout_alignTop="@+id/dualStagetxt"
                     android:text="@string/app_name"
@@ -524,7 +515,6 @@
                     android:layout_below="@+id/dualStage"
                     android:layout_marginTop="5dp"
                     android:background="#cccccc" />
-
 
                 <TextView
                     android:id="@+id/middelseattxt"
@@ -540,7 +530,6 @@
                     android:id="@+id/middelseat"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/dualStage"
                     android:layout_alignStart="@+id/dualStage"
                     android:layout_alignTop="@+id/middelseattxt"
                     android:text="@string/app_name"
@@ -553,7 +542,6 @@
                     android:layout_below="@+id/middelseat"
                     android:layout_marginTop="20dp"
                     android:background="#cccccc" />
-
 
                 <TextView
                     android:id="@+id/middleHeadtxt"
@@ -569,7 +557,6 @@
                     android:id="@+id/middleHead"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/middelseat"
                     android:layout_alignStart="@+id/middelseat"
                     android:layout_alignTop="@+id/middleHeadtxt"
                     android:text="@string/app_name"
@@ -582,9 +569,6 @@
                     android:layout_below="@+id/middleHead"
                     android:layout_marginTop="5dp"
                     android:background="#cccccc" />
-
-                <!-- -->
-
 
                 <TextView
                     android:id="@+id/monitoringtxt"
@@ -600,7 +584,6 @@
                     android:id="@+id/monitoringsys"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/middleHead"
                     android:layout_alignStart="@+id/middleHead"
                     android:layout_alignTop="@+id/monitoringtxt"
                     android:text="@string/app_name"
@@ -628,7 +611,6 @@
                     android:id="@+id/anchorpoint"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/monitoringsys"
                     android:layout_alignStart="@+id/monitoringsys"
                     android:layout_alignTop="@+id/anchorpointtxt"
                     android:text="@string/app_name"
@@ -641,7 +623,6 @@
                     android:layout_below="@+id/anchorpoint"
                     android:layout_marginTop="20dp"
                     android:background="#cccccc" />
-
 
                 <TextView
                     android:id="@+id/worningtxt"
@@ -657,7 +638,6 @@
                     android:id="@+id/seatbeltworning"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/anchorpoint"
                     android:layout_alignStart="@+id/anchorpoint"
                     android:layout_alignTop="@+id/worningtxt"
                     android:text="@string/app_name"
@@ -670,7 +650,6 @@
                     android:layout_below="@+id/seatbeltworning"
                     android:layout_marginTop="5dp"
                     android:background="#cccccc" />
-
 
                 <TextView
                     android:id="@+id/antiBreakingtxt"
@@ -686,7 +665,6 @@
                     android:id="@+id/antiBreaking"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/seatbeltworning"
                     android:layout_alignStart="@+id/seatbeltworning"
                     android:layout_alignTop="@+id/antiBreakingtxt"
                     android:text="@string/app_name"
@@ -755,7 +733,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:layout_toRightOf="@+id/view6"
+                    android:layout_toEndOf="@+id/view6"
                     android:text="@string/app_name"
                     android:textColor="#2C3343" />
 
@@ -782,7 +760,6 @@
                     android:id="@+id/airCondition"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/CentralPrice"
                     android:layout_alignStart="@+id/CentralPrice"
                     android:layout_alignTop="@+id/airConditiontxt"
                     android:text="@string/app_name"
@@ -795,7 +772,6 @@
                     android:layout_below="@+id/airCondition"
                     android:layout_marginTop="5dp"
                     android:background="#cccccc" />
-
 
                 <TextView
                     android:id="@+id/rear_actxt"
@@ -811,7 +787,6 @@
                     android:id="@+id/rear_ac"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/airCondition"
                     android:layout_alignStart="@+id/airCondition"
                     android:layout_alignTop="@+id/rear_actxt"
                     android:text="@string/app_name"
@@ -824,7 +799,6 @@
                     android:layout_below="@+id/rear_ac"
                     android:layout_marginTop="5dp"
                     android:background="#cccccc" />
-
 
                 <TextView
                     android:id="@+id/buttonStarttxt"
@@ -840,7 +814,6 @@
                     android:id="@+id/buttonStart"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/rear_ac"
                     android:layout_alignStart="@+id/rear_ac"
                     android:layout_alignTop="@+id/buttonStarttxt"
                     android:text="@string/app_name"
@@ -853,7 +826,6 @@
                     android:layout_below="@+id/buttonStart"
                     android:layout_marginTop="20dp"
                     android:background="#cccccc" />
-
 
                 <TextView
                     android:id="@+id/CruiseControltxt"
@@ -869,7 +841,6 @@
                     android:id="@+id/CruiseControl"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/buttonStart"
                     android:layout_alignStart="@+id/buttonStart"
                     android:layout_alignTop="@+id/CruiseControltxt"
                     android:text="@string/app_name"
@@ -882,7 +853,6 @@
                     android:layout_below="@+id/CruiseControl"
                     android:layout_marginTop="5dp"
                     android:background="#cccccc" />
-
 
                 <TextView
                     android:id="@+id/Parkingtxt"
@@ -898,7 +868,6 @@
                     android:id="@+id/ParkingSenser"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/CruiseControl"
                     android:layout_alignStart="@+id/CruiseControl"
                     android:layout_alignTop="@+id/Parkingtxt"
                     android:text="@string/app_name"
@@ -911,7 +880,6 @@
                     android:layout_below="@+id/ParkingSenser"
                     android:layout_marginTop="5dp"
                     android:background="#cccccc" />
-
 
                 <TextView
                     android:id="@+id/SeatUpholsterytxt"
@@ -927,7 +895,6 @@
                     android:id="@+id/SeatUpholstery"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/ParkingSenser"
                     android:layout_alignStart="@+id/ParkingSenser"
                     android:layout_alignTop="@+id/SeatUpholsterytxt"
                     android:text="@string/app_name"
@@ -940,7 +907,6 @@
                     android:layout_below="@+id/SeatUpholstery"
                     android:layout_marginTop="5dp"
                     android:background="#cccccc" />
-
 
                 <TextView
                     android:id="@+id/FloadingSeattxt"
@@ -956,7 +922,6 @@
                     android:id="@+id/FloadingSeat"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/SeatUpholstery"
                     android:layout_alignStart="@+id/SeatUpholstery"
                     android:layout_alignTop="@+id/FloadingSeattxt"
                     android:text="@string/app_name"
@@ -969,7 +934,6 @@
                     android:layout_below="@+id/FloadingSeat"
                     android:layout_marginTop="5dp"
                     android:background="#cccccc" />
-
 
                 <TextView
                     android:id="@+id/PowerWindowtxt"
@@ -985,7 +949,6 @@
                     android:id="@+id/PowerWindow"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/FloadingSeat"
                     android:layout_alignStart="@+id/FloadingSeat"
                     android:layout_alignTop="@+id/PowerWindowtxt"
                     android:text="@string/app_name"
@@ -1015,7 +978,6 @@
                     android:id="@+id/RearDefogger"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/PowerWindow"
                     android:layout_alignStart="@+id/PowerWindow"
                     android:layout_alignTop="@+id/RearDefoggertxt"
                     android:text="@string/app_name"
@@ -1044,7 +1006,6 @@
                     android:id="@+id/RearWiper"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/RearDefogger"
                     android:layout_alignStart="@+id/RearDefogger"
                     android:layout_alignTop="@+id/RearWipertxt"
                     android:text="@string/app_name"
@@ -1057,7 +1018,6 @@
                     android:layout_below="@+id/RearWiper"
                     android:layout_marginTop="5dp"
                     android:background="#cccccc" />
-
 
                 <TextView
                     android:id="@+id/RainSensertxt"
@@ -1073,7 +1033,6 @@
                     android:id="@+id/RainSenser"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/RearWiper"
                     android:layout_alignStart="@+id/RearWiper"
                     android:layout_alignTop="@+id/RainSensertxt"
                     android:text="@string/app_name"
@@ -1086,7 +1045,6 @@
                     android:layout_below="@+id/RainSenser"
                     android:layout_marginTop="5dp"
                     android:background="#cccccc" />
-
 
                 <TextView
                     android:id="@+id/Sunrooftxt"
@@ -1102,7 +1060,6 @@
                     android:id="@+id/Sunroof"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/RainSenser"
                     android:layout_alignStart="@+id/RainSenser"
                     android:layout_alignTop="@+id/Sunrooftxt"
                     android:text="@string/app_name"
@@ -1130,7 +1087,6 @@
                     android:id="@+id/FogLamps"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/Sunroof"
                     android:layout_alignStart="@+id/Sunroof"
                     android:layout_alignTop="@+id/FogLampstxt"
                     android:text="@string/app_name"
@@ -1159,7 +1115,6 @@
                     android:id="@+id/MusicSystem"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/FogLamps"
                     android:layout_alignStart="@+id/FogLamps"
                     android:layout_alignTop="@+id/MusicSystemtxt"
                     android:text="@string/app_name"
@@ -1189,7 +1144,6 @@
                     android:id="@+id/SteeringControl"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/MusicSystem"
                     android:layout_alignStart="@+id/MusicSystem"
                     android:layout_alignTop="@+id/SteeringControltxt"
                     android:text="@string/app_name"
@@ -1199,7 +1153,6 @@
                 <View
                     android:id="@+id/vSteeringControl"
                     android:layout_width="match_parent"
-
                     android:layout_height="1dp"
                     android:layout_below="@+id/SteeringControl"
                     android:layout_marginTop="20dp"
@@ -1219,12 +1172,10 @@
                     android:id="@+id/WarrantyYear"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/MusicSystem"
                     android:layout_alignStart="@+id/MusicSystem"
                     android:layout_alignTop="@+id/WarrantyYeartxt"
                     android:text="@string/app_name"
                     android:textColor="#2C3343" />
-
 
                 <View
                     android:id="@+id/vWarrantyYear"
@@ -1248,7 +1199,6 @@
                     android:id="@+id/WarrantKm"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/WarrantyYear"
                     android:layout_alignStart="@+id/WarrantyYear"
                     android:layout_alignTop="@+id/WarrantyKmtxt"
                     android:text="@string/app_name"
@@ -1263,9 +1213,7 @@
                     android:background="#cccccc" />
 
             </RelativeLayout>
-
         </RelativeLayout>
-
 
         <RelativeLayout
             android:id="@+id/tractorSpecification"
@@ -1327,7 +1275,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:layout_toRightOf="@+id/view7"
+                    android:layout_toEndOf="@+id/view7"
                     android:text="@string/app_name"
                     android:textColor="#2C3343" />
 
@@ -1354,7 +1302,6 @@
                     android:id="@+id/setTyreSize"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setRatedRPM"
                     android:layout_alignStart="@+id/setRatedRPM"
                     android:layout_alignTop="@+id/TyreSize"
                     android:text="@string/app_name"
@@ -1383,7 +1330,6 @@
                     android:id="@+id/setEngineDetails"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setTyreSize"
                     android:layout_alignStart="@+id/setTyreSize"
                     android:layout_alignTop="@+id/EngineDetails"
                     android:text="@string/app_name"
@@ -1396,7 +1342,6 @@
                     android:layout_below="@+id/setEngineDetails"
                     android:layout_marginTop="5dp"
                     android:background="#cccccc" />
-
 
                 <TextView
                     android:id="@+id/TurbochargerNaturalAspirated"
@@ -1412,7 +1357,6 @@
                     android:id="@+id/setTurbochargerNaturalAspirated"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setEngineDetails"
                     android:layout_alignStart="@+id/setEngineDetails"
                     android:layout_alignTop="@+id/TurbochargerNaturalAspirated"
                     android:text="@string/app_name"
@@ -1425,7 +1369,6 @@
                     android:layout_below="@+id/setTurbochargerNaturalAspirated"
                     android:layout_marginTop="20dp"
                     android:background="#cccccc" />
-
 
                 <TextView
                     android:id="@+id/HPCat"
@@ -1441,7 +1384,6 @@
                     android:id="@+id/setHPCat"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setTurbochargerNaturalAspirated"
                     android:layout_alignStart="@+id/setTurbochargerNaturalAspirated"
                     android:layout_alignTop="@+id/HPCat"
                     android:text="@string/app_name"
@@ -1454,7 +1396,6 @@
                     android:layout_below="@+id/setHPCat"
                     android:layout_marginTop="5dp"
                     android:background="#cccccc" />
-
 
                 <TextView
                     android:id="@+id/NoOfCylinder"
@@ -1470,7 +1411,6 @@
                     android:id="@+id/setNoOfCylinder"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setHPCat"
                     android:layout_alignStart="@+id/setHPCat"
                     android:layout_alignTop="@+id/NoOfCylinder"
                     android:text="@string/app_name"
@@ -1483,7 +1423,6 @@
                     android:layout_below="@+id/setNoOfCylinder"
                     android:layout_marginTop="5dp"
                     android:background="#cccccc" />
-
 
                 <TextView
                     android:id="@+id/BoreStroke"
@@ -1499,7 +1438,6 @@
                     android:id="@+id/setBoreStroke"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setNoOfCylinder"
                     android:layout_alignStart="@+id/setNoOfCylinder"
                     android:layout_alignTop="@+id/BoreStroke"
                     android:text="@string/app_name"
@@ -1512,7 +1450,6 @@
                     android:layout_below="@+id/setBoreStroke"
                     android:layout_marginTop="5dp"
                     android:background="#cccccc" />
-
 
                 <TextView
                     android:id="@+id/cylinderCapacityCC"
@@ -1528,7 +1465,6 @@
                     android:id="@+id/setcylinderCapacityCC"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setBoreStroke"
                     android:layout_alignStart="@+id/setBoreStroke"
                     android:layout_alignTop="@+id/cylinderCapacityCC"
                     android:text="@string/app_name"
@@ -1541,7 +1477,6 @@
                     android:layout_below="@+id/setcylinderCapacityCC"
                     android:layout_marginTop="5dp"
                     android:background="#cccccc" />
-
 
                 <TextView
                     android:id="@+id/PTOHP"
@@ -1557,7 +1492,6 @@
                     android:id="@+id/setPTOHP"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setcylinderCapacityCC"
                     android:layout_alignStart="@+id/setcylinderCapacityCC"
                     android:layout_alignTop="@+id/PTOHP"
                     android:text="@string/app_name"
@@ -1571,7 +1505,6 @@
                     android:layout_marginTop="5dp"
                     android:background="#cccccc" />
 
-
                 <TextView
                     android:id="@+id/MaxTorquekgm"
                     android:layout_width="wrap_content"
@@ -1582,12 +1515,10 @@
                     android:text="Max Torque kgm : "
                     android:textColor="#2C3343" />
 
-
                 <TextView
                     android:id="@+id/setMaxTorquekgm"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setPTOHP"
                     android:layout_alignStart="@+id/setPTOHP"
                     android:layout_alignTop="@+id/MaxTorquekgm"
                     android:text="@string/app_name"
@@ -1600,7 +1531,6 @@
                     android:layout_below="@+id/setMaxTorquekgm"
                     android:layout_marginTop="5dp"
                     android:background="#cccccc" />
-
 
                 <TextView
                     android:id="@+id/BackupTorque"
@@ -1616,7 +1546,6 @@
                     android:id="@+id/setBackupTorque"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setMaxTorquekgm"
                     android:layout_alignStart="@+id/setMaxTorquekgm"
                     android:layout_alignTop="@+id/BackupTorque"
                     android:text="@string/app_name"
@@ -1629,7 +1558,6 @@
                     android:layout_below="@+id/setBackupTorque"
                     android:layout_marginTop="5dp"
                     android:background="#cccccc" />
-
 
                 <TextView
                     android:id="@+id/FIP"
@@ -1645,7 +1573,6 @@
                     android:id="@+id/setFIP"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setBackupTorque"
                     android:layout_alignStart="@+id/setBackupTorque"
                     android:layout_alignTop="@+id/FIP"
                     android:text="@string/app_name"
@@ -1658,7 +1585,6 @@
                     android:layout_below="@+id/setFIP"
                     android:layout_marginTop="5dp"
                     android:background="#cccccc" />
-
 
                 <TextView
                     android:id="@+id/AirCleaner"
@@ -1674,7 +1600,6 @@
                     android:id="@+id/setAirCleaner"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setFIP"
                     android:layout_alignStart="@+id/setFIP"
                     android:layout_alignTop="@+id/AirCleaner"
                     android:text="@string/app_name"
@@ -1702,7 +1627,6 @@
                     android:id="@+id/setHydraulic"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setAirCleaner"
                     android:layout_alignStart="@+id/setAirCleaner"
                     android:layout_alignTop="@+id/Hydraulic"
                     android:text="@string/app_name"
@@ -1715,7 +1639,6 @@
                     android:layout_below="@+id/setHydraulic"
                     android:layout_marginTop="5dp"
                     android:background="#cccccc" />
-
 
                 <TextView
                     android:id="@+id/AuxiliaryHydValve"
@@ -1731,7 +1654,6 @@
                     android:id="@+id/setAuxiliaryHydValve"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setHydraulic"
                     android:layout_alignStart="@+id/setHydraulic"
                     android:layout_alignTop="@+id/AuxiliaryHydValve"
                     android:text="@string/app_name"
@@ -1744,7 +1666,6 @@
                     android:layout_below="@+id/setAuxiliaryHydValve"
                     android:layout_marginTop="10dp"
                     android:background="#cccccc" />
-
 
                 <TextView
                     android:id="@+id/Hydraulicliftcapacitykg"
@@ -1761,7 +1682,6 @@
                     android:id="@+id/setHydraulicliftcapacitykg"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setAuxiliaryHydValve"
                     android:layout_alignStart="@+id/setAuxiliaryHydValve"
                     android:layout_alignTop="@+id/Hydraulicliftcapacitykg"
                     android:text="@string/app_name"
@@ -1790,12 +1710,10 @@
                     android:id="@+id/setPTOSpeed"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setHydraulicliftcapacitykg"
                     android:layout_alignStart="@+id/setHydraulicliftcapacitykg"
                     android:layout_alignTop="@+id/PTOSpeed"
                     android:text="@string/app_name"
                     android:textColor="#2C3343" />
-
 
                 <View
                     android:id="@+id/vt17"
@@ -1819,7 +1737,6 @@
                     android:id="@+id/setRPTOGRPTO"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setPTOSpeed"
                     android:layout_alignStart="@+id/setPTOSpeed"
                     android:layout_alignTop="@+id/RPTOGRPTO"
                     android:text="@string/app_name"
@@ -1868,7 +1785,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:layout_toRightOf="@+id/view8"
+                    android:layout_toEndOf="@+id/view8"
                     android:text="@string/app_name"
                     android:textColor="#2C3343" />
 
@@ -1895,7 +1812,6 @@
                     android:id="@+id/setTypeofClutchandBreakPedal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setClutch"
                     android:layout_alignStart="@+id/setClutch"
                     android:layout_alignTop="@+id/TypeofClutchandBreakPedal"
                     android:text="@string/app_name"
@@ -1908,7 +1824,6 @@
                     android:layout_below="@+id/setTypeofClutchandBreakPedal"
                     android:layout_marginTop="20dp"
                     android:background="#cccccc" />
-
 
                 <TextView
                     android:id="@+id/FrontTyre"
@@ -1924,7 +1839,6 @@
                     android:id="@+id/setFrontTyre"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setTypeofClutchandBreakPedal"
                     android:layout_alignStart="@+id/setTypeofClutchandBreakPedal"
                     android:layout_alignTop="@+id/FrontTyre"
                     android:text="@string/app_name"
@@ -1937,7 +1851,6 @@
                     android:layout_below="@+id/setFrontTyre"
                     android:layout_marginTop="5dp"
                     android:background="#cccccc" />
-
 
                 <TextView
                     android:id="@+id/RearTyre"
@@ -1953,7 +1866,6 @@
                     android:id="@+id/setRearTyre"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setFrontTyre"
                     android:layout_alignStart="@+id/setFrontTyre"
                     android:layout_alignTop="@+id/RearTyre"
                     android:text="@string/app_name"
@@ -1966,7 +1878,6 @@
                     android:layout_below="@+id/setRearTyre"
                     android:layout_marginTop="10dp"
                     android:background="#cccccc" />
-
 
                 <TextView
                     android:id="@+id/Brakes"
@@ -1982,7 +1893,6 @@
                     android:id="@+id/setBrakes"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setRearTyre"
                     android:layout_alignStart="@+id/setRearTyre"
                     android:layout_alignTop="@+id/Brakes"
                     android:text="@string/app_name"
@@ -2011,7 +1921,6 @@
                     android:id="@+id/setSteering"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setBrakes"
                     android:layout_alignStart="@+id/setBrakes"
                     android:layout_alignTop="@+id/Steering"
                     android:text="@string/app_name"
@@ -2024,7 +1933,6 @@
                     android:layout_below="@+id/setSteering"
                     android:layout_marginTop="5dp"
                     android:background="#cccccc" />
-
 
                 <TextView
                     android:id="@+id/FuelTankCapacityLtr"
@@ -2040,12 +1948,10 @@
                     android:id="@+id/setFuelTankCapacityLtr"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setSteering"
                     android:layout_alignStart="@+id/setSteering"
                     android:layout_alignTop="@+id/FuelTankCapacityLtr"
                     android:text="@string/app_name"
                     android:textColor="#2C3343" />
-
 
                 <View
                     android:id="@+id/vt25"
@@ -2054,7 +1960,6 @@
                     android:layout_below="@+id/setFuelTankCapacityLtr"
                     android:layout_marginTop="5dp"
                     android:background="#cccccc" />
-
 
                 <TextView
                     android:id="@+id/WheelBasemm"
@@ -2070,7 +1975,6 @@
                     android:id="@+id/setWheelBasemm"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setFuelTankCapacityLtr"
                     android:layout_alignStart="@+id/setFuelTankCapacityLtr"
                     android:layout_alignTop="@+id/WheelBasemm"
                     android:text="@string/app_name"
@@ -2083,7 +1987,6 @@
                     android:layout_below="@+id/setWheelBasemm"
                     android:layout_marginTop="5dp"
                     android:background="#cccccc" />
-
 
                 <TextView
                     android:id="@+id/WeightKg"
@@ -2099,7 +2002,6 @@
                     android:id="@+id/setWeightKg"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setWheelBasemm"
                     android:layout_alignStart="@+id/setWheelBasemm"
                     android:layout_alignTop="@+id/WeightKg"
                     android:text="@string/app_name"
@@ -2113,7 +2015,6 @@
                     android:layout_marginTop="5dp"
                     android:background="#cccccc" />
 
-
                 <TextView
                     android:id="@+id/GearBox"
                     android:layout_width="wrap_content"
@@ -2124,12 +2025,10 @@
                     android:text="Gear Box : "
                     android:textColor="#2C3343" />
 
-
                 <TextView
                     android:id="@+id/setGearBox"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setWeightKg"
                     android:layout_alignStart="@+id/setWeightKg"
                     android:layout_alignTop="@+id/GearBox"
                     android:text="@string/app_name"
@@ -2142,7 +2041,6 @@
                     android:layout_below="@+id/setGearBox"
                     android:layout_marginTop="5dp"
                     android:background="#cccccc" />
-
 
                 <TextView
                     android:id="@+id/TypeofGearReduction"
@@ -2158,7 +2056,6 @@
                     android:id="@+id/setTypeofGearReduction"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setGearBox"
                     android:layout_alignStart="@+id/setGearBox"
                     android:layout_alignTop="@+id/TypeofGearReduction"
                     android:text="@string/app_name"
@@ -2171,7 +2068,6 @@
                     android:layout_below="@+id/setTypeofGearReduction"
                     android:layout_marginTop="5dp"
                     android:background="#cccccc" />
-
 
                 <TextView
                     android:id="@+id/Speed"
@@ -2187,7 +2083,6 @@
                     android:id="@+id/setSpeed"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setTypeofGearReduction"
                     android:layout_alignStart="@+id/setTypeofGearReduction"
                     android:layout_alignTop="@+id/Speed"
                     android:text="@string/app_name"
@@ -2200,7 +2095,6 @@
                     android:layout_below="@+id/setSpeed"
                     android:layout_marginTop="5dp"
                     android:background="#cccccc" />
-
 
             </RelativeLayout>
 
@@ -2237,10 +2131,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:layout_toRightOf="@+id/view9"
+                    android:layout_toEndOf="@+id/view9"
                     android:text="@string/app_name"
                     android:textColor="#2C3343" />
-
 
                 <View
                     android:id="@+id/vt31"
@@ -2264,7 +2157,6 @@
                     android:id="@+id/setEngineRatedRPM"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setEngineType"
                     android:layout_alignStart="@+id/setEngineType"
                     android:layout_alignTop="@+id/EngineRatedRPM"
                     android:text="@string/app_name"
@@ -2292,7 +2184,6 @@
                     android:id="@+id/setHP"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setEngineRatedRPM"
                     android:layout_alignStart="@+id/setEngineRatedRPM"
                     android:layout_alignTop="@+id/HP"
                     android:text="@string/app_name"
@@ -2320,7 +2211,6 @@
                     android:id="@+id/setPowerKW"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setHP"
                     android:layout_alignStart="@+id/setHP"
                     android:layout_alignTop="@+id/PowerKW"
                     android:text="@string/app_name"
@@ -2348,7 +2238,6 @@
                     android:id="@+id/setDisplacementCC"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setPowerKW"
                     android:layout_alignStart="@+id/setPowerKW"
                     android:layout_alignTop="@+id/DisplacementCC"
                     android:text="@string/app_name"
@@ -2361,7 +2250,6 @@
                     android:layout_below="@+id/setDisplacementCC"
                     android:layout_marginTop="5dp"
                     android:background="#cccccc" />
-
 
                 <TextView
                     android:id="@+id/Boreinmm"
@@ -2377,7 +2265,6 @@
                     android:id="@+id/setBoreinmm"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setDisplacementCC"
                     android:layout_alignStart="@+id/setDisplacementCC"
                     android:layout_alignTop="@+id/Boreinmm"
                     android:text="@string/app_name"
@@ -2405,7 +2292,6 @@
                     android:id="@+id/setStrokeinmm"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setBoreinmm"
                     android:layout_alignStart="@+id/setBoreinmm"
                     android:layout_alignTop="@+id/Strokeinmm"
                     android:text="@string/app_name"
@@ -2433,7 +2319,6 @@
                     android:id="@+id/setCoolingSystem"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setStrokeinmm"
                     android:layout_alignStart="@+id/setStrokeinmm"
                     android:layout_alignTop="@+id/CoolingSystem"
                     android:text="@string/app_name"
@@ -2461,7 +2346,6 @@
                     android:id="@+id/setFuelType"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setCoolingSystem"
                     android:layout_alignStart="@+id/setCoolingSystem"
                     android:layout_alignTop="@+id/FuelType"
                     android:text="@string/app_name"
@@ -2474,7 +2358,6 @@
                     android:layout_below="@+id/setFuelType"
                     android:layout_marginTop="5dp"
                     android:background="#cccccc" />
-
 
                 <TextView
                     android:id="@+id/NoofCylinder"
@@ -2491,7 +2374,6 @@
                     android:id="@+id/setNoofCylinder"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setFuelType"
                     android:layout_alignStart="@+id/setFuelType"
                     android:layout_alignTop="@+id/NoofCylinder"
                     android:text="@string/app_name"
@@ -2507,7 +2389,6 @@
                     android:background="#cccccc"
                     android:visibility="gone" />
 
-
                 <TextView
                     android:id="@+id/Torque"
                     android:layout_width="wrap_content"
@@ -2522,7 +2403,6 @@
                     android:id="@+id/setTorque"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setNoofCylinder"
                     android:layout_alignStart="@+id/setNoofCylinder"
                     android:layout_alignTop="@+id/Torque"
                     android:text="@string/app_name"
@@ -2551,7 +2431,6 @@
                     android:id="@+id/setAirCleanerFilter"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setTorque"
                     android:layout_alignStart="@+id/setTorque"
                     android:layout_alignTop="@+id/AirCleanerFilter"
                     android:text="@string/app_name"
@@ -2581,7 +2460,6 @@
                     android:id="@+id/setTransmissionType"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setAirCleanerFilter"
                     android:layout_alignStart="@+id/setAirCleanerFilter"
                     android:layout_alignTop="@+id/TransmissionType"
                     android:text="@string/app_name"
@@ -2609,7 +2487,6 @@
                     android:id="@+id/setDrive"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setTransmissionType"
                     android:layout_alignStart="@+id/setTransmissionType"
                     android:layout_alignTop="@+id/Drive"
                     android:text="@string/app_name"
@@ -2637,7 +2514,6 @@
                     android:id="@+id/setMaxSpeed"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setDrive"
                     android:layout_alignStart="@+id/setDrive"
                     android:layout_alignTop="@+id/MaxSpeed"
                     android:text="@string/app_name"
@@ -2665,7 +2541,6 @@
                     android:id="@+id/setMaxReverseSpeed"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setMaxSpeed"
                     android:layout_alignStart="@+id/setMaxSpeed"
                     android:layout_alignTop="@+id/MaxReverseSpeed"
                     android:text="@string/app_name"
@@ -2693,7 +2568,6 @@
                     android:id="@+id/setPTOrpm"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setMaxReverseSpeed"
                     android:layout_alignStart="@+id/setMaxReverseSpeed"
                     android:layout_alignTop="@+id/PTOrpm"
                     android:text="@string/app_name"
@@ -2721,7 +2595,6 @@
                     android:id="@+id/setPTOType"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setPTOrpm"
                     android:layout_alignStart="@+id/setPTOrpm"
                     android:layout_alignTop="@+id/PTOType"
                     android:text="@string/app_name"
@@ -2769,7 +2642,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:layout_toRightOf="@+id/view10"
+                    android:layout_toEndOf="@+id/view10"
                     android:text="@string/app_name"
                     android:textColor="#2C3343" />
 
@@ -2796,7 +2669,6 @@
                     android:id="@+id/setSteeringType"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setNoofGearsForward"
                     android:layout_alignStart="@+id/setNoofGearsForward"
                     android:layout_alignTop="@+id/SteeringType"
                     android:text="@string/app_name"
@@ -2824,7 +2696,6 @@
                     android:id="@+id/setBrakeType"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setSteeringType"
                     android:layout_alignStart="@+id/setSteeringType"
                     android:layout_alignTop="@+id/BrakeType"
                     android:text="@string/app_name"
@@ -2852,7 +2723,6 @@
                     android:id="@+id/setClutchType"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setBrakeType"
                     android:layout_alignStart="@+id/setBrakeType"
                     android:layout_alignTop="@+id/ClutchType"
                     android:text="@string/app_name"
@@ -2880,7 +2750,6 @@
                     android:id="@+id/setTotalWeight"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setClutchType"
                     android:layout_alignStart="@+id/setClutchType"
                     android:layout_alignTop="@+id/TotalWeight"
                     android:text="@string/app_name"
@@ -2908,7 +2777,6 @@
                     android:id="@+id/setWheelBase"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setTotalWeight"
                     android:layout_alignStart="@+id/setTotalWeight"
                     android:layout_alignTop="@+id/WheelBase"
                     android:text="@string/app_name"
@@ -2936,7 +2804,6 @@
                     android:id="@+id/setOverallLength"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setWheelBase"
                     android:layout_alignStart="@+id/setWheelBase"
                     android:layout_alignTop="@+id/OverallLength"
                     android:text="@string/app_name"
@@ -2964,7 +2831,6 @@
                     android:id="@+id/setOverallWidth"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setOverallLength"
                     android:layout_alignStart="@+id/setOverallLength"
                     android:layout_alignTop="@+id/OverallWidth"
                     android:text="@string/app_name"
@@ -2992,7 +2858,6 @@
                     android:id="@+id/setTurningRadiusofBrakes"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setOverallWidth"
                     android:layout_alignStart="@+id/setOverallWidth"
                     android:layout_alignTop="@+id/TurningRadiusofBrakes"
                     android:text="@string/app_name"
@@ -3020,7 +2885,6 @@
                     android:id="@+id/setTyreSizeFront"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setTurningRadiusofBrakes"
                     android:layout_alignStart="@+id/setTurningRadiusofBrakes"
                     android:layout_alignTop="@+id/TyreSizeFront"
                     android:text="@string/app_name"
@@ -3048,7 +2912,6 @@
                     android:id="@+id/setTyreSizeRear"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setTyreSizeFront"
                     android:layout_alignStart="@+id/setTyreSizeFront"
                     android:layout_alignTop="@+id/TyreSizeRear"
                     android:text="@string/app_name"
@@ -3076,7 +2939,6 @@
                     android:id="@+id/setHydraulicType"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setTyreSizeRear"
                     android:layout_alignStart="@+id/setTyreSizeRear"
                     android:layout_alignTop="@+id/HydraulicType"
                     android:text="@string/app_name"
@@ -3104,7 +2966,6 @@
                     android:id="@+id/setLiftingCapacityatStandardFrame"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setHydraulicType"
                     android:layout_alignStart="@+id/setHydraulicType"
                     android:layout_alignTop="@+id/LiftingCapacityatStandardFrame"
                     android:text="@string/app_name"
@@ -3132,7 +2993,6 @@
                     android:id="@+id/set3PointLinkage"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setLiftingCapacityatStandardFrame"
                     android:layout_alignStart="@+id/setLiftingCapacityatStandardFrame"
                     android:layout_alignTop="@+id/thPointLinkage"
                     android:text="@string/app_name"
@@ -3160,7 +3020,6 @@
                     android:id="@+id/setPumpType"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/set3PointLinkage"
                     android:layout_alignStart="@+id/set3PointLinkage"
                     android:layout_alignTop="@+id/PumpType"
                     android:text="@string/app_name"
@@ -3188,7 +3047,6 @@
                     android:id="@+id/setWebsite"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setPumpType"
                     android:layout_alignStart="@+id/setPumpType"
                     android:layout_alignTop="@+id/Website"
                     android:text="@string/app_name"
@@ -3217,7 +3075,6 @@
                     android:id="@+id/setNoofGearsReverse"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setWebsite"
                     android:layout_alignStart="@+id/setWebsite"
                     android:layout_alignTop="@+id/NoofGearsReverse"
                     android:text="@string/app_name"
@@ -3295,7 +3152,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:layout_toRightOf="@+id/view11"
+                    android:layout_toEndOf="@+id/view11"
                     android:text="@string/app_name"
                     android:textColor="#2C3343" />
 
@@ -3322,7 +3179,6 @@
                     android:id="@+id/setDisplacement"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setEngine"
                     android:layout_alignStart="@+id/setEngine"
                     android:layout_alignTop="@+id/Displacement"
                     android:text="@string/app_name"
@@ -3350,7 +3206,6 @@
                     android:id="@+id/setMaxPower"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setDisplacement"
                     android:layout_alignStart="@+id/setDisplacement"
                     android:layout_alignTop="@+id/MaxPower"
                     android:text="@string/app_name"
@@ -3378,7 +3233,6 @@
                     android:id="@+id/setMaxTorque"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setMaxPower"
                     android:layout_alignStart="@+id/setMaxPower"
                     android:layout_alignTop="@+id/MaxTorque"
                     android:text="@string/app_name"
@@ -3406,7 +3260,6 @@
                     android:id="@+id/setTransmission"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setMaxTorque"
                     android:layout_alignStart="@+id/setMaxTorque"
                     android:layout_alignTop="@+id/Transmission"
                     android:text="@string/app_name"
@@ -3434,7 +3287,6 @@
                     android:id="@+id/setClutchpickup"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setTransmission"
                     android:layout_alignStart="@+id/setTransmission"
                     android:layout_alignTop="@+id/ClutchPickup"
                     android:text="@string/app_name"
@@ -3463,7 +3315,6 @@
                     android:id="@+id/setGearbox"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setClutchpickup"
                     android:layout_alignStart="@+id/setClutchpickup"
                     android:layout_alignTop="@+id/Gearbox"
                     android:text="@string/app_name"
@@ -3491,7 +3342,6 @@
                     android:id="@+id/setFuel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setGearbox"
                     android:layout_alignStart="@+id/setGearbox"
                     android:layout_alignTop="@+id/Fuel"
                     android:text="@string/app_name"
@@ -3520,7 +3370,6 @@
                     android:id="@+id/setFuelTank"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setFuel"
                     android:layout_alignStart="@+id/setFuel"
                     android:layout_alignTop="@+id/FuelTank"
                     android:text="@string/app_name"
@@ -3548,7 +3397,6 @@
                     android:id="@+id/setGradeability"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setFuelTank"
                     android:layout_alignStart="@+id/setFuelTank"
                     android:layout_alignTop="@+id/Gradeability"
                     android:text="@string/app_name"
@@ -3576,7 +3424,6 @@
                     android:id="@+id/setTurningRadius"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setGradeability"
                     android:layout_alignStart="@+id/setGradeability"
                     android:layout_alignTop="@+id/TurningRadius"
                     android:text="@string/app_name"
@@ -3604,7 +3451,6 @@
                     android:id="@+id/setMaxSpeedPickup"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setTurningRadius"
                     android:layout_alignStart="@+id/setTurningRadius"
                     android:layout_alignTop="@+id/MaxSpeedPickup"
                     android:text="@string/app_name"
@@ -3632,7 +3478,6 @@
                     android:id="@+id/setAxleConfiguration"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setMaxSpeedPickup"
                     android:layout_alignStart="@+id/setMaxSpeedPickup"
                     android:layout_alignTop="@+id/AxleConfiguration"
                     android:text="@string/app_name"
@@ -3660,7 +3505,6 @@
                     android:id="@+id/setTyres"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setAxleConfiguration"
                     android:layout_alignStart="@+id/setAxleConfiguration"
                     android:layout_alignTop="@+id/Tyres"
                     android:text="@string/app_name"
@@ -3688,7 +3532,6 @@
                     android:id="@+id/setWheelbase"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setTyres"
                     android:layout_alignStart="@+id/setTyres"
                     android:layout_alignTop="@+id/Wheelbase"
                     android:text="@string/app_name"
@@ -3716,7 +3559,6 @@
                     android:id="@+id/setGroundClearance"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setWheelbase"
                     android:layout_alignStart="@+id/setWheelbase"
                     android:layout_alignTop="@+id/GroundClearance"
                     android:text="@string/app_name"
@@ -3744,7 +3586,6 @@
                     android:id="@+id/setGVWGCW"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setGroundClearance"
                     android:layout_alignStart="@+id/setGroundClearance"
                     android:layout_alignTop="@+id/GVWGCW"
                     android:text="@string/app_name"
@@ -3794,7 +3635,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:layout_toRightOf="@+id/view12"
+                    android:layout_toEndOf="@+id/view12"
                     android:text="@string/app_name"
                     android:textColor="#2C3343" />
 
@@ -3821,7 +3662,6 @@
                     android:id="@+id/setBrakesPickup"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setPayload"
                     android:layout_alignStart="@+id/setPayload"
                     android:layout_alignTop="@+id/BrakesPickup"
                     android:text="@string/app_name"
@@ -3849,7 +3689,6 @@
                     android:id="@+id/setFrontAxleSuspension"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setBrakesPickup"
                     android:layout_alignStart="@+id/setBrakesPickup"
                     android:layout_alignTop="@+id/FrontAxleSuspension"
                     android:text="@string/app_name"
@@ -3877,7 +3716,6 @@
                     android:id="@+id/setRearAxleSuspension"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setFrontAxleSuspension"
                     android:layout_alignStart="@+id/setFrontAxleSuspension"
                     android:layout_alignTop="@+id/RearAxleSuspension"
                     android:text="@string/app_name"
@@ -3905,7 +3743,6 @@
                     android:id="@+id/setLoadBodyDimensions"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setRearAxleSuspension"
                     android:layout_alignStart="@+id/setRearAxleSuspension"
                     android:layout_alignTop="@+id/LoadBodyDimensions"
                     android:text="@string/app_name"
@@ -3956,7 +3793,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:layout_toRightOf="@+id/view14"
+                android:layout_toEndOf="@+id/view14"
                 android:text="@string/app_name"
                 android:textColor="#2C3343" />
 
@@ -3983,7 +3820,6 @@
                 android:id="@+id/setDisplacementCv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/setEngineCv"
                 android:layout_alignStart="@+id/setEngineCv"
                 android:layout_alignTop="@+id/DisplacementCv"
                 android:text="@string/app_name"
@@ -4011,7 +3847,6 @@
                 android:id="@+id/setMaxPowerCv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/setDisplacementCv"
                 android:layout_alignStart="@+id/setDisplacementCv"
                 android:layout_alignTop="@+id/MaxPowerCv"
                 android:text="@string/app_name"
@@ -4039,7 +3874,6 @@
                 android:id="@+id/setMaxTorqueCv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/setMaxPowerCv"
                 android:layout_alignStart="@+id/setMaxPowerCv"
                 android:layout_alignTop="@+id/MaxTorqueCv"
                 android:text="@string/app_name"
@@ -4067,7 +3901,6 @@
                 android:id="@+id/setTransmissionCv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/setMaxTorqueCv"
                 android:layout_alignStart="@+id/setMaxTorqueCv"
                 android:layout_alignTop="@+id/TransmissionCv"
                 android:text="@string/app_name"
@@ -4095,7 +3928,6 @@
                 android:id="@+id/setClutchCv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/setTransmissionCv"
                 android:layout_alignStart="@+id/setTransmissionCv"
                 android:layout_alignTop="@+id/ClutchCv"
                 android:text="@string/app_name"
@@ -4123,7 +3955,6 @@
                 android:id="@+id/setGearboxCv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/setClutchCv"
                 android:layout_alignStart="@+id/setClutchCv"
                 android:layout_alignTop="@+id/GearboxCv"
                 android:text="@string/app_name"
@@ -4151,7 +3982,6 @@
                 android:id="@+id/setFuelCv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/setGearboxCv"
                 android:layout_alignStart="@+id/setGearboxCv"
                 android:layout_alignTop="@+id/FuelCv"
                 android:text="@string/app_name"
@@ -4179,7 +4009,6 @@
                 android:id="@+id/setFuelTankCv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/setFuelCv"
                 android:layout_alignStart="@+id/setFuelCv"
                 android:layout_alignTop="@+id/FuelTankCv"
                 android:text="@string/app_name"
@@ -4207,7 +4036,6 @@
                 android:id="@+id/setGradeabilityCv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/setFuelTankCv"
                 android:layout_alignStart="@+id/setFuelTankCv"
                 android:layout_alignTop="@+id/GradeabilityCv"
                 android:text="@string/app_name"
@@ -4235,7 +4063,6 @@
                 android:id="@+id/setTurningRadiusCv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/setGradeabilityCv"
                 android:layout_alignStart="@+id/setGradeabilityCv"
                 android:layout_alignTop="@+id/TurningRadiusCv"
                 android:text="@string/app_name"
@@ -4263,7 +4090,6 @@
                 android:id="@+id/setMaxSpeedCv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/setTurningRadiusCv"
                 android:layout_alignStart="@+id/setTurningRadiusCv"
                 android:layout_alignTop="@+id/MaxSpeedCv"
                 android:text="@string/app_name"
@@ -4291,7 +4117,6 @@
                 android:id="@+id/setAxleConfigurationCv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/setMaxSpeedCv"
                 android:layout_alignStart="@+id/setMaxSpeedCv"
                 android:layout_alignTop="@+id/AxleConfigurationCv"
                 android:text="@string/app_name"
@@ -4319,7 +4144,6 @@
                 android:id="@+id/setTyresCv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/setAxleConfigurationCv"
                 android:layout_alignStart="@+id/setAxleConfigurationCv"
                 android:layout_alignTop="@+id/TyresCv"
                 android:text="@string/app_name"
@@ -4347,7 +4171,6 @@
                 android:id="@+id/setWheelbaseCv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/setTyresCv"
                 android:layout_alignStart="@+id/setTyresCv"
                 android:layout_alignTop="@+id/WheelbaseCv"
                 android:text="@string/app_name"
@@ -4375,7 +4198,6 @@
                 android:id="@+id/setGroundClearanceCv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/setWheelbaseCv"
                 android:layout_alignStart="@+id/setWheelbaseCv"
                 android:layout_alignTop="@+id/GroundClearanceCv"
                 android:text="@string/app_name"
@@ -4404,7 +4226,6 @@
                 android:id="@+id/setGVWGCWCv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/setGroundClearanceCv"
                 android:layout_alignStart="@+id/setGroundClearanceCv"
                 android:layout_alignTop="@+id/GVWGCWCv"
                 android:text="@string/app_name"
@@ -4432,7 +4253,6 @@
                 android:id="@+id/setKerbWeightCv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/setGVWGCWCv"
                 android:layout_alignStart="@+id/setGVWGCWCv"
                 android:layout_alignTop="@+id/KerbWeightCv"
                 android:text="@string/app_name"
@@ -4460,7 +4280,6 @@
                 android:id="@+id/setBrakesCv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/setKerbWeightCv"
                 android:layout_alignStart="@+id/setKerbWeightCv"
                 android:layout_alignTop="@+id/BrakesCv"
                 android:text="@string/app_name"
@@ -4488,7 +4307,6 @@
                 android:id="@+id/setFrontAxleSuspensionCv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/setBrakesCv"
                 android:layout_alignStart="@+id/setBrakesCv"
                 android:layout_alignTop="@+id/FrontAxleSuspensionCv"
                 android:text="@string/app_name"
@@ -4516,7 +4334,6 @@
                 android:id="@+id/setRearAxleSuspensionCv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/setFrontAxleSuspensionCv"
                 android:layout_alignStart="@+id/setFrontAxleSuspensionCv"
                 android:layout_alignTop="@+id/RearAxleSuspensionCv"
                 android:text="@string/app_name"
@@ -4544,7 +4361,6 @@
                 android:id="@+id/setBodyOptionsCv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/setRearAxleSuspensionCv"
                 android:layout_alignStart="@+id/setRearAxleSuspensionCv"
                 android:layout_alignTop="@+id/RearAxleSuspensionCv"
                 android:text="@string/app_name"
@@ -4620,7 +4436,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:layout_toRightOf="@+id/view13"
+                    android:layout_toEndOf="@+id/view13"
                     android:text="@string/app_name"
                     android:textColor="#2C3343" />
 
@@ -4647,7 +4463,6 @@
                     android:id="@+id/setEmissionNormsbus"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setDescriptionbus"
                     android:layout_alignStart="@+id/setDescriptionbus"
                     android:layout_alignTop="@+id/EmissionNormsbus"
                     android:text="@string/app_name"
@@ -4675,7 +4490,6 @@
                     android:id="@+id/setDisplacementbus"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setEmissionNormsbus"
                     android:layout_alignStart="@+id/setEmissionNormsbus"
                     android:layout_alignTop="@+id/Displacementbus"
                     android:text="@string/app_name"
@@ -4703,7 +4517,6 @@
                     android:id="@+id/setMaxPowerbus"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setDisplacementbus"
                     android:layout_alignStart="@+id/setDisplacementbus"
                     android:layout_alignTop="@+id/MaxPowerbus"
                     android:text="@string/app_name"
@@ -4731,7 +4544,6 @@
                     android:id="@+id/setMaxTorquebus"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setMaxPowerbus"
                     android:layout_alignStart="@+id/setMaxPowerbus"
                     android:layout_alignTop="@+id/MaxTorquebus"
                     android:text="@string/app_name"
@@ -4759,7 +4571,6 @@
                     android:id="@+id/setTransmissionbus"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setMaxTorquebus"
                     android:layout_alignStart="@+id/setMaxTorquebus"
                     android:layout_alignTop="@+id/Transmissionbus"
                     android:text="@string/app_name"
@@ -4787,7 +4598,6 @@
                     android:id="@+id/setClutchbus"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setTransmissionbus"
                     android:layout_alignStart="@+id/setTransmissionbus"
                     android:layout_alignTop="@+id/Clutchbus"
                     android:text="@string/app_name"
@@ -4815,7 +4625,6 @@
                     android:id="@+id/setGearboxbus"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setClutchbus"
                     android:layout_alignStart="@+id/setClutchbus"
                     android:layout_alignTop="@+id/Gearboxbus"
                     android:text="@string/app_name"
@@ -4843,7 +4652,6 @@
                     android:id="@+id/setFuelbus"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setGearboxbus"
                     android:layout_alignStart="@+id/setGearboxbus"
                     android:layout_alignTop="@+id/Fuelbus"
                     android:text="@string/app_name"
@@ -4871,7 +4679,6 @@
                     android:id="@+id/setFuelTankbus"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setFuelbus"
                     android:layout_alignStart="@+id/setFuelbus"
                     android:layout_alignTop="@+id/FuelTankbus"
                     android:text="@string/app_name"
@@ -4899,7 +4706,6 @@
                     android:id="@+id/setTurningRadiusbus"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setFuelTankbus"
                     android:layout_alignStart="@+id/setFuelTankbus"
                     android:layout_alignTop="@+id/TurningRadiusbus"
                     android:text="@string/app_name"
@@ -4927,7 +4733,6 @@
                     android:id="@+id/setMaxSpeedbus"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setTurningRadiusbus"
                     android:layout_alignStart="@+id/setTurningRadiusbus"
                     android:layout_alignTop="@+id/MaxSpeedbus"
                     android:text="@string/app_name"
@@ -4955,7 +4760,6 @@
                     android:id="@+id/setEngineLocationbus"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setMaxSpeedbus"
                     android:layout_alignStart="@+id/setMaxSpeedbus"
                     android:layout_alignTop="@+id/EngineLocationbus"
                     android:text="@string/app_name"
@@ -4983,7 +4787,6 @@
                     android:id="@+id/setFloorTypebus"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setEngineLocationbus"
                     android:layout_alignStart="@+id/setEngineLocationbus"
                     android:layout_alignTop="@+id/FloorTypebus"
                     android:text="@string/app_name"
@@ -5011,7 +4814,6 @@
                     android:id="@+id/setAxleConfigurationbus"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setFloorTypebus"
                     android:layout_alignStart="@+id/setFloorTypebus"
                     android:layout_alignTop="@+id/AxleConfigurationbus"
                     android:text="@string/app_name"
@@ -5039,7 +4841,6 @@
                     android:id="@+id/setTyresbus"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setAxleConfigurationbus"
                     android:layout_alignStart="@+id/setAxleConfigurationbus"
                     android:layout_alignTop="@+id/Tyresbus"
                     android:text="@string/app_name"
@@ -5067,7 +4868,6 @@
                     android:id="@+id/setWheelbasebus"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setTyresbus"
                     android:layout_alignStart="@+id/setTyresbus"
                     android:layout_alignTop="@+id/Wheelbasebus"
                     android:text="@string/app_name"
@@ -5095,7 +4895,6 @@
                     android:id="@+id/setOverallLengthbus"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setWheelbasebus"
                     android:layout_alignStart="@+id/setWheelbasebus"
                     android:layout_alignTop="@+id/OverallLengthbus"
                     android:text="@string/app_name"
@@ -5123,7 +4922,6 @@
                     android:id="@+id/setGroundClearancebus"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setOverallLengthbus"
                     android:layout_alignStart="@+id/setOverallLengthbus"
                     android:layout_alignTop="@+id/GroundClearancebus"
                     android:text="@string/app_name"
@@ -5151,7 +4949,6 @@
                     android:id="@+id/setGVWGCWbus"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setGroundClearancebus"
                     android:layout_alignStart="@+id/setGroundClearancebus"
                     android:layout_alignTop="@+id/GVWGCWbus"
                     android:text="@string/app_name"
@@ -5179,7 +4976,6 @@
                     android:id="@+id/setBrakesbus"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setGVWGCWbus"
                     android:layout_alignStart="@+id/setGVWGCWbus"
                     android:layout_alignTop="@+id/Brakesbus"
                     android:text="@string/app_name"
@@ -5207,7 +5003,6 @@
                     android:id="@+id/setFrontAxleSuspensionbus"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setBrakesbus"
                     android:layout_alignStart="@+id/setBrakesbus"
                     android:layout_alignTop="@+id/FrontAxleSuspensionbus"
                     android:text="@string/app_name"
@@ -5236,7 +5031,6 @@
                     android:id="@+id/setRearAxleSuspensionbus"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setFrontAxleSuspensionbus"
                     android:layout_alignStart="@+id/setFrontAxleSuspensionbus"
                     android:layout_alignTop="@+id/RearAxleSuspensionbus"
                     android:text="@string/app_name"
@@ -5264,7 +5058,6 @@
                     android:id="@+id/setNoofSeatsbus"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setRearAxleSuspensionbus"
                     android:layout_alignStart="@+id/setRearAxleSuspensionbus"
                     android:layout_alignTop="@+id/NoofSeatsbus"
                     android:text="@string/app_name"
@@ -5292,7 +5085,6 @@
                     android:id="@+id/setSeatTypebus"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setNoofSeatsbus"
                     android:layout_alignStart="@+id/setNoofSeatsbus"
                     android:layout_alignTop="@+id/SeatTypebus"
                     android:text="@string/app_name"
@@ -5320,7 +5112,6 @@
                     android:id="@+id/setAdditionalinformationbus"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setSeatTypebus"
                     android:layout_alignStart="@+id/setSeatTypebus"
                     android:layout_alignTop="@+id/Additionalinformationbus"
                     android:text="@string/app_name"
@@ -5397,7 +5188,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:layout_toRightOf="@+id/view15"
+                    android:layout_toEndOf="@+id/view15"
                     android:text="@string/app_name"
                     android:textColor="#2C3343" />
 
@@ -5424,7 +5215,6 @@
                     android:id="@+id/setNoofCylindersSCV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setDescriptionSCV"
                     android:layout_alignStart="@+id/setDescriptionSCV"
                     android:layout_alignTop="@+id/NoofCylindersSCV"
                     android:text="@string/app_name"
@@ -5452,7 +5242,6 @@
                     android:id="@+id/setDisplacementSCV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setNoofCylindersSCV"
                     android:layout_alignStart="@+id/setNoofCylindersSCV"
                     android:layout_alignTop="@+id/DisplacementSCV"
                     android:text="@string/app_name"
@@ -5480,7 +5269,6 @@
                     android:id="@+id/setMaxPowerSCV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setDisplacementSCV"
                     android:layout_alignStart="@+id/setDisplacementSCV"
                     android:layout_alignTop="@+id/MaxPowerSCV"
                     android:text="@string/app_name"
@@ -5508,7 +5296,6 @@
                     android:id="@+id/setMaxTorqueSCV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setMaxPowerSCV"
                     android:layout_alignStart="@+id/setMaxPowerSCV"
                     android:layout_alignTop="@+id/MaxTorqueSCV"
                     android:text="@string/app_name"
@@ -5536,7 +5323,6 @@
                     android:id="@+id/setTransmissionSCV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setMaxTorqueSCV"
                     android:layout_alignStart="@+id/setMaxTorqueSCV"
                     android:layout_alignTop="@+id/TransmissionSCV"
                     android:text="@string/app_name"
@@ -5564,7 +5350,6 @@
                     android:id="@+id/setClutchSCV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setTransmissionSCV"
                     android:layout_alignStart="@+id/setTransmissionSCV"
                     android:layout_alignTop="@+id/ClutchSCV"
                     android:text="@string/app_name"
@@ -5592,7 +5377,6 @@
                     android:id="@+id/setGearboxSCV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setClutchSCV"
                     android:layout_alignStart="@+id/setClutchSCV"
                     android:layout_alignTop="@+id/GearboxSCV"
                     android:text="@string/app_name"
@@ -5620,7 +5404,6 @@
                     android:id="@+id/setFuelSCV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setGearboxSCV"
                     android:layout_alignStart="@+id/setGearboxSCV"
                     android:layout_alignTop="@+id/FuelSCV"
                     android:text="@string/app_name"
@@ -5648,7 +5431,6 @@
                     android:id="@+id/setFuelTankSCV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setFuelSCV"
                     android:layout_alignStart="@+id/setFuelSCV"
                     android:layout_alignTop="@+id/FuelTankSCV"
                     android:text="@string/app_name"
@@ -5676,7 +5458,6 @@
                     android:id="@+id/setGradeabilitySCV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setFuelTankSCV"
                     android:layout_alignStart="@+id/setFuelTankSCV"
                     android:layout_alignTop="@+id/GradeabilitySCV"
                     android:text="@string/app_name"
@@ -5704,7 +5485,6 @@
                     android:id="@+id/setTurningRadiusSCV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setGradeabilitySCV"
                     android:layout_alignStart="@+id/setGradeabilitySCV"
                     android:layout_alignTop="@+id/TurningRadiusSCV"
                     android:text="@string/app_name"
@@ -5732,7 +5512,6 @@
                     android:id="@+id/setMaxSpeedSCV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setTurningRadiusSCV"
                     android:layout_alignStart="@+id/setTurningRadiusSCV"
                     android:layout_alignTop="@+id/MaxSpeedSCV"
                     android:text="@string/app_name"
@@ -5760,7 +5539,6 @@
                     android:id="@+id/setAxleConfigurationSCV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setMaxSpeedSCV"
                     android:layout_alignStart="@+id/setMaxSpeedSCV"
                     android:layout_alignTop="@+id/AxleConfigurationSCV"
                     android:text="@string/app_name"
@@ -5788,7 +5566,6 @@
                     android:id="@+id/setTyresSCV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setAxleConfigurationSCV"
                     android:layout_alignStart="@+id/setAxleConfigurationSCV"
                     android:layout_alignTop="@+id/TyresSCV"
                     android:text="@string/app_name"
@@ -5816,7 +5593,6 @@
                     android:id="@+id/setWheelbaseSCV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setTyresSCV"
                     android:layout_alignStart="@+id/setTyresSCV"
                     android:layout_alignTop="@+id/WheelbaseSCV"
                     android:text="@string/app_name"
@@ -5844,7 +5620,6 @@
                     android:id="@+id/setGroundClearanceSCV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setWheelbaseSCV"
                     android:layout_alignStart="@+id/setWheelbaseSCV"
                     android:layout_alignTop="@+id/GroundClearanceSCV"
                     android:text="@string/app_name"
@@ -5872,7 +5647,6 @@
                     android:id="@+id/setGVWGCWSCV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setGroundClearanceSCV"
                     android:layout_alignStart="@+id/setGroundClearanceSCV"
                     android:layout_alignTop="@+id/GVWGCWSCV"
                     android:text="@string/app_name"
@@ -5900,7 +5674,6 @@
                     android:id="@+id/setKerbWeightSCV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setGVWGCWSCV"
                     android:layout_alignStart="@+id/setGVWGCWSCV"
                     android:layout_alignTop="@+id/KerbWeightSCV"
                     android:text="@string/app_name"
@@ -5928,7 +5701,6 @@
                     android:id="@+id/setPayloadSCV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setKerbWeightSCV"
                     android:layout_alignStart="@+id/setKerbWeightSCV"
                     android:layout_alignTop="@+id/PayloadSCV"
                     android:text="@string/app_name"
@@ -5956,7 +5728,6 @@
                     android:id="@+id/setBrakesSCV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setPayloadSCV"
                     android:layout_alignStart="@+id/setPayloadSCV"
                     android:layout_alignTop="@+id/BrakesSCV"
                     android:text="@string/app_name"
@@ -5984,7 +5755,6 @@
                     android:id="@+id/setFrontAxleSuspensionSCV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setBrakesSCV"
                     android:layout_alignStart="@+id/setBrakesSCV"
                     android:layout_alignTop="@+id/FrontAxleSuspensionSCV"
                     android:text="@string/app_name"
@@ -6012,7 +5782,6 @@
                     android:id="@+id/setRearAxlesuspensionSCV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setFrontAxleSuspensionSCV"
                     android:layout_alignStart="@+id/setFrontAxleSuspensionSCV"
                     android:layout_alignTop="@+id/RearAxlesuspensionSCV"
                     android:text="@string/app_name"
@@ -6040,7 +5809,6 @@
                     android:id="@+id/setBodyOptionSCV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setRearAxlesuspensionSCV"
                     android:layout_alignStart="@+id/setRearAxlesuspensionSCV"
                     android:layout_alignTop="@+id/BodyOptionSCV"
                     android:text="@string/app_name"
@@ -6068,7 +5836,6 @@
                     android:id="@+id/setAdditionalInformationSCV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setBodyOptionSCV"
                     android:layout_alignStart="@+id/setBodyOptionSCV"
                     android:layout_alignTop="@+id/AdditionalInformationSCV"
                     android:text="@string/app_name"
@@ -6146,7 +5913,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:layout_toRightOf="@+id/view16"
+                    android:layout_toEndOf="@+id/view16"
                     android:text="@string/app_name"
                     android:textColor="#2C3343" />
 
@@ -6173,7 +5940,6 @@
                     android:id="@+id/setDisplacementTipper"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setEngineTipper"
                     android:layout_alignStart="@+id/setEngineTipper"
                     android:layout_alignTop="@+id/DisplacementTipper"
                     android:text="@string/app_name"
@@ -6201,7 +5967,6 @@
                     android:id="@+id/setMaxPowerTipper"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setDisplacementTipper"
                     android:layout_alignStart="@+id/setDisplacementTipper"
                     android:layout_alignTop="@+id/MaxPowerTipper"
                     android:text="@string/app_name"
@@ -6229,7 +5994,6 @@
                     android:id="@+id/setMaxTorqueTipper"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setMaxPowerTipper"
                     android:layout_alignStart="@+id/setMaxPowerTipper"
                     android:layout_alignTop="@+id/MaxTorqueTipper"
                     android:text="@string/app_name"
@@ -6257,7 +6021,6 @@
                     android:id="@+id/setTransmissionTipper"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setMaxTorqueTipper"
                     android:layout_alignStart="@+id/setMaxTorqueTipper"
                     android:layout_alignTop="@+id/TransmissionTipper"
                     android:text="@string/app_name"
@@ -6285,7 +6048,6 @@
                     android:id="@+id/setClutchTipper"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setTransmissionTipper"
                     android:layout_alignStart="@+id/setTransmissionTipper"
                     android:layout_alignTop="@+id/ClutchTipper"
                     android:text="@string/app_name"
@@ -6313,7 +6075,6 @@
                     android:id="@+id/setGearboxTipper"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setClutchTipper"
                     android:layout_alignStart="@+id/setClutchTipper"
                     android:layout_alignTop="@+id/GearboxTipper"
                     android:text="@string/app_name"
@@ -6341,7 +6102,6 @@
                     android:id="@+id/setFuelTipper"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setGearboxTipper"
                     android:layout_alignStart="@+id/setGearboxTipper"
                     android:layout_alignTop="@+id/FuelTipper"
                     android:text="@string/app_name"
@@ -6369,7 +6129,6 @@
                     android:id="@+id/setFuelTankTipper"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setFuelTipper"
                     android:layout_alignStart="@+id/setFuelTipper"
                     android:layout_alignTop="@+id/FuelTankTipper"
                     android:text="@string/app_name"
@@ -6397,7 +6156,6 @@
                     android:id="@+id/setGradeabilityTipper"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setFuelTankTipper"
                     android:layout_alignStart="@+id/setFuelTankTipper"
                     android:layout_alignTop="@+id/GradeabilityTipper"
                     android:text="@string/app_name"
@@ -6425,7 +6183,6 @@
                     android:id="@+id/setTurningRadiusTipper"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setGradeabilityTipper"
                     android:layout_alignStart="@+id/setGradeabilityTipper"
                     android:layout_alignTop="@+id/TurningRadiusTipper"
                     android:text="@string/app_name"
@@ -6453,7 +6210,6 @@
                     android:id="@+id/setAxleConfigurationTipper"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setTurningRadiusTipper"
                     android:layout_alignStart="@+id/setTurningRadiusTipper"
                     android:layout_alignTop="@+id/AxleConfigurationTipper"
                     android:text="@string/app_name"
@@ -6481,7 +6237,6 @@
                     android:id="@+id/setTyresTipper"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setAxleConfigurationTipper"
                     android:layout_alignStart="@+id/setAxleConfigurationTipper"
                     android:layout_alignTop="@+id/TyresTipper"
                     android:text="@string/app_name"
@@ -6509,7 +6264,6 @@
                     android:id="@+id/setWheelbaseTipper"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setTyresTipper"
                     android:layout_alignStart="@+id/setTyresTipper"
                     android:layout_alignTop="@+id/WheelbaseTipper"
                     android:text="@string/app_name"
@@ -6537,7 +6291,6 @@
                     android:id="@+id/setGroundClearanceTipper"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setWheelbaseTipper"
                     android:layout_alignStart="@+id/setWheelbaseTipper"
                     android:layout_alignTop="@+id/GroundClearanceTipper"
                     android:text="@string/app_name"
@@ -6565,7 +6318,6 @@
                     android:id="@+id/setGVWGCWTipper"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setGroundClearanceTipper"
                     android:layout_alignStart="@+id/setGroundClearanceTipper"
                     android:layout_alignTop="@+id/GVWGCWTipper"
                     android:text="@string/app_name"
@@ -6593,7 +6345,6 @@
                     android:id="@+id/setPayloadTipper"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setGVWGCWTipper"
                     android:layout_alignStart="@+id/setGVWGCWTipper"
                     android:layout_alignTop="@+id/PayloadTipper"
                     android:text="@string/app_name"
@@ -6621,7 +6372,6 @@
                     android:id="@+id/setBrakesTipper"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setPayloadTipper"
                     android:layout_alignStart="@+id/setPayloadTipper"
                     android:layout_alignTop="@+id/BrakesTipper"
                     android:text="@string/app_name"
@@ -6649,7 +6399,6 @@
                     android:id="@+id/setFrontAxleSuspensionTipper"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setBrakesTipper"
                     android:layout_alignStart="@+id/setBrakesTipper"
                     android:layout_alignTop="@+id/FrontAxleSuspensionTipper"
                     android:text="@string/app_name"
@@ -6677,7 +6426,6 @@
                     android:id="@+id/setRearAxleSuspensionTipper"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setFrontAxleSuspensionTipper"
                     android:layout_alignStart="@+id/setFrontAxleSuspensionTipper"
                     android:layout_alignTop="@+id/RearAxleSuspensionTipper"
                     android:text="@string/app_name"
@@ -6705,7 +6453,6 @@
                     android:id="@+id/setBodyOptionsTipper"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setRearAxleSuspensionTipper"
                     android:layout_alignStart="@+id/setRearAxleSuspensionTipper"
                     android:layout_alignTop="@+id/BodyOptionsTipper"
                     android:text="@string/app_name"
@@ -6733,7 +6480,6 @@
                     android:id="@+id/setLoadbodyTipper"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setBodyOptionsTipper"
                     android:layout_alignStart="@+id/setBodyOptionsTipper"
                     android:layout_alignTop="@+id/LoadbodyTipper"
                     android:text="@string/app_name"
@@ -6810,7 +6556,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:layout_toRightOf="@+id/view17"
+                    android:layout_toEndOf="@+id/view17"
                     android:text="@string/app_name"
                     android:textColor="#2C3343" />
 
@@ -6837,7 +6583,6 @@
                     android:id="@+id/setNoofCylindersPt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setDescriptionPt"
                     android:layout_alignStart="@+id/setDescriptionPt"
                     android:layout_alignTop="@+id/NoofCylindersPt"
                     android:text="@string/app_name"
@@ -6865,7 +6610,6 @@
                     android:id="@+id/setDisplacementPt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setNoofCylindersPt"
                     android:layout_alignStart="@+id/setNoofCylindersPt"
                     android:layout_alignTop="@+id/DisplacementPt"
                     android:text="@string/app_name"
@@ -6893,7 +6637,6 @@
                     android:id="@+id/setMaxPowertPt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setDisplacementPt"
                     android:layout_alignStart="@+id/setDisplacementPt"
                     android:layout_alignTop="@+id/MaxPowertPt"
                     android:text="@string/app_name"
@@ -6921,7 +6664,6 @@
                     android:id="@+id/setMaxTorquePt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setMaxPowertPt"
                     android:layout_alignStart="@+id/setMaxPowertPt"
                     android:layout_alignTop="@+id/MaxTorquePt"
                     android:text="@string/app_name"
@@ -6949,7 +6691,6 @@
                     android:id="@+id/setTransmissionPt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setMaxTorquePt"
                     android:layout_alignStart="@+id/setMaxTorquePt"
                     android:layout_alignTop="@+id/TransmissionPt"
                     android:text="@string/app_name"
@@ -6977,7 +6718,6 @@
                     android:id="@+id/setClutchPt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setTransmissionPt"
                     android:layout_alignStart="@+id/setTransmissionPt"
                     android:layout_alignTop="@+id/ClutchPt"
                     android:text="@string/app_name"
@@ -7005,7 +6745,6 @@
                     android:id="@+id/setGearboxPt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setClutchPt"
                     android:layout_alignStart="@+id/setClutchPt"
                     android:layout_alignTop="@+id/GearboxPt"
                     android:text="@string/app_name"
@@ -7033,7 +6772,6 @@
                     android:id="@+id/setFuelPt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setGearboxPt"
                     android:layout_alignStart="@+id/setGearboxPt"
                     android:layout_alignTop="@+id/FuelPt"
                     android:text="@string/app_name"
@@ -7061,7 +6799,6 @@
                     android:id="@+id/setFuelTankPt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setFuelPt"
                     android:layout_alignStart="@+id/setFuelPt"
                     android:layout_alignTop="@+id/FuelTankPt"
                     android:text="@string/app_name"
@@ -7089,7 +6826,6 @@
                     android:id="@+id/setGradeabilityPt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setFuelTankPt"
                     android:layout_alignStart="@+id/setFuelTankPt"
                     android:layout_alignTop="@+id/GradeabilityPt"
                     android:text="@string/app_name"
@@ -7117,7 +6853,6 @@
                     android:id="@+id/setTurningRadiusPt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setGradeabilityPt"
                     android:layout_alignStart="@+id/setGradeabilityPt"
                     android:layout_alignTop="@+id/TurningRadiusPt"
                     android:text="@string/app_name"
@@ -7145,7 +6880,6 @@
                     android:id="@+id/setMaxSpeedPt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setTurningRadiusPt"
                     android:layout_alignStart="@+id/setTurningRadiusPt"
                     android:layout_alignTop="@+id/MaxSpeedPt"
                     android:text="@string/app_name"
@@ -7173,7 +6907,6 @@
                     android:id="@+id/setAxleConfigurationPt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setMaxSpeedPt"
                     android:layout_alignStart="@+id/setMaxSpeedPt"
                     android:layout_alignTop="@+id/AxleConfigurationPt"
                     android:text="@string/app_name"
@@ -7201,7 +6934,6 @@
                     android:id="@+id/setTyresPt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setAxleConfigurationPt"
                     android:layout_alignStart="@+id/setAxleConfigurationPt"
                     android:layout_alignTop="@+id/TyresPt"
                     android:text="@string/app_name"
@@ -7229,7 +6961,6 @@
                     android:id="@+id/setWheelbasePt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setTyresPt"
                     android:layout_alignStart="@+id/setTyresPt"
                     android:layout_alignTop="@+id/WheelbasePt"
                     android:text="@string/app_name"
@@ -7257,7 +6988,6 @@
                     android:id="@+id/setGroundClearancePt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setWheelbasePt"
                     android:layout_alignStart="@+id/setWheelbasePt"
                     android:layout_alignTop="@+id/GroundClearancePt"
                     android:text="@string/app_name"
@@ -7285,7 +7015,6 @@
                     android:id="@+id/setGVWGCWPt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setGroundClearancePt"
                     android:layout_alignStart="@+id/setGroundClearancePt"
                     android:layout_alignTop="@+id/GVWGCWPt"
                     android:text="@string/app_name"
@@ -7313,7 +7042,6 @@
                     android:id="@+id/setKerbWeightPt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setGVWGCWPt"
                     android:layout_alignStart="@+id/setGVWGCWPt"
                     android:layout_alignTop="@+id/KerbWeightPt"
                     android:text="@string/app_name"
@@ -7341,7 +7069,6 @@
                     android:id="@+id/setPayloadPt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setKerbWeightPt"
                     android:layout_alignStart="@+id/setKerbWeightPt"
                     android:layout_alignTop="@+id/PayloadPt"
                     android:text="@string/app_name"
@@ -7369,7 +7096,6 @@
                     android:id="@+id/setBrakesPt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setPayloadPt"
                     android:layout_alignStart="@+id/setPayloadPt"
                     android:layout_alignTop="@+id/BrakesPt"
                     android:text="@string/app_name"
@@ -7397,7 +7123,6 @@
                     android:id="@+id/setFrontAxleSuspensionPt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setBrakesPt"
                     android:layout_alignStart="@+id/setBrakesPt"
                     android:layout_alignTop="@+id/FrontAxleSuspensionPt"
                     android:text="@string/app_name"
@@ -7425,7 +7150,6 @@
                     android:id="@+id/setRearAxleSuspensionPt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setFrontAxleSuspensionPt"
                     android:layout_alignStart="@+id/setFrontAxleSuspensionPt"
                     android:layout_alignTop="@+id/RearAxleSuspensionPt"
                     android:text="@string/app_name"
@@ -7453,7 +7177,6 @@
                     android:id="@+id/setBodyOptionPt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/setRearAxleSuspensionPt"
                     android:layout_alignStart="@+id/setRearAxleSuspensionPt"
                     android:layout_alignTop="@+id/BodyOptionPt"
                     android:text="@string/app_name"

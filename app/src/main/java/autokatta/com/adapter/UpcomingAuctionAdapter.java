@@ -7,11 +7,13 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -34,12 +36,13 @@ import autokatta.com.view.ShareWithinAppActivity;
 public class UpcomingAuctionAdapter extends RecyclerView.Adapter<UpcomingAuctionAdapter.AuctionHolder> {
     Activity activity;
     List<MyUpcomingAuctionResponse.Success.Auction> mMainlist = new ArrayList<>();
-    private String allDetails, spcl;
+    private String mLoginContact = "";
 
-    public UpcomingAuctionAdapter(Activity activity, List<MyUpcomingAuctionResponse.Success.Auction> itemlist) {
-        this.activity = activity;
+    public UpcomingAuctionAdapter(Activity activity1, List<MyUpcomingAuctionResponse.Success.Auction> itemlist) {
+        this.activity = activity1;
         this.mMainlist = itemlist;
-
+        mLoginContact = activity.getSharedPreferences(activity.getString(R.string.my_preference), Context.MODE_PRIVATE).
+                getString("loginContact", "");
     }
 
     @Override
@@ -49,7 +52,7 @@ public class UpcomingAuctionAdapter extends RecyclerView.Adapter<UpcomingAuction
     }
 
     @Override
-    public void onBindViewHolder(final UpcomingAuctionAdapter.AuctionHolder holder, final int position) {
+    public void onBindViewHolder(final UpcomingAuctionAdapter.AuctionHolder holder, int position) {
 
 
         holder.action_title.setText(mMainlist.get(position).getActionTitle());
@@ -65,14 +68,14 @@ public class UpcomingAuctionAdapter extends RecyclerView.Adapter<UpcomingAuction
             public void onClick(View v) {
 
                 Bundle b = new Bundle();
-                b.putInt("auction_id", mMainlist.get(position).getAuctionId());
-                b.putString("actiontitle", mMainlist.get(position).getActionTitle());
-                b.putString("auctionvehicle", mMainlist.get(position).getNoOfVehicle());
-                b.putString("auctionstartdate", mMainlist.get(position).getStartDate());
-                b.putString("auctionstarttime", mMainlist.get(position).getStartTime());
-                b.putString("auctionenddate", mMainlist.get(position).getEndDate());
-                b.putString("auctionendtime", mMainlist.get(position).getEndTime());
-                b.putString("participants", mMainlist.get(position).getGoingcount());
+                b.putInt("auction_id", mMainlist.get(holder.getAdapterPosition()).getAuctionId());
+                b.putString("actiontitle", mMainlist.get(holder.getAdapterPosition()).getActionTitle());
+                b.putString("auctionvehicle", mMainlist.get(holder.getAdapterPosition()).getNoOfVehicle());
+                b.putString("auctionstartdate", mMainlist.get(holder.getAdapterPosition()).getStartDate());
+                b.putString("auctionstarttime", mMainlist.get(holder.getAdapterPosition()).getStartTime());
+                b.putString("auctionenddate", mMainlist.get(holder.getAdapterPosition()).getEndDate());
+                b.putString("auctionendtime", mMainlist.get(holder.getAdapterPosition()).getEndTime());
+                b.putString("participants", mMainlist.get(holder.getAdapterPosition()).getGoingcount());
 
 
 //                ActiveAuctionPreview fr = new ActiveAuctionPreview();
@@ -88,130 +91,73 @@ public class UpcomingAuctionAdapter extends RecyclerView.Adapter<UpcomingAuction
 
 
         holder.relativeshare.setOnClickListener(new View.OnClickListener() {
-
+            String imageFilePath = "", imagename;
             Intent intent = new Intent(Intent.ACTION_SEND);
-            String imageFilePath;
-
-            @Override
-            public void onClick(View view) {
-
-                allDetails = mMainlist.get(position).getActionTitle() + "="
-                        + mMainlist.get(position).getNoOfVehicle() + "="
-                        + mMainlist.get(position).getEndDate() + "=" +
-                        mMainlist.get(position).getEndTime() + "=" +
-                        mMainlist.get(position).getAuctionType() + "=" +
-                        "0" + "=" + "0" + "=" + "a";
-                String mAuction = "auction";
-
-
-                activity.getSharedPreferences(activity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                        putString("Share_sharedata", allDetails).apply();
-                activity.getSharedPreferences(activity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                        putInt("Share_auction_id", mMainlist.get(position).getAuctionId()).apply();
-                activity.getSharedPreferences(activity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                        putString("Share_keyword", mAuction).apply();
-
-                activity.startActivity(new Intent(activity, ShareWithinAppActivity.class));
-                activity.finish();
-
-            }
-        });
-
-        holder.btnshare.setOnClickListener(new View.OnClickListener() {
-
-            Intent intent = new Intent(Intent.ACTION_SEND);
-            String imageFilePath;
 
             @Override
             public void onClick(View v) {
+                PopupMenu mPopupMenu = new PopupMenu(activity, holder.relativeshare);
+                mPopupMenu.getMenuInflater().inflate(R.menu.more_menu, mPopupMenu.getMenu());
+                mPopupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        switch (item.getItemId()) {
+                            case R.id.autokatta:
+                                String allVehicleDetails = holder.action_title.getText().toString() + "=" +
+                                        holder.auction_vehicle.getText().toString() + "=" +
+                                        holder.auction_enddate.getText().toString() + "=" +
+                                        holder.auction_endtime.getText().toString() + "=" +
+                                        mMainlist.get(holder.getAdapterPosition()).getAuctionType() + "=" +
+                                        mMainlist.get(holder.getAdapterPosition()).getGoingcount() + "=" +
+                                        "0" + "=" +
+                                        "myauction";
+                                System.out.println("all auction detailssss======Auto " + allVehicleDetails);
+
+                                activity.getSharedPreferences(activity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                                        putString("Share_sharedata", allVehicleDetails).apply();
+                                activity.getSharedPreferences(activity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                                        putInt("Share_auction_id", mMainlist.get(holder.getAdapterPosition()).getAuctionId()).apply();
+                                activity.getSharedPreferences(activity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                                        putString("Share_keyword", "auction").apply();
 
 
-                allDetails = mMainlist.get(position).getActionTitle() + "="
-                        + mMainlist.get(position).getNoOfVehicle() + "="
-                        + mMainlist.get(position).getEndDate() + "=" +
-                        mMainlist.get(position).getEndTime() + "=" +
-                        mMainlist.get(position).getAuctionType() + "=" +
-                        "0" + "=" + "0" + "=" + "a";
-                String mAuction = "auction";
+                                Intent i = new Intent(activity, ShareWithinAppActivity.class);
+                                activity.startActivity(i);
+                                break;
 
+                            case R.id.other:
+                                String allVehicleDetailss = "Auction Title : " + holder.action_title.getText().toString() + "\n" +
+                                        "No.of Vehicles : " + holder.auction_vehicle.getText().toString() + "\n" +
+                                        "Auction End Date : " + holder.auction_enddate.getText().toString() + "\n" +
+                                        "Auction End Time : " + holder.auction_endtime.getText().toString() + "\n" +
+                                        "Auction Type : " + mMainlist.get(holder.getAdapterPosition()).getAuctionType() + "\n" +
+                                        "Auction Going Count : " + mMainlist.get(holder.getAdapterPosition()).getGoingcount() + "\n" +
+                                        "Auction Ignore Count : " + "0";
 
-                activity.getSharedPreferences(activity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                        putString("Share_sharedata", allDetails).apply();
-                activity.getSharedPreferences(activity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                        putInt("Share_auction_id", mMainlist.get(position).getAuctionId()).apply();
-                activity.getSharedPreferences(activity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                        putString("Share_keyword", mAuction).apply();
-
-                System.out.println("Share Image \n");
-
-                intent.setType("text/plain");
-
-                intent.putExtra(Intent.EXTRA_SUBJECT, "Please Find Below Attachments");
-                intent.putExtra(Intent.EXTRA_TEXT, allDetails);
-
-                activity.startActivity(intent);
-
-
+                                intent.setType("text/plain");
+                                intent.putExtra(Intent.EXTRA_TEXT, "Please visit and Follow my vehicle on Autokatta. Stay connected for Product and Service updates and enquiries"
+                                        + "\n" + "http://autokatta.com/vehicle/main/" + mMainlist.get(holder.getAdapterPosition()).getAuctionId() + "/" + mLoginContact
+                                        + "\n" + "\n" + allVehicleDetailss);
+//                                intent.setType("image/jpeg");
+//                                intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(imageFilePath)));
+                                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                                intent.putExtra(Intent.EXTRA_SUBJECT, "Please Find Below Attachments");
+                                activity.startActivity(Intent.createChooser(intent, "Autokatta"));
+                                break;
+                        }
+                        return false;
+                    }
+                });
+                mPopupMenu.show();
             }
         });
 
 
-        spcl = mMainlist.get(position).getSpecialClauses().replaceAll(",", "\n");
+        String spcl = mMainlist.get(position).getSpecialClauses().replaceAll(",", "\n");
         Log.i("ooo", "" + spcl);
         holder.btnclause.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                /*final android.app.AlertDialog.Builder alertDialog = new android.app.AlertDialog.Builder(activity);
-                alertDialog.setTitle("Special Clauses");
-
-                final TextView input = new TextView(activity);
-                input.setText(spcl);
-
-                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.MATCH_PARENT,
-                        LinearLayout.LayoutParams.WRAP_CONTENT);
-                lp.setMarginStart(30);
-                input.setBackgroundColor(Color.LTGRAY);
-                input.setLayoutParams(lp);
-                input.setPadding(40, 40, 40, 40);
-                input.setGravity(Gravity.CENTER_VERTICAL);
-                input.setTextColor(Color.parseColor("#110359"));
-                input.setTextSize(20);
-
-                alertDialog.setView(input);
-
-                // alertDialog.setIcon(R.drawable.key);
-
-                alertDialog.setNeutralButton("cancel",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.cancel();
-                            }
-                        });
-
-                alertDialog.show();*/
-
-                /*Log.i("ooo",""+spcl);
-
-                LayoutInflater inflater= LayoutInflater.from(activity);
-                View view=inflater.inflate(R.layout.yo, null);
-
-                TextView textview=(TextView)view.findViewById(R.id.textmsg);
-                textview.setText(spcl);
-                AlertDialog.Builder alertDialog1 = new AlertDialog.Builder(activity);
-                alertDialog1.setTitle("Special Clauses");
-//alertDialog.setMessage("Here is a really long message.");
-                alertDialog1.setView(view);
-                //alertDialog1.setButton("OK", null);
-                alertDialog1.setNeutralButton("cancel",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.cancel();
-                            }
-                        });
-                AlertDialog alert1 = alertDialog1.create();
-                alert1.show();*/
 
                 AlertDialog dialog = new AlertDialog.Builder(activity)
                         .setTitle("Special Clauses")
@@ -261,7 +207,7 @@ public class UpcomingAuctionAdapter extends RecyclerView.Adapter<UpcomingAuction
         TextView action_title, auction_vehicle, auction_enddate, auction_endtime, auction_startdate,
                 auction_starttime;
         TextView timer;
-        Button preview, btnshare, btnshare1, btnclause;
+        Button preview, btnclause;
         RelativeLayout relativeshare, relativeLayout;
 
         AuctionHolder(View view) {
@@ -273,9 +219,6 @@ public class UpcomingAuctionAdapter extends RecyclerView.Adapter<UpcomingAuction
             auction_startdate = (TextView) view.findViewById(R.id.datetime1);
             auction_starttime = (TextView) view.findViewById(R.id.editTime);
             preview = (Button) view.findViewById(R.id.button);
-            //holder.btngoing=(Button)convertView.findViewById(R.id.going);
-            btnshare = (Button) view.findViewById(R.id.share);
-            //holder.btnshare1=(Button)convertView.findViewById(R.id.share1);
             relativeshare = (RelativeLayout) view.findViewById(R.id.relativeshare);
             btnclause = (Button) view.findViewById(R.id.clauses);
             relativeLayout = (RelativeLayout) itemView.findViewById(R.id.rel);

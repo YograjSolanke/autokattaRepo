@@ -128,7 +128,7 @@
             android:layout_marginEnd="10dp"
             android:layout_marginTop="10dp"
             android:layout_toStartOf="@+id/sellcallimg"
-            android:background="@drawable/fav1"
+            android:background="@mipmap/new_favourite"
             android:contentDescription="@string/app_name"
             android:visibility="visible" />
 
@@ -140,7 +140,7 @@
             android:layout_marginEnd="10dp"
             android:layout_marginTop="10dp"
             android:layout_toStartOf="@+id/sellcallimg"
-            android:background="@drawable/fav2"
+            android:background="@mipmap/new_favourite_clk"
             android:contentDescription="@string/app_name"
             android:visibility="gone" />
 

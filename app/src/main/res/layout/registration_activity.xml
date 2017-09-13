@@ -171,7 +171,8 @@
                         android:id="@+id/clearDate"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
-                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
+                        android:contentDescription="@string/app_name"
                         android:src="@android:drawable/ic_delete"
                         android:visibility="gone" />
 
@@ -179,9 +180,9 @@
                         android:id="@+id/editdob"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_toLeftOf="@+id/clearDate"
+                        android:layout_toStartOf="@+id/clearDate"
+                        android:drawableEnd="@null"
                         android:drawablePadding="@dimen/card_margin"
-                        android:drawableRight="@null"
                         android:drawableStart="@mipmap/ic_calendar"
                         android:hint="@string/date_of_birth"
                         android:inputType="date"

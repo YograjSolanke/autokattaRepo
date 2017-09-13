@@ -5,66 +5,67 @@
     android:background="@color/white">
 
     <RelativeLayout
+        android:id="@+id/relativemain"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/relativemain"
         android:background="@color/white"
         android:padding="1dp">
 
         <RelativeLayout
             android:id="@+id/relative3"
-            android:background="@android:drawable/dialog_holo_light_frame"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="@android:drawable/dialog_holo_light_frame">
 
             <ImageView
+                android:id="@+id/vehiprofile"
                 android:layout_width="75dp"
                 android:layout_height="75dp"
-                android:id="@+id/vehiprofile"
-                android:layout_marginTop="5dip"
-                android:layout_marginLeft="5dp"
+                android:layout_alignParentStart="true"
                 android:layout_below="@+id/relativetitle"
-                android:layout_alignParentLeft="true" />
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dip"
+                android:contentDescription="@string/app_name" />
 
             <RelativeLayout
                 android:id="@+id/relativeuploadedon"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/relativeleads"
-                android:layout_toRightOf="@+id/vehiprofile"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="2dp">
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="2dp"
+                android:layout_toEndOf="@+id/vehiprofile">
 
                 <TextView
                     android:id="@+id/uploadedon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="#808080"
-                    android:gravity="center"
-                    android:textStyle="bold"
                     android:layout_centerVertical="true"
-                    android:text="@string/uploaded_on" />
+                    android:gravity="center"
+                    android:text="@string/uploaded_on"
+                    android:textColor="#808080"
+                    android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/dash6"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/dash6"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@+id/uploadedon"
+                    android:gravity="center"
                     android:text="-"
                     android:textColor="#808080"
-                    android:gravity="center"
-                    android:textStyle="bold"
-                    android:layout_centerVertical="true"
-                    android:layout_toRightOf="@+id/uploadedon"
-                    android:layout_marginLeft="10dp" />
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/edituploadedon"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="#808080"
                     android:layout_centerVertical="true"
-                    android:layout_toRightOf="@+id/dash6"
-                    android:layout_marginLeft="5dp" />
+                    android:layout_marginStart="5dp"
+                    android:layout_toEndOf="@+id/dash6"
+                    android:textColor="#808080" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -83,127 +84,128 @@
                         android:id="@+id/title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="#808080"
-                        android:gravity="center"
-                        android:textStyle="bold"
                         android:layout_centerVertical="true"
-                        android:text="@string/title" />
+                        android:gravity="center"
+                        android:text="@string/title"
+                        android:textColor="#808080"
+                        android:textStyle="bold" />
 
                     <TextView
+                        android:id="@+id/dash1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/dash1"
-                        android:text="-"
                         android:layout_centerVertical="true"
-                        android:textColor="#808080"
+                        android:layout_marginStart="10dp"
+                        android:layout_toEndOf="@+id/title"
                         android:gravity="center"
-                        android:layout_marginLeft="10dp"
-                        android:textStyle="bold"
-                        android:layout_toRightOf="@+id/title" />
+                        android:text="-"
+                        android:textColor="#808080"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/edittitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="#808080"
                         android:layout_centerVertical="true"
-                        android:layout_toRightOf="@+id/dash1"
-                        android:layout_marginLeft="10dp" />
+                        android:layout_marginStart="10dp"
+                        android:layout_toEndOf="@+id/dash1"
+                        android:textColor="#808080" />
                 </RelativeLayout>
             </RelativeLayout>
 
             <ImageView
+                android:id="@+id/delete"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
+                android:layout_alignParentEnd="true"
                 android:layout_below="@+id/relativetitle"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="5dp"
+                android:layout_marginEnd="5dp"
                 android:layout_marginTop="5dp"
-                android:id="@+id/delete"
-                android:visibility="gone"
-                android:src="@drawable/ic_delete" />
+                android:contentDescription="@string/app_name"
+                android:src="@mipmap/ic_delete"
+                android:visibility="gone" />
 
             <RelativeLayout
                 android:id="@+id/relativeprice"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/vehiprofile"
                 android:layout_below="@+id/delete"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="5dp">
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_toEndOf="@+id/vehiprofile">
 
                 <TextView
                     android:id="@+id/price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="#808080"
-                    android:gravity="center"
-                    android:textStyle="bold"
                     android:layout_centerVertical="true"
-                    android:text="@string/price" />
+                    android:gravity="center"
+                    android:text="@string/price"
+                    android:textColor="#808080"
+                    android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/dash2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/dash2"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@+id/price"
+                    android:gravity="center"
                     android:text="-"
                     android:textColor="#808080"
-                    android:gravity="center"
-                    android:textStyle="bold"
-                    android:layout_centerVertical="true"
-                    android:layout_toRightOf="@+id/price"
-                    android:layout_marginLeft="10dp" />
+                    android:textStyle="bold" />
 
 
                 <TextView
+                    android:id="@+id/editprice"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="#808080"
-                    android:id="@+id/editprice"
                     android:layout_centerVertical="true"
-                    android:layout_toRightOf="@+id/dash2"
-                    android:layout_marginLeft="5dp" />
+                    android:layout_marginStart="5dp"
+                    android:layout_toEndOf="@+id/dash2"
+                    android:textColor="#808080" />
             </RelativeLayout>
 
             <RelativeLayout
                 android:id="@+id/relativeleads"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/vehiprofile"
                 android:layout_below="@+id/relativeprice"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="2dp">
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="2dp"
+                android:layout_toEndOf="@+id/vehiprofile">
 
                 <TextView
                     android:id="@+id/leads"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="#808080"
-                    android:gravity="center"
-                    android:textStyle="bold"
                     android:layout_centerVertical="true"
-                    android:text="@string/no_of_leads" />
+                    android:gravity="center"
+                    android:text="@string/no_of_leads"
+                    android:textColor="#808080"
+                    android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/dash"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/dash"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@+id/leads"
+                    android:gravity="center"
                     android:text="-"
                     android:textColor="#808080"
-                    android:gravity="center"
-                    android:textStyle="bold"
-                    android:layout_centerVertical="true"
-                    android:layout_toRightOf="@+id/leads"
-                    android:layout_marginLeft="10dp" />
+                    android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/editleads"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="#808080"
-                    android:id="@+id/editleads"
                     android:layout_centerVertical="true"
-                    android:layout_toRightOf="@+id/dash"
-                    android:layout_marginLeft="5dp" />
+                    android:layout_marginStart="5dp"
+                    android:layout_toEndOf="@+id/dash"
+                    android:textColor="#808080" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -211,81 +213,81 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/relativeuploadedon"
-                android:layout_toRightOf="@+id/vehiprofile"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="2dp">
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="2dp"
+                android:layout_toEndOf="@+id/vehiprofile">
 
                 <TextView
                     android:id="@+id/category"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="#808080"
-                    android:gravity="center"
-                    android:textStyle="bold"
                     android:layout_centerVertical="true"
-                    android:text="@string/category" />
+                    android:gravity="center"
+                    android:text="@string/category"
+                    android:textColor="#808080"
+                    android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/dash3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/dash3"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@+id/category"
+                    android:gravity="center"
                     android:text="-"
                     android:textColor="#808080"
-                    android:gravity="center"
-                    android:textStyle="bold"
-                    android:layout_centerVertical="true"
-                    android:layout_toRightOf="@+id/category"
-                    android:layout_marginLeft="10dp" />
+                    android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/editcategory"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="#808080"
-                    android:id="@+id/editcategory"
                     android:layout_centerVertical="true"
-                    android:layout_toRightOf="@+id/dash3"
-                    android:layout_marginLeft="5dp" />
+                    android:layout_marginStart="5dp"
+                    android:layout_toEndOf="@+id/dash3"
+                    android:textColor="#808080" />
             </RelativeLayout>
 
             <RelativeLayout
                 android:id="@+id/relativebrand"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
                 android:layout_below="@+id/relativecategory"
-                android:layout_marginTop="5dp"
-                android:layout_marginLeft="5dp">
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp">
 
                 <TextView
                     android:id="@+id/brand"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="#808080"
-                    android:gravity="center"
-                    android:textStyle="bold"
                     android:layout_centerVertical="true"
-                    android:text="@string/brand" />
+                    android:gravity="center"
+                    android:text="@string/brand"
+                    android:textColor="#808080"
+                    android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/dash4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/dash4"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@+id/brand"
+                    android:gravity="center"
                     android:text="-"
                     android:textColor="#808080"
-                    android:gravity="center"
-                    android:textStyle="bold"
-                    android:layout_toRightOf="@+id/brand"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp" />
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/editbrand"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="#808080"
                     android:layout_centerVertical="true"
-                    android:layout_toRightOf="@+id/dash4"
-                    android:layout_marginLeft="5dp" />
+                    android:layout_marginStart="5dp"
+                    android:layout_toEndOf="@+id/dash4"
+                    android:textColor="#808080" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -293,40 +295,40 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/relativebrand"
-                android:layout_marginTop="2dp"
-                android:layout_marginLeft="5dp">
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="2dp">
 
                 <TextView
                     android:id="@+id/model"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="#808080"
-                    android:gravity="center"
-                    android:textStyle="bold"
                     android:layout_centerVertical="true"
-                    android:text="@string/model" />
+                    android:gravity="center"
+                    android:text="@string/model"
+                    android:textColor="#808080"
+                    android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/dash5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/dash5"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@+id/model"
+                    android:gravity="center"
                     android:text="-"
                     android:textColor="#808080"
-                    android:gravity="center"
-                    android:textStyle="bold"
-                    android:layout_centerVertical="true"
-                    android:layout_toRightOf="@+id/model"
-                    android:layout_marginLeft="10dp" />
+                    android:textStyle="bold" />
 
 
                 <TextView
                     android:id="@+id/editmodel"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="#808080"
                     android:layout_centerVertical="true"
-                    android:layout_toRightOf="@+id/dash5"
-                    android:layout_marginLeft="5dp" />
+                    android:layout_marginStart="5dp"
+                    android:layout_toEndOf="@+id/dash5"
+                    android:textColor="#808080" />
             </RelativeLayout>
         </RelativeLayout>
     </RelativeLayout>
@@ -339,9 +341,9 @@
 
 
         <android.support.v7.widget.RecyclerView
+            android:id="@+id/buyerlist"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/buyerlist">
+            android:layout_height="match_parent">
 
         </android.support.v7.widget.RecyclerView>
     </android.support.v4.widget.SwipeRefreshLayout>

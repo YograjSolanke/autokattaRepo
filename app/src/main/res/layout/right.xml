@@ -15,15 +15,15 @@
             android:layout_height="wrap_content"
             android:background="@drawable/date_textview_back"
             android:text="@string/date_of_message"
-            android:textSize="10sp" />
+            android:textSize="12sp" />
     </RelativeLayout>
 
     <LinearLayout
         android:id="@+id/maintext"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="right"
-        android:layout_marginRight="3dp"
+        android:layout_gravity="end"
+        android:layout_marginEnd="3dp"
         android:layout_marginTop="5dp"
         android:background="@drawable/chat_textview_right"
         android:orientation="vertical">
@@ -43,10 +43,9 @@
             android:id="@+id/dateNtime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/msgr"
-            android:layout_gravity="right"
+            android:layout_gravity="end"
             android:text="@string/date_and_time"
-            android:textSize="10sp" />
+            android:textSize="12sp" />
 
     </LinearLayout>
 
@@ -54,8 +53,8 @@
         android:id="@+id/imagelayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="right"
-        android:layout_marginRight="3dp"
+        android:layout_gravity="end"
+        android:layout_marginEnd="3dp"
         android:background="@drawable/chat_textview_right"
         android:orientation="vertical">
 
@@ -63,17 +62,17 @@
             android:id="@+id/image"
             android:layout_width="150dp"
             android:layout_height="150dp"
-            android:layout_below="@+id/maintext"
-            android:layout_marginTop="5dp" />
+            android:layout_marginTop="5dp"
+            android:contentDescription="@string/app_name" />
 
         <TextView
             android:id="@+id/imagetime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="right"
+            android:layout_gravity="end"
             android:text="@string/times"
             android:textColor="@color/white"
-            android:textSize="10sp" />
+            android:textSize="12sp" />
     </LinearLayout>
 
 </LinearLayout>

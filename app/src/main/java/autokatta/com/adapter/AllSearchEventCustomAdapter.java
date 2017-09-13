@@ -34,6 +34,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 import autokatta.com.R;
 import autokatta.com.auction.PreviewLiveEvents;
@@ -51,7 +52,7 @@ public class AllSearchEventCustomAdapter extends BaseAdapter {
     private List<ModelSearchAuction> allSearchDataArrayList = new ArrayList<>();
     private LayoutInflater inflater;
     private Handler handler;
-    private String startdatetime, enddatetime, special_clause, spcl;
+    private String spcl;
     private HashMap<TextView, CountDownTimer> counters;
 
     public AllSearchEventCustomAdapter(Activity activity1, List<ModelSearchAuction> allSearchDataArrayList) {
@@ -118,7 +119,6 @@ public class AllSearchEventCustomAdapter extends BaseAdapter {
                     holder.auction_startdate = (TextView) convertView.findViewById(R.id.datetime1);
                     holder.auction_starttime = (TextView) convertView.findViewById(R.id.editTime);
                     holder.preview = (Button) convertView.findViewById(R.id.button);
-                    holder.btnshare = (Button) convertView.findViewById(R.id.share);
                     holder.relativeshare = (RelativeLayout) convertView.findViewById(R.id.relativeshare);
                     holder.timer = (TextView) convertView.findViewById(R.id.timer);
                     holder.btnclause = (Button) convertView.findViewById(R.id.clauses);
@@ -227,8 +227,8 @@ public class AllSearchEventCustomAdapter extends BaseAdapter {
                 holder.auction_endtime.setText(object.getEndTime());
                 holder.auction_startdate.setText(object.getStartDate());
                 holder.auction_starttime.setText(object.getStartTime());
-                startdatetime = object.getStartDateTime();
-                enddatetime = object.getEndDateTime();
+                String startdatetime = object.getStartDateTime();
+                String enddatetime = object.getEndDateTime();
 
                 final TextView tv = holder.timer;
                 CountDownTimer cdt = counters.get(holder.timer);
@@ -236,7 +236,7 @@ public class AllSearchEventCustomAdapter extends BaseAdapter {
                     cdt.cancel();
                     cdt = null;
                 }
-                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
                 try {
                     Date futureDate = dateFormat.parse(enddatetime);
                     System.out.println("date============================================" + enddatetime);
@@ -274,7 +274,9 @@ public class AllSearchEventCustomAdapter extends BaseAdapter {
                                 seconds = (int) (millisUntilFinished / DateUtils.SECOND_IN_MILLIS);
                             }
 
-                            sDate += " " + String.format("%02d", hours) + ":" + String.format("%02d", minutes) + ":" + String.format("%02d", seconds);
+                            sDate += " " + String.format(Locale.getDefault(), "%02d", hours) + ":" +
+                                    String.format(Locale.getDefault(), "%02d", minutes) + ":" +
+                                    String.format(Locale.getDefault(), "%02d", seconds);
                             tv.setText(sDate.trim());
                         }
 
@@ -289,33 +291,12 @@ public class AllSearchEventCustomAdapter extends BaseAdapter {
                     e.printStackTrace();
                 }
 
-                special_clause = object.getSpecialClauses();
+                String special_clause = object.getSpecialClauses();
                 spcl = special_clause.replaceAll(",", "\n");
 
                 holder.btnclause.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        /*final android.app.AlertDialog.Builder alertDialog = new android.app.AlertDialog.Builder(activity);
-                        alertDialog.setTitle("Special Clauses");
-
-                        final TextView input = new TextView(activity);
-                        input.setText(spcl);
-
-                        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
-                                LinearLayout.LayoutParams.MATCH_PARENT,
-                                LinearLayout.LayoutParams.MATCH_PARENT);
-                        input.setLayoutParams(lp);
-                        alertDialog.setView(input);
-                        // alertDialog.setIcon(R.drawable.key);
-
-                        alertDialog.setNeutralButton("cancel",
-                                new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        dialog.cancel();
-                                    }
-                                });
-
-                        alertDialog.show();*/
                         AlertDialog dialog = new AlertDialog.Builder(activity)
                                 .setTitle("Special Clauses")
                                 .setMessage("YOUR_MSG")

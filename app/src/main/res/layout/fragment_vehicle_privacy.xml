@@ -62,25 +62,27 @@
                     android:layout_margin="5dp">
 
                 </ListView>
-
             </RelativeLayout>
-
-
         </RelativeLayout>
-
     </ScrollView>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_alignParentBottom="true"
-        android:layout_below="@+id/scrl">
 
         <LinearLayout
             android:id="@+id/relativebtnbottom"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_centerHorizontal="true">
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/scrl">
+
+            <Button
+                android:id="@+id/cancel"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/buttonback"
+                android:text="Cancel"
+                android:textColor="@color/white"
+                android:textSize="15sp" />
 
             <Button
                 android:id="@+id/ok"
@@ -89,22 +91,11 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/buttonback"
                 android:text="Ok"
-                android:textColor="@color/white"
-                android:textSize="15sp" />
-
-            <Button
-                android:id="@+id/cancel"
-                style="?android:attr/buttonBarButtonStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:background="@drawable/buttonback"
-                android:text="Cancel"
                 android:textColor="@color/white"
                 android:textSize="15sp" />
 
         </LinearLayout>
-    </RelativeLayout>
 
 
 </RelativeLayout>

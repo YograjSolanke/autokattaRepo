@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fab="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent">
 
     <ImageView
         android:id="@+id/vehiprofile"
         android:layout_width="match_parent"
         android:layout_height="150dp"
-        android:scaleType="fitXY"
         android:contentDescription="@string/app_name"
+        android:scaleType="fitXY"
         android:src="@drawable/vehiimg" />
 
     <ImageView
         android:id="@+id/edit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
         android:contentDescription="@string/app_name"
-        android:src="@drawable/ic_mode_edit_black_24dp"
-        android:layout_alignParentEnd="true" />
+        android:src="@mipmap/ic_edit" />
 
     <RelativeLayout
         android:id="@+id/relativeprice"
@@ -59,8 +59,8 @@
         android:id="@+id/name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_below="@+id/relativeprice">
+        android:layout_below="@+id/relativeprice"
+        android:layout_marginStart="5dp">
 
         <TextView
             android:id="@+id/name_tag"
@@ -87,8 +87,8 @@
         android:id="@+id/relativecategory"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_below="@+id/name">
+        android:layout_below="@+id/name"
+        android:layout_marginStart="5dp">
 
         <TextView
             android:id="@+id/category"
@@ -116,8 +116,8 @@
         android:id="@+id/relativebrand"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_below="@+id/relativecategory">
+        android:layout_below="@+id/relativecategory"
+        android:layout_marginStart="5dp">
 
         <TextView
             android:id="@+id/brand"
@@ -144,8 +144,8 @@
         android:id="@+id/relativemodel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_below="@+id/relativebrand">
+        android:layout_below="@+id/relativebrand"
+        android:layout_marginStart="5dp">
 
         <TextView
             android:id="@+id/model"
@@ -172,8 +172,8 @@
         android:id="@+id/version"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_below="@+id/relativemodel">
+        android:layout_below="@+id/relativemodel"
+        android:layout_marginStart="5dp">
 
         <TextView
             android:id="@+id/version_tag"
@@ -200,8 +200,8 @@
         android:id="@+id/enquiry"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_below="@+id/version">
+        android:layout_below="@+id/version"
+        android:layout_marginStart="5dp">
 
         <TextView
             android:id="@+id/enquiry_tag"
@@ -237,8 +237,8 @@
         android:id="@+id/views"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_below="@+id/enquiry">
+        android:layout_below="@+id/enquiry"
+        android:layout_marginStart="5dp">
 
         <TextView
             android:id="@+id/views_tag"
@@ -265,8 +265,8 @@
         android:id="@+id/calls"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_below="@+id/views">
+        android:layout_below="@+id/views"
+        android:layout_marginStart="5dp">
 
         <TextView
             android:id="@+id/calls_tag"
@@ -293,8 +293,8 @@
         android:id="@+id/stores"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_below="@+id/calls">
+        android:layout_below="@+id/calls"
+        android:layout_marginStart="5dp">
 
         <TextView
             android:id="@+id/stores_tag"
@@ -338,12 +338,14 @@
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="end|bottom"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
+        android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        android:background="@color/red"
-        android:src="@mipmap/ic_plus"
-        app:fabSize="mini" />
+        android:src="@mipmap/ic_create_group"
+        android:visibility="visible"
+        fab:fab_colorNormal="#5176C9"
+        fab:fab_colorPressed="#5176C9"
+        fab:fab_colorRipple="#5176C9" />
 
 </RelativeLayout>

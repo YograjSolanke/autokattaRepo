@@ -2,10 +2,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mainlayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    android:id="@+id/mainlayout"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".view.ServiceViewActivity"
     tools:showIn="@layout/activity_service_view">
@@ -33,11 +33,11 @@
             android:id="@+id/txtstorename"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/lstorename"
             android:layout_marginStart="10dp"
             android:layout_marginTop="5dp"
-            android:layout_below="@+id/lstorename"
+            android:layout_toStartOf="@+id/call"
             android:text="Store Name"
-            android:layout_toLeftOf="@+id/call"
             android:textColor="@color/textColor"
             android:textSize="15sp" />
 
@@ -71,8 +71,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/txtstorewebsite"
             android:layout_marginBottom="5dp"
-            android:layout_marginTop="5dp"
             android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
             android:text="No.Of Enquiries:"
             android:textColor="@color/textColor"
             android:textSize="12sp"
@@ -85,8 +85,8 @@
             android:layout_height="30dp"
             android:layout_below="@+id/txtstorewebsite"
             android:layout_marginBottom="5dp"
-            android:layout_marginTop="5dp"
             android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
             android:background="@color/background"
             android:text="Send Enquiry"
             android:textAllCaps="false"
@@ -162,17 +162,6 @@
                         android:fitsSystemWindows="true"
                         app:layout_collapseMode="parallax" />
 
-                    <!--<ImageView
-                        android:id="@+id/profile"
-                        android:layout_width="150dp"
-                        android:layout_height="150dp"
-                        android:layout_below="@+id/no_of_photos"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="10dp"
-                        android:src="@drawable/vehiimg"
-                        android:contentDescription="@string/app_name"
-                        android:visibility="visible" />-->
-
                     <LinearLayout
                         android:id="@+id/lineartxts"
                         android:layout_width="wrap_content"
@@ -237,7 +226,6 @@
 
                     </LinearLayout>
 
-
                     <View
                         android:id="@+id/v2"
                         android:layout_width="match_parent"
@@ -246,12 +234,11 @@
                         android:layout_marginTop="5dp"
                         android:background="#cccccc" />
 
-
                     <LinearLayout
+                        android:id="@+id/relalike2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/v2"
-                        android:id="@+id/relalike2"
                         android:baselineAligned="false"
                         android:orientation="horizontal"
                         android:weightSum="2">
@@ -259,8 +246,8 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center"
                             android:layout_weight="1"
+                            android:gravity="center"
                             android:visibility="visible">
 
                             <Button
@@ -287,12 +274,11 @@
 
                         </LinearLayout>
 
-
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:layout_weight="1">
+                            android:layout_weight="1"
+                            android:gravity="center">
 
                             <Button
                                 android:id="@+id/linearshare"
@@ -305,157 +291,6 @@
                                 android:text="Share" />
                         </LinearLayout>
                     </LinearLayout>
-
-                    <!--<LinearLayout-->
-
-                    <!--android:id="@+id/relalike2"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="35dp"-->
-                    <!--android:layout_below="@+id/v2"-->
-                    <!--android:background="#80bebebe"-->
-                    <!--android:orientation="horizontal">-->
-
-                    <!--<LinearLayout-->
-                    <!--android:id="@+id/linearlike"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_marginTop="5dp"-->
-                    <!--android:layout_weight="1"-->
-                    <!--android:gravity="center">-->
-
-                    <!--<ImageView-->
-                    <!--android:id="@+id/likeimg"-->
-                    <!--android:layout_width="20dp"-->
-                    <!--android:layout_height="20dp"-->
-                    <!--android:background="@drawable/likeicon"-->
-                    <!--android:contentDescription="@string/app_name" />-->
-
-                    <!--<TextView-->
-                    <!--android:id="@+id/liketxt"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_marginStart="5dp"-->
-                    <!--android:text="Like"-->
-                    <!--android:textColor="#2C3343" />-->
-
-                    <!--</LinearLayout>-->
-
-                    <!--<LinearLayout-->
-                    <!--android:id="@+id/linearunlike"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="match_parent"-->
-                    <!--android:layout_weight="1"-->
-                    <!--android:gravity="center"-->
-                    <!--android:visibility="gone">-->
-
-                    <!--<ImageView-->
-                    <!--android:id="@+id/unlikeimg"-->
-                    <!--android:layout_width="20dp"-->
-                    <!--android:layout_height="20dp"-->
-                    <!--android:background="@drawable/unlikethumb" />-->
-
-                    <!--<TextView-->
-                    <!--android:id="@+id/unliketxt"-->
-                    <!--android:layout_width="60dp"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_marginStart="5dp"-->
-                    <!--android:contentDescription="@string/app_name"-->
-                    <!--android:text="Unlike"-->
-                    <!--android:textColor="@color/red" />-->
-
-                    <!--</LinearLayout>-->
-
-                    <!--<View-->
-                    <!--android:layout_width="1dp"-->
-                    <!--android:layout_height="20dp"-->
-                    <!--android:layout_gravity="center"-->
-                    <!--android:background="@color/black" />-->
-
-
-                    <!--<LinearLayout-->
-                    <!--android:id="@+id/linearshare"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_marginTop="5dp"-->
-                    <!--android:layout_weight="1"-->
-                    <!--android:gravity="center">-->
-
-                    <!--<ImageView-->
-                    <!--android:id="@+id/shareimg"-->
-                    <!--android:layout_width="20dp"-->
-                    <!--android:layout_height="20dp"-->
-                    <!--android:background="@android:drawable/ic_menu_share"-->
-                    <!--android:contentDescription="@string/app_name" />-->
-
-                    <!--<TextView-->
-                    <!--android:id="@+id/sharetxt"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_marginStart="5dp"-->
-                    <!--android:text="Share"-->
-                    <!--android:textColor="#2C3343" />-->
-
-                    <!--</LinearLayout>-->
-
-                    <!--<View-->
-                    <!--android:layout_width="1dp"-->
-                    <!--android:layout_height="20dp"-->
-                    <!--android:layout_gravity="center"-->
-                    <!--android:background="@color/black" />-->
-
-
-                    <!--<LinearLayout-->
-                    <!--android:id="@+id/linearshare1"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_marginTop="5dp"-->
-                    <!--android:layout_weight="1"-->
-                    <!--android:gravity="center">-->
-
-                    <!--<ImageView-->
-                    <!--android:id="@+id/shareimg1"-->
-                    <!--android:layout_width="20dp"-->
-                    <!--android:layout_height="20dp"-->
-                    <!--android:background="@drawable/autoshare"-->
-                    <!--android:contentDescription="@string/app_name" />-->
-
-                    <!--<TextView-->
-                    <!--android:id="@+id/sharetxt1"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_marginStart="5dp"-->
-                    <!--android:text="Share"-->
-                    <!--android:textColor="#2C3343" />-->
-
-                    <!--</LinearLayout>-->
-
-                    <!--<View-->
-                    <!--android:layout_width="1dp"-->
-                    <!--android:layout_height="20dp"-->
-                    <!--android:layout_gravity="center"-->
-                    <!--android:background="@color/black" />-->
-
-
-                    <!--<LinearLayout-->
-                    <!--android:id="@+id/linearreview"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_marginTop="5dp"-->
-                    <!--android:layout_weight="1"-->
-                    <!--android:gravity="center">-->
-
-
-                    <!--<TextView-->
-                    <!--android:id="@+id/reviewtxt"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_marginStart="5dp"-->
-                    <!--android:text="Review"-->
-                    <!--android:textColor="#2C3343" />-->
-
-                    <!--</LinearLayout>-->
-
-                    <!--</LinearLayout>-->
 
                     <View
                         android:id="@+id/v3"
@@ -492,14 +327,13 @@
                         android:id="@+id/deleteservice"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_below="@+id/v3"
                         android:layout_marginEnd="5dp"
                         android:layout_marginTop="5dp"
-                        android:layout_below="@+id/v3"
-                        android:layout_toLeftOf="@+id/editservice"
+                        android:layout_toStartOf="@+id/editservice"
                         android:contentDescription="@string/app_name"
                         android:src="@mipmap/ic_delete"
                         android:visibility="gone" />
-
 
                     <RelativeLayout
                         android:id="@+id/relativetype"
@@ -519,27 +353,16 @@
                             android:textSize="15sp"
                             android:textStyle="bold" />
 
-                        <!--<TextView-->
-                        <!--android:id="@+id/dash1"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:layout_centerHorizontal="true"-->
-                        <!--android:layout_centerVertical="true"-->
-                        <!--android:gravity="center"-->
-                        <!--android:text="-"-->
-                        <!--android:textColor="#2C3343"-->
-                        <!--android:textStyle="bold" />-->
-
                         <EditText
                             android:id="@+id/txtstype"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/stype"
+                            android:layout_marginTop="5dp"
+                            android:background="@android:color/transparent"
+                            android:hint="service type"
                             android:textColor="@color/textColor"
                             android:textColorHint="@color/hintColor"
-                            android:layout_marginTop="5dp"
-                            android:hint="service type"
-                            android:background="@android:color/transparent"
                             android:textSize="15sp" />
                     </RelativeLayout>
 
@@ -547,8 +370,8 @@
                         android:id="@+id/relativeservicename"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:layout_below="@+id/relativetype">
+                        android:layout_below="@+id/relativetype"
+                        android:layout_marginTop="5dp">
 
                         <TextView
                             android:id="@+id/lsname"
@@ -559,26 +382,15 @@
                             android:textSize="15sp"
                             android:textStyle="bold" />
 
-                        <!--<TextView-->
-                        <!--android:id="@+id/dash2"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:layout_centerHorizontal="true"-->
-                        <!--android:layout_centerVertical="true"-->
-                        <!--android:gravity="center"-->
-                        <!--android:text="-"-->
-                        <!--android:textColor="#2C3343"-->
-                        <!--android:textStyle="bold" />-->
-
                         <EditText
                             android:id="@+id/txtsname"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/lsname"
-                            android:textColor="@color/textColor"
-                            android:hint="service name"
-                            android:background="@android:color/transparent"
                             android:layout_marginTop="5dp"
+                            android:background="@android:color/transparent"
+                            android:hint="service name"
+                            android:textColor="@color/textColor"
                             android:textColorHint="@color/hintColor"
                             android:textSize="15sp" />
                     </RelativeLayout>
@@ -587,8 +399,8 @@
                         android:id="@+id/relativeserviceprice"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:layout_below="@+id/relativeservicename">
+                        android:layout_below="@+id/relativeservicename"
+                        android:layout_marginTop="5dp">
 
                         <TextView
                             android:id="@+id/lsprice"
@@ -600,38 +412,26 @@
                             android:textSize="15sp"
                             android:textStyle="bold" />
 
-                        <!--<TextView-->
-                        <!--android:id="@+id/dash3"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:layout_centerHorizontal="true"-->
-                        <!--android:layout_centerVertical="true"-->
-                        <!--android:gravity="center"-->
-                        <!--android:text="-"-->
-                        <!--android:textColor="#2C3343"-->
-                        <!--android:textStyle="bold" />-->
 
                         <EditText
                             android:id="@+id/txtsprice"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/lsprice"
-                            android:inputType="number"
-                            android:hint="price"
                             android:background="@android:color/transparent"
+                            android:hint="price"
+                            android:inputType="number"
                             android:textColor="@color/textColor"
                             android:textColorHint="@color/hintColor"
-                            android:textSize="15sp"
-
-                            />
+                            android:textSize="15sp" />
                     </RelativeLayout>
 
                     <RelativeLayout
                         android:id="@+id/relativeservicetags"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:layout_below="@+id/relativeserviceprice">
+                        android:layout_below="@+id/relativeserviceprice"
+                        android:layout_marginTop="5dp">
 
                         <TextView
                             android:id="@+id/lpsags"
@@ -642,37 +442,25 @@
                             android:textSize="15sp"
                             android:textStyle="bold" />
 
-                        <!--<TextView-->
-                        <!--android:id="@+id/dash4"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:layout_centerHorizontal="true"-->
-                        <!--android:layout_centerVertical="true"-->
-                        <!--android:gravity="center"-->
-                        <!--android:text="-"-->
-                        <!--android:textColor="#2C3343"-->
-                        <!--android:textStyle="bold" />-->
-
                         <MultiAutoCompleteTextView
                             android:id="@+id/txtstags"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/lpsags"
+                            android:layout_marginTop="5dp"
+                            android:background="@android:color/transparent"
+                            android:hint="tags"
                             android:textColor="@color/textColor"
                             android:textColorHint="@color/hintColor"
-                            android:hint="tags"
-                            android:textSize="15sp"
-                            android:layout_marginTop="5dp"
-                            android:background="@android:color/transparent" />
+                            android:textSize="15sp" />
                     </RelativeLayout>
-
 
                     <RelativeLayout
                         android:id="@+id/relativebrandtags"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:layout_below="@+id/relativeservicetags">
+                        android:layout_below="@+id/relativeservicetags"
+                        android:layout_marginTop="5dp">
 
                         <TextView
                             android:id="@+id/brandtags"
@@ -683,27 +471,16 @@
                             android:textSize="15sp"
                             android:textStyle="bold" />
 
-                        <!--<TextView-->
-                        <!--android:id="@+id/dash5"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:layout_centerHorizontal="true"-->
-                        <!--android:layout_centerVertical="true"-->
-                        <!--android:gravity="center"-->
-                        <!--android:text="-"-->
-                        <!--android:textColor="#2C3343"-->
-                        <!--android:textStyle="bold" />-->
-
                         <MultiAutoCompleteTextView
                             android:id="@+id/txtbrandptags"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/brandtags"
+                            android:layout_marginTop="5dp"
+                            android:background="@android:color/transparent"
+                            android:hint="brand tags"
                             android:textColor="@color/textColor"
                             android:textColorHint="@color/hintColor"
-                            android:layout_marginTop="5dp"
-                            android:hint="brand tags"
-                            android:background="@android:color/transparent"
                             android:textSize="15sp" />
                     </RelativeLayout>
 
@@ -712,8 +489,8 @@
                         android:id="@+id/relativeservicedetails"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:layout_below="@+id/relativebrandtags">
+                        android:layout_below="@+id/relativebrandtags"
+                        android:layout_marginTop="5dp">
 
                         <TextView
                             android:id="@+id/lsdetails"
@@ -724,27 +501,16 @@
                             android:textSize="15sp"
                             android:textStyle="bold" />
 
-                        <!--<TextView-->
-                        <!--android:id="@+id/dash6"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:layout_centerHorizontal="true"-->
-                        <!--android:layout_centerVertical="true"-->
-                        <!--android:gravity="center"-->
-                        <!--android:text="-"-->
-                        <!--android:textColor="#2C3343"-->
-                        <!--android:textStyle="bold" />-->
-
                         <EditText
                             android:id="@+id/txtsdetails"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/lsdetails"
-                            android:textColor="@color/textColor"
-                            android:textColorHint="@color/hintColor"
-                            android:hint="service details"
                             android:layout_marginTop="5dp"
                             android:background="@android:color/transparent"
+                            android:hint="service details"
+                            android:textColor="@color/textColor"
+                            android:textColorHint="@color/hintColor"
                             android:textSize="15sp" />
 
                     </RelativeLayout>
@@ -765,42 +531,25 @@
                             android:textSize="15sp"
                             android:textStyle="bold" />
 
-
-                        <!--<TextView-->
-                        <!--android:id="@+id/dash7"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:layout_alignParentTop="true"-->
-                        <!--android:layout_centerVertical="true"-->
-                        <!--android:layout_marginStart="81dp"-->
-                        <!--android:layout_toEndOf="@+id/lscategory"-->
-                        <!--android:gravity="center"-->
-                        <!--android:text="-"-->
-                        <!--android:textColor="#2C3343"-->
-                        <!--android:textStyle="bold" />-->
-
                         <Spinner
                             android:id="@+id/spincategory"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/lscategory"
-                            android:textColor="@color/textColor"
                             android:layout_marginTop="5dp"
                             android:background="@android:color/transparent"
-                            android:textSize="15sp">
-
-                        </Spinner>
+                            android:textColor="@color/textColor"
+                            android:textSize="15sp"></Spinner>
 
                     </RelativeLayout>
-
 
                     <LinearLayout
                         android:id="@+id/linearbtns"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/linearcategory"
-                        android:orientation="horizontal"
                         android:layout_marginTop="5dp"
+                        android:orientation="horizontal"
                         android:visibility="gone">
 
                         <TextView
@@ -847,7 +596,7 @@
                             android:layout_height="match_parent"
                             android:layout_gravity="center_vertical"
                             android:layout_marginTop="5dp"
-                            android:layout_toLeftOf="@+id/btnpost"
+                            android:layout_toStartOf="@+id/btnpost"
                             android:gravity="center"
                             android:hint="Write Review.."
                             android:textColor="#2C3343"
@@ -890,8 +639,8 @@
                         android:id="@+id/relativerateservice"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
                         android:layout_below="@+id/linearcategory"
+                        android:layout_marginTop="10dp"
                         android:visibility="visible">
 
                         <LinearLayout
@@ -937,8 +686,6 @@
                                 android:numStars="5"
                                 android:stepSize="1"
                                 android:theme="@style/RatingBar" />
-
-
                         </RelativeLayout>
 
                         <RelativeLayout
@@ -998,7 +745,6 @@
                                 android:numStars="5"
                                 android:stepSize="1"
                                 android:theme="@style/RatingBar" />
-
                         </RelativeLayout>
 
                         <RelativeLayout
