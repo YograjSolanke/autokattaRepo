@@ -27,7 +27,7 @@ public class BrowseStoreActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setHomeButtonEnabled(true);
         }
-
+        startActivity(new Intent(getApplicationContext(), BrowseStoreAppIntro.class));
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -56,7 +56,7 @@ public class BrowseStoreActivity extends AppCompatActivity {
         overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
     }
 
-    @Override
+    /*@Override
     protected void onResume() {
         super.onResume();
         if (sharedPreferences.getBoolean("browseStoreFirstRun", true)) {
@@ -65,7 +65,7 @@ public class BrowseStoreActivity extends AppCompatActivity {
             editor.putBoolean("browseStoreFirstRun", false);
             editor.apply();
         }
-    }
+    }*/
    /* @Override
     protected void onResume() {
         super.onResume();

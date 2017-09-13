@@ -24,6 +24,7 @@ public class SearchStoreActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         setTitle("Search Store");
         sharedPreferences = getSharedPreferences(getString(R.string.firstRun), MODE_PRIVATE);
+        startActivity(new Intent(getApplicationContext(), SearchStoreAppIntro.class));
         if (getSupportActionBar() != null) {
             getSupportActionBar().setHomeButtonEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -73,7 +74,7 @@ public class SearchStoreActivity extends AppCompatActivity {
         overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);*/
     }
 
-    @Override
+    /*@Override
     protected void onResume() {
         super.onResume();
         if (sharedPreferences.getBoolean("searchStoreFirstRun", true)) {
@@ -82,6 +83,6 @@ public class SearchStoreActivity extends AppCompatActivity {
             editor.putBoolean("searchStoreFirstRun", false);
             editor.apply();
         }
-    }
+    }*/
 
 }

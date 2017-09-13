@@ -23,7 +23,7 @@ public class MyUploadedVehiclesActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         sharedPreferences = getSharedPreferences(getString(R.string.firstRun), MODE_PRIVATE);
         setTitle("My Inventory");
-
+        startActivity(new Intent(getApplicationContext(), MyInventoryAppIntro.class));
         if (getSupportActionBar() != null) {
             getSupportActionBar().setHomeButtonEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -72,7 +72,7 @@ public class MyUploadedVehiclesActivity extends AppCompatActivity {
         }
     }
 
-    @Override
+    /*@Override
     protected void onResume() {
         super.onResume();
         if (sharedPreferences.getBoolean("inventoryFirstRun", true)) {
@@ -81,5 +81,5 @@ public class MyUploadedVehiclesActivity extends AppCompatActivity {
             editor.putBoolean("inventoryFirstRun", false);
             editor.apply();
         }
-    }
+    }*/
 }

@@ -20,7 +20,7 @@ public class BrowseStoreAppIntro extends AppIntro {
 
         // Show and Hide Skip and Done buttons
         showStatusBar(false);
-        showSkipButton(false);
+        showSkipButton(true);
 
         // Turn vibration on and set intensity
         // You will need to add VIBRATE permission in Manifest file
@@ -33,7 +33,7 @@ public class BrowseStoreAppIntro extends AppIntro {
 
     @Override
     public void onSkipPressed() {
-
+        finish();
     }
 
     @Override

@@ -39,6 +39,7 @@ public class GroupTabs extends AppCompatActivity {
         setSupportActionBar(toolbar);
         sharedPreferences = getSharedPreferences(getString(R.string.firstRun), MODE_PRIVATE);
         setTitle("My Groups");
+        startActivity(new Intent(getApplicationContext(), GroupAppIntro.class));
         mLayout = (CoordinatorLayout) findViewById(R.id.activity_group_tabs);
         IntentFilter intentFilter = new IntentFilter(Receiver.NETWORK_AVAILABLE_ACTION);
         LocalBroadcastManager.getInstance(this).registerReceiver(new BroadcastReceiver() {
@@ -82,7 +83,7 @@ public class GroupTabs extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
+    /*@Override
     protected void onResume() {
         super.onResume();
         if (sharedPreferences.getBoolean("groupFirstRun", true)) {
@@ -91,7 +92,7 @@ public class GroupTabs extends AppCompatActivity {
             editor.putBoolean("groupFirstRun", false);
             editor.apply();
         }
-    }
+    }*/
 
     @Override
     public void onBackPressed() {

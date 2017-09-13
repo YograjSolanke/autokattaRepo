@@ -724,6 +724,12 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
         <activity
+            android:name=".app_info.BusinessChatAppIntro"
+            android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
             android:name=".fragment_profile.EditTags"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
             android:label="@string/title_activity_edit_tags"

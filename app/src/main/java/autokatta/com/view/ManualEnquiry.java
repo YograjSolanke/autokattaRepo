@@ -57,6 +57,7 @@ public class ManualEnquiry extends AppCompatActivity implements SwipeRefreshLayo
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
         setTitle("Enquiry List");
+        startActivity(new Intent(getApplicationContext(), ManualAppIntro.class));
         sharedPreferences = getSharedPreferences(getString(R.string.firstRun), MODE_PRIVATE);
         runOnUiThread(new Runnable() {
             @Override
@@ -374,7 +375,7 @@ public class ManualEnquiry extends AppCompatActivity implements SwipeRefreshLayo
         Log.i("dsfaascssd", "->" + request.getVehicleId());
     }
 
-    @Override
+    /*@Override
     protected void onResume() {
         super.onResume();
         if (sharedPreferences.getBoolean("manualFirstRun", true)) {
@@ -383,7 +384,7 @@ public class ManualEnquiry extends AppCompatActivity implements SwipeRefreshLayo
             editor.putBoolean("manualFirstRun", false);
             editor.apply();
         }
-    }
+    }*/
     /*public static boolean isValidPhone(String phone){
         String expression = "^([0-9\\+]|\\(\\d{1,3}\\))[0-9\\-\\. ]{3,15}$";
         CharSequence inputString = phone;

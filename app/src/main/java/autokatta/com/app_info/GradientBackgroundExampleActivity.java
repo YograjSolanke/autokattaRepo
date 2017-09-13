@@ -18,7 +18,7 @@ public class GradientBackgroundExampleActivity extends AppIntro {
 
         // Show and Hide Skip and Done buttons
         showStatusBar(false);
-        showSkipButton(false);
+        showSkipButton(true);
 
         // Turn vibration on and set intensity
         // You will need to add VIBRATE permission in Manifest file
@@ -31,7 +31,7 @@ public class GradientBackgroundExampleActivity extends AppIntro {
 
     @Override
     public void onSkipPressed() {
-
+        finish();
     }
 
     @Override

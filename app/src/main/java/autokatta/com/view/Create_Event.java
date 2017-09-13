@@ -23,6 +23,7 @@ public class Create_Event extends AppCompatActivity {
         setSupportActionBar(toolbar);
         setTitle("Create Event");
         sharedPreferences = getSharedPreferences(getString(R.string.firstRun), MODE_PRIVATE);
+        startActivity(new Intent(getApplicationContext(), CreateEventAppIntro.class));
         if (getSupportActionBar() != null) {
             getSupportActionBar().setHomeButtonEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -52,7 +53,7 @@ public class Create_Event extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
+    /*@Override
     protected void onResume() {
         super.onResume();
         if (sharedPreferences.getBoolean("createEventFirstRun", true)) {
@@ -61,7 +62,7 @@ public class Create_Event extends AppCompatActivity {
             editor.putBoolean("createEventFirstRun", false);
             editor.apply();
         }
-    }
+    }*/
 
     @Override
     public void onBackPressed() {

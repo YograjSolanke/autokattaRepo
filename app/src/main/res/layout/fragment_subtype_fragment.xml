@@ -587,7 +587,6 @@
                     android:layout_height="40dip"
                     android:layout_marginTop="5dp"
                     android:background="#80bebebe"
-                    android:gravity="center"
                     android:hint="@string/enter_implement"
                     android:textColor="#2C3343"
                     android:textColorHint="#848484"

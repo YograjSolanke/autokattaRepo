@@ -26,6 +26,7 @@ public class MyStoreListActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         setTitle("My Store");
         sharedPreferences = getSharedPreferences(getString(R.string.firstRun), MODE_PRIVATE);
+        startActivity(new Intent(getApplicationContext(), CreateStoreAppIntro.class));
         if (getSupportActionBar() != null) {
             getSupportActionBar().setHomeButtonEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -73,7 +74,7 @@ public class MyStoreListActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
+    /*@Override
     protected void onResume() {
         super.onResume();
         if (sharedPreferences.getBoolean("myStoreListFirstRun", true)) {
@@ -82,7 +83,7 @@ public class MyStoreListActivity extends AppCompatActivity {
             editor.putBoolean("myStoreListFirstRun", false);
             editor.apply();
         }
-    }
+    }*/
 
     @Override
     public void onBackPressed() {

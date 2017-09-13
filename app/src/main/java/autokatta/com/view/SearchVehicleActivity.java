@@ -105,7 +105,7 @@ public class SearchVehicleActivity extends AppCompatActivity implements MultiSel
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         setTitle("Search Vehicle");
-
+        startActivity(new Intent(getApplicationContext(), SearchVehicleAppIntro.class));
         sharedPreferences = getSharedPreferences(getString(R.string.firstRun), MODE_PRIVATE);
         myContact = getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).getString("loginContact", "");
         mApiCall = new ApiCall(this, this);
@@ -1526,7 +1526,7 @@ public class SearchVehicleActivity extends AppCompatActivity implements MultiSel
         overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
     }
 
-    @Override
+    /*@Override
     protected void onResume() {
         super.onResume();
         if (sharedPreferences.getBoolean("vehicleFirstRun", true)) {
@@ -1535,5 +1535,5 @@ public class SearchVehicleActivity extends AppCompatActivity implements MultiSel
             editor.putBoolean("vehicleFirstRun", false);
             editor.apply();
         }
-    }
+    }*/
 }

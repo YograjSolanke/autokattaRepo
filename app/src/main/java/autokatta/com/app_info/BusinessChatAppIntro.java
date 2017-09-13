@@ -8,17 +8,14 @@ import com.github.paolorotolo.appintro.AppIntro;
 import autokatta.com.R;
 
 /**
- * Created by ak-001 on 12/9/17.
+ * Created by ak-001 on 13/9/17.
  */
 
-public class CreateStoreAppIntro extends AppIntro {
+public class BusinessChatAppIntro extends AppIntro {
     @Override
     public void init(@Nullable Bundle savedInstanceState) {
-        addSlide(AppIntroSlider.newInstance(R.layout.app_intro_create_store_one));
-        addSlide(AppIntroSlider.newInstance(R.layout.app_intro_create_store_two));
-        addSlide(AppIntroSlider.newInstance(R.layout.app_intro_create_store_three));
-        addSlide(AppIntroSlider.newInstance(R.layout.app_intro_create_store_five));
-        addSlide(AppIntroSlider.newInstance(R.layout.app_intro_create_store_seven));
+        addSlide(AppIntroSlider.newInstance(R.layout.app_intro_business_chat_one));
+        addSlide(AppIntroSlider.newInstance(R.layout.app_intro_business_chat_two));
 
         // Show and Hide Skip and Done buttons
         showStatusBar(false);

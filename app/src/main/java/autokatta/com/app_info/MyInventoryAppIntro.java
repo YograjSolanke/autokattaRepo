@@ -17,10 +17,13 @@ public class MyInventoryAppIntro extends AppIntro {
     public void init(@Nullable Bundle savedInstanceState) {
         addSlide(AppIntroSlider.newInstance(R.layout.app_intro_my_inventory_one));
         addSlide(AppIntroSlider.newInstance(R.layout.app_intro_my_inventory_two));
+        addSlide(AppIntroSlider.newInstance(R.layout.app_intro_manual_enquiry_one));
+        addSlide(AppIntroSlider.newInstance(R.layout.app_intro_manual_enquiry_two));
+        addSlide(AppIntroSlider.newInstance(R.layout.app_intro_manual_enquiry_four));
 
         // Show and Hide Skip and Done buttons
         showStatusBar(false);
-        showSkipButton(false);
+        showSkipButton(true);
 
         // Turn vibration on and set intensity
         // You will need to add VIBRATE permission in Manifest file
@@ -33,7 +36,7 @@ public class MyInventoryAppIntro extends AppIntro {
 
     @Override
     public void onSkipPressed() {
-
+        finish();
     }
 
     @Override

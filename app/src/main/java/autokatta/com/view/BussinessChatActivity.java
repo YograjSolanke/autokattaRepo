@@ -1,11 +1,13 @@
 package autokatta.com.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import autokatta.com.R;
+import autokatta.com.app_info.BusinessChatAppIntro;
 import autokatta.com.fragment.BussinessChatFragment;
 
 public class BussinessChatActivity extends AppCompatActivity {
@@ -17,7 +19,7 @@ public class BussinessChatActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         setTitle("Business Chat");
-
+        startActivity(new Intent(getApplicationContext(), BusinessChatAppIntro.class));
         if (getSupportActionBar() != null) {
             getSupportActionBar().setHomeButtonEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);

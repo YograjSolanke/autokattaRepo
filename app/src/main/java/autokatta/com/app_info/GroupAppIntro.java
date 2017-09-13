@@ -14,13 +14,14 @@ import autokatta.com.R;
 public class GroupAppIntro extends AppIntro {
     @Override
     public void init(@Nullable Bundle savedInstanceState) {
+        addSlide(AppIntroSlider.newInstance(R.layout.app_intro_create_store_six));
         addSlide(AppIntroSlider.newInstance(R.layout.app_intro_group_one));
         addSlide(AppIntroSlider.newInstance(R.layout.app_intro_group_two));
         addSlide(AppIntroSlider.newInstance(R.layout.app_intro_group_three));
 
         // Show and Hide Skip and Done buttons
         showStatusBar(false);
-        showSkipButton(false);
+        showSkipButton(true);
 
         // Turn vibration on and set intensity
         // You will need to add VIBRATE permission in Manifest file
@@ -33,7 +34,7 @@ public class GroupAppIntro extends AppIntro {
 
     @Override
     public void onSkipPressed() {
-
+        finish();
     }
 
     @Override
