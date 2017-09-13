@@ -105,7 +105,7 @@ public class ChatActivity extends AppCompatActivity implements RequestNotifier, 
 
         Button buttonRep = (Button) findViewById(R.id.replay);
         listView = (ListView) findViewById(R.id.msgview);
-        msgFrom = (TextView) findViewById(R.id.msgFrom);
+        //msgFrom = (TextView) findViewById(R.id.msgFrom);
         chatwithtext = (TextView) findViewById(R.id.chatwithtext);
         chatWithLocation = (TextView) findViewById(R.id.chatwithLocation);
         apiCall = new ApiCall(this, this);

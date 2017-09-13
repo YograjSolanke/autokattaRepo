@@ -246,7 +246,7 @@ public class GroupProductAdapter extends RecyclerView.Adapter<GroupProductAdapte
             ptags = (TextView) itemView.findViewById(R.id.edittags);
             pCategoey = (TextView) itemView.findViewById(R.id.editCategory);
             ptype = (TextView) itemView.findViewById(R.id.editproducttype);
-            viewdetails = (Button) itemView.findViewById(R.id.btnviewdetails);
+            //viewdetails = (Button) itemView.findViewById(R.id.btnviewdetails);
             mDetails = (Button) itemView.findViewById(R.id.btnView);
             mEdit = (Button) itemView.findViewById(R.id.btnEdit);
             image = (ImageView) itemView.findViewById(R.id.profile);
