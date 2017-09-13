@@ -132,7 +132,7 @@ public class MySearchAdapter extends RecyclerView.Adapter<MySearchAdapter.Search
         try {
             TimeZone utc = TimeZone.getTimeZone("etc/UTC");
             //format of date coming from services
-            DateFormat inputFormat = new SimpleDateFormat("yyyy-mm-dd HH:mm:ss a",
+            DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",
                     Locale.US);
             inputFormat.setTimeZone(utc);
             //format of date which want to show
