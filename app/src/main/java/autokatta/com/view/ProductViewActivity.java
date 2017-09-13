@@ -534,6 +534,8 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                             pname = success.getProductName();
                             pprice = success.getPrice();
                             pdetails = success.getProductDetails();
+                            if (pdetails.equals(""))
+                                pdetails = "No Details";
                             ptags = success.getProductTagNames();
                             ptype = success.getProductType();
                             pimages = success.getImages();

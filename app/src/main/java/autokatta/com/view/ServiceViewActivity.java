@@ -707,6 +707,8 @@ Get Admin data...
                             sname = success.getName();
                             sprice = success.getPrice();
                             sdetails = success.getDetails();
+                            if (sdetails.equals(""))
+                                sdetails = "No Details";
                             stags = success.getServicetags();
                             stype = success.getType();
                             simages = success.getImages();

@@ -214,25 +214,27 @@
 
         <RelativeLayout
             android:id="@+id/btnrelative"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/rl1"
+            android:layout_marginTop="10dp"
+            android:layout_centerHorizontal="true"
             android:background="@android:drawable/dialog_holo_light_frame">
 
             <LinearLayout
                 android:id="@+id/relatebutton"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="40dp"
                 android:background="#80bebebe"
-                android:orientation="horizontal"
-                android:weightSum="1">
+                android:layout_centerHorizontal="true"
+                android:orientation="horizontal">
 
                 <Button
                     android:id="@+id/share"
-                    android:layout_width="0dp"
+                    android:padding="10dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="1dp"
-                    android:layout_weight="1"
+                    android:drawableStart="@mipmap/new_share_white"
                     android:background="@drawable/buttonback"
                     android:text="@string/share"
                     android:textColor="@color/white"

@@ -74,7 +74,10 @@ public class StoreProductAdapter extends RecyclerView.Adapter<StoreProductAdapte
         final StoreInventoryResponse.Success.Product product = mMainList.get(position);
         holder.pname.setText(product.getName());
         holder.pprice.setText(product.getPrice());
+        if (!product.getProductDetails().equals(""))
         holder.pdetails.setText(product.getProductDetails());
+        else
+            holder.pdetails.setText("No Details");
         holder.ptags.setText(product.getProductTags());
         holder.ptype.setText(product.getProductType());
         holder.pCategoey.setText(product.getCategory());

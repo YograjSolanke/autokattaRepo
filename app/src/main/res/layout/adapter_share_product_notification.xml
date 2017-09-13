@@ -68,11 +68,11 @@
 
                     <ImageView
                         android:id="@+id/fvrtimg"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
-                        android:background="@drawable/fav1"
+                        android:background="@mipmap/new_favourite"
                         android:contentDescription="@string/app_name" />
 
                     <ImageView
@@ -81,7 +81,7 @@
                         android:layout_height="25dp"
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
-                        android:background="@drawable/fav2"
+                        android:background="@mipmap/new_favourite_clk"
                         android:contentDescription="@string/app_name"
                         android:visibility="gone" />
 
@@ -214,67 +214,23 @@
                     android:layout_below="@+id/producttyperel"
                     android:layout_marginEnd="20dp"
                     android:layout_marginTop="20dp"
-                    android:background="@drawable/call_icon"
+                    android:background="@mipmap/new_call"
                     android:contentDescription="@string/app_name" />
 
-                <ImageView
-                    android:id="@+id/starprod1"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                <RatingBar
+                    android:id="@+id/store_rating"
+                    style="?android:attr/ratingBarStyleSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:numStars="5"
                     android:layout_below="@+id/callimg"
                     android:layout_marginBottom="5dp"
-                    android:layout_marginEnd="2dp"
                     android:layout_marginTop="5dp"
-                    android:layout_toStartOf="@+id/starprod2"
-                    android:background="@drawable/ratestar1"
-                    android:contentDescription="@string/app_name" />
+                    android:stepSize="1.0"
+                    android:theme="@style/RatingBar"
+                    android:layout_alignParentEnd="true" />
 
-                <ImageView
-                    android:id="@+id/starprod2"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_below="@+id/callimg"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginEnd="2dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_toStartOf="@+id/starprod3"
-                    android:background="@drawable/ratestar1" />
 
-                <ImageView
-                    android:id="@+id/starprod3"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_below="@+id/callimg"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginEnd="2dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_toStartOf="@+id/starprod4"
-                    android:background="@drawable/ratestar1"
-                    android:contentDescription="@string/app_name" />
-
-                <ImageView
-                    android:id="@+id/starprod4"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_below="@+id/callimg"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginEnd="2dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_toStartOf="@+id/starprod5"
-                    android:background="@drawable/ratestar1"
-                    android:contentDescription="@string/app_name" />
-
-                <ImageView
-                    android:id="@+id/starprod5"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_below="@+id/callimg"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginEnd="5dp"
-                    android:layout_marginTop="5dp"
-                    android:background="@drawable/ratestar1"
-                    android:contentDescription="@string/app_name" />
 
             </RelativeLayout>
 
@@ -287,137 +243,208 @@
 
             </View>
 
-            <LinearLayout
+            <!--<LinearLayout-->
 
+            <!--android:id="@+id/relalike2"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="35dp"-->
+            <!--android:layout_below="@+id/v2"-->
+            <!--android:background="@color/white"-->
+            <!--android:orientation="horizontal">-->
+
+            <!--<LinearLayout-->
+            <!--android:id="@+id/linearlike"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_marginTop="5dp"-->
+            <!--android:layout_weight="1"-->
+            <!--android:gravity="center">-->
+
+            <!--<ImageView-->
+            <!--android:id="@+id/likeimg"-->
+            <!--android:layout_width="20dp"-->
+            <!--android:layout_height="20dp"-->
+            <!--android:background="@drawable/likeicon"-->
+            <!--android:contentDescription="@string/app_name" />-->
+
+            <!--<TextView-->
+            <!--android:id="@+id/liketxt"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginStart="5dp"-->
+            <!--android:text="Like"-->
+            <!--android:textColor="#808080" />-->
+
+            <!--</LinearLayout>-->
+
+            <!--<LinearLayout-->
+            <!--android:id="@+id/linearunlike"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_marginTop="5dp"-->
+            <!--android:layout_weight="1"-->
+            <!--android:gravity="center"-->
+            <!--android:visibility="gone">-->
+
+            <!--<ImageView-->
+            <!--android:id="@+id/unlikeimg"-->
+            <!--android:layout_width="20dp"-->
+            <!--android:layout_height="20dp"-->
+            <!--android:background="@drawable/unlikethumb"-->
+            <!--android:contentDescription="@string/app_name" />-->
+
+            <!--<TextView-->
+            <!--android:id="@+id/unliketxt"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginStart="5dp"-->
+            <!--android:text="Unlike"-->
+            <!--android:textColor="@color/red" />-->
+
+            <!--</LinearLayout>-->
+
+            <!--<View-->
+            <!--android:layout_width="1dp"-->
+            <!--android:layout_height="20dp"-->
+            <!--android:layout_gravity="center"-->
+            <!--android:background="#cccccc">-->
+
+            <!--</View>-->
+
+
+            <!--<LinearLayout-->
+            <!--android:id="@+id/linearshare"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_marginTop="5dp"-->
+            <!--android:layout_weight="1"-->
+            <!--android:gravity="center">-->
+
+            <!--<ImageView-->
+            <!--android:id="@+id/shareimg"-->
+            <!--android:layout_width="20dp"-->
+            <!--android:layout_height="20dp"-->
+            <!--android:background="@android:drawable/ic_menu_share"-->
+            <!--android:contentDescription="@string/app_name" />-->
+
+            <!--<TextView-->
+            <!--android:id="@+id/sharetxt"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginStart="5dp"-->
+            <!--android:text="Share"-->
+            <!--android:textColor="#808080" />-->
+
+            <!--</LinearLayout>-->
+
+            <!--<View-->
+            <!--android:layout_width="1dp"-->
+            <!--android:layout_height="20dp"-->
+            <!--android:layout_gravity="center"-->
+            <!--android:background="#cccccc">-->
+
+            <!--</View>-->
+
+
+            <!--<LinearLayout-->
+            <!--android:id="@+id/linearshare1"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_marginTop="5dp"-->
+            <!--android:layout_weight="1"-->
+            <!--android:gravity="center">-->
+
+            <!--<ImageView-->
+            <!--android:id="@+id/shareimg1"-->
+            <!--android:layout_width="20dp"-->
+            <!--android:layout_height="20dp"-->
+            <!--android:background="@drawable/autoshare"-->
+            <!--android:contentDescription="@string/app_name" />-->
+
+            <!--<TextView-->
+            <!--android:id="@+id/sharetxt1"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginStart="5dp"-->
+            <!--android:text="Share"-->
+            <!--android:textColor="#808080" />-->
+
+            <!--</LinearLayout>-->
+
+            <!--</LinearLayout>-->
+
+            <LinearLayout
                 android:id="@+id/relalike2"
                 android:layout_width="match_parent"
-                android:layout_height="35dp"
+                android:layout_height="wrap_content"
                 android:layout_below="@+id/v2"
-                android:background="@color/white"
-                android:orientation="horizontal">
+                android:baselineAligned="false"
+                android:orientation="horizontal"
+                android:weightSum="2">
 
                 <LinearLayout
-                    android:id="@+id/linearlike"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="5dp"
-                    android:layout_weight="1"
-                    android:gravity="center">
-
-                    <ImageView
-                        android:id="@+id/likeimg"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:background="@drawable/likeicon"
-                        android:contentDescription="@string/app_name" />
-
-                    <TextView
-                        android:id="@+id/liketxt"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"
-                        android:text="Like"
-                        android:textColor="#808080" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/linearunlike"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="5dp"
-                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:visibility="gone">
+                    android:layout_weight="1">
 
-                    <ImageView
-                        android:id="@+id/unlikeimg"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:background="@drawable/unlikethumb"
-                        android:contentDescription="@string/app_name" />
-
-                    <TextView
-                        android:id="@+id/unliketxt"
+                    <Button
+                        android:id="@+id/unlike"
+                        style="?android:attr/button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"
-                        android:text="Unlike"
-                        android:textColor="@color/red" />
+                        android:background="@android:color/transparent"
+                        android:drawableStart="@mipmap/unlike"
+                        android:text="@string/likes"
+                        android:visibility="visible" />
+
+                    <Button
+                        android:id="@+id/like"
+                        style="?android:attr/button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:drawableStart="@mipmap/you_like"
+                        android:text="@string/likes"
+                        android:textColor="#5176c9"
+                        android:textStyle="bold"
+                        android:visibility="gone" />
 
                 </LinearLayout>
 
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="20dp"
-                    android:layout_gravity="center"
-                    android:background="#cccccc">
+                <!--<LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.9"
+                    android:orientation="horizontal">
 
-                </View>
+                    <Button
+                        style="?android:attr/button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:drawableStart="@mipmap/unlike"
+                        android:text="@string/share" />
+                </LinearLayout>-->
 
 
                 <LinearLayout
-                    android:id="@+id/linearshare"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="5dp"
-                    android:layout_weight="1"
-                    android:gravity="center">
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_weight="1">
 
-                    <ImageView
-                        android:id="@+id/shareimg"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:background="@android:drawable/ic_menu_share"
-                        android:contentDescription="@string/app_name" />
-
-                    <TextView
-                        android:id="@+id/sharetxt"
+                    <Button
+                        android:id="@+id/shares"
+                        style="?android:attr/button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"
-                        android:text="Share"
-                        android:textColor="#808080" />
-
+                        android:layout_gravity="center"
+                        android:background="@android:color/transparent"
+                        android:drawableStart="@mipmap/new_share"
+                        android:text="Share" />
                 </LinearLayout>
-
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="20dp"
-                    android:layout_gravity="center"
-                    android:background="#cccccc">
-
-                </View>
-
-
-                <LinearLayout
-                    android:id="@+id/linearshare1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="5dp"
-                    android:layout_weight="1"
-                    android:gravity="center">
-
-                    <ImageView
-                        android:id="@+id/shareimg1"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:background="@drawable/autoshare"
-                        android:contentDescription="@string/app_name" />
-
-                    <TextView
-                        android:id="@+id/sharetxt1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"
-                        android:text="Share"
-                        android:textColor="#808080" />
-
-                </LinearLayout>
-
             </LinearLayout>
-
-
         </RelativeLayout>
     </android.support.v7.widget.CardView>
 

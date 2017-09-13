@@ -70,7 +70,10 @@ public class StoreServiceAdapter extends RecyclerView.Adapter<StoreServiceAdapte
         final StoreInventoryResponse.Success.Service service = mMainList.get(position);
         holder.pname.setText(service.getServiceName());
         holder.pprice.setText(service.getServicePrice());
+        if (!service.getServiceDetails().equals(""))
         holder.pdetails.setText(service.getServiceDetails());
+        else
+            holder.pdetails.setText("No Details");
         holder.ptags.setText(service.getServicetags());
         holder.ptype.setText(service.getServiceType());
         holder.pCategory.setText(service.getServicecategory());
