@@ -42,6 +42,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:layout_toEndOf="@+id/nametxt"
+                    android:layout_toStartOf="@+id/call"
                     android:text="@string/names"
                     android:textColor="#808080" />
 
