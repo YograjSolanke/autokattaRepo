@@ -5,9 +5,8 @@
     android:layout_height="match_parent"
     tools:context="autokatta.com.other.ShowQrCode">
 
-    <ImageView
+    <ListView
+        android:id="@+id/store_qr_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:contentDescription="@string/app_name" />
+        android:layout_height="wrap_content" />
 </LinearLayout>

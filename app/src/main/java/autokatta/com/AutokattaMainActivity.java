@@ -138,7 +138,7 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
         mLanguage = getSharedPreferences(getString(R.string.firstRun), MODE_PRIVATE).getString("Language", "");
         setLocale(mLanguage);
 
-        /**
+        /* *
          * Call this function whenever you want to check user login
          * This will redirect user to LoginActivity is he is not
          * logged in
@@ -830,7 +830,7 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
                     /*//setting values to textviews
                     textViewName.setText(obj.getString("name"));
                     textViewAddress.setText(obj.getString("address"));*/
-                    Toast.makeText(getApplicationContext(), " " + obj.getString("name") + "" + obj.getString("address"), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), " " + obj.getString("storeid") + "->" + obj.getString("storecontact"), Toast.LENGTH_SHORT).show();
                 } catch (JSONException e) {
                     e.printStackTrace();
                     //if control comes here

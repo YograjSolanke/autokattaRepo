@@ -93,6 +93,7 @@ dependencies {
     compile 'com.nineoldandroids:library:2.4.0'
     compile 'com.daimajia.slider:library:1.1.5@aar'
     compile 'com.journeyapps:zxing-android-embedded:3.4.0'
+    compile 'com.google.zxing:core:3.2.1'
     compile 'com.github.fiskurgit:ChipCloud:3.0.3'
     compile 'com.google.android:flexbox:0.2.5'
     compile 'com.android.support:multidex:1.0.1'

@@ -752,7 +752,8 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
-        <activity android:name=".other.ShowQrCode"></activity>
+        <activity android:name=".other.ShowQrCode" />
+        <activity android:name=".other.ViewQrCode"></activity>
     </application>
 
 </manifest>

@@ -1292,6 +1292,4 @@ public interface ServiceApi {
                                                   @Query("Discussion") String Discussion, @Query("NextFollowUpDate") String NextFollowUpDate,
                                                   @Query("Idslist") String Idslist);
 
-
-
 }
