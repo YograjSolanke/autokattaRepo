@@ -93,6 +93,7 @@ public class EnquiredPersonsListActivity extends AppCompatActivity implements Re
                 mTypetxt.setText(strKeyword);
                 mTitletxt.setText(strTitle);
                 mAddress.setText(bundleAddress);
+                mContact.setText(bundlecontact);
                 mCustname.setText(bundleCustname);
 
                 dialog = new ProgressDialog(EnquiredPersonsListActivity.this);

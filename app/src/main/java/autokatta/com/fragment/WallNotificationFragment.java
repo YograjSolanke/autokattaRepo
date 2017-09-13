@@ -124,6 +124,7 @@ public class WallNotificationFragment extends Fragment implements SwipeRefreshLa
                 mRetry.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        mSwipeRefreshLayout.setRefreshing(true);
                         getData();
                     }
                 });

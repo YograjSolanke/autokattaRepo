@@ -142,7 +142,7 @@ public class InventoryAdapter extends BaseAdapter {
                 holder.mCheckBox.setFocusable(false);
                 holder.mCheckBox.setChecked(positionArray[position]);
 
-                final ViewHolder finalHolder = holder;
+               final ViewHolder finalHolder = holder;
                 holder.mCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 
                     @Override
@@ -169,6 +169,29 @@ public class InventoryAdapter extends BaseAdapter {
                 holder.mProductCategory.setText(product.getCategory());
                 holder.mProductType.setText(product.getProductType());
                 Log.i("product", "name->" + product.getProductName());
+
+                holder.mProductCheck.setFocusable(false);
+                holder.mProductCheck.setChecked(positionArray[position]);
+
+                final ViewHolder finalHolder1 = holder;
+                holder.mProductCheck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        if (finalHolder1.mProductCheck.isChecked()) {
+                            if (isChecked) {
+                                checked_ids.set(position, mItemList.get(position).getProductId());
+                                positionArray[position] = true;
+                            } else if (checked_ids.contains(mItemList.get(position).getProductId())) {
+                                checked_ids.set(position, "0");
+                                positionArray[position] = false;
+                            }
+                        } else {
+                            Toast.makeText(mActivity, "checked", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                });
                 break;
 
             case "Services":
@@ -177,6 +200,30 @@ public class InventoryAdapter extends BaseAdapter {
                 holder.mServiceCategory.setText(services.getCategory());
                 holder.mServiceType.setText(services.getType());
                 Log.i("product", "name->" + services.getName());
+
+
+                holder.mServiceCheck.setFocusable(false);
+                holder.mServiceCheck.setChecked(positionArray[position]);
+
+                final ViewHolder finalHolder2 = holder;
+                holder.mServiceCheck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        if (finalHolder2.mServiceCheck.isChecked()) {
+                            if (isChecked) {
+                                checked_ids.set(position, mItemList.get(position).getProductId());
+                                positionArray[position] = true;
+                            } else if (checked_ids.contains(mItemList.get(position).getProductId())) {
+                                checked_ids.set(position, "0");
+                                positionArray[position] = false;
+                            }
+                        } else {
+                            Toast.makeText(mActivity, "checked", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                });
                 break;
         }
         return convertView;

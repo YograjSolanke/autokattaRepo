@@ -49,14 +49,14 @@ public class ManualEnquiryVehicleList extends AppCompatActivity implements Reque
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
-        setTitle("Select Vehicle");
+
         mListView = (ListView) findViewById(R.id.vehicle_list);
         mSubmit = (Button) findViewById(R.id.submit);
         mSubmit.setOnClickListener(this);
 
         if (getIntent().getExtras() != null) {
             getMyInventoryData(getIntent().getExtras().getString("spinnerValue"));
-
+            setTitle("Select "+getIntent().getExtras().getString("spinnerValue"));
             custName = getIntent().getExtras().getString("custName");
             custContact = getIntent().getExtras().getString("custContact");
             custAddress = getIntent().getExtras().getString("custAddress");
@@ -289,7 +289,7 @@ public class ManualEnquiryVehicleList extends AppCompatActivity implements Reque
                     AddEnquiryData(custName, custContact, custAddress, custFullAddress, custInventoryType, custEnquiryStatus,
                             discussion, nextFollowupDate, addArray);
                 } else {
-                    Toast.makeText(this, "Please add your Inventory...", Toast.LENGTH_SHORT).show();
+                    CustomToast.customToast(this, "Please Select Atleat One...");
                 }
                 break;
         }

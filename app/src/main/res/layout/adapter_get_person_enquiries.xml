@@ -31,6 +31,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.6"
                     android:text="@string/contact_no"
+                    android:visibility="gone"
                     android:textStyle="bold" />
 
                 <TextView
@@ -40,7 +41,8 @@
                     android:layout_weight="1.2"
                     android:gravity="start"
                     android:text="@string/contact_no"
-                    android:textColor="@color/text_color" />
+                    android:textColor="@color/text_color"
+                    android:visibility="gone"/>
 
                 <ImageView
                     android:id="@+id/is_auto"
