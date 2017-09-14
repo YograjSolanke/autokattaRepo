@@ -416,10 +416,11 @@ public class PriceFragment extends Fragment implements RequestNotifier, View.OnC
     private void uploadImage(String picturePath) {
         Log.i("PAth", "->" + picturePath);
         List<String> imgList = Arrays.asList(picturePath.split(","));
-        for (int i = 0; i < imgList.size(); i++) {
+        //for (int i = 0; i < imgList.size(); i++) {
 
 
-            File file = new File(imgList.get(i));
+        //File file = new File(imgList.get(i));
+        File file = new File(picturePath);
             // Parsing any Media type file
             RequestBody requestBody = RequestBody.create(MediaType.parse("*/*"), file);
             MultipartBody.Part fileToUpload = MultipartBody.Part.createFormData("file", file.getName(), requestBody);
@@ -438,6 +439,6 @@ public class PriceFragment extends Fragment implements RequestNotifier, View.OnC
 
                 }
             });
-        }
+        //}
     }
 }

@@ -1236,8 +1236,11 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                 int man_yearposition = myp.getSelectedYearPosition();
                 int reg_yearposition = myp1.getSelectedYearPosition();
 
-                strHrs = mHrs.getText().toString();
-                strKms = Integer.parseInt(mKms.getText().toString());
+                if (category.equalsIgnoreCase("Tractor")) {
+                    strHrs = mHrs.getText().toString();
+                } else {
+                    strKms = Integer.parseInt(mKms.getText().toString());
+                }
 
                 if (radioButton1.isChecked()) {
                     strGroupPriavcy = "Yes";
