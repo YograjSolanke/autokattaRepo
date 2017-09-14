@@ -218,7 +218,7 @@
                     android:contentDescription="@string/app_name" />
 
                 <RatingBar
-                    android:id="@+id/store_rating"
+                    android:id="@+id/product_rating"
                     style="?android:attr/ratingBarStyleSmall"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

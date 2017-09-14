@@ -61,7 +61,7 @@ public class ShareWithCaptionAdapter extends BaseAdapter {
         TextView storename, storetype, location, website, time, workingday;
         RelativeLayout relative, relaprofilelike;
         LinearLayout relalike2, relatebutton;
-        RatingBar storerating;
+        RatingBar storerating, productRating, serviceRating;
         ImageView dp, groupimage, storeimage, imgvehicle, imgproduct, imgservice, profileimage, storecallimg, Upimgvehicle;
         TextView profilefollowcnt, profilelikecnt, storefollowcnt, storelikecnt, vehiclelikecnt, Upvehiclelikecnt;
         TextView productname, producttype, productlikecnt;
@@ -152,6 +152,7 @@ public class ShareWithCaptionAdapter extends BaseAdapter {
                         holder.relalike2 = (LinearLayout) view.findViewById(R.id.relalike2);
                         holder.relalike2 = (LinearLayout) view.findViewById(R.id.relalike2);
                         holder.callimg = (ImageView) view.findViewById(R.id.callimg);
+                        holder.productRating = (RatingBar) view.findViewById(R.id.product_rating);
 
 
                         break;
@@ -169,6 +170,7 @@ public class ShareWithCaptionAdapter extends BaseAdapter {
                         holder.relative = (RelativeLayout) view.findViewById(R.id.relative);
                         holder.relalike2 = (LinearLayout) view.findViewById(R.id.relalike2);
                         holder.callimg = (ImageView) view.findViewById(R.id.callimg);
+                        holder.serviceRating = (RatingBar) view.findViewById(R.id.service_rating);
                         break;
 
 
@@ -402,37 +404,8 @@ public class ShareWithCaptionAdapter extends BaseAdapter {
                                 .into(holder.imgproduct);
                     }
 
-
-                    if (!data1[2].equals("null")) {
-
-                        Float f = Float.parseFloat(data1[2]);
-                        if (f > 4.5) {
-                            holder.productrating1.setImageResource(R.drawable.ratestar1);
-                            holder.productrating2.setImageResource(R.drawable.ratestar1);
-                            holder.productrating3.setImageResource(R.drawable.ratestar1);
-                            holder.productrating4.setImageResource(R.drawable.ratestar1);
-                            holder.productrating5.setImageResource(R.drawable.ratestar1);
-                        } else if (f > 3.5 && f <= 4.5) {
-                            holder.productrating1.setImageResource(R.drawable.ratestar1);
-                            holder.productrating2.setImageResource(R.drawable.ratestar1);
-                            holder.productrating3.setImageResource(R.drawable.ratestar1);
-                            holder.productrating4.setImageResource(R.drawable.ratestar1);
-                        } else if (f > 2.5 && f <= 3.5) {
-                            holder.productrating1.setImageResource(R.drawable.ratestar1);
-                            holder.productrating2.setImageResource(R.drawable.ratestar1);
-                            holder.productrating3.setImageResource(R.drawable.ratestar1);
-                        } else if (f > 1.5 && f <= 2.5) {
-                            holder.productrating1.setImageResource(R.drawable.ratestar1);
-                            holder.productrating2.setImageResource(R.drawable.ratestar1);
-                        } else if (f <= 1.5 && f > 0.5) {
-                            holder.productrating1.setImageResource(R.drawable.ratestar1);
-
-                        } else if (f <= 0.5) {
-
-                        }
-
-                    } else {
-
+                    if (data1[2] != null && !data1[2].equals("null")) {
+                        holder.productRating.setRating(Float.parseFloat(data1[2]));
                     }
                 }
 
@@ -460,39 +433,10 @@ public class ShareWithCaptionAdapter extends BaseAdapter {
                                 .override(100, 100)
                                 .into(holder.imgservice);
                     }
-
-
-                    if (!data2[2].equals("null")) {
-
-                        Float f = Float.parseFloat(data2[2]);
-                        if (f > 4.5) {
-                            holder.servicerating1.setImageResource(R.drawable.ratestar1);
-                            holder.servicerating2.setImageResource(R.drawable.ratestar1);
-                            holder.servicerating3.setImageResource(R.drawable.ratestar1);
-                            holder.servicerating4.setImageResource(R.drawable.ratestar1);
-                            holder.servicerating5.setImageResource(R.drawable.ratestar1);
-                        } else if (f > 3.5 && f <= 4.5) {
-                            holder.servicerating1.setImageResource(R.drawable.ratestar1);
-                            holder.servicerating2.setImageResource(R.drawable.ratestar1);
-                            holder.servicerating3.setImageResource(R.drawable.ratestar1);
-                            holder.servicerating4.setImageResource(R.drawable.ratestar1);
-                        } else if (f > 2.5 && f <= 3.5) {
-                            holder.servicerating1.setImageResource(R.drawable.ratestar1);
-                            holder.servicerating2.setImageResource(R.drawable.ratestar1);
-                            holder.servicerating3.setImageResource(R.drawable.ratestar1);
-                        } else if (f > 1.5 && f <= 2.5) {
-                            holder.servicerating1.setImageResource(R.drawable.ratestar1);
-                            holder.servicerating2.setImageResource(R.drawable.ratestar1);
-                        } else if (f <= 1.5 && f > 0.5) {
-                            holder.servicerating1.setImageResource(R.drawable.ratestar1);
-
-                        } else if (f <= 0.5) {
-
-                        }
-
-                    } else {
-
+                    if (data2[2] != null && !data2[2].equals("null")) {
+                        holder.productRating.setRating(Float.parseFloat(data2[2]));
                     }
+
                 }
 
 
