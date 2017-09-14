@@ -150,11 +150,6 @@ public class ShareWithCaptionAdapter extends BaseAdapter {
                         holder.productlikecnt = (TextView) view.findViewById(R.id.likeprod);
                         holder.relative = (RelativeLayout) view.findViewById(R.id.relative);
                         holder.relalike2 = (LinearLayout) view.findViewById(R.id.relalike2);
-                        holder.productrating1 = (ImageView) view.findViewById(R.id.starprod1);
-                        holder.productrating2 = (ImageView) view.findViewById(R.id.starprod2);
-                        holder.productrating3 = (ImageView) view.findViewById(R.id.starprod3);
-                        holder.productrating4 = (ImageView) view.findViewById(R.id.starprod4);
-                        holder.productrating5 = (ImageView) view.findViewById(R.id.starprod5);
                         holder.relalike2 = (LinearLayout) view.findViewById(R.id.relalike2);
                         holder.callimg = (ImageView) view.findViewById(R.id.callimg);
 
@@ -173,12 +168,6 @@ public class ShareWithCaptionAdapter extends BaseAdapter {
                         holder.servicesharecnt = (TextView) view.findViewById(R.id.shareservice);
                         holder.relative = (RelativeLayout) view.findViewById(R.id.relative);
                         holder.relalike2 = (LinearLayout) view.findViewById(R.id.relalike2);
-                        holder.servicerating1 = (ImageView) view.findViewById(R.id.starservice1);
-                        holder.servicerating2 = (ImageView) view.findViewById(R.id.starservice2);
-                        holder.servicerating3 = (ImageView) view.findViewById(R.id.starservice3);
-                        holder.servicerating4 = (ImageView) view.findViewById(R.id.starservice4);
-                        holder.servicerating5 = (ImageView) view.findViewById(R.id.starservice5);
-
                         holder.callimg = (ImageView) view.findViewById(R.id.callimg);
                         break;
 
