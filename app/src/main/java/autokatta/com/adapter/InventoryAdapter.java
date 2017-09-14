@@ -212,9 +212,9 @@ public class InventoryAdapter extends BaseAdapter {
                     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                         if (finalHolder2.mServiceCheck.isChecked()) {
                             if (isChecked) {
-                                checked_ids.set(position, mItemList.get(position).getProductId());
+                                checked_ids.set(position, mItemList.get(position).getId());
                                 positionArray[position] = true;
-                            } else if (checked_ids.contains(mItemList.get(position).getProductId())) {
+                            } else if (checked_ids.contains(mItemList.get(position).getId())) {
                                 checked_ids.set(position, "0");
                                 positionArray[position] = false;
                             }

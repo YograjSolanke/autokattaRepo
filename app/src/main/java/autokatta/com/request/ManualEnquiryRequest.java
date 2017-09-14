@@ -22,12 +22,30 @@ public class ManualEnquiryRequest {
     public String productType;
     public String productPrice;
     public String productImage;
+    public String productId;
+
+    public String getProductId() {
+        return productId;
+    }
+
+    public void setProductId(String productId) {
+        this.productId = productId;
+    }
+
+    public String getServiceId() {
+        return serviceId;
+    }
+
+    public void setServiceId(String serviceId) {
+        this.serviceId = serviceId;
+    }
 
     public String serviceName;
     public String serviceCategory;
     public String serviceType;
     public String servicePrice;
     public String serviceImage;
+    public String serviceId;
 
     public String customerName;
     public String customerContact;

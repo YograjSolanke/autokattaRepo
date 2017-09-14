@@ -71,7 +71,7 @@ public class BussinessChatAdapter extends RecyclerView.Adapter<BussinessChatAdap
                 b.putInt("product_id", mItemList.get(getAdapterPosition()).getProductId());
                 b.putInt("service_id", 0);
                 b.putInt("vehicle_id", 0);
-                b.putString("keyword", "Product");
+                b.putString("keyword", "Products");
                 b.putString("title", mItemList.get(getAdapterPosition()).getProductName());
                 b.putString("price", mItemList.get(getAdapterPosition()).getPrice());
                 b.putString("category", "");
@@ -83,7 +83,7 @@ public class BussinessChatAdapter extends RecyclerView.Adapter<BussinessChatAdap
                 b.putInt("product_id", 0);
                 b.putInt("service_id", mItemList.get(getAdapterPosition()).getId());
                 b.putInt("vehicle_id", 0);
-                b.putString("keyword", "Service");
+                b.putString("keyword", "Services");
                 b.putString("title", mItemList.get(getAdapterPosition()).getName());
                 b.putString("price", mItemList.get(getAdapterPosition()).getPrice());
                 b.putString("category", "");
@@ -96,7 +96,7 @@ public class BussinessChatAdapter extends RecyclerView.Adapter<BussinessChatAdap
                 b.putInt("product_id", 0);
                 b.putInt("service_id", 0);
                 b.putInt("vehicle_id", mItemList.get(getAdapterPosition()).getVehicleId());
-                b.putString("keyword", "Vehicle");
+                b.putString("keyword", "Used Vehicle");
                 b.putString("title", mItemList.get(getAdapterPosition()).getVeihicletitle());
                 b.putString("price", mItemList.get(getAdapterPosition()).getPrice());
                 b.putString("category", mItemList.get(getAdapterPosition()).getCategory());

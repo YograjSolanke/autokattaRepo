@@ -194,9 +194,34 @@ public class ManualEnquiry extends AppCompatActivity implements SwipeRefreshLayo
 
                             request.setCustomerName("name");
                             request.setCustomerContact("contact");
-                            request.setCreatedDate(success.getCreatedDate());
-                            request.setFollowupDate(success.getNextFollowupDate());
+                            //request.setCreatedDate(success.getCreatedDate());
+                          //  request.setFollowupDate(success.getNextFollowupDate());
                             request.setEnquiryStatus(success.getCustEnquiryStatus());
+
+                            /*Date format*/
+                       /*     try {
+                                TimeZone utc = TimeZone.getTimeZone("etc/UTC");
+                                //format of date coming from services
+                                DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd ", Locale.getDefault());
+                        *//*DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",
+                                Locale.getDefault());*//*
+                                inputFormat.setTimeZone(utc);
+
+                                //format of date which we want to show
+                                DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy ", Locale.getDefault());
+                        *//*DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy hh:mm aa",
+                                Locale.getDefault());*//*
+                                outputFormat.setTimeZone(utc);
+
+                                Date date = inputFormat.parse(success.getNextFollowupDate());
+                                //System.out.println("jjj"+date);
+                                String output = outputFormat.format(date);
+                                //System.out.println(mainList.get(i).getDate()+" jjj " + output);
+                                success.setNextFollowupDate(output);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }*/
+
 
                             if (success.getPrice().equals("") || success.getPrice().isEmpty())
                                 request.setVehiclePrice("NA");
@@ -215,16 +240,43 @@ public class ManualEnquiry extends AppCompatActivity implements SwipeRefreshLayo
                         for (ManualEnquiryResponse.Success.Product success : manualEnquiry.getSuccess().getProducts()) {
                             ManualEnquiryRequest request = new ManualEnquiryRequest();
                             request.setLayoutNo(2);
-                            request.setVehicleId(success.getProductId());
+                            request.setProductId(success.getProductId());
                             request.setProductName(success.getProductName());
                             request.setProductCategory(success.getCategory());
                             request.setProductType(success.getProductType());
 
                             request.setCustomerName("name");
                             request.setCustomerContact("contact");
-                            request.setCreatedDate(success.getCreatedDate());
-                            request.setFollowupDate(success.getNextFollowupDate());
+                         //   request.setCreatedDate(success.getCreatedDate());
+                           // request.setFollowupDate(success.getNextFollowupDate());
                             request.setEnquiryStatus(success.getCustEnquiryStatus());
+
+
+                              /*Date format*/
+                        /*    try {
+                                TimeZone utc = TimeZone.getTimeZone("etc/UTC");
+                                //format of date coming from services
+                                DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd ", Locale.getDefault());
+                        *//*DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",
+                                Locale.getDefault());*//*
+                                inputFormat.setTimeZone(utc);
+
+                                //format of date which we want to show
+                                DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy ", Locale.getDefault());
+                        *//*DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy hh:mm aa",
+                                Locale.getDefault());*//*
+                                outputFormat.setTimeZone(utc);
+
+                                Date date = inputFormat.parse(success.getNextFollowupDate());
+                                //System.out.println("jjj"+date);
+                                String output = outputFormat.format(date);
+                                //System.out.println(mainList.get(i).getDate()+" jjj " + output);
+                                success.setNextFollowupDate(output);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+*/
+
 
                             if (success.getPrice().equals("") || success.getPrice().isEmpty())
                                 request.setProductPrice("NA");
@@ -244,7 +296,7 @@ public class ManualEnquiry extends AppCompatActivity implements SwipeRefreshLayo
                         for (ManualEnquiryResponse.Success.Service service : manualEnquiry.getSuccess().getServices()) {
                             ManualEnquiryRequest request = new ManualEnquiryRequest();
                             request.setLayoutNo(3);
-                            request.setVehicleId(service.getId());
+                            request.setServiceId(service.getId());
                             request.setServiceName(service.getName());
                             request.setServiceCategory(service.getCategory());
                             request.setServiceType(service.getType());
@@ -255,6 +307,30 @@ public class ManualEnquiry extends AppCompatActivity implements SwipeRefreshLayo
                             request.setFollowupDate(service.getNextFollowupDate());
                             request.setEnquiryStatus(service.getCustEnquiryStatus());
 
+                              /*Date format*/
+                           /* try {
+                                TimeZone utc = TimeZone.getTimeZone("etc/UTC");
+                                //format of date coming from services
+                                DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd ", Locale.getDefault());
+                        *//*DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",
+                                Locale.getDefault());*//*
+                                inputFormat.setTimeZone(utc);
+
+                                //format of date which we want to show
+                                DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy ", Locale.getDefault());
+                        *//*DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy hh:mm aa",
+                                Locale.getDefault());*//*
+                                outputFormat.setTimeZone(utc);
+
+                                Date date = inputFormat.parse(service.getNextFollowupDate());
+                                //System.out.println("jjj"+date);
+                                String output = outputFormat.format(date);
+                                //System.out.println(mainList.get(i).getDate()+" jjj " + output);
+                                service.setNextFollowupDate(output);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+*/
                             if (service.getPrice().equals("") || service.getPrice().isEmpty())
                                 request.setServicePrice("NA");
                             else
@@ -356,16 +432,19 @@ public class ManualEnquiry extends AppCompatActivity implements SwipeRefreshLayo
         //getPersonData(request.getVehicleId(), request.getVehicleInventory());
 
         Intent intent = new Intent(ManualEnquiry.this, EnquiredPersonsActivity.class);
-        intent.putExtra("id", request.getVehicleId());
+
         intent.putExtra("keyword", request.getVehicleInventory());
         switch (request.getVehicleInventory()) {
             case "Products":
+                intent.putExtra("id", request.getProductId());
                 intent.putExtra("name", request.getProductName());
                 break;
             case "Services":
+                intent.putExtra("id", request.getServiceId());
                 intent.putExtra("name", request.getServiceName());
                 break;
             case "Used Vehicle":
+                intent.putExtra("id", request.getVehicleId());
                 intent.putExtra("name", request.getVehicleName());
                 break;
         }

@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -17,8 +18,10 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -54,6 +57,7 @@ public class EnquiredPersonsListActivity extends AppCompatActivity implements Re
     private ProgressDialog dialog;
     FloatingActionButton fabAddNewEnquiry;
     String bundlecontact,bundleAddress,bundleCustname;
+    ImageView mCall;
     String strNewDiscussion = "", strNewFollowDate = "", strNewStatus = "";
 
     @Override
@@ -87,6 +91,7 @@ public class EnquiredPersonsListActivity extends AppCompatActivity implements Re
                 mTitletxt = (TextView) findViewById(R.id.title);
                 mAddress = (TextView) findViewById(R.id.address);
                 mContact = (TextView) findViewById(R.id.contact);
+                mCall = (ImageView) findViewById(R.id.call);
                 mCustname = (TextView) findViewById(R.id.custname);
                 fabAddNewEnquiry = (FloatingActionButton) findViewById(R.id.fabAddNewEnquiry);
 
@@ -130,6 +135,12 @@ public class EnquiredPersonsListActivity extends AppCompatActivity implements Re
             }
         });
 
+        mCall.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                call(bundlecontact);
+            }
+        });
         fabAddNewEnquiry.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -204,6 +215,33 @@ public class EnquiredPersonsListActivity extends AppCompatActivity implements Re
                                     success.setEnquiryStatus(success.getEnquiryStatus());
                                     success.setNextFollowUpDate(success.getNextFollowUpDate());
                                     success.setInventoryType(success.getInventoryType());
+/*
+                                   *//*Date format*//*
+                                try {
+                                    TimeZone utc = TimeZone.getTimeZone("etc/UTC");
+                                    //format of date coming from services
+                                    DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.getDefault());
+                        *//*DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",
+                                Locale.getDefault());*//*
+                                    inputFormat.setTimeZone(utc);
+
+                                    //format of date which we want to show
+                                    DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy hh:mm a", Locale.getDefault());
+                        *//*DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy hh:mm aa",
+                                Locale.getDefault());*//*
+                                    outputFormat.setTimeZone(utc);
+
+                                    Date date = inputFormat.parse(success.getNextFollowUpDate());
+                                    Date date1 = inputFormat.parse(success.getCreatedDate());
+                                    //System.out.println("jjj"+date);
+                                    String output = outputFormat.format(date);
+                                    String output1 = outputFormat.format(date1);
+                                    //System.out.println(mainList.get(i).getDate()+" jjj " + output);
+                                    success.setNextFollowUpDate(output);
+                                    success.setCreatedDate(output1);
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }*/
                                 mList.add(success);
                             }
                             GetPersonsEnquiriesAdapter adapter = new GetPersonsEnquiriesAdapter(this, mList, strId, strKeyword, strTitle,bundlecontact);
@@ -354,6 +392,17 @@ public class EnquiredPersonsListActivity extends AppCompatActivity implements Re
             }
         });
         openDialog.show();
+    }
+
+
+    //Calling Functionality
+    private void call(String rcontact) {
+        Intent in = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + rcontact));
+        try {
+            startActivity(in);
+        } catch (android.content.ActivityNotFoundException ex) {
+            System.out.println("No Activity Found For Call in Car Details Fragment\n");
+        }
     }
 
 

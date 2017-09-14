@@ -173,6 +173,33 @@ public class EnquiredPersonsActivity extends AppCompatActivity implements Reques
                                 success.setLastEnquiryDate(success.getLastEnquiryDate());
                                 success.setCustEnquiryStatus(success.getCustEnquiryStatus());
                                 success.setLastDiscussion(success.getLastDiscussion());
+
+                               /*   *//*Date format*//*
+                                try {
+                                    TimeZone utc = TimeZone.getTimeZone("etc/UTC");
+                                    //format of date coming from services
+                                    DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd ", Locale.getDefault());
+                        *//*DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",
+                                Locale.getDefault());*//*
+                                    inputFormat.setTimeZone(utc);
+
+                                    //format of date which we want to show
+                                    DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy ", Locale.getDefault());
+                        *//*DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy hh:mm aa",
+                                Locale.getDefault());*//*
+                                    outputFormat.setTimeZone(utc);
+
+                                    Date date = inputFormat.parse(success.getNextFollowupDate());
+                                    Date date1 = inputFormat.parse(success.getLastEnquiryDate());
+                                    //System.out.println("jjj"+date);
+                                    String output = outputFormat.format(date);
+                                    String output1 = outputFormat.format(date1);
+                                    //System.out.println(mainList.get(i).getDate()+" jjj " + output);
+                                    success.setNextFollowupDate(output);
+                                    success.setLastEnquiryDate(output1);
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }*/
                                 mList.add(success);
                             }
                             GetPersonDataAdapter adapter = new GetPersonDataAdapter(this, mList, strId, strKeyword, strTitle);

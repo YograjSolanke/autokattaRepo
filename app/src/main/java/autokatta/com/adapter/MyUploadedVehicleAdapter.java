@@ -221,14 +221,14 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
                 //    b.putString("sender",storeContact);
                 b.putString("sender", "");
                 b.putString("sendername", "");
-                b.putString("keyword", "Vehicle");
+                b.putString("keyword", "Used Vehicle");
                 b.putString("category", mMainList.get(holder.getAdapterPosition()).getCategory());
                 b.putString("title", mMainList.get(holder.getAdapterPosition()).getTitle());
                 b.putString("brand", mMainList.get(holder.getAdapterPosition()).getManufacturer());
                 b.putString("model", mMainList.get(holder.getAdapterPosition()).getModel());
                 b.putString("price", mMainList.get(holder.getAdapterPosition()).getPrice());
                 b.putString("image", vimages.get(0));
-                b.putInt("vehicleid", mMainList.get(holder.getAdapterPosition()).getVehicleId());
+                b.putInt("id", mMainList.get(holder.getAdapterPosition()).getVehicleId());
                 b.putString("classname", "myuploadedvehicleadapter");
 
                 Intent intent = new Intent(activity, AddManualEnquiry.class);

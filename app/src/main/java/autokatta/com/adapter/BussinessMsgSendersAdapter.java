@@ -153,9 +153,19 @@ public class BussinessMsgSendersAdapter extends RecyclerView.Adapter<BussinessMs
                 b.putString("model", mModel);
                 b.putString("price", mPrice);
                 b.putString("image", mImage);
-                b.putInt("vehicleid", vehicle_id);
-                b.putString("classname", "bussinessmsgsendersadapter");
+                if (mKeyword.equalsIgnoreCase("Used vehicle")){
+                    b.putInt("id", vehicle_id);
+                }else
+                    if (mKeyword.equalsIgnoreCase("Products"))
+                    {
+                        b.putInt("id", product_id);
+                    }
+                    else
+                    {
+                        b.putInt("id", service_id);
+                    }
 
+                b.putString("classname", "bussinessmsgsendersadapter");
                 Intent intent = new Intent(mActivity, AddManualEnquiry.class);
                 intent.putExtras(b);
                 mActivity.startActivity(intent, option.toBundle());

@@ -62,8 +62,8 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
     ImageView Image;
     Menu menu;
     String fullpath = "";
-    String mVehicleId;
-    String mKeyword,mTitle,mPrice,mCategory,mBrand,mModel,mClassname,mImage;
+    //int mSId,mVId,mPId;
+    String mId,mKeyword,mTitle,mPrice,mCategory,mBrand,mModel,mClassname,mImage;
     private final int REQUEST_CODE = 99;
     Button mSubmit;
 
@@ -161,19 +161,19 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
                     edtName.setSelection(edtName.getText().length());
                     edtContact.setSelection(edtContact.getText().length());
 
-                    Keyword.setText(getIntent().getExtras().getString("keyword"));
+
+                   mKeyword= getIntent().getExtras().getString("keyword");
+                    Keyword.setText(mKeyword);
                     Category.setText(getIntent().getExtras().getString("category"));
                     Title.setText(getIntent().getExtras().getString("title"));
                     Brand.setText(getIntent().getExtras().getString("brand"));
                     Model.setText(getIntent().getExtras().getString("model"));
                     price.setText(getIntent().getExtras().getString("price"));
                     mImage=getIntent().getExtras().getString("image","");
-                    mVehicleId= String.valueOf(getIntent().getExtras().getInt("vehicleid"));
+                    mId= String.valueOf(getIntent().getExtras().getInt("id"));
                     mClassname=getIntent().getExtras().getString("classname");
 
-
-
-                    if (getIntent().getExtras().getString("keyword","").equalsIgnoreCase("Product")) {
+                    if (getIntent().getExtras().getString("keyword","").equalsIgnoreCase("Products")) {
                         relBrand.setVisibility(View.GONE);
                         relModel.setVisibility(View.GONE);
                         if (!mImage.equals("") && !mImage.equals("null")) {
@@ -188,7 +188,7 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
                         } else {
                             Image.setImageResource(R.drawable.logo);
                         }
-                    } else if (getIntent().getExtras().getString("keyword","").equalsIgnoreCase("Service")) {
+                    } else if (getIntent().getExtras().getString("keyword","").equalsIgnoreCase("Services")) {
                         relCategory.setVisibility(View.GONE);
                         relBrand.setVisibility(View.GONE);
                         relModel.setVisibility(View.GONE);
@@ -204,7 +204,7 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
                         } else {
                             Image.setImageResource(R.drawable.logo);
                         }
-                    } else if (getIntent().getExtras().getString("keyword","").equalsIgnoreCase("Vehicle")) {
+                    } else if (getIntent().getExtras().getString("keyword","").equalsIgnoreCase("Used Vehicle")) {
                         if (!mImage.equals("") && !mImage.equals("null")) {
                             fullpath = getString(R.string.base_image_url) + mImage;
                             fullpath = fullpath.replaceAll(" ", "%20");
@@ -223,15 +223,19 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
                         public void onClick(View view) {
                             String custInventoryType = "", custEnquiryStatus = "";
                             Boolean flag = false;
-                           // int strPos = spnInventory.getSelectedItemPosition();
+                          //  int strPos = spnInventory.getSelectedItemPosition();
                             int strPos1 = spnStatus.getSelectedItemPosition();
                             String custName = edtName.getText().toString();
                             String custContact = edtContact.getText().toString();
                             String custAddress = autoAddress.getText().toString();
                             String custFullAddress = edtAddress.getText().toString();
-
-                           /* if (strPos != 0) {
+                            custInventoryType=mKeyword;
+/*
+                            if (strPos != 0) {
                                 custInventoryType = spnInventory.getSelectedItem().toString();
+                            }else
+                            {
+                                custInventoryType=mKeyword;
                             }*/
                             if (strPos1 != 0)
                                 custEnquiryStatus = spnStatus.getSelectedItem().toString();
@@ -267,7 +271,7 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
                             } else if (custFullAddress.equals("")) {
                                 edtAddress.setError("Enter Detailed address");
                                 edtAddress.requestFocus();
-                            }/* else if (spnInventory.getSelectedItemPosition() == 0) {
+                            } /*else if (spnInventory.getSelectedItemPosition() == 0 && custInventoryType.equalsIgnoreCase("")) {
                                 CustomToast.customToast(getApplicationContext(), "Please provide inventory");
                                 spnInventory.requestFocus();
                             } */else if (spnStatus.getSelectedItemPosition() == 0) {
@@ -281,7 +285,7 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
                                 edtDate.requestFocus();
                             } else {
                                     AddEnquiryData(custName, custContact, custAddress, custFullAddress, custInventoryType, custEnquiryStatus,
-                                            discussion, nextFollowupDate, mVehicleId);
+                                            discussion, nextFollowupDate, mId);
                                 }
 
                             }
