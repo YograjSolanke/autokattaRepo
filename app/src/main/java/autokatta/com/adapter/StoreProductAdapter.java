@@ -135,14 +135,15 @@ public class StoreProductAdapter extends RecyclerView.Adapter<StoreProductAdapte
                 //    b.putString("sender",storeContact);
                 b.putString("sender","");
                 b.putString("sendername","");
-                b.putString("keyword", "Product");
+                b.putString("keyword", "Products");
                 b.putString("category", mMainList.get(position).getCategory());
                 b.putString("title", mMainList.get(position).getName());
                 b.putString("brand", mMainList.get(position).getBrandtags());
                 b.putString("model", "");
                 b.putString("price", mMainList.get(position).getPrice());
                 b.putString("image", images.get(0));
-                b.putInt("vehicleid", 0);
+          //      b.putInt("vehicle_id", 0);
+                b.putInt("id", mMainList.get(position).getProductId());
                 b.putString("classname", "storeproductadapter");
 
                 Intent intent = new Intent(activity, AddManualEnquiry.class);
