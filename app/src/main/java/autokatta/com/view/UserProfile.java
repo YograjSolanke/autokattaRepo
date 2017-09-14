@@ -65,6 +65,7 @@ import autokatta.com.fragment_profile.MyVehicles;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.interfaces.ServiceApi;
 import autokatta.com.other.CustomToast;
+import autokatta.com.other.FullImageActivity;
 import autokatta.com.register.NextRegistrationContinue;
 import autokatta.com.response.ProfileAboutResponse;
 import okhttp3.MediaType;
@@ -117,6 +118,7 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
         mCreateStore.setOnClickListener(this);
         addVehicle.setOnClickListener(this);
 
+
         if (getSupportActionBar() != null) {
             getSupportActionBar().setHomeButtonEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -138,7 +140,8 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
             collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
             collapsingToolbar.setCollapsedTitleTextColor(Color.WHITE);
             mProfilePicture = (ImageView) findViewById(R.id.user_image);
-            mProfilePicture.setEnabled(false);
+            //mProfilePicture.setEnabled(false);
+            mProfilePicture.setOnClickListener(this);
             viewPager = (ViewPager) findViewById(R.id.user_profile_viewpager);
             if (viewPager != null) {
                 setupViewPager(viewPager);
@@ -703,6 +706,21 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
                 i.putExtra("action", "profile");
                 i.putExtra("className", "profile");
                 startActivity(i, option.toBundle());
+                break;
+
+            case R.id.user_image:
+
+                String image;
+                if (dp.equals(""))
+                    image = getString(R.string.base_image_url) + "logo48x48.png";
+                else
+                    image = getString(R.string.base_image_url) + dp;
+
+                Bundle b = new Bundle();
+                b.putString("image", image);
+                Intent intentimage = new Intent(UserProfile.this, FullImageActivity.class);
+                intentimage.putExtras(b);
+                startActivity(intentimage);
                 break;
         }
     }

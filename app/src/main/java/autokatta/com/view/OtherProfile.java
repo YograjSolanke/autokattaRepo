@@ -30,6 +30,7 @@ import autokatta.com.fragment_profile.Groups;
 import autokatta.com.fragment_profile.OtherWall;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
+import autokatta.com.other.FullImageActivity;
 import autokatta.com.response.ProfileAboutResponse;
 import retrofit2.Response;
 
@@ -44,6 +45,7 @@ public class OtherProfile extends AppCompatActivity implements RequestNotifier, 
     FloatingActionButton mCall, mLike, mFollow;
     Groups mGroupsFrag;
     AboutStore mStore;
+    String dp = "";
     Event mEventFrag;
     OtherWall mOtherWallFrag;
     String mAction = "other";
@@ -66,11 +68,14 @@ public class OtherProfile extends AppCompatActivity implements RequestNotifier, 
         mCall = (FloatingActionButton) findViewById(R.id.call_c);
         mLike = (FloatingActionButton) findViewById(R.id.like_l);
         mFollow = (FloatingActionButton) findViewById(R.id.follow_f);
+        mOtherPicture = (ImageView) findViewById(R.id.other_profile_image);
+        mOtherPicture.setOnClickListener(this);
 
         mCall.setLabelTextColor(Color.BLACK);
         mCall.setOnClickListener(this);
         mLike.setOnClickListener(this);
         mFollow.setOnClickListener(this);
+
 
         mGroupsFrag = new Groups();
         mGroupsFrag.setArguments(mBundle);
@@ -108,7 +113,6 @@ public class OtherProfile extends AppCompatActivity implements RequestNotifier, 
                     getOtherProfile(mOtherContact);
                     collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
                     mOtherProfile = (CoordinatorLayout) findViewById(R.id.other_profile);
-                    mOtherPicture = (ImageView) findViewById(R.id.other_profile_image);
                     ViewPager viewPager = (ViewPager) findViewById(R.id.other_profile_viewpager);
                     if (viewPager != null) {
                         setupViewPager(viewPager);
@@ -145,7 +149,7 @@ public class OtherProfile extends AppCompatActivity implements RequestNotifier, 
     public void notifySuccess(Response<?> response) {
         if (response != null) {
             if (response.isSuccessful()) {
-                String userName = "", dp = "";
+                String userName = "";
                 ProfileAboutResponse mProfileAboutResponse = (ProfileAboutResponse) response.body();
                 for (ProfileAboutResponse.Success success : mProfileAboutResponse.getSuccess()) {
                     userName = success.getUsername();
@@ -243,6 +247,19 @@ public class OtherProfile extends AppCompatActivity implements RequestNotifier, 
                     mApiCall.UnLike(mLoginContact, mOtherContact, "1", 0, 0, 0, 0, 0, 0, 0);
                     menuRed.setClosedOnTouchOutside(true);
                 }
+                break;
+            case R.id.other_profile_image:
+                String image;
+                if (dp.equals(""))
+                    image = getString(R.string.base_image_url) + "logo48x48.png";
+                else
+                    image = getString(R.string.base_image_url) + dp;
+
+                Bundle b = new Bundle();
+                b.putString("image", image);
+                Intent intent = new Intent(OtherProfile.this, FullImageActivity.class);
+                intent.putExtras(b);
+                startActivity(intent);
                 break;
         }
     }

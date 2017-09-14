@@ -37,6 +37,7 @@ import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.model.LikeUnlike;
 import autokatta.com.other.CustomToast;
+import autokatta.com.other.FullImageActivity;
 import autokatta.com.response.StoreOldAdminResponse;
 import autokatta.com.response.StoreResponse;
 import autokatta.com.view.StoreViewActivity;
@@ -228,6 +229,8 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
         mCall.setOnClickListener(this);
         mWebSite.setOnClickListener(this);
         mEnquiry.setOnClickListener(this);
+        mBannerImage.setOnClickListener(this);
+        mStoreImage.setOnClickListener(this);
     }
 
     private void goToUrl(String url) {
@@ -241,6 +244,9 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
 
     @Override
     public void onClick(View v) {
+
+        Intent intent = new Intent(getActivity(), FullImageActivity.class);
+        Bundle b = new Bundle();
         switch (v.getId()) {
             case R.id.call:
                 if (storeAdmins.size() == 0)
@@ -289,6 +295,30 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
 
             case R.id.enquiry:
 
+                break;
+            case R.id.other_store_image:
+                String image;
+                if (storeCoverImage.equals(""))
+                    image = getString(R.string.base_image_url) + "logo48x48.png";
+                else
+                    image = getString(R.string.base_image_url) + storeCoverImage;
+
+                b.putString("image", image);
+                intent.putExtras(b);
+                startActivity(intent);
+                break;
+            case R.id.other_store_images:
+
+
+                String imageStore;
+                if (storeImage.equals(""))
+                    imageStore = getString(R.string.base_image_url) + "logo48x48.png";
+                else
+                    imageStore = getString(R.string.base_image_url) + storeImage;
+
+                b.putString("image", imageStore);
+                intent.putExtras(b);
+                startActivity(intent);
                 break;
         }
     }

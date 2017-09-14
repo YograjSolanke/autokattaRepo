@@ -42,6 +42,7 @@ import autokatta.com.fragment.VehicleDetailsTwo;
 import autokatta.com.fragment.VehicleDetails_Details;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
+import autokatta.com.other.FullImageActivity;
 import autokatta.com.response.GetVehicleByIdResponse;
 import retrofit2.Response;
 
@@ -241,13 +242,22 @@ public class VehicleDetails extends AppCompatActivity implements RequestNotifier
                 }
 
                 /* Banner...*/
-                for (String name : Hash_file_maps.keySet()) {
+                for (final String name : Hash_file_maps.keySet()) {
                     TextSliderView textSliderView = new TextSliderView(VehicleDetails.this);
                     textSliderView
                             /*.description(name)*/
                             .image(Hash_file_maps.get(name))
                             .setScaleType(BaseSliderView.ScaleType.Fit)
-                            .setOnSliderClickListener(this);
+                            .setOnSliderClickListener(new BaseSliderView.OnSliderClickListener() {
+                                @Override
+                                public void onSliderClick(BaseSliderView slider) {
+                                    Bundle b = new Bundle();
+                                    b.putString("image", Hash_file_maps.get(name));
+                                    Intent intent = new Intent(VehicleDetails.this, FullImageActivity.class);
+                                    intent.putExtras(b);
+                                    startActivity(intent);
+                                }
+                            });
                     textSliderView.bundle(new Bundle());
                     textSliderView.getBundle()
                             .putString("extra", name);

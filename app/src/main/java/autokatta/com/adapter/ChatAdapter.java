@@ -151,8 +151,13 @@ public class ChatAdapter extends BaseAdapter implements View.OnClickListener {
         image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String image;
+                if (chatMessageObj.getImage().equals(""))
+                    image = activity.getString(R.string.base_image_url) + "logo48x48.png";
+                else
+                    image = activity.getString(R.string.base_image_url) + chatMessageObj.getImage();
                 Bundle b = new Bundle();
-                b.putString("image", chatMessageObj.getImage());
+                b.putString("image", image);
                 Intent intent = new Intent(activity, FullImageActivity.class);
                 intent.putExtras(b);
                 activity.startActivity(intent);

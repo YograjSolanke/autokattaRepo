@@ -56,6 +56,7 @@ import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.interfaces.ServiceApi;
 import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.other.CustomToast;
+import autokatta.com.other.FullImageActivity;
 import autokatta.com.response.BrandsTagResponse;
 import autokatta.com.response.CategoryResponse;
 import autokatta.com.response.EnquiryCountResponse;
@@ -811,13 +812,22 @@ Get Admin data...
                                     Hash_file_maps.put("Image-" + simages, dp_path + simages.replaceAll(" ", ""));
                                 }
 
-                                for (String name : Hash_file_maps.keySet()) {
+                                for (final String name : Hash_file_maps.keySet()) {
                                     TextSliderView textSliderView = new TextSliderView(ServiceViewActivity.this);
                                     textSliderView
                                             //.description(name)
                                             .image(Hash_file_maps.get(name))
                                             .setScaleType(BaseSliderView.ScaleType.Fit)
-                                            .setOnSliderClickListener(this);
+                                            .setOnSliderClickListener(new BaseSliderView.OnSliderClickListener() {
+                                                @Override
+                                                public void onSliderClick(BaseSliderView slider) {
+                                                    Bundle b = new Bundle();
+                                                    b.putString("image", Hash_file_maps.get(name));
+                                                    Intent intent = new Intent(ServiceViewActivity.this, FullImageActivity.class);
+                                                    intent.putExtras(b);
+                                                    startActivity(intent);
+                                                }
+                                            });
                                     textSliderView.bundle(new Bundle());
                                     textSliderView.getBundle()
                                             .putString("extra", name);

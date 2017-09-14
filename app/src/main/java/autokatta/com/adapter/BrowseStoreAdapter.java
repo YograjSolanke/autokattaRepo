@@ -33,6 +33,7 @@ import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
+import autokatta.com.other.FullImageActivity;
 import autokatta.com.response.BrowseStoreResponse;
 import autokatta.com.view.ShareWithinAppActivity;
 import autokatta.com.view.StoreViewActivity;
@@ -145,6 +146,22 @@ public class BrowseStoreAdapter extends RecyclerView.Adapter<BrowseStoreAdapter.
                     //.error(R.drawable.blocked) //To show error image if problem in loading.
                     .into(holder.store_image);
         }
+
+        holder.store_image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String image;
+                if (success.getStoreImage().equals(""))
+                    image = activity.getString(R.string.base_image_url) + "logo48x48.png";
+                else
+                    image = activity.getString(R.string.base_image_url) + success.getStoreImage();
+                Intent intent = new Intent(activity, FullImageActivity.class);
+                Bundle b = new Bundle();
+                b.putString("image", image);
+                intent.putExtras(b);
+                activity.startActivity(intent);
+            }
+        });
 
         holder.mCardView.setOnClickListener(new View.OnClickListener() {
             @Override

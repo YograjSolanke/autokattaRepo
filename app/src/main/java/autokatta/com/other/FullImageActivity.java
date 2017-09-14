@@ -35,7 +35,7 @@ public class FullImageActivity extends AppCompatActivity {
         String image = bundle.getString("image");
 
         Glide.with(getApplicationContext())
-                .load(getString(R.string.base_image_url) + image)
+                .load(image)
               //  .load(bitmap)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .listener(new RequestListener<String, GlideDrawable>() {
