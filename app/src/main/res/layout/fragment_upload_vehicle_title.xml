@@ -567,7 +567,7 @@
                     android:layout_marginTop="5dp"
                     android:background="#80bebebe"
                     android:ems="10"
-                    android:hint="0"
+                    android:hint="@string/kms_run"
                     android:inputType="number"
                     android:paddingEnd="10dp"
                     android:paddingStart="10dp"

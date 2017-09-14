@@ -1239,6 +1239,9 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                 if (category.equalsIgnoreCase("Tractor")) {
                     strHrs = mHrs.getText().toString();
                 } else {
+                    if (mKms.getText().toString().isEmpty())
+                        strKms = 0;
+                    else
                     strKms = Integer.parseInt(mKms.getText().toString());
                 }
 
