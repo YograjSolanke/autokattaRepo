@@ -110,7 +110,7 @@ public class MyStoreListFragment extends Fragment implements View.OnClickListene
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                     fragmentTransaction.replace(R.id.myStoreListFrame, createStoreFragment, "createStoreFragment")
                             .addToBackStack("createStoreFragment")
-                            .commit();
+                            .commitAllowingStateLoss();
                 }
             } else {
                 mSwipeRefreshLayout.setRefreshing(false);
