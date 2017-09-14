@@ -1,6 +1,7 @@
 package autokatta.com.upload_vehicle;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -21,7 +22,9 @@ import autokatta.com.adapter.GetVehicleListAdapter;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
+import autokatta.com.register.CreateStoreContainer;
 import autokatta.com.response.GetVehicleListResponse;
+import autokatta.com.response.MyStoreResponse;
 import retrofit2.Response;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -35,6 +38,8 @@ public class VehicleList extends Fragment implements RequestNotifier {
     View mVehicleList;
     ListView mListView;
     List<GetVehicleListResponse.Success> mGetVehicle;
+    boolean isTrue = false;
+    MyStoreResponse myStoreResponse;
 
     @Nullable
     @Override
@@ -60,6 +65,7 @@ public class VehicleList extends Fragment implements RequestNotifier {
                 }
             }
         });
+        getStore();
         getData();
         return mVehicleList;
     }
@@ -69,20 +75,36 @@ public class VehicleList extends Fragment implements RequestNotifier {
         mApiCall.getVehicleCount(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", null));
     }
 
+    /*
+    Get store Data...
+     */
+
+    private void getStore() {
+        ApiCall mApiCall = new ApiCall(getActivity(), this);
+        mApiCall.MyStoreList(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", null));
+    }
+
     @Override
     public void notifySuccess(Response<?> response) {
         if (response != null) {
             if (response.isSuccessful()) {
-                GetVehicleListResponse mGetVehicleListResponse = (GetVehicleListResponse) response.body();
-                if (!mGetVehicleListResponse.getSuccess().isEmpty()) {
-                    for (GetVehicleListResponse.Success mSuccess : mGetVehicleListResponse.getSuccess()) {
-                        mSuccess.setId(mSuccess.getId());
-                        mSuccess.setName(mSuccess.getName());
-                        mGetVehicle.add(mSuccess);
+                if (response.body() instanceof GetVehicleListResponse) {
+                    GetVehicleListResponse mGetVehicleListResponse = (GetVehicleListResponse) response.body();
+                    if (!mGetVehicleListResponse.getSuccess().isEmpty()) {
+                        for (GetVehicleListResponse.Success mSuccess : mGetVehicleListResponse.getSuccess()) {
+                            mSuccess.setId(mSuccess.getId());
+                            mSuccess.setName(mSuccess.getName());
+                            mGetVehicle.add(mSuccess);
+                        }
+                        GetVehicleListAdapter mGetVehicleListAdapter = new GetVehicleListAdapter(getActivity(), mGetVehicle);
+                        mListView.setAdapter(mGetVehicleListAdapter);
+                        mGetVehicleListAdapter.notifyDataSetChanged();
                     }
-                    GetVehicleListAdapter mGetVehicleListAdapter = new GetVehicleListAdapter(getActivity(), mGetVehicle);
-                    mListView.setAdapter(mGetVehicleListAdapter);
-                    mGetVehicleListAdapter.notifyDataSetChanged();
+                } else if (response.body() instanceof MyStoreResponse) {
+                    myStoreResponse = (MyStoreResponse) response.body();
+                    if (!myStoreResponse.getSuccess().isEmpty()) {
+                        isTrue = true;
+                    }
                 }
             } else {
                 CustomToast.customToast(getActivity(), getString(R.string._404));
@@ -110,24 +132,53 @@ public class VehicleList extends Fragment implements RequestNotifier {
     public void notifyString(String str) {
         try {
             if (str != null) {
-                AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
-                alertDialog.setCancelable(false);
-                alertDialog.setTitle("Upload Vehicle");
-                alertDialog.setMessage("You already uploaded " + str + " vehicles. you want to upload another vehicle?");
-                alertDialog.setIcon(android.R.drawable.ic_dialog_alert);
-                alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        getVehicleList();
+                if (Integer.parseInt(str) > 3 && !isTrue) {
+                    AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
+                    alertDialog.setCancelable(false);
+                    alertDialog.setTitle("Create Store first");
+                    alertDialog.setMessage("You can not upload more than 3 vehicles. Please create store first?");
+                    alertDialog.setIcon(android.R.drawable.ic_dialog_alert);
+                    alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            Bundle b = new Bundle();
+                            b.putString("className", "VehicleList");
+                            Intent i = new Intent(getActivity(), CreateStoreContainer.class);
+                            i.putExtras(b);
+                            startActivity(i);
+                        }
+                    });
+                    alertDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            getActivity().finish();
+                            //startActivity(new Intent(getActivity(), AutokattaMainActivity.class));
+                            dialog.cancel();
+                        }
+                    });
+                    alertDialog.show();
+                } else {
+                    AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
+                    alertDialog.setCancelable(false);
+                    alertDialog.setTitle("Upload Vehicle");
+                    if (str.equals("0")) {
+                        alertDialog.setMessage("You don't have any vehicle do you want to upload?");
+                    } else {
+                        alertDialog.setMessage("You already uploaded " + str + " vehicles. you want to upload another vehicle?");
                     }
-                });
-                alertDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        getActivity().finish();
-                        //startActivity(new Intent(getActivity(), AutokattaMainActivity.class));
-                        dialog.cancel();
-                    }
-                });
-                alertDialog.show();
+                    alertDialog.setIcon(android.R.drawable.ic_dialog_alert);
+                    alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            getVehicleList();
+                        }
+                    });
+                    alertDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            getActivity().finish();
+                            //startActivity(new Intent(getActivity(), AutokattaMainActivity.class));
+                            dialog.cancel();
+                        }
+                    });
+                    alertDialog.show();
+                }
             } else {
                 CustomToast.customToast(getActivity(), getString(R.string.no_response));
             }

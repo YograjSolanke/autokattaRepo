@@ -4,14 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="autokatta.com.other.SplashActivity"
-    android:background="@color/background">
+    android:background="@drawable/autokatta_splash">
 
-    <ImageView
+    <!--<ImageView
         android:layout_width="150dip"
         android:layout_height="150dip"
         android:id="@+id/imageView5"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
         android:contentDescription="@string/app_name"
-        android:src="@drawable/hdlogo"/>
+        android:src="@drawable/hdlogo"/>-->
 </RelativeLayout>

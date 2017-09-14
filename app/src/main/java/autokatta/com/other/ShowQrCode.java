@@ -1,6 +1,8 @@
 package autokatta.com.other;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.ListView;
@@ -34,8 +36,6 @@ public class ShowQrCode extends AppCompatActivity implements RequestNotifier {
         }
         mTestConnection = new ConnectionDetector(ShowQrCode.this);
         mListView = (ListView) findViewById(R.id.store_qr_list);
-        /*ApiCall apiCall = new ApiCall(this, this);
-        apiCall.getStoreQrCode(getSharedPreferences(getString(R.string.my_preference),MODE_PRIVATE).getString("loginContact",""));*/
         getStoreProfileInfo(getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""));
     }
 
@@ -71,16 +71,29 @@ public class ShowQrCode extends AppCompatActivity implements RequestNotifier {
                     mListView.setAdapter(myStoreAdapter);
                     myStoreAdapter.notifyDataSetChanged();
                 } else {
-                    //mNoData.setVisibility(View.VISIBLE);
-                    //CustomToast.customToast(getActivity(), "No Store found");
+                    AlertDialog.Builder alertDialog = new AlertDialog.Builder(ShowQrCode.this);
+                    alertDialog.setTitle("No Store Created");
+                    alertDialog.setMessage("Please create store first...?");
+                    alertDialog.setIcon(android.R.drawable.ic_dialog_alert);
+                    alertDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            finish();
+                            /*Bundle b = new Bundle();
+                            b.putString("className", "ShowQrCode");
+                            Intent i = new Intent(getApplicationContext(), CreateStoreContainer.class);
+                            i.putExtras(b);
+                            startActivity(i);*/
+                        }
+                    });
+                    /*alertDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                            finish();
+                        }
+                    });*/
+                    alertDialog.show();
                 }
-            } else {
-//                if (mActivity != null)
-                //CustomToast.customToast(getActivity(), getString(R.string._404_));
             }
-        } else {
-//            if (mActivity != null)
-            //CustomToast.customToast(getActivity(), getString(R.string.no_response));
         }
     }
 
