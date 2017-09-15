@@ -420,7 +420,7 @@ public class ManualEnquiryResponse {
 
         public class Service {
 
-            @SerializedName("id")
+            @SerializedName("service_id")
             @Expose
             private String id;
             @SerializedName("store_id")
