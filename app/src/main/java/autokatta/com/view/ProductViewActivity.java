@@ -1277,6 +1277,12 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                             groupTitleList.add(success.getTitle());
                             //}
                         }
+
+
+                        for (ProfileGroupResponse.JoinedGroup success : mProfileGroupResponse.getSuccess().getJoinedGroups()) {
+                            groupIdList.add(String.valueOf(success.getId()));
+                            groupTitleList.add(success.getTitle());
+                        }
                         //Log.i("previousGrpIds--",groupIdList);
                         System.out.println("previousGrpIds-- List" + groupIdList);
                         groupTitleArray = groupTitleList.toArray(new String[groupTitleList.size()]);

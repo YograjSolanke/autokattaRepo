@@ -142,8 +142,7 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
         else
             holder.editkms.setText(mMainList.get(position).getKmsRunning());
 
-        prevGroupIds = mMainList.get(position).getGroupIDs().replaceAll(" ", "");
-        prevStoreIds = mMainList.get(position).getStoreIDs().replaceAll(" ", "");
+
 
         //To set Date
         try {
@@ -479,6 +478,8 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
             @Override
             public void onClick(View v) {
                 try {
+                    prevGroupIds = mMainList.get(holder.getAdapterPosition()).getGroupIDs().replaceAll(" ", "");
+
                     getGroups();
                     mVehicleId = mMainList.get(holder.getAdapterPosition()).getVehicleId();
                 } catch (Exception e) {
@@ -491,6 +492,7 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
             @Override
             public void onClick(View v) {
                 try {
+                    prevStoreIds = mMainList.get(holder.getAdapterPosition()).getStoreIDs().replaceAll(" ", "");
                     getStores();
                     mVehicleId = mMainList.get(holder.getAdapterPosition()).getVehicleId();
                 } catch (Exception e) {
@@ -530,6 +532,10 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
 
                         ProfileGroupResponse mProfileGroupResponse = (ProfileGroupResponse) response.body();
                         for (ProfileGroupResponse.MyGroup success : mProfileGroupResponse.getSuccess().getMyGroups()) {
+                            groupIdList.add(String.valueOf(success.getId()));
+                            groupTitleList.add(success.getTitle());
+                        }
+                        for (ProfileGroupResponse.JoinedGroup success : mProfileGroupResponse.getSuccess().getJoinedGroups()) {
                             groupIdList.add(String.valueOf(success.getId()));
                             groupTitleList.add(success.getTitle());
                         }
@@ -589,10 +595,10 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
         mSelectedItems.clear();
         String[] prearra = prevGroupIds.split(",");
 
-        for (int i = 0; i < groupIdList.size(); i++) {
-            if (Arrays.asList(prearra).contains(groupIdList.get(i))) {
+        for (int i = 0; i < groupIdArray.length; i++) {
+            if (Arrays.asList(prearra).contains(groupIdArray[i])) {
                 itemsCheckedGroups[i] = true;
-                mSelectedItems.add(groupIdList.get(i));
+                mSelectedItems.add(groupIdArray[i]);
             } else
                 itemsCheckedGroups[i] = false;
         }
@@ -628,10 +634,10 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
                             for (int j = 0; j < groupIdArray.length; j++) {
                                 if (mSelectedItems.get(i).equals(groupIdArray[j])) {
                                     if (stringgroupids.equals("")) {
-                                        stringgroupids = groupIdList.get(j);
+                                        stringgroupids = groupIdArray[j];
                                         stringgroupname = groupTitleArray[j];
                                     } else {
-                                        stringgroupids = stringgroupids + "," + groupIdList.get(j);
+                                        stringgroupids = stringgroupids + "," + groupIdArray[j];
                                         stringgroupname = stringgroupname + "," + groupTitleArray[j];
                                     }
                                 }

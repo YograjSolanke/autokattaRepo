@@ -675,6 +675,11 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                         groupIdList.add(String.valueOf(success.getId()));
                         groupTitleList.add(success.getTitle());
                     }
+                    for (ProfileGroupResponse.JoinedGroup success : mProfileGroupResponse.getSuccess().getJoinedGroups()) {
+                        groupIdList.add(String.valueOf(success.getId()));
+                        groupTitleList.add(success.getTitle());
+                    }
+
                     groupTitleArray = groupTitleList.toArray(new String[groupTitleList.size()]);
                     groupIdArray = groupIdList.toArray(new String[groupIdList.size()]);
                 } else if (response.body() instanceof MyStoreResponse) {
