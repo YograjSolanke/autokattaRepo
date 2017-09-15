@@ -17,8 +17,13 @@ import android.widget.TextView;
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 
 import autokatta.com.R;
 import autokatta.com.adapter.EndedExchangeAdapter;
@@ -124,13 +129,51 @@ public class MyEndedExchangeMelaFragment extends Fragment implements SwipeRefres
                         ExchangeSuccess.setName(ExchangeSuccess.getName());
                         ExchangeSuccess.setLocation(ExchangeSuccess.getLocation());
                         ExchangeSuccess.setAddress(ExchangeSuccess.getAddress());
-                        ExchangeSuccess.setStartDate(ExchangeSuccess.getStartDate().replace("T00:00:00",""));
+                        ExchangeSuccess.setStartDate(ExchangeSuccess.getStartDate());
                         ExchangeSuccess.setStartTime(ExchangeSuccess.getStartTime());
-                        ExchangeSuccess.setEndDate(ExchangeSuccess.getEndDate().replace("T00:00:00",""));
+                        ExchangeSuccess.setEndDate(ExchangeSuccess.getEndDate());
                         ExchangeSuccess.setEndTime(ExchangeSuccess.getEndTime());
                         ExchangeSuccess.setImage(ExchangeSuccess.getImage());
                         ExchangeSuccess.setDetails(ExchangeSuccess.getDetails());
                         ExchangeSuccess.setContact(ExchangeSuccess.getContact());
+
+
+                        try {
+                            TimeZone utc = TimeZone.getTimeZone("etc/UTC");
+                        //    TimeZone utc1 = TimeZone.getTimeZone("etc/UTC");
+                            //format of date coming from services
+                            DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                        //    DateFormat inputFormat1 = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss a", Locale.getDefault());
+                        /*DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",
+                                Locale.getDefault());*/
+                            inputFormat.setTimeZone(utc);
+                     //       inputFormat1.setTimeZone(utc1);
+//
+                            //format of date which we want to show
+                            DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
+                      //      DateFormat outputFormat1 = new SimpleDateFormat("dd MMM yyyy hh:mm:ss a", Locale.getDefault());
+                        /*DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy hh:mm aa",
+                                Locale.getDefault());*/
+                            outputFormat.setTimeZone(utc);
+                       //     outputFormat1.setTimeZone(utc1);
+
+                            Date date = inputFormat.parse(ExchangeSuccess.getStartDate());
+                            Date date1 = inputFormat.parse(ExchangeSuccess.getEndDate());
+                       //     Date date2 = inputFormat.parse(ExchangeSuccess.getStartDateTime());
+                        //    Date date3 = inputFormat.parse(ExchangeSuccess.getEndDateTime());
+                            //System.out.println("jjj"+date);
+                            String output = outputFormat.format(date);
+                            String output1 = outputFormat.format(date1);
+                       //     String output2 = outputFormat.format(date2);
+                       //     String output3 = outputFormat.format(date3);
+                            //System.out.println(mainList.get(i).getDate()+" jjj " + output);
+                            ExchangeSuccess.setStartDate(output);
+                            ExchangeSuccess.setEndDate(output1);
+                        //    ExchangeSuccess.setEndDateTime(output3);
+                        //    ExchangeSuccess.setStartDateTime(output2);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                         activeExchangeMelaList.add(ExchangeSuccess);
                     }
                     mSwipeRefreshLayout.setRefreshing(false);

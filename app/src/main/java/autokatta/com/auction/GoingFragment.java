@@ -18,8 +18,13 @@ import android.widget.Toast;
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 
 import autokatta.com.R;
 import autokatta.com.adapter.AuctionNotificationAdapter;
@@ -244,6 +249,32 @@ public class GoingFragment extends Fragment implements RequestNotifier {
                     model.setBlackListStatus(success.getBlackListStatus());
                     model.setMycontact(success.getMycontact());
 
+
+
+                    try {
+                        TimeZone utc = TimeZone.getTimeZone("etc/UTC");
+                        //format of date coming from services
+                        DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+
+                        inputFormat.setTimeZone(utc);
+
+                        //format of date which we want to show
+                        DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
+
+                        outputFormat.setTimeZone(utc);
+
+                        Date date = inputFormat.parse(success.getStartDate().replace("T00:00:00", ""));
+                        Date date1 = inputFormat.parse(success.getEndDate().replace("T00:00:00", ""));
+
+                        String output = outputFormat.format(date);
+                        String output1 = outputFormat.format(date1);
+
+                        model.setStartDate(output);
+                        model.setEndDate(output1);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
                     model.setKeyWord("sale");
                     mLiveSaleEventList.add(model);
                 }
@@ -291,6 +322,31 @@ public class GoingFragment extends Fragment implements RequestNotifier {
                     model.setUsername(success.getEventOwner());
                     model.setBlackListStatus(success.getBlackListStatus());
                     model.setMycontact(success.getMycontact());
+
+
+                    try {
+                        TimeZone utc = TimeZone.getTimeZone("etc/UTC");
+                        //format of date coming from services
+                        DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+
+                        inputFormat.setTimeZone(utc);
+
+                        //format of date which we want to show
+                        DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
+
+                        outputFormat.setTimeZone(utc);
+
+                        Date date = inputFormat.parse(success.getStartDate().replace("T00:00:00", ""));
+                        Date date1 = inputFormat.parse(success.getEndDate().replace("T00:00:00", ""));
+
+                        String output = outputFormat.format(date);
+                        String output1 = outputFormat.format(date1);
+
+                        model.setStartDate(output);
+                        model.setEndDate(output1);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
 
                     model.setKeyWord("service");
                     mLiveServiceEventList.add(model);
@@ -340,6 +396,31 @@ public class GoingFragment extends Fragment implements RequestNotifier {
                     model.setBlackListStatus(success.getBlackListStatus());
                     model.setMycontact(success.getMycontact());
 
+
+                    try {
+                        TimeZone utc = TimeZone.getTimeZone("etc/UTC");
+                        //format of date coming from services
+                        DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+
+                        inputFormat.setTimeZone(utc);
+
+                        //format of date which we want to show
+                        DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
+
+                        outputFormat.setTimeZone(utc);
+
+                        Date date = inputFormat.parse(success.getStartDate().replace("T00:00:00", ""));
+                        Date date1 = inputFormat.parse(success.getEndDate().replace("T00:00:00", ""));
+
+                        String output = outputFormat.format(date);
+                        String output1 = outputFormat.format(date1);
+
+                        model.setStartDate(output);
+                        model.setEndDate(output1);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
                     model.setKeyWord("exchange");
                     mLiveExchangeEventList.add(model);
                 }
@@ -387,6 +468,31 @@ public class GoingFragment extends Fragment implements RequestNotifier {
                     model.setUsername(success.getEventOwner());
                     model.setBlackListStatus(success.getBlackListStatus());
                     model.setMycontact(success.getMycontact());
+
+
+                    try {
+                        TimeZone utc = TimeZone.getTimeZone("etc/UTC");
+                        //format of date coming from services
+                        DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+
+                        inputFormat.setTimeZone(utc);
+
+                        //format of date which we want to show
+                        DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
+
+                        outputFormat.setTimeZone(utc);
+
+                        Date date = inputFormat.parse(success.getStartDate().replace("T00:00:00", ""));
+                        Date date1 = inputFormat.parse(success.getEndDate().replace("T00:00:00", ""));
+
+                        String output = outputFormat.format(date);
+                        String output1 = outputFormat.format(date1);
+
+                        model.setStartDate(output);
+                        model.setEndDate(output1);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
 
                     model.setKeyWord("loan");
                     mLiveLoanEventList.add(model);
@@ -448,6 +554,31 @@ public class GoingFragment extends Fragment implements RequestNotifier {
                             model.setLocation(success.getLocation());
                         else
                             model.setLocation(success.getStockLocation());
+
+
+                        try {
+                            TimeZone utc = TimeZone.getTimeZone("etc/UTC");
+                            //format of date coming from services
+                            DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+
+                            inputFormat.setTimeZone(utc);
+
+                            //format of date which we want to show
+                            DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
+
+                            outputFormat.setTimeZone(utc);
+
+                            Date date = inputFormat.parse(success.getStartDate().replace("T00:00:00", ""));
+                            Date date1 = inputFormat.parse(success.getEndDate().replace("T00:00:00", ""));
+
+                            String output = outputFormat.format(date);
+                            String output1 = outputFormat.format(date1);
+
+                            model.setStartDate(output);
+                            model.setEndDate(output1);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
 
                         model.setKeyWord("auction");
                         mLiveEventList.add(model);

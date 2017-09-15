@@ -17,8 +17,13 @@ import android.widget.TextView;
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 
 import autokatta.com.R;
 import autokatta.com.adapter.ActiveLoanMelaAdapter;
@@ -127,16 +132,43 @@ public class MyActiveLoanMelaFragment extends Fragment implements SwipeRefreshLa
                         loanSuccess.setName(loanSuccess.getName());
                         loanSuccess.setLocation(loanSuccess.getLocation());
                         loanSuccess.setAddress(loanSuccess.getAddress());
-                        loanSuccess.setStartDate(loanSuccess.getStartDate().replace("T00:00:00", ""));
+                        loanSuccess.setStartDate(loanSuccess.getStartDate());
                         loanSuccess.setStartTime(loanSuccess.getStartTime());
-                        loanSuccess.setEndDate(loanSuccess.getEndDate().replace("T00:00:00", ""));
+                        loanSuccess.setEndDate(loanSuccess.getEndDate());
                         loanSuccess.setEndTime(loanSuccess.getEndTime());
                         loanSuccess.setImage(loanSuccess.getImage());
                         loanSuccess.setDetails(loanSuccess.getDetails());
                         loanSuccess.setContact(loanSuccess.getContact());
-                        loanSuccess.setStartDateTime(loanSuccess.getStartDateTime().replace("T", " "));
-                        loanSuccess.setEndDateTime(loanSuccess.getEndDateTime().replace("T", " "));
+                        loanSuccess.setStartDateTime(loanSuccess.getStartDateTime());
+                        loanSuccess.setEndDateTime(loanSuccess.getEndDateTime());
 
+
+                        try {
+                            TimeZone utc = TimeZone.getTimeZone("etc/UTC");
+                            //format of date coming from services
+                            DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+
+                            inputFormat.setTimeZone(utc);
+                            //  inputFormat1.setTimeZone(utc1);
+
+                            //format of date which we want to show
+                            DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
+
+                            outputFormat.setTimeZone(utc);
+                            ///     outputFormat1.setTimeZone(utc1);
+
+                            Date date = inputFormat.parse(loanSuccess.getStartDate());
+                            Date date1 = inputFormat.parse(loanSuccess.getEndDate());
+
+                            String output = outputFormat.format(date);
+                            String output1 = outputFormat.format(date1);
+
+                            loanSuccess.setStartDate(output);
+                            loanSuccess.setEndDate(output1);
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                         activeLoanMelaResponseList.add(loanSuccess);
                     }
                     mSwipeRefreshLayout.setRefreshing(false);

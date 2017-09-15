@@ -22,8 +22,13 @@ import java.io.IOException;
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 
 import autokatta.com.R;
 import autokatta.com.adapter.GetPersonDataAdapter;
@@ -174,19 +179,19 @@ public class EnquiredPersonsActivity extends AppCompatActivity implements Reques
                                 success.setCustEnquiryStatus(success.getCustEnquiryStatus());
                                 success.setLastDiscussion(success.getLastDiscussion());
 
-                               /*   *//*Date format*//*
+                               /*   *//*Date format*/
                                 try {
                                     TimeZone utc = TimeZone.getTimeZone("etc/UTC");
                                     //format of date coming from services
-                                    DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd ", Locale.getDefault());
-                        *//*DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",
-                                Locale.getDefault());*//*
+                                    DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                        /*DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",
+                                Locale.getDefault());*/
                                     inputFormat.setTimeZone(utc);
 
                                     //format of date which we want to show
-                                    DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy ", Locale.getDefault());
-                        *//*DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy hh:mm aa",
-                                Locale.getDefault());*//*
+                                    DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
+                        /*DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy hh:mm aa",
+                                Locale.getDefault());*/
                                     outputFormat.setTimeZone(utc);
 
                                     Date date = inputFormat.parse(success.getNextFollowupDate());
@@ -199,7 +204,7 @@ public class EnquiredPersonsActivity extends AppCompatActivity implements Reques
                                     success.setLastEnquiryDate(output1);
                                 } catch (Exception e) {
                                     e.printStackTrace();
-                                }*/
+                                }
                                 mList.add(success);
                             }
                             GetPersonDataAdapter adapter = new GetPersonDataAdapter(this, mList, strId, strKeyword, strTitle);

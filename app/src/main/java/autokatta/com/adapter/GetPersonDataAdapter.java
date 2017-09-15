@@ -154,7 +154,7 @@ public class GetPersonDataAdapter extends RecyclerView.Adapter<GetPersonDataAdap
         try {
             mActivity.startActivity(in);
         } catch (android.content.ActivityNotFoundException ex) {
-            System.out.println("No Activity Found For Call in Car Details Fragment\n");
+            System.out.println("No Activity Found For Call in get person adapter\n");
         }
     }
 

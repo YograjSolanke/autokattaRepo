@@ -32,8 +32,13 @@ import java.io.IOException;
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 
 import autokatta.com.R;
 import autokatta.com.adapter.GetPersonsEnquiriesAdapter;
@@ -215,33 +220,34 @@ public class EnquiredPersonsListActivity extends AppCompatActivity implements Re
                                     success.setEnquiryStatus(success.getEnquiryStatus());
                                     success.setNextFollowUpDate(success.getNextFollowUpDate());
                                     success.setInventoryType(success.getInventoryType());
-/*
-                                   *//*Date format*//*
+
+                                /*Date format*/      /*  two dates in different format *//*Date format*/
                                 try {
                                     TimeZone utc = TimeZone.getTimeZone("etc/UTC");
+                                    TimeZone utc1 = TimeZone.getTimeZone("etc/UTC");
                                     //format of date coming from services
-                                    DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.getDefault());
-                        *//*DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",
-                                Locale.getDefault());*//*
+                                    DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                                    DateFormat inputFormat1 = new SimpleDateFormat("yyyy-MM-dd hh:mm ss", Locale.getDefault());
                                     inputFormat.setTimeZone(utc);
+                                    inputFormat1.setTimeZone(utc1);
 
                                     //format of date which we want to show
-                                    DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy hh:mm a", Locale.getDefault());
-                        *//*DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy hh:mm aa",
-                                Locale.getDefault());*//*
+                                    DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
+                                    DateFormat outputFormat1 = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
                                     outputFormat.setTimeZone(utc);
+                                    outputFormat1.setTimeZone(utc1);
 
-                                    Date date = inputFormat.parse(success.getNextFollowUpDate());
-                                    Date date1 = inputFormat.parse(success.getCreatedDate());
+                                    Date date1 = inputFormat.parse(success.getNextFollowUpDate());
+                                    Date date = inputFormat.parse(success.getCreatedDate());
                                     //System.out.println("jjj"+date);
-                                    String output = outputFormat.format(date);
-                                    String output1 = outputFormat.format(date1);
+                                    String output1 = outputFormat.format(date);
+                                    String output = outputFormat.format(date1);
                                     //System.out.println(mainList.get(i).getDate()+" jjj " + output);
-                                    success.setNextFollowUpDate(output);
-                                    success.setCreatedDate(output1);
+                                    success.setNextFollowUpDate(output1);
+                                    success.setCreatedDate(output);
                                 } catch (Exception e) {
                                     e.printStackTrace();
-                                }*/
+                                }
                                 mList.add(success);
                             }
                             GetPersonsEnquiriesAdapter adapter = new GetPersonsEnquiriesAdapter(this, mList, strId, strKeyword, strTitle,bundlecontact);

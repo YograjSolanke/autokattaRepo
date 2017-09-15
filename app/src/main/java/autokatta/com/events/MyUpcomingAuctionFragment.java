@@ -15,8 +15,13 @@ import android.widget.TextView;
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 
 import autokatta.com.R;
 import autokatta.com.adapter.UpcomingAuctionAdapter;
@@ -99,8 +104,8 @@ public class MyUpcomingAuctionFragment extends Fragment implements SwipeRefreshL
             apiCall = new ApiCall(getActivity(), this);
             apiCall.MyUpcomingAuction(loginContact);
         } else {
-            CustomToast.customToast(getActivity(),getString(R.string.no_internet));
-           // errorMessage(getActivity(), getString(R.string.no_internet));
+            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
+            // errorMessage(getActivity(), getString(R.string.no_internet));
         }
     }
 
@@ -122,13 +127,51 @@ public class MyUpcomingAuctionFragment extends Fragment implements SwipeRefreshL
                         successAuction.setAuctionId(successAuction.getAuctionId());
                         successAuction.setActionTitle(successAuction.getActionTitle());
                         successAuction.setNoOfVehicle(successAuction.getNoOfVehicle());
-                        successAuction.setEndDate(successAuction.getEndDate().replace("T00:00:00",""));
+                        successAuction.setEndDate(successAuction.getEndDate());
                         successAuction.setEndTime(successAuction.getEndTime());
-                        successAuction.setStartDate(successAuction.getStartDate().replace("T00:00:00",""));
+                        successAuction.setStartDate(successAuction.getStartDate());
                         successAuction.setStartTime(successAuction.getStartTime());
                         successAuction.setSpecialClauses(successAuction.getSpecialClauses());
                         successAuction.setGoingcount(successAuction.getGoingcount());
                         successAuction.setAuctionType(successAuction.getAuctionType());
+
+
+                        try {
+                            TimeZone utc = TimeZone.getTimeZone("etc/UTC");
+                            // TimeZone utc1 = TimeZone.getTimeZone("etc/UTC");
+                            //format of date coming from services
+                            DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                            //        DateFormat inputFormat1 = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss a", Locale.getDefault());
+                        /*DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",
+                                Locale.getDefault());*/
+                            inputFormat.setTimeZone(utc);
+                            //   inputFormat1.setTimeZone(utc1);
+
+                            //format of date which we want to show
+                            DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
+                            //             DateFormat outputFormat1 = new SimpleDateFormat("dd MMM yyyy hh:mm:ss a", Locale.getDefault());
+                        /*DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy hh:mm aa",
+                                Locale.getDefault());*/
+                            outputFormat.setTimeZone(utc);
+                            //     outputFormat1.setTimeZone(utc1);
+
+                            Date date = inputFormat.parse(successAuction.getStartDate());
+                            Date date1 = inputFormat.parse(successAuction.getEndDate());
+                            //Date date2 = inputFormat.parse(successAuction.getStartDateTime());
+                            //   Date date3 = inputFormat.parse(successAuction.getEndDateTime());
+                            //System.out.println("jjj"+date);
+                            String output = outputFormat.format(date);
+                            String output1 = outputFormat.format(date1);
+                            //     String output2 = outputFormat.format(date2);
+                            //   String output3 = outputFormat.format(date3);
+                            //System.out.println(mainList.get(i).getDate()+" jjj " + output);
+                            successAuction.setStartDate(output);
+                            successAuction.setEndDate(output1);
+                            // auctionSuccess.setEndDateTime(output3);
+                            //auctionSuccess.setStartDateTime(output2);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
 
                         upcomingAuctionResponseList.add(successAuction);
 
@@ -156,21 +199,21 @@ public class MyUpcomingAuctionFragment extends Fragment implements SwipeRefreshL
     public void notifyError(Throwable error) {
         mSwipeRefreshLayout.setRefreshing(false);
         if (error instanceof SocketTimeoutException) {
-            CustomToast.customToast(getActivity(),getString(R.string._404_));
+            CustomToast.customToast(getActivity(), getString(R.string._404_));
             //   showMessage(getActivity(), getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
-            CustomToast.customToast(getActivity(),getString(R.string.no_response));
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
             // showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            CustomToast.customToast(getActivity(),getString(R.string.no_response));
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
             //   showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
-            CustomToast.customToast(getActivity(),getString(R.string.no_internet));
+            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
             //   errorMessage(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
-            CustomToast.customToast(getActivity(),getString(R.string.no_internet));
+            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
             //   errorMessage(getActivity(), getString(R.string.no_internet));
-        }else {
+        } else {
             Log.i("Check Class-", "My Upcoming Auction fragment");
             error.printStackTrace();
         }

@@ -17,8 +17,13 @@ import android.widget.TextView;
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 
 import autokatta.com.R;
 import autokatta.com.adapter.ActiveSaleMelaAdapter;
@@ -101,7 +106,7 @@ public class MyActiveSaleMelaFragment extends Fragment implements SwipeRefreshLa
             apiCall.getSaleMelaDetails(loginContact);
         } else {
             CustomToast.customToast(getActivity(), getActivity().getString(R.string.no_internet));
-          //  errorMessage(getActivity(), getString(R.string.no_internet));
+            //  errorMessage(getActivity(), getString(R.string.no_internet));
         }
     }
 
@@ -127,16 +132,42 @@ public class MyActiveSaleMelaFragment extends Fragment implements SwipeRefreshLa
                         loanSuccess.setName(loanSuccess.getName());
                         loanSuccess.setLocation(loanSuccess.getLocation());
                         loanSuccess.setAddress(loanSuccess.getAddress());
-                        loanSuccess.setStartDate(loanSuccess.getStartDate().replace("T00:00:00",""));
+                        loanSuccess.setStartDate(loanSuccess.getStartDate());
                         loanSuccess.setStartTime(loanSuccess.getStartTime());
-                        loanSuccess.setEndDate(loanSuccess.getEndDate().replace("T00:00:00",""));
+                        loanSuccess.setEndDate(loanSuccess.getEndDate());
                         loanSuccess.setEndTime(loanSuccess.getEndTime());
                         loanSuccess.setImage(loanSuccess.getImage());
                         loanSuccess.setDetails(loanSuccess.getDetails());
                         loanSuccess.setContact(loanSuccess.getContact());
                         loanSuccess.setGoingcount(loanSuccess.getGoingcount());
-                        loanSuccess.setStartDateTime(loanSuccess.getStartDateTime().replace("T", " "));
-                        loanSuccess.setEndDateTime(loanSuccess.getEndDateTime().replace("T", " "));
+                        loanSuccess.setStartDateTime(loanSuccess.getStartDateTime());
+                        loanSuccess.setEndDateTime(loanSuccess.getEndDateTime());
+
+
+                        try {
+                            TimeZone utc = TimeZone.getTimeZone("etc/UTC");
+
+                            DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                            inputFormat.setTimeZone(utc);
+
+                            //format of date which we want to show
+                            DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
+
+                            outputFormat.setTimeZone(utc);
+                            //       outputFormat1.setTimeZone(utc1);
+//
+                            Date date = inputFormat.parse(loanSuccess.getStartDate());
+                            Date date1 = inputFormat.parse(loanSuccess.getEndDate());
+
+                            String output = outputFormat.format(date);
+                            String output1 = outputFormat.format(date1);
+
+                            loanSuccess.setStartDate(output);
+                            loanSuccess.setEndDate(output1);
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
 
                         activeSaleMelaResponseList.add(loanSuccess);
                     }
@@ -163,19 +194,19 @@ public class MyActiveSaleMelaFragment extends Fragment implements SwipeRefreshLa
         mSwipeRefreshLayout.setRefreshing(false);
         if (error instanceof SocketTimeoutException) {
             CustomToast.customToast(getActivity(), getActivity().getString(R.string._404_));
-          //  showMessage(getActivity(), getString(R.string._404_));
+            //  showMessage(getActivity(), getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
             CustomToast.customToast(getActivity(), getActivity().getString(R.string.no_response));
-         //   showMessage(getActivity(), getString(R.string.no_response));
+            //   showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
             CustomToast.customToast(getActivity(), getActivity().getString(R.string.no_response));
-        //    showMessage(getActivity(), getString(R.string.no_response));
+            //    showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
             CustomToast.customToast(getActivity(), getActivity().getString(R.string.no_internet));
-       //     errorMessage(getActivity(), getString(R.string.no_internet));
+            //     errorMessage(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
             CustomToast.customToast(getActivity(), getActivity().getString(R.string.no_internet));
-          //  errorMessage(getActivity(), getString(R.string.no_internet));
+            //  errorMessage(getActivity(), getString(R.string.no_internet));
         } else {
             Log.i("Check Class-", "My Active Loan Mela Fragment");
             error.printStackTrace();

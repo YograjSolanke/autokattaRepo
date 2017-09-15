@@ -15,8 +15,13 @@ import android.widget.TextView;
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 
 import autokatta.com.R;
 import autokatta.com.adapter.UpcomingLoanMelaAdapter;
@@ -109,13 +114,51 @@ public class MyUpcomingLoanMelaFragment extends Fragment implements SwipeRefresh
                         successLoan.setName(successLoan.getName());
                         successLoan.setLocation(successLoan.getLocation());
                         successLoan.setAddress(successLoan.getAddress());
-                        successLoan.setStartDate(successLoan.getStartDate().replace("T00:00:00",""));
+                        successLoan.setStartDate(successLoan.getStartDate());
                         successLoan.setStartTime(successLoan.getStartTime());
-                        successLoan.setEndDate(successLoan.getEndDate().replace("T00:00:00",""));
+                        successLoan.setEndDate(successLoan.getEndDate());
                         successLoan.setEndTime(successLoan.getEndTime());
                         successLoan.setImage(successLoan.getImage());
                         successLoan.setDetails(successLoan.getDetails());
                         successLoan.setContact(successLoan.getContact());
+
+
+                        try {
+                            TimeZone utc = TimeZone.getTimeZone("etc/UTC");
+                            //           TimeZone utc1 = TimeZone.getTimeZone("etc/UTC");
+                            //format of date coming from services
+                            DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                            //         DateFormat inputFormat1 = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss a", Locale.getDefault());
+                        /*DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",
+                                Locale.getDefault());*/
+                            inputFormat.setTimeZone(utc);
+                            //        inputFormat1.setTimeZone(utc1);
+
+                            //format of date which we want to show
+                            DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
+                            //      DateFormat outputFormat1 = new SimpleDateFormat("dd MMM yyyy hh:mm:ss a", Locale.getDefault());
+                        /*DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy hh:mm aa",
+                                Locale.getDefault());*/
+                            outputFormat.setTimeZone(utc);
+                            //       outputFormat1.setTimeZone(utc1);
+
+                            Date date = inputFormat.parse(successLoan.getStartDate());
+                            Date date1 = inputFormat.parse(successLoan.getEndDate());
+                            //       Date date2 = inputFormat.parse(successLoan.getStartDateTime());
+                            //      Date date3 = inputFormat.parse(successLoan.getEndDateTime());
+                            //System.out.println("jjj"+date);
+                            String output = outputFormat.format(date);
+                            String output1 = outputFormat.format(date1);
+                            //      String output2 = outputFormat.format(date2);
+                            //    String output3 = outputFormat.format(date3);
+                            //System.out.println(mainList.get(i).getDate()+" jjj " + output);
+                            successLoan.setStartDate(output);
+                            successLoan.setEndDate(output1);
+                            //     successLoan.setEndDateTime(output3);
+                            //      successLoan.setStartDateTime(output2);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                         upcomingLoanMelaResponseList.add(successLoan);
 
                     }

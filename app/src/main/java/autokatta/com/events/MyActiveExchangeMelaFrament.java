@@ -17,8 +17,13 @@ import android.widget.TextView;
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 
 import autokatta.com.R;
 import autokatta.com.adapter.ActiveExchangeMelaAdapter;
@@ -122,16 +127,41 @@ public class MyActiveExchangeMelaFrament extends Fragment implements SwipeRefres
                         ExchangeSuccess.setName(ExchangeSuccess.getName());
                         ExchangeSuccess.setLocation(ExchangeSuccess.getLocation());
                         ExchangeSuccess.setAddress(ExchangeSuccess.getAddress());
-                        ExchangeSuccess.setStartDate(ExchangeSuccess.getStartDate().replace("T00:00:00",""));
+                        ExchangeSuccess.setStartDate(ExchangeSuccess.getStartDate());
                         ExchangeSuccess.setStartTime(ExchangeSuccess.getStartTime());
-                        ExchangeSuccess.setEndDate(ExchangeSuccess.getEndDate().replace("T00:00:00",""));
+                        ExchangeSuccess.setEndDate(ExchangeSuccess.getEndDate());
                         ExchangeSuccess.setEndTime(ExchangeSuccess.getEndTime());
                         ExchangeSuccess.setImage(ExchangeSuccess.getImage());
                         ExchangeSuccess.setDetails(ExchangeSuccess.getDetails());
                         ExchangeSuccess.setContact(ExchangeSuccess.getContact());
-                        ExchangeSuccess.setStartDateTime(ExchangeSuccess.getStartDateTime().replace("T", " "));
-                        ExchangeSuccess.setEndDateTime(ExchangeSuccess.getEndDateTime().replace("T", " "));
+                        ExchangeSuccess.setStartDateTime(ExchangeSuccess.getStartDateTime());
+                        ExchangeSuccess.setEndDateTime(ExchangeSuccess.getEndDateTime());
 
+
+                        try {
+                            TimeZone utc = TimeZone.getTimeZone("etc/UTC");
+                            //     TimeZone utc1 = TimeZone.getTimeZone("etc/UTC");
+                            //format of date coming from services
+                            DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+
+                            inputFormat.setTimeZone(utc);
+                            //format of date which we want to show
+                            DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
+                            outputFormat.setTimeZone(utc);
+                            //   outputFormat1.setTimeZone(utc1);
+
+                            Date date = inputFormat.parse(ExchangeSuccess.getStartDate());
+                            Date date1 = inputFormat.parse(ExchangeSuccess.getEndDate());
+
+                            String output = outputFormat.format(date);
+                            String output1 = outputFormat.format(date1);
+
+                            ExchangeSuccess.setStartDate(output);
+                            ExchangeSuccess.setEndDate(output1);
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                         activeExchangeMelaList.add(ExchangeSuccess);
                     }
                     mSwipeRefreshLayout.setRefreshing(false);

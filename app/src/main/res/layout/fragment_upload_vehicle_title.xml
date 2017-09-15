@@ -180,8 +180,8 @@
                         android:id="@+id/finance"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1.2"
-                        android:gravity="center_horizontal"
+                        android:layout_weight="0.6"
+                        android:gravity="start"
                         android:orientation="horizontal">
 
                         <RadioButton
@@ -221,8 +221,8 @@
                         android:id="@+id/exchangeradio"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1.2"
-                        android:gravity="center_horizontal"
+                        android:layout_weight="0.6"
+                        android:gravity="start"
                         android:orientation="horizontal">
 
                         <RadioButton

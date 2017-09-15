@@ -17,8 +17,13 @@ import android.widget.TextView;
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 
 import autokatta.com.R;
 import autokatta.com.adapter.MyEndedServiceMelaAdapter;
@@ -113,8 +118,8 @@ public class MyEndedServiceMelaFragment extends Fragment implements SwipeRefresh
             apiCall = new ApiCall(getActivity(), this);
             apiCall.getEndedServiceMela(loginContact);
         } else {
-            CustomToast.customToast(getActivity(),getString(R.string.no_internet));
-         //   errorMessage(getActivity(), getString(R.string.no_internet));
+            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
+            //   errorMessage(getActivity(), getString(R.string.no_internet));
         }
     }
 
@@ -139,14 +144,51 @@ public class MyEndedServiceMelaFragment extends Fragment implements SwipeRefresh
                         loanSuccess.setName(loanSuccess.getName());
                         loanSuccess.setLocation(loanSuccess.getLocation());
                         loanSuccess.setAddress(loanSuccess.getAddress());
-                        loanSuccess.setStartDate(loanSuccess.getStartDate().replace("T00:00:00",""));
+                        loanSuccess.setStartDate(loanSuccess.getStartDate());
                         loanSuccess.setStartTime(loanSuccess.getStartTime());
-                        loanSuccess.setEndDate(loanSuccess.getEndDate().replace("T00:00:00",""));
+                        loanSuccess.setEndDate(loanSuccess.getEndDate());
                         loanSuccess.setEndTime(loanSuccess.getEndTime());
                         loanSuccess.setImage(loanSuccess.getImage());
                         loanSuccess.setDetails(loanSuccess.getDetails());
                         loanSuccess.setContact(loanSuccess.getContact());
 
+
+                        try {
+                            TimeZone utc = TimeZone.getTimeZone("etc/UTC");
+                            //     TimeZone utc1 = TimeZone.getTimeZone("etc/UTC");
+                            //format of date coming from services
+                            DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                            //    DateFormat inputFormat1 = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss a", Locale.getDefault());
+                        /*DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",
+                                Locale.getDefault());*/
+                            inputFormat.setTimeZone(utc);
+                            //       inputFormat1.setTimeZone(utc1);
+
+                            //format of date which we want to show
+                            DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
+                            DateFormat outputFormat1 = new SimpleDateFormat("dd MMM yyyy hh:mm:ss a", Locale.getDefault());
+                        /*DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy hh:mm aa",
+                                Locale.getDefault());*/
+                            outputFormat.setTimeZone(utc);
+                            //        outputFormat1.setTimeZone(utc1);
+
+                            Date date = inputFormat.parse(loanSuccess.getStartDate());
+                            Date date1 = inputFormat.parse(loanSuccess.getEndDate());
+                            //      Date date2 = inputFormat.parse(loanSuccess.getStartDateTime());
+                            //       Date date3 = inputFormat.parse(loanSuccess.getEndDateTime());
+                            //System.out.println("jjj"+date);
+                            String output = outputFormat.format(date);
+                            String output1 = outputFormat.format(date1);
+                            //   String output2 = outputFormat.format(date2);
+                            //    String output3 = outputFormat.format(date3);
+                            //   //System.out.println(mainList.get(i).getDate()+" jjj " + output);
+                            loanSuccess.setStartDate(output);
+                            loanSuccess.setEndDate(output1);
+                            //     loanSuccess.setEndDateTime(output3);
+                            //      loanSuccess.setStartDateTime(output2);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                         endedServiceMelaResponseList.add(loanSuccess);
                     }
                     mSwipeRefreshLayout.setRefreshing(false);
@@ -169,21 +211,21 @@ public class MyEndedServiceMelaFragment extends Fragment implements SwipeRefresh
     public void notifyError(Throwable error) {
         mSwipeRefreshLayout.setRefreshing(false);
         if (error instanceof SocketTimeoutException) {
-            CustomToast.customToast(getActivity(),getString(R.string._404_));
+            CustomToast.customToast(getActivity(), getString(R.string._404_));
             //   showMessage(getActivity(), getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
-            CustomToast.customToast(getActivity(),getString(R.string.no_response));
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
             // showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            CustomToast.customToast(getActivity(),getString(R.string.no_response));
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
             //   showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
-            CustomToast.customToast(getActivity(),getString(R.string.no_internet));
+            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
             //   errorMessage(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
-            CustomToast.customToast(getActivity(),getString(R.string.no_internet));
+            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
             //   errorMessage(getActivity(), getString(R.string.no_internet));
-        }else {
+        } else {
             Log.i("Check Class-", "Ended Service  Mela Fragment");
             error.printStackTrace();
         }
