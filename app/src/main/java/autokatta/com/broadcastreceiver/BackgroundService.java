@@ -11,21 +11,20 @@ import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 
 import autokatta.com.R;
+import autokatta.com.database.DbConstants;
 import autokatta.com.database.DbOperation;
 import autokatta.com.interfaces.ServiceApi;
 import autokatta.com.request.AutokattaContactRequest;
+import autokatta.com.request.ManualEnquiryRequestCount;
 import autokatta.com.response.GetAutokattaContactResponse;
+import autokatta.com.response.ManualEnquiryResponse;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
@@ -40,12 +39,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class BackgroundService extends Service {
 
-    JSONArray jsonArray = new JSONArray();
-    final JSONObject json = new JSONObject();
     List<String> names = new ArrayList<>();
     List<String> numbers = new ArrayList<>();
-    List<String> lst = new ArrayList<>();
-    HashMap<String, String> key = new HashMap<>();
+    List<ManualEnquiryRequestCount> mMyGroupsList = new ArrayList<>();
     String numberstring = "", namestring = "";
     DbOperation operation;
 
@@ -127,6 +123,7 @@ public class BackgroundService extends Service {
 
             }
             getAutokattaContacts();
+            getEnquiryCount();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -141,6 +138,7 @@ public class BackgroundService extends Service {
                     public void run() {
                         try {
                             getAutokattaContacts();
+                            getEnquiryCount();
                             Log.i("Background", "call webservice");
                         } catch (Exception e) {
                             Log.e("background", e.getMessage());
@@ -212,6 +210,69 @@ public class BackgroundService extends Service {
 
                 @Override
                 public void onFailure(Call<GetAutokattaContactResponse> call, Throwable t) {
+                    t.printStackTrace();
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /*
+    Get Autokatta Contacts...
+     */
+    private void getEnquiryCount() {
+        try {
+
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl(getApplicationContext().getString(R.string.base_url))
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .client(initLog().build())
+                    .build();
+            ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+            Call<ManualEnquiryResponse> mServiceMelaResponse = serviceApi.getManualEnquiry(getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
+                    .getString("loginContact", ""), "null", "null", "null", "null", "null", "null", "null", "null", "null");
+            mServiceMelaResponse.enqueue(new Callback<ManualEnquiryResponse>() {
+                @Override
+                public void onResponse(Call<ManualEnquiryResponse> call, Response<ManualEnquiryResponse> response) {
+                    long result = 0;
+                    operation = new DbOperation(getApplicationContext());
+                    operation.OPEN();
+                    operation.deleteEnquiryCount();
+                    operation.createEnquiryCount();
+                    mMyGroupsList.clear();
+                    ManualEnquiryResponse manualEnquiry = (ManualEnquiryResponse) response.body();
+                    if (manualEnquiry.getSuccess() != null) {
+                        /*Used Vehicle*/
+                        for (ManualEnquiryResponse.Success.UsedVehicle success : manualEnquiry.getSuccess().getUsedVehicle()) {
+                            ManualEnquiryRequestCount request = new ManualEnquiryRequestCount();
+                            request.setVehicleId(success.getVehicleId());
+                            mMyGroupsList.add(request);
+                        }
+
+                        /*Products*/
+                        for (ManualEnquiryResponse.Success.Product success : manualEnquiry.getSuccess().getProducts()) {
+                            ManualEnquiryRequestCount request = new ManualEnquiryRequestCount();
+                            request.setProductId(success.getProductId());
+                            mMyGroupsList.add(request);
+                        }
+
+                        /*Services*/
+                        for (ManualEnquiryResponse.Success.Service service : manualEnquiry.getSuccess().getServices()) {
+                            ManualEnquiryRequestCount request = new ManualEnquiryRequestCount();
+                            request.setServiceId(service.getId());
+                            mMyGroupsList.add(request);
+                        }
+                        result = operation.updateEnquiryCount(mMyGroupsList.size());
+                        Cursor cursor = operation.getEnquiryCount();
+                        cursor.moveToLast();
+                        Log.i("dsafdsfads", "->" + cursor.getString(cursor.getColumnIndex(DbConstants.enq_val)));
+                        operation.CLOSE();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ManualEnquiryResponse> call, Throwable t) {
                     t.printStackTrace();
                 }
             });

@@ -2,16 +2,21 @@ package autokatta.com.enquiries;
 
 import android.app.ActivityOptions;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import autokatta.com.R;
+import autokatta.com.database.DbConstants;
+import autokatta.com.database.DbOperation;
 import autokatta.com.view.BussinessChatActivity;
 import autokatta.com.view.ManualEnquiry;
 
@@ -23,6 +28,7 @@ public class AllEnquiryTabFragment extends Fragment implements View.OnClickListe
 
     View mEnquiryTab;
     RelativeLayout relativeBC, relativeTestDrive, relativeNewDealer, relativeManualEnquiry;
+    TextView mManualCount;
 
     public AllEnquiryTabFragment() {
         //Empty Fragment...
@@ -37,12 +43,23 @@ public class AllEnquiryTabFragment extends Fragment implements View.OnClickListe
         relativeTestDrive = (RelativeLayout) mEnquiryTab.findViewById(R.id.relTD);
         relativeNewDealer = (RelativeLayout) mEnquiryTab.findViewById(R.id.relND);
         relativeManualEnquiry = (RelativeLayout) mEnquiryTab.findViewById(R.id.relME);
+        mManualCount = (TextView) mEnquiryTab.findViewById(R.id.manual_count);
 
         relativeBC.setOnClickListener(this);
         relativeTestDrive.setOnClickListener(this);
         relativeNewDealer.setOnClickListener(this);
         relativeManualEnquiry.setOnClickListener(this);
 
+        DbOperation operation;
+        operation = new DbOperation(getActivity().getApplicationContext());
+        operation.OPEN();
+        Cursor cursor = operation.getEnquiryCount();
+        if (cursor.getCount() > 0) {
+            cursor.moveToLast();
+            mManualCount.setText(cursor.getString(cursor.getColumnIndex(DbConstants.enq_val)));
+            Log.i("dsafdsfads", "->" + cursor.getString(cursor.getColumnIndex(DbConstants.enq_val)));
+        }
+        operation.CLOSE();
         return mEnquiryTab;
     }
 

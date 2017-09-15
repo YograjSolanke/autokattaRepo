@@ -21,4 +21,11 @@ public class DbQuery {
 
     protected static final String dropAutokattaContact = "drop table if exists '" + DbConstants.tableMyAutokattaContacts + "'";
 
+    protected static final String create_table_Enq_Count = "create table " + DbConstants.tableEnquiryCount +
+            "(" + DbConstants.enq_id + " integer primary key autoincrement," + DbConstants.enq_val + " text)";
+
+    protected static final String getEnquiryCount = "select * from " + DbConstants.tableEnquiryCount;
+
+    protected static final String dropEnquiryCount = "drop table if exists '" + DbConstants.tableEnquiryCount + "'";
+
 }

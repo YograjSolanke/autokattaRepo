@@ -59,18 +59,18 @@ public class DbOperation {
             if (cursor.getCount() > 0) {
                 Log.e("Present", "->");
             } else {*/
-                ContentValues values = new ContentValues();
-                values.put(DbConstants.userName, name);
-                values.put(DbConstants.contact, contact);
-                values.put(DbConstants.followStatus, followStatus);
-                values.put(DbConstants.myStatus, myStatus);
+            ContentValues values = new ContentValues();
+            values.put(DbConstants.userName, name);
+            values.put(DbConstants.contact, contact);
+            values.put(DbConstants.followStatus, followStatus);
+            values.put(DbConstants.myStatus, myStatus);
 
-                if (profilePic == null) {
-                    values.put(DbConstants.profilePic, R.mipmap.ic_launcher);
-                } else {
-                    values.put(DbConstants.profilePic, profilePic);
-                }
-                result = db.insert(DbConstants.tableMyAutokattaContacts, null, values);
+            if (profilePic == null) {
+                values.put(DbConstants.profilePic, R.mipmap.ic_launcher);
+            } else {
+                values.put(DbConstants.profilePic, profilePic);
+            }
+            result = db.insert(DbConstants.tableMyAutokattaContacts, null, values);
             // }
             operation.CLOSE();
         } catch (Exception e) {
@@ -91,6 +91,7 @@ public class DbOperation {
         }
         return cursor;
     }
+
 
     /*
    Delete My Autokatta Contact...
@@ -132,4 +133,50 @@ public class DbOperation {
         return result;
     }
 
+
+    /*
+    Get Enquiry Count...
+     */
+    public void createEnquiryCount() {
+        db.execSQL(DbQuery.create_table_Enq_Count);
+    }
+
+    /*
+    update count
+     */
+    public long updateEnquiryCount(int count) {
+        long result = -1;
+        try {
+            Cursor cursor = null;
+            DbOperation operation = new DbOperation(mContext);
+            operation.OPEN();
+            ContentValues values = new ContentValues();
+            values.put(DbConstants.enq_val, count);
+            result = db.insert(DbConstants.tableEnquiryCount, null, values);
+            operation.CLOSE();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    /*
+    Get My Autokatta Contact...
+     */
+    public Cursor getEnquiryCount() {
+        Cursor cursor = null;
+        try {
+            cursor = db.rawQuery(DbQuery.getEnquiryCount, null);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return cursor;
+    }
+
+    /*
+   Delete Enquiry Count...
+    */
+    public void deleteEnquiryCount() {
+        db.execSQL(DbQuery.dropEnquiryCount);
+    }
 }

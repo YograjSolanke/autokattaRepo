@@ -18,6 +18,7 @@ public class DbHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         try {
             db.execSQL(DbQuery.create_table_AutokattaContact);
+            db.execSQL(DbQuery.create_table_Enq_Count);
         } catch (Exception e) {
             e.printStackTrace();
         }

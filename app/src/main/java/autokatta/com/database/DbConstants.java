@@ -13,6 +13,7 @@ public class DbConstants {
     Table Names...
      */
     static final String tableMyAutokattaContacts = "table_autokatta_contact";
+    static final String tableEnquiryCount = "table_enquiry_count";
 
 
     //tableMyAutokattaContacts
@@ -22,4 +23,9 @@ public class DbConstants {
     public static final String contact = "contact";
     public static final String followStatus = "follow_status";
     public static final String myStatus = "my_status";
+
+    //table enquiry count...
+    public static final String enq_id = "id";
+    public static final String enq_val = "value";
+
 }

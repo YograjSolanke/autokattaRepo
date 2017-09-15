@@ -678,7 +678,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                 sb1.append(notificationList.get(position).getSenderName());
                 sb1.append(" ");
                 sb1.append(notificationList.get(position).getAction());
-                sb1.append("\n");
+                sb1.append(" ");
                 sb1.append(notificationList.get(position).getReceiverName());
                 sb1.append(" Profile");
 
@@ -745,6 +745,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                                 notificationList.get(position).getReceiverName().length()
                         , Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
+                mProfileHolder.mProfileAction.setSingleLine(false);
                 mProfileHolder.mProfileAction.setText(sb1);
                 mProfileHolder.mProfileAction.setMovementMethod(LinkMovementMethod.getInstance());
                 mProfileHolder.mProfileAction.setHighlightColor(Color.TRANSPARENT);
@@ -1062,7 +1063,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                 sb2.append(notificationList.get(position).getSenderName());
                 sb2.append(" ");
                 sb2.append(notificationList.get(position).getAction());
-                sb2.append("\n");
+                sb2.append(" ");
                 sb2.append(notificationList.get(position).getReceiverName());
                 sb2.append(" ");
                 sb2.append(notificationList.get(position).getStoreName());
@@ -1158,6 +1159,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                                 notificationList.get(position).getStoreName().length() + 1
                         , Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
+                mStoreHolder.mStoreActionName.setSingleLine(false);
                 mStoreHolder.mStoreActionName.setText(sb2);
                 mStoreHolder.mStoreActionName.setMovementMethod(LinkMovementMethod.getInstance());
                 mStoreHolder.mStoreActionName.setHighlightColor(Color.TRANSPARENT);
@@ -1445,7 +1447,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                 sb3.append(notificationList.get(position).getSenderName());
                 sb3.append(" ");
                 sb3.append(notificationList.get(position).getAction());
-                sb3.append("\n");
+                sb3.append(" ");
                 sb3.append(notificationList.get(position).getReceiverName());
                 sb3.append(" in ");
                 sb3.append(notificationList.get(position).getGroupName());
@@ -1550,6 +1552,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                         , Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
 
+                mGroupHolder.mActionName.setSingleLine(false);
                 mGroupHolder.mActionName.setText(sb3);
                 mGroupHolder.mActionName.setMovementMethod(LinkMovementMethod.getInstance());
                 mGroupHolder.mActionName.setHighlightColor(Color.TRANSPARENT);
@@ -1648,7 +1651,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                 sb4.append(notificationList.get(position).getSenderName());
                 sb4.append(" ");
                 sb4.append(notificationList.get(position).getAction());
-                sb4.append("\n");
+                sb4.append(" ");
                 sb4.append(notificationList.get(position).getReceiverName());
                 sb4.append(" ");
                 sb4.append(notificationList.get(position).getUpVehicleTitle());
@@ -1738,6 +1741,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                                 notificationList.get(position).getUpVehicleTitle().length() + 1
                         , Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
+                mVehicleHolder.mActionName.setSingleLine(false);
                 mVehicleHolder.mActionName.setText(sb4);
                 mVehicleHolder.mActionName.setMovementMethod(LinkMovementMethod.getInstance());
                 mVehicleHolder.mActionName.setHighlightColor(Color.TRANSPARENT);
@@ -2146,7 +2150,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                     sb5.append(notificationList.get(position).getSenderName());
                     sb5.append(" ");
                     sb5.append(notificationList.get(position).getAction());
-                    sb5.append("\n");
+                    sb5.append(" ");
                     sb5.append(notificationList.get(position).getProductName());
                     sb5.append(" Product");
 
@@ -2205,7 +2209,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                     sb5.append(notificationList.get(position).getSenderName());
                     sb5.append(" ");
                     sb5.append(notificationList.get(position).getAction());
-                    sb5.append("\n");
+                    sb5.append(" ");
                     sb5.append(notificationList.get(position).getReceiverName());
                     sb5.append(" ");
                     sb5.append(notificationList.get(position).getProductName());
@@ -2295,10 +2299,10 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                             , Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                 }
 
+                mProductHolder.mProductActionName.setSingleLine(false);
                 mProductHolder.mProductActionName.setText(sb5);
                 mProductHolder.mProductActionName.setMovementMethod(LinkMovementMethod.getInstance());
                 mProductHolder.mProductActionName.setHighlightColor(Color.TRANSPARENT);
-
 
                 mProductHolder.mProductActionTime.setText(notificationList.get(position).getDateTime());
                 mProductHolder.mProductName.setText(notificationList.get(position).getProductName());
@@ -2773,6 +2777,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                             , Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                 }
 
+                mServiceHolder.mServiceActionName.setSingleLine(false);
                 mServiceHolder.mServiceActionName.setText(sb6);
                 mServiceHolder.mServiceActionName.setMovementMethod(LinkMovementMethod.getInstance());
                 mServiceHolder.mServiceActionName.setHighlightColor(Color.TRANSPARENT);
@@ -3123,6 +3128,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                     }
                 }, 0, notificationList.get(position).getSenderName().length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
+                mPostHolder.mAction.setSingleLine(false);
                 mPostHolder.mAction.setText(sb7);
                 mPostHolder.mAction.setMovementMethod(LinkMovementMethod.getInstance());
                 mPostHolder.mAction.setHighlightColor(Color.TRANSPARENT);
@@ -3268,6 +3274,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                     }
                 }, 0, notificationList.get(position).getSenderName().length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
+                mSearchHolder.mSearchActionName.setSingleLine(false);
                 mSearchHolder.mSearchActionName.setText(sb8);
                 mSearchHolder.mSearchActionName.setMovementMethod(LinkMovementMethod.getInstance());
                 mSearchHolder.mSearchActionName.setHighlightColor(Color.TRANSPARENT);
@@ -3864,7 +3871,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                 sb10.append(notificationList.get(position).getSenderName());
                 sb10.append(" ");
                 sb10.append(notificationList.get(position).getAction());
-                sb10.append("\n");
+                sb10.append(" ");
                 sb10.append(notificationList.get(position).getUpVehicleTitle());
                 sb10.append(" Vehicle In ");
                 sb10.append(notificationList.get(position).getGroupName());
@@ -3960,6 +3967,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                                 notificationList.get(position).getGroupName().length() + 1
                         , Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
+                mUpVehicleHolder.mActionName.setSingleLine(false);
                 mUpVehicleHolder.mActionName.setText(sb10);
                 mUpVehicleHolder.mActionName.setMovementMethod(LinkMovementMethod.getInstance());
                 mUpVehicleHolder.mActionName.setHighlightColor(Color.TRANSPARENT);
@@ -3984,7 +3992,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                 if (notificationList.get(position).getSenderPicture() == null ||
                         notificationList.get(position).getSenderPicture().equals("") ||
                         notificationList.get(position).getSenderPicture().equals("null")) {
-                    mUpVehicleHolder.mUserPic.setBackgroundResource(R.drawable.logo48x48);
+                    //mUpVehicleHolder.mUserPic.setBackgroundResource(R.drawable.logo48x48);
                 } else {
                     Glide.with(mActivity)
                             .load(mActivity.getString(R.string.base_image_url) + notificationList.get(position).getSenderPicture())

@@ -246,60 +246,60 @@
     <string name="standard_cloud">Standard cloud using FlexboxLayout with dividerDrawable:</string>
     <string name="horizontalscrollview_example">HorizontalScrollView with useInsetPadding config:</string>
     <string-array name="demo_array">
-        <item>Select Interest From Given Tags Only</item>
-        <item>Launch</item>
-        <item>Review</item>
-        <item>Demo</item>
-        <item>News</item>
-        <item>Buying</item>
-        <item>Selling</item>
-        <item>Spare Parts</item>
-        <item>Vehicles</item>
-        <item>Accessories</item>
-        <item>New Vehicle</item>
-        <item>Used Vehicle</item>
-        <item>Auction</item>
-        <item>Auto Sports</item>
-        <item>Information</item>
-        <item>Jobs</item>
-        <item>Car pool</item>
-        <item>Others</item>
-        <item>2 wheelers</item>
-        <item>3 wheelers</item>
-        <item>Cars</item>
+        <item>सिलेक्ट इंटरेस्ट फ्रॉम गीवन टॅग्स ओन्ली</item>
+        <item>लाँच</item>
+        <item>रिव्हिव</item>
+        <item>डेमो</item>
+        <item>न्युज</item>
+        <item>बायिंग</item>
+        <item>सेल्लिंग</item>
+        <item>स्पेयर पार्टस</item>
+        <item>वेहिकल्स</item>
+        <item>ऍक्सेसीरीज</item>
+        <item>निव वेहिकल्स</item>
+        <item>यूज्ड वेहिकल्स</item>
+        <item>ओक्षण</item>
+        <item>ऑटो स्पोर्ट्स</item>
+        <item>इन्फॉर्मशन</item>
+        <item>जॉब्स</item>
+        <item>कार पूल</item>
+        <item>ओदर</item>
+        <item>2 व्हीलर</item>
+        <item>3 व्हीलर</item>
+        <item>कार्स</item>
         <item>Trucks</item>
-        <item>Transport and Cargo</item>
-        <item>Sabres of Paradise</item>
-        <item>Construction Equipment</item>
+        <item>ट्रान्सपोर्ट अँड कार्गो</item>
+        <item>सोबर्स ऑफ पराडाइज</item>
+        <item>कॉन्स्टक्षण Equipment</item>
 
-        <item>Health and Wellness</item>
-        <item>Auto Detailing styling</item>
-        <item>Electrical and Electronics</item>
-        <item>Route Maps and Holiday Discussions</item>
-        <item>Super Cars Section</item>
-        <item>Home Audio/Video</item>
-        <item>Product Announcements</item>
-        <item>Automotive News and General Discussions</item>
-        <item>FAQs</item>
-        <item>Indian Car Sales, Reports and Analysis</item>
-        <item>Photography</item>
-        <item>Bodywork and Interiors</item>
-        <item>Others</item>
-        <item>Technical Discussions</item>
-        <item>RTO, Law, Loans and Insurance</item>
-        <item>Handling (Suspension, Steering, Brakes etc)</item>
-        <item>Travelogues</item>
-        <item>4x4s and Off-Road</item>
-        <item>Engines and Transmissions</item>
-        <item>Traffic Lights</item>
-        <item>Electrical and Electronics</item>
-        <item>Alloys and Tyres</item>
-        <item>Bikes</item>
-        <item>Automotive Lighting</item>
-        <item>Racing</item>
-        <item>Product Review</item>
-        <item>Product Demo</item>
-        <item>Videos</item>
+        <item>हेअल्थ अँड वेलनेस</item>
+        <item>ऑटो डेटाइलिंग स्र्तीलिंग</item>
+        <item>इलेक्ट्रिकल अँड इलेक्ट्रॉनिक्स</item>
+        <item>रौते मॅप्स अँड हॉलिडे दिसकॅशिअन्स</item>
+        <item>सुपर कार्स सेकशन</item>
+        <item>होम ऑडिओ/विडिओ</item>
+        <item>प्रॉडक्ट अन्नऊन्समेंट्स</item>
+        <item>ऑटोमोटिव्ह न्युज अँड जनरल दिसकॅशिअन्स</item>
+        <item>एफ ए क्यू</item>
+        <item>इंडियन कार्स सेल्स, रिपोर्ट्स अँड आनालीसीस</item>
+        <item>फोटोग्राफी</item>
+        <item>बॉडीवर्क अँड इंटेरिअर्स</item>
+        <item>ओदर</item>
+        <item>Technical दिसकॅशिअन्स</item>
+        <item>आर ती ओ, Law, लोण अँड इन्शुरन्स</item>
+        <item>हँडलिंग (ससपेनशन, स्टेरिंग, ब्रक्स etc)</item>
+        <item>ट्रॅव्हलॉगुएस</item>
+        <item>4x4s अँड ऑफ-रोड</item>
+        <item>इंजिन्स अँड ट्रान्समिस्सीन्स</item>
+        <item>ट्रॅफिक लाइट</item>
+        <item>इलेक्ट्रिकल अँड इलेक्ट्रॉनिक्स</item>
+        <item>ऑलोय्स अँड टायर्स</item>
+        <item>बाइक्स</item>
+        <item>ऑटोमोटिव्ह लाइटनिंग</item>
+        <item>रेसिंग</item>
+        <item>प्रॉडक्ट रेव्हिव</item>
+        <item>प्रॉडक्ट डेमो</item>
+        <item>विडिओ</item>
     </string-array>
     <string name="title_activity_location">"स्थानप्रतिक्रिया"</string>
     <string name="title_activity_edit_profile">"प्रोफाईल संपादित करा"</string>
