@@ -88,7 +88,7 @@ public class MyStoreListFragment extends Fragment implements View.OnClickListene
                         Sresponse.setLikecount(Sresponse.getLikecount());
                         Sresponse.setFollowcount(Sresponse.getFollowcount());
                         Sresponse.setStoreType(Sresponse.getStoreType());
-                        getActivity().setTitle("My Store");
+                        //getActivity().setTitle("My Store");
                         storeResponseArrayList.add(Sresponse);
                     }
                     mSwipeRefreshLayout.setRefreshing(false);
@@ -225,6 +225,7 @@ public class MyStoreListFragment extends Fragment implements View.OnClickListene
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                getActivity().setTitle("My Store");
                 mNoData = (TextView) mMyStoreList.findViewById(R.id.no_category);
                 mNoData.setVisibility(View.GONE);
                 fabCreateStore = (FloatingActionButton) mMyStoreList.findViewById(R.id.fabCreateStore);

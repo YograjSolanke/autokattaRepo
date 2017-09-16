@@ -24,7 +24,6 @@ import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
 import autokatta.com.register.CreateStoreContainer;
 import autokatta.com.response.GetVehicleListResponse;
-import autokatta.com.response.MyStoreResponse;
 import retrofit2.Response;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -38,15 +37,23 @@ public class VehicleList extends Fragment implements RequestNotifier {
     View mVehicleList;
     ListView mListView;
     List<GetVehicleListResponse.Success> mGetVehicle;
-    boolean isTrue = false;
-    MyStoreResponse myStoreResponse;
+    String yesNo;
+    boolean hasViewCreated = false;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mVehicleList = inflater.inflate(R.layout.fragment_vehicle_upload_list, container, false);
+        return mVehicleList;
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         mGetVehicle = new ArrayList<>();
         mListView = (ListView) mVehicleList.findViewById(R.id.upload_list);
+        yesNo = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("isTrue", "");
+        Log.i("yesNo", "->" + yesNo);
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -65,23 +72,23 @@ public class VehicleList extends Fragment implements RequestNotifier {
                 }
             }
         });
-        getStore();
         getData();
-        return mVehicleList;
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (this.isVisible()) {
+            if (isVisibleToUser && !hasViewCreated) {
+                getData();
+                hasViewCreated = true;
+            }
+        }
     }
 
     private void getData() {
         ApiCall mApiCall = new ApiCall(getActivity(), this);
         mApiCall.getVehicleCount(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", null));
-    }
-
-    /*
-    Get store Data...
-     */
-
-    private void getStore() {
-        ApiCall mApiCall = new ApiCall(getActivity(), this);
-        mApiCall.MyStoreList(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", null));
     }
 
     @Override
@@ -99,11 +106,6 @@ public class VehicleList extends Fragment implements RequestNotifier {
                         GetVehicleListAdapter mGetVehicleListAdapter = new GetVehicleListAdapter(getActivity(), mGetVehicle);
                         mListView.setAdapter(mGetVehicleListAdapter);
                         mGetVehicleListAdapter.notifyDataSetChanged();
-                    }
-                } else if (response.body() instanceof MyStoreResponse) {
-                    myStoreResponse = (MyStoreResponse) response.body();
-                    if (!myStoreResponse.getSuccess().isEmpty()) {
-                        isTrue = true;
                     }
                 }
             } else {
@@ -132,29 +134,32 @@ public class VehicleList extends Fragment implements RequestNotifier {
     public void notifyString(String str) {
         try {
             if (str != null) {
-                if (Integer.parseInt(str) > 3 && !isTrue) {
-                    AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
-                    alertDialog.setCancelable(false);
-                    alertDialog.setTitle("Create Store first");
-                    alertDialog.setMessage("You can not upload more than 3 vehicles. Please create store first?");
-                    alertDialog.setIcon(android.R.drawable.ic_dialog_alert);
-                    alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            Bundle b = new Bundle();
-                            b.putString("className", "VehicleList");
-                            Intent i = new Intent(getActivity(), CreateStoreContainer.class);
-                            i.putExtras(b);
-                            startActivity(i);
-                        }
-                    });
-                    alertDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            getActivity().finish();
-                            //startActivity(new Intent(getActivity(), AutokattaMainActivity.class));
-                            dialog.cancel();
-                        }
-                    });
-                    alertDialog.show();
+                if (yesNo.equals("no")) {
+                    if (Integer.parseInt(str) >= 3) {
+                        AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
+                        alertDialog.setCancelable(false);
+                        alertDialog.setTitle("Create Store first");
+                        alertDialog.setMessage("You don't have any store created, you can not upload more than 3 vehicles. Please create store first?");
+                        alertDialog.setIcon(android.R.drawable.ic_dialog_alert);
+                        alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                Bundle b = new Bundle();
+                                b.putString("className", "VehicleList");
+                                Intent i = new Intent(getActivity(), CreateStoreContainer.class);
+                                i.putExtras(b);
+                                startActivity(i);
+                                getActivity().finish();
+                            }
+                        });
+                        alertDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                getActivity().finish();
+                                //startActivity(new Intent(getActivity(), AutokattaMainActivity.class));
+                                dialog.cancel();
+                            }
+                        });
+                        alertDialog.show();
+                    }
                 } else {
                     AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
                     alertDialog.setCancelable(false);

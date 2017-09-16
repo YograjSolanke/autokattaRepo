@@ -887,7 +887,7 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
                         bundle.putInt("store_id", id);
                         bundle.putString("call", callFrom);
 
-                        if (callFrom.equals("interestbased")) {
+                        if (callFrom.equals("interestbased") || callFrom.equals("VehicleList")) {
                             AddMoreAdminsForStoreFrag addAdmin = new AddMoreAdminsForStoreFrag();
                             addAdmin.setArguments(bundle);
                             FragmentManager fragmentManager = getActivity().getSupportFragmentManager();

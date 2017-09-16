@@ -9,13 +9,18 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import autokatta.com.R;
+import autokatta.com.apicall.ApiCall;
 import autokatta.com.app_info.UploadVehicleAppIntro;
+import autokatta.com.interfaces.RequestNotifier;
+import autokatta.com.response.MyStoreResponse;
 import autokatta.com.upload_vehicle.VehicleList;
+import retrofit2.Response;
 
-public class VehicleUpload extends AppCompatActivity {
+public class VehicleUpload extends AppCompatActivity implements RequestNotifier {
 
     SharedPreferences sharedPreferences = null;
     SharedPreferences.Editor editor;
+
     @Override
     @CallSuper
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +29,7 @@ public class VehicleUpload extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         setTitle("Upload Vehicle");
+        getStore();
         sharedPreferences = getSharedPreferences(getString(R.string.firstRun), MODE_PRIVATE);
         startActivity(new Intent(getApplicationContext(), UploadVehicleAppIntro.class));
         if (getSupportActionBar() != null) {
@@ -51,6 +57,15 @@ public class VehicleUpload extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    /*
+    Get store Data...
+     */
+
+    private void getStore() {
+        ApiCall mApiCall = new ApiCall(VehicleUpload.this, this);
+        mApiCall.MyStoreList(getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", null));
+    }
+
     @Override
     public void onBackPressed() {
         //super.onBackPressed();
@@ -65,6 +80,30 @@ public class VehicleUpload extends AppCompatActivity {
                 overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
             }
         }
+    }
+
+    @Override
+    public void notifySuccess(Response<?> response) {
+        if (response != null) {
+            if (response.isSuccessful()) {
+                MyStoreResponse myStoreResponse = (MyStoreResponse) response.body();
+                if (!myStoreResponse.getSuccess().isEmpty()) {
+                    getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("isTrue", "yes").apply();
+                } else {
+                    getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("isTrue", "no").apply();
+                }
+            }
+        }
+    }
+
+    @Override
+    public void notifyError(Throwable error) {
+
+    }
+
+    @Override
+    public void notifyString(String str) {
+
     }
 
     /*@Override
