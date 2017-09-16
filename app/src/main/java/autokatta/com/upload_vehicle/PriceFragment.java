@@ -74,6 +74,7 @@ public class PriceFragment extends Fragment implements RequestNotifier, View.OnC
 
     String myContact;
     String imageNames = "";
+    List<String> strImages1 = new ArrayList<>();
 
 
     @Nullable
@@ -172,6 +173,8 @@ public class PriceFragment extends Fragment implements RequestNotifier, View.OnC
             @Override
             public void run() {
                 try {
+                    Bundle getBundle = getArguments();
+                    strImages1 = getBundle.getStringArrayList("images");
                     getPrice(strCategoryId, strSubcategoryId, strBrandId, strModelId, strVersionId, strMfgYr, strRto);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -186,7 +189,7 @@ public class PriceFragment extends Fragment implements RequestNotifier, View.OnC
         switch (v.getId()) {
             case R.id.btnUpload:
 
-                String selectImages = "";
+                /*String selectImages = "";
                 String allimg = "";
                 List<String> ImgData2 = Arrays.asList(strImages.split(","));
                 for (int i1 = 0; i1 < ImgData2.size(); i1++) {
@@ -200,7 +203,24 @@ public class PriceFragment extends Fragment implements RequestNotifier, View.OnC
                         imageNames = imageNames + "," + lastWord;
                     }
                     System.out.println(ImgData2.get(i1));
+                }*/
+
+                String selectImages = "";
+                String allimg = "";
+
+                for (int i1 = 0; i1 < strImages1.size(); i1++) {
+                    selectImages = strImages1.get(i1);
+                    String lastWord = selectImages.substring(selectImages.lastIndexOf("/") + 1);
+                    if (allimg.equalsIgnoreCase("") && imageNames.equalsIgnoreCase("")) {
+                        allimg = "" + strImages1.get(i1);
+                        imageNames = "" + lastWord;
+                    } else {
+                        allimg = allimg + "," + strImages1.get(i1);
+                        imageNames = imageNames + "," + lastWord;
+                    }
+                    System.out.println(strImages1.get(i1));
                 }
+
                 uploadVehicle();
                 break;
         }

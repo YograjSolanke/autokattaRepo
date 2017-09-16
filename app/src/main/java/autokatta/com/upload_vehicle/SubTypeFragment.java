@@ -892,16 +892,19 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
             mImages = data.getParcelableArrayListExtra(ImagePickerActivity.INTENT_EXTRA_SELECTED_IMAGES);
             StringBuilder sb = new StringBuilder();
             List<String> addData = new ArrayList<>();
-            ArrayList<String> mPath = new ArrayList<>();
+            List<String> mPath = new ArrayList<>();
+            mPath.clear();
             for (int i = 0; i < mImages.size(); i++) {
                 sb.append(mImages.get(i).getPath());
                 mPath.add(mImages.get(i).getPath());
             }
-            ArrayList<String> mPath1 = new ArrayList<>();
+            List<String> mPath1 = new ArrayList<>();
             int cnt = 0;
             String selectImages = "";
             String selectedimg = "";
             String allimg = "";
+            allimgpath = "";
+            mPath1.clear();
             for (int i = 0; i < mPath.size(); i++) {
                 cnt++;
                 if (cnt <= 12) {
@@ -944,7 +947,7 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
                 alertDialog.dismiss();
 
                 Bundle b = new Bundle();
-                b.putStringArrayList("IMAGE", mPath1);
+                b.putStringArrayList("IMAGE", (ArrayList<String>) mPath1);
                 b.putInt("call", 1);
                 SelectedImagesFragment mSelectedImagesFragment = new SelectedImagesFragment();
                 mSelectedImagesFragment.setArguments(b);

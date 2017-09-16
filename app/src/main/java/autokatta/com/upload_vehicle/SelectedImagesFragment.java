@@ -73,6 +73,7 @@ public class SelectedImagesFragment extends Fragment implements View.OnClickList
 
             String text1 = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("images", "");
             List<String> ImgData2 = Arrays.asList(text1.split(","));
+            image.clear();
             for (int i1 = 0; i1 < ImgData2.size(); i1++) {
                 if (allimg.equalsIgnoreCase("")) {
                     allimg = "" + ImgData2.get(i1);
@@ -88,6 +89,7 @@ public class SelectedImagesFragment extends Fragment implements View.OnClickList
 
         } else {
             List<String> ImgData = b.getStringArrayList("IMAGE");
+            image.clear();
             for (int i1 = 0; i1 < (ImgData != null ? ImgData.size() : 0); i1++) {
                 if (allimg.equalsIgnoreCase("")) {
                     allimg = "" + ImgData.get(i1);
@@ -126,6 +128,8 @@ public class SelectedImagesFragment extends Fragment implements View.OnClickList
                 getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("images", allimg).apply();
                 b = new Bundle();
                 b.putInt("call", call);
+
+                b.putStringArrayList("images", (ArrayList<String>) image);
 
                 PriceFragment fragment = new PriceFragment();
                 fragment.setArguments(b);
@@ -210,6 +214,7 @@ public class SelectedImagesFragment extends Fragment implements View.OnClickList
                     }
 
                     b.putInt("Activity", 1);
+                    b.putInt("number", page);
                     ImageEditFragment fragment2 = new ImageEditFragment();
                     fragment2.setArguments(b);
                     /*FragmentManager fragmentManager = getActivity().getSupportFragmentManager();

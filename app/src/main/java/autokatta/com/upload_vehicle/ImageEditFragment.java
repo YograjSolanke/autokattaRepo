@@ -195,13 +195,17 @@ public class ImageEditFragment extends Fragment implements ColorPickerDialog.OnC
         System.out.println(RootDir);
         //  System.out.println("lastword:::"+firstWord);
         System.out.println("secword:::" + driveLetter);
-        File myDir = new File(firstWords);
-        myDir.mkdirs();
+
         Random generator = new Random();
         int n = 10000;
         n = generator.nextInt(n);
         String fname = driveLetter + "1.jpg";
         System.out.println("Whole image name:::" + fname);
+
+        File myDir = new File(firstWords);
+        boolean isDirectoryCreated = myDir.mkdirs();
+        String newpath = "";
+
         File file = new File(myDir, fname);
         if (file.exists()) file.delete();
         try {
@@ -213,10 +217,10 @@ public class ImageEditFragment extends Fragment implements ColorPickerDialog.OnC
         } catch (Exception e) {
             e.printStackTrace();
         }
-        String newpath = "" + file;
-
-
+        newpath = "" + file;
         Toast.makeText(getActivity(), "Image saved " + file, Toast.LENGTH_LONG).show();
+
+
 
         Bundle b = new Bundle();
 
