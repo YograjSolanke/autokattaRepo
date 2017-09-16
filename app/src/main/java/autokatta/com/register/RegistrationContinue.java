@@ -22,6 +22,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.net.ConnectException;
@@ -37,6 +40,8 @@ import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.interfaces.ServiceApi;
 import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.other.CustomToast;
+import autokatta.com.response.ProfileAboutResponse;
+import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -55,7 +60,9 @@ public class RegistrationContinue extends AppCompatActivity implements RequestNo
     File file;
     Button mSubmit, mSkip;
     Boolean flag = false;
+    int RegId;
     CoordinatorLayout mCoordinate;
+    String userName, email, contact, profession, company, designation, subProfession, websitestr, city, skills, interest, about, profilepic;
     ConnectionDetector mTestConnection;
 
     @Override
@@ -88,7 +95,18 @@ public class RegistrationContinue extends AppCompatActivity implements RequestNo
         });
         mSubmit.setOnClickListener(this);
         mSkip.setOnClickListener(this);
+
+
+        if (mTestConnection.isConnectedToInternet()) {
+            ApiCall mApiCall = new ApiCall(RegistrationContinue.this, this);
+            mApiCall.profileAbout(getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
+                    .getString("loginContact", ""), getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
+                    .getString("loginContact", ""));
+        } else {
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
+        }
     }
+
 
     public void onPickImage(View view) {
         final CharSequence[] options = {"Take Photo", "Choose from Gallery", "Cancel"};
@@ -112,6 +130,7 @@ public class RegistrationContinue extends AppCompatActivity implements RequestNo
         });
         builder.show();
     }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -239,7 +258,7 @@ public class RegistrationContinue extends AppCompatActivity implements RequestNo
             TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
             textView.setTextColor(Color.YELLOW);
             snackbar.show();*/
-            CustomToast.customToast(getApplicationContext(),getString(R.string.no_internet));
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
         }
     }
 
@@ -280,22 +299,7 @@ public class RegistrationContinue extends AppCompatActivity implements RequestNo
                         mApiCall.updateRegistration(getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
                                 .getInt("loginregistrationid", 0), 1, lastWord, abouttext, websitetext);
                     } else {
-                       /* Snackbar snackbar = Snackbar.make(mCoordinate, getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
-                                .setAction("Go Online", new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View view) {
-                                        startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
-                                    }
-                                });
-                        // Changing message text color
-                        snackbar.setActionTextColor(Color.RED);
-                        // Changing action button text color
-                        View sbView = snackbar.getView();
-                        TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
-                        textView.setTextColor(Color.YELLOW);
-                        snackbar.show();*/
-                        //   errorMessage(getActivity(), getString(R.string.no_internet));
-                        CustomToast.customToast(getApplicationContext(),getString(R.string.no_internet));
+                        CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
                     }
                 }
                 break;
@@ -319,22 +323,58 @@ public class RegistrationContinue extends AppCompatActivity implements RequestNo
 
     @Override
     public void notifySuccess(Response<?> response) {
+        if (response != null) {
+            if (response.isSuccessful()) {
+                if (response.body() instanceof ProfileAboutResponse) {
+                    ProfileAboutResponse mProfileAboutResponse = (ProfileAboutResponse) response.body();
+                    if (!mProfileAboutResponse.getSuccess().isEmpty()) {
+                        userName = mProfileAboutResponse.getSuccess().get(0).getUsername();
+                        email = mProfileAboutResponse.getSuccess().get(0).getEmail();
+                        contact = mProfileAboutResponse.getSuccess().get(0).getContact();
+                        profession = mProfileAboutResponse.getSuccess().get(0).getProfession();
+                        company = mProfileAboutResponse.getSuccess().get(0).getCompanyName();
+                        designation = mProfileAboutResponse.getSuccess().get(0).getDesignation();
+                        subProfession = mProfileAboutResponse.getSuccess().get(0).getSubProfession();
+                        websitestr = mProfileAboutResponse.getSuccess().get(0).getWebsite();
+                        city = mProfileAboutResponse.getSuccess().get(0).getCity();
+                        skills = mProfileAboutResponse.getSuccess().get(0).getSkills();
+                        RegId = mProfileAboutResponse.getSuccess().get(0).getRegId();
+                        interest = mProfileAboutResponse.getSuccess().get(0).getInterests();
+                        about = mProfileAboutResponse.getSuccess().get(0).getAbout();
+
+                        mAboutUs.setText(about);
+                        mWebSite.setText(websitestr);
+                        Glide.with(getApplicationContext())
+                                .load(getString(R.string.base_image_url) + mProfileAboutResponse.getSuccess().get(0).getProfilePic())
+                                .bitmapTransform(new CropCircleTransformation(this)) //To display image in Circular form.
+                                .diskCacheStrategy(DiskCacheStrategy.ALL) //For caching diff versions of image.
+                                .override(110, 100)
+                                .into(mProfilePic);
+                    } else
+                        CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
+                }
+            } else {
+                CustomToast.customToast(getApplicationContext(), getString(R.string._404_));
+            }
+        } else {
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
+        }
 
     }
 
     @Override
     public void notifyError(Throwable error) {
         if (error instanceof SocketTimeoutException) {
-            CustomToast.customToast(getApplicationContext(),getString(R.string._404_));
+            CustomToast.customToast(getApplicationContext(), getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
-            CustomToast.customToast(getApplicationContext(),getString(R.string.no_response));
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            CustomToast.customToast(getApplicationContext(),getString(R.string.no_response));
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
-            CustomToast.customToast(getApplicationContext(),getString(R.string.no_internet));
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
-            CustomToast.customToast(getApplicationContext(),getString(R.string.no_internet));
-        }  else {
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
+        } else {
             Log.i("Check Class-", "Continue Registration");
         }
     }
@@ -349,8 +389,8 @@ public class RegistrationContinue extends AppCompatActivity implements RequestNo
                 startActivity(i, options.toBundle());
             }
         } else {
-            CustomToast.customToast(getApplicationContext(),getString(R.string.no_response));
-         }
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
+        }
     }
 
     @Override

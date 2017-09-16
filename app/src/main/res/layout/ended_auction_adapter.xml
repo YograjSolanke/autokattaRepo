@@ -166,7 +166,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_marginStart="25dp"
+                    android:layout_marginStart="30dp"
                     android:layout_toEndOf="@+id/datetime1"
                     android:text="&amp;"
                     android:textColor="#808080" />
@@ -207,7 +207,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
-                    android:layout_marginStart="50dp"
+                    android:layout_marginStart="32dp"
                     android:layout_toEndOf="@+id/end2"
                     android:enabled="false"
                     android:hint="@string/date"
@@ -217,7 +217,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_marginStart="25dp"
+                    android:layout_marginStart="30dp"
                     android:layout_toEndOf="@+id/datetime2"
                     android:text="&amp;"
                     android:textColor="#808080" />

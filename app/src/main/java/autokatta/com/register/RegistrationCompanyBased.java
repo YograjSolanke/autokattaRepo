@@ -45,6 +45,7 @@ import autokatta.com.response.GetStatesResponse;
 import autokatta.com.response.GetVehicleBrandResponse;
 import autokatta.com.response.GetVehicleListResponse;
 import autokatta.com.response.GetVehicleSubTypeResponse;
+import autokatta.com.response.ProfileAboutResponse;
 import autokatta.com.response.getDealsResponse;
 import retrofit2.Response;
 
@@ -57,6 +58,9 @@ public class RegistrationCompanyBased extends AppCompatActivity implements Reque
     Integer RegiId, page = 2;
     String strCompany, strDesignation, updatecompany, updatedesignation, skillpart = "", skillid = "",
             dealpart = "", dealid = "", Skidlist = "", Deidlist = "", Skills = "", Deals = "";
+
+   String profession, company , designation,subProfession,dealingwith,skills,interest;
+
     boolean skillflag = false, dealflag = false;
 
     List<String> mSkillList = new ArrayList<>();
@@ -157,7 +161,10 @@ public class RegistrationCompanyBased extends AppCompatActivity implements Reque
                 mApiCall.getDeals();
                 mApiCall.getDesignation();
                 mApiCall.getSkills();
-                autoSkills.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
+                mApiCall.profileAbout(getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
+                            .getString("loginContact", ""), getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
+                            .getString("loginContact", ""));
+
 
                 autoSkills.setOnKeyListener(new View.OnKeyListener() {
                     @Override
@@ -238,12 +245,21 @@ public class RegistrationCompanyBased extends AppCompatActivity implements Reque
         Next.setOnClickListener(this);
         Cancel.setOnClickListener(this);
 
-        mInterest.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), AddTags.class));
-            }
-        });
+            mInterest.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (interest.equalsIgnoreCase("")) {
+                        startActivity(new Intent(getApplicationContext(), AddTags.class));
+                    }else
+                    {
+                        Intent intent = new Intent(RegistrationCompanyBased.this, AddTags.class);
+                        intent.putExtra("interest", interest);
+                        startActivity(intent);
+                    }
+                }
+            });
+
+
     }
 
     public void checkSkills() {
@@ -310,6 +326,25 @@ public class RegistrationCompanyBased extends AppCompatActivity implements Reque
     public void notifySuccess(Response<?> response) {
         if (response != null) {
             if (response.isSuccessful()) {
+                if (response.body() instanceof ProfileAboutResponse) {
+                    ProfileAboutResponse mProfileAboutResponse = (ProfileAboutResponse) response.body();
+                    if (!mProfileAboutResponse.getSuccess().isEmpty()) {
+
+                        profession = mProfileAboutResponse.getSuccess().get(0).getProfession();
+                        company = mProfileAboutResponse.getSuccess().get(0).getCompanyName();
+                        designation = mProfileAboutResponse.getSuccess().get(0).getDesignation();
+                        subProfession = mProfileAboutResponse.getSuccess().get(0).getSubProfession();
+                        dealingwith = mProfileAboutResponse.getSuccess().get(0).getDealingWith();
+                        skills = mProfileAboutResponse.getSuccess().get(0).getSkills();
+                        interest = mProfileAboutResponse.getSuccess().get(0).getInterests();
+
+                        autoCompany.setText(company);
+                        autoDesignation.setText(designation);
+                        autoSkills.setText(skills);
+                        autoDeals.setText(dealingwith);
+
+                    }
+                }
                 if (response.body() instanceof GetCompaniesResponse) {
                     mCompanyList.clear();
                     GetCompaniesResponse mGetCompanyList = (GetCompaniesResponse) response.body();

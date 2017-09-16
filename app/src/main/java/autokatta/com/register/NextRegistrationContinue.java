@@ -43,6 +43,7 @@ import autokatta.com.response.GetVehicleListResponse;
 import autokatta.com.response.GetVehicleModelResponse;
 import autokatta.com.response.GetVehicleSubTypeResponse;
 import autokatta.com.response.GetVehicleVersionResponse;
+import autokatta.com.response.ProfileAboutResponse;
 import retrofit2.Response;
 
 public class NextRegistrationContinue extends AppCompatActivity implements RequestNotifier,
@@ -50,13 +51,15 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
 
     EditText edtvehicleno, edtfit, edtyear, edttax, edtpermit, edtinsurance, edtpuc, edtlastservice, edtnextservice;
     Spinner mSpinnerVehitype, mSpinnerModel, mSpinnerBrand, mSpinnerVersion, mSpinnerSubType;
+String mVehicleNo ,mPurchaseyr ,mTaxVal,  mFitness,mInsurance,mPUC,mPermit ,mLastSer;
+
 
     ImageView purchaseCal, fitnessCal, taxCal, permitCal, insuranceCal, pucCal, lastServiceCal, nextServiceCal,
             purchaseCancel, fitnessCancel, taxCancel, permitCancel, insuranceCancel, pucCancel, lastServiceCancel,
             nextServiceCancel;
 
     String whichclick = "", subcategoryName;
-    int subcategoryId;
+    int subcategoryId,mRegid;
 
     final ArrayList<String> mVehicleTypeList = new ArrayList<>();
     HashMap<String, Integer> mVehicleTypeList1 = new HashMap<>();
@@ -164,6 +167,8 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
                     lastServiceCancel = (ImageView) findViewById(R.id.lastServiceCan);
                     nextServiceCancel = (ImageView) findViewById(R.id.nextServiceCan);
 
+                    mRegid=getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
+                            .getInt("loginregistrationid", 0);
                     contact = getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
                             .getString("loginContact", "");
                     Intent i = getIntent();
@@ -268,6 +273,15 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
                 }
             }
         });
+
+        if (mTestConnection.isConnectedToInternet()) {
+            ApiCall mApiCall = new ApiCall(NextRegistrationContinue.this, this);
+            mApiCall.profileAbout(getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
+                    .getString("loginContact", ""), getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
+                    .getString("loginContact", ""));
+        } else {
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
+        }
 
         purchaseCancel.setOnClickListener(this);
         fitnessCancel.setOnClickListener(this);
@@ -416,21 +430,10 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
                     if (mTestConnection.isConnectedToInternet()) {
                         mApicall.addOwn(contact, vehiclenotext, vehicletypetext, subcattext, modeltext, brandtext, versiontext, yeartext,
                                 taxvaltext, fitnessvaltext, permitvaltext, insurance, puc, lastservice, nextservice);
+
+                      //  mApicall.updateRegistration(vehiclenotext, vehicletypetext, subcattext, modeltext, brandtext, versiontext, yeartext, taxvaltext, fitnessvaltext, permitvaltext, insurance, puc, lastservice, nextservice);
                     } else {
-                       /* Snackbar snackbar = Snackbar.make(mNextRegistration, getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
-                                .setAction("Go Online", new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View view) {
-                                        startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
-                                    }
-                                });
-                        // Changing message text color
-                        snackbar.setActionTextColor(Color.RED);
-                        // Changing action button text color
-                        View sbView = snackbar.getView();
-                        TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
-                        textView.setTextColor(Color.YELLOW);
-                        snackbar.show();*/
+
                         CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
                     }
                     //addOwn();
@@ -445,20 +448,6 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
                         mApicall.uploadVehicle(ids, vehiclenotext, vehicletypetext, subcattext, modeltext, brandtext, versiontext, yeartext,
                                 taxvaltext, fitnessvaltext, permitvaltext, insurance, puc, lastservice, nextservice);
                     } else {
-                       /* Snackbar snackbar = Snackbar.make(mNextRegistration, getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
-                                .setAction("Go Online", new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View view) {
-                                        startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
-                                    }
-                                });
-                        // Changing message text color
-                        snackbar.setActionTextColor(Color.RED);
-                        // Changing action button text color
-                        View sbView = snackbar.getView();
-                        TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
-                        textView.setTextColor(Color.YELLOW);
-                        snackbar.show();*/
                         CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
                     }
                     CustomToast.customToast(getApplicationContext(), "Vehicle Uploaded");
@@ -671,6 +660,28 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
     public void notifySuccess(Response<?> response) {
         if (response != null) {
             if (response.isSuccessful()) {
+                if (response.body() instanceof ProfileAboutResponse) {
+                    ProfileAboutResponse mProfileAboutResponse = (ProfileAboutResponse) response.body();
+                    if (!mProfileAboutResponse.getSuccess().isEmpty()) {
+
+                        mVehicleNo = mProfileAboutResponse.getSuccess().get(0).getVehicleNo();
+                     //   mPurchaseyr = mProfileAboutResponse.getSuccess().get(0).ye();
+                        mTaxVal = mProfileAboutResponse.getSuccess().get(0).getTaxValidity();
+                        mFitness = mProfileAboutResponse.getSuccess().get(0).getFitnessValidity();
+                        mInsurance = mProfileAboutResponse.getSuccess().get(0).getInsuranceValidityDate();
+                        mPUC = mProfileAboutResponse.getSuccess().get(0).getPUCValidityDate();
+                        mPermit = mProfileAboutResponse.getSuccess().get(0).getPermitValidity();
+                        mLastSer = mProfileAboutResponse.getSuccess().get(0).getLastServiceDate();
+
+                        edtvehicleno.setText(mVehicleNo);
+                        edttax.setText(mTaxVal);
+                        edtfit.setText(mFitness);
+                        edtinsurance.setText(mInsurance);
+                        edtpuc.setText(mPUC);
+                        edtpermit.setText(mPermit);
+                        edtlastservice.setText(mLastSer);
+                    }
+                }
                 if (response.body() instanceof GetVehicleListResponse) {
                     mVehicleTypeList.clear();
                     mVehicleTypeList1.clear();
