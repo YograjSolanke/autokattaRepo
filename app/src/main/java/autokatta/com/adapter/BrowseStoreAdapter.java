@@ -85,6 +85,7 @@ public class BrowseStoreAdapter extends RecyclerView.Adapter<BrowseStoreAdapter.
         holder.storerating.setEnabled(false);
         holder.productCount.setText("Products(" + String.valueOf(success.getProductcount()) + ")");
         holder.serviceCount.setText("Services(" + String.valueOf(success.getServicecount()) + ")");
+        holder.storeOwner.setText(success.getOwnerName());
 
         if (success.getWebsite() == null || success.getWebsite().isEmpty() || success.getWebsite().equals("null")) {
             holder.storewebsite.setText("No website found");
@@ -103,6 +104,7 @@ public class BrowseStoreAdapter extends RecyclerView.Adapter<BrowseStoreAdapter.
         holder.btnfollow.setTypeface(tf);
         holder.serviceCount.setTypeface(tf);
         holder.productCount.setTypeface(tf);
+        holder.storeOwner.setTypeface(tf);
 
         if (success.getLikestatus().equalsIgnoreCase("yes")) {
             holder.linearlike.setVisibility(View.GONE);
@@ -422,7 +424,7 @@ public class BrowseStoreAdapter extends RecyclerView.Adapter<BrowseStoreAdapter.
     }
 
     static class StoreHolder extends RecyclerView.ViewHolder {
-        TextView storename, storelocation, storewebsite, storetiming, storeworkingdays, storetype, storeservices;
+        TextView storename, storelocation, storewebsite, storetiming, storeworkingdays, storetype, storeservices, storeOwner;
         ImageView store_image, call_image;
         TextView btnlike, btnfollow;
         RatingBar storerating;
@@ -459,6 +461,7 @@ public class BrowseStoreAdapter extends RecyclerView.Adapter<BrowseStoreAdapter.
             mCardView = (CardView) itemView.findViewById(R.id.card_view);
             productCount = (TextView) itemView.findViewById(R.id.productCount);
             serviceCount = (TextView) itemView.findViewById(R.id.serviceCount);
+            storeOwner = (TextView) itemView.findViewById(R.id.storeOwner);
 
             //btndetail = (Button) itemView.findViewById(R.id.details);
             storerating = (RatingBar) itemView.findViewById(R.id.storerating);

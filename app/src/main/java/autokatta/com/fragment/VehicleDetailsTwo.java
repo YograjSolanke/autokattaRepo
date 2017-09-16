@@ -148,10 +148,10 @@ public class VehicleDetailsTwo extends Fragment implements RequestNotifier {
                         insurencedetails.setText(datum.getInsuranceIdv());
                     }
 
-                    if (datum.getNoOfOwners() == null || datum.getNoOfOwners().equalsIgnoreCase("")) {
+                    if (datum.getNoOfOwners() == null || datum.getNoOfOwners() == 0) {
                         ownerdetails.setText(getString(R.string.not_mentioned));
                     } else {
-                        ownerdetails.setText(datum.getNoOfOwners());
+                        ownerdetails.setText(String.valueOf(datum.getNoOfOwners()));
                     }
 
                     if (datum.getFualType() == null || datum.getFualType().equalsIgnoreCase("")) {
@@ -166,10 +166,10 @@ public class VehicleDetailsTwo extends Fragment implements RequestNotifier {
                         colordetails.setText(datum.getColor());
                     }
 
-                    if (datum.getKmsRunning() == null || datum.getKmsRunning().equalsIgnoreCase("")) {
+                    if (datum.getKmsRunning() == null || datum.getKmsRunning() == 0.0 || datum.getKmsRunning() == 0) {
                         kmsdetails.setText(getString(R.string.not_mentioned));
                     } else {
-                        kmsdetails.setText(datum.getKmsRunning());
+                        kmsdetails.setText(String.valueOf(datum.getKmsRunning()));
                     }
 
                     if (datum.getRTOCity() == null || datum.getRTOCity().equalsIgnoreCase("")) {
@@ -190,22 +190,22 @@ public class VehicleDetailsTwo extends Fragment implements RequestNotifier {
                         insvaldetails.setText(datum.getInsuranceValid());
                     }
 
-                    if (datum.getTaxValidity() == null || datum.getTaxValidity().equalsIgnoreCase("")) {
+                    if (datum.getTaxPaidUpto() == null || datum.getTaxPaidUpto().equalsIgnoreCase("")) {
                         taxdetails.setText(getString(R.string.not_mentioned));
                     } else {
-                        taxdetails.setText(datum.getTaxValidity());
+                        taxdetails.setText(datum.getTaxPaidUpto());
                     }
 
-                    if (datum.getFitnessValidity() == null || datum.getFitnessValidity().equalsIgnoreCase("")) {
+                    if (datum.getFitnessYesNo() == null || datum.getFitnessYesNo().equalsIgnoreCase("")) {
                         fitnessdetails.setText(getString(R.string.not_mentioned));
                     } else {
-                        fitnessdetails.setText(datum.getFitnessValidity());
+                        fitnessdetails.setText(datum.getFitnessYesNo());
                     }
 
-                    if (datum.getPermitValidity() == null || datum.getPermitValidity().equalsIgnoreCase("")) {
+                    if (datum.getPermitYesNo() == null || datum.getPermitYesNo().equalsIgnoreCase("")) {
                         permitvaldetails.setText(getString(R.string.not_mentioned));
                     } else {
-                        permitvaldetails.setText(datum.getPermitValidity());
+                        permitvaldetails.setText(datum.getPermitYesNo());
                     }
 
                     if (datum.getPermit() == null || datum.getPermit().equalsIgnoreCase("")) {

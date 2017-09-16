@@ -55,6 +55,7 @@ public class GroupContactFragment extends Fragment implements RequestNotifier {
     public static Button AddContacts;
     EditText inputSearch;
     List<String> clist = new ArrayList<>();
+    List<String> alreadyMemberList = new ArrayList<>();
     List<GetRegisteredContactsResponse.Success> cntlist = new ArrayList<>();
 
     boolean flag = true;
@@ -90,6 +91,7 @@ public class GroupContactFragment extends Fragment implements RequestNotifier {
         mGroup_id = args.getInt("bundle_GroupId", 0);
         bundle_GroupName = args.getString("bundle_GroupName", "");
         call = args.getString("call", "");
+        alreadyMemberList = args.getStringArrayList("list");
         AddContacts.setEnabled(false);
 
         AddContacts.setOnClickListener(new OnClickListener() {
@@ -223,7 +225,7 @@ public class GroupContactFragment extends Fragment implements RequestNotifier {
                             if (number.length() > 10)
                                 number = number.substring(number.length() - 10);
 
-                            if (contact.equalsIgnoreCase(number) && !contact.equals(mContact)) {
+                            if (contact.equalsIgnoreCase(number) && !contact.equals(mContact) && !alreadyMemberList.contains(number)) {
                                 contactRegistered.setContact(number);
                                 contactRegistered.setUsername(name);
                                 cntlist.add(contactRegistered);

@@ -165,8 +165,8 @@ mycontact=getActivity().getSharedPreferences(getString(R.string.my_preference), 
                         datum.setImplements(datum.getImplements());
                         datum.setApplication(datum.getApplication());
                         datum.setContact(datum.getContact());
-                        mViewsStr.setText(datum.getViews());
-                        mCallStr.setText(datum.getCalls());
+                        mViewsStr.setText(String.valueOf(datum.getViews()));
+                        mCallStr.setText(String.valueOf(datum.getCalls()));
                         datum.setBodyManufacturer(datum.getBodyManufacturer());
                         datum.setSeatManufacturer(datum.getSeatManufacturer());
                         datum.setUsername(datum.getUsername());

@@ -11,6 +11,7 @@ import java.util.List;
 
 public class BrowseStoreResponse {
 
+
     @SerializedName("Success")
     @Expose
     private List<Success> success = null;
@@ -37,20 +38,12 @@ public class BrowseStoreResponse {
 
     public class Success {
 
-
-        public boolean isVisibility() {
-            return visibility;
-        }
-
-        public void setVisibility(boolean visibility) {
-            this.visibility = visibility;
-        }
-
-        private boolean visibility;
-
         @SerializedName("store_id")
         @Expose
         private Integer storeId;
+        @SerializedName("OwnerName")
+        @Expose
+        private String ownerName;
         @SerializedName("contact_no")
         @Expose
         private String contactNo;
@@ -75,6 +68,9 @@ public class BrowseStoreResponse {
         @SerializedName("working_days")
         @Expose
         private String workingDays;
+        @SerializedName("modified_date_1")
+        @Expose
+        private String modifiedDate1;
         @SerializedName("modified_date")
         @Expose
         private String modifiedDate;
@@ -109,12 +105,32 @@ public class BrowseStoreResponse {
         @Expose
         private Integer vehiclecount;
 
+
+        public boolean isVisibility() {
+            return visibility;
+        }
+
+        public void setVisibility(boolean visibility) {
+            this.visibility = visibility;
+        }
+
+        private boolean visibility;
+
+
         public Integer getStoreId() {
             return storeId;
         }
 
         public void setStoreId(Integer storeId) {
             this.storeId = storeId;
+        }
+
+        public String getOwnerName() {
+            return ownerName;
+        }
+
+        public void setOwnerName(String ownerName) {
+            this.ownerName = ownerName;
         }
 
         public String getContactNo() {
@@ -181,6 +197,14 @@ public class BrowseStoreResponse {
             this.workingDays = workingDays;
         }
 
+        public String getModifiedDate1() {
+            return modifiedDate1;
+        }
+
+        public void setModifiedDate1(String modifiedDate1) {
+            this.modifiedDate1 = modifiedDate1;
+        }
+
         public String getModifiedDate() {
             return modifiedDate;
         }
@@ -191,7 +215,7 @@ public class BrowseStoreResponse {
 
         public String getStoreOpenTime() {
             return storeOpenTime;
-        }
+    }
 
         public void setStoreOpenTime(String storeOpenTime) {
             this.storeOpenTime = storeOpenTime;
@@ -211,7 +235,7 @@ public class BrowseStoreResponse {
 
         public void setLikestatus(String likestatus) {
             this.likestatus = likestatus;
-        }
+    }
 
         public String getFollowstatus() {
             return followstatus;
@@ -223,7 +247,7 @@ public class BrowseStoreResponse {
 
         public Integer getLikecount() {
             return likecount;
-    }
+        }
 
         public void setLikecount(Integer likecount) {
             this.likecount = likecount;
@@ -239,11 +263,11 @@ public class BrowseStoreResponse {
 
         public Double getRating() {
             return rating;
-        }
+    }
 
         public void setRating(Double rating) {
             this.rating = rating;
-    }
+        }
 
         public Integer getProductcount() {
             return productcount;

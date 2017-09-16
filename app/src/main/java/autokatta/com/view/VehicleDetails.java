@@ -54,7 +54,8 @@ public class VehicleDetails extends AppCompatActivity implements RequestNotifier
     String name;
     FloatingActionMenu mFab;
     FloatingActionButton mLike, mCall, mShare, mChat;
-    String Title, mPrice, mBrand, mModel, mYear, mKms, mRTO_City, mAddress, mRegistration, mSendImage, imgUrl;
+    String Title, mPrice, mBrand, mModel, mYear, mRTO_City, mAddress, mRegistration, mSendImage, imgUrl;
+    Double mKms;
     String contact, mLikestr, prefcontact, allDetails;
     ApiCall mApiCall;
     int mVehicle_Id;

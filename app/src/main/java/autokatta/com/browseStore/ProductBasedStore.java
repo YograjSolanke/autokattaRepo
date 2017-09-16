@@ -108,6 +108,7 @@ public class ProductBasedStore extends Fragment implements RequestNotifier, Swip
                         success.setProductcount(success.getProductcount());
                         success.setServicecount(success.getServicecount());
                         success.setVehiclecount(success.getVehiclecount());
+                        success.setOwnerName(success.getOwnerName());
                         // success.setVisibility(true);
                         mSuccesses.add(success);
 

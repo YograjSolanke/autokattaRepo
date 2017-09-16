@@ -37,6 +37,11 @@ public class StoreResponse {
 
     public class Success {
 
+
+        @SerializedName("OwnerName")
+        @Expose
+        private String ownerName;
+
         @SerializedName("id")
         @Expose
         private Integer id;
@@ -127,6 +132,15 @@ public class StoreResponse {
         @SerializedName("dealingWith")
         @Expose
         private String dealingWith;
+
+
+        public String getOwnerName() {
+            return ownerName;
+        }
+
+        public void setOwnerName(String ownerName) {
+            this.ownerName = ownerName;
+        }
 
         public Integer getId() {
             return id;

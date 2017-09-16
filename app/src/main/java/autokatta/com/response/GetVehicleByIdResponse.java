@@ -13,6 +13,9 @@ public class GetVehicleByIdResponse {
     @SerializedName("Success")
     @Expose
     private Success success;
+    @SerializedName("Error")
+    @Expose
+    private Object error;
 
     public Success getSuccess() {
         return success;
@@ -21,6 +24,15 @@ public class GetVehicleByIdResponse {
     public void setSuccess(Success success) {
         this.success = success;
     }
+
+    public Object getError() {
+        return error;
+    }
+
+    public void setError(Object error) {
+        this.error = error;
+    }
+
 
     public class Success {
 
@@ -49,11 +61,12 @@ public class GetVehicleByIdResponse {
 
     }
 
+
     public class VehicleDatum {
 
         @SerializedName("vehicle_id")
         @Expose
-        private String vehicleId;
+        private Integer vehicleId;
         @SerializedName("Title")
         @Expose
         private String title;
@@ -83,7 +96,7 @@ public class GetVehicleByIdResponse {
         private String locationCountry;
         @SerializedName("Location_address")
         @Expose
-        private Object locationAddress;
+        private String locationAddress;
         @SerializedName("Year_of_registration")
         @Expose
         private String yearOfRegistration;
@@ -105,12 +118,21 @@ public class GetVehicleByIdResponse {
         @SerializedName("insurance_idv")
         @Expose
         private String insuranceIdv;
+        @SerializedName("tax_validity_1")
+        @Expose
+        private Object taxValidity1;
         @SerializedName("tax_validity")
         @Expose
         private String taxValidity;
+        @SerializedName("fitness_validity_1")
+        @Expose
+        private Object fitnessValidity1;
         @SerializedName("fitness_validity")
         @Expose
         private String fitnessValidity;
+        @SerializedName("permit_validity_1")
+        @Expose
+        private Object permitValidity1;
         @SerializedName("permit_validity")
         @Expose
         private String permitValidity;
@@ -125,10 +147,10 @@ public class GetVehicleByIdResponse {
         private String permit;
         @SerializedName("kms_running")
         @Expose
-        private String kmsRunning;
+        private Double kmsRunning;
         @SerializedName("no_of_owners")
         @Expose
-        private String noOfOwners;
+        private Integer noOfOwners;
         @SerializedName("hypothication")
         @Expose
         private String hypothication;
@@ -182,10 +204,10 @@ public class GetVehicleByIdResponse {
         private String contact;
         @SerializedName("views")
         @Expose
-        private String views;
+        private Integer views;
         @SerializedName("calls")
         @Expose
-        private String calls;
+        private Integer calls;
         @SerializedName("bodyManufacturer")
         @Expose
         private String bodyManufacturer;
@@ -195,18 +217,87 @@ public class GetVehicleByIdResponse {
         @SerializedName("username")
         @Expose
         private String username;
+        @SerializedName("tempstore_id")
+        @Expose
+        private Object tempstoreId;
         @SerializedName("store_id")
         @Expose
         private String storeId;
         @SerializedName("status")
         @Expose
         private String status;
+        @SerializedName("groupIDs")
+        @Expose
+        private String groupIDs;
+        @SerializedName("storeIDs")
+        @Expose
+        private String storeIDs;
+        @SerializedName("Boon")
+        @Expose
+        private String boon;
+        @SerializedName("Brakes")
+        @Expose
+        private String brakes;
+        @SerializedName("Date_1")
+        @Expose
+        private String date1;
+        @SerializedName("Date")
+        @Expose
+        private String date;
+        @SerializedName("EmissionVersion")
+        @Expose
+        private String emissionVersion;
+        @SerializedName("ExchangeStatus")
+        @Expose
+        private String exchangeStatus;
+        @SerializedName("FinanceExchange")
+        @Expose
+        private String financeExchange;
+        @SerializedName("FinanceStatus")
+        @Expose
+        private String financeStatus;
+        @SerializedName("FinanceRequest")
+        @Expose
+        private String financeRequest;
+        @SerializedName("FitnessYesNo")
+        @Expose
+        private String fitnessYesNo;
+        @SerializedName("HPCapacity")
+        @Expose
+        private String hPCapacity;
+        @SerializedName("HrsRunning")
+        @Expose
+        private String hrsRunning;
+        @SerializedName("JIB")
+        @Expose
+        private String jIB;
+        @SerializedName("PermitYesNo")
+        @Expose
+        private String permitYesNo;
+        @SerializedName("Privacy")
+        @Expose
+        private String privacy;
+        @SerializedName("Pump")
+        @Expose
+        private String pump;
+        @SerializedName("ReservePrice")
+        @Expose
+        private String reservePrice;
+        @SerializedName("Steering")
+        @Expose
+        private String steering;
+        @SerializedName("TaxPaidUpto")
+        @Expose
+        private String taxPaidUpto;
+        @SerializedName("Version")
+        @Expose
+        private String version;
 
-        public String getVehicleId() {
+        public Integer getVehicleId() {
             return vehicleId;
         }
 
-        public void setVehicleId(String vehicleId) {
+        public void setVehicleId(Integer vehicleId) {
             this.vehicleId = vehicleId;
         }
 
@@ -282,11 +373,11 @@ public class GetVehicleByIdResponse {
             this.locationCountry = locationCountry;
         }
 
-        public Object getLocationAddress() {
+        public String getLocationAddress() {
             return locationAddress;
         }
 
-        public void setLocationAddress(Object locationAddress) {
+        public void setLocationAddress(String locationAddress) {
             this.locationAddress = locationAddress;
         }
 
@@ -346,6 +437,14 @@ public class GetVehicleByIdResponse {
             this.insuranceIdv = insuranceIdv;
         }
 
+        public Object getTaxValidity1() {
+            return taxValidity1;
+        }
+
+        public void setTaxValidity1(Object taxValidity1) {
+            this.taxValidity1 = taxValidity1;
+        }
+
         public String getTaxValidity() {
             return taxValidity;
         }
@@ -354,12 +453,28 @@ public class GetVehicleByIdResponse {
             this.taxValidity = taxValidity;
         }
 
+        public Object getFitnessValidity1() {
+            return fitnessValidity1;
+        }
+
+        public void setFitnessValidity1(Object fitnessValidity1) {
+            this.fitnessValidity1 = fitnessValidity1;
+        }
+
         public String getFitnessValidity() {
             return fitnessValidity;
         }
 
         public void setFitnessValidity(String fitnessValidity) {
             this.fitnessValidity = fitnessValidity;
+        }
+
+        public Object getPermitValidity1() {
+            return permitValidity1;
+        }
+
+        public void setPermitValidity1(Object permitValidity1) {
+            this.permitValidity1 = permitValidity1;
         }
 
         public String getPermitValidity() {
@@ -394,19 +509,19 @@ public class GetVehicleByIdResponse {
             this.permit = permit;
         }
 
-        public String getKmsRunning() {
+        public Double getKmsRunning() {
             return kmsRunning;
         }
 
-        public void setKmsRunning(String kmsRunning) {
+        public void setKmsRunning(Double kmsRunning) {
             this.kmsRunning = kmsRunning;
         }
 
-        public String getNoOfOwners() {
+        public Integer getNoOfOwners() {
             return noOfOwners;
         }
 
-        public void setNoOfOwners(String noOfOwners) {
+        public void setNoOfOwners(Integer noOfOwners) {
             this.noOfOwners = noOfOwners;
         }
 
@@ -546,19 +661,19 @@ public class GetVehicleByIdResponse {
             this.contact = contact;
         }
 
-        public String getViews() {
+        public Integer getViews() {
             return views;
         }
 
-        public void setViews(String views) {
+        public void setViews(Integer views) {
             this.views = views;
         }
 
-        public String getCalls() {
+        public Integer getCalls() {
             return calls;
         }
 
-        public void setCalls(String calls) {
+        public void setCalls(Integer calls) {
             this.calls = calls;
         }
 
@@ -586,6 +701,14 @@ public class GetVehicleByIdResponse {
             this.username = username;
         }
 
+        public Object getTempstoreId() {
+            return tempstoreId;
+        }
+
+        public void setTempstoreId(Object tempstoreId) {
+            this.tempstoreId = tempstoreId;
+        }
+
         public String getStoreId() {
             return storeId;
         }
@@ -602,5 +725,182 @@ public class GetVehicleByIdResponse {
             this.status = status;
         }
 
+        public String getGroupIDs() {
+            return groupIDs;
+        }
+
+        public void setGroupIDs(String groupIDs) {
+            this.groupIDs = groupIDs;
+        }
+
+        public String getStoreIDs() {
+            return storeIDs;
+        }
+
+        public void setStoreIDs(String storeIDs) {
+            this.storeIDs = storeIDs;
+        }
+
+        public String getBoon() {
+            return boon;
+        }
+
+        public void setBoon(String boon) {
+            this.boon = boon;
+        }
+
+        public String getBrakes() {
+            return brakes;
+        }
+
+        public void setBrakes(String brakes) {
+            this.brakes = brakes;
+        }
+
+        public String getDate1() {
+            return date1;
+        }
+
+        public void setDate1(String date1) {
+            this.date1 = date1;
+        }
+
+        public String getDate() {
+            return date;
+        }
+
+        public void setDate(String date) {
+            this.date = date;
+        }
+
+        public String getEmissionVersion() {
+            return emissionVersion;
+        }
+
+        public void setEmissionVersion(String emissionVersion) {
+            this.emissionVersion = emissionVersion;
+        }
+
+        public String getExchangeStatus() {
+            return exchangeStatus;
+        }
+
+        public void setExchangeStatus(String exchangeStatus) {
+            this.exchangeStatus = exchangeStatus;
+        }
+
+        public String getFinanceExchange() {
+            return financeExchange;
+        }
+
+        public void setFinanceExchange(String financeExchange) {
+            this.financeExchange = financeExchange;
+        }
+
+        public String getFinanceStatus() {
+            return financeStatus;
+        }
+
+        public void setFinanceStatus(String financeStatus) {
+            this.financeStatus = financeStatus;
+        }
+
+        public String getFinanceRequest() {
+            return financeRequest;
+        }
+
+        public void setFinanceRequest(String financeRequest) {
+            this.financeRequest = financeRequest;
+        }
+
+        public String getFitnessYesNo() {
+            return fitnessYesNo;
+        }
+
+        public void setFitnessYesNo(String fitnessYesNo) {
+            this.fitnessYesNo = fitnessYesNo;
+        }
+
+        public String getHPCapacity() {
+            return hPCapacity;
+        }
+
+        public void setHPCapacity(String hPCapacity) {
+            this.hPCapacity = hPCapacity;
+        }
+
+        public String getHrsRunning() {
+            return hrsRunning;
+        }
+
+        public void setHrsRunning(String hrsRunning) {
+            this.hrsRunning = hrsRunning;
+        }
+
+        public String getJIB() {
+            return jIB;
+        }
+
+        public void setJIB(String jIB) {
+            this.jIB = jIB;
+        }
+
+        public String getPermitYesNo() {
+            return permitYesNo;
+        }
+
+        public void setPermitYesNo(String permitYesNo) {
+            this.permitYesNo = permitYesNo;
+        }
+
+        public String getPrivacy() {
+            return privacy;
+        }
+
+        public void setPrivacy(String privacy) {
+            this.privacy = privacy;
+        }
+
+        public String getPump() {
+            return pump;
+        }
+
+        public void setPump(String pump) {
+            this.pump = pump;
+        }
+
+        public String getReservePrice() {
+            return reservePrice;
+        }
+
+        public void setReservePrice(String reservePrice) {
+            this.reservePrice = reservePrice;
+        }
+
+        public String getSteering() {
+            return steering;
+        }
+
+        public void setSteering(String steering) {
+            this.steering = steering;
+        }
+
+        public String getTaxPaidUpto() {
+            return taxPaidUpto;
+        }
+
+        public void setTaxPaidUpto(String taxPaidUpto) {
+            this.taxPaidUpto = taxPaidUpto;
+        }
+
+        public String getVersion() {
+            return version;
+        }
+
+        public void setVersion(String version) {
+            this.version = version;
+        }
+
     }
 }
+

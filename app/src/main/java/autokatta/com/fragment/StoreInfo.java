@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -29,6 +30,7 @@ import autokatta.com.other.CustomToast;
 import autokatta.com.response.StoreOldAdminResponse;
 import autokatta.com.response.StoreResponse;
 import autokatta.com.view.MyStoreListActivity;
+import autokatta.com.view.OtherProfile;
 import autokatta.com.view.StoreViewActivity;
 import retrofit2.Response;
 
@@ -42,12 +44,13 @@ public class StoreInfo extends Fragment implements RequestNotifier, View.OnClick
     View mAbout;
     String myContact, StoreContact;
     int Store_id;
+    RelativeLayout ownerLayout;
     ImageView editStore, addEnquiry;
     boolean hasView;
     RelativeLayout adminContactLayout;
     NestedScrollView scrollView;
     RelativeLayout mRel;
-    TextView storeName, storeLocation, storeWebsite, storeWorkDays, storeOpen, editbrandtags,
+    TextView storeName, storeLocation, storeWebsite, storeWorkDays, storeOpen, editbrandtags, storeOwner,
             storeClose, storeAddress, storeServiceOffered, storeType, storeDescription, mNoData, adminContacts;
     ConnectionDetector mTestConnection;
     Activity mActivity;
@@ -107,6 +110,7 @@ public class StoreInfo extends Fragment implements RequestNotifier, View.OnClick
 
                     for (StoreResponse.Success success : storeResponse.getSuccess()) {
                         storeName.setText(success.getName());
+                        storeOwner.setText(success.getOwnerName());
                         StoreContact = success.getContact();
                         storeLocation.setText(success.getLocation());
                         if (!success.getWebsite().equals(""))
@@ -131,9 +135,13 @@ public class StoreInfo extends Fragment implements RequestNotifier, View.OnClick
                         if (StoreContact.contains(myContact)) {
                             editStore.setVisibility(View.VISIBLE);
                             addEnquiry.setVisibility(View.VISIBLE);
+                            ownerLayout.setVisibility(View.GONE);
 
-                        } else
+                        } else {
                             adminContactLayout.setVisibility(View.GONE);
+
+
+                        }
                     }
                 } else {
 
@@ -239,6 +247,18 @@ public class StoreInfo extends Fragment implements RequestNotifier, View.OnClick
                 adminContacts = (TextView) mAbout.findViewById(R.id.editAdminContact);
                 editbrandtags = (TextView) mAbout.findViewById(R.id.editbrandtags);
                 adminContactLayout = (RelativeLayout) mAbout.findViewById(R.id.linear14);
+                storeOwner = (TextView) mAbout.findViewById(R.id.editstOwner);
+                ownerLayout = (RelativeLayout) mAbout.findViewById(R.id.relativestoreOwner);
+
+                storeOwner.setTextColor(Color.BLUE);
+                storeOwner.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent i = new Intent(getActivity(), OtherProfile.class);
+                        i.putExtra("contactOtherProfile", StoreContact);
+                        getActivity().startActivity(i);
+                    }
+                });
 
                 Bundle b = getArguments();
                 Store_id = b.getInt("store_id");

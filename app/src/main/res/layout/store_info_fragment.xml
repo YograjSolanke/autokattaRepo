@@ -40,6 +40,7 @@
             android:layout_below="@+id/editStore"
             android:visibility="visible">
 
+
             <RelativeLayout
                 android:id="@+id/relativestorename"
                 android:layout_width="match_parent"
@@ -71,6 +72,42 @@
                 android:layout_width="match_parent"
                 android:layout_height="0.1dp"
                 android:layout_below="@+id/relativestorename"
+                android:background="@color/black" />
+
+
+            <RelativeLayout
+                android:id="@+id/relativestoreOwner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/relativestorename"
+                android:visibility="visible">
+
+                <TextView
+                    android:id="@+id/txtstoreOwner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/owner"
+                    android:textColor="@color/textColor"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/editstOwner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/txtstoreOwner"
+                    android:layout_marginTop="5dp"
+                    android:hint="@string/names"
+                    android:maxLength="25"
+                    android:textColor="#000000"
+                    android:textColorHint="#848484"
+                    android:textSize="15sp" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.1dp"
+                android:layout_below="@+id/relativestoreOwner"
                 android:background="@color/black" />
 
             <RelativeLayout
@@ -145,7 +182,7 @@
                 android:id="@+id/relativestorewebsite"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/relativestorename"
+                android:layout_below="@+id/relativestoreOwner"
                 android:layout_marginTop="10dp">
 
                 <TextView
