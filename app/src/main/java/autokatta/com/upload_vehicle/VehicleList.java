@@ -109,21 +109,26 @@ public class VehicleList extends Fragment implements RequestNotifier {
                     }
                 }
             } else {
-                CustomToast.customToast(getActivity(), getString(R.string._404));
+                /*if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string._404));*/
             }
         } else {
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string.no_response));
         }
     }
 
     @Override
     public void notifyError(Throwable error) {
         if (error instanceof SocketTimeoutException) {
-            CustomToast.customToast(getActivity(), getString(R.string._404));
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string._404));
         } else if (error instanceof NullPointerException) {
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else {
             Log.i("Check Class-", "Vehicle List");
             error.printStackTrace();
@@ -185,7 +190,8 @@ public class VehicleList extends Fragment implements RequestNotifier {
                     alertDialog.show();
                 }
             } else {
-                CustomToast.customToast(getActivity(), getString(R.string.no_response));
+                if (isAdded())
+                    CustomToast.customToast(getActivity(), getString(R.string.no_response));
             }
         } catch (Exception e) {
             e.printStackTrace();

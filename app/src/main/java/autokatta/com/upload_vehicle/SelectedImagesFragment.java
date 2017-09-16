@@ -48,6 +48,7 @@ public class SelectedImagesFragment extends Fragment implements View.OnClickList
     Bundle b;
     FragmentManager fragmentManager;
     FragmentTransaction fragmentTransaction;
+    String updatedImages;
 
 
     @Nullable
@@ -87,6 +88,7 @@ public class SelectedImagesFragment extends Fragment implements View.OnClickList
             }
             image.set(a, newpath);
 
+
         } else {
             List<String> ImgData = b.getStringArrayList("IMAGE");
             image.clear();
@@ -103,6 +105,16 @@ public class SelectedImagesFragment extends Fragment implements View.OnClickList
                 count++;
             }
         }
+        updatedImages = "";
+        for (int k = 0; k < image.size(); k++) {
+            if (updatedImages.equals(""))
+                updatedImages = image.get(k);
+            else
+                updatedImages = updatedImages + "," + image.get(k);
+        }
+        getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().
+                putString("images", updatedImages).apply();
+
         MyPagerAdapter myPagerAdapter = new MyPagerAdapter(SelectedImagesFragment.this, image);
         viewPager.setAdapter(myPagerAdapter);
         return mSelectedImages;
@@ -150,7 +162,6 @@ public class SelectedImagesFragment extends Fragment implements View.OnClickList
             mStrings = new String[image.size()];
             mStrings = (String[]) image.toArray(mStrings);
             imageLoader = new ImageLoader(sliderActivity.getActivity());
-
         }
 
         @Override

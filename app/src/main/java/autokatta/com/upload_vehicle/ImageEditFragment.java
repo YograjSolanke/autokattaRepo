@@ -1,5 +1,7 @@
 package autokatta.com.upload_vehicle;
 
+import android.content.Context;
+import android.content.ContextWrapper;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -10,7 +12,6 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -25,11 +26,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Random;
 
 import autokatta.com.R;
@@ -39,7 +40,7 @@ import autokatta.com.other.ColorPickerDialog;
  * Created by ak-001 on 23/3/17.
  */
 
-public class ImageEditFragment extends Fragment implements ColorPickerDialog.OnColorChangedListener{
+public class ImageEditFragment extends Fragment implements ColorPickerDialog.OnColorChangedListener {
     View mImageEdit;
     String path;
     Bitmap bitmapMaster, image, tempBitmap;
@@ -47,6 +48,9 @@ public class ImageEditFragment extends Fragment implements ColorPickerDialog.OnC
     int number;
     Paint paint;
     Canvas canvasMaster;
+
+    public ImageEditFragment() {
+    }
 
     @Nullable
     @Override
@@ -147,19 +151,19 @@ public class ImageEditFragment extends Fragment implements ColorPickerDialog.OnC
         });
         return mImageEdit;
     }
+
     /*
     * Project position on ImageView to position on Bitmap
     * draw on it
     */
-    private void drawOnProjectedBitMap(ImageView iv, Bitmap bm, int x, int y){
-        if(x<0 || y<0 || x > iv.getWidth() || y > iv.getHeight()){
+    private void drawOnProjectedBitMap(ImageView iv, Bitmap bm, int x, int y) {
+        if (x < 0 || y < 0 || x > iv.getWidth() || y > iv.getHeight()) {
             //outside ImageView
-            return;
-        }else{
-            int projectedX = (int)((double)x * ((double)bm.getWidth()/(double)iv.getWidth()));
-            int projectedY = (int)((double)y * ((double)bm.getHeight()/(double)iv.getHeight()));
+        } else {
+            int projectedX = (int) ((double) x * ((double) bm.getWidth() / (double) iv.getWidth()));
+            int projectedY = (int) ((double) y * ((double) bm.getHeight() / (double) iv.getHeight()));
 
-            Paint   paint = new Paint();
+            Paint paint = new Paint();
             paint.setStyle(Paint.Style.STROKE);
             paint.setColor(Color.BLUE);
             paint.setStrokeWidth((float) 3);
@@ -181,7 +185,7 @@ public class ImageEditFragment extends Fragment implements ColorPickerDialog.OnC
     SAVE EDITED IMAGE...
      */
     void saveImage(Bitmap img) {
-        String RootDir = Environment.getExternalStorageDirectory()
+        /*String RootDir = Environment.getExternalStorageDirectory()
                 + File.separator;//+ "txt_imgs";
 //String test =  "This is a sentence";
         String firstWords = path.substring(0, path.lastIndexOf("/"));
@@ -218,8 +222,43 @@ public class ImageEditFragment extends Fragment implements ColorPickerDialog.OnC
             e.printStackTrace();
         }
         newpath = "" + file;
-        Toast.makeText(getActivity(), "Image saved " + file, Toast.LENGTH_LONG).show();
+        Toast.makeText(getActivity(), "Image saved " + file, Toast.LENGTH_LONG).show();*/
 
+
+        Random generator = new Random();
+        int n = 10000;
+        n = generator.nextInt(n);
+        ContextWrapper cw = new ContextWrapper(getActivity());
+        String lastWord = path.substring(path.lastIndexOf("/") + 1);
+        String driveLetter = lastWord.split("\\.")[0];
+        // path to /data/data/yourapp/app_data/imageDir
+        File MyDirectory = cw.getDir("imageDir", Context.MODE_PRIVATE);
+        //File MyDirector = cw.getExternalCacheDir();
+
+        // Create imageDir
+        File MyPath = new File(MyDirectory, driveLetter + n + ".jpg");
+        //File MyPath = new File(MyDirectory,"Image" + n + ".jpg");
+
+        FileOutputStream fos = null;
+        try {
+            fos = new FileOutputStream(MyPath);
+
+            // Use the compress method on the BitMap object to write image to the OutputStream
+            img.compress(Bitmap.CompressFormat.PNG, 100, fos);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (fos != null) {
+                    fos.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        String newpath = "";
+        newpath = "" + MyPath;
 
 
         Bundle b = new Bundle();
@@ -277,13 +316,11 @@ public class ImageEditFragment extends Fragment implements ColorPickerDialog.OnC
         @Override
         public void colorChanged(int color) {
             // Toast.makeText(FullImageViewActivity.this, ""+color, Toast.LENGTH_LONG).show();
-            ColorAh = color;
             //  new ColorPickerDialog(FullImageViewActivity.this, listener, mPaint.getColor()).show();
             // ll.setBackgroundColor(ColorAh);
-            mPaint.setColor(ColorAh);
+            mPaint.setColor(color);
         }
     };
-    private int ColorAh = Color.BLACK;
 
     @Override
     public void onResume() {
