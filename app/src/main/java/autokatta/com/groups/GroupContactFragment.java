@@ -271,7 +271,7 @@ public class GroupContactFragment extends Fragment implements RequestNotifier {
         if (str != null) {
             if (str.startsWith("success")) {
                 if (isAdded()) {
-                    CustomToast.customToast(getActivity(), "Contact Added Successfully");
+                    CustomToast.customToast(getActivity(), "Contact Added");
                     Log.i("Notification send", "success add group member");
                 /*Intent intent = new Intent(getActivity(), GroupsActivity.class);
                 intent.putExtra("grouptype", "MyGroup");

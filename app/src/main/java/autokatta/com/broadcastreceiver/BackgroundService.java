@@ -235,39 +235,41 @@ public class BackgroundService extends Service {
             mServiceMelaResponse.enqueue(new Callback<ManualEnquiryResponse>() {
                 @Override
                 public void onResponse(Call<ManualEnquiryResponse> call, Response<ManualEnquiryResponse> response) {
-                    long result = 0;
-                    operation = new DbOperation(getApplicationContext());
-                    operation.OPEN();
-                    operation.deleteEnquiryCount();
-                    operation.createEnquiryCount();
-                    mMyGroupsList.clear();
-                    ManualEnquiryResponse manualEnquiry = (ManualEnquiryResponse) response.body();
-                    if (manualEnquiry.getSuccess() != null) {
+                    if (response.isSuccessful()) {
+                        long result = 0;
+                        operation = new DbOperation(getApplicationContext());
+                        operation.OPEN();
+                        operation.deleteEnquiryCount();
+                        operation.createEnquiryCount();
+                        mMyGroupsList.clear();
+                        ManualEnquiryResponse manualEnquiry = (ManualEnquiryResponse) response.body();
+                        if (manualEnquiry.getSuccess() != null) {
                         /*Used Vehicle*/
-                        for (ManualEnquiryResponse.Success.UsedVehicle success : manualEnquiry.getSuccess().getUsedVehicle()) {
-                            ManualEnquiryRequestCount request = new ManualEnquiryRequestCount();
-                            request.setVehicleId(success.getVehicleId());
-                            mMyGroupsList.add(request);
-                        }
+                            for (ManualEnquiryResponse.Success.UsedVehicle success : manualEnquiry.getSuccess().getUsedVehicle()) {
+                                ManualEnquiryRequestCount request = new ManualEnquiryRequestCount();
+                                request.setVehicleId(success.getVehicleId());
+                                mMyGroupsList.add(request);
+                            }
 
                         /*Products*/
-                        for (ManualEnquiryResponse.Success.Product success : manualEnquiry.getSuccess().getProducts()) {
-                            ManualEnquiryRequestCount request = new ManualEnquiryRequestCount();
-                            request.setProductId(success.getProductId());
-                            mMyGroupsList.add(request);
-                        }
+                            for (ManualEnquiryResponse.Success.Product success : manualEnquiry.getSuccess().getProducts()) {
+                                ManualEnquiryRequestCount request = new ManualEnquiryRequestCount();
+                                request.setProductId(success.getProductId());
+                                mMyGroupsList.add(request);
+                            }
 
                         /*Services*/
-                        for (ManualEnquiryResponse.Success.Service service : manualEnquiry.getSuccess().getServices()) {
-                            ManualEnquiryRequestCount request = new ManualEnquiryRequestCount();
-                            request.setServiceId(service.getId());
-                            mMyGroupsList.add(request);
+                            for (ManualEnquiryResponse.Success.Service service : manualEnquiry.getSuccess().getServices()) {
+                                ManualEnquiryRequestCount request = new ManualEnquiryRequestCount();
+                                request.setServiceId(service.getId());
+                                mMyGroupsList.add(request);
+                            }
+                            result = operation.updateEnquiryCount(mMyGroupsList.size());
+                            Cursor cursor = operation.getEnquiryCount();
+                            cursor.moveToLast();
+                            Log.i("dsafdsfads", "->" + cursor.getString(cursor.getColumnIndex(DbConstants.enq_val)));
+                            operation.CLOSE();
                         }
-                        result = operation.updateEnquiryCount(mMyGroupsList.size());
-                        Cursor cursor = operation.getEnquiryCount();
-                        cursor.moveToLast();
-                        Log.i("dsafdsfads", "->" + cursor.getString(cursor.getColumnIndex(DbConstants.enq_val)));
-                        operation.CLOSE();
                     }
                 }
 
