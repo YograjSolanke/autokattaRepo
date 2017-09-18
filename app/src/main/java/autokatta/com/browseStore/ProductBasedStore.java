@@ -136,13 +136,14 @@ public class ProductBasedStore extends Fragment implements RequestNotifier, Swip
 //                adapter.notifyDataSetChanged();
             } else {
                 mSwipeRefreshLayout.setRefreshing(false);
-                CustomToast.customToast(mActivity,getString(R.string._404_));
+                //CustomToast.customToast(mActivity,getString(R.string._404_));
 
                 // mNoData.setVisibility(View.VISIBLE);
                 // showMessage(mActivity, getString(R.string._404_));
             }
         } else {
             mSwipeRefreshLayout.setRefreshing(false);
+            if (isAdded())
             CustomToast.customToast(mActivity,getString(R.string.no_response));
             // showMessage(mActivity, getString(R.string.no_response));
         }
@@ -193,30 +194,24 @@ public class ProductBasedStore extends Fragment implements RequestNotifier, Swip
         });
     }
 
-    /*@Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof Activity) {
-            if (mActivity != null)
-                mActivity = (Activity) context;
-        }
-    }*/
-
 
     @Override
     public void notifyError(Throwable error) {
         mSwipeRefreshLayout.setRefreshing(false);
         if (error instanceof SocketTimeoutException) {
+            if (isAdded())
             CustomToast.customToast(mActivity,getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
-            CustomToast.customToast(mActivity,getString(R.string.no_response));
+            //CustomToast.customToast(mActivity,getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            CustomToast.customToast(mActivity,getString(R.string.no_response));
+            // CustomToast.customToast(mActivity,getString(R.string.no_response));
             //  showMessage(mActivity, getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
+            if (isAdded())
             CustomToast.customToast(mActivity,getString(R.string.no_internet));
             //  errorMessage(mActivity, getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
+            if (isAdded())
             CustomToast.customToast(mActivity,getString(R.string.no_internet));
             //  errorMessage(mActivity, getString(R.string.no_internet));
         } else {
@@ -310,11 +305,13 @@ public class ProductBasedStore extends Fragment implements RequestNotifier, Swip
                 adapter.notifyDataSetChanged();
                 } else {
                     if (counter == 0) {
+                        if (isAdded())
                         CustomToast.customToast(getActivity(), "Please Select Atleast One Category");
 //                        AlertDialog alert = alertDialog.create();
 //                        alert.show();
                     }
                     if (counter > 5) {
+                        if (isAdded())
                         CustomToast.customToast(getActivity(), "Please Select Only 5 Category");
 //                        AlertDialog alert = alertDialog.create();
 //                        alert.show();
@@ -429,31 +426,4 @@ public class ProductBasedStore extends Fragment implements RequestNotifier, Swip
         }
     }
 
-
-    /*public void showMessage(Activity activity, String message) {
-        Snackbar snackbar = Snackbar.make(activity.findViewById(android.R.id.content),
-                message, Snackbar.LENGTH_LONG);
-        TextView textView = (TextView) snackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
-        textView.setTextColor(Color.RED);
-        snackbar.show();
-    }
-
-    public void errorMessage(Activity activity, String message) {
-        Snackbar snackbar = Snackbar.make(activity.findViewById(android.R.id.content),
-                message, Snackbar.LENGTH_INDEFINITE)
-                .setAction("Retry", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        getStoreData(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
-                                .getString("loginContact", ""));
-                    }
-                });
-        // Changing message text color
-        snackbar.setActionTextColor(Color.BLUE);
-        // Changing action button text color
-        View sbView = snackbar.getView();
-        TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
-        textView.setTextColor(Color.WHITE);
-        snackbar.show();
-    }*/
 }

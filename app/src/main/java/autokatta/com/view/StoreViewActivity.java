@@ -824,7 +824,7 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
 //                    menuRed.setClosedOnTouchOutside(true);
 //                }
             } else {
-                CustomToast.customToast(getApplicationContext(), getString(R.string._404_));
+                //  CustomToast.customToast(getApplicationContext(), getString(R.string._404_));
             }
         } else {
             CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
@@ -836,44 +836,13 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
     public void notifyError(Throwable error) {
         if (error instanceof SocketTimeoutException) {
             CustomToast.customToast(getApplicationContext(), getString(R.string._404));
-        } else if (error instanceof NullPointerException) {
-            CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
+            //CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
             CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
-            //mNoInternetIcon.setVisibility(View.VISIBLE);
-//            Snackbar snackbar = Snackbar.make(mLayout, getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
-//                    .setAction("Go Online", new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View view) {
-//                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
-//                        }
-//                    });
-//            // Changing message text color
-//            snackbar.setActionTextColor(Color.BLUE);
-//            // Changing action button text color
-//            View sbView = snackbar.getView();
-//            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
-//            textView.setTextColor(Color.WHITE);
-//            snackbar.show();
         } else if (error instanceof UnknownHostException) {
             CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
-            //mNoInternetIcon.setVisibility(View.VISIBLE);
-//            Snackbar snackbar = Snackbar.make(mLayout, getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
-//                    .setAction("Go Online", new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View view) {
-//                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
-//                        }
-//                    });
-//            // Changing message text color
-//            snackbar.setActionTextColor(Color.BLUE);
-//            // Changing action button text color
-//            View sbView = snackbar.getView();
-//            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
-//            textView.setTextColor(Color.WHITE);
-//            snackbar.show();
+
         } else {
             Log.i("Check Class-"
                     , "StoreViewActivity");
@@ -884,46 +853,7 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
     @Override
     public void notifyString(String str) {
         if (str != null) {
-//            if (str.equals("success_follow")) {
-//                Snackbar.make(mLayout, "Following", Snackbar.LENGTH_SHORT).show();
-//                mFollow.setLabelText("Following");
-//                mFollow.setLabelTextColor(Color.RED);
-//                mFolllowstr = "yes";
-//            } else if (str.equals("success_unfollow")) {
-//                mFollow.setLabelText("Follow");
-//                mFollow.setLabelTextColor(Color.WHITE);
-//                mFolllowstr = "no";
-//            } else if (str.equals("success_like")) {
-//                Snackbar.make(mLayout, "Liked", Snackbar.LENGTH_SHORT).show();
-//                mLike.setLabelText("Liked");
-//                mLike.setLabelTextColor(Color.RED);
-//                mLikestr = "yes";
-//            } else if (str.equals("success_unlike")) {
-//                mLike.setLabelText("Like");
-//                mLike.setLabelTextColor(Color.WHITE);
-//                mLikestr = "no";
-//            } else if (str.equals("success_rating_submitted")) {
-//                Snackbar.make(mLayout, "Rating Submitted", Snackbar.LENGTH_SHORT).show();
-//                Bundle bundle = new Bundle();
-//                bundle.putString("store_id", store_id);
-//                bundle.putString("StoreContact", storeOtherContact);
-//                finish();
-//                Intent intent = new Intent(StoreViewActivity.this, StoreViewActivity.class);
-//                intent.putExtras(bundle);
-//                startActivity(intent);
-//
-//            } else if (str.equals("success_rating_updated")) {
-//                Snackbar.make(mLayout, "SRating updated", Snackbar.LENGTH_SHORT).show();
-//                Bundle bundle = new Bundle();
-//                bundle.putString("store_id", store_id);
-//                bundle.putString("StoreContact", storeOtherContact);
-//                finish();
-//                Intent intent = new Intent(StoreViewActivity.this, StoreViewActivity.class);
-//                intent.putExtras(bundle);
-//                startActivity(intent);
-//            } else if (str.equals("success_recommended")) {
-//                Snackbar.make(mLayout, "Store Recommended", Snackbar.LENGTH_SHORT).show();
-//            }
+
         }
     }
 
@@ -956,20 +886,4 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
         overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
     }
 
-    /*@Override
-    protected void onResume() {
-        String action = getIntent().getAction();
-        // Prevent endless loop by adding a unique action, don't restart if action is present
-        if(action == null || !action.equals("Already created")) {
-            Log.v("Example", "Force restart");
-            Intent intent = new Intent(this, StoreViewActivity.class);
-            startActivity(intent);
-            finish();
-        }
-        // Remove the unique action so the next time onResume is called it will restart
-        else {
-            getIntent().setAction(null);
-        }
-        super.onResume();
-    }*/
 }

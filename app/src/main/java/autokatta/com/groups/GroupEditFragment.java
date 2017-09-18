@@ -112,6 +112,7 @@ public class GroupEditFragment extends Fragment implements RequestNotifier {
                             .into(mGroup_image);
                 } catch (Exception e) {
                     e.printStackTrace();
+                    if (isAdded())
                     CustomToast.customToast(getActivity(),"Error uploading image");
 
                     //showMessage(getActivity(), "Error uploading image");
@@ -310,18 +311,21 @@ public class GroupEditFragment extends Fragment implements RequestNotifier {
     @Override
     public void notifyError(Throwable error) {
         if (error instanceof SocketTimeoutException) {
+            if (isAdded())
             CustomToast.customToast(getActivity(),getString(R.string._404_));
 
         } else if (error instanceof NullPointerException) {
-            CustomToast.customToast(getActivity(),getString(R.string.no_response));
+            // CustomToast.customToast(getActivity(),getString(R.string.no_response));
 
         } else if (error instanceof ClassCastException) {
-            CustomToast.customToast(getActivity(),getString(R.string.no_response));
+            //  CustomToast.customToast(getActivity(),getString(R.string.no_response));
 
         } else if (error instanceof ConnectException) {
+            if (isAdded())
             CustomToast.customToast(getActivity(),getString(R.string.no_internet));
 
         } else if (error instanceof UnknownHostException) {
+            if (isAdded())
             CustomToast.customToast(getActivity(),getString(R.string.no_internet));
 
         } else {
@@ -334,6 +338,7 @@ public class GroupEditFragment extends Fragment implements RequestNotifier {
     @Override
     public void notifyString(String str) {
         if (str.equals("Success")) {
+            if (isAdded())
             CustomToast.customToast(getActivity(),"Group Updated");
             //showMessage(getActivity(), "Group Updated");
             uploadImage(mediaPath);
@@ -356,6 +361,7 @@ public class GroupEditFragment extends Fragment implements RequestNotifier {
                         .into(mGroup_image);
             } catch (Exception e) {
                 e.printStackTrace();
+                if (isAdded())
                 CustomToast.customToast(getActivity(),"Error uploading image");
                 //showMessage(getActivity(), "Error uploading image");
             }

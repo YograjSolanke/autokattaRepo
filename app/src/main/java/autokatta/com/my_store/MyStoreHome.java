@@ -104,16 +104,6 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
         return mMyStoreHome;
     }
 
-//    @Override
-//    public void setUserVisibleHint(boolean isVisibleToUser) {
-//        super.setUserVisibleHint(isVisibleToUser);
-//        if (this.isVisible()) {
-//            if (isVisibleToUser && !hasLoadedOnce) {
-//                getOtherStore(myContact, store_id);
-//                hasLoadedOnce = false;
-//            }
-//        }
-//    }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -253,39 +243,7 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
                     call(mOtherContact);
                 else
                 getCallContactList();
-//                if (!storeAdmins.equals("")) {
-//                    // createCotactsList();
-//                    // @Here are the list of items to be shown in the list
-//                    if (storeAdmins.contains(",")) {
-//
-//                        if (!storeAdmins.contains(mOtherContact)) {
-//                            storeAdmins = storeAdmins + "," + mOtherContact + "-" + "owner";
-//                            items = storeAdmins.split(",");
-//                        }
-//
-//                    } else {
-//                        items = new String[]{storeAdmins, mOtherContact + "-" + "Owner"};
-//
-//                    }
-//
-//                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-//                    builder.setTitle("Make your selection");
-//                    builder.setItems(items, new DialogInterface.OnClickListener() {
-//                        public void onClick(DialogInterface dialog, int item) {
-//
-//                            // will toast your selection
-//                            //   showToast("Name: " + items[item]);
-//                            String[] arr = items[item].split("-");
-//                            call(arr[0]);
-//
-//
-//                            dialog.dismiss();
-//
-//                        }
-//                    }).show();
-//
-//                } else
-//                    call(mOtherContact);
+
                 break;
 
             case R.id.web:
@@ -474,14 +432,17 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
             dialog.dismiss();
         }
         if (error instanceof SocketTimeoutException) {
+            if (isAdded())
             CustomToast.customToast(getActivity(), getString(R.string._404));
         } else if (error instanceof NullPointerException) {
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            // CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            //CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
+            if (isAdded())
             CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
+            if (isAdded())
             CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         } else {
             Log.i("Check Class-"
@@ -493,54 +454,61 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
     @Override
     public void notifyString(String str) {
         if (str != null) {
-            if (str.equals("success_follow")) {
-                //if (mActivity != null)
-                CustomToast.customToast(getActivity(), "Following");
-                /*mFollow.setVisibility(View.GONE);
-                mUnFollow.setVisibility(View.VISIBLE);*/
-                mFolllowstr = "yes";
-            } else if (str.equals("success_unfollow")) {
-                //if (mActivity != null)
-                CustomToast.customToast(getActivity(), "UnFollowing");
+            switch (str) {
+                case "success_follow":
+                    CustomToast.customToast(getActivity(), "Following");
+                    mFolllowstr = "yes";
+                    break;
+                case "success_unfollow":
+                    //if (mActivity != null)
+                    CustomToast.customToast(getActivity(), "UnFollowing");
                 /*mFollow.setVisibility(View.VISIBLE);
                 mUnFollow.setVisibility(View.GONE);*/
-                mFolllowstr = "no";
-            } else if (str.equals("success_like")) {
-                //if (mActivity != null)
-                CustomToast.customToast(getActivity(), "Liked");
+                    mFolllowstr = "no";
+                    break;
+                case "success_like":
+                    //if (mActivity != null)
+                    CustomToast.customToast(getActivity(), "Liked");
                 /*mLike.setVisibility(View.VISIBLE);
                 mUnlike.setVisibility(View.GONE);*/
-                mLikestr = "yes";
-            } else if (str.equals("success_unlike")) {
-                //if (mActivity != null)
-                CustomToast.customToast(getActivity(), "Unliked");
+                    mLikestr = "yes";
+                    break;
+                case "success_unlike":
+                    //if (mActivity != null)
+                    CustomToast.customToast(getActivity(), "Unliked");
                 /*mLike.setVisibility(View.GONE);
                 mUnlike.setVisibility(View.VISIBLE);*/
-                mLikestr = "no";
-            } else if (str.equals("success_rating_submitted")) {
-                if (mActivity != null)
-                    CustomToast.customToast(getActivity(), "Rating Submitted");
-                Bundle bundle = new Bundle();
-                bundle.putInt("store_id", store_id);
-                bundle.putString("StoreContact", storeOtherContact);
-                getActivity().finish();
-                Intent intent = new Intent(getActivity(), StoreViewActivity.class);
-                intent.putExtras(bundle);
-                startActivity(intent);
+                    mLikestr = "no";
+                    break;
+                case "success_rating_submitted": {
+                    if (mActivity != null)
+                        CustomToast.customToast(getActivity(), "Rating Submitted");
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("store_id", store_id);
+                    bundle.putString("StoreContact", storeOtherContact);
+                    getActivity().finish();
+                    Intent intent = new Intent(getActivity(), StoreViewActivity.class);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
 
-            } else if (str.equals("success_rating_updated")) {
-                //if (mActivity != null)
-                CustomToast.customToast(getActivity(), "Rating Updated");
-                Bundle bundle = new Bundle();
-                bundle.putInt("store_id", store_id);
-                bundle.putString("StoreContact", storeOtherContact);
-                getActivity().finish();
-                Intent intent = new Intent(getActivity(), StoreViewActivity.class);
-                intent.putExtras(bundle);
-                startActivity(intent);
-            } else if (str.equals("success_recommended")) {
-                //if (mActivity != null)
-                CustomToast.customToast(getActivity(), "Store recommended");
+                    break;
+                }
+                case "success_rating_updated": {
+                    //if (mActivity != null)
+                    CustomToast.customToast(getActivity(), "Rating Updated");
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("store_id", store_id);
+                    bundle.putString("StoreContact", storeOtherContact);
+                    getActivity().finish();
+                    Intent intent = new Intent(getActivity(), StoreViewActivity.class);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                    break;
+                }
+                case "success_recommended":
+                    //if (mActivity != null)
+                    CustomToast.customToast(getActivity(), "Store recommended");
+                    break;
             }
         }
     }
