@@ -414,8 +414,8 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
                 mActivity.startActivity(intent);
                 mActivity.finish();
                 //notifyDataSetChanged();
-            } else if (str.equals("success_1")) {
-                CustomToast.customToast(mActivity, "remove successfully");
+            } else if (str.startsWith("success_1")) {
+                CustomToast.customToast(mActivity, "removed successfully");
             } else {
                 CustomToast.customToast(mActivity, "left successfully");
                 /*Intent intent = new Intent(mActivity, GroupTabs.class);

@@ -303,10 +303,11 @@
                 android:layout_below="@+id/view_quotation"
                 android:layout_marginTop="5dp"
                 android:background="@color/background"
-                android:text="@string/get_quot"
+                android:text="send quot"
                 android:textColor="@color/white"
                 android:textSize="12sp"
                 android:visibility="visible" />
+            <!--android:text="@string/get_quot"-->
 
             <Button
                 android:id="@+id/view_quotation"
