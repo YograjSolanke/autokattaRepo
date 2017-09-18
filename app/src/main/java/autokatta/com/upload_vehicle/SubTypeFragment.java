@@ -206,72 +206,6 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
                         }
                     });
 
-          /*          mFuel.clear();
-                    mFuel.add("-Select Fuel Type-");
-                    mFuel.add("Petrol");
-                    mFuel.add("Diesel");
-                    mFuel.add("CNG");
-                    mFuel.add("LPG");
-                    mFuel.add("Electric");
-                    mFuel.add("Hybrid");
-                    if (getActivity() != null) {
-                        final ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(getActivity(),
-                                android.R.layout.simple_spinner_item, mFuel);
-                        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                        mSetFuel.setAdapter(dataAdapter);
-                    }
-*/
-                     /*else if (Category.equalsIgnoreCase("Tractor") || Category.equalsIgnoreCase("Construction Equipment") ||
-                            Category.equalsIgnoreCase("2 Wheeler")) {
-
-                        mEmissionSpinner.setVisibility(View.GONE);
-                    } else if (Category.equalsIgnoreCase("2 Wheeler") || Category.equalsIgnoreCase("3 Wheeler")) {
-
-                        mTaxValidSpinner.setVisibility(View.GONE);
-                        mPermitSpinner.setVisibility(View.GONE);
-                        mFitnessSpinner.setVisibility(View.GONE);
-                    } else if (Category.equalsIgnoreCase("Car")) {
-
-                        if (permit.equalsIgnoreCase("Private")) {
-                            mTaxValidSpinner.setVisibility(View.GONE);
-                            mPermitSpinner.setVisibility(View.GONE);
-                            mFitnessSpinner.setVisibility(View.GONE);
-                        }
-                    } else if (Category.equalsIgnoreCase("Tractor")) {
-
-                        mPermitSpinner.setVisibility(View.GONE);
-                        mFitnessSpinner.setVisibility(View.GONE);
-                        relInsurance.setVisibility(View.GONE);
-
-
-                    }else if (Category.equalsIgnoreCase("Construction Equipment")) {
-
-                        String RCInvoiceText = "";
-                        if (subCategory.equals("Excavator") || subCategory.equals("Skid Steers") || subCategory.equals("Crawlers")
-                                || subCategory.equals("Dozer") || subCategory.equals("Concrete Mixers") || subCategory.equals("Road Rollers")
-                                || subCategory.equals("Milling Equipment") || subCategory.equals("Trenches")) {
-                            // tax.setVisibility(View.GONE);
-                            mHypoSpinner.setVisibility(View.GONE);
-                            mPermitSpinner.setVisibility(View.GONE);
-                            mFitnessSpinner.setVisibility(View.GONE);
-                            RCInvoiceText = "-Select Invoice Available-";
-                        } else
-                            RCInvoiceText = "-Select RC Available-";
-
-                        List<String> RcInvoice = new ArrayList<>();
-                        RcInvoice.add(RCInvoiceText);
-                        RcInvoice.add("Yes");
-                        RcInvoice.add("No");
-
-                        if (getActivity() != null) {
-                            final ArrayAdapter<String> dataAdapter1 = new ArrayAdapter<>(getActivity(),
-                                    android.R.layout.simple_spinner_item, RcInvoice);
-                            dataAdapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                            mRcSpinner.setAdapter(dataAdapter1);
-                        }
-
-                    }*/
-
                     if (Category.equalsIgnoreCase("Bus")) {
 
                         autoBodymanufacturer.setVisibility(View.VISIBLE);
@@ -402,15 +336,6 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
 
                             }
                         });
-//
-//                        if (!invoice.equalsIgnoreCase("")) {
-//                            if (invoice.equalsIgnoreCase(RCInvoiceText))
-//                                invoicespinner.setSelection(0);
-//                            else if (invoice.equalsIgnoreCase("Yes"))
-//                                invoicespinner.setSelection(1);
-//                            else
-//                                invoicespinner.setSelection(2);
-//                        }
 
                     } else if (Category.equalsIgnoreCase("Commercial Vehicle")) {
                         fuelType();

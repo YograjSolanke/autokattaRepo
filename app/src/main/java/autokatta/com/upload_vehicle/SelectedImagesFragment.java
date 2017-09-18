@@ -59,8 +59,6 @@ public class SelectedImagesFragment extends Fragment implements View.OnClickList
     FragmentTransaction fragmentTransaction;
     String updatedImages;
 
-
-    @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mSelectedImages = inflater.inflate(R.layout.fragment_selected_image, container, false);
@@ -78,8 +76,6 @@ public class SelectedImagesFragment extends Fragment implements View.OnClickList
             int a = b.getInt("number", 0);
             String newpath = b.getString("newpath");
             Log.i("path on back", newpath);
-//            SharedPreferences settings1 = getActivity().getSharedPreferences(MyPREFERENCES, Context.MODE_WORLD_READABLE | Context.MODE_PRIVATE);
-//            Editor editor1 = settings1.edit();
 
             String text1 = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("images", "");
             List<String> ImgData2 = Arrays.asList(text1.split(","));
@@ -134,14 +130,6 @@ public class SelectedImagesFragment extends Fragment implements View.OnClickList
         switch (v.getId()) {
             case R.id.btnBack:
                 onBackPressed();
-               /* b = new Bundle();
-                b.putInt("call", 2);
-                SubTypeFragment fragment2 = new SubTypeFragment();
-                fragment2.setArguments(b);
-                fragmentManager = getActivity().getSupportFragmentManager();
-                fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.vehicle_upload_container, fragment2);
-                fragmentTransaction.commit();*/
                 break;
 
             case R.id.btnGo:
@@ -186,7 +174,6 @@ public class SelectedImagesFragment extends Fragment implements View.OnClickList
 
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
-
 
             TextView textView = new TextView(getActivity());
             textView.setTextColor(Color.WHITE);
@@ -236,13 +223,9 @@ public class SelectedImagesFragment extends Fragment implements View.OnClickList
 
                     b.putInt("Activity", 1);
                     b.putInt("number", page);
+
                     ImageEditFragment fragment2 = new ImageEditFragment();
                     fragment2.setArguments(b);
-                    /*FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                    fragmentTransaction.replace(R.id.vehicle_upload_container, fragment2);
-                    fragmentTransaction.addToBackStack("imageeditfragment");
-                    fragmentTransaction.commit();*/
                     getActivity().getSupportFragmentManager().beginTransaction()
                             .replace(R.id.vehicle_upload_container, fragment2, "imageeditfragment")
                             .addToBackStack("imageeditfragment")
@@ -250,7 +233,6 @@ public class SelectedImagesFragment extends Fragment implements View.OnClickList
 
                 }
             });
-
             container.addView(layout);
             return layout;
         }
@@ -294,9 +276,7 @@ public class SelectedImagesFragment extends Fragment implements View.OnClickList
         List<String> imgList = Arrays.asList(picturePath.split(","));
         for (int i = 0; i < imgList.size(); i++) {
 
-
             File file = new File(imgList.get(i));
-            //File file = new File(picturePath);
             // Parsing any Media type file
             RequestBody requestBody = RequestBody.create(MediaType.parse("*/*"), file);
             MultipartBody.Part fileToUpload = MultipartBody.Part.createFormData("file", file.getName(), requestBody);

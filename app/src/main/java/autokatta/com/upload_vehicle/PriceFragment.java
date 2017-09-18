@@ -270,20 +270,6 @@ public class PriceFragment extends Fragment implements RequestNotifier, View.OnC
                                 priceList.add(Integer.valueOf(success.getPriceSuggestion()));
                         }
 
-//                    System.out.println("priceSuggestion" + priceList);
-//
-//                    for (int i = 0; i < priceList.size() - 1; i++) {
-//                        for (int j = i + 1; j < priceList.size(); j++) {
-//                            if (priceList.get(i) > (priceList.get(j))) {
-//                                int temp = priceList.get(i);
-//                                priceList.set(i, priceList.get(j));
-//                                priceList.set(j, temp);
-//                            }
-//                        }
-//                    }
-//
-//                    System.out.println("priceSuggestion" + priceList);
-
                         if (priceList.size() != 0) {
 
                             int maxsize = priceList.size();
@@ -365,8 +351,8 @@ public class PriceFragment extends Fragment implements RequestNotifier, View.OnC
                 }
 
             } else {
-                if (isAdded())
-                    CustomToast.customToast(getActivity(), getActivity().getString(R.string._404));
+                /*if (isAdded())
+                    CustomToast.customToast(getActivity(), getActivity().getString(R.string._404));*/
             }
 
         } else {
