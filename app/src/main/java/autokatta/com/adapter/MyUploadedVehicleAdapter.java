@@ -396,6 +396,15 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
                                         mGrouplist.add(groupresponse.getTitle());
                                         mGrouplist1.put(groupresponse.getTitle(), groupresponse.getId());
                                     }
+
+
+                                    for (ProfileGroupResponse.JoinedGroup groupresponse : mProfilegroup.getSuccess().getJoinedGroups()) {
+                                        groupresponse.setId(groupresponse.getId());
+                                        groupresponse.setTitle(groupresponse.getTitle());
+                                        mGrouplist.add(groupresponse.getTitle());
+                                        mGrouplist1.put(groupresponse.getTitle(), groupresponse.getId());
+                                    }
+
                                     parsedData.addAll(mGrouplist);
                                     if (activity != null) {
                                         ArrayAdapter<String> adapter = new ArrayAdapter<>(activity, android.R.layout.simple_spinner_item, parsedData);
@@ -479,8 +488,9 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
             public void onClick(View v) {
                 try {
                     prevGroupIds = mMainList.get(holder.getAdapterPosition()).getGroupIDs().replaceAll(" ", "");
+                    int position = holder.getAdapterPosition();
 
-                    getGroups();
+                    getGroups(position);
                     mVehicleId = mMainList.get(holder.getAdapterPosition()).getVehicleId();
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -493,7 +503,8 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
             public void onClick(View v) {
                 try {
                     prevStoreIds = mMainList.get(holder.getAdapterPosition()).getStoreIDs().replaceAll(" ", "");
-                    getStores();
+                    int position = holder.getAdapterPosition();
+                    getStores(position);
                     mVehicleId = mMainList.get(holder.getAdapterPosition()).getVehicleId();
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -505,7 +516,7 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
     /*
     Get Groups...
      */
-    private void getGroups() {
+    private void getGroups(final int position) {
         if (mConnectionDetector.isConnectedToInternet()) {
             Retrofit retrofit = new Retrofit.Builder()
                     .baseUrl(activity.getString(R.string.base_url))
@@ -568,7 +579,7 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
                             alertDialog.show();
                         } else {
                             itemsCheckedGroups = new boolean[groupTitleArray.length];
-                            alertBoxGroups(groupTitleArray);
+                            alertBoxGroups(groupTitleArray, position);
                         }
                     } else {
                         hud.dismiss();
@@ -590,15 +601,16 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
     /*
     Alert Dialog
      */
-    private void alertBoxGroups(final String[] groupTitleArray) {
+    private void alertBoxGroups(final String[] groupTitleArray, final int position) {
         final List<String> mSelectedItems = new ArrayList<>();
         mSelectedItems.clear();
         String[] prearra = prevGroupIds.split(",");
 
-        for (int i = 0; i < groupIdArray.length; i++) {
-            if (Arrays.asList(prearra).contains(groupIdArray[i])) {
+
+        for (int i = 0; i < groupIdList.size(); i++) {
+            if (Arrays.asList(prearra).contains(groupIdList.get(i))) {
                 itemsCheckedGroups[i] = true;
-                mSelectedItems.add(groupIdArray[i]);
+                mSelectedItems.add(groupIdList.get(i));
             } else
                 itemsCheckedGroups[i] = false;
         }
@@ -625,7 +637,6 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
 
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
-
                         System.out.println("selected ids=" + mSelectedItems);
                         stringgroupids = "";
                         stringgroupname = "";
@@ -634,16 +645,17 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
                             for (int j = 0; j < groupIdArray.length; j++) {
                                 if (mSelectedItems.get(i).equals(groupIdArray[j])) {
                                     if (stringgroupids.equals("")) {
-                                        stringgroupids = groupIdArray[j];
+                                        stringgroupids = groupIdList.get(j);
                                         stringgroupname = groupTitleArray[j];
                                     } else {
-                                        stringgroupids = stringgroupids + "," + groupIdArray[j];
+                                        stringgroupids = stringgroupids + "," + groupIdList.get(j);
                                         stringgroupname = stringgroupname + "," + groupTitleArray[j];
                                     }
                                 }
                             }
                         }
                         prevGroupIds = stringgroupids;
+                        mMainList.get(position).setGroupIDs(prevGroupIds);
                         setPrivacy(stringgroupids, prevStoreIds);
 
                         if (mSelectedItems.size() == 0) {
@@ -670,7 +682,7 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
     /*
     Get Store...
      */
-    private void getStores() {
+    private void getStores(final int position) {
         if (mConnectionDetector.isConnectedToInternet()) {
             Retrofit retrofit = new Retrofit.Builder()
                     .baseUrl(activity.getString(R.string.base_url))
@@ -729,7 +741,7 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
                             alertDialog.show();
                         } else {*/
                         itemsCheckedStores = new boolean[storeTitleArray.length];
-                        alertBoxStore(storeTitleArray);
+                        alertBoxStore(storeTitleArray, position);
                         //}
                     } else {
                         hud.dismiss();
@@ -748,7 +760,7 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
         }
     }
 
-    private void alertBoxStore(final String[] storeTitleArray) {
+    private void alertBoxStore(final String[] storeTitleArray, final int position) {
         final List<String> mSelectedItems = new ArrayList<>();
         mSelectedItems.clear();
         String[] prearra = prevStoreIds.split(",");
@@ -801,6 +813,7 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
                             }
                         }
                         prevStoreIds = stringstoreids;
+                        mMainList.get(position).setGroupIDs(prevGroupIds);
                         setPrivacy(prevGroupIds, stringstoreids);
                         if (mSelectedItems.size() == 0) {
                             CustomToast.customToast(activity, "No store Was Selected");
@@ -869,6 +882,10 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
                     break;
                 case "success_added":
                     CustomToast.customToast(activity, "data updated");
+                    // notifyDataSetChanged();
+
+//                    Intent intent = new Intent(activity, MyUploadedVehiclesActivity.class);
+//                    activity.startActivity(intent);
                     break;
             }
         }

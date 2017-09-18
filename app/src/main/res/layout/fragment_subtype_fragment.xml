@@ -104,7 +104,7 @@
                     android:background="#80bebebe"
                     android:gravity="center_vertical"
                     android:hint="@string/registration_no"
-                    android:inputType="number"
+                    android:digits="0123456789qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM- "
                     android:padding="5dp"
                     android:textColor="#2C3343"
                     android:textColorHint="#848484" />
