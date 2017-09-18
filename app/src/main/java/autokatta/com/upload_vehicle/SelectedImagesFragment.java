@@ -23,12 +23,21 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import autokatta.com.R;
+import autokatta.com.apicall.ApiCall;
+import autokatta.com.interfaces.ServiceApi;
 import autokatta.com.other.ImageLoader;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -136,8 +145,9 @@ public class SelectedImagesFragment extends Fragment implements View.OnClickList
                 break;
 
             case R.id.btnGo:
+                uploadImage(updatedImages);
 
-                getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("images", allimg).apply();
+                getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("images", updatedImages).apply();
                 b = new Bundle();
                 b.putInt("call", call);
 
@@ -276,6 +286,35 @@ public class SelectedImagesFragment extends Fragment implements View.OnClickList
 
         if (fm.getBackStackEntryCount() > 0) {
             fm.popBackStack();
+        }
+    }
+
+    private void uploadImage(String picturePath) {
+        Log.i("PAth", "->" + picturePath);
+        List<String> imgList = Arrays.asList(picturePath.split(","));
+        for (int i = 0; i < imgList.size(); i++) {
+
+
+            File file = new File(imgList.get(i));
+            //File file = new File(picturePath);
+            // Parsing any Media type file
+            RequestBody requestBody = RequestBody.create(MediaType.parse("*/*"), file);
+            MultipartBody.Part fileToUpload = MultipartBody.Part.createFormData("file", file.getName(), requestBody);
+            RequestBody filename = RequestBody.create(MediaType.parse("text/plain"), file.getName());
+
+            ServiceApi getResponse = ApiCall.getRetrofit().create(ServiceApi.class);
+            Call<String> call = getResponse.uploadVehiclePic(fileToUpload, filename);
+            call.enqueue(new Callback<String>() {
+                @Override
+                public void onResponse(Call<String> call, Response<String> response) {
+                    Log.i("uploadVehicle", "imageResponse->" + response.body());
+                }
+
+                @Override
+                public void onFailure(Call<String> call, Throwable t) {
+                    Log.getStackTraceString(t);
+                }
+            });
         }
     }
 }
