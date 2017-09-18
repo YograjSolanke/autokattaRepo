@@ -1272,7 +1272,11 @@ public interface ServiceApi {
     Call<String> _autokattaUploadStatus(@Query("SenderContact") String myContact, @Query("StatusText") String statusText,
                                         @Query("StatusImage") String statusImage, @Query("StatusVideo") String statusVideo);
 
-    Call<String> _autokattaSendQuotation(int vehicleId, int groupId, String reservePrice, String deadLineDate);
+    @POST("SendQuotation")
+    Call<String> _autokattaSendQuotation(@Query("QuotationFor") String strTitle, @Query("ReservePrice") String strPrice,
+                                         @Query("DeadLineDate") String deadlineDate, @Query("GroupIDs") String groupid,
+                                         @Query("VehicleID") int vehicleId, @Query("MyContact") String myContact,
+                                         @Query("Type") String type);
 
     //Get Interest
     @GET("GetAllInterest")

@@ -102,10 +102,10 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
     HashMap<String, String> mPumpList1 = new HashMap<>();
     //Staring
     List<String> mStaringList = new ArrayList<>();
-    String category,   brandName = "", modelName = "", versionName = "",
+    String category, brandName = "", modelName = "", versionName = "",
             subcategoryName, brakeId, brakeName, pumpId, pumpName, uploadauctioncat;
 
-    int categoryId,subcategoryId,brandId, modelId, versionId;
+    int categoryId, subcategoryId, brandId, modelId, versionId;
     /*
     Year Fragment...
      */
@@ -305,12 +305,6 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                         exchangests = "No";
                     }
 
-                    /*
-                    Sub type Fragment
-                     */
-                    /*else if (!category.equalsIgnoreCase("Car")) {
-                        linearPermit.setVisibility(View.GONE);
-                    }*/
 
                     String permit = "";
                     if (category.equalsIgnoreCase("Car")) {
@@ -363,15 +357,6 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
 
                     }
 
-                    /*else if (category.equalsIgnoreCase("Construction Equipment") || category.equalsIgnoreCase("Cranes")) {
-                        mKms.setVisibility(View.GONE);
-                        mHrs.setVisibility(View.VISIBLE);
-                        mPumpSpinner.setVisibility(View.GONE);
-                        mBreakSpinner.setVisibility(View.GONE);
-                        mStaringSpinner.setVisibility(View.GONE);
-                        //note.setText("In Hrs");
-
-                    }*/
                     /*
                     Staring Spinner
                      */
@@ -467,7 +452,7 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
      */
     private void AddBrand(String keyword, String title, int categoryId, int subCatID) {
         ApiCall mApiCall = new ApiCall(getActivity(), this);
-        mApiCall.addVersionModelBrand(keyword, title, categoryId, subCatID,0,0);
+        mApiCall.addVersionModelBrand(keyword, title, categoryId, subCatID, 0, 0);
     }
 
     /*
@@ -475,7 +460,7 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
      */
     private void AddModel(String keyword, String title, int categoryId, int subCatID, int brandId) {
         ApiCall mApiCall = new ApiCall(getActivity(), this);
-        mApiCall.addVersionModelBrand(keyword, title, categoryId, subCatID, brandId,0);
+        mApiCall.addVersionModelBrand(keyword, title, categoryId, subCatID, brandId, 0);
     }
 
     /*
@@ -1226,10 +1211,6 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                         strHrs = "", brandstr = "", modelstr = "", versionstr = "";
                 int strKms = 0;
                 strTitle = title.getText().toString();
-                /*strMakemonth = mMakeMonth.getText().toString();
-                strMakeyear = mMakeYear.getText().toString();
-                strRegisterMonth = mRegisterMonth.getText().toString();
-                strRegisterYear = mRegisterYear.getText().toString();*/
                 strMakemonth = myp.getSelectedMonthName();
                 strMakeyear = String.valueOf(myp.getSelectedYear());
                 strRegisterMonth = myp1.getSelectedMonthName();
@@ -1247,7 +1228,7 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                     if (mKms.getText().toString().isEmpty())
                         strKms = 0;
                     else
-                    strKms = Integer.parseInt(mKms.getText().toString());
+                        strKms = Integer.parseInt(mKms.getText().toString());
                 }
 
                 if (radioButton1.isChecked()) {

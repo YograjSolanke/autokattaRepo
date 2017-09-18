@@ -1,5 +1,6 @@
 package autokatta.com.upload_vehicle;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -39,6 +40,7 @@ public class VehicleList extends Fragment implements RequestNotifier {
     List<GetVehicleListResponse.Success> mGetVehicle;
     String yesNo;
     boolean hasViewCreated = false;
+    private ProgressDialog dialog;
 
     @Nullable
     @Override
@@ -50,6 +52,8 @@ public class VehicleList extends Fragment implements RequestNotifier {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        dialog = new ProgressDialog(getActivity());
+        dialog.setMessage("Loading...");
         mGetVehicle = new ArrayList<>();
         mListView = (ListView) mVehicleList.findViewById(R.id.upload_list);
         yesNo = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("isTrue", "");
@@ -62,9 +66,7 @@ public class VehicleList extends Fragment implements RequestNotifier {
                 if (s != null) {
                     getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_categoryName", s).apply();
                     getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putInt("upload_categoryId", subTypeId).apply();
-                    /*FragmentManager manager = getFragmentManager();
-                    FragmentTransaction fragmentTransaction = manager.beginTransaction();
-                    fragmentTransaction.replace(R.id.vehicle_upload_container, new Title()).addToBackStack("vehicle_list").commit();*/
+
                     getActivity().getSupportFragmentManager().beginTransaction()
                             .replace(R.id.vehicle_upload_container, new CategoryList(), "vehicle_list")
                             .addToBackStack("vehicle_list")
@@ -88,6 +90,7 @@ public class VehicleList extends Fragment implements RequestNotifier {
 
     private void getData() {
         ApiCall mApiCall = new ApiCall(getActivity(), this);
+        dialog.show();
         mApiCall.getVehicleCount(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", null));
     }
 
@@ -138,6 +141,9 @@ public class VehicleList extends Fragment implements RequestNotifier {
     @Override
     public void notifyString(String str) {
         try {
+            if (dialog.isShowing()) {
+                dialog.dismiss();
+            }
             if (str != null) {
                 if (yesNo.equals("no")) {
                     if (Integer.parseInt(str) >= 3) {
@@ -183,7 +189,7 @@ public class VehicleList extends Fragment implements RequestNotifier {
                     alertDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             getActivity().finish();
-                            //startActivity(new Intent(getActivity(), AutokattaMainActivity.class));
+
                             dialog.cancel();
                         }
                     });

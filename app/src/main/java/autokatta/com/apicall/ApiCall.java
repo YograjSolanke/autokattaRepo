@@ -8145,7 +8145,8 @@ get ExchangeMela Analytics Data
        Send a quotation
      */
 
-    public void SendQuotation(int vehicleId, int GroupId, String ReservePrice, String DeadLineDate) {
+    public void SendQuotation(String strTitle, String strPrice, String deadlineDate, String groupid,
+                              int vehicleId, String myContact, String Type) {
 
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
@@ -8162,8 +8163,8 @@ get ExchangeMela Analytics Data
                         .build();
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<String> mPostResponse = serviceApi._autokattaSendQuotation(vehicleId, GroupId, ReservePrice,
-                        DeadLineDate);
+                Call<String> mPostResponse = serviceApi._autokattaSendQuotation(strTitle, strPrice, deadlineDate,
+                        groupid, vehicleId, myContact, Type);
                 mPostResponse.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {

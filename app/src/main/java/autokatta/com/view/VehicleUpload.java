@@ -6,12 +6,16 @@ import android.os.Bundle;
 import android.support.annotation.CallSuper;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
+
+import java.net.SocketTimeoutException;
 
 import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.app_info.UploadVehicleAppIntro;
 import autokatta.com.interfaces.RequestNotifier;
+import autokatta.com.other.CustomToast;
 import autokatta.com.response.MyStoreResponse;
 import autokatta.com.upload_vehicle.VehicleList;
 import retrofit2.Response;
@@ -19,7 +23,6 @@ import retrofit2.Response;
 public class VehicleUpload extends AppCompatActivity implements RequestNotifier {
 
     SharedPreferences sharedPreferences = null;
-    SharedPreferences.Editor editor;
 
     @Override
     @CallSuper
@@ -35,12 +38,8 @@ public class VehicleUpload extends AppCompatActivity implements RequestNotifier 
         if (getSupportActionBar() != null) {
             getSupportActionBar().setHomeButtonEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            //    getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
         }
-        //startActivity(new Intent(getApplicationContext(), UploadVehicleAppIntro.class));
-       /* FragmentManager mFragmentManager = getSupportFragmentManager();
-        FragmentTransaction mFragmentTransaction = mFragmentManager.beginTransaction();
-        mFragmentTransaction.replace(R.id.vehicle_upload_container, new VehicleList()).commit();*/
+
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.vehicle_upload_container, new VehicleList(), "VehicleUpload")
                 .addToBackStack("VehicleUpload")
@@ -98,7 +97,16 @@ public class VehicleUpload extends AppCompatActivity implements RequestNotifier 
 
     @Override
     public void notifyError(Throwable error) {
-
+        if (error instanceof SocketTimeoutException) {
+            CustomToast.customToast(getApplicationContext(), getString(R.string._404));
+        } else if (error instanceof NullPointerException) {
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
+        } else if (error instanceof ClassCastException) {
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
+        } else {
+            Log.i("Check Class-", "VehicleUpload");
+            error.printStackTrace();
+        }
     }
 
     @Override
@@ -106,23 +114,5 @@ public class VehicleUpload extends AppCompatActivity implements RequestNotifier 
 
     }
 
-    /*@Override
-    protected void onResume() {
-        super.onResume();
-        if (sharedPreferences.getBoolean("uploadVehicleFirstRun", true)) {
-            startActivity(new Intent(getApplicationContext(), UploadVehicleAppIntro.class));
-            editor = sharedPreferences.edit();
-            editor.putBoolean("uploadVehicleFirstRun", false);
-            editor.apply();
-        }
-    }*/
-        /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            ActivityOptions options = ActivityOptions.makeCustomAnimation(VehicleUpload.this, R.anim.pull_in_left, R.anim.push_out_right);
-            startActivity(new Intent(getApplicationContext(), AutokattaMainActivity.class), options.toBundle());
-            finish();
-        } else {
-            finish();
-            startActivity(new Intent(getApplicationContext(), AutokattaMainActivity.class));
-        }*/
 }
 

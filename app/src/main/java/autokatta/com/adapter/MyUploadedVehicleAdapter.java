@@ -81,7 +81,7 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
     List<MyUploadedVehiclesResponse.Success> mMainList;
     //  private ConnectionDetector connectionDetector;
     ApiCall apiCall;
-    private String prefcontact;
+    private String myContact;
     private int groupid;
     private String groupname;
     //SubType
@@ -135,7 +135,7 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
         holder.editrto.setText(mMainList.get(position).getRtoCity());
         holder.editlocation.setText(mMainList.get(position).getLocationCity());
         holder.editregNo.setText(mMainList.get(position).getRegistrationNumber());
-        prefcontact = activity.getSharedPreferences(activity.getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "");
+        myContact = activity.getSharedPreferences(activity.getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "");
 
         if (mMainList.get(position).getKmsRunning().equals(""))
             holder.editkms.setText(mMainList.get(position).getHrsRunning());
@@ -472,8 +472,9 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
                         if (groupid == 0)
                             CustomToast.customToast(activity, "please select Group to send quotation");
                         else {
-                            /*apiCall.SendQuotation(mMainList.get(holder.getAdapterPosition()).getVehicleId(),
-                                    groupid, strPrice, deadlineDate);*/
+                            apiCall.SendQuotation(strTitle, strPrice, deadlineDate, String.valueOf(groupid),
+                                    mMainList.get(holder.getAdapterPosition()).getVehicleId(), myContact,
+                                    "UsedVehicle");
                             System.out.println(mMainList.get(holder.getAdapterPosition()).getVehicleId());
                             openDialog.dismiss();
                         }
@@ -882,10 +883,9 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
                     break;
                 case "success_added":
                     CustomToast.customToast(activity, "data updated");
-                    // notifyDataSetChanged();
-
-//                    Intent intent = new Intent(activity, MyUploadedVehiclesActivity.class);
-//                    activity.startActivity(intent);
+                    break;
+                case "sent_quotation":
+                    CustomToast.customToast(activity, "quotation sent");
                     break;
             }
         }
