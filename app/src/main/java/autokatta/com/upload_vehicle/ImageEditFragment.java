@@ -236,7 +236,8 @@ public class ImageEditFragment extends Fragment implements ColorPickerDialog.OnC
         //File MyDirector = cw.getExternalCacheDir();
 
         // Create imageDir
-        File MyPath = new File(MyDirectory, driveLetter + n + ".jpg");
+        File MyPath = new File(MyDirectory, driveLetter + "1.jpg");
+        //File MyPath = new File(MyDirectory, driveLetter + n + ".jpg");
         //File MyPath = new File(MyDirectory,"Image" + n + ".jpg");
 
         FileOutputStream fos = null;
