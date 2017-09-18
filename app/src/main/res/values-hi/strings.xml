@@ -704,4 +704,7 @@
     <string name="product_cate">"उत्पाद श्रेणी (पूर्व। एटो भागों)"</string>
     <string name="product_details">"उत्पाद विवरण"</string>
     <string name="create_by">"निर्माता"</string>
+
+    <string name="add_interest">ऍड इंटरेस्ट</string>
+    <string name="confirm_interest">आप अपनी पोस्ट इंटरेस्ट के साथ ऍड करना चाहते हैं???</string>
 </resources>

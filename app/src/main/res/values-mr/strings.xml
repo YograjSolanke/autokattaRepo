@@ -700,4 +700,7 @@
     <string name="product_cate">"उत्पादन श्रेणी (माजी.आटो भाग)"</string>
     <string name="product_details">"उत्पादन तपशील"</string>
     <string name="create_by">"ने निर्मित:"</string>
+
+    <string name="add_interest">ऍड इंटरेस्ट</string>
+    <string name="confirm_interest">आपण आपली पोस्ट इंटरेस्ट सोबत ऍड करू इच्छित आहात का ???</string>
 </resources>

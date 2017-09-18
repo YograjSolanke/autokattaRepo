@@ -5,4 +5,9 @@
         android:id="@+id/add_manual"
         android:title="@string/manual_add"
         app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/add_manuals"
+        android:title="Today's follow-up"
+        app:showAsAction="always" />
 </menu>

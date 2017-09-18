@@ -3,10 +3,12 @@ package autokatta.com.other;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,15 +18,21 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.google.android.flexbox.FlexboxLayout;
 
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.List;
 
 import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.response.ProfileAboutResponse;
+import fisk.chipcloud.ChipCloud;
+import fisk.chipcloud.ChipCloudConfig;
+import fisk.chipcloud.ChipListener;
 import retrofit2.Response;
 
 public class PostStatus extends AppCompatActivity implements RequestNotifier {
@@ -38,6 +46,8 @@ public class PostStatus extends AppCompatActivity implements RequestNotifier {
     private ProgressDialog dialog;
     ImageView mProfile_image;
     TextView mProfile_name;
+    String statusText;
+    List<String> lst = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +76,7 @@ public class PostStatus extends AppCompatActivity implements RequestNotifier {
         mProfile_image = (ImageView) findViewById(R.id.profile_image);
         mProfile_name = (TextView) findViewById(R.id.profile_name);
         mPictureVideo = (TextView) findViewById(R.id.picture_video);
-        mPictureVideo.setVisibility(View.GONE);     //functionality in 2nd phase
+        //mPictureVideo.setVisibility(View.GONE);     //functionality in 2nd phase
         mPictureVideo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -112,13 +122,36 @@ public class PostStatus extends AppCompatActivity implements RequestNotifier {
                 break;
 
             case R.id.post_status:
-                String statusText = mStatusText.getText().toString();
+                statusText = mStatusText.getText().toString();
                 Log.i("status", statusText);
                 if (statusText.equals("") || statusText.startsWith(" ") && statusText.endsWith(" ")) {
                     mStatusText.setError("Enter data");
                     mStatusText.requestFocus();
-                } else
-                    PostData(statusText);
+                } else {
+                    AlertDialog.Builder alert = new AlertDialog.Builder(this);
+                    alert.setTitle(getString(R.string.add_interest));
+                    alert.setMessage(getString(R.string.confirm_interest));
+                    alert.setIconAttribute(android.R.attr.alertDialogIcon);
+
+                    alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                            openDialog();
+                            //PostData(statusText);
+                        }
+                    });
+
+                    alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+
+                    });
+                    alert.create();
+                    alert.show();
+                }
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -220,5 +253,69 @@ public class PostStatus extends AppCompatActivity implements RequestNotifier {
 
         } else
             CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
+    }
+
+    private void openDialog() {
+        LayoutInflater layoutInflater = LayoutInflater.from(PostStatus.this);
+        View view = layoutInflater.inflate(R.layout.activity_add_tags, null);
+        AlertDialog.Builder builder = new AlertDialog.Builder(PostStatus.this);
+        builder.setTitle("Autokatta");
+        builder.setIcon(R.drawable.logo48x48);
+        builder.setView(view);
+
+        FlexboxLayout flexbox = (FlexboxLayout) view.findViewById(R.id.flexbox);
+
+        ChipCloudConfig config = new ChipCloudConfig()
+                .selectMode(ChipCloud.SelectMode.multi)
+                .checkedChipColor(Color.parseColor("#ddaa00"))
+                .checkedTextColor(Color.parseColor("#ffffff"))
+                .uncheckedChipColor(Color.parseColor("#efefef"))
+                .uncheckedTextColor(Color.parseColor("#666666"));
+
+        ChipCloud chipCloud = new ChipCloud(PostStatus.this, flexbox, config);
+
+        //chipCloud.addChip("HelloWorld!");
+
+
+        String[] demoArray = getResources().getStringArray(R.array.demo_array);
+        chipCloud.addChips(demoArray);
+        chipCloud.deselectIndex(0);
+
+        chipCloud.setListener(new ChipListener() {
+            @Override
+            public void chipCheckedChange(int index, boolean checked, boolean userClick) {
+                if (userClick && index != 0) {
+                    //Log.d(TAG, String.format("chipCheckedChange Label at index: %d checked: %s", index, checked));
+                    //Log.i("asdf", "->" + chipCloud.getLabel(index));
+                    //String id = String.valueOf(hashMap.get(mInterestResponse.get(index)));
+                    if (checked) {
+                        lst.add(String.valueOf(index));
+                        Log.i("added", "->" + lst.toString());
+                        /*Log.i("addedidx", "->" + id);*/
+
+                    } else {
+                        lst.remove(String.valueOf(index));
+                        Log.i("removed", "->" + lst.toString());
+                       /* Log.i("removedidx", "->" + index);*/
+                    }
+                }
+            }
+        });
+
+        builder.setCancelable(false)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        finish();
+                        PostData(statusText);
+                    }
+                }).setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.cancel();
+            }
+        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 }

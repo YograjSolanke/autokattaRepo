@@ -61,7 +61,7 @@ public class ManualEnquiry extends AppCompatActivity implements SwipeRefreshLayo
             getSupportActionBar().setHomeButtonEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
-        setTitle("Enquiry List");
+        setTitle("Enquiry's");
         startActivity(new Intent(getApplicationContext(), ManualAppIntro.class));
         sharedPreferences = getSharedPreferences(getString(R.string.firstRun), MODE_PRIVATE);
         runOnUiThread(new Runnable() {

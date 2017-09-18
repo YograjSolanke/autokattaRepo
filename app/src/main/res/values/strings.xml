@@ -708,4 +708,7 @@
     <string name="product_cate">Product Category(Ex.Auto parts)</string>
     <string name="product_details">Product Details</string>
     <string name="create_by">Created By:</string>
+
+    <string name="add_interest">Add Interest</string>
+    <string name="confirm_interest">Do you want to post your status with interest???</string>
 </resources>
