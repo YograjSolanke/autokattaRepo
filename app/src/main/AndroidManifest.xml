@@ -753,7 +753,11 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
         <activity android:name=".other.ShowQrCode" />
-        <activity android:name=".other.ViewQrCode"></activity>
+        <activity android:name=".other.ViewQrCode" />
+        <activity
+            android:name=".view.MyVehicleQuotationListActivity"
+            android:label="@string/title_activity_my_vehicle_quotation_list"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

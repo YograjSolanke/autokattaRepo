@@ -711,4 +711,5 @@
 
     <string name="add_interest">Add Interest</string>
     <string name="confirm_interest">Do you want to post your status with interest???</string>
+    <string name="title_activity_my_vehicle_quotation_list">MyVehicleQuotationListActivity</string>
 </resources>
