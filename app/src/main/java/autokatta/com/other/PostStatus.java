@@ -1,5 +1,6 @@
 package autokatta.com.other;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -8,12 +9,14 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.LayoutInflater;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -39,11 +42,10 @@ public class PostStatus extends AppCompatActivity implements RequestNotifier {
 
     TextView mPictureVideo;
     EditText mStatusText;
-    int SELECT_GALLERY = 0;
-    int SELECT_GALLERY_KITKAT = 1;
     private ApiCall mApiCall;
     private String mLoginContact;
     private ProgressDialog dialog;
+    Dialog mBottomSheetDialog;
     ImageView mProfile_image;
     TextView mProfile_name;
     String statusText;
@@ -128,7 +130,7 @@ public class PostStatus extends AppCompatActivity implements RequestNotifier {
                     mStatusText.setError("Enter data");
                     mStatusText.requestFocus();
                 } else {
-                    AlertDialog.Builder alert = new AlertDialog.Builder(this);
+                    /*AlertDialog.Builder alert = new AlertDialog.Builder(this);
                     alert.setTitle(getString(R.string.add_interest));
                     alert.setMessage(getString(R.string.confirm_interest));
                     alert.setIconAttribute(android.R.attr.alertDialogIcon);
@@ -136,10 +138,10 @@ public class PostStatus extends AppCompatActivity implements RequestNotifier {
                     alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                            openDialog();
-                            //PostData(statusText);
-                        }
+                            dialog.dismiss();*/
+                    openDialog();
+                    //PostData(statusText);
+                    /*    }
                     });
 
                     alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -150,7 +152,7 @@ public class PostStatus extends AppCompatActivity implements RequestNotifier {
 
                     });
                     alert.create();
-                    alert.show();
+                    alert.show();*/
                 }
                 break;
         }
@@ -186,12 +188,10 @@ public class PostStatus extends AppCompatActivity implements RequestNotifier {
         }
         if (response != null) {
             if (response.isSuccessful()) {
-                //hud.dismiss();
                 ProfileAboutResponse mProfileAboutResponse = (ProfileAboutResponse) response.body();
                 if (!mProfileAboutResponse.getSuccess().isEmpty()) {
                     String dp = mProfileAboutResponse.getSuccess().get(0).getProfilePic();
                     mProfile_name.setText(mProfileAboutResponse.getSuccess().get(0).getUsername());
-                    int RegID = mProfileAboutResponse.getSuccess().get(0).getRegId();
                     String dp_path = getApplicationContext().getString(R.string.base_image_url) + dp;
 
                     if (!dp.equals("")) {
@@ -203,15 +203,11 @@ public class PostStatus extends AppCompatActivity implements RequestNotifier {
                     } else {
                         mProfile_image.setBackgroundResource(R.drawable.profile);
                     }
-                } else {
-
                 }
             } else {
-                //hud.dismiss();
                 CustomToast.customToast(getApplicationContext(), getString(R.string._404));
             }
         } else {
-            //hud.dismiss();
             CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
         }
     }
@@ -256,66 +252,63 @@ public class PostStatus extends AppCompatActivity implements RequestNotifier {
     }
 
     private void openDialog() {
-        LayoutInflater layoutInflater = LayoutInflater.from(PostStatus.this);
-        View view = layoutInflater.inflate(R.layout.activity_add_tags, null);
-        AlertDialog.Builder builder = new AlertDialog.Builder(PostStatus.this);
-        builder.setTitle("Autokatta");
-        builder.setIcon(R.drawable.logo48x48);
-        builder.setView(view);
+        try {
+            View view = getLayoutInflater().inflate(R.layout.activity_add_tags, null);
+            mBottomSheetDialog = new Dialog(PostStatus.this,
+                    R.style.MaterialDialogSheet);
+            mBottomSheetDialog.setContentView(view);
+            mBottomSheetDialog.setCancelable(true);
+            mBottomSheetDialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT,
+                    500);
+            mBottomSheetDialog.getWindow().setGravity(Gravity.BOTTOM);
+            mBottomSheetDialog.show();
 
-        FlexboxLayout flexbox = (FlexboxLayout) view.findViewById(R.id.flexbox);
+            FlexboxLayout flexbox = (FlexboxLayout) view.findViewById(R.id.flexbox);
+            Button ok = (Button) view.findViewById(R.id.ok);
 
-        ChipCloudConfig config = new ChipCloudConfig()
-                .selectMode(ChipCloud.SelectMode.multi)
-                .checkedChipColor(Color.parseColor("#ddaa00"))
-                .checkedTextColor(Color.parseColor("#ffffff"))
-                .uncheckedChipColor(Color.parseColor("#efefef"))
-                .uncheckedTextColor(Color.parseColor("#666666"));
+            ChipCloudConfig config = new ChipCloudConfig()
+                    .selectMode(ChipCloud.SelectMode.multi)
+                    .checkedChipColor(Color.parseColor("#4169E1"))
+                    .checkedTextColor(Color.parseColor("#ffffff"))
+                    .uncheckedChipColor(Color.parseColor("#efefef"))
+                    .uncheckedTextColor(Color.parseColor("#666666"));
 
-        ChipCloud chipCloud = new ChipCloud(PostStatus.this, flexbox, config);
+            ChipCloud chipCloud = new ChipCloud(PostStatus.this, flexbox, config);
+            String[] demoArray = getResources().getStringArray(R.array.demo_array);
+            chipCloud.addChips(demoArray);
+            chipCloud.deselectIndex(0);
 
-        //chipCloud.addChip("HelloWorld!");
-
-
-        String[] demoArray = getResources().getStringArray(R.array.demo_array);
-        chipCloud.addChips(demoArray);
-        chipCloud.deselectIndex(0);
-
-        chipCloud.setListener(new ChipListener() {
-            @Override
-            public void chipCheckedChange(int index, boolean checked, boolean userClick) {
-                if (userClick && index != 0) {
-                    //Log.d(TAG, String.format("chipCheckedChange Label at index: %d checked: %s", index, checked));
-                    //Log.i("asdf", "->" + chipCloud.getLabel(index));
-                    //String id = String.valueOf(hashMap.get(mInterestResponse.get(index)));
-                    if (checked) {
-                        lst.add(String.valueOf(index));
-                        Log.i("added", "->" + lst.toString());
-                        /*Log.i("addedidx", "->" + id);*/
-
-                    } else {
-                        lst.remove(String.valueOf(index));
-                        Log.i("removed", "->" + lst.toString());
-                       /* Log.i("removedidx", "->" + index);*/
+            chipCloud.setListener(new ChipListener() {
+                @Override
+                public void chipCheckedChange(int index, boolean checked, boolean userClick) {
+                    if (userClick && index != 0) {
+                        if (checked) {
+                            lst.add(String.valueOf(index));
+                        } else {
+                            lst.remove(String.valueOf(index));
+                        }
                     }
                 }
-            }
-        });
+            });
 
-        builder.setCancelable(false)
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        finish();
-                        PostData(statusText);
-                    }
-                }).setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                dialogInterface.cancel();
-            }
-        });
-        AlertDialog alertDialog = builder.create();
-        alertDialog.show();
+            ok.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    PostData(statusText);
+                }
+            });
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (mBottomSheetDialog != null) {
+            mBottomSheetDialog.dismiss();
+            mBottomSheetDialog = null;
+        }
     }
 }

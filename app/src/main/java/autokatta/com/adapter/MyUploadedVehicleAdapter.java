@@ -14,6 +14,7 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.text.InputType;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -141,7 +142,6 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
             holder.editkms.setText(mMainList.get(position).getHrsRunning());
         else
             holder.editkms.setText(mMainList.get(position).getKmsRunning());
-
 
 
         //To set Date
@@ -510,6 +510,36 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+            }
+        });
+
+        /*
+        To transfer stock...
+         */
+        holder.mTransferStock.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                View view = activity.getLayoutInflater().inflate(R.layout.custom_bottom_transfer_stock, null);
+                EditText txtBackup = (EditText) view.findViewById(R.id.owner_name);
+                EditText txtDetail = (EditText) view.findViewById(R.id.contact_no);
+                EditText txtOpen = (EditText) view.findViewById(R.id.transfer_date);
+                EditText txtUninstall = (EditText) view.findViewById(R.id.reason_for_transfer);
+                EditText txtUninstall1 = (EditText) view.findViewById(R.id.description);
+                ImageView mClose = (ImageView) view.findViewById(R.id.close);
+
+                final Dialog mBottomSheetDialog = new Dialog(activity, R.style.MaterialDialogSheet);
+                mBottomSheetDialog.setContentView(view);
+                mBottomSheetDialog.setCancelable(true);
+                mBottomSheetDialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                mBottomSheetDialog.getWindow().setGravity(Gravity.BOTTOM);
+                mBottomSheetDialog.show();
+
+                mClose.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mBottomSheetDialog.dismiss();
+                    }
+                });
             }
         });
     }
@@ -896,7 +926,7 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
         ImageView vehicleimage;
         TextView edittitles, editprices, editcategorys, editbrands, editmodels, editleads, edituploadedon, editmfgyr,
                 editkms, editrto, editlocation, editregNo;
-        Button vehidetails, btnnotify, delete, mEnquiry, mQuotation, mUploadGroup, mUploadStore;
+        Button vehidetails, btnnotify, delete, mEnquiry, mQuotation, mUploadGroup, mUploadStore, mTransferStock;
         CardView mcardView;
         RelativeLayout mBroadcast;
         LinearLayout mLinear;
@@ -927,6 +957,7 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
             mBroadcast = (RelativeLayout) itemView.findViewById(R.id.relativebroadcast);
             mLinear = (LinearLayout) itemView.findViewById(R.id.linearbtns);
             mQuotation = (Button) itemView.findViewById(R.id.quotation);
+            mTransferStock = (Button) itemView.findViewById(R.id.transfer_stock);
         }
     }
 

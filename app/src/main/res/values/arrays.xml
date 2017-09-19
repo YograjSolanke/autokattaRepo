@@ -204,6 +204,12 @@
         <item>Pending</item>
     </string-array>
 
+    <!--demo-->
+    <string-array name="demo">
+        <item>Under Working</item>
+    </string-array>
+
+
     <!--User Inventory
     new vehicle, used vehicle, product, services-->
     <string-array name="UserInventory">

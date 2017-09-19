@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <View
-        android:background="@color/colorPrimary"
         android:id="@+id/v1"
         android:layout_width="match_parent"
-        android:layout_height="1dp" />
+        android:layout_height="1dp"
+        android:background="@color/colorPrimary" />
 
     <android.support.design.widget.TabLayout
         android:id="@+id/social_tabs"
-        app:tabGravity="fill"
-        app:tabMode="scrollable"
-        android:background="@color/colorPrimary"
-        app:tabIndicatorColor="@color/white"
-        app:tabSelectedTextColor="@color/white"
-        app:tabTextColor="#B0C4DE"
-        android:longClickable="true"
         android:layout_width="match_parent"
-        android:layout_height="35dip" />
+        android:layout_height="35dip"
+        android:background="@color/colorPrimary"
+        android:longClickable="true"
+        app:tabGravity="fill"
+        app:tabIndicatorColor="@color/white"
+        app:tabMode="scrollable"
+        app:tabSelectedTextColor="@color/white"
+        app:tabTextColor="#B0C4DE" />
 
     <android.support.v4.view.ViewPager
         android:id="@+id/social_viewpager"

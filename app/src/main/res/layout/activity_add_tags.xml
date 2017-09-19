@@ -10,21 +10,23 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-    <com.google.android.flexbox.FlexboxLayout
-        android:id="@+id/flexbox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:flexWrap="wrap"
-        app:alignItems="flex_start"
-        app:alignContent="space_around"
-        app:showDivider="middle"
-        app:dividerDrawable="@drawable/div" />
 
-    <Button
-        android:id="@+id/ok"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/ok" />
+        <com.google.android.flexbox.FlexboxLayout
+            android:id="@+id/flexbox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:alignContent="space_around"
+            app:alignItems="flex_start"
+            app:dividerDrawable="@drawable/div"
+            app:flexWrap="wrap"
+
+            app:showDivider="middle" />
+
+        <Button
+            android:id="@+id/ok"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/ok" />
     </LinearLayout>
 
 </ScrollView>

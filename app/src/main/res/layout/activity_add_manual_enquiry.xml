@@ -189,12 +189,14 @@
                     android:textStyle="bold" />
 
                 <RadioGroup
+                    android:id="@+id/exchange"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1.4"
                     android:orientation="horizontal">
 
                     <RadioButton
+                        android:id="@+id/exchangeYes"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/yes" />

@@ -46,9 +46,10 @@ public class MyUploadedVehicleTabs extends Fragment {
         adapter.addFragment(new InventoryProductsFragment(), "Products");
         adapter.addFragment(new InventoryServicesFragment(), "Services");
         adapter.addFragment(new MyUploadedVehiclesFragment(), "Used Vehicle");
-        //adapter.addFragment(new NewVehicle(), "New Vehicle");
-        //adapter.addFragment(new SoldVehicle(), "Sold Vehicle");
-         adapter.addFragment(new MyVehicles(), "My Owned Vehicles");
+        adapter.addFragment(new NewVehicle(), "New Vehicle");
+        adapter.addFragment(new SoldVehicle(), "Sold Vehicle");
+        adapter.addFragment(new MyVehicles(), "My Owned Vehicles");
+        adapter.addFragment(new SoldVehicle(), "Transfer Stock");
         viewPager.setAdapter(adapter);
     }
 

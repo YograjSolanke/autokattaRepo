@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/popup_window"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="bottom|center"
+    android:background="@android:color/white"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <ImageView
+        android:id="@+id/close"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:contentDescription="@string/app_name"
+        android:src="@android:drawable/ic_menu_close_clear_cancel" />
+
+    <EditText
+        android:id="@+id/owner_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Owner Name"
+        android:labelFor="@+id/owner_name"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <EditText
+        android:id="@+id/contact_no"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Contact Number"
+        android:labelFor="@+id/contact_no"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <EditText
+        android:id="@+id/transfer_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Transfer Date"
+        android:inputType="datetime"
+        android:labelFor="@+id/transfer_date"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <EditText
+        android:id="@+id/reason_for_transfer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Reason For Transfer"
+        android:labelFor="@+id/reason_for_transfer"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <EditText
+        android:id="@+id/description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Description"
+        android:labelFor="@+id/description"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="end">
+
+        <Button
+            android:id="@+id/submit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/button_default"
+            android:text="Send"
+            android:textColor="@color/white"
+            android:textStyle="bold" />
+    </LinearLayout>
+</LinearLayout>

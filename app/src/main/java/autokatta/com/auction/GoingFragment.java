@@ -227,61 +227,62 @@ public class GoingFragment extends Fragment implements RequestNotifier {
         call.enqueue(new Callback<GetLiveSaleEventsResponse>() {
             @Override
             public void onResponse(Call<GetLiveSaleEventsResponse> call, Response<GetLiveSaleEventsResponse> response) {
-                GetLiveSaleEventsResponse serviceEventsResponse = response.body();
-                mLiveSaleEventList.clear();
-                for (GetLiveSaleEventsResponse.Success success : serviceEventsResponse.getSuccess()) {
-                    ModelLiveFragment model = new ModelLiveFragment();
-                    model.setSale_id(success.getId());
-                    model.setContact(success.getContact());
-                    model.setName(success.getName());
-                    model.setStartDate(success.getStartDate());
-                    model.setStartTime(success.getStartTime());
-                    model.setEndDate(success.getEndDate());
-                    model.setEndTime(success.getEndTime());
-                    model.setLocation(success.getLocation());
-                    model.setAddress(success.getAddress());
-                    model.setImage(success.getImage());
-                    model.setStartDateTime(success.getStartDateTime());
-                    model.setEndDateTime(success.getEndDateTime());
-                    model.setCreateDate(success.getCreateDate());
-                    model.setDetails(success.getDetails());
-                    model.setUsername(success.getEventOwner());
-                    model.setBlackListStatus(success.getBlackListStatus());
-                    model.setMycontact(success.getMycontact());
+                if (response.isSuccessful()) {
+                    GetLiveSaleEventsResponse serviceEventsResponse = response.body();
+                    mLiveSaleEventList.clear();
+                    for (GetLiveSaleEventsResponse.Success success : serviceEventsResponse.getSuccess()) {
+                        ModelLiveFragment model = new ModelLiveFragment();
+                        model.setSale_id(success.getId());
+                        model.setContact(success.getContact());
+                        model.setName(success.getName());
+                        model.setStartDate(success.getStartDate());
+                        model.setStartTime(success.getStartTime());
+                        model.setEndDate(success.getEndDate());
+                        model.setEndTime(success.getEndTime());
+                        model.setLocation(success.getLocation());
+                        model.setAddress(success.getAddress());
+                        model.setImage(success.getImage());
+                        model.setStartDateTime(success.getStartDateTime());
+                        model.setEndDateTime(success.getEndDateTime());
+                        model.setCreateDate(success.getCreateDate());
+                        model.setDetails(success.getDetails());
+                        model.setUsername(success.getEventOwner());
+                        model.setBlackListStatus(success.getBlackListStatus());
+                        model.setMycontact(success.getMycontact());
 
 
+                        try {
+                            TimeZone utc = TimeZone.getTimeZone("etc/UTC");
+                            //format of date coming from services
+                            DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
 
-                    try {
-                        TimeZone utc = TimeZone.getTimeZone("etc/UTC");
-                        //format of date coming from services
-                        DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                            inputFormat.setTimeZone(utc);
 
-                        inputFormat.setTimeZone(utc);
+                            //format of date which we want to show
+                            DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
 
-                        //format of date which we want to show
-                        DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
+                            outputFormat.setTimeZone(utc);
 
-                        outputFormat.setTimeZone(utc);
+                            Date date = inputFormat.parse(success.getStartDate().replace("T00:00:00", ""));
+                            Date date1 = inputFormat.parse(success.getEndDate().replace("T00:00:00", ""));
 
-                        Date date = inputFormat.parse(success.getStartDate().replace("T00:00:00", ""));
-                        Date date1 = inputFormat.parse(success.getEndDate().replace("T00:00:00", ""));
+                            String output = outputFormat.format(date);
+                            String output1 = outputFormat.format(date1);
 
-                        String output = outputFormat.format(date);
-                        String output1 = outputFormat.format(date1);
+                            model.setStartDate(output);
+                            model.setEndDate(output1);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
 
-                        model.setStartDate(output);
-                        model.setEndDate(output1);
-                    } catch (Exception e) {
-                        e.printStackTrace();
+                        model.setKeyWord("sale");
+                        mLiveSaleEventList.add(model);
                     }
-
-                    model.setKeyWord("sale");
-                    mLiveSaleEventList.add(model);
+                    mSaleCount.setText(String.valueOf(mLiveSaleEventList.size()));
+                    mAdapter = new AuctionNotificationAdapter(getActivity(), mLiveSaleEventList, "Going");
+                    mSaleRecyclerView.setAdapter(mAdapter);
+                    mAdapter.notifyDataSetChanged();
                 }
-                mSaleCount.setText(String.valueOf(mLiveSaleEventList.size()));
-                mAdapter = new AuctionNotificationAdapter(getActivity(), mLiveSaleEventList, "Going");
-                mSaleRecyclerView.setAdapter(mAdapter);
-                mAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -301,60 +302,62 @@ public class GoingFragment extends Fragment implements RequestNotifier {
         call.enqueue(new Callback<GetLiveSaleEventsResponse>() {
             @Override
             public void onResponse(Call<GetLiveSaleEventsResponse> call, Response<GetLiveSaleEventsResponse> response) {
-                GetLiveSaleEventsResponse serviceEventsResponse = response.body();
-                mLiveServiceEventList.clear();
-                for (GetLiveSaleEventsResponse.Success success : serviceEventsResponse.getSuccess()) {
-                    ModelLiveFragment model = new ModelLiveFragment();
-                    model.setService_id(success.getId());
-                    model.setContact(success.getContact());
-                    model.setName(success.getName());
-                    model.setStartDate(success.getStartDate());
-                    model.setStartTime(success.getStartTime());
-                    model.setEndDate(success.getEndDate());
-                    model.setEndTime(success.getEndTime());
-                    model.setLocation(success.getLocation());
-                    model.setAddress(success.getAddress());
-                    model.setImage(success.getImage());
-                    model.setStartDateTime(success.getStartDateTime());
-                    model.setEndDateTime(success.getEndDateTime());
-                    model.setCreateDate(success.getCreateDate());
-                    model.setDetails(success.getDetails());
-                    model.setUsername(success.getEventOwner());
-                    model.setBlackListStatus(success.getBlackListStatus());
-                    model.setMycontact(success.getMycontact());
+                if (response.isSuccessful()) {
+                    GetLiveSaleEventsResponse serviceEventsResponse = response.body();
+                    mLiveServiceEventList.clear();
+                    for (GetLiveSaleEventsResponse.Success success : serviceEventsResponse.getSuccess()) {
+                        ModelLiveFragment model = new ModelLiveFragment();
+                        model.setService_id(success.getId());
+                        model.setContact(success.getContact());
+                        model.setName(success.getName());
+                        model.setStartDate(success.getStartDate());
+                        model.setStartTime(success.getStartTime());
+                        model.setEndDate(success.getEndDate());
+                        model.setEndTime(success.getEndTime());
+                        model.setLocation(success.getLocation());
+                        model.setAddress(success.getAddress());
+                        model.setImage(success.getImage());
+                        model.setStartDateTime(success.getStartDateTime());
+                        model.setEndDateTime(success.getEndDateTime());
+                        model.setCreateDate(success.getCreateDate());
+                        model.setDetails(success.getDetails());
+                        model.setUsername(success.getEventOwner());
+                        model.setBlackListStatus(success.getBlackListStatus());
+                        model.setMycontact(success.getMycontact());
 
 
-                    try {
-                        TimeZone utc = TimeZone.getTimeZone("etc/UTC");
-                        //format of date coming from services
-                        DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                        try {
+                            TimeZone utc = TimeZone.getTimeZone("etc/UTC");
+                            //format of date coming from services
+                            DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
 
-                        inputFormat.setTimeZone(utc);
+                            inputFormat.setTimeZone(utc);
 
-                        //format of date which we want to show
-                        DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
+                            //format of date which we want to show
+                            DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
 
-                        outputFormat.setTimeZone(utc);
+                            outputFormat.setTimeZone(utc);
 
-                        Date date = inputFormat.parse(success.getStartDate().replace("T00:00:00", ""));
-                        Date date1 = inputFormat.parse(success.getEndDate().replace("T00:00:00", ""));
+                            Date date = inputFormat.parse(success.getStartDate().replace("T00:00:00", ""));
+                            Date date1 = inputFormat.parse(success.getEndDate().replace("T00:00:00", ""));
 
-                        String output = outputFormat.format(date);
-                        String output1 = outputFormat.format(date1);
+                            String output = outputFormat.format(date);
+                            String output1 = outputFormat.format(date1);
 
-                        model.setStartDate(output);
-                        model.setEndDate(output1);
-                    } catch (Exception e) {
-                        e.printStackTrace();
+                            model.setStartDate(output);
+                            model.setEndDate(output1);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
+                        model.setKeyWord("service");
+                        mLiveServiceEventList.add(model);
                     }
-
-                    model.setKeyWord("service");
-                    mLiveServiceEventList.add(model);
+                    mServiceCount.setText(String.valueOf(mLiveServiceEventList.size()));
+                    mAdapter = new AuctionNotificationAdapter(getActivity(), mLiveServiceEventList, "Going");
+                    mServiceEventRecyclerView.setAdapter(mAdapter);
+                    mAdapter.notifyDataSetChanged();
                 }
-                mServiceCount.setText(String.valueOf(mLiveServiceEventList.size()));
-                mAdapter = new AuctionNotificationAdapter(getActivity(), mLiveServiceEventList, "Going");
-                mServiceEventRecyclerView.setAdapter(mAdapter);
-                mAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -374,60 +377,62 @@ public class GoingFragment extends Fragment implements RequestNotifier {
         call.enqueue(new Callback<GetLiveSaleEventsResponse>() {
             @Override
             public void onResponse(Call<GetLiveSaleEventsResponse> call, Response<GetLiveSaleEventsResponse> response) {
-                GetLiveSaleEventsResponse serviceEventsResponse = response.body();
-                mLiveExchangeEventList.clear();
-                for (GetLiveSaleEventsResponse.Success success : serviceEventsResponse.getSuccess()) {
-                    ModelLiveFragment model = new ModelLiveFragment();
-                    model.setExchange_id(success.getId());
-                    model.setContact(success.getContact());
-                    model.setName(success.getName());
-                    model.setStartDate(success.getStartDate());
-                    model.setStartTime(success.getStartTime());
-                    model.setEndDate(success.getEndDate());
-                    model.setEndTime(success.getEndTime());
-                    model.setLocation(success.getLocation());
-                    model.setAddress(success.getAddress());
-                    model.setImage(success.getImage());
-                    model.setStartDateTime(success.getStartDateTime());
-                    model.setEndDateTime(success.getEndDateTime());
-                    model.setCreateDate(success.getCreateDate());
-                    model.setDetails(success.getDetails());
-                    model.setUsername(success.getEventOwner());
-                    model.setBlackListStatus(success.getBlackListStatus());
-                    model.setMycontact(success.getMycontact());
+                if (response.isSuccessful()) {
+                    GetLiveSaleEventsResponse serviceEventsResponse = response.body();
+                    mLiveExchangeEventList.clear();
+                    for (GetLiveSaleEventsResponse.Success success : serviceEventsResponse.getSuccess()) {
+                        ModelLiveFragment model = new ModelLiveFragment();
+                        model.setExchange_id(success.getId());
+                        model.setContact(success.getContact());
+                        model.setName(success.getName());
+                        model.setStartDate(success.getStartDate());
+                        model.setStartTime(success.getStartTime());
+                        model.setEndDate(success.getEndDate());
+                        model.setEndTime(success.getEndTime());
+                        model.setLocation(success.getLocation());
+                        model.setAddress(success.getAddress());
+                        model.setImage(success.getImage());
+                        model.setStartDateTime(success.getStartDateTime());
+                        model.setEndDateTime(success.getEndDateTime());
+                        model.setCreateDate(success.getCreateDate());
+                        model.setDetails(success.getDetails());
+                        model.setUsername(success.getEventOwner());
+                        model.setBlackListStatus(success.getBlackListStatus());
+                        model.setMycontact(success.getMycontact());
 
 
-                    try {
-                        TimeZone utc = TimeZone.getTimeZone("etc/UTC");
-                        //format of date coming from services
-                        DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                        try {
+                            TimeZone utc = TimeZone.getTimeZone("etc/UTC");
+                            //format of date coming from services
+                            DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
 
-                        inputFormat.setTimeZone(utc);
+                            inputFormat.setTimeZone(utc);
 
-                        //format of date which we want to show
-                        DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
+                            //format of date which we want to show
+                            DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
 
-                        outputFormat.setTimeZone(utc);
+                            outputFormat.setTimeZone(utc);
 
-                        Date date = inputFormat.parse(success.getStartDate().replace("T00:00:00", ""));
-                        Date date1 = inputFormat.parse(success.getEndDate().replace("T00:00:00", ""));
+                            Date date = inputFormat.parse(success.getStartDate().replace("T00:00:00", ""));
+                            Date date1 = inputFormat.parse(success.getEndDate().replace("T00:00:00", ""));
 
-                        String output = outputFormat.format(date);
-                        String output1 = outputFormat.format(date1);
+                            String output = outputFormat.format(date);
+                            String output1 = outputFormat.format(date1);
 
-                        model.setStartDate(output);
-                        model.setEndDate(output1);
-                    } catch (Exception e) {
-                        e.printStackTrace();
+                            model.setStartDate(output);
+                            model.setEndDate(output1);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
+                        model.setKeyWord("exchange");
+                        mLiveExchangeEventList.add(model);
                     }
-
-                    model.setKeyWord("exchange");
-                    mLiveExchangeEventList.add(model);
+                    mExchangeEventCount.setText(String.valueOf(mLiveExchangeEventList.size()));
+                    mAdapter = new AuctionNotificationAdapter(getActivity(), mLiveExchangeEventList, "Going");
+                    mExchangeEventRecyclerView.setAdapter(mAdapter);
+                    mAdapter.notifyDataSetChanged();
                 }
-                mExchangeEventCount.setText(String.valueOf(mLiveExchangeEventList.size()));
-                mAdapter = new AuctionNotificationAdapter(getActivity(), mLiveExchangeEventList, "Going");
-                mExchangeEventRecyclerView.setAdapter(mAdapter);
-                mAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -447,60 +452,62 @@ public class GoingFragment extends Fragment implements RequestNotifier {
         call.enqueue(new Callback<GetLiveSaleEventsResponse>() {
             @Override
             public void onResponse(Call<GetLiveSaleEventsResponse> call, Response<GetLiveSaleEventsResponse> response) {
-                GetLiveSaleEventsResponse serviceEventsResponse = response.body();
-                mLiveLoanEventList.clear();
-                for (GetLiveSaleEventsResponse.Success success : serviceEventsResponse.getSuccess()) {
-                    ModelLiveFragment model = new ModelLiveFragment();
-                    model.setLoan_id(success.getId());
-                    model.setContact(success.getContact());
-                    model.setName(success.getName());
-                    model.setStartDate(success.getStartDate());
-                    model.setStartTime(success.getStartTime());
-                    model.setEndDate(success.getEndDate());
-                    model.setEndTime(success.getEndTime());
-                    model.setLocation(success.getLocation());
-                    model.setAddress(success.getAddress());
-                    model.setImage(success.getImage());
-                    model.setStartDateTime(success.getStartDateTime());
-                    model.setEndDateTime(success.getEndDateTime());
-                    model.setCreateDate(success.getCreateDate());
-                    model.setDetails(success.getDetails());
-                    model.setUsername(success.getEventOwner());
-                    model.setBlackListStatus(success.getBlackListStatus());
-                    model.setMycontact(success.getMycontact());
+                if (response.isSuccessful()) {
+                    GetLiveSaleEventsResponse serviceEventsResponse = response.body();
+                    mLiveLoanEventList.clear();
+                    for (GetLiveSaleEventsResponse.Success success : serviceEventsResponse.getSuccess()) {
+                        ModelLiveFragment model = new ModelLiveFragment();
+                        model.setLoan_id(success.getId());
+                        model.setContact(success.getContact());
+                        model.setName(success.getName());
+                        model.setStartDate(success.getStartDate());
+                        model.setStartTime(success.getStartTime());
+                        model.setEndDate(success.getEndDate());
+                        model.setEndTime(success.getEndTime());
+                        model.setLocation(success.getLocation());
+                        model.setAddress(success.getAddress());
+                        model.setImage(success.getImage());
+                        model.setStartDateTime(success.getStartDateTime());
+                        model.setEndDateTime(success.getEndDateTime());
+                        model.setCreateDate(success.getCreateDate());
+                        model.setDetails(success.getDetails());
+                        model.setUsername(success.getEventOwner());
+                        model.setBlackListStatus(success.getBlackListStatus());
+                        model.setMycontact(success.getMycontact());
 
 
-                    try {
-                        TimeZone utc = TimeZone.getTimeZone("etc/UTC");
-                        //format of date coming from services
-                        DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                        try {
+                            TimeZone utc = TimeZone.getTimeZone("etc/UTC");
+                            //format of date coming from services
+                            DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
 
-                        inputFormat.setTimeZone(utc);
+                            inputFormat.setTimeZone(utc);
 
-                        //format of date which we want to show
-                        DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
+                            //format of date which we want to show
+                            DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
 
-                        outputFormat.setTimeZone(utc);
+                            outputFormat.setTimeZone(utc);
 
-                        Date date = inputFormat.parse(success.getStartDate().replace("T00:00:00", ""));
-                        Date date1 = inputFormat.parse(success.getEndDate().replace("T00:00:00", ""));
+                            Date date = inputFormat.parse(success.getStartDate().replace("T00:00:00", ""));
+                            Date date1 = inputFormat.parse(success.getEndDate().replace("T00:00:00", ""));
 
-                        String output = outputFormat.format(date);
-                        String output1 = outputFormat.format(date1);
+                            String output = outputFormat.format(date);
+                            String output1 = outputFormat.format(date1);
 
-                        model.setStartDate(output);
-                        model.setEndDate(output1);
-                    } catch (Exception e) {
-                        e.printStackTrace();
+                            model.setStartDate(output);
+                            model.setEndDate(output1);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
+                        model.setKeyWord("loan");
+                        mLiveLoanEventList.add(model);
                     }
-
-                    model.setKeyWord("loan");
-                    mLiveLoanEventList.add(model);
+                    mLoanMelaCount.setText(String.valueOf(mLiveLoanEventList.size()));
+                    mAdapter = new AuctionNotificationAdapter(getActivity(), mLiveLoanEventList, "Going");
+                    mLoanMelaRecyclerView.setAdapter(mAdapter);
+                    mAdapter.notifyDataSetChanged();
                 }
-                mLoanMelaCount.setText(String.valueOf(mLiveLoanEventList.size()));
-                mAdapter = new AuctionNotificationAdapter(getActivity(), mLiveLoanEventList, "Going");
-                mLoanMelaRecyclerView.setAdapter(mAdapter);
-                mAdapter.notifyDataSetChanged();
             }
 
             @Override
