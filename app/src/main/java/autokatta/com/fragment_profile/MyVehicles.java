@@ -1,8 +1,10 @@
 package autokatta.com.fragment_profile;
 
 import android.app.Activity;
+import android.app.ActivityOptions;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -11,8 +13,11 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.github.clans.fab.FloatingActionButton;
 
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
@@ -26,6 +31,7 @@ import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.other.CustomToast;
+import autokatta.com.register.NextRegistrationContinue;
 import autokatta.com.response.GetOwnVehiclesResponse;
 import retrofit2.Response;
 
@@ -44,6 +50,7 @@ public class MyVehicles extends android.support.v4.app.Fragment implements Reque
     ApiCall mApiCall;
     boolean _hasLoadedOnce = false;
     ConnectionDetector mTestConnection;
+    FloatingActionButton addVehicle;
     TextView mNoData;
     private ProgressDialog dialog;
     Activity mActivity;
@@ -76,7 +83,7 @@ public class MyVehicles extends android.support.v4.app.Fragment implements Reque
                 mTestConnection = new ConnectionDetector(getActivity());
                 mSwipeRefreshLayout = (SwipeRefreshLayout) mMyVehicles.findViewById(R.id.swipeRefreshLayoutMyVehicles);
                 mRecyclerView = (RecyclerView) mMyVehicles.findViewById(R.id.recyclermyVehicles);
-                //FloatingActionButton addVehicle = (FloatingActionButton) mMyVehicles.findViewById(R.id.add_vehicle);
+                addVehicle = (FloatingActionButton) mMyVehicles.findViewById(R.id.add_vehicle);
                 mNoData = (TextView) mMyVehicles.findViewById(R.id.no_category);
                 mNoData.setVisibility(View.GONE);
 
@@ -104,6 +111,18 @@ public class MyVehicles extends android.support.v4.app.Fragment implements Reque
         });
         mApiCall = new ApiCall(getActivity(), this);
         mSwipeRefreshLayout.setOnRefreshListener(this);
+
+        addVehicle.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ActivityOptions option = ActivityOptions.makeCustomAnimation(getActivity(), R.anim.ok_left_to_right,
+                        R.anim.ok_right_to_left);
+                Intent i = new Intent(getActivity(), NextRegistrationContinue.class);
+                i.putExtra("action", "profile");
+                i.putExtra("className", "profile");
+                startActivity(i, option.toBundle());
+            }
+        });
     }
 
     @Override
@@ -128,6 +147,7 @@ public class MyVehicles extends android.support.v4.app.Fragment implements Reque
             ApiCall mApiCall = new ApiCall(getActivity(), this);
             mApiCall.getOwnVehicles(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""));
         } else {
+            if (isAdded())
             CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         }
     }
@@ -189,8 +209,8 @@ public class MyVehicles extends android.support.v4.app.Fragment implements Reque
                 }
             } else {
                 mSwipeRefreshLayout.setRefreshing(false);
-//                if (isAdded())
-//                CustomToast.customToast(getActivity(), getString(R.string._404_));
+                if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string._404_));
             }
         } else {
             mSwipeRefreshLayout.setRefreshing(false);
@@ -208,16 +228,16 @@ public class MyVehicles extends android.support.v4.app.Fragment implements Reque
         }
         if (error instanceof SocketTimeoutException) {
             if (isAdded()) {
-                CustomToast.customToast(getActivity(), getString(R.string.no_internet));
+                CustomToast.customToast(getActivity(), getString(R.string._404_));
             }
         } else if (error instanceof NullPointerException) {
-//            if (isAdded()) {
-//                CustomToast.customToast(getActivity(), getString(R.string.no_response));
-//            }
+            if (isAdded()) {
+                CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            }
         } else if (error instanceof ClassCastException) {
-//            if (isAdded()) {
-//                CustomToast.customToast(getActivity(), getString(R.string.no_response));
-//            }
+            if (isAdded()) {
+                CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            }
         } else if (error instanceof ConnectException) {
             if (isAdded()) {
                 CustomToast.customToast(getActivity(), getString(R.string.no_internet));

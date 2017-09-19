@@ -61,12 +61,10 @@ import autokatta.com.fragment_profile.AboutStore;
 import autokatta.com.fragment_profile.Follow;
 import autokatta.com.fragment_profile.Groups;
 import autokatta.com.fragment_profile.Modules;
-import autokatta.com.fragment_profile.MyVehicles;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.interfaces.ServiceApi;
 import autokatta.com.other.CustomToast;
 import autokatta.com.other.FullImageActivity;
-import autokatta.com.register.NextRegistrationContinue;
 import autokatta.com.response.ProfileAboutResponse;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -301,11 +299,11 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
                 mCreateGroup.hide(true);
                 break;*/
 
-            case 3:
+          /*  case 3:
                 addVehicle.hide(true);
                 mCreateStore.hide(true);
                 mCreateGroup.hide(true);
-                break;
+                break;*/
 
             case 4:
                 addVehicle.hide(true);
@@ -367,7 +365,7 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
         //adapter.addFragment(new Katta(), "KATTA");
         adapter.addFragment(new Modules(), "MODULE");
         adapter.addFragment(new Follow(), "FOLLOW");
-        adapter.addFragment(new MyVehicles(), "MY VEHICLES");
+     //   adapter.addFragment(new MyVehicles(), "MY VEHICLES");
         /*adapter.addFragment(new MyVideos(), "MY VIDEO");
         adapter.addFragment(new Blog(), "BLOG");
         adapter.addFragment(new Post(), "POST");
@@ -700,12 +698,12 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
                 break;
 
             case R.id.add_vehicle:
-                ActivityOptions option = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.ok_left_to_right,
+                /*ActivityOptions option = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.ok_left_to_right,
                         R.anim.ok_right_to_left);
                 Intent i = new Intent(getApplicationContext(), NextRegistrationContinue.class);
                 i.putExtra("action", "profile");
                 i.putExtra("className", "profile");
-                startActivity(i, option.toBundle());
+                startActivity(i, option.toBundle());*/
                 break;
 
             case R.id.user_image:

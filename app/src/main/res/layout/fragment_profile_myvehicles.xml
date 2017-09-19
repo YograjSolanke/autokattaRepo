@@ -1,6 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                xmlns:fab="http://schemas.android.com/apk/res-auto">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -36,13 +37,16 @@
                 android:scrollbars="vertical" />
         </android.support.v4.widget.SwipeRefreshLayout>
 
-        <!--<android.support.design.widget.FloatingActionButton
+        <com.github.clans.fab.FloatingActionButton
              android:id="@+id/add_vehicle"
              android:layout_width="wrap_content"
              android:layout_height="wrap_content"
              android:layout_alignParentBottom="true"
              android:layout_alignParentEnd="true"
-             android:src="@mipmap/ic_plus" />-->
+             fab:fab_colorNormal="#5176C9"
+             fab:fab_colorPressed="#5176C9"
+             fab:fab_colorRipple="#5176C9"
+             android:src="@mipmap/ic_add_my_vehi" />
     </RelativeLayout>
 
     <include layout="@layout/error_view" />

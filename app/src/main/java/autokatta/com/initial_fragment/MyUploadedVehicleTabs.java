@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 
 import autokatta.com.R;
 import autokatta.com.adapter.TabAdapterName;
+import autokatta.com.fragment_profile.MyVehicles;
 import autokatta.com.inventory_catalog.InventoryProductsFragment;
 import autokatta.com.inventory_catalog.InventoryServicesFragment;
 
@@ -47,6 +48,7 @@ public class MyUploadedVehicleTabs extends Fragment {
         adapter.addFragment(new MyUploadedVehiclesFragment(), "Used Vehicle");
         //adapter.addFragment(new NewVehicle(), "New Vehicle");
         //adapter.addFragment(new SoldVehicle(), "Sold Vehicle");
+         adapter.addFragment(new MyVehicles(), "My Owned Vehicles");
         viewPager.setAdapter(adapter);
     }
 
