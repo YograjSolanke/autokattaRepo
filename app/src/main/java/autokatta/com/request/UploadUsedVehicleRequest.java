@@ -211,6 +211,9 @@ public class UploadUsedVehicleRequest {
     @SerializedName("Implementstr")
     @Expose
     private String implementstr;
+  @SerializedName("StockType")
+    @Expose
+    private String StockType;
 
     public String getContact() {
         return contact;
@@ -258,6 +261,14 @@ public class UploadUsedVehicleRequest {
 
     public void setVersionId(int versionId) {
         this.versionId = versionId;
+    }
+
+    public String getStockType() {
+        return StockType;
+    }
+
+    public void setStockType(String stockType) {
+        StockType = stockType;
     }
 
     public String getCategory() {

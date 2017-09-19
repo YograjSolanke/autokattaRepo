@@ -293,6 +293,18 @@ public class GetVehicleByIdResponse {
         @Expose
         private String version;
 
+        public String getStockType() {
+            return StockType;
+        }
+
+        public void setStockType(String stockType) {
+            StockType = stockType;
+        }
+
+        @SerializedName("StockType")
+        @Expose
+        private String StockType;
+
         public Integer getVehicleId() {
             return vehicleId;
         }
