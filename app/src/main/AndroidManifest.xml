@@ -742,9 +742,10 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".groups.GetQuotation"
+            android:name=".groups.GetGroupQuotation"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
             android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".other.FullImageActivity"
@@ -756,8 +757,11 @@
         <activity android:name=".other.ViewQrCode" />
         <activity
             android:name=".view.MyVehicleQuotationListActivity"
+            android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
             android:label="@string/title_activity_my_vehicle_quotation_list"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustResize"></activity>
     </application>
 
 </manifest>

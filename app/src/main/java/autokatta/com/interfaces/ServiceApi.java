@@ -1296,4 +1296,7 @@ public interface ServiceApi {
                                                   @Query("Discussion") String Discussion, @Query("NextFollowUpDate") String NextFollowUpDate,
                                                   @Query("Idslist") String Idslist);
 
+    //Get Group Quotation
+    @GET("GetGroupQuotation")
+    Call<GetGroupQuotationResponse> _autokattaGetGroupQuotation(@Query("GroupId") int mGrpId);
 }

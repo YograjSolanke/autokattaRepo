@@ -18,6 +18,7 @@ import autokatta.com.R;
 public class GroupCommunicationFragment extends Fragment {
     View mGroupCommunication;
     RelativeLayout mGetQuotation;
+    Bundle b, b1;
 
     public GroupCommunicationFragment() {
         //empty constructor...
@@ -33,6 +34,9 @@ public class GroupCommunicationFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        b = new Bundle();
+        b1 = getArguments();
+
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -40,7 +44,18 @@ public class GroupCommunicationFragment extends Fragment {
                 mGetQuotation.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        startActivity(new Intent(getActivity(), GetQuotation.class));
+
+                        b.putString("grouptype", b1.getString("grouptype", ""));
+                        b.putString("className", b1.getString("className", ""));
+                        b.putInt("bundle_GroupId", b1.getInt("bundle_GroupId", 0));
+                        b.putString("bundle_GroupName", b1.getString("bundle_GroupName", ""));
+                        b.putString("bundle_Contact", b1.getString("bundle_Contact", ""));
+                        b.putString("tabIndex", b1.getString("tabIndex", ""));
+
+                        Intent intent = new Intent(getActivity(), GetGroupQuotation.class);
+                        intent.putExtras(b);
+                        startActivity(intent);
+                        //startActivity(new Intent(getActivity(), GetGroupQuotation.class));
                     }
                 });
             }

@@ -8289,6 +8289,35 @@ get ExchangeMela Analytics Data
         }
     }
 
+    public void GetGroupQuotation(int mGrpId) {
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<GetGroupQuotationResponse> mQuotationResponseCall = serviceApi._autokattaGetGroupQuotation(mGrpId);
+                mQuotationResponseCall.enqueue(new Callback<GetGroupQuotationResponse>() {
+                    @Override
+                    public void onResponse(Call<GetGroupQuotationResponse> call, Response<GetGroupQuotationResponse> response) {
+                        mNotifier.notifySuccess(response);
+                    }
+
+                    @Override
+                    public void onFailure(Call<GetGroupQuotationResponse> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+            } else
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     /***
      * Retrofit Logs
      ***/
@@ -8317,6 +8346,5 @@ get ExchangeMela Analytics Data
         httpClient.addInterceptor(logging).build();
         return httpClient;
     }
-
 
 }
