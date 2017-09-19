@@ -104,10 +104,10 @@ public class Follow extends Fragment implements RequestNotifier {
 
             } else {
 
-                CustomToast.customToast(getActivity(), getString(R.string._404_));
+                // CustomToast.customToast(getActivity(), getString(R.string._404_));
             }
         } else {
-
+            if (isAdded())
             CustomToast.customToast(getActivity(), getString(R.string.no_response));
         }
     }
@@ -115,23 +115,23 @@ public class Follow extends Fragment implements RequestNotifier {
     @Override
     public void notifyError(Throwable error) {
         if (error instanceof SocketTimeoutException) {
-
-            CustomToast.customToast(getActivity(), getString(R.string._404_));
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string.no_internet));
 
         } else if (error instanceof NullPointerException) {
 
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            //CustomToast.customToast(getActivity(), getString(R.string.no_response));
 
         } else if (error instanceof ClassCastException) {
 
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            //CustomToast.customToast(getActivity(), getString(R.string.no_response));
 
         } else if (error instanceof ConnectException) {
-
+            if (isAdded())
             CustomToast.customToast(getActivity(), getString(R.string.no_internet));
 
         } else if (error instanceof UnknownHostException) {
-
+            if (isAdded())
             CustomToast.customToast(getActivity(), getString(R.string.no_internet));
 
         } else {
@@ -156,14 +156,14 @@ public class Follow extends Fragment implements RequestNotifier {
                     if (mTestConnection.isConnectedToInternet()) {
                         apiCall.getFollowers(mOtherContact);
                     } else {
-
+                        if (isAdded())
                         CustomToast.customToast(getActivity(), getString(R.string.no_internet));
                     }
                 } else {
                     if (mTestConnection.isConnectedToInternet()) {
                         apiCall.getFollowers(contact);
                     } else {
-
+                        if (isAdded())
                         CustomToast.customToast(getActivity(), getString(R.string.no_internet));
                     }
                 }
@@ -191,60 +191,18 @@ public class Follow extends Fragment implements RequestNotifier {
                     if (mTestConnection.isConnectedToInternet()) {
                         apiCall.getFollowers(mOtherContact);
                     } else {
-
+                        if (isAdded())
                         CustomToast.customToast(getActivity(), getString(R.string.no_internet));
                     }
                 } else {
                     if (mTestConnection.isConnectedToInternet()) {
                         apiCall.getFollowers(contact);
                     } else {
-
+                        if (isAdded())
                         CustomToast.customToast(getActivity(), getString(R.string.no_internet));
                     }
                 }
             }
         });
     }
-
-   /* public void showMessage(Activity activity, String message) {
-        Snackbar snackbar = Snackbar.make(activity.findViewById(android.R.id.content),
-                message, Snackbar.LENGTH_LONG);
-        TextView textView = (TextView) snackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
-        textView.setTextColor(Color.RED);
-        snackbar.show();
-    }
-
-    public void errorMessage(Activity activity, String message) {
-        Snackbar snackbar = Snackbar.make(activity.findViewById(android.R.id.content),
-                message, Snackbar.LENGTH_INDEFINITE)
-                .setAction("Retry", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Bundle bundle = getArguments();
-                        if (bundle != null) {
-                            mOtherContact = bundle.getString("otherContact");
-                            if (mTestConnection.isConnectedToInternet()) {
-                                apiCall.getFollowers(mOtherContact);
-                            } else {
-                                *//*if (mActivity != null)
-                                    errorMessage(mActivity, getString(R.string.no_internet));*//*
-                            }
-                        } else {
-                            if (mTestConnection.isConnectedToInternet()) {
-                                apiCall.getFollowers(contact);
-                            } else {
-                                *//*if (mActivity != null)
-                                    errorMessage(mActivity, getString(R.string.no_internet));*//*
-                            }
-                        }
-                    }
-                });
-        // Changing message text color
-        snackbar.setActionTextColor(Color.BLUE);
-        // Changing action button text color
-        View sbView = snackbar.getView();
-        TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
-        textView.setTextColor(Color.WHITE);
-        snackbar.show();
-    }*/
 }

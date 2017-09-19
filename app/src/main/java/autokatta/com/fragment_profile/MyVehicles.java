@@ -189,10 +189,12 @@ public class MyVehicles extends android.support.v4.app.Fragment implements Reque
                 }
             } else {
                 mSwipeRefreshLayout.setRefreshing(false);
-                CustomToast.customToast(getActivity(), getString(R.string._404_));
+//                if (isAdded())
+//                CustomToast.customToast(getActivity(), getString(R.string._404_));
             }
         } else {
             mSwipeRefreshLayout.setRefreshing(false);
+            if (isAdded())
             CustomToast.customToast(getActivity(), getString(R.string.no_response));
         }
     }
@@ -206,16 +208,16 @@ public class MyVehicles extends android.support.v4.app.Fragment implements Reque
         }
         if (error instanceof SocketTimeoutException) {
             if (isAdded()) {
-                CustomToast.customToast(getActivity(), getString(R.string._404_));
+                CustomToast.customToast(getActivity(), getString(R.string.no_internet));
             }
         } else if (error instanceof NullPointerException) {
-            if (isAdded()) {
-                CustomToast.customToast(getActivity(), getString(R.string.no_response));
-            }
+//            if (isAdded()) {
+//                CustomToast.customToast(getActivity(), getString(R.string.no_response));
+//            }
         } else if (error instanceof ClassCastException) {
-            if (isAdded()) {
-                CustomToast.customToast(getActivity(), getString(R.string.no_response));
-            }
+//            if (isAdded()) {
+//                CustomToast.customToast(getActivity(), getString(R.string.no_response));
+//            }
         } else if (error instanceof ConnectException) {
             if (isAdded()) {
                 CustomToast.customToast(getActivity(), getString(R.string.no_internet));

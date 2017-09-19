@@ -78,7 +78,7 @@ public class AboutStore extends Fragment implements RequestNotifier, View.OnClic
             dialog.show();
             mApiCall.getStoreProfileInfo(loginContact);
         } else {
-//           if (mActivity != null)
+            if (isAdded())
             CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         }
     }
@@ -111,10 +111,10 @@ public class AboutStore extends Fragment implements RequestNotifier, View.OnClic
                 }
             } else {
 //                if (mActivity != null)
-                CustomToast.customToast(getActivity(), getString(R.string._404_));
+//                CustomToast.customToast(getActivity(), getString(R.string._404_));
             }
         } else {
-//            if (mActivity != null)
+            if (isAdded())
             CustomToast.customToast(getActivity(), getString(R.string.no_response));
         }
     }
@@ -125,23 +125,23 @@ public class AboutStore extends Fragment implements RequestNotifier, View.OnClic
             dialog.dismiss();
         }
         if (error instanceof SocketTimeoutException) {
-
+            if (isAdded())
             CustomToast.customToast(getActivity(), getString(R.string._404_));
 
         } else if (error instanceof NullPointerException) {
 //
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            //   CustomToast.customToast(getActivity(), getString(R.string.no_response));
 //
         } else if (error instanceof ClassCastException) {
 
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            // CustomToast.customToast(getActivity(), getString(R.string.no_response));
 
         } else if (error instanceof ConnectException) {
-
+            if (isAdded())
             CustomToast.customToast(getActivity(), getString(R.string.no_internet));
 
         } else if (error instanceof UnknownHostException) {
-
+            if (isAdded())
             CustomToast.customToast(getActivity(), getString(R.string.no_internet));
 
         } else {
@@ -224,30 +224,4 @@ public class AboutStore extends Fragment implements RequestNotifier, View.OnClic
         });
     }
 
-   /* public void showMessage(Activity activity, String message) {
-        Snackbar snackbar = Snackbar.make(activity.findViewById(android.R.id.content),
-                message, Snackbar.LENGTH_LONG);
-        TextView textView = (TextView) snackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
-        textView.setTextColor(Color.RED);
-        snackbar.show();
-    }
-
-    public void errorMessage(Activity activity, String message) {
-        Snackbar snackbar = Snackbar.make(activity.findViewById(android.R.id.content),
-                message, Snackbar.LENGTH_INDEFINITE)
-                .setAction("Retry", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        getStoreProfileInfo(getActivity().getSharedPreferences(getString(R.string.my_preference),
-                                Context.MODE_PRIVATE).getString("loginContact", ""));
-                    }
-                });
-        // Changing message text color
-        snackbar.setActionTextColor(Color.BLUE);
-        // Changing action button text color
-        View sbView = snackbar.getView();
-        TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
-        textView.setTextColor(Color.WHITE);
-        snackbar.show();
-    }*/
 }

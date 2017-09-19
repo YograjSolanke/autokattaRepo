@@ -273,9 +273,10 @@ public class About extends Fragment implements RequestNotifier, MaterialIntroLis
                     }
                 }
             } else {
-                CustomToast.customToast(getActivity(), getString(R.string._404_));
+                // CustomToast.customToast(getActivity(), getString(R.string._404_));
             }
         } else {
+            if (isAdded())
             CustomToast.customToast(getActivity(), getString(R.string.no_response));
         }
     }
@@ -284,13 +285,13 @@ public class About extends Fragment implements RequestNotifier, MaterialIntroLis
     public void notifyError(Throwable error) {
         if (error instanceof SocketTimeoutException) {
             if (isAdded())
-                CustomToast.customToast(getActivity(), getString(R.string._404_));
+                CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof NullPointerException) {
-            if (isAdded())
-                CustomToast.customToast(getActivity(), getString(R.string.no_response));
+//            if (isAdded())
+//                CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            if (isAdded())
-                CustomToast.customToast(getActivity(), getString(R.string.no_response));
+//            if (isAdded())
+//                CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
             if (isAdded())
                 CustomToast.customToast(getActivity(), getString(R.string.no_internet));

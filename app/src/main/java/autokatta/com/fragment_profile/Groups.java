@@ -77,7 +77,7 @@ public class Groups extends Fragment implements RequestNotifier, View.OnClickLis
             ApiCall apiCall = new ApiCall(getActivity(), this);
             apiCall.profileGroup(contact);
         } else {
-
+            if (isAdded())
             CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         }
     }
@@ -121,9 +121,10 @@ public class Groups extends Fragment implements RequestNotifier, View.OnClickLis
                 adapter.notifyDataSetChanged();
 
             } else {
-                CustomToast.customToast(getActivity(), getString(R.string._404_));
+                // CustomToast.customToast(getActivity(), getString(R.string._404_));
             }
         } else {
+            if (isAdded())
             CustomToast.customToast(getActivity(), getString(R.string.no_response));
         }
     }
@@ -131,14 +132,17 @@ public class Groups extends Fragment implements RequestNotifier, View.OnClickLis
     @Override
     public void notifyError(Throwable error) {
         if (error instanceof SocketTimeoutException) {
-            CustomToast.customToast(getActivity(), getString(R.string._404_));
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof NullPointerException) {
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            //CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            // CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
+            if (isAdded())
             CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
+            if (isAdded())
             CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         } else {
             Log.i("Check Class-", "Groups Fragment");
@@ -153,12 +157,7 @@ public class Groups extends Fragment implements RequestNotifier, View.OnClickLis
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            /*case R.id.create_group:
-                Intent intent = new Intent(getActivity(), GroupTabs.class);
-                intent.putExtra("ClassName", "Groups");
-                startActivity(intent);
-                getActivity().finish();
-                break;*/
+
         }
     }
 
@@ -200,29 +199,4 @@ public class Groups extends Fragment implements RequestNotifier, View.OnClickLis
         });
     }
 
-   /* public void showMessage(Activity activity, String message) {
-        Snackbar snackbar = Snackbar.make(activity.findViewById(android.R.id.content),
-                message, Snackbar.LENGTH_LONG);
-        TextView textView = (TextView) snackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
-        textView.setTextColor(Color.RED);
-        snackbar.show();
-    }
-
-    public void errorMessage(Activity activity, String message) {
-        Snackbar snackbar = Snackbar.make(activity.findViewById(android.R.id.content),
-                message, Snackbar.LENGTH_INDEFINITE)
-                .setAction("Retry", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        getGroups();
-                    }
-                });
-        // Changing message text color
-        snackbar.setActionTextColor(Color.BLUE);
-        // Changing action button text color
-        View sbView = snackbar.getView();
-        TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
-        textView.setTextColor(Color.WHITE);
-        snackbar.show();
-    }*/
 }
