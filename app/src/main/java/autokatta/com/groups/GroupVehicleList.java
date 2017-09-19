@@ -83,6 +83,7 @@ public class GroupVehicleList extends Fragment implements SwipeRefreshLayout.OnR
         if (mTestConnection.isConnectedToInternet()) {
             mApiCall.getMyVehicles(rcontact);
         } else {
+            if (isAdded())
             CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         }
     }
@@ -216,8 +217,8 @@ public class GroupVehicleList extends Fragment implements SwipeRefreshLayout.OnR
                 }
             } else {
                 mSwipeRefreshLayout.setRefreshing(false);
-                if (isAdded())
-                    CustomToast.customToast(getActivity(), getString(R.string._404_));
+//                if (isAdded())
+//                    CustomToast.customToast(getActivity(), getString(R.string._404_));
             }
         } else {
             mSwipeRefreshLayout.setRefreshing(false);

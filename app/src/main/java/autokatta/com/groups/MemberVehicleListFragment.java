@@ -241,6 +241,7 @@ public class MemberVehicleListFragment extends Fragment implements SwipeRefreshL
         if (mTestConnection.isConnectedToInternet()) {
             mApiCall.getMyVehicles(rcontact);
         } else {
+            if (isAdded())
             CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         }
     }
@@ -261,6 +262,7 @@ public class MemberVehicleListFragment extends Fragment implements SwipeRefreshL
         if (mTestConnection.isConnectedToInternet()) {
             mApiCall.getGroupVehicles(mGroupId, brand, model, version, city, RTOcity, price, reg_year, mgf_year, kmsrunning, no_of_owner,rcontact);
         } else {
+            if (isAdded())
             CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         }
 
@@ -369,10 +371,11 @@ public class MemberVehicleListFragment extends Fragment implements SwipeRefreshL
                 }
             } else {
                 mSwipeRefreshLayout.setRefreshing(false);
-                CustomToast.customToast(getActivity(), getString(R.string._404_));
+                // CustomToast.customToast(getActivity(), getString(R.string._404_));
             }
         } else {
             mSwipeRefreshLayout.setRefreshing(false);
+            if (isAdded())
             CustomToast.customToast(getActivity(), getString(R.string.no_response));
         }
     }
@@ -381,14 +384,17 @@ public class MemberVehicleListFragment extends Fragment implements SwipeRefreshL
     public void notifyError(Throwable error) {
         mSwipeRefreshLayout.setRefreshing(false);
         if (error instanceof SocketTimeoutException) {
+            if (isAdded())
             CustomToast.customToast(getActivity(), getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            //CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            //  CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
+            if (isAdded())
             CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
+            if (isAdded())
             CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         } else {
             Log.i("Check Class-"

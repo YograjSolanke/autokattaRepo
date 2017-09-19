@@ -349,7 +349,7 @@ public class MyAuctionVehicleDetails extends AppCompatActivity implements Reques
                 }*/
 
             } else {
-                CustomToast.customToast(getApplicationContext(), getString(R.string._404));
+                //CustomToast.customToast(getApplicationContext(), getString(R.string._404));
             }
         } else {
             CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
@@ -361,9 +361,9 @@ public class MyAuctionVehicleDetails extends AppCompatActivity implements Reques
         if (error instanceof SocketTimeoutException) {
             CustomToast.customToast(getApplicationContext(), getString(R.string._404));
         } else if (error instanceof NullPointerException) {
-            CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
+            // CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
+            //CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
         } else {
             Log.i("Check Class-", "My Auction Vehicle Details Activity");
         }

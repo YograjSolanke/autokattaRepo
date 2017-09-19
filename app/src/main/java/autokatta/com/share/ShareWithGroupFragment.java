@@ -119,8 +119,8 @@ public class ShareWithGroupFragment extends Fragment implements RequestNotifier 
                         vehicle_id, product_id, service_id, profile_contact, search_id, status_id, auction_id, loan_id, exchange_id, keyword);
                 grouplist.setAdapter(adapter);
             } else {
-                if (isAdded())
-                    CustomToast.customToast(getActivity(), getString(R.string._404_));
+//                if (isAdded())
+//                    CustomToast.customToast(getActivity(), getString(R.string._404_));
             }
         } else {
             if (isAdded())
@@ -135,11 +135,11 @@ public class ShareWithGroupFragment extends Fragment implements RequestNotifier 
             if (isAdded())
                 CustomToast.customToast(getActivity(), getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
-            if (isAdded())
-                CustomToast.customToast(getActivity(), getString(R.string.no_response));
+//            if (isAdded())
+//                CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            if (isAdded())
-                CustomToast.customToast(getActivity(), getString(R.string._404_));
+//            if (isAdded())
+//                CustomToast.customToast(getActivity(), getString(R.string._404_));
         } else if (error instanceof ConnectException) {
             if (isAdded())
                 CustomToast.customToast(getActivity(), getString(R.string.no_internet));

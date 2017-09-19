@@ -92,12 +92,14 @@ public class ShareWithBroadcastFragment extends Fragment implements RequestNotif
                     grouplist.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
                 } else {
+                    if (isAdded())
                     CustomToast.customToast(getActivity(), getString(R.string.no_response));
                 }
             } else {
-                CustomToast.customToast(getActivity(), getString(R.string._404_));
+                // CustomToast.customToast(getActivity(), getString(R.string._404_));
             }
         } else {
+            if (isAdded())
             CustomToast.customToast(getActivity(), getString(R.string.no_response));
         }
     }
@@ -106,45 +108,19 @@ public class ShareWithBroadcastFragment extends Fragment implements RequestNotif
     @Override
     public void notifyError(Throwable error) {
         if (error instanceof SocketTimeoutException) {
+            if (isAdded())
             CustomToast.customToast(getActivity(), getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            //  CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            // CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
+            if (isAdded())
             CustomToast.customToast(getActivity(), getString(R.string.no_internet));
-            //mNoInternetIcon.setVisibility(View.VISIBLE);
-//            Snackbar snackbar = Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
-//                    .setAction("Go Online", new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View view) {
-//                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
-//                        }
-//                    });
-//            // Changing message text color
-//            snackbar.setActionTextColor(Color.RED);
-//            // Changing action button text color
-//            View sbView = snackbar.getView();
-//            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
-//            textView.setTextColor(Color.YELLOW);
-//            snackbar.show();
+
         } else if (error instanceof UnknownHostException) {
+            if (isAdded())
             CustomToast.customToast(getActivity(), getString(R.string.no_internet));
-            //mNoInternetIcon.setVisibility(View.VISIBLE);
-//            Snackbar snackbar = Snackbar.make(getView(), getString(R.string.no_internet), Snackbar.LENGTH_INDEFINITE)
-//                    .setAction("Go Online", new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View view) {
-//                            startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
-//                        }
-//                    });
-//            // Changing message text color
-//            snackbar.setActionTextColor(Color.RED);
-//            // Changing action button text color
-//            View sbView = snackbar.getView();
-//            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
-//            textView.setTextColor(Color.YELLOW);
-//            snackbar.show();
         } else {
             Log.i("Check Class-"
                     , "Share With Broadcast");

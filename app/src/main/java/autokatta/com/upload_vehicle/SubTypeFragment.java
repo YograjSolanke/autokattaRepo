@@ -1046,8 +1046,8 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
                     }
                 }
             } else {
-                if (isAdded())
-                    CustomToast.customToast(getActivity(), getString(R.string._404));
+//                if (isAdded())
+//                    CustomToast.customToast(getActivity(), getString(R.string._404));
             }
         } else {
             if (isAdded())
@@ -1061,11 +1061,11 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
             if (isAdded())
                 CustomToast.customToast(getActivity(), getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
-            if (isAdded())
-                CustomToast.customToast(getActivity(), getString(R.string.no_response));
+//            if (isAdded())
+//                CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            if (isAdded())
-                CustomToast.customToast(getActivity(), getString(R.string.no_response));
+//            if (isAdded())
+//                CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
             if (isAdded())
                 CustomToast.customToast(getActivity(), getString(R.string.no_internet));

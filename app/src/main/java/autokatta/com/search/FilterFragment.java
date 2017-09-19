@@ -1764,9 +1764,10 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
                 }
 
             } else {
-                CustomToast.customToast(getActivity(), getString(R.string._404));
+                //CustomToast.customToast(getActivity(), getString(R.string._404));
             }
         } else {
+            if (isAdded())
             CustomToast.customToast(getActivity(), getString(R.string.no_response));
         }
     }
@@ -1777,11 +1778,11 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
             if (isAdded())
                 CustomToast.customToast(getActivity(), getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
-            if (isAdded())
-                CustomToast.customToast(getActivity(), getString(R.string.no_response));
+//            if (isAdded())
+//                CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            if (isAdded())
-                CustomToast.customToast(getActivity(), getString(R.string.no_response));
+//            if (isAdded())
+//                CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
             if (isAdded())
                 CustomToast.customToast(getActivity(), getString(R.string.no_internet));

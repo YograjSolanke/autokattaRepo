@@ -365,9 +365,10 @@ public class AdminVehicleDetails extends AppCompatActivity implements RequestNot
                 else
                     vehicle_km_hrs.setText(Hrs_running + "Hrs");
             } else {
-                CustomToast.customToast(getApplicationContext(), getString(R.string._404));
+                // CustomToast.customToast(getApplicationContext(), getString(R.string._404));
             }
         } else {
+
             CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
         }
     }
@@ -377,9 +378,9 @@ public class AdminVehicleDetails extends AppCompatActivity implements RequestNot
         if (error instanceof SocketTimeoutException) {
             CustomToast.customToast(getApplicationContext(), getString(R.string._404));
         } else if (error instanceof NullPointerException) {
-            CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
+            // CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
+            // CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
         } else {
             Log.i("Check Class-", "AdminVehicleDetails Activity");
         }
@@ -390,28 +391,6 @@ public class AdminVehicleDetails extends AppCompatActivity implements RequestNot
 
     }
 
-    /*@Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                onBackPressed();
-                break;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            ActivityOptions options = ActivityOptions.makeCustomAnimation(AdminVehicleDetails.this, R.anim.pull_in_left, R.anim.push_out_right);
-            startActivity(new Intent(getApplicationContext(), AutokattaMainActivity.class), options.toBundle());
-            finish();
-        } else {
-            finish();
-            startActivity(new Intent(getApplicationContext(), AutokattaMainActivity.class));
-        }
-    }*/
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {

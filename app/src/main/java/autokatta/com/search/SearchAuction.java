@@ -122,6 +122,7 @@ public class SearchAuction extends Fragment implements RequestNotifier {
             ApiCall mApiCall = new ApiCall(getActivity(), this);
             mApiCall.getSearchAuctionData(searchString);
         } else {
+            if (isAdded())
             CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         }
     }
@@ -352,6 +353,7 @@ public class SearchAuction extends Fragment implements RequestNotifier {
                 filterImg.setVisibility(View.GONE);
             }
         } else {
+            if (isAdded())
             CustomToast.customToast(getActivity(), getString(R.string.no_response));
         }
     }
@@ -362,14 +364,17 @@ public class SearchAuction extends Fragment implements RequestNotifier {
             dialog.dismiss();
         }*/
         if (error instanceof SocketTimeoutException) {
+            if (isAdded())
             CustomToast.customToast(getActivity(), getString(R.string._404));
         } else if (error instanceof NullPointerException) {
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            // CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            //   CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
+            if (isAdded())
             CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
+            if (isAdded())
             CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         } else {
             Log.i("Check Class-", "SearchAuction Fragment");

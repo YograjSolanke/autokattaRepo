@@ -297,9 +297,10 @@ int auction_id;
                 mRecyclerView.setAdapter(adapter);
                 adapter.notifyDataSetChanged();
             } else {
-                CustomToast.customToast(getApplicationContext(), getString(R.string._404));
+                // CustomToast.customToast(getApplicationContext(), getString(R.string._404));
             }
         } else {
+
             CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
         }
     }

@@ -222,9 +222,10 @@ public class SearchVehicle extends Fragment implements RequestNotifier {
                     advanceSearch.setVisibility(View.GONE);
                 }
             } else {
-                CustomToast.customToast(getActivity(), getString(R.string._404));
+                // CustomToast.customToast(getActivity(), getString(R.string._404));
             }
         } else {
+            if (isAdded())
             CustomToast.customToast(getActivity(), getString(R.string.no_response));
         }
     }
@@ -238,11 +239,11 @@ public class SearchVehicle extends Fragment implements RequestNotifier {
             if(isAdded())
             CustomToast.customToast(getActivity(), getString(R.string._404));
         } else if (error instanceof NullPointerException) {
-            if(isAdded())
-                CustomToast.customToast(getActivity(), getString(R.string.no_response));
+//            if(isAdded())
+//                CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            if(isAdded())
-                CustomToast.customToast(getActivity(), getString(R.string.no_response));
+//            if(isAdded())
+//                CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
             if(isAdded())
                 CustomToast.customToast(getActivity(), getString(R.string.no_internet));

@@ -70,6 +70,7 @@ public class MyGroupsFragment extends Fragment implements SwipeRefreshLayout.OnR
         if (mTestConnection.isConnectedToInternet()) {
             mApiCall.Groups(loginContact);
         } else {
+            if (isAdded())
             CustomToast.customToast(getActivity(),getString(R.string.no_internet));
             // errorMessage(activity, getString(R.string.no_internet));
         }
@@ -112,6 +113,7 @@ public class MyGroupsFragment extends Fragment implements SwipeRefreshLayout.OnR
             }
         } else {
             mSwipeRefreshLayout.setRefreshing(false);
+            if (isAdded())
             CustomToast.customToast(getActivity(),getString(R.string.no_response));
             //showMessage(activity, getString(R.string.no_response));
         }
@@ -131,18 +133,21 @@ public class MyGroupsFragment extends Fragment implements SwipeRefreshLayout.OnR
     public void notifyError(Throwable error) {
         mSwipeRefreshLayout.setRefreshing(false);
         if (error instanceof SocketTimeoutException) {
+            if (isAdded())
             CustomToast.customToast(getActivity(),getString(R.string._404_));
             //   showMessage(getActivity(), getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
-            CustomToast.customToast(getActivity(),getString(R.string.no_response));
+            // CustomToast.customToast(getActivity(),getString(R.string.no_response));
             // showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            CustomToast.customToast(getActivity(),getString(R.string.no_response));
+            // CustomToast.customToast(getActivity(),getString(R.string.no_response));
             //   showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
+            if (isAdded())
             CustomToast.customToast(getActivity(),getString(R.string.no_internet));
             //   errorMessage(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
+            if (isAdded())
             CustomToast.customToast(getActivity(),getString(R.string.no_internet));
             //   errorMessage(getActivity(), getString(R.string.no_internet));
         } else {
@@ -269,30 +274,4 @@ public class MyGroupsFragment extends Fragment implements SwipeRefreshLayout.OnR
         mApiCall = new ApiCall(getActivity(), this);
     }
 
-   /* public void showMessage(Activity activity, String message) {
-        Snackbar snackbar = Snackbar.make(activity.findViewById(android.R.id.content),
-                message, Snackbar.LENGTH_LONG);
-        TextView textView = (TextView) snackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
-        textView.setTextColor(Color.RED);
-        snackbar.show();
-    }
-
-    public void errorMessage(Activity activity, String message) {
-        Snackbar snackbar = Snackbar.make(activity.findViewById(android.R.id.content),
-                message, Snackbar.LENGTH_INDEFINITE)
-                .setAction("Retry", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        getData(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
-                                .getString("loginContact", ""));
-                    }
-                });
-        // Changing message text color
-        snackbar.setActionTextColor(Color.BLUE);
-        // Changing action button text color
-        View sbView = snackbar.getView();
-        TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
-        textView.setTextColor(Color.WHITE);
-        snackbar.show();
-    }*/
 }

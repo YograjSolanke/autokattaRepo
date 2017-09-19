@@ -127,8 +127,8 @@ public class VehicleList extends Fragment implements RequestNotifier {
             if (isAdded())
                 CustomToast.customToast(getActivity(), getString(R.string._404));
         } else if (error instanceof NullPointerException) {
-            if (isAdded())
-                CustomToast.customToast(getActivity(), getString(R.string.no_response));
+//            if (isAdded())
+//                CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
             if (isAdded())
                 CustomToast.customToast(getActivity(), getString(R.string.no_response));

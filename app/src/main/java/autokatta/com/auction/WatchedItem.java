@@ -94,6 +94,7 @@ public class WatchedItem extends Fragment implements RequestNotifier {
                     Context.MODE_PRIVATE).getString("loginContact", ""));
             //mApiCall.userWatchedItems("1047", "9890950817");
         } else {
+            if (isAdded())
             CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         }
     }
@@ -141,9 +142,10 @@ public class WatchedItem extends Fragment implements RequestNotifier {
                     //mSwipeRefreshLayout.setRefreshing(false);
                 }
             } else {
-                CustomToast.customToast(getActivity(), getString(R.string._404));
+                // CustomToast.customToast(getActivity(), getString(R.string._404));
             }
         } else {
+            if (isAdded())
             CustomToast.customToast(getActivity(), getString(R.string.no_response));
         }
     }
@@ -151,9 +153,10 @@ public class WatchedItem extends Fragment implements RequestNotifier {
     @Override
     public void notifyError(Throwable error) {
         if (error instanceof SocketTimeoutException) {
-            CustomToast.customToast(getActivity(), getString(R.string._404));
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof NullPointerException) {
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            // CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
             CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {

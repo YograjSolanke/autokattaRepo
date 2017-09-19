@@ -129,8 +129,10 @@ public class SearchService extends Fragment implements RequestNotifier {
             //dialog.show();
             mApiCall.searchService(searchString, getActivity().getSharedPreferences(getString(R.string.my_preference),
                     Context.MODE_PRIVATE).getString("loginContact", ""));
-        } else
+        } else {
+            if (isAdded())
             CustomToast.customToast(getActivity(), getString(R.string.no_internet));
+        }
     }
 
     @Override
@@ -256,9 +258,10 @@ public class SearchService extends Fragment implements RequestNotifier {
                 }
 
             } else {
-                CustomToast.customToast(getActivity(), getString(R.string._404));
+                // CustomToast.customToast(getActivity(), getString(R.string._404));
             }
         } else {
+            if (isAdded())
             CustomToast.customToast(getActivity(), getString(R.string.no_response));
         }
     }
@@ -269,14 +272,17 @@ public class SearchService extends Fragment implements RequestNotifier {
             dialog.dismiss();
         }*/
         if (error instanceof SocketTimeoutException) {
+            if (isAdded())
             CustomToast.customToast(getActivity(), getString(R.string._404));
         } else if (error instanceof NullPointerException) {
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            // CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            //CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
+            if (isAdded())
             CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
+            if (isAdded())
             CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         } else {
             Log.i("Check Class-", "SearchService Fragment");

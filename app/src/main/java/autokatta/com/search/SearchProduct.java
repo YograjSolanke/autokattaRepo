@@ -142,8 +142,10 @@ public class SearchProduct extends Fragment implements RequestNotifier {
             //dialog.show();
             mApiCall.searchProduct(searchString, getActivity().getSharedPreferences(getString(R.string.my_preference),
                     Context.MODE_PRIVATE).getString("loginContact", ""));
-        } else
+        } else {
+            if (isAdded())
             CustomToast.customToast(getActivity(), getString(R.string.no_internet));
+        }
     }
 
     @Override
@@ -249,9 +251,10 @@ public class SearchProduct extends Fragment implements RequestNotifier {
                 }
 
             } else {
-                CustomToast.customToast(getActivity(), getString(R.string._404_));
+                //  CustomToast.customToast(getActivity(), getString(R.string._404_));
             }
         } else {
+            if (isAdded())
             CustomToast.customToast(getActivity(), getString(R.string.no_response));
         }
     }
@@ -262,14 +265,17 @@ public class SearchProduct extends Fragment implements RequestNotifier {
             dialog.dismiss();
         }*/
         if (error instanceof SocketTimeoutException) {
+            if (isAdded())
             CustomToast.customToast(getActivity(), getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            //  CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            // CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
+            if (isAdded())
             CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
+            if (isAdded())
             CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         } else {
             Log.i("Check Class-", "SearchProduct Fragment");

@@ -141,6 +141,7 @@ public class SearchStore extends Fragment implements RequestNotifier {
                         Context.MODE_PRIVATE).getString("loginContact", ""));
             }
         } else {
+            if (isAdded())
             CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         }
     }
@@ -206,9 +207,10 @@ public class SearchStore extends Fragment implements RequestNotifier {
                     filterImg.setVisibility(View.GONE);
                 }
             } else {
-                CustomToast.customToast(getActivity(), getString(R.string._404_));
+                //CustomToast.customToast(getActivity(), getString(R.string._404_));
             }
         } else {
+            if (isAdded())
             CustomToast.customToast(getActivity(), getString(R.string.no_response));
         }
     }
@@ -219,14 +221,17 @@ public class SearchStore extends Fragment implements RequestNotifier {
             dialog.dismiss();
         }*/
         if (error instanceof SocketTimeoutException) {
+            if (isAdded())
             CustomToast.customToast(getActivity(), getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            // CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            //  CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
+            if (isAdded())
             CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
+            if (isAdded())
             CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         } else {
             Log.i("Check Class-", "SearchStore Fragment");
