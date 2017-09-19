@@ -118,6 +118,7 @@ public class AuctionVehiclesFragment extends Fragment implements SwipeRefreshLay
             ApiCall apiCall = new ApiCall(getActivity(), this);
             apiCall.getAuctionEvent(strAuctionId);
         } else {
+            if (isAdded())
             CustomToast.customToast(getActivity(), getString(R.string.no_internet));
             //errorMessage(getActivity(), getString(R.string.no_internet));
         }
@@ -129,7 +130,6 @@ public class AuctionVehiclesFragment extends Fragment implements SwipeRefreshLay
         if (response != null) {
             if (response.isSuccessful()) {
                 vehicles.clear();
-
                 GetAuctionEventResponse mAuctionEventResponse = (GetAuctionEventResponse) response.body();
                 if (!mAuctionEventResponse.getSuccess().getVehicles().isEmpty()) {
                     mNoData.setVisibility(View.GONE);
@@ -170,9 +170,10 @@ public class AuctionVehiclesFragment extends Fragment implements SwipeRefreshLay
                 }
             } else {
                 mSwipeRefreshLayout.setRefreshing(false);
-                CustomToast.customToast(getActivity(), getString(R.string._404));
+                // CustomToast.customToast(getActivity(), getString(R.string._404));
             }
         } else {
+            if (isAdded())
             CustomToast.customToast(getActivity(), getString(R.string.no_response));
         }
 
@@ -193,18 +194,21 @@ public class AuctionVehiclesFragment extends Fragment implements SwipeRefreshLay
     public void notifyError(Throwable error) {
         mSwipeRefreshLayout.setRefreshing(false);
         if (error instanceof SocketTimeoutException) {
+            if (isAdded())
             CustomToast.customToast(getActivity(), getString(R.string._404_));
            // showMessage(getActivity(), getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            // CustomToast.customToast(getActivity(), getString(R.string.no_response));
            // showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            //CustomToast.customToast(getActivity(), getString(R.string.no_response));
          //   showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
+            if (isAdded())
             CustomToast.customToast(getActivity(), getString(R.string.no_internet));
            // errorMessage(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
+            if (isAdded())
             CustomToast.customToast(getActivity(), getString(R.string.no_internet));
           //  errorMessage(getActivity(), getString(R.string.no_internet));
         } else {
@@ -217,30 +221,4 @@ public class AuctionVehiclesFragment extends Fragment implements SwipeRefreshLay
     public void notifyString(String str) {
 
     }
-
-  /*  public void showMessage(Activity activity, String message) {
-        Snackbar snackbar = Snackbar.make(activity.findViewById(android.R.id.content),
-                message, Snackbar.LENGTH_LONG);
-        TextView textView = (TextView) snackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
-        textView.setTextColor(Color.RED);
-        snackbar.show();
-    }
-
-    public void errorMessage(Activity activity, String message) {
-        Snackbar snackbar = Snackbar.make(activity.findViewById(android.R.id.content),
-                message, Snackbar.LENGTH_INDEFINITE)
-                .setAction("Retry", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        getAuctionVehicle(strAuctionId);
-                    }
-                });
-        // Changing message text color
-        snackbar.setActionTextColor(Color.BLUE);
-        // Changing action button text color
-        View sbView = snackbar.getView();
-        TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
-        textView.setTextColor(Color.WHITE);
-        snackbar.show();
-    }*/
 }

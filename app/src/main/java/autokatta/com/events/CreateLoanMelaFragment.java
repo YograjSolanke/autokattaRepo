@@ -232,9 +232,10 @@ public class CreateLoanMelaFragment extends Fragment implements RequestNotifier,
 
                 }
             } else {
-                CustomToast.customToast(getActivity(), getString(R.string._404));
+                //  CustomToast.customToast(getActivity(), getString(R.string._404));
             }
         } else {
+            if (isAdded())
             CustomToast.customToast(getActivity(), getString(R.string.no_response));
         }
 
@@ -243,11 +244,12 @@ public class CreateLoanMelaFragment extends Fragment implements RequestNotifier,
     @Override
     public void notifyError(Throwable error) {
         if (error instanceof SocketTimeoutException) {
-            CustomToast.customToast(getActivity(), getString(R.string._404));
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof NullPointerException) {
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            //CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            //CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else {
             Log.i("Check Class", "Create Loan Mela");
             error.printStackTrace();

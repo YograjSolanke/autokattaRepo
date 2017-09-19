@@ -519,48 +519,6 @@ public class CreateAuctionFragment extends Fragment
 
                 }
 
-                //Color Response
-
-                /*else if (response.body() instanceof AllStatesResponse) {
-                    Log.e("GetAllStates", "->");
-                    final List<String> mStateList = new ArrayList<>();
-                    *//*mStateList.clear();
-
-                    AllStatesResponse getStateResponse = (AllStatesResponse) response.body();
-                    for (AllStatesResponse.Success success : getStateResponse.getSuccess()) {
-                        success.setCountryId(success.getCountryId());
-                        success.setStateId(success.getStateId());
-                        success.setStateName(success.getStateName());
-
-                        success.setCountryId("1");
-                        success.setStateId("1");
-                        success.setStateName("Maharashtra");
-                        mStateList.add(success.getStateName());
-                    }*//*
-                    mStateList.add("Maharashtra");
-                    mStateList.add("GOA");
-                    mStateList.add("Andhra Pradesh");
-                    mStateList.add("Tamilnadu");
-                    Log.i("ListState", "->" + mStateList);
-
-                    stockLocationSpinner.setItems(mStateList, "-Select State-", CreateAuctionFragment.this);
-                    *//*multiSpinnercolor.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                        @Override
-                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                            if (position != 0) {
-                                String ColorName = multiSpinnercolor.getSelectedItem().toString();
-
-                                System.out.println("Color name::" + ColorName);
-                            }
-                        }
-
-                        @Override
-                        public void onNothingSelected(AdapterView<?> parent) {
-
-                        }
-                    });*//*
-                }*/
-
                 else if (response.body() instanceof GetStatesResponse) {
                     stateLst.clear();
                     GetStatesResponse mGetState = (GetStatesResponse) response.body();
@@ -578,9 +536,10 @@ public class CreateAuctionFragment extends Fragment
                 }
 
             } else {
-                CustomToast.customToast(getActivity(), getString(R.string._404));
+                //  CustomToast.customToast(getActivity(), getString(R.string._404));
             }
         } else {
+            if (isAdded())
             CustomToast.customToast(getActivity(), getString(R.string.no_response));
         }
 
@@ -590,11 +549,12 @@ public class CreateAuctionFragment extends Fragment
     @Override
     public void notifyError(Throwable error) {
         if (error instanceof SocketTimeoutException) {
-            CustomToast.customToast(getActivity(), getString(R.string._404));
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof NullPointerException) {
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            //   CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            // CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else {
             Log.i("Check class", "Create Auction Fragment");
             error.printStackTrace();

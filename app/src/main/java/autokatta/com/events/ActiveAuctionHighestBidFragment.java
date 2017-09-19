@@ -117,6 +117,7 @@ public class ActiveAuctionHighestBidFragment extends Fragment implements Request
             mApiCall.ActiveAuctionHighBid(myContact, strAuctionId);
 
         } else {
+            if (isAdded())
             CustomToast.customToast(getActivity(),getString(R.string.no_internet));
         }
     }
@@ -347,10 +348,13 @@ public class ActiveAuctionHighestBidFragment extends Fragment implements Request
                     mNoData.setVisibility(View.VISIBLE);
                     //mSwipeRefreshLayout.setRefreshing(false);
                 }
-            } else
-                CustomToast.customToast(getActivity(), getString(R.string.no_response));
-        } else
+            } else {
+                // CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            }
+        } else {
+            if (isAdded())
             CustomToast.customToast(getActivity(), getString(R.string.no_internet));
+        }
 
     }
 
@@ -383,14 +387,17 @@ public class ActiveAuctionHighestBidFragment extends Fragment implements Request
     @Override
     public void notifyError(Throwable error) {
         if (error instanceof SocketTimeoutException) {
-            CustomToast.customToast(getActivity(), getString(R.string._404));
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof NullPointerException) {
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            //CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            //CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
+            if (isAdded())
             CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
+            if (isAdded())
             CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         } else {
             Log.i("Check class", "Active Auction HighesBid Fragment");
@@ -402,30 +409,4 @@ public class ActiveAuctionHighestBidFragment extends Fragment implements Request
     public void notifyString(String str) {
 
     }
-
-    /*public void showMessage(Activity activity, String message) {
-        Snackbar snackbar = Snackbar.make(activity.findViewById(android.R.id.content),
-                message, Snackbar.LENGTH_LONG);
-        TextView textView = (TextView) snackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
-        textView.setTextColor(Color.RED);
-        snackbar.show();
-    }
-
-    public void errorMessage(Activity activity, String message) {
-        Snackbar snackbar = Snackbar.make(activity.findViewById(android.R.id.content),
-                message, Snackbar.LENGTH_INDEFINITE)
-                .setAction("Retry", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        getHighVehicle(myContact, mAuctionId);
-                    }
-                });
-        // Changing message text color
-        snackbar.setActionTextColor(Color.BLUE);
-        // Changing action button text color
-        View sbView = snackbar.getView();
-        TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
-        textView.setTextColor(Color.WHITE);
-        snackbar.show();
-    }*/
 }

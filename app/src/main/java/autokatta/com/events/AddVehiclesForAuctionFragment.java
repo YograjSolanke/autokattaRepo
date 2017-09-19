@@ -788,8 +788,10 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
                             UserId = success.getUserId();
                         }
 
-                    } else
+                    } else {
+                        if (isAdded())
                         CustomToast.customToast(getActivity(), getString(R.string.no_response));
+                    }
                 }
 
 
@@ -839,6 +841,7 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
                         byadmin_listview.setAdapter(adminadapter);
                         btnbyadmin.setText("By admin(" + String.valueOf(adminData.size()) + ")");
                     } else {
+                        if (isAdded())
                         CustomToast.customToast(getActivity(), getString(R.string.no_response));
 
                     }
@@ -889,6 +892,7 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
                         btnbyreauction.setText("Reauction(" + String.valueOf(reaucionData.size()) + ")");
 
                     } else {
+                        if (isAdded())
                         CustomToast.customToast(getActivity(), getString(R.string.no_response));
                     }
                 }
@@ -908,19 +912,22 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
                     }
                 }
 
-            } else
+            } else {
+                if (isAdded())
                 CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            }
         }
     }
 
     @Override
     public void notifyError(Throwable error) {
         if (error instanceof SocketTimeoutException) {
-            CustomToast.customToast(getActivity(), getString(R.string._404));
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof NullPointerException) {
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            //CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            // CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else {
             Log.i("Check Class-", "Add vehicles for Auction Fragment");
             error.printStackTrace();
@@ -949,8 +956,10 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
 
                 sqlite_obj.close();*/
             }
-        } else
+        } else {
+            if (isAdded())
             CustomToast.customToast(getActivity(), getString(R.string.no_response));
+        }
     }
 
     public void showIntro(View view, String id, String text, Focus focusType) {

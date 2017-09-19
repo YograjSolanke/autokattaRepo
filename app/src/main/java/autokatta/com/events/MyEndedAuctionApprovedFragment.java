@@ -109,6 +109,7 @@ public class MyEndedAuctionApprovedFragment extends Fragment implements RequestN
             ApiCall mApiCall = new ApiCall(getActivity(), this);
             mApiCall.EndedAuctionApprovedVehi(myContact, strAuctionId);
         } else {
+            if (isAdded())
             CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         }
     }
@@ -436,12 +437,14 @@ public class MyEndedAuctionApprovedFragment extends Fragment implements RequestN
                     mNoData.setVisibility(View.VISIBLE);
                     //mSwipeRefreshLayout.setRefreshing(false);
                 }
-            } else
+            } else {
+                if (isAdded())
                 CustomToast.customToast(getActivity(), getString(R.string.no_response));
-        } else
-            CustomToast.customToast(
-
-                    getActivity(), getString(R.string.no_internet));
+            }
+        } else {
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string.no_internet));
+        }
 
 
     }
@@ -449,14 +452,17 @@ public class MyEndedAuctionApprovedFragment extends Fragment implements RequestN
     @Override
     public void notifyError(Throwable error) {
         if (error instanceof SocketTimeoutException) {
-            CustomToast.customToast(getActivity(), getString(R.string._404_));
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof NullPointerException) {
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            //CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            // CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
+            if (isAdded())
             CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
+            if (isAdded())
             CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         } else {
             Log.i("Check class", "MyEnded Auction Approved Fragment");
@@ -469,17 +475,24 @@ public class MyEndedAuctionApprovedFragment extends Fragment implements RequestN
         if (str != null) {
             if (str.equals("success")) {
                 if (keyword.equals("blacklist")) {
+                    if (isAdded())
                     CustomToast.customToast(getActivity(), "Add To Blacklist");
                 } else {
+                    if (isAdded())
                     CustomToast.customToast(getActivity(), "Remove from blacklist");
                 }
-            } else if (str.equals("success_reauction"))
+            } else if (str.equals("success_reauction")) {
+                if (isAdded())
                 CustomToast.customToast(getActivity(), "Vehicle added to reauction");
-            else
+            } else {
+                if (isAdded())
                 CustomToast.customToast(getActivity(), "Problem while adding vehicle to reauction Please try Later");
+            }
 
-        } else
+        } else {
+            if (isAdded())
             CustomToast.customToast(getActivity(), getString(R.string.no_response));
+        }
     }
 
     private void call(String rContact) {
@@ -499,6 +512,7 @@ public class MyEndedAuctionApprovedFragment extends Fragment implements RequestN
             mApiCall.addToReauction(vehicleid, mAuctionId);
             //mApiCall.addToReauction(vehicleid, "379");
         } else {
+            if (isAdded())
             CustomToast.customToast(getActivity(), getString(R.string.no_internet));
             //   errorMessage(getActivity(), getString(R.string.no_internet));
         }
@@ -510,6 +524,7 @@ public class MyEndedAuctionApprovedFragment extends Fragment implements RequestN
             mApiCall.addRemoveFromBlacklist(myContact/*, mAuctionId*/, rContact, keyword, "Auction");
             //mApiCall.Add_RemoveBlacklistContact(myContact, "379", rContact, keyword);
         } else {
+            if (isAdded())
             CustomToast.customToast(getActivity(), getString(R.string.no_internet));
             //   errorMessage(getActivity(), getString(R.string.no_internet));
         }
@@ -529,30 +544,4 @@ public class MyEndedAuctionApprovedFragment extends Fragment implements RequestN
 
         }
     }
-/*
-    public void showMessage(Activity activity, String message) {
-        Snackbar snackbar = Snackbar.make(activity.findViewById(android.R.id.content),
-                message, Snackbar.LENGTH_LONG);
-        TextView textView = (TextView) snackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
-        textView.setTextColor(Color.RED);
-        snackbar.show();
-    }
-
-    public void errorMessage(Activity activity, String message) {
-        Snackbar snackbar = Snackbar.make(activity.findViewById(android.R.id.content),
-                message, Snackbar.LENGTH_INDEFINITE)
-                .setAction("Retry", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        getEndedApprovedVehicle(myContact, mAuctionId);
-                    }
-                });
-        // Changing message text color
-        snackbar.setActionTextColor(Color.BLUE);
-        // Changing action button text color
-        View sbView = snackbar.getView();
-        TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
-        textView.setTextColor(Color.WHITE);
-        snackbar.show();
-    }*/
 }

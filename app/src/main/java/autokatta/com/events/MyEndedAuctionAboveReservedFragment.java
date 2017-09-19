@@ -110,6 +110,7 @@ public class MyEndedAuctionAboveReservedFragment extends Fragment implements Req
             ApiCall mApiCall = new ApiCall(getActivity(), this);
             mApiCall.ActiveAuctionAboveReservedPrice(myContact, strAuctionId);
         } else {
+            if (isAdded())
             CustomToast.customToast(getActivity(), getActivity().getString(R.string.no_internet));
         }
     }
@@ -517,23 +518,30 @@ public class MyEndedAuctionAboveReservedFragment extends Fragment implements Req
                     }
                 }
 
-            } else
+            } else {
+                if (isAdded())
                 CustomToast.customToast(getActivity(), getString(R.string.no_response));
-        } else
+            }
+        } else {
+            if (isAdded())
             CustomToast.customToast(getActivity(), getString(R.string.no_internet));
+        }
     }
 
     @Override
     public void notifyError(Throwable error) {
         if (error instanceof SocketTimeoutException) {
-            CustomToast.customToast(getActivity(), getString(R.string._404_));
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof NullPointerException) {
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            //   CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            //  CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
+            if (isAdded())
             CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
+            if (isAdded())
             CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         } else {
             Log.i("Check class", "Ended Auction Above Resreved Fragment");
@@ -548,19 +556,26 @@ public class MyEndedAuctionAboveReservedFragment extends Fragment implements Req
             //Blacklist
             if (str.equals("success")) {
                 if (keyword.equals("blacklist")) {
+                    if (isAdded())
                     CustomToast.customToast(getActivity(), "Add To Blacklist");
                 } else {
+                    if (isAdded())
                     CustomToast.customToast(getActivity(), "Remove from blacklist");
                 }
             }
 
             //Reauction
-            else if (str.equals("success_reauction"))
+            else if (str.equals("success_reauction")) {
+                if (isAdded())
                 CustomToast.customToast(getActivity(), "Vehicle added to reauction");
-            else
+            } else {
+                if (isAdded())
                 CustomToast.customToast(getActivity(), "Problem while adding vehicle to reauction");
-        } else
+            }
+        } else {
+            if (isAdded())
             CustomToast.customToast(getActivity(), getString(R.string.no_response));
+        }
     }
 
 
@@ -569,6 +584,7 @@ public class MyEndedAuctionAboveReservedFragment extends Fragment implements Req
         if (mTestConnection.isConnectedToInternet()) {
             mApiCall.ApproveVehicle(mAuctionId, keyword1, vehicleid, bidderContact, bidPrice);
         } else {
+            if (isAdded())
             CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         }
     }
@@ -578,6 +594,7 @@ public class MyEndedAuctionAboveReservedFragment extends Fragment implements Req
         if (mTestConnection.isConnectedToInternet()) {
             mApiCall.addToReauction(vehicleid, mAuctionId);
         } else {
+            if (isAdded())
             CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         }
     }
@@ -587,6 +604,7 @@ public class MyEndedAuctionAboveReservedFragment extends Fragment implements Req
         if (mTestConnection.isConnectedToInternet()) {
             mApiCall.addRemoveFromBlacklist(myContact/*, mAuctionId*/, rContact, keyword, "Auction");
         } else {
+            if (isAdded())
             CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         }
     }
@@ -616,31 +634,5 @@ public class MyEndedAuctionAboveReservedFragment extends Fragment implements Req
 
         }
     }
-
-   /* public void showMessage(Activity activity, String message) {
-        Snackbar snackbar = Snackbar.make(activity.findViewById(android.R.id.content),
-                message, Snackbar.LENGTH_LONG);
-        TextView textView = (TextView) snackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
-        textView.setTextColor(Color.RED);
-        snackbar.show();
-    }
-
-    public void errorMessage(Activity activity, String message) {
-        Snackbar snackbar = Snackbar.make(activity.findViewById(android.R.id.content),
-                message, Snackbar.LENGTH_INDEFINITE)
-                .setAction("Retry", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        getEndedAboveReservedVehicle(myContact, mAuctionId);
-                    }
-                });
-        // Changing message text color
-        snackbar.setActionTextColor(Color.BLUE);
-        // Changing action button text color
-        View sbView = snackbar.getView();
-        TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
-        textView.setTextColor(Color.WHITE);
-        snackbar.show();
-    }*/
 
 }
