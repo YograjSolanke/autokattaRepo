@@ -82,6 +82,7 @@ public class GetGroupQuotationAdapter extends RecyclerView.Adapter<RecyclerView.
                 bundle.putInt("bundle_GroupId", mGroupId);
                 bundle.putInt("bundle_VehicleId", groupQuotationList.get(holder.getAdapterPosition()).getVehicleId());
                 bundle.putString("bundle_Type", groupQuotationList.get(holder.getAdapterPosition()).getType());
+                bundle.putString("bundle_Contact", groupQuotationList.get(holder.getAdapterPosition()).getContactNo());
 
                 Intent intent = new Intent(mActivity, MyVehicleQuotationListActivity.class);
                 intent.putExtras(bundle);

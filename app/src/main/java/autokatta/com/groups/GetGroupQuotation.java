@@ -195,6 +195,7 @@ public class GetGroupQuotation extends AppCompatActivity implements SwipeRefresh
                         success.setDeadLineDate(success.getDeadLineDate());
                         success.setGroupIDs(success.getGroupIDs());
                         success.setType(success.getType());
+                        success.setMyContact(success.getMyContact());
 
                         groupQuotationList.add(success);
 
