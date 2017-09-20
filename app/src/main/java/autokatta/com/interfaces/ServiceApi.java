@@ -1306,4 +1306,10 @@ public interface ServiceApi {
     Call<MyVehicleQuotationListResponse> _autokattaGetVehicleQuotationList(@Query("vehicleid") int vehicleid,
                                                                            @Query("groupid") int groupid,
                                                                            @Query("type") String type);
+
+    //Add Quotation
+    @POST("AddQuotation")
+    Call<String> _autokattaAddQuotation(@Query("vehicleid") int vehicleId, @Query("groupid") int groupId,
+                                        @Query("custcontact") String custContact, @Query("price") double price,
+                                        @Query("type") String type);
 }
