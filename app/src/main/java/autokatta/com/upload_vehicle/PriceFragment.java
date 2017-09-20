@@ -68,7 +68,7 @@ public class PriceFragment extends Fragment implements RequestNotifier, View.OnC
             strFitnessDate = "", strPermitDate = "", strChasis = "", strEngine = "", strDrive = "", strTrans = "", strBustype = "", strAir = "",
             strApp = "", strImplementStr = "", strSeatcap = "", strTyreContext = "", strFuel = "", strHp = "", strJib = "", strBoon = "",
             strImages = "", strColor = "", strBodytype = "", strImplement = "", strMfgYr = "", strBrandName = "",
-            strModelName = "", strVersionName = "";
+            strModelName = "", strVersionName = "",strStocktype;
     double strKms;
     int strOwner, strCategoryId, vehicle_id, strSubcategoryId, strBrandId, strModelId, strVersionId;
 
@@ -166,6 +166,7 @@ public class PriceFragment extends Fragment implements RequestNotifier, View.OnC
         strVersionName = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("upload_versionName", "");
         strVersionId = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getInt("upload_versionId", 0);
         strMfgYr = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("upload_mfgYear", "20");
+        strStocktype = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("upload_auction_categoryName", "");
 
         System.out.println("incoming images=" + strImages);
         Log.i("incoming images=", "->" + strImages);
@@ -248,7 +249,7 @@ public class PriceFragment extends Fragment implements RequestNotifier, View.OnC
                 strApp, strTyreContext, strBustype, strAir,
                 strInvoice, strImplement, strGroupprivacy, strHp, strJib,
                 strBoon, strBrakename, strPumpname, strInsuDate, strEmission, strExhangestatus, strStearing,
-                strCategoryId, strSubcategoryId, strBrandId, strModelId, strVersionId);
+                strCategoryId, strSubcategoryId, strBrandId, strModelId, strVersionId,strStocktype);
     }
 
     @Override

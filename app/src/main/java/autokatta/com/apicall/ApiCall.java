@@ -8054,7 +8054,7 @@ get ExchangeMela Analytics Data
                                   String strHp, String strJib, String strBoon, String strBrakename, String strPumpname,
                                   String strInsuDate, String strEmission, String strExhangestatus,
                                   String strStearing, int strCategoryId, int strSubcategoryId, int strBrandId,
-                                  int strModelId, int strVersionId) {
+                                  int strModelId, int strVersionId,String Stocktype) {
 
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
@@ -8078,7 +8078,7 @@ get ExchangeMela Analytics Data
                         strHp, strJib, strBoon, strBrakename, strPumpname,
                         strInsuDate, strEmission, strExhangestatus,
                         strStearing, strCategoryId, strSubcategoryId, strBrandId,
-                        strModelId, strVersionId);
+                        strModelId, strVersionId,Stocktype);
 
                 Call<UploadUsedVehicleResponse> mServiceMelaResponse = serviceApi._autokattaUploadUsedVehicle(usedVehicleRequest);
                 mServiceMelaResponse.enqueue(new Callback<UploadUsedVehicleResponse>() {

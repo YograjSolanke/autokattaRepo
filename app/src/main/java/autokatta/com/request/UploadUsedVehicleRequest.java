@@ -775,7 +775,7 @@ public class UploadUsedVehicleRequest {
                                     String invoice, String implementss, String privacy, String hp_capacity, String JIB,
                                     String Boon, String brakes, String pump, String insuranceDate, String emissionVersion,
                                     String exchangeStatus, String steering,
-                                    int category_id, int sub_cat_id, int BrandID, int ModelID, int VersionId) {
+                                    int category_id, int sub_cat_id, int BrandID, int ModelID, int VersionId,String strStocktype) {
         this.title = title;
         this.contact = myContact;
         this.category = category;
@@ -840,5 +840,6 @@ public class UploadUsedVehicleRequest {
         this.brandID = BrandID;
         this.modelID = ModelID;
         this.versionId = VersionId;
+        this.StockType = strStocktype;
     }
 }

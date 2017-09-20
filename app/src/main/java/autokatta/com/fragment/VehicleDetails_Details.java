@@ -36,7 +36,7 @@ public class VehicleDetails_Details extends Fragment implements RequestNotifier 
     View mVehicleDetails;
     TextView mTitleStr, mPriceStr, mViewsStr, mCallStr, mEnquiryStr;
     String contact,mycontact;
-    TextView mAddressDetails, mCategoryDetails, mSubCatDetails, mBrandDetails, mModelDetails, mVersionDetails, mYearDetails;
+    TextView mAddressDetails, mCategoryDetails, mSubCatDetails, mBrandDetails, mModelDetails, mVersionDetails, mYearDetails,mStockType;
     ConnectionDetector mTestConnection;
 
     @Nullable
@@ -60,6 +60,7 @@ mycontact=getActivity().getSharedPreferences(getString(R.string.my_preference), 
         mModelDetails = (TextView) mVehicleDetails.findViewById(R.id.modeldetails);
         mVersionDetails = (TextView) mVehicleDetails.findViewById(R.id.versiondetails);
         mYearDetails = (TextView) mVehicleDetails.findViewById(R.id.yeardetails);
+        mStockType = (TextView) mVehicleDetails.findViewById(R.id.stocktype);
 
 
         getActivity().runOnUiThread(new Runnable() {
@@ -172,6 +173,8 @@ mycontact=getActivity().getSharedPreferences(getString(R.string.my_preference), 
                         datum.setUsername(datum.getUsername());
                         datum.setStoreId(datum.getStoreId());
                         datum.setStatus(datum.getStatus());
+                        datum.setStockType(datum.getStockType());
+                        mStockType.setText(datum.getStockType());
 
                     }
                 } else if (response.body() instanceof EnquiryCountResponse) {
