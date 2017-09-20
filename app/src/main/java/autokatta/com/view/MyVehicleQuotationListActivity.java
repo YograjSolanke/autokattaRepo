@@ -2,6 +2,7 @@ package autokatta.com.view;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,7 +16,6 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.github.clans.fab.FloatingActionButton;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -141,6 +141,8 @@ public class MyVehicleQuotationListActivity extends AppCompatActivity implements
                             if (bundle_Contact.equals(myContact)) {
                                 fab.setVisibility(View.GONE);
                                 getQuotationList(bundle_GroupId, bundle_VehicleId, bundle_Type);
+                            } else {
+                                mSwipeRefreshLayout.setRefreshing(false);
                             }
                         }
 
