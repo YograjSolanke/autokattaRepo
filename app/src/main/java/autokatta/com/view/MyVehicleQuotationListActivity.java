@@ -15,9 +15,15 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.github.clans.fab.FloatingActionButton;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 
 import autokatta.com.R;
 import autokatta.com.adapter.QuotationListAdapter;
@@ -43,7 +49,8 @@ public class MyVehicleQuotationListActivity extends AppCompatActivity implements
     ImageView Image;
     int bundle_GroupId;
     int bundle_VehicleId;
-    String bundle_Type;
+    FloatingActionButton fab;
+    String bundle_Type, bundle_Contact;
     String image;
     List<MyVehicleQuotationListResponse.Success> quotationList = new ArrayList<>();
     LinearLayout linearButton;
@@ -59,6 +66,7 @@ public class MyVehicleQuotationListActivity extends AppCompatActivity implements
 
         myContact = getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", null);
         quotationRecycler = (RecyclerView) findViewById(R.id.quotationList);
+        fab = (FloatingActionButton) findViewById(R.id.fab);
         mNoData = (TextView) findViewById(R.id.no_category);
         mNoData.setVisibility(View.GONE);
         quotationRecycler.setHasFixedSize(true);
@@ -107,6 +115,7 @@ public class MyVehicleQuotationListActivity extends AppCompatActivity implements
                 bundle_GroupId = i.getIntExtra("bundle_GroupId", 0);
                 bundle_VehicleId = i.getIntExtra("bundle_VehicleId", 0);
                 bundle_Type = i.getStringExtra("bundle_Type");
+                bundle_Contact = i.getStringExtra("bundle_Contact");
                 image = i.getStringExtra("Image");
 
 
@@ -128,7 +137,11 @@ public class MyVehicleQuotationListActivity extends AppCompatActivity implements
                         @Override
                         public void run() {
                             mSwipeRefreshLayout.setRefreshing(true);
-                            getQuotationList(bundle_GroupId, bundle_VehicleId, bundle_Type);
+
+                            if (bundle_Contact.equals(myContact)) {
+                                fab.setVisibility(View.GONE);
+                                getQuotationList(bundle_GroupId, bundle_VehicleId, bundle_Type);
+                            }
                         }
 
 
@@ -170,7 +183,30 @@ public class MyVehicleQuotationListActivity extends AppCompatActivity implements
                         success.setCustContact(success.getCustContact());
                         success.setCustomerName(success.getCustomerName());
                         success.setReservePrice(success.getReservePrice());
-                        success.setCreatedDate(success.getCreatedDate());
+
+
+                        try {
+                            TimeZone utc = TimeZone.getTimeZone("etc/UTC");
+                            //format of date coming from services
+                            DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                        /*DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",
+                                Locale.getDefault());*/
+                            inputFormat.setTimeZone(utc);
+
+                            //format of date which we want to show
+                            DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
+                        /*DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy hh:mm aa",
+                                Locale.getDefault());*/
+                            outputFormat.setTimeZone(utc);
+
+                            Date date = inputFormat.parse(success.getCreatedDate());
+                            //System.out.println("jjj"+date);
+                            String output = outputFormat.format(date);
+                            //System.out.println(mainList.get(i).getDate()+" jjj " + output);
+                            success.setCreatedDate(output);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
 
                         quotationList.add(success);
 
