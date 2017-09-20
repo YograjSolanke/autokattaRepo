@@ -61,6 +61,7 @@ import autokatta.com.response.MyUploadedVehiclesResponse;
 import autokatta.com.response.ProfileGroupResponse;
 import autokatta.com.view.AddManualEnquiry;
 import autokatta.com.view.MyBroadcastGroupsActivity;
+import autokatta.com.view.MyVehicleQuotationListActivity;
 import autokatta.com.view.VehicleDetails;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import okhttp3.OkHttpClient;
@@ -80,12 +81,11 @@ import static android.content.Context.MODE_PRIVATE;
 public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVehicleAdapter.VehicleHolder> implements RequestNotifier {
     Activity activity;
     List<MyUploadedVehiclesResponse.Success> mMainList;
-    //  private ConnectionDetector connectionDetector;
     ApiCall apiCall;
     private String myContact;
     private int groupid;
     private String groupname;
-    //SubType
+
     private List<String> mGrouplist = new ArrayList<>();
     private List<String> groupIdList = new ArrayList<>();
     private List<String> groupTitleList = new ArrayList<>();
@@ -151,10 +151,6 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
             DateFormat newDateFormat = new SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault());
             holder.edituploadedon.setText(newDateFormat.format(inputDate.parse(mMainList.get(position).getDate())));
 
-           /* DateFormat date = new SimpleDateFormat(" MMM dd ");
-            DateFormat time = new SimpleDateFormat(" hh:mm a");
-            holder.edituploadedon.setText(date.format(mMainList.get(position).getDate()) + time.format(mMainList.get(position).getDate()));
-*/
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -217,7 +213,7 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
             public void onClick(View view) {
                 ActivityOptions option = ActivityOptions.makeCustomAnimation(activity, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
                 Bundle b = new Bundle();
-                //    b.putString("sender",storeContact);
+
                 b.putString("sender", "");
                 b.putString("sendername", "");
                 b.putString("keyword", "Used Vehicle");
@@ -237,14 +233,7 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
             }
         });
 
-   /*     holder.mEnquiry.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(activity, ManualEnquiry.class);
-                activity.startActivity(intent);
-            }
-        });
-*/
+
         holder.delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -542,6 +531,120 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
                 });
             }
         });
+
+        /* To View quote for vehicle */
+        holder.mViewQuote.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Dialog openDialog = new Dialog(activity);
+                openDialog.setContentView(R.layout.view_quote_group_selection);
+                openDialog.setTitle("view quotation");
+                final Spinner mGroupsSpinner = (Spinner) openDialog.findViewById(R.id.spinnergroup);
+
+                Button viewQuotation = (Button) openDialog.findViewById(R.id.btnSend);
+                /*Spinner to get groups*/
+                try {
+                    if (mConnectionDetector.isConnectedToInternet()) {
+                        Retrofit retrofit = new Retrofit.Builder()
+                                .baseUrl(activity.getString(R.string.base_url))
+                                .addConverterFactory(GsonConverterFactory.create())
+                                .client(initLog().build())
+                                .build();
+
+                        ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                        Call<ProfileGroupResponse> add = serviceApi._autokattaProfileGroup(activity.getSharedPreferences(activity.getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", null));
+                        add.enqueue(new Callback<ProfileGroupResponse>() {
+                            @Override
+                            public void onResponse(Call<ProfileGroupResponse> call, Response<ProfileGroupResponse> response) {
+                                if (response.isSuccessful()) {
+                                    mGrouplist.clear();
+                                    mGrouplist1.clear();
+                                    parsedData.clear();
+                                    mGrouplist.add("Select Group");
+                                    ProfileGroupResponse mProfilegroup = (ProfileGroupResponse) response.body();
+                                    for (ProfileGroupResponse.MyGroup groupresponse : mProfilegroup.getSuccess().getMyGroups()) {
+                                        groupresponse.setId(groupresponse.getId());
+                                        groupresponse.setTitle(groupresponse.getTitle());
+                                        mGrouplist.add(groupresponse.getTitle());
+                                        mGrouplist1.put(groupresponse.getTitle(), groupresponse.getId());
+                                    }
+
+
+                                    for (ProfileGroupResponse.JoinedGroup groupresponse : mProfilegroup.getSuccess().getJoinedGroups()) {
+                                        groupresponse.setId(groupresponse.getId());
+                                        groupresponse.setTitle(groupresponse.getTitle());
+                                        mGrouplist.add(groupresponse.getTitle());
+                                        mGrouplist1.put(groupresponse.getTitle(), groupresponse.getId());
+                                    }
+
+                                    parsedData.addAll(mGrouplist);
+                                    if (activity != null) {
+                                        ArrayAdapter<String> adapter = new ArrayAdapter<>(activity, android.R.layout.simple_spinner_item, parsedData);
+                                        //  adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                                        mGroupsSpinner.setAdapter(adapter);
+                                    }
+                                    mGroupsSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                        @Override
+                                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                                            if (position != 0) {
+                                                groupid = mGrouplist1.get(parsedData.get(position));
+                                                groupname = parsedData.get(position);
+                                                System.out.println("group id::" + groupid);
+                                                System.out.println("group name::" + groupname);
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onNothingSelected(AdapterView<?> adapterView) {
+
+                                        }
+                                    });
+
+                                } else {
+                                    CustomToast.customToast(activity, activity.getString(R.string._404));
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<ProfileGroupResponse> call, Throwable t) {
+
+                            }
+
+                        });
+                    } else
+                        CustomToast.customToast(activity.getApplicationContext(), activity.getString(R.string.no_internet));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                viewQuotation.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        // TODO Auto-generated method stub
+                        Log.i("groupId", String.valueOf(groupid));
+                        if (groupid == 0)
+                            CustomToast.customToast(activity, "please select Group to view quotation");
+                        else {
+                            Bundle bundle = new Bundle();
+                            bundle.putString("Title", holder.edittitles.getText().toString());
+                            bundle.putString("Category", holder.editcategorys.getText().toString());
+                            bundle.putString("Brand", holder.editbrands.getText().toString());
+                            bundle.putString("Model", holder.editmodels.getText().toString());
+                            bundle.putString("Price", holder.editprices.getText().toString());
+                            bundle.putString("Image", vimages.get(0));
+                            bundle.putInt("bundle_GroupId", groupid);
+                            bundle.putInt("bundle_VehicleId", mMainList.get(holder.getAdapterPosition()).getVehicleId());
+                            bundle.putString("bundle_Type", "UsedVehicle");
+
+                            Intent intent = new Intent(activity, MyVehicleQuotationListActivity.class);
+                            intent.putExtras(bundle);
+                            activity.startActivity(intent);
+                            openDialog.dismiss();
+                        }
+                    }
+                });
+                openDialog.show();
+            }
+        });
     }
 
     /*
@@ -630,7 +733,7 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
     }
 
     /*
-    Alert Dialog
+    Alert Dialog For Groups
      */
     private void alertBoxGroups(final String[] groupTitleArray, final int position) {
         final List<String> mSelectedItems = new ArrayList<>();
@@ -707,8 +810,6 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
                 .show();
 
     }
-
-    /*
 
     /*
     Get Store...
@@ -791,6 +892,9 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
         }
     }
 
+    /*
+    Alert Dialog For Stores
+     */
     private void alertBoxStore(final String[] storeTitleArray, final int position) {
         final List<String> mSelectedItems = new ArrayList<>();
         mSelectedItems.clear();
@@ -926,7 +1030,8 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
         ImageView vehicleimage;
         TextView edittitles, editprices, editcategorys, editbrands, editmodels, editleads, edituploadedon, editmfgyr,
                 editkms, editrto, editlocation, editregNo;
-        Button vehidetails, btnnotify, delete, mEnquiry, mQuotation, mUploadGroup, mUploadStore, mTransferStock;
+        Button vehidetails, btnnotify, delete, mEnquiry, mQuotation, mUploadGroup, mUploadStore, mTransferStock,
+                mViewQuote;
         CardView mcardView;
         RelativeLayout mBroadcast;
         LinearLayout mLinear;
@@ -958,6 +1063,7 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
             mLinear = (LinearLayout) itemView.findViewById(R.id.linearbtns);
             mQuotation = (Button) itemView.findViewById(R.id.quotation);
             mTransferStock = (Button) itemView.findViewById(R.id.transfer_stock);
+            mViewQuote = (Button) itemView.findViewById(R.id.view_quotation);
         }
     }
 
