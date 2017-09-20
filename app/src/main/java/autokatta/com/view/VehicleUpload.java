@@ -67,7 +67,7 @@ public class VehicleUpload extends AppCompatActivity implements RequestNotifier 
 
     @Override
     public void onBackPressed() {
-        //super.onBackPressed();
+        super.onBackPressed();
         int fragments = getSupportFragmentManager().getBackStackEntryCount();
         if (fragments == 1) {
             finish();

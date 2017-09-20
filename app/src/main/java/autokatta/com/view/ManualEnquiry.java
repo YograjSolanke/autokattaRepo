@@ -36,6 +36,7 @@ import autokatta.com.R;
 import autokatta.com.adapter.ManualEnquiryAdapter;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.app_info.ManualAppIntro;
+import autokatta.com.enquiries.TodaysFollowUp;
 import autokatta.com.interfaces.ItemClickListener;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
@@ -153,12 +154,15 @@ public class ManualEnquiry extends AppCompatActivity implements SwipeRefreshLayo
                 } else {
                     onBackPressed();
                 }
-                break;
+                return true;
 
             case R.id.add_manual:
                 ActivityOptions options = ActivityOptions.makeCustomAnimation(ManualEnquiry.this, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
                 startActivity(new Intent(getApplicationContext(), AddManualEnquiry.class), options.toBundle());
-                //finish();
+                return true;
+
+            case R.id.today_follow_up:
+                startActivity(new Intent(getApplicationContext(), TodaysFollowUp.class));
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -200,7 +204,7 @@ public class ManualEnquiry extends AppCompatActivity implements SwipeRefreshLayo
                             request.setCustomerName("name");
                             request.setCustomerContact("contact");
                             //request.setCreatedDate(success.getCreatedDate());
-                          //  request.setFollowupDate(success.getNextFollowupDate());
+                            //  request.setFollowupDate(success.getNextFollowupDate());
                             request.setEnquiryStatus(success.getCustEnquiryStatus());
 
                             /*Date format*/
