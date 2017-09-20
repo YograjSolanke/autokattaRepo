@@ -125,6 +125,7 @@ public class MySearchfragment extends Fragment implements SwipeRefreshLayout.OnR
                         mySearchSuccess.setMysearchstatus(mySearchSuccess.getMysearchstatus());
                         mySearchSuccess.setSearchdate(mySearchSuccess.getSearchdate().replaceAll("T", " "));
                         mySearchSuccess.setStopdate(mySearchSuccess.getStopdate());
+                        mySearchSuccess.setStocktype(mySearchSuccess.getStocktype());
 
 /*
                         Date d = null, d1 = null;

@@ -239,10 +239,38 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/llDate"
+                    android:id="@+id/llstock"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/llYear"
+                    android:layout_toStartOf="@+id/deletevehi"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/textView71"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="5dp"
+                        android:text="Stock Type"
+                        android:textColor="#808080"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/stocktype"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="5dp"
+                        android:text="@string/not_mentioned"
+                        android:textColor="#808080" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/llstock"
                     android:layout_toStartOf="@+id/deletevehi"
                     android:orientation="horizontal">
 
@@ -293,6 +321,8 @@
                         android:text="@string/not_mentioned"
                         android:textColor="#808080" />
                 </LinearLayout>
+
+
             </RelativeLayout>
 
             <RelativeLayout
@@ -356,6 +386,8 @@
                     android:textColor="#2C3343"
                     android:textStyle="bold" />
             </RelativeLayout>
+
+
         </RelativeLayout>
     </android.support.v7.widget.CardView>
 

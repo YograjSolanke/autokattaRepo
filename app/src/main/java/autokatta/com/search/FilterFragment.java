@@ -66,7 +66,7 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
     EditText useEdit, seatingEdit, transmissionEdit, impletementEdit, boatEdit, rvEdit;
     Button BtnRefresh, BtnApplySearch, BtnMoreOptions, btnCity, btnRto;
     Spinner rc, insurance, owner, hypo, brand, model, allcategory, subcategory, version, mBodyTypeSpinner;
-    Spinner tax_validity, fitness_validity, permit_validity, drive, bus_type, air, invoice, finance;
+    Spinner tax_validity, fitness_validity, permit_validity, drive, bus_type, air, invoice, finance,stocktype;
     MultiSelectionSpinner spinnerfual;
 
     TextView man_yr_from, man_yr_to, tyre_from, tyre_to, reg_yr_from, reg_yr_to, kms_from, kms_to, pricefrom, priceto, hrs_from, hrs_to, minihpcapacity, maxhpcapcity;
@@ -87,7 +87,7 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
     String spinnervalues[];
 
     String city1, city2, city11, city12, city13, city14, city21, city22, city23, city24, brand1, model1, color1, version1, man_yr1, man_yr2, reg_yr1, reg1, reg_yr2, rc1, insurance1, kms1, kms2, hypo1, price1, price2;
-    String permit1, tax_validity1, fitness_validity1, permit_validity1, drive1, fual1, bus_type1, air1, invoice1;
+    String permit1, tax_validity1, fitness_validity1, permit_validity1, drive1, fual1, bus_type1, air1, invoice1,strstocktype;
 
     String use1, seating1, transmission1, implement1, body1, boat1, rv1, finance1, tyre1, tyre2, callPermission, myContact;
     int count = 0, owner1 = 0, Sid, vehicle_id, sub_category_id;
@@ -109,6 +109,7 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
         mConnectionDetector = new ConnectionDetector(getActivity());
 
         TextView financetxt = (TextView) root.findViewById(R.id.financetxt);
+        TextView stocktxt = (TextView) root.findViewById(R.id.stocktxt);
         TextView messageText = (TextView) root.findViewById(R.id.messageText);
         TextView messageText1 = (TextView) root.findViewById(R.id.messageText1);
         TextView brandtxt = (TextView) root.findViewById(R.id.brandtxt);
@@ -184,6 +185,7 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
         fitness_validity = (Spinner) root.findViewById(R.id.fitnessEdit1);
         permit_validity = (Spinner) root.findViewById(R.id.permitEdit1);
         drive = (Spinner) root.findViewById(R.id.driveEdit1);
+        stocktype = (Spinner) root.findViewById(R.id.stocktypespnr);
 
         checkRTO = (CheckBox) root.findViewById(R.id.checkRTO);
         autoCity = (AutoCompleteTextView) root.findViewById(R.id.cityEdit);
@@ -225,6 +227,7 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
 
         String text = "<font color=#FF0000>*</font>";
         financetxt.setText(Html.fromHtml("Finance Required:" + text));
+        stocktxt.setText(Html.fromHtml("Stock Type:" + text));
         messageText.setText(Html.fromHtml("Category:" + text));
         messageText1.setText(Html.fromHtml("Sub category:" + text));
         brandtxt.setText(Html.fromHtml("Brand:" + text));
@@ -396,6 +399,7 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
                 @Override
                 public void onClick(View v) {
                     finance1 = finance.getSelectedItem().toString();
+                    strstocktype = stocktype.getSelectedItem().toString();
                     Category = allcategory.getSelectedItem().toString();
                     try {
                         if (Category.equalsIgnoreCase("Car")) {
@@ -409,6 +413,8 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
 
                     if (finance1.startsWith("-Select")) {
                         Toast.makeText(getActivity(), "Please provide finance required or not", Toast.LENGTH_SHORT).show();
+                    } else  if (strstocktype.startsWith("-Select")) {
+                        Toast.makeText(getActivity(), "Please select Stock Type", Toast.LENGTH_SHORT).show();
                     } else if (Category.equals("-Select Category-")) {
                         Toast.makeText(getActivity(), "select catagory", Toast.LENGTH_SHORT).show();
                     } else if (subcategory.getSelectedItem().toString().equals("-Select subcategory-")) {
@@ -789,6 +795,7 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
                 public void onClick(View v) {
                     // TODO Auto-generated method stub
                     finance.setSelection(0);
+                    stocktype.setSelection(0);
                     allcategory.setSelection(0);
                     subcategory.setSelection(0);
                     brand.setSelection(0);
@@ -1036,6 +1043,12 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
                 finance1 = finance.getSelectedItem().toString();
             }
 
+            if (strstocktype.startsWith("-Select")) {
+                strstocktype = "";
+            } else {
+                strstocktype = stocktype.getSelectedItem().toString();
+            }
+
             if (bus_type1.startsWith("-Select")) {
                 bus_type1 = "";
             } else {
@@ -1099,7 +1112,7 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
                 hrs1 + "-" + hrs2, hpcap1 + "-" + hpcap2, owner1, price1 + "-" + price2, tyre1 + "-" + tyre2,
                 city1, city11, city12, city13, city14, city2, city21, city22, city23, city24, rc1, insurance1,
                 tax_validity1, fitness_validity1, permit_validity1, fual1, seating1, permit1, hypo1, drive1, finance1, transmission1,
-                body1, boat1, rv1, use1, implement1, bus_type1, air1, invoice1, action, Sid, callPermission);
+                body1, boat1, rv1, use1, implement1, bus_type1, air1, invoice1, action, Sid, callPermission,strstocktype);
     }
 
 
@@ -1274,6 +1287,16 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if (keyCode == KeyEvent.KEYCODE_BACK) {
                     finance.clearFocus();
+                }
+                return false;
+            }
+        });
+
+        stocktype.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_BACK) {
+                    stocktype.clearFocus();
                 }
                 return false;
             }

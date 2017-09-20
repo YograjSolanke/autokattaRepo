@@ -232,4 +232,14 @@
         <item>Three Wheeler</item>
     </string-array>
 
+    <!--vehicle Stock type-->
+    <string-array name="stocktype">
+        <item>-Select Stock Type-</item>
+        <item>Finance/Repo</item>
+        <item>Insurance Salvage</item>
+        <item>Scrapped</item>
+        <item>Dealer Stock</item>
+        <item>Market Place</item>
+    </string-array>
+
 </resources>

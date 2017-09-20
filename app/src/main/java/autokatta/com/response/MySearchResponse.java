@@ -92,6 +92,19 @@ public class MySearchResponse {
         @Expose
         private String buyerLeads;
 
+        public String getStocktype() {
+            return stocktype;
+        }
+
+        public void setStocktype(String stocktype) {
+            this.stocktype = stocktype;
+        }
+
+        @SerializedName("StockType")
+
+        @Expose
+        private String stocktype;
+
         public int getSearchId() {
             return searchId;
         }

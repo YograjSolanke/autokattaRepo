@@ -105,6 +105,7 @@ public class MySearchAdapter extends RecyclerView.Adapter<MySearchAdapter.Search
         holder.textprice.setText(mMainlist.get(position).getPrice());
         holder.textyear.setText(mMainlist.get(position).getYearOfManufactur());
         holder.BuyerLeads.setText(mMainlist.get(position).getBuyerLeads());
+        holder.stocktype.setText(mMainlist.get(position).getStocktype());
 
         //To set Date
 
@@ -401,7 +402,7 @@ public class MySearchAdapter extends RecyclerView.Adapter<MySearchAdapter.Search
 
     static class SearchHolder extends RecyclerView.ViewHolder {
 
-        TextView textcategory, textbrand, textmodel, textprice, textyear, textsearchdate, BuyerLeads, Stopdate;
+        TextView textcategory, textbrand, textmodel, textprice, textyear, textsearchdate, BuyerLeads, Stopdate,stocktype;
         ImageView editImg, deleteData, favImg, unfavImg, share;
         Button Stopsearch, Startsearch;
         RelativeLayout relativeLayout;
@@ -428,6 +429,7 @@ public class MySearchAdapter extends RecyclerView.Adapter<MySearchAdapter.Search
 
             relativeLayout = (RelativeLayout) itemView.findViewById(R.id.relnote);
             Stopdate = (TextView) itemView.findViewById(R.id.txtdate);
+            stocktype = (TextView) itemView.findViewById(R.id.stocktype);
             cardView = (CardView) itemView.findViewById(R.id.card_view);
 
         }
