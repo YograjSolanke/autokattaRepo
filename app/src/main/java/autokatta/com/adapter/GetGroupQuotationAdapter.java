@@ -78,6 +78,7 @@ public class GetGroupQuotationAdapter extends RecyclerView.Adapter<RecyclerView.
                 bundle.putString("Brand", holder.Brand.getText().toString());
                 bundle.putString("Model", holder.Model.getText().toString());
                 bundle.putString("Price", holder.Price.getText().toString());
+                bundle.putString("Image", groupQuotationList.get(holder.getAdapterPosition()).getImage());
                 bundle.putInt("bundle_GroupId", mGroupId);
                 bundle.putInt("bundle_VehicleId", groupQuotationList.get(holder.getAdapterPosition()).getVehicleId());
                 bundle.putString("bundle_Type", groupQuotationList.get(holder.getAdapterPosition()).getType());
@@ -85,10 +86,6 @@ public class GetGroupQuotationAdapter extends RecyclerView.Adapter<RecyclerView.
                 Intent intent = new Intent(mActivity, MyVehicleQuotationListActivity.class);
                 intent.putExtras(bundle);
                 mActivity.startActivity(intent);
-
-                /* on MyVehicleQuotationListActivity first include same xml as per this adapter and then set bundled
-                * values........... then call webservice to get list of persons who replied for that quotation
-                * i.e api/AutoKattaWebService/GetViewQuotation?vehicleid={int}&groupid={int}&type={UsedVehicle}*/
 
             }
         });

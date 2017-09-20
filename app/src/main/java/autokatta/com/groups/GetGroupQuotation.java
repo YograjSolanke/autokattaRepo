@@ -221,11 +221,11 @@ public class GetGroupQuotation extends AppCompatActivity implements SwipeRefresh
     public void notifyError(Throwable error) {
         mSwipeRefreshLayout.setRefreshing(false);
         if (error instanceof SocketTimeoutException) {
-            CustomToast.customToast(this, getString(R.string._404_));
+            CustomToast.customToast(this, getString(R.string.no_internet));
         } else if (error instanceof NullPointerException) {
-            CustomToast.customToast(this, getString(R.string.no_response));
+            //CustomToast.customToast(this, getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            CustomToast.customToast(this, getString(R.string.no_response));
+            // CustomToast.customToast(this, getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
             CustomToast.customToast(this, getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {

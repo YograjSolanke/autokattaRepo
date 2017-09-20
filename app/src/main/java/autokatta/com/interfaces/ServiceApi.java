@@ -1299,4 +1299,11 @@ public interface ServiceApi {
     //Get Group Quotation
     @GET("GetGroupQuotation")
     Call<GetGroupQuotationResponse> _autokattaGetGroupQuotation(@Query("GroupId") int mGrpId);
+
+
+    //Get vehicle qoutation list
+    @GET("GetViewQuotation")
+    Call<MyVehicleQuotationListResponse> _autokattaGetVehicleQuotationList(@Query("vehicleid") int vehicleid,
+                                                                           @Query("groupid") int groupid,
+                                                                           @Query("type") String type);
 }
