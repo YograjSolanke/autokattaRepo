@@ -5208,7 +5208,7 @@ Get uploaded Vehicle Buyer list
                              String permit_validity1, String fual1, String seating1, String permit1, String hypo1,
                              String drive1, String finance1, String transmission1, String body1, String boat1, String rv1,
                              String use1, String implement1, String bus_type1, String air1, String invoice1, String action,
-                             int sid, String callPermission) {
+                             int sid, String callPermission,String StockType) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 //JSON to Gson conversion
@@ -5232,7 +5232,7 @@ Get uploaded Vehicle Buyer list
                         body1, boat1, rv1, use1, city11, city12,
                         city13, city14, city21, city22, city23, city24,
                         tyre, implement1, bus_type1, air1, invoice1,
-                        finance1, version1, callPermission);
+                        finance1, version1, callPermission,StockType);
                 Call<String> createbrdcstgrp = serviceApi._autokattaSaveMySearch(saveSearchRequest);
                 createbrdcstgrp.enqueue(new Callback<String>() {
                     @Override

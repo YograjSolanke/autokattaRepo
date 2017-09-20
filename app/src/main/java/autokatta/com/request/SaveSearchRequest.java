@@ -154,6 +154,9 @@ public class SaveSearchRequest {
     @SerializedName("CallPermission")
     @Expose
     private String callPermission;
+    @SerializedName("StockType")
+    @Expose
+    private String StockType;
 
     public SaveSearchRequest(String keyword, Integer searchID, String contact, String category, String brand, String model,
                              String rTOCity, String city, String locationState, String registrationYear,
@@ -164,7 +167,7 @@ public class SaveSearchRequest {
                              String bodyType, String boatType, String rvType, String application, String city1, String city2,
                              String city3, String city4, String rTOcity1, String rTOcity2, String rTOcity3, String rTOcity4,
                              String tyreCondition, String _implements, String busType, String airCondition, String invoice,
-                             String finance, String version, String callPermission) {
+                             String finance, String version, String callPermission, String StockType) {
         this.keyword = keyword;
         this.searchID = searchID;
         this.contact = contact;
@@ -213,5 +216,6 @@ public class SaveSearchRequest {
         this.finance = finance;
         this.version = version;
         this.callPermission = callPermission;
+        this.StockType = StockType;
     }
 }
