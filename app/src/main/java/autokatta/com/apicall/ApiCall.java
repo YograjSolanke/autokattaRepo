@@ -8318,6 +8318,40 @@ get ExchangeMela Analytics Data
         }
     }
 
+
+    //get vehicle's quotation List
+
+
+    public void GetVehicleQuotationList(int mGrpId, int vehicle_id, String type) {
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<MyVehicleQuotationListResponse> mQuotationResponseCall = serviceApi._autokattaGetVehicleQuotationList(vehicle_id,
+                        mGrpId, type);
+                mQuotationResponseCall.enqueue(new Callback<MyVehicleQuotationListResponse>() {
+                    @Override
+                    public void onResponse(Call<MyVehicleQuotationListResponse> call, Response<MyVehicleQuotationListResponse> response) {
+                        mNotifier.notifySuccess(response);
+                    }
+
+                    @Override
+                    public void onFailure(Call<MyVehicleQuotationListResponse> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+            } else
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     /***
      * Retrofit Logs
      ***/
