@@ -180,7 +180,6 @@ public class MyGroupsFragment extends Fragment implements SwipeRefreshLayout.OnR
 
     @Override
     public void onRefresh() {
-        mMyGroupsList.clear();
         getData(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
                 .getString("loginContact", ""));
         mRecyclerView.getRecycledViewPool().clear();
