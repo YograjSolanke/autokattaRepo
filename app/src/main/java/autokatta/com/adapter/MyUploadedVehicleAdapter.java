@@ -245,9 +245,36 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
                             .setMessage("Are You Sure You Want To Delete This Store?")
                             .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
-                                    apiCall.deleteUploadedVehicle(mMainList.get(holder.getAdapterPosition()).getVehicleId(), "delete");
+                                    View view = activity.getLayoutInflater().inflate(R.layout.custom_sold_vehicle_info, null);
+                                    EditText mCustomerName = (EditText) view.findViewById(R.id.customer_name);
+                                    EditText mContact = (EditText) view.findViewById(R.id.contact);
+                                    EditText mAddress = (EditText) view.findViewById(R.id.address);
+                                    EditText mSoldDate = (EditText) view.findViewById(R.id.sold_date);
+                                    Button mSave = (Button) view.findViewById(R.id.submit);
+                                    ImageView mClose = (ImageView) view.findViewById(R.id.close);
+
+                                    final Dialog mBottomSheetDialog = new Dialog(activity, R.style.MaterialDialogSheet);
+                                    mBottomSheetDialog.setContentView(view);
+                                    mBottomSheetDialog.setCancelable(true);
+                                    mBottomSheetDialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                                    mBottomSheetDialog.getWindow().setGravity(Gravity.BOTTOM);
+                                    mBottomSheetDialog.show();
+
+                                    mClose.setOnClickListener(new OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            mBottomSheetDialog.dismiss();
+                                        }
+                                    });
+
+                                    mSave.setOnClickListener(new OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            /*apiCall.deleteUploadedVehicle(mMainList.get(holder.getAdapterPosition()).getVehicleId(), "delete");
                                     mMainList.remove(holder.getAdapterPosition());
-                                    notifyDataSetChanged();
+                                    notifyDataSetChanged();*/
+                                        }
+                                    });
                                 }
                             })
 

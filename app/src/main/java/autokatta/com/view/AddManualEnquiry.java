@@ -113,6 +113,7 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
                         if (checkedId == R.id.exchangeYes) {
                             View view = getLayoutInflater().inflate(R.layout.custom_enquiry_exchange_info, null);
                             ImageView mClose = (ImageView) view.findViewById(R.id.close);
+                            Button mAdd = (Button) view.findViewById(R.id.submit);
 
                             mBottomSheetDialog = new Dialog(AddManualEnquiry.this, R.style.MaterialDialogSheet);
                             mBottomSheetDialog.setContentView(view);
@@ -125,6 +126,13 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
                                 @Override
                                 public void onClick(View v) {
                                     mBottomSheetDialog.dismiss();
+                                }
+                            });
+
+                            mAdd.setOnClickListener(new OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+
                                 }
                             });
                         }

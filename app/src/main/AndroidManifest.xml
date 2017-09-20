@@ -757,7 +757,8 @@
         <activity
             android:name=".view.MyVehicleQuotationListActivity"
             android:label="@string/title_activity_my_vehicle_quotation_list"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".enquiries.TodaysFollowUp"></activity>
     </application>
 
 </manifest>

@@ -7,7 +7,7 @@
         app:showAsAction="ifRoom" />
 
     <item
-        android:id="@+id/add_manuals"
+        android:id="@+id/today_follow_up"
         android:title="Today's follow-up"
         app:showAsAction="always" />
 </menu>
