@@ -119,6 +119,7 @@ public class AllSearchEventCustomAdapter extends BaseAdapter {
                     holder.auction_startdate = (TextView) convertView.findViewById(R.id.datetime1);
                     holder.auction_starttime = (TextView) convertView.findViewById(R.id.editTime);
                     holder.preview = (Button) convertView.findViewById(R.id.button);
+                    holder.btnshare = (Button) convertView.findViewById(R.id.share);
                     holder.relativeshare = (RelativeLayout) convertView.findViewById(R.id.relativeshare);
                     holder.timer = (TextView) convertView.findViewById(R.id.timer);
                     holder.btnclause = (Button) convertView.findViewById(R.id.clauses);

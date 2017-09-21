@@ -70,11 +70,15 @@ public class RegistrationRequest {
     @Expose
     private String permitValidity;
 
+    @SerializedName("BrandName")
+    @Expose
+    private String BrandName;
+
     public RegistrationRequest(String userName, String profilePicture, String contact, String emial, String dOB,
                                String country, String state, String city, String profession, String subProfession,
                                String gender, String password, String about, String webSite, String vehicleNo,
                                String vehicleType, String industry, String taxValidity, String fitnessValidity,
-                               String permitValidity) {
+                               String permitValidity,String Brand) {
         this.userName = userName;
         this.profilePicture = profilePicture;
         this.contact = contact;
@@ -95,11 +99,12 @@ public class RegistrationRequest {
         this.taxValidity = taxValidity;
         this.fitnessValidity = fitnessValidity;
         this.permitValidity = permitValidity;
+        this.BrandName=Brand;
     }
 
 
 //registration activity
-    public RegistrationRequest(String username, String contact, String email, String dob, String gender, String city, String profession, String password, String sub_profession, String industry) {
+    public RegistrationRequest(String username, String contact, String email, String dob, String gender, String city, String profession, String password, String sub_profession, String industry,String brand) {
         this.userName = username;
         this.contact = contact;
         this.emial = email;
@@ -110,5 +115,6 @@ public class RegistrationRequest {
         this.password = password;
         this.subProfession = sub_profession;
         this.industry = industry;
+        this.BrandName = brand;
     }
 }

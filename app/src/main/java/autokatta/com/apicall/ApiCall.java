@@ -609,7 +609,7 @@ public class ApiCall {
         Registration after getting OTP
      */
 
-    public void registrationAfterOtp(String username, String contact, String email, String dob, String gender, String pincode, String city, String profession, String password, String sub_profession, String industry) {
+    public void registrationAfterOtp(String username, String contact, String email, String dob, String gender, String pincode, String city, String profession, String password, String sub_profession, String industry,String Brand) {
         try {
             //JSON to Gson conversion
             Gson gson = new GsonBuilder()
@@ -623,7 +623,7 @@ public class ApiCall {
                         .build();
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                RegistrationRequest registrationRequest = new RegistrationRequest(username, contact, email, dob, gender, city, profession, password, sub_profession, industry);
+                RegistrationRequest registrationRequest = new RegistrationRequest(username, contact, email, dob, gender, city, profession, password, sub_profession, industry,Brand);
 
                 Call<String> afterOtpRegistrationResponseCall = serviceApi._autokattaAfterOtpRegistration(registrationRequest);
                 afterOtpRegistrationResponseCall.enqueue(new Callback<String>() {
