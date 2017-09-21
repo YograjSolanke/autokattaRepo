@@ -42,6 +42,9 @@ public class QuotationListAdapter extends RecyclerView.Adapter<RecyclerView.View
     public void onBindViewHolder(RecyclerView.ViewHolder holder1, int position) {
         final QuotationHolder holder = (QuotationHolder) holder1;
 
+        if (QuotationList.get(holder.getAdapterPosition()).getCustContact().equals(mLoginContact))
+            holder.name.setText("You");
+        else
         holder.name.setText(QuotationList.get(position).getCustomerName());
         holder.contact.setText(QuotationList.get(position).getCustContact());
         holder.reservedPrice.setText(String.valueOf(QuotationList.get(position).getReservePrice()));

@@ -1,5 +1,6 @@
 package autokatta.com.view;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -8,14 +9,21 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.InputType;
+import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -24,16 +32,24 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
+import java.util.concurrent.TimeUnit;
 
 import autokatta.com.R;
 import autokatta.com.adapter.QuotationListAdapter;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
+import autokatta.com.interfaces.ServiceApi;
 import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.MyVehicleQuotationListResponse;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Call;
+import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MyVehicleQuotationListActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener, RequestNotifier {
 
@@ -140,9 +156,9 @@ public class MyVehicleQuotationListActivity extends AppCompatActivity implements
 
                             if (bundle_Contact.equals(myContact)) {
                                 fab.setVisibility(View.GONE);
-                                getQuotationList(bundle_GroupId, bundle_VehicleId, bundle_Type);
+                                getOtherQuotationList(bundle_GroupId, bundle_VehicleId, bundle_Type);
                             } else {
-                                mSwipeRefreshLayout.setRefreshing(false);
+                                getMyQuotationList(bundle_GroupId, bundle_VehicleId, bundle_Type);
                             }
                         }
 
@@ -153,11 +169,29 @@ public class MyVehicleQuotationListActivity extends AppCompatActivity implements
             }
         });
 
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                clickButton();
+            }
+        });
+
 
 
     }
 
-    private void getQuotationList(int bundle_groupId, int bundle_vehicleId, String bundle_type) {
+    private void getMyQuotationList(int bundle_groupId, int bundle_vehicleId, String bundle_type) {
+        //here user will see list of Quotation which belongs him
+
+        if (mTestConnection.isConnectedToInternet()) {
+            ApiCall mApiCall = new ApiCall(this, this);
+            mApiCall.GetMyQuotationList(bundle_groupId, bundle_vehicleId, bundle_type, myContact);
+        } else
+            CustomToast.customToast(this, getString(R.string.no_internet));
+    }
+
+    private void getOtherQuotationList(int bundle_groupId, int bundle_vehicleId, String bundle_type) {
+        //here user will see list of Quotation send by other user for that particular vehicle
 
         if (mTestConnection.isConnectedToInternet()) {
             ApiCall mApiCall = new ApiCall(this, this);
@@ -237,5 +271,125 @@ public class MyVehicleQuotationListActivity extends AppCompatActivity implements
     @Override
     public void notifyString(String str) {
 
+    }
+
+    private void clickButton() {
+        android.support.v7.app.AlertDialog.Builder alertDialog = new android.support.v7.app.AlertDialog.Builder(this);
+        alertDialog.setTitle("Quotation for vehicle");
+        alertDialog.setMessage("Enter amount");
+
+        final EditText input = new EditText(this);
+        input.setHint("Amount");
+        input.setInputType(InputType.TYPE_CLASS_NUMBER);
+
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT);
+        input.setLayoutParams(lp);
+        alertDialog.setView(input);
+        // alertDialog.setIcon(R.drawable.key);
+
+        alertDialog.setPositiveButton("Ok",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        try {
+                            String Amount = input.getText().toString();
+                            if (Amount.equals("")) {
+                                input.setError("Please Enter Amount");
+                                Toast.makeText(MyVehicleQuotationListActivity.this, "Price should not be empty", Toast.LENGTH_LONG).show();
+                            } else {
+
+                                try {
+                                    if (mTestConnection.isConnectedToInternet()) {
+                                        //JSON to Gson conversion
+                                        Gson gson = new GsonBuilder()
+                                                .setLenient()
+                                                .create();
+                                        Retrofit retrofit = new Retrofit.Builder()
+                                                .baseUrl(getString(R.string.base_url))
+                                                .addConverterFactory(GsonConverterFactory.create(gson))
+                                                .client(initLog().build())
+                                                .build();
+
+                                        ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                                        Call<String> addBid = serviceApi._autokattaAddQuotation(bundle_VehicleId, bundle_GroupId,
+                                                myContact, Double.parseDouble(Amount), bundle_Type);
+                                        addBid.enqueue(new Callback<String>() {
+                                            @Override
+                                            public void onResponse(Call<String> call, Response<String> response) {
+                                                if (response.isSuccessful()) {
+                                                    String result;
+                                                    result = response.body();
+
+                                                    if (result.equals("success")) {
+                                                        CustomToast.customToast(MyVehicleQuotationListActivity.this, "Price Sent");
+                                                        getMyQuotationList(bundle_GroupId, bundle_VehicleId, bundle_Type);
+                                                    }
+
+                                                } else {
+                                                    Log.e("No", "Response");
+                                                }
+                                            }
+
+                                            @Override
+                                            public void onFailure(Call<String> call, Throwable t) {
+                                                t.printStackTrace();
+                                            }
+                                        });
+                                    } else
+                                        CustomToast.customToast(MyVehicleQuotationListActivity.this, getString(R.string.no_internet));
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+        alertDialog.setNegativeButton("Cancel",
+                new DialogInterface.OnClickListener()
+
+                {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+        alertDialog.show();
+    }
+
+
+    /***
+     * Retrofit Logs
+     ***/
+    private OkHttpClient.Builder initLog() {
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        // set your desired log level
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        // add your other interceptors …
+        // add logging as last interceptor
+        httpClient.addInterceptor(logging).readTimeout(90, TimeUnit.SECONDS);
+        return httpClient;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+        overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
     }
 }
