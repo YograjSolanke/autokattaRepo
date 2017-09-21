@@ -16,6 +16,8 @@ public class Db_AutokattaContactResponse {
     private String city;
     private Boolean contactVisibility;
     private String status;
+    private String groupIds;
+    private String groupNames;
 
     public String getContact() {
         return contact;
@@ -79,6 +81,22 @@ public class Db_AutokattaContactResponse {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getGroupIds() {
+        return groupIds;
+    }
+
+    public void setGroupIds(String groupIds) {
+        this.groupIds = groupIds;
+    }
+
+    public String getGroupNames() {
+        return groupNames;
+    }
+
+    public void setGroupNames(String groupNames) {
+        this.groupNames = groupNames;
     }
 
     /*Comparator for sorting the list by Student Name*/

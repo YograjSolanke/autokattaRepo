@@ -3,7 +3,6 @@ package autokatta.com.database;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
 import autokatta.com.R;
@@ -28,8 +27,6 @@ public class DbOperation {
 
             db = new DbHelper(mContext).getWritableDatabase();
 
-        } catch (SQLException e) {
-            e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -48,7 +45,8 @@ public class DbOperation {
     /*
     My Autokatta Contact...
      */
-    public long addMyAutokattaContact(String name, String profilePic, String contact, String followStatus, String myStatus) {
+    public long addMyAutokattaContact(String name, String profilePic, String contact, String followStatus,
+                                      String myStatus, String groupIds, String groupNames) {
         long result = -1;
         try {
             Cursor cursor = null;
@@ -64,6 +62,8 @@ public class DbOperation {
             values.put(DbConstants.contact, contact);
             values.put(DbConstants.followStatus, followStatus);
             values.put(DbConstants.myStatus, myStatus);
+            values.put(DbConstants.groupIds, groupIds);
+            values.put(DbConstants.groupNames, groupNames);
 
             if (profilePic == null) {
                 values.put(DbConstants.profilePic, R.mipmap.ic_launcher);

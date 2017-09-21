@@ -148,6 +148,20 @@
                 android:textColor="@android:color/white"
                 android:textSize="12sp"
                 android:visibility="visible" />
+
+            <Button
+                android:id="@+id/btnGroups"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginTop="35dp"
+                android:background="@drawable/buttonback"
+                android:gravity="center"
+                android:text="Groups"
+                android:textAllCaps="false"
+                android:layout_toEndOf="@+id/profileImg"
+                android:layout_below="@+id/txtstatus"
+                android:textColor="@android:color/white"
+                android:textSize="12sp" />
         </RelativeLayout>
     </android.support.v7.widget.CardView>
 

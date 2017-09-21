@@ -80,8 +80,9 @@ public class BackgroundService extends Service {
                         String name = people.getString(indexName);
                         String number = people.getString(indexNumber);
 
-                        number = number.replaceAll("-", "");
-                        number = number.replace("(", "").replace(")", "").replaceAll(" ", "").replaceAll("[\\D]", "");
+                        //number = number.replaceAll("-", "");
+                        number = number.replace("-", "").replace("(", "").replace(")", "").replaceAll(" ", "").
+                                replaceAll("[\\D]", "");
 
                         if (number.length() > 10)
                             number = number.substring(number.length() - 10);
@@ -188,21 +189,67 @@ public class BackgroundService extends Service {
                         operation.deleteAutokattaContacts();
                         operation.createAutokattaContactTable();
                         GetAutokattaContactResponse mContactResponse = response.body();
-                        for (GetAutokattaContactResponse.Success success : mContactResponse.getSuccess()) {
-                            success.setUserName(success.getUserName());
+
+                        Uri uri = ContactsContract.CommonDataKinds.Phone.CONTENT_URI;
+                        String[] projection = new String[]{ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME,
+                                ContactsContract.CommonDataKinds.Phone.NUMBER};
+
+                        Cursor people = getApplicationContext().getContentResolver().query(uri, projection, null, null, null);
+                        int indexName = 0, indexNumber = 0;
+                        if (people != null) {
+                            indexName = people.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME);
+                            indexNumber = people.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
+
+
+                            for (GetAutokattaContactResponse.Success success : mContactResponse.getSuccess()) {
+                            /*success.setUserName(success.getUserName());
                             success.setProfilePic(success.getProfilePic());
                             success.setContact(success.getContact());
                             success.setFollowStatus(success.getFollowStatus());
-                            success.setMystatus(success.getMystatus());
-                            Log.i("asdfd", "asdf" + success.getUserName());
+                            success.setMystatus(success.getMystatus());*/
+                                Log.i("asdfd", "asdf" + success.getUserName());
 
-                            result = operation.addMyAutokattaContact(success.getUserName(), success.getProfilePic(),
-                                    success.getContact(), success.getFollowStatus(), success.getMystatus());
+                                String sContact = success.getContact();
+                                String sUserName = success.getUserName();
+                                String sProfilePic = success.getProfilePic();
+                                String sFollowStatus = success.getFollowStatus();
+                                String sMyStatus = success.getMystatus();
+
+                                people.moveToFirst();
+                                do {
+                                    String name = people.getString(indexName);
+                                    String number = people.getString(indexNumber);
+
+                                    number = number.replace("-", "").replace("(", "").replace(")", "").replaceAll(" ", "").
+                                            replaceAll("[\\D]", "");
+
+                                    if (number.length() > 10)
+                                        number = number.substring(number.length() - 10);
+
+                                    if (number.equalsIgnoreCase(sContact)) {
+                                        success.setUserName(name);
+                                        success.setProfilePic(success.getProfilePic());
+                                        success.setContact(success.getContact());
+                                        success.setFollowStatus(success.getFollowStatus());
+                                        success.setMystatus(success.getMystatus());
+                                        success.setGroupIds(success.getGroupIds());
+                                        success.setGroupNames(success.getGroupNames());
+                                    }
+                                } while (people.moveToNext());
+
+
+                                result = operation.addMyAutokattaContact(success.getUserName(), success.getProfilePic(),
+                                        success.getContact(), success.getFollowStatus(), success.getMystatus(),
+                                        success.getGroupIds(), success.getGroupNames());
+                            }
+                            people.close();
                         }
+
                         if (result > 0) {
                             Log.i("TAG", "Record Inserted Successfully");
                         }
                         operation.CLOSE();
+
                     } else {
                         //CustomToast.customToast(getApplicationContext(), getString(R.string._404));
                     }

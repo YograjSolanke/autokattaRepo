@@ -3,9 +3,11 @@ package autokatta.com.adapter;
 import android.app.Activity;
 import android.app.ActivityOptions;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -18,6 +20,7 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -35,6 +38,7 @@ import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.Db_AutokattaContactResponse;
 import autokatta.com.view.ChatActivity;
+import autokatta.com.view.GroupsActivity;
 import autokatta.com.view.OtherProfile;
 import autokatta.com.view.UserProfile;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
@@ -56,6 +60,8 @@ public class AutokattaContactAdapter extends RecyclerView.Adapter<AutokattaConta
     private String myContact = "";
     private ApiCall apicall;
     private String Rcontact = "";
+    private String[] strGroupIds;
+    private String[] groupTitleArray;
 
 
     static class YoHolder extends RecyclerView.ViewHolder {
@@ -63,7 +69,7 @@ public class AutokattaContactAdapter extends RecyclerView.Adapter<AutokattaConta
         CardView mCardView;
         ImageView imgProfile, imgCall;
         TextView mTextName, mTextNumber, mTextStatus;
-        Button btnFollow, btnUnfollow, btnsendmsg;
+        Button btnFollow, btnUnfollow, btnsendmsg, btnGroups;
 
         private YoHolder(View itemView) {
             super(itemView);
@@ -76,6 +82,7 @@ public class AutokattaContactAdapter extends RecyclerView.Adapter<AutokattaConta
             btnFollow = (Button) itemView.findViewById(R.id.btnfollow);
             btnUnfollow = (Button) itemView.findViewById(R.id.btnunfollow);
             btnsendmsg = (Button) itemView.findViewById(R.id.btnsendmsg);
+            btnGroups = (Button) itemView.findViewById(R.id.btnGroups);
         }
 
     }
@@ -98,7 +105,7 @@ public class AutokattaContactAdapter extends RecyclerView.Adapter<AutokattaConta
     }
 
     @Override
-    public void onBindViewHolder(final AutokattaContactAdapter.YoHolder holder, int position) {
+    public void onBindViewHolder(final AutokattaContactAdapter.YoHolder holder, final int position) {
         myContact = mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).getString("loginContact", "");
         holder.mTextName.setText(contactdata.get(position).getUsername());
         holder.mTextNumber.setText(contactdata.get(position).getContact());
@@ -212,7 +219,45 @@ public class AutokattaContactAdapter extends RecyclerView.Adapter<AutokattaConta
             }
         });
 
+        if (contactdata.get(position).getGroupIds().isEmpty())
+            holder.btnGroups.setVisibility(GONE);
+        else if (contactdata.get(position).getGroupIds().contains(",")) {
+            strGroupIds = contactdata.get(position).getGroupIds().split(",");
+            groupTitleArray = contactdata.get(position).getGroupNames().split(",");
+        } else if (!contactdata.get(position).getGroupIds().contains(",") && !contactdata.get(position).getGroupIds().isEmpty()) {
+            strGroupIds = new String[1];
+            groupTitleArray = new String[1];
+            strGroupIds[0] = contactdata.get(position).getGroupIds();
+            groupTitleArray[0] = contactdata.get(position).getGroupNames();
+        }
+
+
+        holder.btnGroups.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
+                builder.setTitle("Select Group To View");
+                builder.setItems(groupTitleArray, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int item) {
+
+                        Toast.makeText(mActivity, "Group" + strGroupIds[item], Toast.LENGTH_SHORT).show();
+                        Intent i = new Intent(mActivity, GroupsActivity.class);
+                        i.putExtra("grouptype", "OtherGroup");
+                        i.putExtra("className", "OtherProfile");
+
+                        i.putExtra("bundle_GroupId", strGroupIds[item]);
+                        i.putExtra("bundle_GroupName", groupTitleArray[item]);
+                        i.putExtra("bundle_Contact", contactdata.get(holder.getAdapterPosition()).getContact());
+                        mActivity.startActivity(i);
+                        dialog.dismiss();
+
+                    }
+                }).show();
+            }
+        });
     }
+
 
     private void sendFollowerUnfollower(String contact, String keyword) {
         if (keyword.equalsIgnoreCase("follow")) {

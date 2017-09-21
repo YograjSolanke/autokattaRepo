@@ -50,6 +50,12 @@ public class GetAutokattaContactResponse {
         @SerializedName("followStatus")
         @Expose
         private String followStatus;
+        @SerializedName("groupIds")
+        @Expose
+        private String groupIds = "24,25";
+        @SerializedName("groupNames")
+        @Expose
+        private String groupNames = "yoyo,newGroup";
 
         public String getUserName() {
             return userName;
@@ -89,6 +95,22 @@ public class GetAutokattaContactResponse {
 
         public void setFollowStatus(String followStatus) {
             this.followStatus = followStatus;
+        }
+
+        public String getGroupIds() {
+            return groupIds;
+        }
+
+        public void setGroupIds(String groupIds) {
+            this.groupIds = groupIds;
+        }
+
+        public String getGroupNames() {
+            return groupNames;
+        }
+
+        public void setGroupNames(String groupNames) {
+            this.groupNames = groupNames;
         }
     }
 }
