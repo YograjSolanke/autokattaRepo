@@ -31,7 +31,7 @@
                 android:contentDescription="@string/app_name" />
 
             <LinearLayout
-                android:id="@+id/relativeprice"
+                android:id="@+id/relativesoldto"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
@@ -61,10 +61,10 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/relativecategory"
+                android:id="@+id/relativesolddate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/relativeprice"
+                android:layout_below="@+id/relativesoldto"
                 android:layout_marginStart="10dp"
                 android:layout_toEndOf="@+id/vehiprofile"
                 android:weightSum="1">
@@ -90,10 +90,10 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/relativebrand"
+                android:id="@+id/relativeaddress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/relativecategory"
+                android:layout_below="@+id/relativesolddate"
                 android:layout_marginStart="10dp"
                 android:layout_toEndOf="@+id/vehiprofile"
                 android:weightSum="1">
@@ -119,16 +119,16 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/relativemodel"
+                android:id="@+id/relativecontact"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/relativebrand"
+                android:layout_below="@+id/relativeaddress"
                 android:layout_marginStart="10dp"
                 android:layout_toEndOf="@+id/vehiprofile"
                 android:weightSum="1">
 
                 <TextView
-                    android:id="@+id/model"
+                    android:id="@+id/contact"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.25"
@@ -138,7 +138,7 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/editmodel"
+                    android:id="@+id/editcontact"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"

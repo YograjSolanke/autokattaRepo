@@ -52,10 +52,10 @@ public class GetAutokattaContactResponse {
         private String followStatus;
         @SerializedName("groupIds")
         @Expose
-        private String groupIds = "24,25";
+        private String groupIds;
         @SerializedName("groupNames")
         @Expose
-        private String groupNames = "yoyo,newGroup";
+        private String groupNames;
 
         public String getUserName() {
             return userName;

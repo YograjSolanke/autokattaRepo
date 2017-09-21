@@ -12,8 +12,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 
 import autokatta.com.R;
 import autokatta.com.adapter.MySoldAdapter;
@@ -138,7 +143,7 @@ public class SoldVehicle extends Fragment implements RequestNotifier, SwipeRefre
                         myVehicleSuccess.setHrsRunning(myVehicleSuccess.getHrsRunning());
                         myVehicleSuccess.setRtoCity(myVehicleSuccess.getRtoCity());
                         myVehicleSuccess.setLocationCity(myVehicleSuccess.getLocationCity());
-                        myVehicleSuccess.setRegistrationNumber(myVehicleSuccess.getRegistrationNumber());
+                        //myVehicleSuccess.setRegistrationNumber(myVehicleSuccess.getRegistrationNumber());
 
                         if (myVehicleSuccess.getRegistrationNumber().equals(""))
                             myVehicleSuccess.setRegistrationNumber("NA");
@@ -151,6 +156,27 @@ public class SoldVehicle extends Fragment implements RequestNotifier, SwipeRefre
 
                         //myVehicleSuccess.setGroupIDs(myVehicleSuccess.getGroupIDs());
                         //myVehicleSuccess.setStoreIDs(myVehicleSuccess.getStoreIDs());
+
+                        myVehicleSuccess.setSoldToContact(myVehicleSuccess.getSoldToContact());
+                        myVehicleSuccess.setCustName(myVehicleSuccess.getCustName());
+                        myVehicleSuccess.setAddress(myVehicleSuccess.getAddress());
+                        try {
+                            TimeZone utc = TimeZone.getTimeZone("etc/UTC");
+                            //format of date coming from services
+                            DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                            inputFormat.setTimeZone(utc);
+
+                            //format of date which we want to show
+                            DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
+                            outputFormat.setTimeZone(utc);
+
+                            Date date = inputFormat.parse(myVehicleSuccess.getSoldDate());
+                            String output = outputFormat.format(date);
+                            myVehicleSuccess.setSoldDate(output);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
 
 
                         myUploadedVehiclesResponseList.add(myVehicleSuccess);

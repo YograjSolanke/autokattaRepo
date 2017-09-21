@@ -3,6 +3,7 @@ package autokatta.com.adapter;
 import android.app.Activity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -40,18 +41,18 @@ public class MySoldAdapter extends RecyclerView.Adapter<MySoldAdapter.VehicleHol
         RelativeLayout mBroadcast;
         LinearLayout mLinear;
 
+        TextView mCustName, mSoldDate, mCustAddress, mCustContact;
+
         VehicleHolder(View itemView) {
             super(itemView);
-            edittitles = (TextView) itemView.findViewById(R.id.edittitle);
+            /*edittitles = (TextView) itemView.findViewById(R.id.edittitle);
             editprices = (TextView) itemView.findViewById(R.id.editprice);
             editcategorys = (TextView) itemView.findViewById(R.id.editcategory);
             editbrands = (TextView) itemView.findViewById(R.id.editbrand);
             editmodels = (TextView) itemView.findViewById(R.id.editmodel);
             editleads = (TextView) itemView.findViewById(R.id.editleads);
             edituploadedon = (TextView) itemView.findViewById(R.id.edituploadedon);
-            vehicleimage = (ImageView) itemView.findViewById(R.id.vehiprofile);
             delete = (Button) itemView.findViewById(R.id.delete);
-            vehidetails = (Button) itemView.findViewById(R.id.vehibtndetails);
             btnnotify = (Button) itemView.findViewById(R.id.btnnotify);
             mEnquiry = (Button) itemView.findViewById(R.id.Enquiry);
             mUploadGroup = (Button) itemView.findViewById(R.id.upload_group);
@@ -62,27 +63,39 @@ public class MySoldAdapter extends RecyclerView.Adapter<MySoldAdapter.VehicleHol
             editrto = (TextView) itemView.findViewById(R.id.RTO);
             editlocation = (TextView) itemView.findViewById(R.id.location);
             editregNo = (TextView) itemView.findViewById(R.id.registrationNo);
-            mcardView = (CardView) itemView.findViewById(R.id.card_view);
             mBroadcast = (RelativeLayout) itemView.findViewById(R.id.relativebroadcast);
             mLinear = (LinearLayout) itemView.findViewById(R.id.linearbtns);
             mQuotation = (Button) itemView.findViewById(R.id.quotation);
             mTransferStock = (Button) itemView.findViewById(R.id.transfer_stock);
             mViewQuote = (Button) itemView.findViewById(R.id.view_quotation);
+            vehidetails = (Button) itemView.findViewById(R.id.vehibtndetails);*/
+
+            vehicleimage = (ImageView) itemView.findViewById(R.id.vehiprofile);
+            mcardView = (CardView) itemView.findViewById(R.id.card_view);
+            mCustName = (TextView) itemView.findViewById(R.id.customer_name);
+            mSoldDate = (TextView) itemView.findViewById(R.id.sold_date);
+            mCustAddress = (TextView) itemView.findViewById(R.id.address);
+            mCustContact = (TextView) itemView.findViewById(R.id.editcontact);
         }
     }
 
     @Override
     public MySoldAdapter.VehicleHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return null;
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.my_sold_vehicle_adapter, parent, false);
+        return new VehicleHolder(view);
     }
 
     @Override
     public void onBindViewHolder(MySoldAdapter.VehicleHolder holder, int position) {
 
+        holder.mCustName.setText(mMainList.get(position).getCustName());
+        holder.mSoldDate.setText(mMainList.get(position).getSoldDate());
+        holder.mCustAddress.setText(mMainList.get(position).getAddress());
+        holder.mCustContact.setText(mMainList.get(position).getSoldToContact());
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return mMainList.size();
     }
 }
