@@ -21,7 +21,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Customer Name"
-        android:inputType="datetime"
+        android:inputType="text"
         android:labelFor="@+id/transfer_date"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
@@ -30,7 +30,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Contact"
-        android:inputType="datetime"
+        android:inputType="text"
         android:labelFor="@+id/transfer_date"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
@@ -38,8 +38,17 @@
         android:id="@+id/address"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:hint="Address"
+        android:inputType="text"
+        android:labelFor="@+id/transfer_date"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <EditText
+        android:id="@+id/selling_price"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:hint="Selling Price"
-        android:inputType="datetime"
+        android:inputType="number"
         android:labelFor="@+id/transfer_date"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 

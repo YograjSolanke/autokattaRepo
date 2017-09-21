@@ -246,10 +246,11 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
                             .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
                                     View view = activity.getLayoutInflater().inflate(R.layout.custom_sold_vehicle_info, null);
-                                    EditText mCustomerName = (EditText) view.findViewById(R.id.customer_name);
-                                    EditText mContact = (EditText) view.findViewById(R.id.contact);
-                                    EditText mAddress = (EditText) view.findViewById(R.id.address);
-                                    EditText mSoldDate = (EditText) view.findViewById(R.id.sold_date);
+                                    final EditText mCustomerName = (EditText) view.findViewById(R.id.customer_name);
+                                    final EditText mContact = (EditText) view.findViewById(R.id.contact);
+                                    final EditText mAddress = (EditText) view.findViewById(R.id.address);
+                                    final EditText mSellingPrice = (EditText) view.findViewById(R.id.selling_price);
+                                    final EditText mSoldDate = (EditText) view.findViewById(R.id.sold_date);
                                     Button mSave = (Button) view.findViewById(R.id.submit);
                                     ImageView mClose = (ImageView) view.findViewById(R.id.close);
 
@@ -270,9 +271,14 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
                                     mSave.setOnClickListener(new OnClickListener() {
                                         @Override
                                         public void onClick(View v) {
-                                            /*apiCall.deleteUploadedVehicle(mMainList.get(holder.getAdapterPosition()).getVehicleId(), "delete");
-                                    mMainList.remove(holder.getAdapterPosition());
-                                    notifyDataSetChanged();*/
+                                            apiCall.soldVehicle(mMainList.get(holder.getAdapterPosition()).getVehicleId(),
+                                                    mCustomerName.getText().toString(), mContact.getText().toString(),
+                                                    Integer.parseInt(mSellingPrice.getText().toString()),
+                                                    mAddress.getText().toString(), mSoldDate.getText().toString());
+
+                                            apiCall.deleteUploadedVehicle(mMainList.get(holder.getAdapterPosition()).getVehicleId(), "delete");
+                                            mMainList.remove(holder.getAdapterPosition());
+                                            notifyDataSetChanged();
                                         }
                                     });
                                 }
@@ -661,6 +667,7 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
                             bundle.putInt("bundle_GroupId", groupid);
                             bundle.putInt("bundle_VehicleId", mMainList.get(holder.getAdapterPosition()).getVehicleId());
                             bundle.putString("bundle_Type", "UsedVehicle");
+                            bundle.putString("bundle_Contact", mMainList.get(holder.getAdapterPosition()).getContactVehicle());
 
                             Intent intent = new Intent(activity, MyVehicleQuotationListActivity.class);
                             intent.putExtras(bundle);
@@ -1037,7 +1044,7 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
         if (str != null) {
             switch (str) {
                 case "success":
-                    CustomToast.customToast(activity, "vehicle deleted");
+                    //CustomToast.customToast(activity, "vehicle deleted");
                     break;
                 case "success_notification":
                     CustomToast.customToast(activity, "notification sent");
@@ -1048,9 +1055,11 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
                 case "sent_quotation":
                     CustomToast.customToast(activity, "quotation sent");
                     break;
+                case "sold_success":
+                    CustomToast.customToast(activity, "vehicle sold");
+                    break;
             }
         }
-
     }
 
     static class VehicleHolder extends RecyclerView.ViewHolder {

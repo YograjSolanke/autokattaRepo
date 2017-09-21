@@ -1312,4 +1312,14 @@ public interface ServiceApi {
     Call<String> _autokattaAddQuotation(@Query("vehicleid") int vehicleId, @Query("groupid") int groupId,
                                         @Query("custcontact") String custContact, @Query("price") double price,
                                         @Query("type") String type);
+
+    //Sold Vehicle...data...
+    @POST("SoldVehicle")
+    Call<String> _soldVehicle(@Query("vehicleid") int vehicleId, @Query("custname") String custName,
+                              @Query("soldtocontact") String contact, @Query("price") int price,
+                              @Query("address") String address, @Query("Mycontact") String Mycontact);
+
+    //get Sold Vehicle...
+    @GET("GetSoldVehicles")
+    Call<SoldVehicleResponse> getSoldVehicle(@Query("mycontact") String contact);
 }

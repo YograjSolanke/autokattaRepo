@@ -93,7 +93,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 .setContentIntent(pendingIntent)
                 .setContentIntent(likeIntent)
                 .setContentIntent(callIntent)
-                .addAction(R.mipmap.thumb_up, "Like", likeIntent)
+                .addAction(R.mipmap.new_like_white, "Like", likeIntent)
                 .addAction(R.mipmap.call, "Call", callIntent);
 
         NotificationManager notificationManager =
