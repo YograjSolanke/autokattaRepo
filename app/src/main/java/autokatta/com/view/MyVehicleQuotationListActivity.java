@@ -13,6 +13,7 @@ import android.text.InputType;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -55,7 +56,7 @@ public class MyVehicleQuotationListActivity extends AppCompatActivity implements
 
     RecyclerView quotationRecycler;
     SwipeRefreshLayout mSwipeRefreshLayout;
-    TextView mNoData;
+    TextView mNoData, headText;
     String myContact;
     ConnectionDetector mTestConnection;
     LinearLayoutManager mLinearLayoutManager;
@@ -63,6 +64,7 @@ public class MyVehicleQuotationListActivity extends AppCompatActivity implements
     TextView Title, Category, Brand, Model, Keyword, Price;
     RelativeLayout relCategory, relBrand, relModel, relPrice, MainRel;
     ImageView Image;
+    Button view_vehicle, get_Quote;
     int bundle_GroupId;
     int bundle_VehicleId;
     FloatingActionButton fab;
@@ -84,6 +86,7 @@ public class MyVehicleQuotationListActivity extends AppCompatActivity implements
         quotationRecycler = (RecyclerView) findViewById(R.id.quotationList);
         fab = (FloatingActionButton) findViewById(R.id.fab);
         mNoData = (TextView) findViewById(R.id.no_category);
+        headText = (TextView) findViewById(R.id.headText);
         mNoData.setVisibility(View.GONE);
         quotationRecycler.setHasFixedSize(true);
         mLinearLayoutManager = new LinearLayoutManager(this);
@@ -106,6 +109,9 @@ public class MyVehicleQuotationListActivity extends AppCompatActivity implements
         relPrice = (RelativeLayout) findViewById(R.id.relative5);
         MainRel = (RelativeLayout) findViewById(R.id.MainRel);
         linearButton = (LinearLayout) findViewById(R.id.llButton);
+        view_vehicle = (Button) findViewById(R.id.view_vehicle);
+        get_Quote = (Button) findViewById(R.id.view_quot_list);
+        get_Quote.setVisibility(View.GONE);
         Keyword.setVisibility(View.GONE);
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayoutQuotList);
 
@@ -158,6 +164,7 @@ public class MyVehicleQuotationListActivity extends AppCompatActivity implements
                                 fab.setVisibility(View.GONE);
                                 getOtherQuotationList(bundle_GroupId, bundle_VehicleId, bundle_Type);
                             } else {
+                                headText.setText("Your Quotation List");
                                 getMyQuotationList(bundle_GroupId, bundle_VehicleId, bundle_Type);
                             }
                         }
@@ -173,6 +180,17 @@ public class MyVehicleQuotationListActivity extends AppCompatActivity implements
             @Override
             public void onClick(View view) {
                 clickButton();
+            }
+        });
+
+        view_vehicle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Bundle b = new Bundle();
+                b.putInt("vehicle_id", bundle_VehicleId);
+                Intent intent = new Intent(MyVehicleQuotationListActivity.this, VehicleDetails.class);
+                intent.putExtras(b);
+                startActivity(intent);
             }
         });
 
@@ -203,6 +221,12 @@ public class MyVehicleQuotationListActivity extends AppCompatActivity implements
     @Override
     public void onRefresh() {
 
+        if (bundle_Contact.equals(myContact)) {
+            fab.setVisibility(View.GONE);
+            getOtherQuotationList(bundle_GroupId, bundle_VehicleId, bundle_Type);
+        } else {
+            getMyQuotationList(bundle_GroupId, bundle_VehicleId, bundle_Type);
+        }
     }
 
     @Override
@@ -219,6 +243,7 @@ public class MyVehicleQuotationListActivity extends AppCompatActivity implements
                         success.setCustContact(success.getCustContact());
                         success.setCustomerName(success.getCustomerName());
                         success.setReservePrice(success.getReservePrice());
+                        success.setQuery(success.getQuery());
 
 
                         try {
@@ -265,6 +290,7 @@ public class MyVehicleQuotationListActivity extends AppCompatActivity implements
 
     @Override
     public void notifyError(Throwable error) {
+        mSwipeRefreshLayout.setRefreshing(false);
 
     }
 
@@ -282,11 +308,19 @@ public class MyVehicleQuotationListActivity extends AppCompatActivity implements
         input.setHint("Amount");
         input.setInputType(InputType.TYPE_CLASS_NUMBER);
 
-        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.MATCH_PARENT);
-        input.setLayoutParams(lp);
-        alertDialog.setView(input);
+        final EditText inputQuery = new EditText(this);
+        inputQuery.setHint("Enter Query If Any..");
+
+        LinearLayout ll = new LinearLayout(this);
+        ll.setOrientation(LinearLayout.VERTICAL);
+        ll.addView(input);
+        ll.addView(inputQuery);
+
+//        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+//                LinearLayout.LayoutParams.MATCH_PARENT,
+//                LinearLayout.LayoutParams.MATCH_PARENT);
+//        input.setLayoutParams(lp);
+        alertDialog.setView(ll);
         // alertDialog.setIcon(R.drawable.key);
 
         alertDialog.setPositiveButton("Ok",
@@ -294,6 +328,7 @@ public class MyVehicleQuotationListActivity extends AppCompatActivity implements
                     public void onClick(DialogInterface dialog, int which) {
                         try {
                             String Amount = input.getText().toString();
+                            String query = inputQuery.getText().toString();
                             if (Amount.equals("")) {
                                 input.setError("Please Enter Amount");
                                 Toast.makeText(MyVehicleQuotationListActivity.this, "Price should not be empty", Toast.LENGTH_LONG).show();
@@ -313,7 +348,7 @@ public class MyVehicleQuotationListActivity extends AppCompatActivity implements
 
                                         ServiceApi serviceApi = retrofit.create(ServiceApi.class);
                                         Call<String> addBid = serviceApi._autokattaAddQuotation(bundle_VehicleId, bundle_GroupId,
-                                                myContact, Double.parseDouble(Amount), bundle_Type);
+                                                myContact, Double.parseDouble(Amount), bundle_Type, query);
                                         addBid.enqueue(new Callback<String>() {
                                             @Override
                                             public void onResponse(Call<String> call, Response<String> response) {

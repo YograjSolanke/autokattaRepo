@@ -50,6 +50,9 @@ public class MyVehicleQuotationListResponse {
         @SerializedName("CustomerName")
         @Expose
         private String customerName;
+        @SerializedName("Query")
+        @Expose
+        private String query;
 
         public String getCustContact() {
             return custContact;
@@ -89,6 +92,14 @@ public class MyVehicleQuotationListResponse {
 
         public void setCustomerName(String customerName) {
             this.customerName = customerName;
+        }
+
+        public String getQuery() {
+            return query;
+        }
+
+        public void setQuery(String query) {
+            this.query = query;
         }
 
     }

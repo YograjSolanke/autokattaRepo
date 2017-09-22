@@ -221,6 +221,7 @@
                 android:layout_below="@+id/relative5"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="5dp"
+                android:layout_centerHorizontal="true"
                 android:layout_toEndOf="@+id/image"
                 android:orientation="horizontal"
                 android:weightSum="2">
@@ -230,6 +231,7 @@
                     style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="35dp"
+                    android:layout_weight="1"
                     android:background="@color/background"
                     android:padding="@dimen/activity_half_margin"
                     android:text="@string/title_activity_vehicle_details"
@@ -240,6 +242,7 @@
                     style="?android:attr/buttonBarButtonStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="35dp"
+                    android:layout_weight="1"
                     android:layout_marginStart="10dp"
                     android:background="@color/background"
                     android:padding="@dimen/activity_half_margin"

@@ -1,16 +1,23 @@
 package autokatta.com.adapter;
 
 import android.app.Activity;
+import android.app.ActivityOptions;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.List;
 
 import autokatta.com.R;
 import autokatta.com.response.MyVehicleQuotationListResponse;
+import autokatta.com.view.OtherProfile;
 
 /**
  * Created by ak-004 on 20/9/17.
@@ -42,14 +49,51 @@ public class QuotationListAdapter extends RecyclerView.Adapter<RecyclerView.View
     public void onBindViewHolder(RecyclerView.ViewHolder holder1, int position) {
         final QuotationHolder holder = (QuotationHolder) holder1;
 
-        if (QuotationList.get(holder.getAdapterPosition()).getCustContact().equals(mLoginContact))
+        if (QuotationList.get(holder.getAdapterPosition()).getCustContact().equals(mLoginContact)) {
             holder.name.setText("You");
-        else
-        holder.name.setText(QuotationList.get(position).getCustomerName());
+            holder.priceText.setText("Your Quote");
+        } else {
+            holder.callMe.setVisibility(View.VISIBLE);
+            holder.name.setText(QuotationList.get(position).getCustomerName());
+
+        }
         holder.contact.setText(QuotationList.get(position).getCustContact());
         holder.reservedPrice.setText(String.valueOf(QuotationList.get(position).getReservePrice()));
         holder.date.setText(QuotationList.get(position).getCreatedDate());
+        holder.query.setText(QuotationList.get(position).getQuery());
 
+
+        holder.callMe.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                call(QuotationList.get(holder.getAdapterPosition()).getCustContact());
+            }
+        });
+        holder.nameRelative.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!mLoginContact.equals(QuotationList.get(holder.getAdapterPosition()).getCustContact())) {
+                    Bundle bundle = new Bundle();
+                    bundle.putString("contactOtherProfile", QuotationList.get(holder.getAdapterPosition()).getCustContact());
+
+                    ActivityOptions options = ActivityOptions.makeCustomAnimation(mActivity, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
+                    Intent i = new Intent(mActivity, OtherProfile.class);
+                    i.putExtras(bundle);
+                    mActivity.startActivity(i, options.toBundle());
+                }
+            }
+        });
+
+    }
+
+    private void call(String custContact) {
+        Intent in = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + custContact));
+        System.out.println("calling started");
+        try {
+            mActivity.startActivity(in);
+        } catch (android.content.ActivityNotFoundException ex) {
+            System.out.println("No Activity Found For Call in Other Profile\n");
+        }
     }
 
     @Override
@@ -60,8 +104,9 @@ public class QuotationListAdapter extends RecyclerView.Adapter<RecyclerView.View
 
     private static class QuotationHolder extends RecyclerView.ViewHolder {
 
-        TextView name, contact, reservedPrice, date;
-
+        TextView name, contact, reservedPrice, date, priceText, query;
+        ImageView callMe;
+        RelativeLayout nameRelative;
 
         QuotationHolder(View itemView) {
             super(itemView);
@@ -69,7 +114,11 @@ public class QuotationListAdapter extends RecyclerView.Adapter<RecyclerView.View
             name = (TextView) itemView.findViewById(R.id.setName);
             contact = (TextView) itemView.findViewById(R.id.setContact);
             reservedPrice = (TextView) itemView.findViewById(R.id.setPrice);
+            priceText = (TextView) itemView.findViewById(R.id.priceText);
             date = (TextView) itemView.findViewById(R.id.setDate);
+            query = (TextView) itemView.findViewById(R.id.setQuery);
+            callMe = (ImageView) itemView.findViewById(R.id.call);
+            nameRelative = (RelativeLayout) itemView.findViewById(R.id.relative1);
         }
     }
 }

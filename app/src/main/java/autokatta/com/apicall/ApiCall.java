@@ -37,8 +37,6 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-import static autokatta.com.R.string.about;
-
 /**
  * Created by ak-001 on 18/3/17.
  */
@@ -8391,7 +8389,7 @@ get ExchangeMela Analytics Data
       Add quotation
     */
     public void addQuotation(int vehicleId, int groupId, String custContact,
-                             double price, String type) {
+                             double price, String type, String query) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 //JSON to Gson conversion
@@ -8408,7 +8406,7 @@ get ExchangeMela Analytics Data
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
                 Call<String> mServiceMelaResponse = serviceApi._autokattaAddQuotation(vehicleId, groupId, custContact,
-                        price, type);
+                        price, type, query);
                 mServiceMelaResponse.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
