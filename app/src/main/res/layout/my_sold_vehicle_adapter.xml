@@ -67,13 +67,13 @@
                 android:layout_below="@+id/relativesoldto"
                 android:layout_marginStart="10dp"
                 android:layout_toEndOf="@+id/vehiprofile"
-                android:weightSum="1">
+                android:weightSum="2">
 
                 <TextView
                     android:id="@+id/sold"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.25"
+                    android:layout_weight="0.5"
                     android:gravity="start"
                     android:text="Sold Date"
                     android:textColor="#808080"
@@ -84,7 +84,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
-                    android:layout_weight="0.75"
+                    android:layout_weight="1.5"
                     android:hint="@string/not_mentioned"
                     android:textColor="#808080" />
             </LinearLayout>

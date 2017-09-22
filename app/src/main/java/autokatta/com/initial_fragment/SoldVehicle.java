@@ -134,16 +134,12 @@ public class SoldVehicle extends Fragment implements RequestNotifier, SwipeRefre
                         myVehicleSuccess.setCategory(myVehicleSuccess.getCategory());
                         myVehicleSuccess.setModel(myVehicleSuccess.getModel());
                         myVehicleSuccess.setManufacturer(myVehicleSuccess.getManufacturer());
-                        //myVehicleSuccess.setBuyerLeads(myVehicleSuccess.getBuyerLeads());
-                        //myVehicleSuccess.setNotificationstatus(myVehicleSuccess.getNotificationstatus());
-                        //myVehicleSuccess.setImages(myVehicleSuccess.getImages());
                         myVehicleSuccess.setDate(myVehicleSuccess.getDate());
                         myVehicleSuccess.setYearOfManufacture(myVehicleSuccess.getYearOfManufacture());
                         myVehicleSuccess.setKmsRunning(myVehicleSuccess.getKmsRunning());
                         myVehicleSuccess.setHrsRunning(myVehicleSuccess.getHrsRunning());
                         myVehicleSuccess.setRtoCity(myVehicleSuccess.getRtoCity());
                         myVehicleSuccess.setLocationCity(myVehicleSuccess.getLocationCity());
-                        //myVehicleSuccess.setRegistrationNumber(myVehicleSuccess.getRegistrationNumber());
 
                         if (myVehicleSuccess.getRegistrationNumber().equals(""))
                             myVehicleSuccess.setRegistrationNumber("NA");
@@ -152,10 +148,6 @@ public class SoldVehicle extends Fragment implements RequestNotifier, SwipeRefre
 
                         myVehicleSuccess.setVersion(myVehicleSuccess.getVersion());
                         myVehicleSuccess.setRcAvailable(myVehicleSuccess.getRcAvailable());
-                        //myVehicleSuccess.setNoOfOwner(myVehicleSuccess.getNoOfOwner());
-
-                        //myVehicleSuccess.setGroupIDs(myVehicleSuccess.getGroupIDs());
-                        //myVehicleSuccess.setStoreIDs(myVehicleSuccess.getStoreIDs());
 
                         myVehicleSuccess.setSoldToContact(myVehicleSuccess.getSoldToContact());
                         myVehicleSuccess.setCustName(myVehicleSuccess.getCustName());
@@ -177,6 +169,16 @@ public class SoldVehicle extends Fragment implements RequestNotifier, SwipeRefre
                             e.printStackTrace();
                         }
 
+                        String vehicleImage = myVehicleSuccess.getImage();
+                        if (vehicleImage.contains(",")) {
+                            String[] items = vehicleImage.split(",");
+                            myVehicleSuccess.setImage(items[0]);
+                            /*for (String item : items) {
+                                notification.setUpVehicleImage(item);
+                            }*/
+                        } else {
+                            myVehicleSuccess.setImage(vehicleImage);
+                        }
 
 
                         myUploadedVehiclesResponseList.add(myVehicleSuccess);
