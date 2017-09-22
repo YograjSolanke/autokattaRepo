@@ -23,6 +23,7 @@ import com.github.clans.fab.FloatingActionMenu;
 import autokatta.com.R;
 import autokatta.com.adapter.TabAdapterName;
 import autokatta.com.apicall.ApiCall;
+import autokatta.com.fragment_profile.About;
 import autokatta.com.fragment_profile.AboutStore;
 import autokatta.com.fragment_profile.Event;
 import autokatta.com.fragment_profile.Follow;
@@ -43,6 +44,7 @@ public class OtherProfile extends AppCompatActivity implements RequestNotifier, 
     Bundle mBundle = new Bundle();
     FloatingActionMenu menuRed;
     FloatingActionButton mCall, mLike, mFollow;
+    About mAbout;
     Groups mGroupsFrag;
     AboutStore mStore;
     String dp = "";
@@ -76,15 +78,19 @@ public class OtherProfile extends AppCompatActivity implements RequestNotifier, 
         mLike.setOnClickListener(this);
         mFollow.setOnClickListener(this);
 
+        mAbout = new About();
+        mAbout.setArguments(mBundle);
 
         mGroupsFrag = new Groups();
         mGroupsFrag.setArguments(mBundle);
+
         mStore = new AboutStore();
         mStore.setArguments(mBundle);
        /* mEventFrag = new Event();
         mEventFrag.setArguments(mBundle);*/
         mOtherWallFrag = new OtherWall();
         mOtherWallFrag.setArguments(mBundle);
+
         mFollowFrag = new Follow();
         mFollowFrag.setArguments(mBundle);
         /*
@@ -137,7 +143,7 @@ public class OtherProfile extends AppCompatActivity implements RequestNotifier, 
 
     private void setupViewPager(ViewPager viewPager) {
         TabAdapterName adapter = new TabAdapterName(getSupportFragmentManager());
-        adapter.addFragment(mGroupsFrag, "About");
+        adapter.addFragment(mAbout, "ABOUT");
         adapter.addFragment(mGroupsFrag, "GROUP");
         adapter.addFragment(mStore, "STORE");
         //adapter.addFragment(mEventFrag, "EVENT");

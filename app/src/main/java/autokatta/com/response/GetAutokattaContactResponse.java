@@ -50,7 +50,7 @@ public class GetAutokattaContactResponse {
         @SerializedName("followStatus")
         @Expose
         private String followStatus;
-        @SerializedName("groupIds")
+        @SerializedName("groupIDs")
         @Expose
         private String groupIds;
         @SerializedName("groupNames")

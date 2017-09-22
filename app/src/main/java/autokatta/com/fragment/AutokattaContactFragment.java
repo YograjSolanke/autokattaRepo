@@ -76,8 +76,8 @@ public class AutokattaContactFragment extends Fragment {
                     obj.setMystatus(cursor.getString(cursor.getColumnIndex(DbConstants.myStatus)));
                     obj.setFollowstatus(cursor.getString(cursor.getColumnIndex(DbConstants.followStatus)));
                     obj.setUserprofile(cursor.getString(cursor.getColumnIndex(DbConstants.profilePic)));
-                    obj.setGroupIds("");
-                    obj.setGroupNames("");
+                    obj.setGroupIds(cursor.getString(cursor.getColumnIndex(DbConstants.groupIds)));
+                    obj.setGroupNames(cursor.getString(cursor.getColumnIndex(DbConstants.groupNames)));
                     contactdata.add(obj);
                 }
 

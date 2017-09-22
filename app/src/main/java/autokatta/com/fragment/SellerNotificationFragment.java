@@ -40,6 +40,7 @@ import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.SellerResponse;
+import autokatta.com.view.CompareVehicleListActivity;
 import autokatta.com.view.OtherProfile;
 import retrofit2.Response;
 
@@ -79,28 +80,17 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
                 getString("loginContact", "");
         mApiCall.getSavedSearchSellerList(myContact);
 
-        return view;
-    }
+        compare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-    public void VisibleCompareButton(List<Integer> vehicleids) {
-        int flag = 0;
-        getBundle_vehicle_id = "";
-        for (int i = 0; i < vehicleids.size(); i++) {
-            if (vehicleids.get(i) != 0) {
-                flag++;
-                if (getBundle_vehicle_id.equals(""))
-                    getBundle_vehicle_id = vehicleids.get(i).toString();
-                else
-                    getBundle_vehicle_id = getBundle_vehicle_id + "," + vehicleids.get(i).toString();
+                Intent intent = new Intent(getActivity(), CompareVehicleListActivity.class);
+                intent.putExtra("vehicle_ids", getBundle_vehicle_id);
+                getActivity().startActivity(intent);
             }
+        });
 
-        }
-
-        if (flag > 1)
-            relativeLayout.setVisibility(View.VISIBLE);
-        else
-            relativeLayout.setVisibility(View.GONE);
-
+        return view;
     }
 
     public void setViewsVisible(int s) {
@@ -532,7 +522,7 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
 
 
                         if (showcheckboc == 0)
-                            checkBox[j].setVisibility(View.GONE);
+                            checkBox[j].setVisibility(View.VISIBLE);
 
                         final int finalI = i;
                         final int finalJ = j;
@@ -629,6 +619,29 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
             }
         }
     }
+
+    public void VisibleCompareButton(List<Integer> vehicleids) {
+        int flag = 0;
+        getBundle_vehicle_id = "";
+        for (int i = 0; i < vehicleids.size(); i++) {
+            if (vehicleids.get(i) != 0) {
+                flag++;
+                if (getBundle_vehicle_id.equals(""))
+                    getBundle_vehicle_id = vehicleids.get(i).toString();
+                else
+                    getBundle_vehicle_id = getBundle_vehicle_id + "," + vehicleids.get(i).toString();
+            }
+
+        }
+
+        if (flag > 1)
+            relativeLayout.setVisibility(View.VISIBLE);
+        else
+            relativeLayout.setVisibility(View.GONE);
+
+    }
+
+
 
 
     @Override

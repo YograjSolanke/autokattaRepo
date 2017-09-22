@@ -758,7 +758,11 @@
             android:name=".view.MyVehicleQuotationListActivity"
             android:label="@string/title_activity_my_vehicle_quotation_list"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".enquiries.TodaysFollowUp"></activity>
+        <activity android:name=".enquiries.TodaysFollowUp" />
+        <activity
+            android:name=".view.CompareVehicleListActivity"
+            android:label="@string/title_activity_compare_vehicle_list"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
