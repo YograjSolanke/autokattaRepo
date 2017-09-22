@@ -819,6 +819,19 @@ public class SearchVehicleActivity extends AppCompatActivity implements MultiSel
 
                 Category = allcategorySpinner.getSelectedItem().toString();
 
+
+                city2 = autoRTO.getText().toString();
+                city21 = autoRTO1.getText().toString();
+                city22 = autoRTO2.getText().toString();
+                city23 = autoRTO3.getText().toString();
+                city24 = autoRTO4.getText().toString();
+                city1 = autoCity.getText().toString();
+                city11 = autoCity1.getText().toString();
+                city12 = autoCity2.getText().toString();
+                city13 = autoCity3.getText().toString();
+                city14 = autoCity4.getText().toString();
+
+
                 try {
                     if (Category.equalsIgnoreCase("Car")) {
                         permit1 = radioPermitButton.getText().toString();
@@ -828,13 +841,11 @@ public class SearchVehicleActivity extends AppCompatActivity implements MultiSel
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-
-                if (finance1.startsWith("-Select")) {
+                if (strstocktype.startsWith("-Select")) {
+                    CustomToast.customToast(getApplicationContext(), "Please Select Stock Type");
+                } else if (finance1.startsWith("-Select")) {
                     CustomToast.customToast(getApplicationContext(), "Please provide finanace required or not");
-                }else if (strstocktype.startsWith("-Select")) {
-                        CustomToast.customToast(getApplicationContext(), "Please provide Stock Type");
-
-                    } else if (Category.equalsIgnoreCase("Select Category")) {
+                } else if (Category.equalsIgnoreCase("Select Category")) {
                         CustomToast.customToast(getApplicationContext(), "select category");
 
                     } else if (subcategorySpinner.getSelectedItem().toString().equalsIgnoreCase("Select subcategory")) {
@@ -846,7 +857,11 @@ public class SearchVehicleActivity extends AppCompatActivity implements MultiSel
                     } else if (modelSpinner.getSelectedItem().toString().equalsIgnoreCase("Select model")) {
                         CustomToast.customToast(getApplicationContext(), "select model");
 
-                    } else {
+                } else if (city1.equals("") && city11.equals("") && city12.equals("") && city13.equals("") && city14.equals("")) {
+                    CustomToast.customToast(getApplicationContext(), "Please Select Atleast One City");
+                } else if (city2.equals("") && city21.equals("") && city22.equals("") && city23.equals("") && city24.equals("")) {
+                    CustomToast.customToast(getApplicationContext(), "Please Select Atleast One RTO City");
+                } else {
                         applySearch();
                     }
                 }
@@ -899,16 +914,7 @@ public class SearchVehicleActivity extends AppCompatActivity implements MultiSel
 
             price1 = pricefromTxt.getText().toString();
             price2 = pricetoTxt.getText().toString();
-            city2 = autoRTO.getText().toString();
-            city21 = autoRTO1.getText().toString();
-            city22 = autoRTO2.getText().toString();
-            city23 = autoRTO3.getText().toString();
-            city24 = autoRTO4.getText().toString();
-            city1 = autoCity.getText().toString();
-            city11 = autoCity1.getText().toString();
-            city12 = autoCity2.getText().toString();
-            city13 = autoCity3.getText().toString();
-            city14 = autoCity4.getText().toString();
+
 
             use1 = useEdit.getText().toString();
             rv1 = rvEdit.getText().toString();

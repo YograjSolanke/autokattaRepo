@@ -401,6 +401,19 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
                     finance1 = finance.getSelectedItem().toString();
                     strstocktype = stocktype.getSelectedItem().toString();
                     Category = allcategory.getSelectedItem().toString();
+
+                    city2 = autoRTO.getText().toString();
+                    city21 = autoRTO1.getText().toString();
+                    city22 = autoRTO2.getText().toString();
+                    city23 = autoRTO3.getText().toString();
+                    city24 = autoRTO4.getText().toString();
+
+                    city1 = autoCity.getText().toString();
+                    city11 = autoCity1.getText().toString();
+                    city12 = autoCity2.getText().toString();
+                    city13 = autoCity3.getText().toString();
+                    city14 = autoCity4.getText().toString();
+
                     try {
                         if (Category.equalsIgnoreCase("Car")) {
                             permit1 = radioPermitButton.getText().toString();
@@ -410,11 +423,10 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-
-                    if (finance1.startsWith("-Select")) {
-                        Toast.makeText(getActivity(), "Please provide finance required or not", Toast.LENGTH_SHORT).show();
-                    } else  if (strstocktype.startsWith("-Select")) {
+                    if (strstocktype.startsWith("-Select")) {
                         Toast.makeText(getActivity(), "Please select Stock Type", Toast.LENGTH_SHORT).show();
+                    } else if (finance1.startsWith("-Select")) {
+                        Toast.makeText(getActivity(), "Please provide finance required or not", Toast.LENGTH_SHORT).show();
                     } else if (Category.equals("-Select Category-")) {
                         Toast.makeText(getActivity(), "select catagory", Toast.LENGTH_SHORT).show();
                     } else if (subcategory.getSelectedItem().toString().equals("-Select subcategory-")) {
@@ -423,6 +435,10 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
                         Toast.makeText(getActivity(), "select brand", Toast.LENGTH_SHORT).show();
                     } else if (model.getSelectedItem().toString().equals("-Select Models-")) {
                         Toast.makeText(getActivity(), "select model", Toast.LENGTH_SHORT).show();
+                    } else if (city1.equals("") && city11.equals("") && city12.equals("") && city13.equals("") && city14.equals("")) {
+                        CustomToast.customToast(getActivity(), "Please Select Atleast One City");
+                    } else if (city2.equals("") && city21.equals("") && city22.equals("") && city23.equals("") && city24.equals("")) {
+                        CustomToast.customToast(getActivity(), "Please Select Atleast One RTO City");
                     } else {
                         applySearch();
                     }
@@ -947,17 +963,7 @@ public class FilterFragment extends Fragment implements Multispinner.MultiSpinne
 
             price1 = pricefrom.getText().toString();
             price2 = priceto.getText().toString();
-            city2 = autoRTO.getText().toString();
-            city21 = autoRTO1.getText().toString();
-            city22 = autoRTO2.getText().toString();
-            city23 = autoRTO3.getText().toString();
-            city24 = autoRTO4.getText().toString();
 
-            city1 = autoCity.getText().toString();
-            city11 = autoCity1.getText().toString();
-            city12 = autoCity2.getText().toString();
-            city13 = autoCity3.getText().toString();
-            city14 = autoCity4.getText().toString();
 
             if (!city1.isEmpty()) {
                 List<String> resultList = GooglePlacesAdapter.getResultList();
