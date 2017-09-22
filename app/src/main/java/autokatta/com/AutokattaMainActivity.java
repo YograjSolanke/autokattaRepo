@@ -56,6 +56,7 @@ import autokatta.com.fragment.SocialFragment;
 import autokatta.com.fragment.StoreNotification;
 import autokatta.com.fragment.WallNotificationFragment;
 import autokatta.com.interfaces.RequestNotifier;
+import autokatta.com.other.DemoDelAct;
 import autokatta.com.other.PostStatus;
 import autokatta.com.other.SearchActivity;
 import autokatta.com.other.SessionManagement;
@@ -76,7 +77,6 @@ import autokatta.com.view.MySavedAuctionEventActivity;
 import autokatta.com.view.MySearchActivity;
 import autokatta.com.view.MyStoreListActivity;
 import autokatta.com.view.MyUpcomingEventsTabActivity;
-import autokatta.com.view.MyUploadedVehiclesActivity;
 import autokatta.com.view.OtherProfile;
 import autokatta.com.view.ProductViewActivity;
 import autokatta.com.view.SearchStoreActivity;
@@ -510,7 +510,7 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
                         } else if (menuItem.getItemId() == R.id.my_search) {
                             startActivity(new Intent(AutokattaMainActivity.this, MySearchActivity.class));
                         } else if (menuItem.getItemId() == R.id.my_vehicle) {
-                            startActivity(new Intent(AutokattaMainActivity.this, MyUploadedVehiclesActivity.class));
+                            startActivity(new Intent(AutokattaMainActivity.this, DemoDelAct.class));
                         } else if (menuItem.getItemId() == R.id.create_event) {
                             startActivity(new Intent(AutokattaMainActivity.this, Create_Event.class));
                         } else if (menuItem.getItemId() == R.id.active_event) {

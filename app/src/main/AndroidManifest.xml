@@ -762,7 +762,11 @@
         <activity
             android:name=".view.CompareVehicleListActivity"
             android:label="@string/title_activity_compare_vehicle_list"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".other.DemoDelAct" />
+        <activity android:name=".my_inventory_container.ProductContainer" />
+        <activity android:name=".my_inventory_container.ServiceContainer" />
+        <activity android:name=".my_inventory_container.SoldVehicleContainer"></activity>
     </application>
 
 </manifest>

@@ -110,7 +110,7 @@ public class InventoryServicesFragment extends Fragment implements RequestNotifi
                     @Override
                     public void run() {
                         mSwipeRefreshLayout.setRefreshing(true);
-//                        getInventoryService(Sharedcontact);
+                        getInventoryService(Sharedcontact);
                     }
                 });
             }
