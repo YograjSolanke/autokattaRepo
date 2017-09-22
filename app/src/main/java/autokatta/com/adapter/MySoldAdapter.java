@@ -11,8 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -23,6 +21,7 @@ import java.util.List;
 import autokatta.com.R;
 import autokatta.com.response.SoldVehicleResponse;
 import autokatta.com.view.VehicleDetails;
+import jp.wasabeef.glide.transformations.CropSquareTransformation;
 
 /**
  * Created by ak-001 on 20/9/17.
@@ -40,51 +39,23 @@ public class MySoldAdapter extends RecyclerView.Adapter<MySoldAdapter.VehicleHol
 
     static class VehicleHolder extends RecyclerView.ViewHolder {
         ImageView vehicleimage;
-        TextView edittitles, editprices, editcategorys, editbrands, editmodels, editleads, edituploadedon, editmfgyr,
-                editkms, editrto, editlocation, editregNo;
-        Button vehidetails, btnnotify, delete, mEnquiry, mQuotation, mUploadGroup, mUploadStore, mTransferStock,
-                mViewQuote;
+        Button delete;
         CardView mcardView;
-        RelativeLayout mBroadcast;
-        LinearLayout mLinear;
-
-        TextView mCustName, mSoldDate, mCustAddress, mCustContact;
+        TextView mCustName, mSoldDate, mCustAddress, mCustContact, mSoldVehicleName, mCategory, mSubCategory, mBrand, mModel;
 
         VehicleHolder(View itemView) {
             super(itemView);
-            /*edittitles = (TextView) itemView.findViewById(R.id.edittitle);
-            editprices = (TextView) itemView.findViewById(R.id.editprice);
-            editcategorys = (TextView) itemView.findViewById(R.id.editcategory);
-            editbrands = (TextView) itemView.findViewById(R.id.editbrand);
-            editmodels = (TextView) itemView.findViewById(R.id.editmodel);
-            editleads = (TextView) itemView.findViewById(R.id.editleads);
-            edituploadedon = (TextView) itemView.findViewById(R.id.edituploadedon);
-            delete = (Button) itemView.findViewById(R.id.delete);
-            btnnotify = (Button) itemView.findViewById(R.id.btnnotify);
-            mEnquiry = (Button) itemView.findViewById(R.id.Enquiry);
-            mUploadGroup = (Button) itemView.findViewById(R.id.upload_group);
-            mUploadStore = (Button) itemView.findViewById(R.id.upload_store);
-            editmfgyr = (TextView) itemView.findViewById(R.id.year);
-            editkms = (TextView) itemView.findViewById(R.id.km_hrs);
-            //edithrs=(TextView)itemView.findViewById(R.id.km_hrs);
-            editrto = (TextView) itemView.findViewById(R.id.RTO);
-            editlocation = (TextView) itemView.findViewById(R.id.location);
-            editregNo = (TextView) itemView.findViewById(R.id.registrationNo);
-            mBroadcast = (RelativeLayout) itemView.findViewById(R.id.relativebroadcast);
-            mLinear = (LinearLayout) itemView.findViewById(R.id.linearbtns);
-            mQuotation = (Button) itemView.findViewById(R.id.quotation);
-            mTransferStock = (Button) itemView.findViewById(R.id.transfer_stock);
-            mViewQuote = (Button) itemView.findViewById(R.id.view_quotation);
-            vehidetails = (Button) itemView.findViewById(R.id.vehibtndetails);*/
-
+            mSoldVehicleName = (TextView) itemView.findViewById(R.id.sold_vehicle_name);
+            mCategory = (TextView) itemView.findViewById(R.id.category);
+            mSubCategory = (TextView) itemView.findViewById(R.id.sub_category);
+            mBrand = (TextView) itemView.findViewById(R.id.brand);
+            mModel = (TextView) itemView.findViewById(R.id.model);
             vehicleimage = (ImageView) itemView.findViewById(R.id.vehiprofile);
             mcardView = (CardView) itemView.findViewById(R.id.card_view);
             mCustName = (TextView) itemView.findViewById(R.id.customer_name);
             mSoldDate = (TextView) itemView.findViewById(R.id.sold_date);
             mCustAddress = (TextView) itemView.findViewById(R.id.address);
             mCustContact = (TextView) itemView.findViewById(R.id.editcontact);
-
-
         }
     }
 
@@ -96,11 +67,15 @@ public class MySoldAdapter extends RecyclerView.Adapter<MySoldAdapter.VehicleHol
 
     @Override
     public void onBindViewHolder(final MySoldAdapter.VehicleHolder holder, int position) {
-
         holder.mCustName.setText(mMainList.get(position).getCustName());
         holder.mSoldDate.setText(mMainList.get(position).getSoldDate());
         holder.mCustAddress.setText(mMainList.get(position).getAddress());
         holder.mCustContact.setText(mMainList.get(position).getSoldToContact());
+        holder.mSoldVehicleName.setText(mMainList.get(position).getTitle());
+        holder.mCategory.setText(mMainList.get(position).getCategory());
+        holder.mSubCategory.setText(mMainList.get(position).getSubCategory());
+        holder.mBrand.setText(mMainList.get(position).getManufacturer());
+        holder.mModel.setText(mMainList.get(position).getModel());
 
          /* Vehicle pic */
 
@@ -111,6 +86,7 @@ public class MySoldAdapter extends RecyclerView.Adapter<MySoldAdapter.VehicleHol
         } else {
             Glide.with(activity)
                     .load(activity.getString(R.string.base_image_url) + mMainList.get(position).getImage())
+                    .bitmapTransform(new CropSquareTransformation(activity))
                     .diskCacheStrategy(DiskCacheStrategy.ALL) //For caching diff versions of image.
                     .into(holder.vehicleimage);
         }

@@ -22,6 +22,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -241,18 +242,20 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
                     Toast.makeText(activity, "No network....Please try later", Toast.LENGTH_SHORT).show();
                 } else {
                     new AlertDialog.Builder(activity)
-                            .setTitle("Delete?")
-                            .setMessage("Are You Sure You Want To Delete This Store?")
+                            .setTitle("Sale Vehicle?")
+                            .setMessage("Are you sure you want to sale this vehicle?")
                             .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
                                     View view = activity.getLayoutInflater().inflate(R.layout.custom_sold_vehicle_info, null);
                                     final EditText mCustomerName = (EditText) view.findViewById(R.id.customer_name);
                                     final EditText mContact = (EditText) view.findViewById(R.id.contact);
                                     final EditText mAddress = (EditText) view.findViewById(R.id.address);
+                                    final AutoCompleteTextView mLocation = (AutoCompleteTextView) view.findViewById(R.id.autoAddress);
                                     final EditText mSellingPrice = (EditText) view.findViewById(R.id.selling_price);
-                                    final EditText mSoldDate = (EditText) view.findViewById(R.id.sold_date);
                                     Button mSave = (Button) view.findViewById(R.id.submit);
                                     ImageView mClose = (ImageView) view.findViewById(R.id.close);
+                                    //ImageView mContactList = (ImageView) view.findViewById(R.id.contact_list);
+                                    mLocation.setAdapter(new GooglePlacesAdapter(activity, R.layout.registration_spinner));
 
                                     final Dialog mBottomSheetDialog = new Dialog(activity, R.style.MaterialDialogSheet);
                                     mBottomSheetDialog.setContentView(view);
@@ -268,13 +271,21 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
                                         }
                                     });
 
+                                   /* mContactList.setOnClickListener(new OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
+                                            activity.startActivityForResult(intent, REQUEST_CODE);
+                                        }
+                                    });*/
+
                                     mSave.setOnClickListener(new OnClickListener() {
                                         @Override
                                         public void onClick(View v) {
                                             apiCall.soldVehicle(mMainList.get(holder.getAdapterPosition()).getVehicleId(),
                                                     mCustomerName.getText().toString(), mContact.getText().toString(),
                                                     Integer.parseInt(mSellingPrice.getText().toString()),
-                                                    mAddress.getText().toString(), mSoldDate.getText().toString());
+                                                    mAddress.getText().toString(), myContact, mLocation.getText().toString());
 
                                             apiCall.deleteUploadedVehicle(mMainList.get(holder.getAdapterPosition()).getVehicleId(), "delete");
                                             mMainList.remove(holder.getAdapterPosition());
@@ -1113,4 +1124,6 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
         httpClient.addInterceptor(logging).readTimeout(90, TimeUnit.SECONDS);
         return httpClient;
     }
+
+
 }

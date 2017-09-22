@@ -23,20 +23,160 @@
 
             <ImageView
                 android:id="@+id/vehiprofile"
-                android:layout_width="70dip"
-                android:layout_height="70dip"
+                android:layout_width="80dip"
+                android:layout_height="80dip"
                 android:layout_alignParentStart="true"
                 android:layout_marginStart="5dp"
                 android:layout_marginTop="10dip"
                 android:contentDescription="@string/app_name" />
 
             <LinearLayout
+                android:id="@+id/vehicle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_toEndOf="@+id/vehiprofile"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/sold_vehicle_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="start"
+                    android:text="Vehicle Name"
+                    android:textColor="#808080"
+                    android:singleLine="false"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/categoryLinear"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_toEndOf="@+id/vehiprofile"
+                android:layout_below="@+id/vehicle"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+                <TextView
+                    android:id="@+id/cat"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.35"
+                    android:gravity="start"
+                    android:text="Category"
+                    android:textColor="#808080"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/category"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_weight="0.65"
+                    android:hint="@string/not_mentioned"
+                    android:textColor="#808080" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/categoryLinear1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_toEndOf="@+id/vehiprofile"
+                android:layout_below="@+id/categoryLinear"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+                <TextView
+                    android:id="@+id/sub"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.35"
+                    android:gravity="start"
+                    android:text="Sub Category"
+                    android:textColor="#808080"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/sub_category"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_weight="0.65"
+                    android:hint="@string/not_mentioned"
+                    android:textColor="#808080" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/categoryLinear2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_toEndOf="@+id/vehiprofile"
+                android:layout_below="@+id/categoryLinear1"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+                <TextView
+                    android:id="@+id/brand1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.35"
+                    android:gravity="start"
+                    android:text="Brand"
+                    android:textColor="#808080"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/brand"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_weight="0.65"
+                    android:hint="@string/not_mentioned"
+                    android:textColor="#808080" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/modelLinear"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_toEndOf="@+id/vehiprofile"
+                android:layout_below="@+id/categoryLinear2"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+                <TextView
+                    android:id="@+id/model1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.35"
+                    android:gravity="start"
+                    android:text="Model"
+                    android:textColor="#808080"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/model"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_weight="0.65"
+                    android:hint="@string/not_mentioned"
+                    android:textColor="#808080" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:id="@+id/relativesoldto"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:layout_marginTop="5dp"
                 android:layout_toEndOf="@+id/vehiprofile"
+                android:layout_below="@+id/modelLinear"
                 android:orientation="horizontal"
                 android:weightSum="1">
 
@@ -44,7 +184,7 @@
                     android:id="@+id/name"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.25"
+                    android:layout_weight="0.35"
                     android:gravity="start"
                     android:text="Sold To"
                     android:textColor="#808080"
@@ -55,7 +195,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
-                    android:layout_weight="0.75"
+                    android:layout_weight="0.65"
                     android:hint="@string/not_mentioned"
                     android:textColor="#808080" />
             </LinearLayout>
@@ -67,13 +207,13 @@
                 android:layout_below="@+id/relativesoldto"
                 android:layout_marginStart="10dp"
                 android:layout_toEndOf="@+id/vehiprofile"
-                android:weightSum="2">
+                android:weightSum="1">
 
                 <TextView
                     android:id="@+id/sold"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.5"
+                    android:layout_weight="0.35"
                     android:gravity="start"
                     android:text="Sold Date"
                     android:textColor="#808080"
@@ -84,7 +224,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
-                    android:layout_weight="1.5"
+                    android:layout_weight="0.65"
                     android:hint="@string/not_mentioned"
                     android:textColor="#808080" />
             </LinearLayout>
@@ -102,7 +242,7 @@
                     android:id="@+id/addresss"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.25"
+                    android:layout_weight="0.35"
                     android:gravity="start"
                     android:text="Address"
                     android:textColor="#808080"
@@ -113,7 +253,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
-                    android:layout_weight="0.75"
+                    android:layout_weight="0.65"
                     android:hint="@string/not_mentioned"
                     android:textColor="#808080" />
             </LinearLayout>
@@ -131,7 +271,7 @@
                     android:id="@+id/contact"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.25"
+                    android:layout_weight="0.35"
                     android:gravity="start"
                     android:text="Contact"
                     android:textColor="#808080"
@@ -142,7 +282,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
-                    android:layout_weight="0.75"
+                    android:layout_weight="0.65"
                     android:hint="@string/not_mentioned"
                     android:textColor="#808080" />
             </LinearLayout>

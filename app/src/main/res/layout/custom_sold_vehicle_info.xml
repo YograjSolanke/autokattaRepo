@@ -25,13 +25,42 @@
         android:labelFor="@+id/transfer_date"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
-    <EditText
-        android:id="@+id/contact"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Contact"
-        android:inputType="text"
-        android:labelFor="@+id/transfer_date"
+        android:layout_marginTop="@dimen/layout_top"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/contact"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Contact"
+            android:maxLength="10"
+            android:inputType="phone"
+            android:labelFor="@+id/transfer_date"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <!--<LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true">
+
+            <ImageView
+                android:id="@+id/contact_list"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/app_name"
+                android:src="@drawable/ic_contact_phone_black_24dp"
+                android:visibility="visible" />
+        </LinearLayout>-->
+    </RelativeLayout>
+
+    <AutoCompleteTextView
+        android:id="@+id/autoAddress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Location"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <EditText
@@ -49,15 +78,6 @@
         android:layout_height="wrap_content"
         android:hint="Selling Price"
         android:inputType="number"
-        android:labelFor="@+id/transfer_date"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-    <EditText
-        android:id="@+id/sold_date"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Sold Date"
-        android:inputType="datetime"
         android:labelFor="@+id/transfer_date"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 

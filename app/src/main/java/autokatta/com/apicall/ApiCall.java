@@ -609,7 +609,7 @@ public class ApiCall {
         Registration after getting OTP
      */
 
-    public void registrationAfterOtp(String username, String contact, String email, String dob, String gender, String pincode, String city, String profession, String password, String sub_profession, String industry,String Brand) {
+    public void registrationAfterOtp(String username, String contact, String email, String dob, String gender, String pincode, String city, String profession, String password, String sub_profession, String industry, String Brand) {
         try {
             //JSON to Gson conversion
             Gson gson = new GsonBuilder()
@@ -623,7 +623,7 @@ public class ApiCall {
                         .build();
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                RegistrationRequest registrationRequest = new RegistrationRequest(username, contact, email, dob, gender, city, profession, password, sub_profession, industry,Brand);
+                RegistrationRequest registrationRequest = new RegistrationRequest(username, contact, email, dob, gender, city, profession, password, sub_profession, industry, Brand);
 
                 Call<String> afterOtpRegistrationResponseCall = serviceApi._autokattaAfterOtpRegistration(registrationRequest);
                 afterOtpRegistrationResponseCall.enqueue(new Callback<String>() {
@@ -5088,7 +5088,7 @@ Get uploaded Vehicle Buyer list
      */
 
     public void updateProfile(int regID, String emialID, String city, String profession, String subProfession, String website, String companyName,
-                              String designation, String skills,String industry,String Brand, String About,String Interest) {
+                              String designation, String skills, String industry, String Brand, String About, String Interest) {
 
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
@@ -5106,7 +5106,7 @@ Get uploaded Vehicle Buyer list
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
                 UpdateProfileRequest updateProfileRequest = new UpdateProfileRequest(regID, emialID, city, profession, subProfession, website, companyName,
-                        designation, skills,industry,Brand ,About,Interest);
+                        designation, skills, industry, Brand, About, Interest);
                 Call<String> setVehiclePrivacy = serviceApi._autokattaUpdateProfile(updateProfileRequest);
                 setVehiclePrivacy.enqueue(new Callback<String>() {
                     @Override
@@ -5208,7 +5208,7 @@ Get uploaded Vehicle Buyer list
                              String permit_validity1, String fual1, String seating1, String permit1, String hypo1,
                              String drive1, String finance1, String transmission1, String body1, String boat1, String rv1,
                              String use1, String implement1, String bus_type1, String air1, String invoice1, String action,
-                             int sid, String callPermission,String StockType) {
+                             int sid, String callPermission, String StockType) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 //JSON to Gson conversion
@@ -5232,7 +5232,7 @@ Get uploaded Vehicle Buyer list
                         body1, boat1, rv1, use1, city11, city12,
                         city13, city14, city21, city22, city23, city24,
                         tyre, implement1, bus_type1, air1, invoice1,
-                        finance1, version1, callPermission,StockType);
+                        finance1, version1, callPermission, StockType);
                 Call<String> createbrdcstgrp = serviceApi._autokattaSaveMySearch(saveSearchRequest);
                 createbrdcstgrp.enqueue(new Callback<String>() {
                     @Override
@@ -8426,26 +8426,24 @@ get ExchangeMela Analytics Data
     }
 
     /*
-      Sold Vehicle...
-    */
+  Sold Vehicle...
+*/
     public void soldVehicle(int vehicleId, String custName, String contact, int price,
-                            String address, String Mycontact) {
+                            String address, String Mycontact, String location) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 //JSON to Gson conversion
                 Gson gson = new GsonBuilder()
                         .setLenient()
                         .create();
-
                 Retrofit retrofit = new Retrofit.Builder()
                         .baseUrl(mContext.getString(R.string.base_url))
                         .addConverterFactory(GsonConverterFactory.create(gson))
                         .client(initLog().build())
                         .build();
-
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
                 Call<String> mSoldVehicle = serviceApi._soldVehicle(vehicleId, custName, contact,
-                        price, address, Mycontact);
+                        price, address, Mycontact, location);
                 mSoldVehicle.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {

@@ -304,7 +304,7 @@ public interface ServiceApi {
                                                               @Query("City") String city, @Query("RTOcity") String rtoCity,
                                                               @Query("Price") String price, @Query("RegistrationYear") String regYear,
                                                               @Query("ManufactureYear") String mgfYear, @Query("Kms") String kms,
-                                                              @Query("Owners") int owners,@Query("Contact") String contact);
+                                                              @Query("Owners") int owners, @Query("Contact") String contact);
 
     //Get My Uploaded Vehicle...
     @GET("GetMyUploadedVehicles")
@@ -1285,16 +1285,16 @@ public interface ServiceApi {
 
     //Get Manual enquiry persons Data...
     @GET("GetManualEnquiryPersonData")
-    Call<GetManualEnquiryPersonDataResponse> GetManualEnquiryPersonData(@Query("Contact") String Contact ,@Query("Idslist") String Idslist ,
-                                                  @Query("MyContact") String MyContact, @Query("Keyword") String keyword);
+    Call<GetManualEnquiryPersonDataResponse> GetManualEnquiryPersonData(@Query("Contact") String Contact, @Query("Idslist") String Idslist,
+                                                                        @Query("MyContact") String MyContact, @Query("Keyword") String keyword);
 
 
     //Get Manual enquiry persons Data...
     @POST("AddManualEnquiryPersonData")
-    Call<String> AddManualEnquiryPersonData(@Query("Contact") String Contact ,@Query("EnquiryStatus") String EnquiryStatus ,
-                                                  @Query("MyContact") String MyContact, @Query("Keyword") String keyword,
-                                                  @Query("Discussion") String Discussion, @Query("NextFollowUpDate") String NextFollowUpDate,
-                                                  @Query("Idslist") String Idslist);
+    Call<String> AddManualEnquiryPersonData(@Query("Contact") String Contact, @Query("EnquiryStatus") String EnquiryStatus,
+                                            @Query("MyContact") String MyContact, @Query("Keyword") String keyword,
+                                            @Query("Discussion") String Discussion, @Query("NextFollowUpDate") String NextFollowUpDate,
+                                            @Query("Idslist") String Idslist);
 
     //Get Group Quotation
     @GET("GetGroupQuotation")
@@ -1322,11 +1322,11 @@ public interface ServiceApi {
                                         @Query("type") String type,
                                         @Query("query") String query);
 
-    //Sold Vehicle...data...
+    ///Sold Vehicle...data...
     @POST("SoldVehicle")
     Call<String> _soldVehicle(@Query("vehicleid") int vehicleId, @Query("custname") String custName,
                               @Query("soldtocontact") String contact, @Query("price") int price,
-                              @Query("address") String address, @Query("Mycontact") String Mycontact);
+                              @Query("address") String address, @Query("Mycontact") String Mycontact, @Query("Location") String Location);
 
     //get Sold Vehicle...
     @GET("GetSoldVehicles")
