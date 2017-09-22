@@ -219,22 +219,26 @@ public class AutokattaContactAdapter extends RecyclerView.Adapter<AutokattaConta
             }
         });
 
-        if (contactdata.get(position).getGroupIds().isEmpty())
-            holder.btnGroups.setVisibility(GONE);
-        else if (contactdata.get(position).getGroupIds().contains(",")) {
-            strGroupIds = contactdata.get(position).getGroupIds().split(",");
-            groupTitleArray = contactdata.get(position).getGroupNames().split(",");
-        } else if (!contactdata.get(position).getGroupIds().contains(",") && !contactdata.get(position).getGroupIds().isEmpty()) {
-            strGroupIds = new String[1];
-            groupTitleArray = new String[1];
-            strGroupIds[0] = contactdata.get(position).getGroupIds();
-            groupTitleArray[0] = contactdata.get(position).getGroupNames();
-        }
+
 
 
         holder.btnGroups.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
+                strGroupIds = new String[]{""};
+                groupTitleArray = new String[]{""};
+                if (contactdata.get(holder.getAdapterPosition()).getGroupIds().isEmpty()) {
+                    //holder.btnGroups.setVisibility(GONE);
+                } else if (contactdata.get(holder.getAdapterPosition()).getGroupIds().contains(",")) {
+                    strGroupIds = contactdata.get(holder.getAdapterPosition()).getGroupIds().split(", ");
+                    groupTitleArray = contactdata.get(holder.getAdapterPosition()).getGroupNames().trim().split(", ");
+                } else if (!contactdata.get(holder.getAdapterPosition()).getGroupIds().contains(",") &&
+                        !contactdata.get(holder.getAdapterPosition()).getGroupIds().isEmpty()) {
+                    strGroupIds = new String[1];
+                    groupTitleArray = new String[1];
+                    strGroupIds[0] = contactdata.get(holder.getAdapterPosition()).getGroupIds();
+                    groupTitleArray[0] = contactdata.get(holder.getAdapterPosition()).getGroupNames().trim();
+                }
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
                 builder.setTitle("Select Group To View");
@@ -246,11 +250,12 @@ public class AutokattaContactAdapter extends RecyclerView.Adapter<AutokattaConta
                         i.putExtra("grouptype", "OtherGroup");
                         i.putExtra("className", "OtherProfile");
 
-                        i.putExtra("bundle_GroupId", strGroupIds[item]);
+                        i.putExtra("bundle_GroupId", Integer.parseInt(strGroupIds[item]));
                         i.putExtra("bundle_GroupName", groupTitleArray[item]);
                         i.putExtra("bundle_Contact", contactdata.get(holder.getAdapterPosition()).getContact());
                         mActivity.startActivity(i);
                         dialog.dismiss();
+
 
                     }
                 }).show();

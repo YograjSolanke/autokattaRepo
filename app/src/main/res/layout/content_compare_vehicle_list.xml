@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,7 +7,6 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="autokatta.com.view.CompareVehicleListActivity"
     tools:showIn="@layout/activity_compare_vehicle_list">
-
 
     <RelativeLayout
         android:id="@+id/mainrl"
@@ -36,7 +35,6 @@
             android:textColor="@color/black"
             android:textStyle="bold" />
 
-
     </RelativeLayout>
 
 
@@ -48,10 +46,9 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-
-            >
+            android:layout_height="wrap_content"
+            android:baselineAligned="false"
+            android:orientation="horizontal">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -66,18 +63,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="200dp"
-                    android:text="Company Name :"
-
-                    />
+                    android:text="Company Name :" />
 
                 <TextView
                     android:id="@+id/txtmodel"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:text="Model :"
-
-                    />
+                    android:text="Model :" />
 
                 <TextView
                     android:id="@+id/txtversion"
@@ -85,49 +78,35 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:text="Version :"
-
-                    android:visibility="gone"
-
-                    />
+                    android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/txtmakeyr"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:text="Make Year :"
-
-                    />
+                    android:text="Make Year :" />
 
                 <TextView
                     android:id="@+id/txtregyr"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-
-                    android:text="Registration Year :"
-
-                    />
+                    android:text="Registration Year :" />
 
                 <TextView
                     android:id="@+id/txtkm"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-
-                    android:text="KM Driven :"
-
-                    />
+                    android:text="KM Driven :" />
 
                 <TextView
                     android:id="@+id/txtcity"
                     android:layout_width="match_parent"
                     android:layout_height="55dp"
                     android:layout_marginTop="5dp"
-
-                    android:text="City :"
-
-                    />
+                    android:text="City :" />
 
                 <TextView
                     android:id="@+id/txtregcity"
@@ -135,17 +114,12 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:text="Regstration City :"
-                    android:visibility="gone"
-
-                    />
+                    android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/txtowner"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-
                     android:layout_marginTop="5dp"
                     android:text="No Of Owners :" />
 
@@ -153,10 +127,6 @@
                     android:id="@+id/txtprice"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_below="@+id/txtowner"
-
                     android:layout_marginTop="5dp"
                     android:text="Ask Price :" />
 
@@ -164,10 +134,6 @@
                     android:id="@+id/txtregno"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_below="@+id/txtprice"
-
                     android:layout_marginTop="5dp"
                     android:text="Registration No :" />
 
@@ -175,10 +141,6 @@
                     android:id="@+id/txthypo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_below="@+id/txtregno"
-
                     android:layout_marginTop="5dp"
                     android:text="Hypothetication :" />
 
@@ -186,10 +148,6 @@
                     android:id="@+id/txtinsurenceval"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_below="@+id/txthypo"
-
                     android:layout_marginTop="5dp"
                     android:text="Insurence Validity :" />
 
@@ -197,10 +155,6 @@
                     android:id="@+id/txtinsurenceIdv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_below="@+id/txtinsurenceval"
-
                     android:layout_marginTop="5dp"
                     android:text="Insurence Idv :" />
 
@@ -208,10 +162,6 @@
                     android:id="@+id/txtrcavailabel"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_below="@+id/txtinsurenceIdv"
-
                     android:layout_marginTop="5dp"
                     android:text="RC Available :" />
 
@@ -219,10 +169,6 @@
                     android:id="@+id/txtpermit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_below="@+id/txtrcavailabel"
-
                     android:layout_marginTop="5dp"
                     android:text="Permit Validity:" />
 
@@ -230,10 +176,6 @@
                     android:id="@+id/txttaxavailable"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_below="@+id/txtpermit"
-
                     android:layout_marginTop="5dp"
                     android:text="Tax Available :" />
 
@@ -241,11 +183,7 @@
                     android:id="@+id/txttaxpaid"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_below="@+id/txttaxavailable"
                     android:layout_marginTop="10dp"
-
                     android:text="Tax Paid Upto :"
                     android:visibility="gone" />
 
@@ -253,10 +191,6 @@
                     android:id="@+id/txtcolor"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_below="@+id/txttaxpaid"
-
                     android:layout_marginTop="5dp"
                     android:text="Color :" />
 
@@ -264,10 +198,6 @@
                     android:id="@+id/txtfualtype"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_below="@+id/txtcolor"
-
                     android:layout_marginTop="5dp"
                     android:text="Fual type :" />
 
@@ -275,11 +205,7 @@
                     android:id="@+id/txttyrecon"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_below="@+id/txtfualtype"
                     android:layout_marginTop="10dp"
-
                     android:text="Tyre Condition :"
                     android:visibility="gone" />
 
@@ -287,10 +213,6 @@
                     android:id="@+id/txtengineno"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_below="@+id/txttyrecon"
-
                     android:layout_marginTop="5dp"
                     android:text="Engine No :" />
 
@@ -299,27 +221,21 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:text="Chessic No :"
-
-                    />
+                    android:text="Chessic No :" />
 
                 <TextView
                     android:id="@+id/txtseatingcap"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:text="Seating Capacity :"
-
-                    />
+                    android:text="Seating Capacity :" />
 
                 <TextView
                     android:id="@+id/txtfeatness"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:text="Fitness Validity :"
-
-                    />
+                    android:text="Fitness Validity :" />
 
 
                 <TextView
@@ -327,18 +243,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:text="Drive Type :"
-
-                    />
+                    android:text="Drive Type :" />
 
                 <TextView
                     android:id="@+id/txtbodystyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:text="Body Style :"
-
-                    />
+                    android:text="Body Style :" />
 
                 <TextView
                     android:id="@+id/txtair"
@@ -346,9 +258,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:text="Air Condition :"
-                    android:visibility="gone"
-
-                    />
+                    android:visibility="gone" />
 
 
                 <TextView
@@ -357,9 +267,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:text="Bus Type :"
-                    android:visibility="gone"
-
-                    />
+                    android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/txtinvoice"
@@ -367,18 +275,14 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:text="Invoice Availabel :"
-                    android:visibility="gone"
-
-                    />
+                    android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/txtappl"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:text="Application :"
-
-                    />
+                    android:text="Application :" />
 
                 <TextView
                     android:id="@+id/txtimpl"
@@ -386,9 +290,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:text="Implement Attached :"
-                    android:visibility="gone"
-
-                    />
+                    android:visibility="gone" />
 
 
             </LinearLayout>
@@ -396,21 +298,21 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_weight="1">
 
-                >
-
-                <com.androidbelieve.store.HorizontalListView
+                <!--<com.androidbelieve.store.HorizontalListView
                     android:id="@+id/comphorizontl"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
-
-
-                </com.androidbelieve.store.HorizontalListView>
+                </com.androidbelieve.store.HorizontalListView>-->
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/comphorizontl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
             </LinearLayout>
 
         </LinearLayout>
 
     </ScrollView>
 
-</FrameLayout>
+</RelativeLayout>
