@@ -137,6 +137,7 @@ public class OtherProfile extends AppCompatActivity implements RequestNotifier, 
 
     private void setupViewPager(ViewPager viewPager) {
         TabAdapterName adapter = new TabAdapterName(getSupportFragmentManager());
+        adapter.addFragment(mGroupsFrag, "About");
         adapter.addFragment(mGroupsFrag, "GROUP");
         adapter.addFragment(mStore, "STORE");
         //adapter.addFragment(mEventFrag, "EVENT");

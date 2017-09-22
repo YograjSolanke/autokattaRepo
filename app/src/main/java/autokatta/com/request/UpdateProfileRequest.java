@@ -36,7 +36,15 @@ public class UpdateProfileRequest {
     @SerializedName("Skills")
     @Expose
     private String skills;
-
+    @SerializedName("Industry")
+    @Expose
+    private String industry;
+    @SerializedName("BrandName")
+    @Expose
+    private String brandname;
+    @SerializedName("AboutUs")
+    @Expose
+    private String about;
     @SerializedName("InterestIDs")
     @Expose
     private String InterestIDs;
@@ -48,7 +56,7 @@ public class UpdateProfileRequest {
     }
 
     public UpdateProfileRequest(int regID, String emialID, String city, String profession, String subProfession, String website, String companyName,
-                                String designation, String skills, String InterestIDs) {
+                                String designation, String skills,String industry,String Brand, String About,String InterestIDs) {
         this.regID = regID;
         this.emialID = emialID;
         this.city = city;
@@ -61,6 +69,25 @@ public class UpdateProfileRequest {
         this.userName = null;
         this.profilePicture = null;
         this.InterestIDs = InterestIDs;
+        this.industry = industry;
+        this.brandname = Brand;
+        this.about = About;
+    }
+
+    public String getIndustry() {
+        return industry;
+    }
+
+    public void setIndustry(String industry) {
+        this.industry = industry;
+    }
+
+    public String getBrandname() {
+        return brandname;
+    }
+
+    public void setBrandname(String brandname) {
+        this.brandname = brandname;
     }
 
     @SerializedName("ProfilePicture")

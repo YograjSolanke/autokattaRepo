@@ -37,6 +37,8 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+import static autokatta.com.R.string.about;
+
 /**
  * Created by ak-001 on 18/3/17.
  */
@@ -5088,7 +5090,7 @@ Get uploaded Vehicle Buyer list
      */
 
     public void updateProfile(int regID, String emialID, String city, String profession, String subProfession, String website, String companyName,
-                              String designation, String skills, String Interest) {
+                              String designation, String skills,String industry,String Brand, String About,String Interest) {
 
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
@@ -5106,7 +5108,7 @@ Get uploaded Vehicle Buyer list
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
                 UpdateProfileRequest updateProfileRequest = new UpdateProfileRequest(regID, emialID, city, profession, subProfession, website, companyName,
-                        designation, skills, Interest);
+                        designation, skills,industry,Brand ,About,Interest);
                 Call<String> setVehiclePrivacy = serviceApi._autokattaUpdateProfile(updateProfileRequest);
                 setVehiclePrivacy.enqueue(new Callback<String>() {
                     @Override

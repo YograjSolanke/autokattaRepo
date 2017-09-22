@@ -46,7 +46,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:id="@+id/llusertype">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -55,24 +56,89 @@
                 android:textStyle="bold"/>
 
             <TextView
-                android:id="@+id/worked_at"
+                android:id="@+id/usertypetxt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
                 android:hint="@string/worked_at"
                 android:textColor="#708090"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                />
             </LinearLayout>
+           <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/llindustry"
+               >
             <TextView
-                android:id="@+id/subprofession"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="@string/sub_profession"
-                android:visibility="gone" />
+                android:text="Industry -"
+                android:textColor="#708090"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/industrytxt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:hint="Industry"
+                android:textColor="#708090"
+                android:textStyle="bold"
+                />
+        </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:id="@+id/llcategory"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Category -"
+                    android:textColor="#708090"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:id="@+id/categorytxt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:hint="Category"
+                    android:textColor="#708090"
+                    android:textStyle="bold"
+                    />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:id="@+id/llbrand"
+               >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Brand -"
+                    android:textColor="#708090"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:id="@+id/brandtxt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:hint="Brand"
+                    android:textColor="#708090"
+                    android:textStyle="bold"
+                    />
+            </LinearLayout>
 
         </LinearLayout>
 
-        <RadioGroup
+       <!-- <RadioGroup
             android:id="@+id/usertype"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -97,15 +163,111 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Self Employee" />
-        </RadioGroup>
+        </RadioGroup>-->
 
-        <Spinner
+  <!--      <Spinner
             android:id="@+id/spinner"
             android:layout_width="match_parent"
             android:layout_height="35dp"
             android:layout_marginStart="@dimen/card_margin"
             android:layout_marginTop="2dp"
+            android:visibility="" />-->
+        <Spinner
+            android:id="@+id/spinnerUsertype"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_marginTop="10dp"
+            android:entries="@array/userType"
+            android:visibility="gone"/>
+
+        <Spinner
+            android:id="@+id/spinnerindustry"
+            style="@style/Widget.AppCompat.Spinner.Underlined"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_marginTop="10dp"
             android:visibility="gone" />
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/otherIndustryLayout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/text_layout_height"
+            android:visibility="gone">
+
+            <EditText
+                android:id="@+id/editOtherTypeIndustry"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawablePadding="@dimen/card_margin"
+                android:drawableStart="@mipmap/ic_factory"
+                android:hint="@string/enter_your_industry"
+                android:maxLines="1"
+                android:paddingEnd="@dimen/margin_heading_top"
+                android:paddingStart="@dimen/margin_heading_top"
+                android:textColor="@color/textColor"
+                android:textColorHint="@color/hintColor"
+                android:textSize="15sp" />
+        </android.support.design.widget.TextInputLayout>
+
+        <Spinner
+            android:id="@+id/spinnerCategory"
+            style="@style/Widget.AppCompat.Spinner.Underlined"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_marginTop="10dp"
+            android:visibility="gone" />
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/otherCategoryLayout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/text_layout_height"
+            android:visibility="gone">
+
+            <EditText
+                android:id="@+id/editOtherTypeCategory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawablePadding="@dimen/card_margin"
+                android:drawableStart="@mipmap/ic_account_star"
+                android:hint="@string/enter_your_profession"
+                android:maxLines="1"
+                android:paddingEnd="@dimen/margin_heading_top"
+                android:paddingStart="@dimen/margin_heading_top"
+                android:textColor="@color/textColor"
+                android:textColorHint="@color/hintColor"
+                android:textSize="15sp" />
+        </android.support.design.widget.TextInputLayout>
+
+        <Spinner
+            android:id="@+id/spinnerbrand"
+            style="@style/Widget.AppCompat.Spinner.Underlined"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_marginTop="10dp"
+            android:visibility="gone"
+            />
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/otherbrand"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/text_layout_height"
+            android:visibility="gone">
+
+            <EditText
+                android:id="@+id/editOtherBrand"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawablePadding="@dimen/card_margin"
+                android:drawableStart="@mipmap/ic_account_star"
+                android:hint="@string/enter_your_profession"
+                android:maxLines="1"
+                android:paddingEnd="@dimen/margin_heading_top"
+                android:paddingStart="@dimen/margin_heading_top"
+                android:textColor="@color/textColor"
+                android:textColorHint="@color/hintColor"
+                android:textSize="15sp" />
+        </android.support.design.widget.TextInputLayout>
+
 
         <View
             android:layout_width="match_parent"
@@ -268,6 +430,39 @@
                 android:background="@android:color/transparent"
                 android:gravity="start"
                 android:hint="@string/contact_no"
+                android:textColor="#708090"
+                android:textSize="@dimen/text_about"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="5dp"
+            android:background="#cccccc" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/card_margin"
+            android:layout_marginTop="@dimen/margin_small"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="About"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_about" />
+
+            <EditText
+                android:id="@+id/about"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:gravity="start"
+                android:hint="About"
                 android:textColor="#708090"
                 android:textSize="@dimen/text_about"
                 android:textStyle="bold" />

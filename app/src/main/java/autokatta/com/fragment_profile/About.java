@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -14,6 +15,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -21,10 +23,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.MultiAutoCompleteTextView;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
@@ -42,10 +43,12 @@ import autokatta.com.generic.GenericFunctions;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.AddTags;
 import autokatta.com.other.CustomToast;
+import autokatta.com.response.BrandsTagResponse;
 import autokatta.com.response.CategoryResponse;
 import autokatta.com.response.GetCompaniesResponse;
 import autokatta.com.response.GetDesignationResponse;
 import autokatta.com.response.GetSkillsResponse;
+import autokatta.com.response.IndustryResponse;
 import autokatta.com.response.ProfileAboutResponse;
 import co.mobiwise.materialintro.animation.MaterialIntroListener;
 import co.mobiwise.materialintro.prefs.PreferencesManager;
@@ -56,25 +59,30 @@ import me.gujun.android.taggroup.TagGroup;
 import retrofit2.Response;
 
 import static android.content.Context.MODE_PRIVATE;
+import static autokatta.com.R.id.spinnerCategory;
+import static autokatta.com.R.id.spinnerUsertype;
+import static autokatta.com.R.id.spinnerbrand;
+import static autokatta.com.R.id.spinnerindustry;
 import static autokatta.com.adapter.GooglePlacesAdapter.resultList;
 
 /**
  * Created by ak-001 on 18/3/17.
  */
 
-public class About extends Fragment implements RequestNotifier, MaterialIntroListener {
+public class About extends Fragment implements RequestNotifier, MaterialIntroListener, AdapterView.OnItemSelectedListener {
     View mAbout;
-    String[] MODULE = null;
     Button mDone;
     ImageView mEdit;
-    EditText mWebsite, mEmail;
-    TextView mContact, mProfession, msubprofession, mEditTags, mCount;
+    EditText mWebsite, mEmail,mAbouttxt;
+    TextView mContact, mProfession, mEditTags, mCount,mUsertypetxt,mCattxt,mIndusttxt,mBrandtxt;
     AutoCompleteTextView mCompany, mDesignation, mCity;
     MultiAutoCompleteTextView mSkills;
     String newcompanyname, newdesignation, newskills, strCompany, strDesignation, strskills;
 
-    String userName, email, contact, profession, company, designation, subProfession, websitestr, city, skills, interest;
-    String mUpdatedEmail, mUpdatedProfession, mUpdatedCompany, mUpdatedDesignation, mUpdatedSkills, mUpdatedSkills1, mUpdatedCity, mUpdatedWebsite;
+    LinearLayout mUsertypelay,mIndustrylay,mCategorylay,mBrandlay;
+
+    String userName, email, contact, company, designation, subProfession, websitestr, city, skills, interest;
+    String mUpdatedEmail, mUpdateAbout, mUpdatedCompany, mUpdatedDesignation, mUpdatedSkills, mUpdatedSkills1, mUpdatedCity, mUpdatedWebsite;
 
     final List<String> mSkillList = new ArrayList<>();
     final HashMap<String, String> mSkillList1 = new HashMap<>();
@@ -89,13 +97,21 @@ public class About extends Fragment implements RequestNotifier, MaterialIntroLis
     List<String> parsedDataDesignation = new ArrayList<>();
     List<String> parsedDataSkills = new ArrayList<>();
 
-    Spinner spinner;
-    RadioGroup usertype;
-    RadioButton student, employee, selfemployee;
-    String Sharedcontact;
+    //Spinner spinnerUsertype,spinnerindustry,spinnerCategory,spinnerbrand;
+    TextInputLayout otherIndustryLayout, otherCategoryLayout,otherbrandlayout;
+  //  RadioGroup usertype;
+   // RadioButton student, employee, selfemployee;
+    EditText otherIndustry;
+    EditText otherCategory;
+    EditText otherbrand;
+    String Sharedcontact,    strprofession="", sub_profession="", strIndustry="",brand="";
+    Spinner moduleSpinner, usertypeSpinner, industrySpinner,brandSpinner;
     int RegId;
-    String spinnervalue = "";
+   // String spinnervalue = "";
     ApiCall mApiCall;
+    String[] MODULE = null;
+    String[] INDUSTRY = null;
+    String[] BRAND = null;
     String[] parts;
     boolean _hasLoadedOnce = false;
     Activity mActivity;
@@ -150,7 +166,7 @@ public class About extends Fragment implements RequestNotifier, MaterialIntroLis
                         userName = mProfileAboutResponse.getSuccess().get(0).getUsername();
                         email = mProfileAboutResponse.getSuccess().get(0).getEmail();
                         contact = mProfileAboutResponse.getSuccess().get(0).getContact();
-                        profession = mProfileAboutResponse.getSuccess().get(0).getProfession();
+                        strprofession = mProfileAboutResponse.getSuccess().get(0).getProfession();
                         company = mProfileAboutResponse.getSuccess().get(0).getCompanyName();
                         designation = mProfileAboutResponse.getSuccess().get(0).getDesignation();
                         subProfession = mProfileAboutResponse.getSuccess().get(0).getSubProfession();
@@ -159,21 +175,32 @@ public class About extends Fragment implements RequestNotifier, MaterialIntroLis
                         skills = mProfileAboutResponse.getSuccess().get(0).getSkills();
                         RegId = mProfileAboutResponse.getSuccess().get(0).getRegId();
                         interest = mProfileAboutResponse.getSuccess().get(0).getInterests();
+                        brand = mProfileAboutResponse.getSuccess().get(0).getBrandName();
+                        strIndustry = mProfileAboutResponse.getSuccess().get(0).getIndustry();
+
 
                         mContact.setText(contact);
                         Log.i("RegId-->", "   --->" + RegId);
                         Log.i("SUBProfession-->", "   --->" + subProfession);
+                     /*   if (strprofession==null ||subProfession.equalsIgnoreCase("Select Usertype")||subProfession.equalsIgnoreCase("Student"))
+                        {
+                            mUsertypetxt.setText("" + "" + strprofession);
+                            mIndustrylay.setVisibility(View.GONE);
+                            mCategorylay.setVisibility(View.GONE);
+                            mBrandlay.setVisibility(View.GONE);
+                        }
                         if (subProfession == null || subProfession.equalsIgnoreCase("Select Category")) {
                             msubprofession.setText("NA");
                         } else {
                             msubprofession.setText("" + "Sub Profession- " + subProfession);
                         }
-                        mProfession.setText(profession);
-                        if (profession != "Student" || !profession.equalsIgnoreCase("Student")) {
-                            msubprofession.setVisibility(View.VISIBLE);
-                        } else
-                            msubprofession.setVisibility(View.GONE);
+                        if (strIndustry == null || subProfession.equalsIgnoreCase("Select Industry")) {
+                            industrySpinner.setVisibility(View.GONE);
+                        } else {
+                            mIndusttxt.setText("" + "Industry- " + strIndustry);
+                        }*/
                         mEmail.setText(email);
+                        mAbouttxt.setText( mProfileAboutResponse.getSuccess().get(0).getAbout());
                         mWebsite.setText(websitestr);
                         mCity.setText(city);
                         mCity.setEnabled(false);
@@ -182,6 +209,33 @@ public class About extends Fragment implements RequestNotifier, MaterialIntroLis
                         mDesignation.setText(designation);
                         mSkills.setText(skills);
 
+                        mUsertypetxt.setText(strprofession);
+
+
+                        mIndusttxt.setText(mProfileAboutResponse.getSuccess().get(0).getIndustry());
+                     //   mCattxt.setText(mProfileAboutResponse.getSuccess().get(0).getSubProfession());
+                        mBrandtxt.setText(mProfileAboutResponse.getSuccess().get(0).getBrandName());
+
+                        if (strprofession.equalsIgnoreCase("Student"))
+                        {
+                            mBrandlay.setVisibility(View.GONE);
+                            mIndustrylay.setVisibility(View.GONE);
+                            mCategorylay.setVisibility(View.GONE);
+                        }
+
+                        if (!mProfileAboutResponse.getSuccess().get(0).getIndustry().equalsIgnoreCase("Automotive"))
+                        {
+                            mBrandlay.setVisibility(View.GONE);
+                            mCategorylay.setVisibility(View.GONE);
+                        }else
+                        {
+                            mCategorylay.setVisibility(View.GONE);
+                            mIndusttxt.setText(mProfileAboutResponse.getSuccess().get(0).getIndustry()+"-"+mProfileAboutResponse.getSuccess().get(0).getSubProfession());
+                        }
+                        if (!mProfileAboutResponse.getSuccess().get(0).getSubProfession().startsWith("New vehicle")||!mProfileAboutResponse.getSuccess().get(0).getSubProfession().startsWith("Used vehicle"))
+                        {
+                            mBrandlay.setVisibility(View.GONE);
+                        }
                         if (interest.contains(",")) {
                             String[] commaSplit = interest.split(",");
                             /*for (int i=0; i<commaSplit.length; i++){
@@ -191,6 +245,9 @@ public class About extends Fragment implements RequestNotifier, MaterialIntroLis
                         } else {
                             mCount.setText("You have added " + interest.length() + " interest");
                         }
+                    } else {
+                        if (isAdded())
+                            CustomToast.customToast(getActivity(), getString(R.string.no_response));
                     }
                 } else if (response.body() instanceof GetCompaniesResponse) {
                     GetCompaniesResponse mGetCompanyList = (GetCompaniesResponse) response.body();
@@ -242,9 +299,40 @@ public class About extends Fragment implements RequestNotifier, MaterialIntroLis
                             mSkills.setAdapter(dataAdapter);
                         }
                     }
-                } else if (response.body() instanceof CategoryResponse) {
+                } else if (response.body() instanceof IndustryResponse) {
+                    IndustryResponse moduleResponse = (IndustryResponse) response.body();
+                    final List<String> module = new ArrayList<>();
+                    if (!moduleResponse.getSuccess().isEmpty()) {
+                        module.add("Select Industry");
+                        for (IndustryResponse.Success message : moduleResponse.getSuccess()) {
+                            module.add(message.getIndusName());
+                        }
+                        module.add("Other");
+                        INDUSTRY = new String[module.size()];
+                        INDUSTRY = (String[]) module.toArray(INDUSTRY);
+                        ArrayAdapter<String> dataadapter = new ArrayAdapter<>(getActivity(), R.layout.registration_spinner, INDUSTRY);
+                        industrySpinner.setAdapter(dataadapter);
+                    } else
+                        CustomToast.customToast(getActivity(), getString(R.string.no_response));
+                } else if (response.body() instanceof BrandsTagResponse) {
+                    BrandsTagResponse brandsTagResponse = (BrandsTagResponse) response.body();
+                    final List<String> brand = new ArrayList<>();
+                    if (!brandsTagResponse.getSuccess().isEmpty()) {
+                        brand.add("-Select Brands");
+                        for (BrandsTagResponse.Success message : brandsTagResponse.getSuccess()) {
+                            brand.add(message.getTagName());
+                        }
+                        brand.add("Other");
+                        BRAND = new String[brand.size()];
+                        BRAND = (String[]) brand.toArray(BRAND);
+                        ArrayAdapter<String> dataadapter = new ArrayAdapter<>(getActivity(), R.layout.registration_spinner, BRAND);
+                        brandSpinner.setAdapter(dataadapter);
+                    } else
+                        CustomToast.customToast(getActivity(), getString(R.string.no_response));
+                }
+                if (response.body() instanceof CategoryResponse) {
                     CategoryResponse moduleResponse = (CategoryResponse) response.body();
-                    final List<String> module = new ArrayList<String>();
+                    final List<String> module = new ArrayList<>();
                     if (!moduleResponse.getSuccess().isEmpty()) {
                         module.add("Select Category");
                         for (CategoryResponse.Success message : moduleResponse.getSuccess()) {
@@ -253,29 +341,18 @@ public class About extends Fragment implements RequestNotifier, MaterialIntroLis
                         module.add("Other");
                         MODULE = new String[module.size()];
                         MODULE = (String[]) module.toArray(MODULE);
-                        if (getActivity() != null) {
-                            ArrayAdapter<String> dataadapter = new ArrayAdapter<>(getActivity(), R.layout.registration_spinner, MODULE);
-                            spinner.setAdapter(dataadapter);
-                         /*   List<String> name = new ArrayList<>();
-                            name.add(subProfession);*/
-                            for (int i = 0; i < module.size(); i++) {
-                                if (subProfession != null) {
-                                    if (subProfession.equals(module.get(i))) {
-                                        spinner.setSelection(i);
-                                        if (getActivity() != null) {
-                                            ArrayAdapter<String> dataadapter1 = new ArrayAdapter<>(getActivity(), R.layout.registration_spinner, MODULE);
-                                            spinner.setAdapter(dataadapter1);
-                                        }
-                                    }
-                                }
-                            }
-                        }
+                        ArrayAdapter<String> dataadapter = new ArrayAdapter<>(getActivity(), R.layout.registration_spinner, MODULE);
+                        moduleSpinner.setAdapter(dataadapter);
+                    } else {
+                        if (isAdded())
+                        CustomToast.customToast(getActivity(), getString(R.string.no_response));
                     }
+                } else {
+                    if (isAdded())
+                     CustomToast.customToast(getActivity(), getString(R.string._404_));
                 }
-            } else {
-                // CustomToast.customToast(getActivity(), getString(R.string._404_));
             }
-        } else {
+        }else {
             if (isAdded())
             CustomToast.customToast(getActivity(), getString(R.string.no_response));
         }
@@ -311,6 +388,12 @@ public class About extends Fragment implements RequestNotifier, MaterialIntroLis
                     CustomToast.customToast(getActivity(), "Profile Updated");
                 mApiCall.profileAbout(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""),
                         getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""));
+
+                usertypeSpinner.setVisibility(View.GONE);
+                industrySpinner.setVisibility(View.GONE);
+                moduleSpinner.setVisibility(View.GONE);
+                brandSpinner.setVisibility(View.GONE);
+
             }
         }
     }
@@ -348,7 +431,8 @@ public class About extends Fragment implements RequestNotifier, MaterialIntroLis
                 mCount = (TextView) mAbout.findViewById(R.id.count);
                 mEditTags = (TextView) mAbout.findViewById(R.id.editTags);
                 mProfession = (TextView) mAbout.findViewById(R.id.worked_at);
-                msubprofession = (TextView) mAbout.findViewById(R.id.subprofession);
+                mEdit = (ImageView) mAbout.findViewById(R.id.edit);
+              //  msubprofession = (TextView) mAbout.findViewById(R.id.subprofession);
                 mEmail = (EditText) mAbout.findViewById(R.id.email);
                 mWebsite = (EditText) mAbout.findViewById(R.id.website);
                 mCity = (AutoCompleteTextView) mAbout.findViewById(R.id.address);
@@ -356,14 +440,40 @@ public class About extends Fragment implements RequestNotifier, MaterialIntroLis
                 mDesignation = (AutoCompleteTextView) mAbout.findViewById(R.id.designation);
                 mSkills = (MultiAutoCompleteTextView) mAbout.findViewById(R.id.skills);
                 mDone = (Button) mAbout.findViewById(R.id.done);
-                mEdit = (ImageView) mAbout.findViewById(R.id.edit);
-                usertype = (RadioGroup) mAbout.findViewById(R.id.usertype);
-                student = (RadioButton) mAbout.findViewById(R.id.student);
-                employee = (RadioButton) mAbout.findViewById(R.id.employee);
-                selfemployee = (RadioButton) mAbout.findViewById(R.id.selfemployee);
-                spinner = (Spinner) mAbout.findViewById(R.id.spinner);
-                spinner.setVisibility(View.GONE);
+                mUsertypelay = (LinearLayout) mAbout.findViewById(R.id.llusertype);
+                mIndustrylay = (LinearLayout) mAbout.findViewById(R.id.llindustry);
+                mCategorylay = (LinearLayout) mAbout.findViewById(R.id.llcategory);
+                mBrandlay = (LinearLayout) mAbout.findViewById(R.id.llbrand);
+                mUsertypetxt = (TextView) mAbout.findViewById(R.id.usertypetxt);
+                mIndusttxt = (TextView) mAbout.findViewById(R.id.industrytxt);
+                mCattxt = (TextView) mAbout.findViewById(R.id.categorytxt);
+                mBrandtxt = (TextView) mAbout.findViewById(R.id.brandtxt);
+                mAbouttxt = (EditText) mAbout.findViewById(R.id.about);
+
+
+            //    usertype = (RadioGroup) mAbout.findViewById(R.id.usertype);
+              //  student = (RadioButton) mAbout.findViewById(R.id.student);
+                //employee = (RadioButton) mAbout.findViewById(R.id.employee);
+                //elfemployee = (RadioButton) mAbout.findViewById(R.id.selfemployee);
+            //    spinner = (Spinner) mAbout.findViewById(spinner);
+              //  spinner.setVisibility(View.GONE);
                 mLinear = (LinearLayout) mAbout.findViewById(R.id.profileAbout);
+
+
+                usertypeSpinner = (Spinner) mAbout.findViewById(spinnerUsertype);
+                industrySpinner = (Spinner) mAbout.findViewById(spinnerindustry);
+                moduleSpinner = (Spinner) mAbout.findViewById(spinnerCategory);
+                brandSpinner = (Spinner) mAbout.findViewById(spinnerbrand);
+                otherIndustryLayout = (TextInputLayout) mAbout.findViewById(R.id.otherIndustryLayout);
+                otherCategoryLayout = (TextInputLayout) mAbout.findViewById(R.id.otherCategoryLayout);
+                otherbrandlayout = (TextInputLayout) mAbout.findViewById(R.id.otherbrand);
+
+
+
+                usertypeSpinner.setOnItemSelectedListener(About.this);
+                industrySpinner.setOnItemSelectedListener(About.this);
+                moduleSpinner.setOnItemSelectedListener(About.this);
+                brandSpinner.setOnItemSelectedListener(About.this);
 
                 mGenericFunctions = new GenericFunctions();
 
@@ -372,17 +482,21 @@ public class About extends Fragment implements RequestNotifier, MaterialIntroLis
                 mApiCall.getDesignation();
                 mApiCall.getCompany();
                 mApiCall.Categories("");
+                mApiCall.Industries();
+                mApiCall.getBrandTags("both");
         /*Get Designation,Skills,Company From web service*/
 
 
-                mProfession.setEnabled(false);
                 mContact.setEnabled(false);
+                mAbouttxt.setEnabled(false);
                 mWebsite.setEnabled(false);
                 mCity.setEnabled(false);
                 mEmail.setEnabled(false);
                 mCompany.setEnabled(false);
                 mDesignation.setEnabled(false);
                 mSkills.setEnabled(false);
+                usertypeSpinner.setEnabled(false);
+
 
                 mSkills.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
                 mSkills.setOnKeyListener(new View.OnKeyListener() {
@@ -398,8 +512,8 @@ public class About extends Fragment implements RequestNotifier, MaterialIntroLis
                         return false;
                     }
                 });
-
-                usertype.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+/*to be removed*/
+              /*  usertype.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                     @Override
                     public void onCheckedChanged(RadioGroup group, int checkedId) {
                         if (checkedId == R.id.student) {
@@ -421,7 +535,7 @@ public class About extends Fragment implements RequestNotifier, MaterialIntroLis
 
                         }
                     }
-                });
+                });*/
 
                 mEdit.setOnClickListener(new OnClickListener() {
 
@@ -430,21 +544,21 @@ public class About extends Fragment implements RequestNotifier, MaterialIntroLis
                         mDone.setVisibility(View.VISIBLE);
                         mEdit.setVisibility(View.GONE);
                         mEditTags.setVisibility(View.VISIBLE);
-                        if (profession.equalsIgnoreCase("Student")) {
-                            student.setChecked(true);
-                        } else if (profession.equalsIgnoreCase("Employee")) {
-                            employee.setChecked(true);
-                        } else if (profession.equalsIgnoreCase("Self Employee")) {
-                            selfemployee.setChecked(true);
-                        }
-                        if (student.isChecked()) {
+                        usertypeSpinner.setVisibility(View.VISIBLE);
+
+                        mUsertypelay.setVisibility(View.GONE);
+                        mIndustrylay.setVisibility(View.GONE);
+                        mCategorylay.setVisibility(View.GONE);
+                        mBrandlay.setVisibility(View.GONE);
+
+                      /*  if (student.isChecked()) {
                             spinner.setVisibility(View.GONE);
                             msubprofession.setVisibility(View.GONE);
                         } else if (employee.isChecked()) {
                             spinner.setVisibility(View.VISIBLE);
                         } else if (selfemployee.isChecked()) {
                             spinner.setVisibility(View.VISIBLE);
-                        }
+                        }*/
 
                         mCity.setFocusableInTouchMode(true);
                         mCity.setFocusable(true);
@@ -459,16 +573,16 @@ public class About extends Fragment implements RequestNotifier, MaterialIntroLis
                         mSkills.setFocusable(true);
 
                         mCity.setAdapter(new GooglePlacesAdapter(getActivity(), R.layout.simple));
-                        mProfession.setEnabled(true);
+//                        mProfession.setEnabled(true);
                         mCity.setEnabled(true);
                         // mCity.setSelection(mCity.getText().length());
-                        mContact.setEnabled(true);
+                        mAbouttxt.setEnabled(true);
                         mEmail.setEnabled(true);
                         mCompany.setEnabled(true);
                         mDesignation.setEnabled(true);
                         mSkills.setEnabled(true);
                         mWebsite.setEnabled(true);
-                        usertype.setVisibility(View.VISIBLE);
+                        usertypeSpinner.setEnabled(true);
                         mDone.setEnabled(true);
                         mContact.setOnTouchListener(new OnTouchListener() {
                             @Override
@@ -485,17 +599,38 @@ public class About extends Fragment implements RequestNotifier, MaterialIntroLis
                     public void onClick(View view) {
 
                         boolean webflag = false;
-                        usertype.setVisibility(View.GONE);
-                        spinner.setVisibility(View.GONE);
+
                         mEditTags.setVisibility(View.GONE);
-                        mUpdatedProfession = mProfession.getText().toString();
+
+                        mUsertypelay.setVisibility(View.VISIBLE);
+                        mIndustrylay.setVisibility(View.VISIBLE);
+                        mCategorylay.setVisibility(View.VISIBLE);
+                        mBrandlay.setVisibility(View.VISIBLE);
+
+//                        mUpdatedProfession = spinnerUsertype.getSelectedItem().toString();
                         mUpdatedCity = mCity.getText().toString();
                         mUpdatedEmail = mEmail.getText().toString();
+                        mUpdateAbout = mAbouttxt.getText().toString();
                         mUpdatedWebsite = mWebsite.getText().toString();
-                        spinnervalue = spinner.getSelectedItem().toString();
+//                        subProfession = spinnerCategory.getSelectedItem().toString();
                         mUpdatedCompany = mCompany.getText().toString();
                         mUpdatedDesignation = mDesignation.getText().toString();
                         mUpdatedSkills = mSkills.getText().toString().trim();
+
+
+                        strprofession = usertypeSpinner.getSelectedItem().toString().trim();
+
+                        if (!strprofession.equalsIgnoreCase("Student")) {
+                            strIndustry = industrySpinner.getSelectedItem().toString().trim();
+
+                        }
+                        if (moduleSpinner.getVisibility()==View.VISIBLE)
+                            sub_profession = moduleSpinner.getSelectedItem().toString().trim();
+
+
+                        if (brandSpinner.getVisibility()==View.VISIBLE)
+                            brand = brandSpinner.getSelectedItem().toString().trim();
+
 
                         if (mUpdatedSkills.endsWith(",")) {
                             mUpdatedSkills1 = mUpdatedSkills.substring(0, mUpdatedSkills.length() - 1);
@@ -596,33 +731,74 @@ public class About extends Fragment implements RequestNotifier, MaterialIntroLis
                             } else if (strskills.equals("") || strskills.equals("null") || strskills.equals(null)) {
                                 mSkills.setError("Enter Skills Name");
                                 mSkills.requestFocus();
-                            } else {
-                                Log.i("InterestsAbout", getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
-                                        .getString("interest", interest));
-
-                                mApiCall.updateProfile(RegId, mUpdatedEmail, mUpdatedCity, mUpdatedProfession, spinnervalue, mUpdatedWebsite, mUpdatedCompany,
-                                        mUpdatedDesignation, mUpdatedSkills1, getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
+                            }else if (strprofession.equalsIgnoreCase("Select User Type")) {
+                                Toast.makeText(getActivity(), "Please select User type", Toast.LENGTH_LONG).show();
+                            } else if ((!strprofession.equalsIgnoreCase("Student") && (strIndustry.equalsIgnoreCase("")||strIndustry.equalsIgnoreCase("Select Industry")))) {
+                                Toast.makeText(getActivity(), "Please select industry", Toast.LENGTH_LONG).show();
+                            } else if (strIndustry.equalsIgnoreCase("Other") && otherIndustry.getText().toString().trim().equalsIgnoreCase("")) {
+                                otherIndustry.setError("Enter Industry");
+                            } else if (strIndustry.equalsIgnoreCase("Other") && !otherIndustry.getText().toString().matches("[a-zA-Z ]*")) {
+                                otherIndustry.setError("Enter  Valid Industry");
+                            }// else if (strIndustry.equalsIgnoreCase("Automotive and vehicle manufacturing") && sub_profession.equalsIgnoreCase("Select Category")) {
+                            else if (strIndustry.equalsIgnoreCase("Automotive") && sub_profession.equalsIgnoreCase("Select Category")) {
+                                Toast.makeText(getActivity(), "Please select category", Toast.LENGTH_LONG).show();
+                            } else if (sub_profession.equalsIgnoreCase("other") && otherCategory.getText().toString().equalsIgnoreCase("")) {
+                                otherCategory.setError("Enter Profession");
+                            } else if (sub_profession.equalsIgnoreCase("other") && !otherCategory.getText().toString().matches("[a-zA-Z ]*")) {
+                                otherCategory.setError("Enter  Valid Profession");
+                            } else if (sub_profession.startsWith("New vehicle") ||sub_profession.startsWith("Used vehicle")&& brand.equalsIgnoreCase("-Select Brand-")) {
+                                Toast.makeText(getActivity(), "Please select Brand", Toast.LENGTH_LONG).show();
+                            }else if (brand.equalsIgnoreCase("other") && otherbrand.getText().toString().equalsIgnoreCase("")) {
+                                otherbrand.setError("Enter Brand");
+                            } else if (brand.equalsIgnoreCase("other") && !otherbrand.getText().toString().matches("[a-zA-Z ]*")) {
+                                otherbrand.setError("Enter  Valid Brand");
+                            } else if (sub_profession.equalsIgnoreCase("Other")) {
+                                sub_profession = otherCategory.getText().toString().trim();
+                                mApiCall.addOtherCategory(sub_profession);
+                            } else if (brand.equalsIgnoreCase("Other")) {
+                                brand = otherbrand.getText().toString().trim();
+                                mApiCall.addOtherBrandTags(brand,"both");
+                            } else if (strIndustry.equalsIgnoreCase("Other")) {
+                                strIndustry = otherIndustry.getText().toString().trim();
+                                mApiCall.addOtherIndustry(strIndustry);
+                            } else if (sub_profession.equalsIgnoreCase("Select Category")) {
+                                sub_profession = "";
+                            } else if (brand.equalsIgnoreCase("-Select Brand")) {
+                                brand = "";
+                            } else if (strIndustry.equalsIgnoreCase("Select Industry")) {
+                                strIndustry = "";
+                            } else
+                                if (mUpdateAbout.equalsIgnoreCase("")||mUpdateAbout.equalsIgnoreCase(null)) {
+                                    mAbouttxt.setError("Enter About Name");
+                                    mAbouttxt.requestFocus();
+                                }else
+                                    {
+                                        Log.i("InterestsAbout", getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
                                                 .getString("interest", interest));
 
-                                mDone.setVisibility(View.GONE);
-                                mEdit.setVisibility(View.VISIBLE);
-                                mEditTags.setVisibility(View.GONE);
+                                        mApiCall.updateProfile(RegId, mUpdatedEmail, mUpdatedCity, strprofession, subProfession, mUpdatedWebsite, mUpdatedCompany,
+                                                mUpdatedDesignation, mUpdatedSkills1,strIndustry,brand,mUpdateAbout, getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
+                                                        .getString("interest", interest));
 
-                                mProfession.setEnabled(false);
-                                mContact.setEnabled(false);
-                                mWebsite.setEnabled(false);
-                                mCity.setEnabled(false);
-                                mCity.setFocusable(false);
-                                mEmail.setEnabled(false);
-                                mCompany.setEnabled(false);
-                                mCompany.setFocusable(false);
-                                mDesignation.setEnabled(false);
-                                mDesignation.setFocusable(false);
-                                mSkills.setEnabled(false);
-                                mSkills.setFocusable(false);
-                            }
+                                        mDone.setVisibility(View.GONE);
+                                        mEdit.setVisibility(View.VISIBLE);
+                                        mEditTags.setVisibility(View.GONE);
+
+//                                mProfession.setEnabled(false);
+                                        mContact.setEnabled(false);
+                                        mWebsite.setEnabled(false);
+                                        mCity.setEnabled(false);
+                                        mCity.setFocusable(false);
+                                        mEmail.setEnabled(false);
+                                        mCompany.setEnabled(false);
+                                        mCompany.setFocusable(false);
+                                        mDesignation.setEnabled(false);
+                                        mDesignation.setFocusable(false);
+                                        mSkills.setEnabled(false);
+                                        mSkills.setFocusable(false);
+                                    }
+                                }
                         }
-                    }
                 });
 
                 mEditTags.setOnClickListener(new OnClickListener() {
@@ -668,6 +844,72 @@ public class About extends Fragment implements RequestNotifier, MaterialIntroLis
 
     @Override
     public void onUserClicked(String s) {
+
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+        switch (adapterView.getId()) {
+            case (spinnerUsertype):
+
+                // profession = usertypeSpinner.getSelectedItem().toString();
+                if (!usertypeSpinner.getSelectedItem().toString().equalsIgnoreCase("Student")
+                        && !usertypeSpinner.getSelectedItem().toString().equalsIgnoreCase("Select User Type")) {
+                    // otherCategorylayout.setVisibility(View.VISIBLE);
+                    industrySpinner.setVisibility(View.VISIBLE);
+                } else {
+//                        otherCategorylayout.setVisibility(View.GONE);
+                    industrySpinner.setVisibility(View.GONE);
+
+                    if (otherCategoryLayout.getVisibility() == View.VISIBLE) {
+                        otherCategoryLayout.setVisibility(View.GONE);
+                    }
+                    if (otherIndustryLayout.getVisibility() == View.VISIBLE) {
+                        otherIndustryLayout.setVisibility(View.GONE);
+                    }
+                }
+                break;
+            case (spinnerindustry):
+                // strIndustry = industrySpinner.getSelectedItem().toString();
+                if (industrySpinner.getSelectedItem().toString().equalsIgnoreCase("Automotive")) {
+                    // otherCmoduleSpinner = (Spinner) findViewById(R.id.spinner_cou);ategorylayout.setVisibility(View.VISIBLE);
+                    moduleSpinner.setVisibility(View.VISIBLE);
+                    otherIndustryLayout.setVisibility(View.GONE);
+                } else if (industrySpinner.getSelectedItem().toString().equalsIgnoreCase("Other")) {
+//                        otherCategorylayout.setVisibility(View.GONE);
+                    otherIndustryLayout.setVisibility(View.VISIBLE);
+                    moduleSpinner.setVisibility(View.GONE);
+                } else {
+                    moduleSpinner.setVisibility(View.GONE);
+                    otherIndustryLayout.setVisibility(View.GONE);
+                }
+
+                break;
+            case (spinnerCategory):
+                // sub_profession = moduleSpinner.getSelectedItem().toString();
+                if (moduleSpinner.getSelectedItem().toString().startsWith("Used vehicle") || moduleSpinner.getSelectedItem().toString().startsWith("New vehicle")) {
+                    brandSpinner.setVisibility(View.VISIBLE);
+                    otherbrandlayout.setVisibility(View.GONE);
+                } else if (moduleSpinner.getSelectedItem().toString().equalsIgnoreCase("Other")) {
+                    otherCategoryLayout.setVisibility(View.VISIBLE);
+                } else {
+                    otherCategoryLayout.setVisibility(View.GONE);
+                }
+
+                break;
+            case (spinnerbrand):
+
+                if (brandSpinner.getSelectedItem().toString().equalsIgnoreCase("Other")) {
+                    otherbrandlayout.setVisibility(View.VISIBLE);
+                } else {
+                    otherbrandlayout.setVisibility(View.GONE);
+                }
+                break;
+        }
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
 
     }
 
