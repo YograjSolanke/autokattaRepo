@@ -1,16 +1,28 @@
 package autokatta.com.view;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.net.ConnectException;
+import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.List;
+
 import autokatta.com.R;
+import autokatta.com.adapter.CompareVehicleListAdapter;
+import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
+import autokatta.com.other.CustomToast;
+import autokatta.com.response.VehicleForCompareResponse;
 import retrofit2.Response;
 
 public class CompareVehicleListActivity extends AppCompatActivity implements RequestNotifier {
@@ -24,6 +36,8 @@ public class CompareVehicleListActivity extends AppCompatActivity implements Req
     int content = 0;
     TextView textcount;
     String vehicle_ids;
+    List<VehicleForCompareResponse.Success.UsedVehicle> mVehicleCompareList = new ArrayList<>();
+    private ProgressDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +50,8 @@ public class CompareVehicleListActivity extends AppCompatActivity implements Req
             getSupportActionBar().setHomeButtonEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
+        dialog = new ProgressDialog(this);
+        dialog.setMessage("Loading...");
 
         /*FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -95,6 +111,9 @@ public class CompareVehicleListActivity extends AppCompatActivity implements Req
     }
 
     private void getComparisonData(String vehicle_ids) {
+        ApiCall mApiCall = new ApiCall(this, this);
+        dialog.show();
+        mApiCall.getVehiclesForCompare(vehicle_ids);
     }
 
     @Override
@@ -116,37 +135,60 @@ public class CompareVehicleListActivity extends AppCompatActivity implements Req
 
     @Override
     public void notifySuccess(Response<?> response) {
+        if (dialog.isShowing()) {
+            dialog.dismiss();
+        }
         if (response != null) {
             if (response.isSuccessful()) {
-                /*GetGroupQuotationResponse quotationResponse = (GetGroupQuotationResponse) response.body();
-                if (!quotationResponse.getSuccess().getUsedVehicle().isEmpty()) {
+                VehicleForCompareResponse forCompareResponse = (VehicleForCompareResponse) response.body();
+                if (!forCompareResponse.getSuccess().getUsedVehicle().isEmpty()) {
                     //mNoData.setVisibility(View.GONE);
-                    groupQuotationList.clear();
-                    for (GetGroupQuotationResponse.Success.UsedVehicle success : quotationResponse.getSuccess().getUsedVehicle()) {
+                    mVehicleCompareList.clear();
+                    for (VehicleForCompareResponse.Success.UsedVehicle success : forCompareResponse.getSuccess().getUsedVehicle()) {
 
 
-
-                        groupQuotationList.add(success);
+                        mVehicleCompareList.add(success);
 
                     }
-                    GetGroupQuotationAdapter mAdapter = new GetGroupQuotationAdapter(this, groupQuotationList, mLoginContact,
-                            mGrpId);
-                    mRecyclerView.setAdapter(mAdapter);
-                    mAdapter.notifyDataSetChanged();*/
-            } else {
+                    content = mVehicleCompareList.size();
+                    System.out.println("no of items in list================================================" + content);
+                    textcount.setText(String.valueOf(content));
+
+                    CompareVehicleListAdapter mAdapter = new CompareVehicleListAdapter(this, mVehicleCompareList);
+                    mHorizontalRecyclerView.setAdapter(mAdapter);
+                    mAdapter.notifyDataSetChanged();
+                } else {
                     /*mSwipeRefreshLayout.setRefreshing(false);
                     mNoData.setVisibility(View.VISIBLE);*/
+                }
+            } else {
+                //mSwipeRefreshLayout.setRefreshing(false);
             }
         } else {
-            //mSwipeRefreshLayout.setRefreshing(false);
-        }
-         /*else{
             // mSwipeRefreshLayout.setRefreshing(false);
-        }*/
+        }
     }
 
     @Override
     public void notifyError(Throwable error) {
+        if (dialog.isShowing()) {
+            dialog.dismiss();
+        }
+        if (error instanceof SocketTimeoutException) {
+            CustomToast.customToast(getApplicationContext(), getString(R.string._404));
+        } else if (error instanceof NullPointerException) {
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
+        } else if (error instanceof ClassCastException) {
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
+        } else if (error instanceof ConnectException) {
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
+        } else if (error instanceof UnknownHostException) {
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
+        } else {
+            Log.i("Check Class-"
+                    , "UserProfile");
+            error.printStackTrace();
+        }
 
     }
 

@@ -1331,4 +1331,8 @@ public interface ServiceApi {
     //get Sold Vehicle...
     @GET("GetSoldVehicles")
     Call<SoldVehicleResponse> getSoldVehicle(@Query("mycontact") String contact);
+
+    //get Vehicle for comaprison...
+    @GET("GetVehiclesForCompare")
+    Call<VehicleForCompareResponse> _autokattaVehicleCompare(@Query("vehicleids") String vehicle_ids);
 }
