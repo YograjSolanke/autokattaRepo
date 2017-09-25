@@ -214,7 +214,7 @@ public class About extends Fragment implements RequestNotifier, MaterialIntroLis
 
                         mIndusttxt.setText(mProfileAboutResponse.getSuccess().get(0).getIndustry());
                      //   mCattxt.setText(mProfileAboutResponse.getSuccess().get(0).getSubProfession());
-                        mBrandtxt.setText(mProfileAboutResponse.getSuccess().get(0).getBrandName());
+                      //  mBrandtxt.setText(mProfileAboutResponse.getSuccess().get(0).getBrandName());
 
                         if (strprofession.equalsIgnoreCase("Student"))
                         {
@@ -227,6 +227,7 @@ public class About extends Fragment implements RequestNotifier, MaterialIntroLis
                         {
                             mBrandlay.setVisibility(View.GONE);
                             mCategorylay.setVisibility(View.GONE);
+                            mIndusttxt.setText(mProfileAboutResponse.getSuccess().get(0).getIndustry());
                         }else
                         {
                             mCategorylay.setVisibility(View.GONE);
@@ -235,6 +236,11 @@ public class About extends Fragment implements RequestNotifier, MaterialIntroLis
                         if (!mProfileAboutResponse.getSuccess().get(0).getSubProfession().startsWith("New vehicle")||!mProfileAboutResponse.getSuccess().get(0).getSubProfession().startsWith("Used vehicle"))
                         {
                             mBrandlay.setVisibility(View.GONE);
+                        }
+                        else
+                        {
+                            mBrandlay.setVisibility(View.VISIBLE);
+                            mBrandtxt.setText(mProfileAboutResponse.getSuccess().get(0).getBrandName());
                         }
                         if (interest.contains(",")) {
                             String[] commaSplit = interest.split(",");
