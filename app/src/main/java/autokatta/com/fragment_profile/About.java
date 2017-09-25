@@ -78,7 +78,7 @@ public class About extends Fragment implements RequestNotifier, MaterialIntroLis
     AutoCompleteTextView mCompany, mDesignation, mCity;
     MultiAutoCompleteTextView mSkills;
     String newcompanyname, newdesignation, newskills, strCompany, strDesignation, strskills;
-
+    Bundle b=getArguments();
     LinearLayout mUsertypelay,mIndustrylay,mCategorylay,mBrandlay;
 
     String userName, email, contact, company, designation, subProfession, websitestr, city, skills, interest;
@@ -99,15 +99,15 @@ public class About extends Fragment implements RequestNotifier, MaterialIntroLis
 
     //Spinner spinnerUsertype,spinnerindustry,spinnerCategory,spinnerbrand;
     TextInputLayout otherIndustryLayout, otherCategoryLayout,otherbrandlayout;
-  //  RadioGroup usertype;
-   // RadioButton student, employee, selfemployee;
+    //  RadioGroup usertype;
+    // RadioButton student, employee, selfemployee;
     EditText otherIndustry;
     EditText otherCategory;
     EditText otherbrand;
-    String Sharedcontact,    strprofession="", sub_profession="", strIndustry="",brand="";
+    String Sharedcontact,    strprofession="", strIndustry="",brand="";
     Spinner moduleSpinner, usertypeSpinner, industrySpinner,brandSpinner;
     int RegId;
-   // String spinnervalue = "";
+    // String spinnervalue = "";
     ApiCall mApiCall;
     String[] MODULE = null;
     String[] INDUSTRY = null;
@@ -213,8 +213,8 @@ public class About extends Fragment implements RequestNotifier, MaterialIntroLis
 
 
                         mIndusttxt.setText(mProfileAboutResponse.getSuccess().get(0).getIndustry());
-                     //   mCattxt.setText(mProfileAboutResponse.getSuccess().get(0).getSubProfession());
-                      //  mBrandtxt.setText(mProfileAboutResponse.getSuccess().get(0).getBrandName());
+                        //   mCattxt.setText(mProfileAboutResponse.getSuccess().get(0).getSubProfession());
+                        //  mBrandtxt.setText(mProfileAboutResponse.getSuccess().get(0).getBrandName());
 
                         if (strprofession.equalsIgnoreCase("Student"))
                         {
@@ -324,7 +324,7 @@ public class About extends Fragment implements RequestNotifier, MaterialIntroLis
                     BrandsTagResponse brandsTagResponse = (BrandsTagResponse) response.body();
                     final List<String> brand = new ArrayList<>();
                     if (!brandsTagResponse.getSuccess().isEmpty()) {
-                        brand.add("-Select Brands");
+                        brand.add("-Select Brand");
                         for (BrandsTagResponse.Success message : brandsTagResponse.getSuccess()) {
                             brand.add(message.getTagName());
                         }
@@ -351,16 +351,16 @@ public class About extends Fragment implements RequestNotifier, MaterialIntroLis
                         moduleSpinner.setAdapter(dataadapter);
                     } else {
                         if (isAdded())
-                        CustomToast.customToast(getActivity(), getString(R.string.no_response));
+                            CustomToast.customToast(getActivity(), getString(R.string.no_response));
                     }
                 } else {
                     if (isAdded())
-                     CustomToast.customToast(getActivity(), getString(R.string._404_));
+                        CustomToast.customToast(getActivity(), getString(R.string._404_));
                 }
             }
         }else {
             if (isAdded())
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+                CustomToast.customToast(getActivity(), getString(R.string.no_response));
         }
     }
 
@@ -411,7 +411,12 @@ public class About extends Fragment implements RequestNotifier, MaterialIntroLis
         if (this.isVisible()) {
             // If we are becoming invisible, then...
             if (isVisibleToUser && !_hasLoadedOnce) {
-                mApiCall.profileAbout(Sharedcontact, Sharedcontact);
+                if (b!=null)
+                {
+                    mApiCall.profileAbout(b.getString("otherContact"), b.getString("otherContact"));
+                }else {
+                    mApiCall.profileAbout(Sharedcontact, Sharedcontact);
+                }
                 mApiCall.getSkills();
                 mApiCall.getDesignation();
                 mApiCall.getCompany();
@@ -438,7 +443,7 @@ public class About extends Fragment implements RequestNotifier, MaterialIntroLis
                 mEditTags = (TextView) mAbout.findViewById(R.id.editTags);
                 mProfession = (TextView) mAbout.findViewById(R.id.worked_at);
                 mEdit = (ImageView) mAbout.findViewById(R.id.edit);
-              //  msubprofession = (TextView) mAbout.findViewById(R.id.subprofession);
+                //  msubprofession = (TextView) mAbout.findViewById(R.id.subprofession);
                 mEmail = (EditText) mAbout.findViewById(R.id.email);
                 mWebsite = (EditText) mAbout.findViewById(R.id.website);
                 mCity = (AutoCompleteTextView) mAbout.findViewById(R.id.address);
@@ -457,12 +462,12 @@ public class About extends Fragment implements RequestNotifier, MaterialIntroLis
                 mAbouttxt = (EditText) mAbout.findViewById(R.id.about);
 
 
-            //    usertype = (RadioGroup) mAbout.findViewById(R.id.usertype);
-              //  student = (RadioButton) mAbout.findViewById(R.id.student);
+                //    usertype = (RadioGroup) mAbout.findViewById(R.id.usertype);
+                //  student = (RadioButton) mAbout.findViewById(R.id.student);
                 //employee = (RadioButton) mAbout.findViewById(R.id.employee);
                 //elfemployee = (RadioButton) mAbout.findViewById(R.id.selfemployee);
-            //    spinner = (Spinner) mAbout.findViewById(spinner);
-              //  spinner.setVisibility(View.GONE);
+                //    spinner = (Spinner) mAbout.findViewById(spinner);
+                //  spinner.setVisibility(View.GONE);
                 mLinear = (LinearLayout) mAbout.findViewById(R.id.profileAbout);
 
 
@@ -482,8 +487,13 @@ public class About extends Fragment implements RequestNotifier, MaterialIntroLis
                 brandSpinner.setOnItemSelectedListener(About.this);
 
                 mGenericFunctions = new GenericFunctions();
-
-                mApiCall.profileAbout(Sharedcontact, Sharedcontact);
+                if (b!=null){
+                    mApiCall.profileAbout(b.getString("otherContact"), b.getString("otherContact"));
+                    mEdit.setVisibility(View.GONE);
+                }else
+                {
+                    mApiCall.profileAbout(Sharedcontact, Sharedcontact);
+                }
                 mApiCall.getSkills();
                 mApiCall.getDesignation();
                 mApiCall.getCompany();
@@ -631,7 +641,7 @@ public class About extends Fragment implements RequestNotifier, MaterialIntroLis
 
                         }
                         if (moduleSpinner.getVisibility()==View.VISIBLE)
-                            sub_profession = moduleSpinner.getSelectedItem().toString().trim();
+                            subProfession = moduleSpinner.getSelectedItem().toString().trim();
 
 
                         if (brandSpinner.getVisibility()==View.VISIBLE)
@@ -746,65 +756,65 @@ public class About extends Fragment implements RequestNotifier, MaterialIntroLis
                             } else if (strIndustry.equalsIgnoreCase("Other") && !otherIndustry.getText().toString().matches("[a-zA-Z ]*")) {
                                 otherIndustry.setError("Enter  Valid Industry");
                             }// else if (strIndustry.equalsIgnoreCase("Automotive and vehicle manufacturing") && sub_profession.equalsIgnoreCase("Select Category")) {
-                            else if (strIndustry.equalsIgnoreCase("Automotive") && sub_profession.equalsIgnoreCase("Select Category")) {
+                            else if (strIndustry.equalsIgnoreCase("Automotive") && subProfession.equalsIgnoreCase("Select Category")) {
                                 Toast.makeText(getActivity(), "Please select category", Toast.LENGTH_LONG).show();
-                            } else if (sub_profession.equalsIgnoreCase("other") && otherCategory.getText().toString().equalsIgnoreCase("")) {
+                            } else if (subProfession.equalsIgnoreCase("other") && otherCategory.getText().toString().equalsIgnoreCase("")) {
                                 otherCategory.setError("Enter Profession");
-                            } else if (sub_profession.equalsIgnoreCase("other") && !otherCategory.getText().toString().matches("[a-zA-Z ]*")) {
+                            } else if (subProfession.equalsIgnoreCase("other") && !otherCategory.getText().toString().matches("[a-zA-Z ]*")) {
                                 otherCategory.setError("Enter  Valid Profession");
-                            } else if (sub_profession.startsWith("New vehicle") ||sub_profession.startsWith("Used vehicle")&& brand.equalsIgnoreCase("-Select Brand-")) {
-                                Toast.makeText(getActivity(), "Please select Brand", Toast.LENGTH_LONG).show();
+                            } else if (subProfession.startsWith("New vehicle") ||subProfession.startsWith("Used vehicle")&& brand.equalsIgnoreCase("-Select Brand")) {
+                                    Toast.makeText(getActivity(), "Please select Brand", Toast.LENGTH_LONG).show();
                             }else if (brand.equalsIgnoreCase("other") && otherbrand.getText().toString().equalsIgnoreCase("")) {
                                 otherbrand.setError("Enter Brand");
                             } else if (brand.equalsIgnoreCase("other") && !otherbrand.getText().toString().matches("[a-zA-Z ]*")) {
                                 otherbrand.setError("Enter  Valid Brand");
-                            } else if (sub_profession.equalsIgnoreCase("Other")) {
-                                sub_profession = otherCategory.getText().toString().trim();
-                                mApiCall.addOtherCategory(sub_profession);
+                            } else if (subProfession.equalsIgnoreCase("Other")) {
+                                subProfession = otherCategory.getText().toString().trim();
+                                mApiCall.addOtherCategory(subProfession);
                             } else if (brand.equalsIgnoreCase("Other")) {
                                 brand = otherbrand.getText().toString().trim();
                                 mApiCall.addOtherBrandTags(brand,"both");
                             } else if (strIndustry.equalsIgnoreCase("Other")) {
                                 strIndustry = otherIndustry.getText().toString().trim();
                                 mApiCall.addOtherIndustry(strIndustry);
-                            } else if (sub_profession.equalsIgnoreCase("Select Category")) {
-                                sub_profession = "";
+                            } else if (subProfession.equalsIgnoreCase("Select Category")) {
+                                subProfession = "";
                             } else if (brand.equalsIgnoreCase("-Select Brand")) {
                                 brand = "";
                             } else if (strIndustry.equalsIgnoreCase("Select Industry")) {
                                 strIndustry = "";
                             } else
-                                if (mUpdateAbout.equalsIgnoreCase("")||mUpdateAbout.equalsIgnoreCase(null)) {
-                                    mAbouttxt.setError("Enter About Name");
-                                    mAbouttxt.requestFocus();
-                                }else
-                                    {
-                                        Log.i("InterestsAbout", getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
+                            if (mUpdateAbout.equalsIgnoreCase("")||mUpdateAbout.equalsIgnoreCase(null)) {
+                                mAbouttxt.setError("Enter About Name");
+                                mAbouttxt.requestFocus();
+                            }else
+                            {
+                                Log.i("InterestsAbout", getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
+                                        .getString("interest", interest));
+
+                                mApiCall.updateProfile(RegId, mUpdatedEmail, mUpdatedCity, strprofession, subProfession, mUpdatedWebsite, mUpdatedCompany,
+                                        mUpdatedDesignation, mUpdatedSkills1,strIndustry,brand,mUpdateAbout, getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
                                                 .getString("interest", interest));
 
-                                        mApiCall.updateProfile(RegId, mUpdatedEmail, mUpdatedCity, strprofession, subProfession, mUpdatedWebsite, mUpdatedCompany,
-                                                mUpdatedDesignation, mUpdatedSkills1,strIndustry,brand,mUpdateAbout, getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
-                                                        .getString("interest", interest));
-
-                                        mDone.setVisibility(View.GONE);
-                                        mEdit.setVisibility(View.VISIBLE);
-                                        mEditTags.setVisibility(View.GONE);
+                                mDone.setVisibility(View.GONE);
+                                mEdit.setVisibility(View.VISIBLE);
+                                mEditTags.setVisibility(View.GONE);
 
 //                                mProfession.setEnabled(false);
-                                        mContact.setEnabled(false);
-                                        mWebsite.setEnabled(false);
-                                        mCity.setEnabled(false);
-                                        mCity.setFocusable(false);
-                                        mEmail.setEnabled(false);
-                                        mCompany.setEnabled(false);
-                                        mCompany.setFocusable(false);
-                                        mDesignation.setEnabled(false);
-                                        mDesignation.setFocusable(false);
-                                        mSkills.setEnabled(false);
-                                        mSkills.setFocusable(false);
-                                    }
-                                }
+                                mContact.setEnabled(false);
+                                mWebsite.setEnabled(false);
+                                mCity.setEnabled(false);
+                                mCity.setFocusable(false);
+                                mEmail.setEnabled(false);
+                                mCompany.setEnabled(false);
+                                mCompany.setFocusable(false);
+                                mDesignation.setEnabled(false);
+                                mDesignation.setFocusable(false);
+                                mSkills.setEnabled(false);
+                                mAbouttxt.setEnabled(false);
+                            }
                         }
+                    }
                 });
 
                 mEditTags.setOnClickListener(new OnClickListener() {
@@ -843,7 +853,11 @@ public class About extends Fragment implements RequestNotifier, MaterialIntroLis
         mDone.setFocusable(true);
         mDone.setFocusableInTouchMode(true);
         mDone.requestFocus();
-        mApiCall.profileAbout(Sharedcontact, Sharedcontact);
+        if (b!=null){
+            mApiCall.profileAbout(b.getString("otherContact"), b.getString("otherContact"));
+            mEdit.setVisibility(View.GONE);
+        }else
+            mApiCall.profileAbout(Sharedcontact, Sharedcontact);
         if (mDone.getVisibility() == View.VISIBLE)
             showIntro(mDone, INTRO_FOCUS_1, "Please click this...to update profile", Focus.NORMAL);
     }

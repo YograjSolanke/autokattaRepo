@@ -23,11 +23,11 @@ import com.github.clans.fab.FloatingActionMenu;
 import autokatta.com.R;
 import autokatta.com.adapter.TabAdapterName;
 import autokatta.com.apicall.ApiCall;
-import autokatta.com.fragment_profile.About;
 import autokatta.com.fragment_profile.AboutStore;
 import autokatta.com.fragment_profile.Event;
 import autokatta.com.fragment_profile.Follow;
 import autokatta.com.fragment_profile.Groups;
+import autokatta.com.fragment_profile.OtherAbout;
 import autokatta.com.fragment_profile.OtherWall;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
@@ -44,7 +44,7 @@ public class OtherProfile extends AppCompatActivity implements RequestNotifier, 
     Bundle mBundle = new Bundle();
     FloatingActionMenu menuRed;
     FloatingActionButton mCall, mLike, mFollow;
-    About mAbout;
+    OtherAbout mAbout;
     Groups mGroupsFrag;
     AboutStore mStore;
     String dp = "";
@@ -78,7 +78,7 @@ public class OtherProfile extends AppCompatActivity implements RequestNotifier, 
         mLike.setOnClickListener(this);
         mFollow.setOnClickListener(this);
 
-        mAbout = new About();
+        mAbout = new OtherAbout();
         mAbout.setArguments(mBundle);
 
         mGroupsFrag = new Groups();
@@ -138,7 +138,7 @@ public class OtherProfile extends AppCompatActivity implements RequestNotifier, 
     GET Other Profile...
      */
     private void getOtherProfile(String contact) {
-        mApiCall.profileAbout(contact, mLoginContact);
+        mApiCall.profileAbout(contact,mLoginContact);
     }
 
     private void setupViewPager(ViewPager viewPager) {

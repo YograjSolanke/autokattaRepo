@@ -80,6 +80,13 @@ public class AddTags extends AppCompatActivity implements RequestNotifier {
 
         if (getIntent().getExtras() != null) {
             String interest = getIntent().getExtras().getString("interest", "");
+            String action = getIntent().getExtras().getString("action");
+
+            if (action.equalsIgnoreCase("other"))
+            {
+             mOk.setVisibility(View.GONE);
+                flexbox.setEnabled(false);
+            }
             Log.i("inter", "->" + interest);
             String[] commaSplit = new String[0];
             if (!interest.equalsIgnoreCase("")) {
