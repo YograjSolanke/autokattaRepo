@@ -429,6 +429,7 @@
     <string name="go_to_live">Go to live</string>
     <string name="active_auction">Active Auction</string>
     <string name="store_name">Store Name</string>
+    <string name="modules">Modules</string>
     <string name="no_of_enquiries">No.Of Enquiries:</string>
     <string name="send_enquiry">Send Enquiry</string>
     <string name="photos">Photos</string>
@@ -714,4 +715,11 @@
     <string name="confirm_interest">Do you want to post your status with interest???</string>
     <string name="title_activity_my_vehicle_quotation_list">MyVehicleQuotationListActivity</string>
     <string name="title_activity_compare_vehicle_list">CompareVehicleListActivity</string>
+
+    <string name="info">INFO</string>
+    <string name="actions">ACTIONS</string>
+    <string name="uploads">UPLOADS</string>
+    <string name="my_video">My Video</string>
+    <string name="images">Images</string>
+    <string name="blog">Blog</string>
 </resources>

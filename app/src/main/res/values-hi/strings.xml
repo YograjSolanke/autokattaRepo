@@ -425,6 +425,7 @@
     <string name="go_to_live">"जीने के लिए जाओ"</string>
     <string name="active_auction">"सक्रिय नीलामी"</string>
     <string name="store_name">"स्टोर नाम"</string>
+    <string name="modules">मॉड्यूल</string>
     <string name="no_of_enquiries">"नहीं। पूछताछ की संख्या:"</string>
     <string name="send_enquiry">"जांच भेजें"</string>
     <string name="photos">"छवियाँ"</string>

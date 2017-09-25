@@ -1,7 +1,6 @@
 package autokatta.com.view;
 
 import android.animation.ValueAnimator;
-import android.app.ActivityOptions;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -22,18 +21,14 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.animation.DecelerateInterpolator;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -76,8 +71,8 @@ import retrofit2.Response;
 public class UserProfile extends AppCompatActivity implements RequestNotifier, View.OnClickListener {
 
     ImageView mProfilePicture;
+    TextView mUserName, mWorkedAt, mAbout, mGroup, mStore, mModule, mFollow, mMyVideo, mImages, mBlog, mPost;
     Bundle mUserProfileBundle;
-    String mUserName;
     CollapsingToolbarLayout collapsingToolbar;
     String mLoginContact;
     FloatingActionButton mfab_edit, mfab_done;
@@ -104,17 +99,17 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
         setContentView(R.layout.activity_user_profile);
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         appBar = (AppBarLayout) findViewById(R.id.appbar);
-        mfab_edit = (FloatingActionButton) findViewById(R.id.fab_edit_prof);
-        mfab_done = (FloatingActionButton) findViewById(R.id.fab_edit_done);
-        addVehicle = (com.github.clans.fab.FloatingActionButton) findViewById(R.id.add_vehicle);
-        mCreateStore = (com.github.clans.fab.FloatingActionButton) findViewById(R.id.create_store);
-        mCreateGroup = (com.github.clans.fab.FloatingActionButton) findViewById(R.id.create_group);
-        mfab_done.setVisibility(View.GONE);
+       /* mfab_edit = (FloatingActionButton) findViewById(R.id.fab_edit_prof);
+        mfab_done = (FloatingActionButton) findViewById(R.id.fab_edit_done);*/
+        //addVehicle = (com.github.clans.fab.FloatingActionButton) findViewById(R.id.add_vehicle);
+        /*mCreateStore = (com.github.clans.fab.FloatingActionButton) findViewById(R.id.create_store);
+        mCreateGroup = (com.github.clans.fab.FloatingActionButton) findViewById(R.id.create_group);*/
+//        mfab_done.setVisibility(View.GONE);
         setSupportActionBar(toolbar);
 
-        mCreateGroup.setOnClickListener(this);
-        mCreateStore.setOnClickListener(this);
-        addVehicle.setOnClickListener(this);
+//        mCreateGroup.setOnClickListener(this);
+        // mCreateStore.setOnClickListener(this);
+//        addVehicle.setOnClickListener(this);
 
 
         if (getSupportActionBar() != null) {
@@ -135,20 +130,31 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
              */
             getProfileData();
             mUserParent = (CoordinatorLayout) findViewById(R.id.main_content);
-            collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
-            collapsingToolbar.setCollapsedTitleTextColor(Color.WHITE);
+            //collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
+            //collapsingToolbar.setCollapsedTitleTextColor(Color.WHITE);
             mProfilePicture = (ImageView) findViewById(R.id.user_image);
+            mUserName = (TextView) findViewById(R.id.user_name);
+            mWorkedAt = (TextView) findViewById(R.id.worked_at);
+            mAbout = (TextView) findViewById(R.id.about);
+            mGroup = (TextView) findViewById(R.id.group);
+            mStore = (TextView) findViewById(R.id.store);
+            mModule = (TextView) findViewById(R.id.modules);
+            mFollow = (TextView) findViewById(R.id.follow);
+            mMyVideo = (TextView) findViewById(R.id.my_video);
+            mImages = (TextView) findViewById(R.id.images);
+            mBlog = (TextView) findViewById(R.id.blog);
+            mPost = (TextView) findViewById(R.id.post);
             //mProfilePicture.setEnabled(false);
             mProfilePicture.setOnClickListener(this);
-            viewPager = (ViewPager) findViewById(R.id.user_profile_viewpager);
-            if (viewPager != null) {
+            //viewPager = (ViewPager) findViewById(R.id.user_profile_viewpager);
+            /*if (viewPager != null) {
                 setupViewPager(viewPager);
-            }
+            }*/
 
-            TabLayout tabLayout = (TabLayout) findViewById(R.id.user_profile_tabs);
-            tabLayout.setupWithViewPager(viewPager);
+            /*TabLayout tabLayout = (TabLayout) findViewById(R.id.user_profile_tabs);
+            tabLayout.setupWithViewPager(viewPager);*/
 
-            int tab_position = tabLayout.getSelectedTabPosition();
+            /*int tab_position = tabLayout.getSelectedTabPosition();
             if (tab_position == 0) {
                 addVehicle.hide(true);
                 mCreateStore.hide(true);
@@ -172,21 +178,21 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
                 public void onTabReselected(TabLayout.Tab tab) {
 
                 }
-            });
+            });*/
 
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         /*EDIT USER NAME AND PROFILE PIC*/
-        mfab_edit.setOnClickListener(new View.OnClickListener() {
+        /*mfab_edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
-                /*Snackbar.make(view, "Edit enable", Snackbar.LENGTH_LONG)
+                *//*Snackbar.make(view, "Edit enable", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
                 mProfilePicture.setEnabled(true);
                 mfab_done.setVisibility(View.VISIBLE);
-                mfab_edit.setVisibility(View.GONE);*/
+                mfab_edit.setVisibility(View.GONE);*//*
                 String dp_path = getString(R.string.base_image_url) + dp;
                 LayoutInflater layoutInflater = LayoutInflater.from(UserProfile.this);
                 View mViewDialogOtp = layoutInflater.inflate(R.layout.custom_alert_my_profile_edit, null);
@@ -222,8 +228,8 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
                                 updatedUsername = name.getText().toString();
                                 if (updatedUsername.equals("") || updatedUsername.startsWith(" ") && updatedUsername.endsWith(" ")) {
                                     CustomToast.customToast(getApplicationContext(), "Please Enter Your Name");
-                                    /*Snackbar.make(view, "Please Enter Your Name", Snackbar.LENGTH_LONG)
-                                            .setAction("Action", null).show();*/
+                                    *//*Snackbar.make(view, "Please Enter Your Name", Snackbar.LENGTH_LONG)
+                                            .setAction("Action", null).show();*//*
                                 } else {
                                     updateProfile();
                                     uploadImage(mediaPath);
@@ -241,7 +247,7 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
                 alertDialogBox.show();
 
             }
-        });
+        });*/
        /* mProfilePicture.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -267,7 +273,7 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
         mfab_edit.setVisibility(View.VISIBLE);*/
     }
 
-    private void animateFab(int position) {
+    /*private void animateFab(int position) {
         switch (position) {
             case 0:
                 addVehicle.hide(true);
@@ -287,7 +293,7 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
                 mCreateGroup.hide(true);
                 break;
 
-            /*case 3:
+            *//*case 3:
                 addVehicle.hide(true);
                 mCreateStore.hide(true);
                 mCreateGroup.hide(true);
@@ -297,13 +303,13 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
                 addVehicle.hide(true);
                 mCreateStore.hide(true);
                 mCreateGroup.hide(true);
-                break;*/
+                break;*//*
 
-          /*  case 3:
+          *//*  case 3:
                 addVehicle.hide(true);
                 mCreateStore.hide(true);
                 mCreateGroup.hide(true);
-                break;*/
+                break;*//*
 
             case 4:
                 addVehicle.hide(true);
@@ -323,7 +329,7 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
                 mCreateGroup.hide(true);
                 break;
         }
-    }
+    }*/
    /* @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -337,7 +343,6 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
      */
     private void getProfileData() {
         ApiCall mApiCall = new ApiCall(UserProfile.this, this);
-
         dialog.show();
         mApiCall.profileAbout(mLoginContact, mLoginContact);
     }
@@ -384,7 +389,8 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
                 ProfileAboutResponse mProfileAboutResponse = (ProfileAboutResponse) response.body();
                 if (!mProfileAboutResponse.getSuccess().isEmpty()) {
                     dp = mProfileAboutResponse.getSuccess().get(0).getProfilePic();
-                    mUserName = mProfileAboutResponse.getSuccess().get(0).getUsername();
+                    mUserName.setText(mProfileAboutResponse.getSuccess().get(0).getUsername());
+                    mWorkedAt.setText(mProfileAboutResponse.getSuccess().get(0).getCompanyName());
                     RegID = mProfileAboutResponse.getSuccess().get(0).getRegId();
                     String dp_path = getString(R.string.base_image_url)+ dp;
                     final ProgressBar progressBar = (ProgressBar) findViewById(R.id.progress);
@@ -396,20 +402,18 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
                             .listener(new RequestListener<String, GlideDrawable>() {
                                 @Override
                                 public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
-                                    progressBar.setVisibility(View.GONE);
+//                                    progressBar.setVisibility(View.GONE);
                                     return false;
                                 }
 
                                 @Override
                                 public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
-                                    progressBar.setVisibility(View.GONE);
+                                    //   progressBar.setVisibility(View.GONE);
                                     return false;
                                 }
                             })
                             //.placeholder(R.drawable.logo48x48)
                             .into(mProfilePicture);
-                    collapsingToolbar.setTitle(mUserName);
-                    collapsingToolbar.setCollapsedTitleTextColor(Color.WHITE);
                 } else {
 
                 }
@@ -480,8 +484,8 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
                 Snackbar.make(mUserParent, "Profile Updated Successfuly", Snackbar.LENGTH_SHORT).show();
                 getProfileData();
                 mProfilePicture.setEnabled(false);
-                collapsingToolbar.setCollapsedTitleTextColor(Color.WHITE);
-                mfab_done.setVisibility(View.GONE);
+                //collapsingToolbar.setCollapsedTitleTextColor(Color.WHITE);
+                // mfab_done.setVisibility(View.GONE);
             }
 
         }
@@ -678,7 +682,33 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.create_group:
+            case R.id.about:
+                break;
+
+            case R.id.group:
+                break;
+
+            case R.id.store:
+                break;
+
+            case R.id.modules:
+                break;
+
+            case R.id.follow:
+                break;
+
+            case R.id.my_video:
+                break;
+
+            case R.id.images:
+                break;
+
+            case R.id.post:
+                break;
+
+            case R.id.blog:
+                break;
+            /*case R.id.create_group:
                 ActivityOptions option1 = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.ok_left_to_right,
                         R.anim.ok_right_to_left);
                 Intent intent = new Intent(getApplicationContext(), GroupTabs.class);
@@ -695,16 +725,16 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
                 Intent intents = new Intent(getApplicationContext(), MyStoreListActivity.class);
                 intents.putExtras(bundle);
                 startActivity(intents, options.toBundle());
-                break;
+                break;*/
 
-            case R.id.add_vehicle:
-                /*ActivityOptions option = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.ok_left_to_right,
+            /*case R.id.add_vehicle:
+                *//*ActivityOptions option = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.ok_left_to_right,
                         R.anim.ok_right_to_left);
                 Intent i = new Intent(getApplicationContext(), NextRegistrationContinue.class);
                 i.putExtra("action", "profile");
                 i.putExtra("className", "profile");
-                startActivity(i, option.toBundle());*/
-                break;
+                startActivity(i, option.toBundle());*//*
+                break;*/
 
             case R.id.user_image:
 

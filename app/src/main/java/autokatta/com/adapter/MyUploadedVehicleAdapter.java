@@ -363,7 +363,7 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
                     frag.setArguments(b);
                     FragmentManager fragmentManager = ((FragmentActivity) activity).getSupportFragmentManager();
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                    fragmentTransaction.replace(R.id.myUploadedVehicleFrame, frag);
+                    fragmentTransaction.replace(R.id.myUsedVehicleFrame, frag);
                     fragmentTransaction.addToBackStack("vehicle_buyer_list");
                     fragmentTransaction.commit();
                 }

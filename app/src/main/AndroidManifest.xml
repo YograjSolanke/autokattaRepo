@@ -766,7 +766,11 @@
         <activity android:name=".other.DemoDelAct" />
         <activity android:name=".my_inventory_container.ProductContainer" />
         <activity android:name=".my_inventory_container.ServiceContainer" />
-        <activity android:name=".my_inventory_container.SoldVehicleContainer"></activity>
+        <activity android:name=".my_inventory_container.SoldVehicleContainer" />
+        <activity android:name=".my_inventory_container.UsedVehicleContainer" />
+        <activity android:name=".my_inventory_container.BuyerNotificationContainer" />
+        <activity android:name=".my_inventory_container.MyVehicleContainer" />
+        <activity android:name=".my_inventory_container.NewVehicleContainer"></activity>
     </application>
 
 </manifest>

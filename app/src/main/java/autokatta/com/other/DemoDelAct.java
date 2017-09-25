@@ -16,9 +16,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import autokatta.com.R;
+import autokatta.com.my_inventory_container.BuyerNotificationContainer;
+import autokatta.com.my_inventory_container.MyVehicleContainer;
+import autokatta.com.my_inventory_container.NewVehicleContainer;
 import autokatta.com.my_inventory_container.ProductContainer;
 import autokatta.com.my_inventory_container.ServiceContainer;
 import autokatta.com.my_inventory_container.SoldVehicleContainer;
+import autokatta.com.my_inventory_container.UsedVehicleContainer;
+import autokatta.com.view.BussinessChatActivity;
+import autokatta.com.view.ManualEnquiry;
 
 public class DemoDelAct extends AppCompatActivity {
 
@@ -26,11 +32,11 @@ public class DemoDelAct extends AppCompatActivity {
 
     String[] gridViewString = {
             "Product", "Service", "Used Vehicle", "New Vehicle", "Sold Vehicle", "My Vehicle",
-            "Transfer Stock",};
+            "Transfer Stock", "Manual Enquiry", "Business Chat", "Search Leads"};
 
     int[] gridViewImageId = {
-            R.drawable.android, R.drawable.android, R.drawable.android, R.drawable.android, R.drawable.android, R.drawable.android,
-            R.drawable.android,
+            R.mipmap.product, R.mipmap.services, R.mipmap.used_vehicle, R.mipmap.sold_vehicle, R.mipmap.sold_vehicle,
+            R.mipmap.my_vehicle, R.mipmap.transfer_stock, R.mipmap.manual_enquiry, R.mipmap.business_chat, R.mipmap.search_leads,
     };
 
     @Override
@@ -56,15 +62,21 @@ public class DemoDelAct extends AppCompatActivity {
                 } else if (gridViewString[+i].equals("Service")) {
                     startActivity(new Intent(getApplicationContext(), ServiceContainer.class));
                 } else if (gridViewString[+i].equals("Used Vehicle")) {
-                    Toast.makeText(DemoDelAct.this, gridViewString[+i], Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(getApplicationContext(), UsedVehicleContainer.class));
                 } else if (gridViewString[+i].equals("New Vehicle")) {
-                    Toast.makeText(DemoDelAct.this, gridViewString[+i], Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(getApplicationContext(), NewVehicleContainer.class));
                 } else if (gridViewString[+i].equals("Sold Vehicle")) {
                     startActivity(new Intent(getApplicationContext(), SoldVehicleContainer.class));
                 } else if (gridViewString[+i].equals("My Vehicle")) {
-                    Toast.makeText(DemoDelAct.this, gridViewString[+i], Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(getApplicationContext(), MyVehicleContainer.class));
                 } else if (gridViewString[+i].equals("Transfer Stock")) {
                     Toast.makeText(DemoDelAct.this, gridViewString[+i], Toast.LENGTH_SHORT).show();
+                } else if (gridViewString[+i].equals("Search Leads")) {
+                    startActivity(new Intent(getApplicationContext(), BuyerNotificationContainer.class));
+                } else if (gridViewString[+i].equals("Manual Enquiry")) {
+                    startActivity(new Intent(getApplicationContext(), ManualEnquiry.class));
+                } else if (gridViewString[+i].equals("Business Chat")) {
+                    startActivity(new Intent(getApplicationContext(), BussinessChatActivity.class));
                 }
             }
         });
