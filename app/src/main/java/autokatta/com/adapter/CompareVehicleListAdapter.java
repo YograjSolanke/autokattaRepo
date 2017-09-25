@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import autokatta.com.R;
@@ -27,9 +28,11 @@ import jp.wasabeef.glide.transformations.CropCircleTransformation;
 public class CompareVehicleListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private Activity mActivity;
+    private List<VehicleForCompareResponse.Success.UsedVehicle> mVehicleCompareList = new ArrayList<>();
 
-    public CompareVehicleListAdapter(Activity activity, List<VehicleForCompareResponse.Success.UsedVehicle> mVehicleCompareList) {
+    public CompareVehicleListAdapter(Activity activity, List<VehicleForCompareResponse.Success.UsedVehicle> mVehicleCompareList1) {
         mActivity = activity;
+        mVehicleCompareList = mVehicleCompareList1;
     }
 
     @Override
@@ -42,48 +45,46 @@ public class CompareVehicleListAdapter extends RecyclerView.Adapter<RecyclerView
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         final VehicleHolder mVehicleHolder = (VehicleHolder) holder;
 
-        mVehicleHolder.mBrand.setText();
-        mVehicleHolder.mInsuranceValid.setText();
-        mVehicleHolder.mInsurenceIDV.setText();
-        mVehicleHolder.mOwner.setText();
-        mVehicleHolder.mFuel.setText();
-        mVehicleHolder.mColor.setText();
-        mVehicleHolder.mRc.setText();
-        mVehicleHolder.mFitness.setText();
-        mVehicleHolder.mPermitValid.setText();
-        mVehicleHolder.mSeatingCap.setText();
-        mVehicleHolder.mHypo.setText();
-        mVehicleHolder.mDrive.setText();
-        mVehicleHolder.mBody.setText();
-        mVehicleHolder.mApplication.setText();
-        mVehicleHolder.mLocationCity.setText();
-        mVehicleHolder.mPrice.setText();
-        mVehicleHolder.mLocationCity.setText();
-        mVehicleHolder.mKms.setText();
-        mVehicleHolder.mRegNo.setText();
-        mVehicleHolder.mEngine.setText();
-        mVehicleHolder.mChasis.setText();
-        mVehicleHolder.mMfgYear.setText();
-        mVehicleHolder.mTaxValid.setText();
-        mVehicleHolder.mModel.setText();
-        mVehicleHolder.mTaxValid.setText();
-        mVehicleHolder.mRegYear.setText();
+        mVehicleHolder.mBrand.setText(mVehicleCompareList.get(position).getManufacturer());
+        mVehicleHolder.mInsuranceValid.setText(mVehicleCompareList.get(position).getInsuranceValid());
+        mVehicleHolder.mInsurenceIDV.setText(mVehicleCompareList.get(position).getInsuranceIdv());
+        mVehicleHolder.mOwner.setText(mVehicleCompareList.get(position).getNoOfOwners());
+        mVehicleHolder.mFuel.setText(mVehicleCompareList.get(position).getFualType());
+        mVehicleHolder.mColor.setText(mVehicleCompareList.get(position).getColor());
+        mVehicleHolder.mRc.setText(mVehicleCompareList.get(position).getRcAvailable());
+        mVehicleHolder.mFitness.setText(mVehicleCompareList.get(position).getFitnessValidity());
+        mVehicleHolder.mPermitValid.setText(mVehicleCompareList.get(position).getPermitValidity());
+        mVehicleHolder.mSeatingCap.setText(mVehicleCompareList.get(position).getSeatingCapacity());
+        mVehicleHolder.mHypo.setText(mVehicleCompareList.get(position).getHypothication());
+        mVehicleHolder.mDrive.setText(mVehicleCompareList.get(position).getDrive());
+        mVehicleHolder.mBody.setText(mVehicleCompareList.get(position).getBodyType());
+        mVehicleHolder.mApplication.setText(mVehicleCompareList.get(position).getApplication());
+        mVehicleHolder.mLocationCity.setText(mVehicleCompareList.get(position).getLocationCity());
+        mVehicleHolder.mPrice.setText(mVehicleCompareList.get(position).getPrice());
+        mVehicleHolder.mKms.setText(String.valueOf(mVehicleCompareList.get(position).getKmsRunning()));
+        mVehicleHolder.mRegNo.setText(mVehicleCompareList.get(position).getRegistrationNumber());
+        mVehicleHolder.mEngine.setText(mVehicleCompareList.get(position).getEngineNo());
+        mVehicleHolder.mChasis.setText(mVehicleCompareList.get(position).getChassisNo());
+        mVehicleHolder.mMfgYear.setText(mVehicleCompareList.get(position).getYearOfManufacture());
+        mVehicleHolder.mTaxAvailable.setText(mVehicleCompareList.get(position).getTaxValidity());
+        mVehicleHolder.mModel.setText(mVehicleCompareList.get(position).getModel());
+        mVehicleHolder.mRegYear.setText(mVehicleCompareList.get(position).getYearOfRegistration());
+        mVehicleHolder.mTaxPaid.setText(mVehicleCompareList.get(position).getTaxPaidUpto());
 
         mVehicleHolder.vehicleRating.setRating(0);
 
         mVehicleHolder.mCall.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                call(mItemList.get(mVehicleHolder.getAdapterPosition()).getContact());
+                call(mVehicleCompareList.get(mVehicleHolder.getAdapterPosition()).getContactNo());
             }
         });
 
-        if (mItemList.get(position).getSingleImage().equals("") || mItemList.get(position).getSingleImage().equals(null) ||
-                mItemList.get(position).getSingleImage().equals("null")) {
-            holder.mCardImage.setBackgroundResource(R.drawable.vehiimg);
+        if (mVehicleCompareList.get(position).getImage().equals("") || mVehicleCompareList.get(position).getImage() == null ||
+                mVehicleCompareList.get(position).getImage().equals("null")) {
+            mVehicleHolder.mVehiImg.setBackgroundResource(R.drawable.vehiimg);
         } else {
-            //mItemList.get(position).getImage() = mItemList.get(position).getImage().replaceAll(" ", "%20");
-            String dppath = mActivity.getString(R.string.base_image_url) + mItemList.get(position).getSingleImage();
+            String dppath = mActivity.getString(R.string.base_image_url) + mVehicleCompareList.get(position).getImage();
             Glide.with(mActivity)
                     .load(dppath)
                     .bitmapTransform(new CropCircleTransformation(mActivity)) //To display image in Circular form.
@@ -94,7 +95,7 @@ public class CompareVehicleListAdapter extends RecyclerView.Adapter<RecyclerView
 
     @Override
     public int getItemCount() {
-        return 0;
+        return mVehicleCompareList.size();
     }
 
     //Calling Functionality
@@ -109,10 +110,10 @@ public class CompareVehicleListAdapter extends RecyclerView.Adapter<RecyclerView
 
 
     private static class VehicleHolder extends RecyclerView.ViewHolder {
-        TextView mBrand, mInsuranceValid, mInsurenceIDV, mOwner, mFuel, mColor, mRc, insvaltext, taxpaidtext,
+        TextView mBrand, mInsuranceValid, mInsurenceIDV, mOwner, mFuel, mColor, mRc, insvaltext, mTaxPaid,
                 mFitness, mPermitValid, mSeatingCap, permittext, mHypo, mDrive, transmissiontext, mBody,
                 boattext, rvtext, mApplication, mLocationCity, mPrice, mKms, tyretext, bustypetext,
-                airtext, invoicetext, impltext, mRegNo, mEngine, mChasis, mMfgYear, mTaxValid,
+                airtext, invoicetext, impltext, mRegNo, mEngine, mChasis, mMfgYear, mTaxAvailable,
                 mModel, versiontext, mRegYear, regcitytext;
 
         ImageView mVehiImg, mCall;
@@ -152,10 +153,10 @@ public class CompareVehicleListAdapter extends RecyclerView.Adapter<RecyclerView
             mPrice = (TextView) itemView.findViewById(R.id.txtprice);
             mKms = (TextView) itemView.findViewById(R.id.txtkm);
             mMfgYear = (TextView) itemView.findViewById(R.id.txtmakeyr);
-            mTaxValid = (TextView) itemView.findViewById(R.id.txttaxavailable);
+            mTaxAvailable = (TextView) itemView.findViewById(R.id.txttaxavailable);
+            mTaxPaid = (TextView) itemView.findViewById(R.id.txttaxpaid);
             mVehiImg = (ImageView) itemView.findViewById(R.id.imgvehicle);
             vehicleRating = (RatingBar) itemView.findViewById(R.id.vehi_rating);
-
 
             mCall = (ImageView) itemView.findViewById(R.id.call);
 

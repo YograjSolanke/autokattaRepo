@@ -1,6 +1,5 @@
 package autokatta.com.fragment;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -63,7 +62,6 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
     String getBundle_vehicle_id = "";
     ApiCall mApiCall;
 
-    @SuppressLint("NewApi")
     @Nullable
     @Override
     public View onCreateView(LayoutInflater infl, ViewGroup container, Bundle savedInstanceState) {
@@ -385,20 +383,20 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
                                 mainList.get(i).getRcAvailable().equalsIgnoreCase("") || mainList.get(i).getRcAvailable().equalsIgnoreCase("-"))
                             checkBoxRc.setText("RC avl-NA");
                         else
-                            checkBoxRc.setText("RC avl-" + mainList.get(i).getRcAvailable());
+                            checkBoxRc.setText("" + "RC avl-" + mainList.get(i).getRcAvailable());
 
                         if (mainList.get(i).getInsuranceValid().startsWith("-Select Insurance Valid-") ||
                                 mainList.get(i).getInsuranceValid().equalsIgnoreCase("") || mainList.get(i).getInsuranceValid().equalsIgnoreCase("-"))
                             checkBoxIns.setText("INS avl-NA");
                         else
-                            checkBoxIns.setText("INS avl-" + mainList.get(i).getInsuranceValid());
+                            checkBoxIns.setText("" + "INS avl-" + mainList.get(i).getInsuranceValid());
 
                         if (mainList.get(i).getHpcapacity().equalsIgnoreCase("-") ||
                                 mainList.get(i).getHpcapacity().equalsIgnoreCase("")
                                 || mainList.get(i).getHpcapacity().equalsIgnoreCase("not mentioned"))
                             checkBoxHp.setText("Hp-NA");
                         else
-                            checkBoxHp.setText("Hp-" + mainList.get(i).getHpcapacity());
+                            checkBoxHp.setText("" + "Hp-" + mainList.get(i).getHpcapacity());
 
 
                         checkBox6.setText(itemCaterogy);
@@ -411,16 +409,16 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
                         if (itemrc.startsWith("-Select RC Available-") || itemrc.equalsIgnoreCase("") || itemrc.equalsIgnoreCase("-"))
                             checkBoxRcright.setText("RC avl-NA");
                         else
-                            checkBoxRcright.setText("RC avl-" + itemrc);
+                            checkBoxRcright.setText("" + "RC avl-" + itemrc);
                         if (itemins.startsWith("-Select Insurance Valid-") || itemins.equalsIgnoreCase("") || itemins.equalsIgnoreCase("-"))
                             checkBoxInsRight.setText("INS avl-NA");
                         else
-                            checkBoxInsRight.setText("INS avl-" + itemins);
+                            checkBoxInsRight.setText("" + "INS avl-" + itemins);
 
                         if (itemHp.equalsIgnoreCase("") || itemHp.equalsIgnoreCase("-") || itemHp.equalsIgnoreCase("not mentioned"))
                             checkBoxHpRight.setText("Hp-NA");
                         else
-                            checkBoxHpRight.setText("Hp-" + itemHp);
+                            checkBoxHpRight.setText("" + "Hp-" + itemHp);
 
                         try {
                             if (checkBox1.getText().toString().equalsIgnoreCase(checkBox6.getText().toString())) {
@@ -521,8 +519,8 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
                         }
 
 
-                        if (showcheckboc == 0)
-                            checkBox[j].setVisibility(View.VISIBLE);
+                        /*if (showcheckboc == 0)
+                            checkBox[j].setVisibility(View.VISIBLE);*/
 
                         final int finalI = i;
                         final int finalJ = j;
@@ -640,8 +638,6 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
             relativeLayout.setVisibility(View.GONE);
 
     }
-
-
 
 
     @Override

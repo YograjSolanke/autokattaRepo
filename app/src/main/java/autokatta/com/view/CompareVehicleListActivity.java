@@ -146,6 +146,61 @@ public class CompareVehicleListActivity extends AppCompatActivity implements Req
                     mVehicleCompareList.clear();
                     for (VehicleForCompareResponse.Success.UsedVehicle success : forCompareResponse.getSuccess().getUsedVehicle()) {
 
+                        success.setVehicleId(success.getVehicleId());
+                        success.setContactNo(success.getContactNo());
+                        success.setPrice(success.getPrice());
+                        success.setCategory(success.getCategory());
+                        success.setSubCategory(success.getSubCategory());
+                        success.setModel(success.getModel());
+                        success.setManufacturer(success.getManufacturer());
+                        success.setRtoCity(success.getRtoCity());
+                        success.setLocationCity(success.getLocationCity());
+                        success.setYearOfRegistration(success.getYearOfRegistration());
+                        success.setYearOfManufaturer(success.getYearOfManufaturer());
+                        success.setColor(success.getColor());
+                        success.setRegistrationNumber(success.getRegistrationNumber());
+                        success.setRcAvailable(success.getRcAvailable());
+                        success.setInsuranceValid(success.getInsuranceValid());
+                        success.setInsuranceIdv(success.getInsuranceIdv());
+                        success.setTaxValidity(success.getTaxValidity());
+                        success.setFitnessValidity(success.getFitnessValidity());
+                        success.setPermitValidity(success.getPermitValidity());
+                        success.setFualType(success.getFualType());
+                        success.setSeatingCapacity(success.getSeatingCapacity());
+                        success.setPermit(success.getPermit());
+                        success.setKmsRunning(success.getKmsRunning());
+                        success.setNoOfOwners(success.getNoOfOwners());
+                        success.setHypothication(success.getHypothication());
+                        success.setEngineNo(success.getEngineNo());
+                        success.setChassisNo(success.getChassisNo());
+                        success.setDrive(success.getDrive());
+                        success.setTransmission(success.getTransmission());
+                        success.setBodyType(success.getBodyType());
+                        success.setBoatType(success.getBoatType());
+                        success.setRvType(success.getRvType());
+                        success.setTyreCondition(success.getTyreCondition());
+                        success.setBusType(success.getBusType());
+                        success.setAirCondition(success.getAirCondition());
+                        success.setInvoice(success.getInvoice());
+                        success.setImplements(success.getImplements());
+                        success.setApplication(success.getApplication());
+                        success.setViewcount(success.getViewcount());
+                        success.setCallcount(success.getCallcount());
+                        success.setBodyManufacturer(success.getBodyManufacturer());
+                        success.setSeatManufacturer(success.getSeatManufacturer());
+                        success.setStatus(success.getStatus());
+                        success.setYearOfManufacture(success.getYearOfManufacture());
+                        success.setTaxPaidUpto(success.getTaxPaidUpto());
+                        String vehicleImage = success.getImage();
+                        if (vehicleImage.contains(",")) {
+                            String[] items = vehicleImage.split(",");
+                            success.setImage(items[0]);
+                            /*for (String item : items) {
+                                notification.setUpVehicleImage(item);
+                            }*/
+                        } else {
+                            success.setImage(vehicleImage);
+                        }
 
                         mVehicleCompareList.add(success);
 
@@ -160,12 +215,15 @@ public class CompareVehicleListActivity extends AppCompatActivity implements Req
                 } else {
                     /*mSwipeRefreshLayout.setRefreshing(false);
                     mNoData.setVisibility(View.VISIBLE);*/
+                    CustomToast.customToast(getApplicationContext(), getApplicationContext().getString(R.string.no_response));
                 }
             } else {
                 //mSwipeRefreshLayout.setRefreshing(false);
+                CustomToast.customToast(getApplicationContext(), getApplicationContext().getString(R.string.no_response));
             }
         } else {
             // mSwipeRefreshLayout.setRefreshing(false);
+            CustomToast.customToast(getApplicationContext(), getApplicationContext().getString(R.string.no_internet));
         }
     }
 
@@ -186,7 +244,7 @@ public class CompareVehicleListActivity extends AppCompatActivity implements Req
             CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
         } else {
             Log.i("Check Class-"
-                    , "UserProfile");
+                    , "CompareVehicleListActivity");
             error.printStackTrace();
         }
 

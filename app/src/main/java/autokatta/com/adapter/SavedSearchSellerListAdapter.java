@@ -23,12 +23,14 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
 import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.SellerResponse;
+import autokatta.com.view.CompareVehicleListActivity;
 import autokatta.com.view.OtherProfile;
 import retrofit2.Response;
 
@@ -40,12 +42,14 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class SavedSearchSellerListAdapter extends RecyclerView.Adapter<SavedSearchSellerListAdapter.SellerHolder> implements RequestNotifier {
 
-    List<SellerResponse.Success.MatchedResult> matchedResultList = new ArrayList<>();
+    private List<SellerResponse.Success.MatchedResult> matchedResultList = new ArrayList<>();
     Activity activity;
     ApiCall apiCall;
-    String category, brand, model, rto_city, manufacture_year, myContact;
-    String recieverContact, SenderContact, SellerId, VehiId, calldate;
-    int search_id;
+    private String category, brand, model, rto_city, manufacture_year, myContact;
+    private String recieverContact, SenderContact, SellerId, VehiId, calldate;
+    private int search_id;
+    private List<Integer> checkedvehicle_ids = new ArrayList<>();
+    private String getBundle_vehicle_id = "";
 
 
     public SavedSearchSellerListAdapter(Activity activity, List<SellerResponse.Success.MatchedResult> matchedResults, int search_id,
@@ -61,29 +65,33 @@ public class SavedSearchSellerListAdapter extends RecyclerView.Adapter<SavedSear
         apiCall = new ApiCall(activity, this);
         myContact = activity.getSharedPreferences(activity.getString(R.string.my_preference), MODE_PRIVATE)
                 .getString("loginContact", "");
+
+        checkedvehicle_ids = new ArrayList<>(matchedResults.size());
+        for (int j = 0; j < matchedResults.size(); j++) {
+            checkedvehicle_ids.add(0);
+        }
     }
 
     @Override
     public SavedSearchSellerListAdapter.SellerHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.seller_list_adapter, parent, false);
-        SellerHolder holder = new SellerHolder(view);
-        return holder;
+        return new SellerHolder(view);
     }
 
     @Override
     public void onBindViewHolder(final SavedSearchSellerListAdapter.SellerHolder holder, final int position) {
 
         final SellerResponse.Success.MatchedResult object = matchedResultList.get(position);
+        CheckBox checkBox[] = new CheckBox[matchedResultList.size()];
 
         holder.buyerusername.setText(object.getUsername());
-
         holder.Title.setText(object.getTitle());
 
         //to set buyer last call date
         try {
 
-            DateFormat date = new SimpleDateFormat(" MMM dd ");
-            DateFormat time = new SimpleDateFormat(" hh:mm a");
+            DateFormat date = new SimpleDateFormat(" MMM dd ", Locale.getDefault());
+            DateFormat time = new SimpleDateFormat(" hh:mm a", Locale.getDefault());
 
             holder.lastCall.setText("Last call on:" + date.format(object.getLastCallDateNew()) + time.format(object.getLastCallDateNew()));
 
@@ -94,8 +102,8 @@ public class SavedSearchSellerListAdapter extends RecyclerView.Adapter<SavedSear
         //to set vehicle uploaded date
         try {
 
-            DateFormat date = new SimpleDateFormat(" MMM dd ");
-            DateFormat time = new SimpleDateFormat(" hh:mm a");
+            DateFormat date = new SimpleDateFormat(" MMM dd ", Locale.getDefault());
+            DateFormat time = new SimpleDateFormat(" hh:mm a", Locale.getDefault());
 
             holder.UploadedDate.setText("Uploadede On :" + date.format(object.getDate()) + time.format(object.getDate()));
 
@@ -110,13 +118,11 @@ public class SavedSearchSellerListAdapter extends RecyclerView.Adapter<SavedSear
         holder.checkBox4.setText(manufacture_year);
         holder.checkBox5.setText(rto_city);
 
-
         holder.checkBox6.setText(object.getCategory());
         holder.checkBox7.setText(object.getManufacturer());
         holder.checkBox8.setText(object.getModel());
         holder.checkBox9.setText(object.getYearOfManufacture());
         holder.checkBox10.setText(object.getRtoCity());
-
 
         try {
 
@@ -167,7 +173,7 @@ public class SavedSearchSellerListAdapter extends RecyclerView.Adapter<SavedSear
         holder.chckbox.setVisibility(View.GONE);
 
         final String imagenames = object.getImage();
-        ArrayList<String> iname = new ArrayList<String>();
+        List<String> iname = new ArrayList<String>();
 
         try {
             String[] imagenamecame = imagenames.split(",");
@@ -220,6 +226,20 @@ public class SavedSearchSellerListAdapter extends RecyclerView.Adapter<SavedSear
             mFlippingsell = 0;
         }
 
+        /*final int v_ids = Integer.parseInt(matchedResultList.get(holder.getAdapterPosition()).getVehicleId());
+        checkBox[holder.getAdapterPosition()].setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    checkedvehicle_ids.set(holder.getAdapterPosition(), v_ids);
+                    VisibleCompareButton(checkedvehicle_ids);
+                } else {
+                    checkedvehicle_ids.set(holder.getAdapterPosition(), 0);
+                    VisibleCompareButton(checkedvehicle_ids);
+                }
+            }
+        });*/
+
         holder.buyerusername.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -233,62 +253,40 @@ public class SavedSearchSellerListAdapter extends RecyclerView.Adapter<SavedSear
             }
         });
 
-//        holder.buyer_lead_image.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                recieverContact=contact_no.get(position);
-//
-//                Bundle bundle = new Bundle();
-//                bundle.putString("contact", recieverContact);
-//                bundle.putString("action", "other");
-//
-//                SimpleProfile fragment = new SimpleProfile();
-//                fragment.setArguments(bundle);
-//                FragmentManager fragmentManager = ctx.getSupportFragmentManager();
-//                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//                fragmentTransaction.replace(R.id.containerView, fragment);
-//                // fragmentTransaction.addToBackStack(null);
-//                fragmentTransaction.commit();
-//            }
-//        });
 
         holder.callseller.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 recieverContact = object.getContactNo();
-
                 Calendar c = Calendar.getInstance();
                 System.out.println("Current time => " + c.getTime());
-
-                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                calldate = df.format(c.getTime());
-                // formattedDate have current date/time
-                System.out.println("current time=============================" + calldate);
-
-                call(recieverContact);
-                Intent callIntent = new Intent(Intent.ACTION_CALL);
-                callIntent.setData(Uri.parse(recieverContact));
-
-                apiCall.sendLastCallDate(myContact, recieverContact, calldate, "1");
+                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+                String calldate = df.format(c.getTime());
+                if (!recieverContact.equals(myContact)) {
+                    call(recieverContact);
+                    apiCall.sendLastCallDate(myContact, recieverContact, calldate, "1");
+                }
             }
         });
 
 
         if (object.getFavstatus().equalsIgnoreCase("yes")) {
-            holder.favSeller.setImageResource(R.drawable.fav2);
-            holder.favSeller.setEnabled(false);
+            holder.mFavimg.setVisibility(View.GONE);
+            holder.unmFavimg.setVisibility(View.VISIBLE);
         } else {
-            holder.favSeller.setImageResource(R.drawable.fav1);
+            holder.mFavimg.setVisibility(View.VISIBLE);
+            holder.unmFavimg.setVisibility(View.GONE);
         }
 
-        holder.favSeller.setOnClickListener(new View.OnClickListener() {
+        holder.mFavimg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                VehiId = object.getVehicleId();
-                SellerId = search_id + "," + VehiId;
+                String VehiId = object.getVehicleId();
+                String SellerId = search_id + "," + VehiId;
 
                 apiCall.addToFavorite(myContact, "", 0, SellerId, 0);
-                holder.favSeller.setImageResource(R.drawable.fav2);
+                holder.mFavimg.setVisibility(View.GONE);
+                holder.unmFavimg.setVisibility(View.VISIBLE);
 
                 object.setFavstatus("yes");
             }
@@ -296,6 +294,51 @@ public class SavedSearchSellerListAdapter extends RecyclerView.Adapter<SavedSear
 
         });
 
+        holder.unmFavimg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String VehiId = object.getVehicleId();
+                String SellerId = search_id + "," + VehiId;
+
+                apiCall.removeFromFavorite(myContact, "", 0, SellerId, 0);
+                holder.mFavimg.setVisibility(View.GONE);
+                holder.unmFavimg.setVisibility(View.VISIBLE);
+                object.setFavstatus("no");
+
+            }
+
+
+        });
+
+        holder.Compare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(activity, CompareVehicleListActivity.class);
+                intent.putExtra("vehicle_ids", getBundle_vehicle_id);
+                activity.startActivity(intent);
+            }
+        });
+
+    }
+
+    private void VisibleCompareButton(List<Integer> vehicleids) {
+        int flag = 0;
+        getBundle_vehicle_id = "";
+        for (int i = 0; i < vehicleids.size(); i++) {
+            if (vehicleids.get(i) != 0) {
+                flag++;
+                if (getBundle_vehicle_id.equals(""))
+                    getBundle_vehicle_id = vehicleids.get(i).toString();
+                else
+                    getBundle_vehicle_id = getBundle_vehicle_id + "," + vehicleids.get(i).toString();
+            }
+
+        }
+
+       /* if (flag > 1)
+            relativeLayout.setVisibility(View.VISIBLE);
+        else
+            relativeLayout.setVisibility(View.GONE);*/
 
     }
 
@@ -306,12 +349,13 @@ public class SavedSearchSellerListAdapter extends RecyclerView.Adapter<SavedSear
 
     static class SellerHolder extends RecyclerView.ViewHolder {
 
-        ImageView callseller, favSeller;
+        ImageView callseller, mFavimg, unmFavimg;
         ViewFlipper vehi_images;
         TextView buyerusername, buyerlocation, lastCall, Compare, Vehic_cnt, UploadedDate, Title;
         CheckBox checkBox1, checkBox2, checkBox3, checkBox4, checkBox5, checkBox6, checkBox7, checkBox8, checkBox9, checkBox10, chckbox;
+        CheckBox checkBox[];
 
-        public SellerHolder(View itemView) {
+        SellerHolder(View itemView) {
             super(itemView);
 
             buyerusername = (TextView) itemView.findViewById(R.id.username);
@@ -337,10 +381,11 @@ public class SavedSearchSellerListAdapter extends RecyclerView.Adapter<SavedSear
 
             chckbox = (CheckBox) itemView.findViewById(R.id.checkauc);
 
-            favSeller = (ImageView) itemView.findViewById(R.id.sellfevimg);
+            //checkBox[getAdapterPosition()] = (CheckBox) itemView.findViewById(R.id.checkauc);
+
+            mFavimg = (ImageView) itemView.findViewById(R.id.sellfevimg);
+            unmFavimg = (ImageView) itemView.findViewById(R.id.sellunfevimg);
             lastCall = (TextView) itemView.findViewById(R.id.lastcall);
-
-
         }
     }
 
@@ -358,7 +403,7 @@ public class SavedSearchSellerListAdapter extends RecyclerView.Adapter<SavedSear
         } else if (error instanceof ClassCastException) {
             CustomToast.customToast(activity, activity.getString(R.string.no_response));
         } else {
-            Log.i("Check Class-", "VehicleBuyerListAdapter");
+            Log.i("Check Class-", "SavedSearchSellerListAdapter");
             error.printStackTrace();
         }
 
@@ -373,7 +418,6 @@ public class SavedSearchSellerListAdapter extends RecyclerView.Adapter<SavedSear
                 CustomToast.customToast(activity, "Call date Submitted");
             } else if (str.equals("success_favourite")) {
                 CustomToast.customToast(activity, "favourite data submitted");
-
             }
 
 
