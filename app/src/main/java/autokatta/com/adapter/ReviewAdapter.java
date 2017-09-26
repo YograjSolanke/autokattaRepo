@@ -34,7 +34,7 @@ public class ReviewAdapter extends BaseAdapter implements View.OnClickListener {
 
     private List<ReviewAndReplyResponse.Success.ReviewMessage> locallist = new ArrayList<>();
 
-    public ReviewAdapter(Activity activity, String contactnumber, List<ReviewAndReplyResponse.Success.ReviewMessage> locallist) {
+    public ReviewAdapter(Activity activity, List<ReviewAndReplyResponse.Success.ReviewMessage> locallist, String contactnumber) {
 
         date = new SimpleDateFormat(" MMM dd yyyy", Locale.getDefault());
         time = new SimpleDateFormat(" hh:mm aa", Locale.getDefault());
@@ -88,14 +88,16 @@ public class ReviewAdapter extends BaseAdapter implements View.OnClickListener {
     public View getView(final int position, View convertView, ViewGroup parent) {
         final ReviewAndReplyResponse.Success.ReviewMessage MessageObj = locallist.get(position);
         View row = convertView;
-
-
-        row = inflater.inflate(R.layout.right, parent, false);
-
+        String keyword = "";
+        if (keyword.equals("Review"))
         row = inflater.inflate(R.layout.left, parent, false);
+        else
+            row = inflater.inflate(R.layout.right, parent, false);
 
         TextView chattext = (TextView) row.findViewById(R.id.msgr);
         TextView dateNtime = (TextView) row.findViewById(R.id.dateNtime);
+
+        chattext.setText(locallist.get(position).getReviewString());
 
 
         return row;
