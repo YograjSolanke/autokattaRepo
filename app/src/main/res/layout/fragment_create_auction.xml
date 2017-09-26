@@ -233,7 +233,7 @@
                     android:layout_gravity="center"
                     android:layout_marginStart="5dp"
                     android:background="@android:color/transparent"
-                    android:entries="@array/Auction_Category"
+                    android:entries="@array/stocktype"
                     android:gravity="center"
                     android:spinnerMode="dropdown"
                     android:textAlignment="center" />

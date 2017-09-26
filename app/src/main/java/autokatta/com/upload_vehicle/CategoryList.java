@@ -32,10 +32,10 @@ public class CategoryList extends Fragment {
         mCategory = inflater.inflate(R.layout.upload_vehicle_categries_list, null);
         mListView = (ListView) mCategory.findViewById(R.id.upload_category_list);
         mList.clear();
-        getActivity().setTitle("Select Auction Category");
+        getActivity().setTitle("Select Stock Type");
         mList.add("Finance/Repo");
-        mList.add("Insurance Salvage");
-        mList.add("Scrapped");
+        mList.add("Insurance");
+        mList.add("Scrap");
         mList.add("Dealer Stock");
         mList.add("Market Place");
 

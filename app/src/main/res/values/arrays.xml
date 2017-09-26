@@ -175,14 +175,14 @@
         <item>No</item>
     </string-array>
 
-    <string-array name="Auction_Category">
+   <!-- <string-array name="Auction_Category">
         <item>-Select Auction Category-</item>
         <item>Finance/Repo</item>
         <item>Insurance Salvage</item>
         <item>Scrapped</item>
         <item>Dealer Stock</item>
         <item>Market Place</item>
-    </string-array>
+    </string-array>-->
 
     <!--Manual Enquiry Status-->
     <string-array name="ManualEnquiryStatus">
@@ -236,8 +236,8 @@
     <string-array name="stocktype">
         <item>-Select Stock Type-</item>
         <item>Finance/Repo</item>
-        <item>Insurance Salvage</item>
-        <item>Scrapped</item>
+        <item>Insurance</item>
+        <item>Scrap</item>
         <item>Inventory</item>
         <item>Market Place</item>
     </string-array>

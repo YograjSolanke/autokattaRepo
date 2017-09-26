@@ -98,6 +98,7 @@ public class VehicleList extends Fragment implements RequestNotifier {
     public void notifySuccess(Response<?> response) {
         if (response != null) {
             if (response.isSuccessful()) {
+                mGetVehicle.clear();
                 if (response.body() instanceof GetVehicleListResponse) {
                     GetVehicleListResponse mGetVehicleListResponse = (GetVehicleListResponse) response.body();
                     if (!mGetVehicleListResponse.getSuccess().isEmpty()) {
