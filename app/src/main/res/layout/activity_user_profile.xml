@@ -117,29 +117,6 @@
         fab:fab_colorPressed="#5176C9"
         fab:fab_colorRipple="#5176C9" />
 
-
-    <com.github.clans.fab.FloatingActionButton
-        android:id="@+id/create_store"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end|bottom"
-        android:layout_margin="@dimen/fab_margin"
-        android:src="@mipmap/ic_create_store"
-        android:visibility="gone"
-        fab:fab_colorNormal="#5176C9"
-        fab:fab_colorPressed="#5176C9"
-        fab:fab_colorRipple="#5176C9" />
-
-    <com.github.clans.fab.FloatingActionButton
-        android:id="@+id/create_group"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end|bottom"
-        android:layout_margin="@dimen/fab_margin"
-        android:src="@mipmap/ic_create_group"
-        android:visibility="visible"
-        fab:fab_colorNormal="#5176C9"
-        fab:fab_colorPressed="#5176C9"
-        fab:fab_colorRipple="#5176C9" />-->
+    -->
 
 </android.support.design.widget.CoordinatorLayout>

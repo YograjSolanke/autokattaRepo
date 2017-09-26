@@ -1,6 +1,7 @@
 package autokatta.com.fragment_profile;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -46,8 +47,8 @@ public class Follow extends Fragment implements RequestNotifier {
     String contact, mOtherContact;
     boolean _hasLoadedOnce = false;
     ConnectionDetector mTestConnection;
-    ApiCall apiCall;
     Activity mActivity;
+    private ProgressDialog dialog;
 
     @Override
     public void onAttach(Context context) {
@@ -72,6 +73,9 @@ public class Follow extends Fragment implements RequestNotifier {
 
     @Override
     public void notifySuccess(Response<?> response) {
+        if (dialog.isShowing()) {
+            dialog.dismiss();
+        }
         if (response != null) {
             if (response.isSuccessful()) {
                 mHeaderList = new ArrayList<>();
@@ -108,33 +112,30 @@ public class Follow extends Fragment implements RequestNotifier {
             }
         } else {
             if (isAdded())
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+                CustomToast.customToast(getActivity(), getString(R.string.no_response));
         }
     }
 
     @Override
     public void notifyError(Throwable error) {
+        if (dialog.isShowing()) {
+            dialog.dismiss();
+        }
         if (error instanceof SocketTimeoutException) {
             if (isAdded())
                 CustomToast.customToast(getActivity(), getString(R.string.no_internet));
-
         } else if (error instanceof NullPointerException) {
-
-            //CustomToast.customToast(getActivity(), getString(R.string.no_response));
-
+            error.printStackTrace();
         } else if (error instanceof ClassCastException) {
-
-            //CustomToast.customToast(getActivity(), getString(R.string.no_response));
-
+            error.printStackTrace();
         } else if (error instanceof ConnectException) {
             if (isAdded())
-            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
-
+                CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
             if (isAdded())
-            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
-
+                CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         } else {
+            error.printStackTrace();
             Log.i("Check Class-", "Follow Fragment");
         }
     }
@@ -144,28 +145,28 @@ public class Follow extends Fragment implements RequestNotifier {
 
     }
 
+    public void getFollow(String mContact) {
+        if (mTestConnection.isConnectedToInternet()) {
+            ApiCall apiCall = new ApiCall(getActivity(), this);
+            dialog.show();
+            apiCall.getFollowers(mContact);
+        } else {
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string.no_internet));
+        }
+    }
+
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (this.isVisible()) {
             if (isVisibleToUser && !_hasLoadedOnce) {
-                ApiCall apiCall = new ApiCall(getActivity(), this);
                 Bundle bundle = getArguments();
                 if (bundle != null) {
                     mOtherContact = bundle.getString("otherContact");
-                    if (mTestConnection.isConnectedToInternet()) {
-                        apiCall.getFollowers(mOtherContact);
-                    } else {
-                        if (isAdded())
-                        CustomToast.customToast(getActivity(), getString(R.string.no_internet));
-                    }
+                    getFollow(mOtherContact);
                 } else {
-                    if (mTestConnection.isConnectedToInternet()) {
-                        apiCall.getFollowers(contact);
-                    } else {
-                        if (isAdded())
-                        CustomToast.customToast(getActivity(), getString(R.string.no_internet));
-                    }
+                    getFollow(contact);
                 }
                 _hasLoadedOnce = true;
             }
@@ -176,7 +177,6 @@ public class Follow extends Fragment implements RequestNotifier {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        apiCall = new ApiCall(getActivity(), this);
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -184,23 +184,14 @@ public class Follow extends Fragment implements RequestNotifier {
                 followersExpandableListView = (ExpandableListView) mFollow.findViewById(R.id.followexpanablelistview);
                 ViewCompat.setNestedScrollingEnabled(followersExpandableListView, true);
                 contact = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "");
-
+                dialog = new ProgressDialog(getActivity());
+                dialog.setMessage("Loading...");
                 Bundle bundle = getArguments();
                 if (bundle != null) {
                     mOtherContact = bundle.getString("otherContact");
-                    if (mTestConnection.isConnectedToInternet()) {
-                        apiCall.getFollowers(mOtherContact);
-                    } else {
-                        if (isAdded())
-                        CustomToast.customToast(getActivity(), getString(R.string.no_internet));
-                    }
+                    getFollow(mOtherContact);
                 } else {
-                    if (mTestConnection.isConnectedToInternet()) {
-                        apiCall.getFollowers(contact);
-                    } else {
-                        if (isAdded())
-                        CustomToast.customToast(getActivity(), getString(R.string.no_internet));
-                    }
+                    getFollow(contact);
                 }
             }
         });

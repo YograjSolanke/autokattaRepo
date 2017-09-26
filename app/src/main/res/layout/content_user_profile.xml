@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:padding="@dimen/card_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
@@ -31,7 +31,9 @@
                     android:layout_width="90dp"
                     android:layout_height="90dp"
                     android:contentDescription="@string/app_name"
-                    android:scaleType="fitXY" />
+                    android:scaleType="fitXY"
+                    android:src="@mipmap/ic_account"
+                    android:background="@drawable/frame" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -113,6 +115,7 @@
                     android:background="#cccccc" />
 
                 <LinearLayout
+                    android:id="@+id/about"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/text_margin_top"
@@ -128,7 +131,6 @@
                         android:layout_weight="0.8">
 
                         <TextView
-                            android:id="@+id/about"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:drawablePadding="@dimen/fab_margin"
@@ -185,6 +187,7 @@
                     android:orientation="vertical">
 
                     <LinearLayout
+                        android:id="@+id/group"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:baselineAligned="false"
@@ -198,7 +201,6 @@
                             android:layout_weight="0.8">
 
                             <TextView
-                                android:id="@+id/group"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:drawablePadding="@dimen/fab_margin"
@@ -231,6 +233,7 @@
                         android:background="#cccccc" />
 
                     <LinearLayout
+                        android:id="@+id/store"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:baselineAligned="false"
@@ -244,7 +247,6 @@
                             android:layout_weight="0.8">
 
                             <TextView
-                                android:id="@+id/store"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:drawablePadding="@dimen/fab_margin"
@@ -277,6 +279,7 @@
                         android:background="#cccccc" />
 
                     <LinearLayout
+                        android:id="@+id/modules"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:baselineAligned="false"
@@ -290,7 +293,6 @@
                             android:layout_weight="0.8">
 
                             <TextView
-                                android:id="@+id/modules"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:drawablePadding="@dimen/fab_margin"
@@ -323,6 +325,7 @@
                         android:background="#cccccc" />
 
                     <LinearLayout
+                        android:id="@+id/follow"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:baselineAligned="false"
@@ -336,7 +339,6 @@
                             android:layout_weight="0.8">
 
                             <TextView
-                                android:id="@+id/follow"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:drawablePadding="@dimen/fab_margin"
@@ -394,6 +396,7 @@
                     android:orientation="vertical">
 
                     <LinearLayout
+                        android:id="@+id/my_video"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:baselineAligned="false"
@@ -407,7 +410,6 @@
                             android:layout_weight="0.8">
 
                             <TextView
-                                android:id="@+id/my_video"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:drawablePadding="@dimen/fab_margin"
@@ -440,6 +442,7 @@
                         android:background="#cccccc" />
 
                     <LinearLayout
+                        android:id="@+id/images"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:baselineAligned="false"
@@ -453,7 +456,6 @@
                             android:layout_weight="0.8">
 
                             <TextView
-                                android:id="@+id/images"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:drawablePadding="@dimen/fab_margin"
@@ -486,6 +488,7 @@
                         android:background="#cccccc" />
 
                     <LinearLayout
+                        android:id="@+id/post"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:baselineAligned="false"
@@ -499,7 +502,6 @@
                             android:layout_weight="0.8">
 
                             <TextView
-                                android:id="@+id/post"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:drawablePadding="@dimen/fab_margin"
@@ -532,6 +534,7 @@
                         android:background="#cccccc" />
 
                     <LinearLayout
+                        android:id="@+id/blog"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:baselineAligned="false"
@@ -545,7 +548,6 @@
                             android:layout_weight="0.8">
 
                             <TextView
-                                android:id="@+id/blog"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:drawablePadding="@dimen/fab_margin"

@@ -771,10 +771,18 @@
         <activity android:name=".my_inventory_container.BuyerNotificationContainer" />
         <activity android:name=".my_inventory_container.MyVehicleContainer" />
         <activity android:name=".my_inventory_container.NewVehicleContainer" />
+        <activity android:name=".my_profile_container.AboutContainer" />
+        <activity android:name=".my_profile_container.GroupContainer" />
+        <activity android:name=".my_profile_container.StoreContainer" />
+        <activity android:name=".my_profile_container.FollowContainer" />
+        <activity android:name=".my_profile_container.MyVideoContainer" />
+        <activity android:name=".my_profile_container.MyImagesContainer" />
+        <activity android:name=".my_profile_container.MyBlogsContainer" />
+        <activity android:name=".my_profile_container.MyPostContainer" />
         <activity
             android:name=".view.ReviewActivity"
             android:label="@string/title_activity_review"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

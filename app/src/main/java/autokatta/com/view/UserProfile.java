@@ -26,10 +26,13 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -58,6 +61,14 @@ import autokatta.com.fragment_profile.Groups;
 import autokatta.com.fragment_profile.Modules;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.interfaces.ServiceApi;
+import autokatta.com.my_profile_container.AboutContainer;
+import autokatta.com.my_profile_container.FollowContainer;
+import autokatta.com.my_profile_container.GroupContainer;
+import autokatta.com.my_profile_container.MyBlogsContainer;
+import autokatta.com.my_profile_container.MyImagesContainer;
+import autokatta.com.my_profile_container.MyPostContainer;
+import autokatta.com.my_profile_container.MyVideoContainer;
+import autokatta.com.my_profile_container.StoreContainer;
 import autokatta.com.other.CustomToast;
 import autokatta.com.other.FullImageActivity;
 import autokatta.com.response.ProfileAboutResponse;
@@ -71,7 +82,9 @@ import retrofit2.Response;
 public class UserProfile extends AppCompatActivity implements RequestNotifier, View.OnClickListener {
 
     ImageView mProfilePicture;
-    TextView mUserName, mWorkedAt, mAbout, mGroup, mStore, mModule, mFollow, mMyVideo, mImages, mBlog, mPost;
+    TextView mUserName, mWorkedAt;
+    LinearLayout mAbout, mGroup, mStore, mModule, mFollow, mMyVideo, mImages, mBlog, mPost;
+    ImageView mEdit;
     Bundle mUserProfileBundle;
     CollapsingToolbarLayout collapsingToolbar;
     String mLoginContact;
@@ -85,8 +98,8 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
     String fname;
     File file;
     ViewPager viewPager;
-    String dp;
-    String  updatedUsername;
+    String dp, names;
+    String updatedUsername;
     int RegID;
     ImageView img;
     CoordinatorLayout mUserParent;
@@ -135,17 +148,27 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
             mProfilePicture = (ImageView) findViewById(R.id.user_image);
             mUserName = (TextView) findViewById(R.id.user_name);
             mWorkedAt = (TextView) findViewById(R.id.worked_at);
-            mAbout = (TextView) findViewById(R.id.about);
-            mGroup = (TextView) findViewById(R.id.group);
-            mStore = (TextView) findViewById(R.id.store);
-            mModule = (TextView) findViewById(R.id.modules);
-            mFollow = (TextView) findViewById(R.id.follow);
-            mMyVideo = (TextView) findViewById(R.id.my_video);
-            mImages = (TextView) findViewById(R.id.images);
-            mBlog = (TextView) findViewById(R.id.blog);
-            mPost = (TextView) findViewById(R.id.post);
+            mAbout = (LinearLayout) findViewById(R.id.about);
+            mGroup = (LinearLayout) findViewById(R.id.group);
+            mStore = (LinearLayout) findViewById(R.id.store);
+            mModule = (LinearLayout) findViewById(R.id.modules);
+            mFollow = (LinearLayout) findViewById(R.id.follow);
+            mMyVideo = (LinearLayout) findViewById(R.id.my_video);
+            mImages = (LinearLayout) findViewById(R.id.images);
+            mBlog = (LinearLayout) findViewById(R.id.blog);
+            mPost = (LinearLayout) findViewById(R.id.post);
+            mEdit = (ImageView) findViewById(R.id.edit);
             //mProfilePicture.setEnabled(false);
             mProfilePicture.setOnClickListener(this);
+            mAbout.setOnClickListener(this);
+            mGroup.setOnClickListener(this);
+            mStore.setOnClickListener(this);
+            mFollow.setOnClickListener(this);
+            mMyVideo.setOnClickListener(this);
+            mImages.setOnClickListener(this);
+            mBlog.setOnClickListener(this);
+            mPost.setOnClickListener(this);
+            mEdit.setOnClickListener(this);
             //viewPager = (ViewPager) findViewById(R.id.user_profile_viewpager);
             /*if (viewPager != null) {
                 setupViewPager(viewPager);
@@ -355,7 +378,7 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
         if (lastWord != "") {
             mApiCall.updateUsername(RegID, lastWord, updatedUsername);
         } else
-            mApiCall.updateUsername(RegID,dp,updatedUsername);
+            mApiCall.updateUsername(RegID, dp, updatedUsername);
     }
 
     /*
@@ -370,7 +393,7 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
         //adapter.addFragment(new Katta(), "KATTA");
         adapter.addFragment(new Modules(), "MODULE");
         adapter.addFragment(new Follow(), "FOLLOW");
-     //   adapter.addFragment(new MyVehicles(), "MY VEHICLES");
+        //   adapter.addFragment(new MyVehicles(), "MY VEHICLES");
         /*adapter.addFragment(new MyVideos(), "MY VIDEO");
         adapter.addFragment(new Blog(), "BLOG");
         adapter.addFragment(new Post(), "POST");
@@ -390,9 +413,10 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
                 if (!mProfileAboutResponse.getSuccess().isEmpty()) {
                     dp = mProfileAboutResponse.getSuccess().get(0).getProfilePic();
                     mUserName.setText(mProfileAboutResponse.getSuccess().get(0).getUsername());
+                    names = mProfileAboutResponse.getSuccess().get(0).getUsername();
                     mWorkedAt.setText(mProfileAboutResponse.getSuccess().get(0).getCompanyName());
                     RegID = mProfileAboutResponse.getSuccess().get(0).getRegId();
-                    String dp_path = getString(R.string.base_image_url)+ dp;
+                    String dp_path = getString(R.string.base_image_url) + dp;
                     final ProgressBar progressBar = (ProgressBar) findViewById(R.id.progress);
 
                     Glide.with(this)
@@ -683,30 +707,90 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.about:
+                startActivity(new Intent(getApplicationContext(), AboutContainer.class));
                 break;
 
             case R.id.group:
+                startActivity(new Intent(getApplicationContext(), GroupContainer.class));
                 break;
 
             case R.id.store:
+                startActivity(new Intent(getApplicationContext(), StoreContainer.class));
                 break;
 
             case R.id.modules:
                 break;
 
             case R.id.follow:
+                startActivity(new Intent(getApplicationContext(), FollowContainer.class));
                 break;
 
             case R.id.my_video:
+                startActivity(new Intent(getApplicationContext(), MyVideoContainer.class));
                 break;
 
             case R.id.images:
+                startActivity(new Intent(getApplicationContext(), MyImagesContainer.class));
                 break;
 
             case R.id.post:
+                startActivity(new Intent(getApplicationContext(), MyPostContainer.class));
                 break;
 
             case R.id.blog:
+                startActivity(new Intent(getApplicationContext(), MyBlogsContainer.class));
+                break;
+
+            case R.id.edit:
+                String dp_path = getString(R.string.base_image_url) + dp;
+                LayoutInflater layoutInflater = LayoutInflater.from(UserProfile.this);
+                View mViewDialogOtp = layoutInflater.inflate(R.layout.custom_alert_my_profile_edit, null);
+                img = (ImageView) mViewDialogOtp.findViewById(R.id.img);
+                final EditText name = (EditText) mViewDialogOtp.findViewById(R.id.editPersonName);
+                name.setText(names);
+                final AlertDialog.Builder builder1 = new AlertDialog.Builder(UserProfile.this);
+                builder1.setTitle("EDIT PROFILE");
+                builder1.setIcon(R.drawable.hdlogo);
+                builder1.setView(mViewDialogOtp);
+
+                if (dp == null || dp == "null") {
+                    img.setBackgroundResource(R.drawable.hdlogo);
+                } else {
+                    Glide.with(UserProfile.this)
+                            .load(dp_path)
+                            .centerCrop()
+                            .diskCacheStrategy(DiskCacheStrategy.ALL)
+                            .into(img);
+                }
+                img.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        onPickImage(view);
+                    }
+                });
+
+                builder1.setCancelable(false)
+                        .setPositiveButton("SUBMIT", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                updatedUsername = name.getText().toString();
+                                if (updatedUsername.equals("") || updatedUsername.startsWith(" ") && updatedUsername.endsWith(" ")) {
+                                    CustomToast.customToast(getApplicationContext(), "Please Enter Your Name");
+                                } else {
+                                    updateProfile();
+                                    uploadImage(mediaPath);
+                                    dialogInterface.cancel();
+                                }
+                            }
+                        }).setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.cancel();
+                    }
+                });
+
+                AlertDialog alertDialogBox = builder1.create();
+                alertDialogBox.show();
                 break;
             /*case R.id.create_group:
                 ActivityOptions option1 = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.ok_left_to_right,
@@ -737,7 +821,6 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
                 break;*/
 
             case R.id.user_image:
-
                 String image;
                 if (dp.equals(""))
                     image = getString(R.string.base_image_url) + "logo48x48.png";
