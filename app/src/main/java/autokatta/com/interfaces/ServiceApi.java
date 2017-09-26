@@ -1335,4 +1335,16 @@ public interface ServiceApi {
     //get Vehicle for comaprison...
     @GET("GetVehiclesForCompare")
     Call<VehicleForCompareResponse> _autokattaVehicleCompare(@Query("vehicleids") String vehicle_ids);
+
+    //post reviewe or reply here
+    @POST("AddReplayReviews")
+    Call<String> _autokattaPostReviewReply(@Query("ReviewID") int ReviewID, @Query("keyword") String keyword,
+                                           @Query("Contact") String Contact, @Query("Message") String Message,
+                                           @Query("StoreID") int StoreID, @Query("ProductID") int ProductID, @Query("ServiceID") int ServiceID, @Query("VehicleID") int VehicleID);
+
+
+    //post reviewe or reply here
+    @POST("AddReplayReviews")
+    Call<ReviewAndReplyResponse> _autokattagetReviewReply(@Query("StoreID") int StoreID, @Query("ProductID") int ProductID, @Query("ServiceID") int ServiceID, @Query("VehicleID") int VehicleID);
+
 }

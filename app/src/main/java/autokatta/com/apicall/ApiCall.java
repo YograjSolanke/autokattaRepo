@@ -8529,6 +8529,75 @@ get ExchangeMela Analytics Data
         }
     }
 
+
+    /*
+ Sold Vehicle...
+*/
+    public void postReviewOrReply(int ReviewID, String keyword, String Contact, String Message, int StoreID,
+                                  int ProductID, int ServiceID, int VehicleID) {
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                //JSON to Gson conversion
+                Gson gson = new GsonBuilder()
+                        .setLenient()
+                        .create();
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create(gson))
+                        .client(initLog().build())
+                        .build();
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<String> mSoldVehicle = serviceApi._autokattaPostReviewReply(ReviewID, keyword, Contact
+                        , Message, StoreID, ProductID, ServiceID, VehicleID);
+                mSoldVehicle.enqueue(new Callback<String>() {
+                    @Override
+                    public void onResponse(Call<String> call, Response<String> response) {
+                        mNotifier.notifyString(response.body());
+                    }
+
+                    @Override
+                    public void onFailure(Call<String> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+            } else
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    /* post review and reply */
+    public void getReviewOrReply(int StoreID, int ProductID, int ServiceID, int VehicleID) {
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<ReviewAndReplyResponse> mCompareResponseCall = serviceApi._autokattagetReviewReply(StoreID, ProductID, ServiceID, VehicleID);
+                mCompareResponseCall.enqueue(new Callback<ReviewAndReplyResponse>() {
+                    @Override
+                    public void onResponse(Call<ReviewAndReplyResponse> call, Response<ReviewAndReplyResponse> response) {
+                        mNotifier.notifySuccess(response);
+                    }
+
+                    @Override
+                    public void onFailure(Call<ReviewAndReplyResponse> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+            } else
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     /***
      * Retrofit Logs
      ***/
