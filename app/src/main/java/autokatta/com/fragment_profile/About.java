@@ -411,8 +411,7 @@ public class About extends Fragment implements RequestNotifier, MaterialIntroLis
         if (this.isVisible()) {
             // If we are becoming invisible, then...
             if (isVisibleToUser && !_hasLoadedOnce) {
-                if (b!=null)
-                {
+                if (b != null) {
                     mApiCall.profileAbout(b.getString("otherContact"), b.getString("otherContact"));
                 }else {
                     mApiCall.profileAbout(Sharedcontact, Sharedcontact);

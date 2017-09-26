@@ -243,8 +243,8 @@ public class EnquiredPersonsListActivity extends AppCompatActivity implements Re
                                     String output1 = outputFormat.format(date);
                                     String output = outputFormat.format(date1);
                                     //System.out.println(mainList.get(i).getDate()+" jjj " + output);
-                                    success.setNextFollowUpDate(output1);
-                                    success.setCreatedDate(output);
+                                    success.setNextFollowUpDate(output);
+                                    success.setCreatedDate(output1);
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }

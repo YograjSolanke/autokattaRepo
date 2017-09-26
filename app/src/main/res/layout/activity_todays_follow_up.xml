@@ -5,5 +5,16 @@
     android:layout_height="match_parent"
     tools:context="autokatta.com.enquiries.TodaysFollowUp">
 
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/todays_swipeRefreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="visible">
 
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/todays_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="vertical" />
+    </android.support.v4.widget.SwipeRefreshLayout>
 </RelativeLayout>
