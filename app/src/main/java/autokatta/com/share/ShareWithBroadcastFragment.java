@@ -3,10 +3,13 @@ package autokatta.com.share;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ListView;
 
 import java.net.ConnectException;
@@ -27,13 +30,17 @@ import retrofit2.Response;
  */
 
 public class ShareWithBroadcastFragment extends Fragment implements RequestNotifier {
-    String contactnumber,profile_contact ;
-    int store_id ,vehicle_id, product_id, service_id, search_id, status_id, auction_id,
-    loan_id, exchange_id;
+    String contactnumber, profile_contact;
+    int store_id, vehicle_id, product_id, service_id, search_id, status_id, auction_id,
+            loan_id, exchange_id;
     String sharedata, keyword;
 
     ListView grouplist;
     List<MyBroadcastGroupsResponse.Success> broadcastGroupsResponseList = new ArrayList<>();
+    String allGroupIDs = "";
+    String allGroupNames = "";
+    Button btnSend;
+    ShareWithBroadcastAdapter mBroadcastAdapter;
 
     public ShareWithBroadcastFragment() {
         //empty constructor...
@@ -46,6 +53,8 @@ public class ShareWithBroadcastFragment extends Fragment implements RequestNotif
         View root = inflater.inflate(R.layout.generic_list_view, container, false);
         contactnumber = getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).getString("loginContact", null);
         grouplist = (ListView) root.findViewById(R.id.generic_list);
+        btnSend = (Button) root.findViewById(R.id.send);
+        btnSend.setVisibility(View.VISIBLE);
         ApiCall mApiCall = new ApiCall(getActivity(), this);
         mApiCall.MyBroadcastGroups(contactnumber);
         try {
@@ -66,6 +75,64 @@ public class ShareWithBroadcastFragment extends Fragment implements RequestNotif
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        btnSend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                List getGroupIds = mBroadcastAdapter.getGroupIdsList();
+                List getGroupNames = mBroadcastAdapter.getGroupNamesList();
+                allGroupIDs = "";
+                allGroupNames = "";
+                for (int i = 0; i < getGroupIds.size(); i++) {
+                    if (!getGroupIds.get(i).equals("0") && !getGroupNames.get(i).equals("")) {
+                        if (allGroupIDs.equals("") && allGroupNames.equals("")) {
+                            allGroupIDs = (String) getGroupIds.get(i);
+                            allGroupNames = (String) getGroupNames.get(i);
+                        } else {
+                            allGroupIDs = allGroupIDs + "," + getGroupIds.get(i);
+                            allGroupNames = allGroupNames + "," + getGroupNames.get(i);
+                        }
+
+                    }
+                }
+
+                Log.i("BroadcastGroup", "names" + allGroupNames);
+                Log.i("BroadcastGroup", "ids" + allGroupIDs);
+
+                if (allGroupIDs.equals(""))
+                    CustomToast.customToast(getActivity(), "Please select group to share data");
+                else {
+
+                    Bundle b = new Bundle();
+                    b.putString("generic_list_view", sharedata);
+                    b.putInt("store_id", store_id);
+                    b.putInt("vehicle_id", vehicle_id);
+                    b.putInt("product_id", product_id);
+                    b.putInt("service_id", service_id);
+                    b.putString("profile_contact", profile_contact);
+                    b.putInt("search_id", search_id);
+                    b.putInt("status_id", status_id);
+                    b.putInt("auction_id", auction_id);
+                    b.putInt("loan_id", loan_id);
+                    b.putInt("exchange_id", exchange_id);
+                    b.putString("number", "");
+                    b.putString("keyword", keyword);
+                    b.putString("groupname", allGroupNames);
+                    b.putString("broadcastgroupid", allGroupIDs);
+                    b.putString("tab", "broadcastgroup");
+
+                    ShareWithCaptionFragment frag = new ShareWithCaptionFragment();
+                    frag.setArguments(b);
+                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.shareInApp_container, frag);
+                    fragmentTransaction.addToBackStack("ShareWithCaptionFragment");
+                    fragmentTransaction.commit();
+                }
+
+            }
+        });
+
         return root;
     }
 
@@ -87,20 +154,20 @@ public class ShareWithBroadcastFragment extends Fragment implements RequestNotif
                         success.setGrpCreatedDate(success.getGrpCreatedDate());
                         broadcastGroupsResponseList.add(success);
                     }
-                    ShareWithBroadcastAdapter adapter = new ShareWithBroadcastAdapter(getActivity(), broadcastGroupsResponseList, sharedata, contactnumber, store_id,
+                    mBroadcastAdapter = new ShareWithBroadcastAdapter(getActivity(), broadcastGroupsResponseList, sharedata, contactnumber, store_id,
                             vehicle_id, product_id, service_id, profile_contact, search_id, status_id, auction_id, loan_id, exchange_id, keyword);
-                    grouplist.setAdapter(adapter);
-                    adapter.notifyDataSetChanged();
+                    grouplist.setAdapter(mBroadcastAdapter);
+                    mBroadcastAdapter.notifyDataSetChanged();
                 } else {
                     if (isAdded())
-                    CustomToast.customToast(getActivity(), getString(R.string.no_response));
+                        CustomToast.customToast(getActivity(), getString(R.string.no_response));
                 }
             } else {
                 // CustomToast.customToast(getActivity(), getString(R.string._404_));
             }
         } else {
             if (isAdded())
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+                CustomToast.customToast(getActivity(), getString(R.string.no_response));
         }
     }
 
@@ -109,21 +176,21 @@ public class ShareWithBroadcastFragment extends Fragment implements RequestNotif
     public void notifyError(Throwable error) {
         if (error instanceof SocketTimeoutException) {
             if (isAdded())
-            CustomToast.customToast(getActivity(), getString(R.string._404_));
+                CustomToast.customToast(getActivity(), getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
             //  CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
             // CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
             if (isAdded())
-            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
+                CustomToast.customToast(getActivity(), getString(R.string.no_internet));
 
         } else if (error instanceof UnknownHostException) {
             if (isAdded())
-            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
+                CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         } else {
             Log.i("Check Class-"
-                    , "Share With Broadcast");
+                    , "Share With Broadcast Fragment");
         }
     }
 

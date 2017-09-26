@@ -2,14 +2,12 @@ package autokatta.com.share;
 
 import android.app.Activity;
 import android.content.Context;
-import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -26,10 +24,11 @@ import autokatta.com.response.MyBroadcastGroupsResponse;
 public class ShareWithBroadcastAdapter extends BaseAdapter {
     private Activity activity;
     private List<MyBroadcastGroupsResponse.Success> broadcastlist = new ArrayList<>();
-    private LayoutInflater mInflater;
-    private String sharedata, groupid, contactnumber, number,  profile_contact, keyword, grouptab;
-    private int store_id,vehicle_id, product_id, service_id,
-    search_id, status_id, auction_id, loan_id, exchange_id;
+    private String sharedata, groupid, contactnumber, number, profile_contact, keyword, grouptab;
+    private int store_id, vehicle_id, product_id, service_id,
+            search_id, status_id, auction_id, loan_id, exchange_id;
+    private List<String> finalGroupNames = new ArrayList<>();
+    private List<String> finalGroupIds = new ArrayList<>();
 
     ShareWithBroadcastAdapter(Activity activity, List<MyBroadcastGroupsResponse.Success> alldata,
                               String sharedata, String contactnumber, int store_id, int vehicle_id,
@@ -51,11 +50,19 @@ public class ShareWithBroadcastAdapter extends BaseAdapter {
         this.loan_id = loan_id;
         this.exchange_id = exchange_id;
         this.keyword = keyword;
+
+        if (finalGroupIds.size() == 0) {
+            for (int i = 0; i < this.broadcastlist.size(); i++) {
+                finalGroupIds.add("0");
+                finalGroupNames.add("");
+            }
+        }
     }
 
     static class ViewHolder {
-        TextView name, number;
+        TextView name;
         ImageView profile_pic;
+        CheckBox checkBox;
     }
 
     @Override
@@ -76,55 +83,52 @@ public class ShareWithBroadcastAdapter extends BaseAdapter {
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
 
-        mInflater = (LayoutInflater) activity.
+        LayoutInflater mInflater = (LayoutInflater) activity.
                 getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         final ShareWithBroadcastAdapter.ViewHolder holder;
         if (convertView == null) {
             holder = new ShareWithBroadcastAdapter.ViewHolder();
-            convertView = mInflater.inflate(R.layout.adapter_share_contact, null);
+            convertView = mInflater.inflate(R.layout.adapter_share_with_groups, null);
             holder.name = (TextView) convertView.findViewById(R.id.name);
-            holder.number = (TextView) convertView.findViewById(R.id.number);
             holder.profile_pic = (ImageView) convertView.findViewById(R.id.profile_image);
+            holder.checkBox = (CheckBox) convertView.findViewById(R.id.checkbox);
             convertView.setTag(holder);
         } else
             holder = (ShareWithBroadcastAdapter.ViewHolder) convertView.getTag();
 
         final MyBroadcastGroupsResponse.Success obj = broadcastlist.get(position);
         holder.name.setText(obj.getGroupTitle());
-        holder.number.setVisibility(View.GONE);
         holder.profile_pic.setVisibility(View.GONE);
 
-        convertView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Bundle b = new Bundle();
-                b.putString("generic_list_view", sharedata);
-                b.putInt("store_id", store_id);
-                b.putInt("vehicle_id", vehicle_id);
-                b.putInt("product_id", product_id);
-                b.putInt("service_id", service_id);
-                b.putString("profile_contact", profile_contact);
-                b.putInt("search_id", search_id);
-                b.putInt("status_id", status_id);
-                b.putInt("auction_id", auction_id);
-                b.putInt("loan_id", loan_id);
-                b.putInt("exchange_id", exchange_id);
-                b.putString("number", number);
-                b.putString("keyword", keyword);
-                b.putString("groupname", obj.getGroupTitle());
-                b.putInt("broadcastgroupid", obj.getGroupId());
-                b.putString("tab", "broadcastgroup");
 
-                ShareWithCaptionFragment frag = new ShareWithCaptionFragment();
-                frag.setArguments(b);
-                FragmentManager fragmentManager = ((FragmentActivity) activity).getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.shareInApp_container, frag);
-                fragmentTransaction.addToBackStack("ShareWithCaptionFragment");
-                fragmentTransaction.commit();
+        if (!finalGroupIds.get(position).equalsIgnoreCase("0"))
+            holder.checkBox.setChecked(true);
+
+        holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    finalGroupNames.set(position, holder.name.getText().toString());
+                    finalGroupIds.set(position, String.valueOf(broadcastlist.get(position).getGroupId()));
+                } else {
+                    finalGroupNames.set(position, "");
+                    finalGroupIds.set(position, "0");
+                }
+
+                System.out.println("finalGroupIds=" + finalGroupIds.get(position));
+                System.out.println("finalGroupNames=" + finalGroupNames.get(position));
             }
         });
+
         return convertView;
+    }
+
+    List getGroupIdsList() {
+        return finalGroupIds;
+    }
+
+    List getGroupNamesList() {
+        return finalGroupNames;
     }
 }

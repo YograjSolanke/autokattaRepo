@@ -32,7 +32,7 @@ public class ShareWithCaptionFragment extends Fragment implements RequestNotifie
     ListView sharelist;
     String editdata = "";
     String sharedata, storecontact, contactnumber, profile_contact,
-            keyword, tab, groupname, number = "", name;
+            keyword, tab, groupname, number = "", name, groupIds = "", broadcastGroupIds = "";
     int store_id, vehicle_id, product_id, service_id, broadcastgroupid = 0, groupid = 0,
             layoutNumber, search_id, status_id, auction_id, loan_id, exchange_id;
     Button sharebutton;
@@ -66,12 +66,12 @@ public class ShareWithCaptionFragment extends Fragment implements RequestNotifie
         auction_id = b.getInt("auction_id");
         loan_id = b.getInt("loan_id");
         exchange_id = b.getInt("exchange_id");
-        number = b.getString("number","");
+        number = b.getString("number", "");
         name = b.getString("name");
         keyword = b.getString("keyword");
         tab = b.getString("tab");
-        groupid = b.getInt("groupid");
-        broadcastgroupid = b.getInt("broadcastgroupid");
+        groupIds = b.getString("groupid", "");
+        broadcastGroupIds = b.getString("broadcastgroupid", "");
         groupname = b.getString("groupname");
 
         System.out.println("Data in caption fragment" + "-" +
@@ -133,7 +133,7 @@ public class ShareWithCaptionFragment extends Fragment implements RequestNotifie
 
 
     private void shareTask(int layoutNumber, String editdata) {
-        mApiCall.shareTaskInApp(contactnumber, number, groupid, broadcastgroupid, editdata, layoutNumber, profile_contact,
+        mApiCall.shareTaskInApp(contactnumber, number, groupIds, broadcastGroupIds, editdata, layoutNumber, profile_contact,
                 store_id, vehicle_id, product_id, service_id, status_id, search_id, auction_id, loan_id, exchange_id);
     }
 
@@ -146,20 +146,20 @@ public class ShareWithCaptionFragment extends Fragment implements RequestNotifie
     public void notifyError(Throwable error) {
         if (error instanceof SocketTimeoutException) {
             if (isAdded())
-            CustomToast.customToast(getActivity(), getString(R.string._404_));
+                CustomToast.customToast(getActivity(), getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
             //  CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
             // CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
             if (isAdded())
-            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
+                CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
             if (isAdded())
-            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
+                CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         } else {
             Log.i("Check Class-"
-                    , "Share With Caption");
+                    , "Share With Caption Fragment");
         }
     }
 
@@ -168,9 +168,8 @@ public class ShareWithCaptionFragment extends Fragment implements RequestNotifie
         if (str != null) {
             if (str.equalsIgnoreCase("success_share")) {
                 if (isAdded())
-                CustomToast.customToast(getActivity(), "Shared successfully");
+                    CustomToast.customToast(getActivity(), "Shared successfully");
                 getActivity().finish();
-                /*startActivity(new Intent(getActivity(), AutokattaMainActivity.class));*/
             }
         }
 

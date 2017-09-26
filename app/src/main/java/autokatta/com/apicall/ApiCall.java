@@ -6505,7 +6505,7 @@ done
     /*
     To Share data
      */
-    public void shareTaskInApp(String sender_contact, String receiver_contact, int group_id, int broadcastgroup_id,
+    public void shareTaskInApp(String sender_contact, String receiver_contact, String group_id, String broadcastgroup_id,
                                String caption_data, int layout, String profile_id, int store_id,
                                int vehicle_id, int product_id, int service_id, int status_id,
                                int search_id, int auction_id, int loan_id, int exchange_id) {

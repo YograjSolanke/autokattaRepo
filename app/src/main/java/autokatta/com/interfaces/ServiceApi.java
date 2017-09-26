@@ -987,7 +987,7 @@ public interface ServiceApi {
     //Share data within app
     @POST("NewShare")
     Call<String> _autokattaShareData(@Query("SenderContact") String sender_contact, @Query("ReceiverContact") String receiver_contact,
-                                     @Query("GroupID") int group_id, @Query("BroadCastGroupID") int broadcastgroup_id,
+                                     @Query("GroupID") String group_id, @Query("BroadCastGroupID") String broadcastgroup_id,
                                      @Query("CaptionData") String caption_data, @Query("Layout") int layout,
                                      @Query("ProfileContact") String profile_id, @Query("StoreID") int store_id,
                                      @Query("VehicleID") int vehicle_id, @Query("ProductID") int product_id,

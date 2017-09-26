@@ -3,10 +3,13 @@ package autokatta.com.share;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ListView;
 
 import java.net.ConnectException;
@@ -27,11 +30,15 @@ import retrofit2.Response;
  * Created by ak-005 on 18/6/16.
  */
 public class ShareWithGroupFragment extends Fragment implements RequestNotifier {
-    String contactnumber, storecontact, profile_contact;
+    String contactnumber, profile_contact;
     String sharedata, keyword;
     int store_id, vehicle_id, product_id, service_id, search_id, status_id, auction_id, loan_id,
             exchange_id;
     ListView grouplist;
+    Button btnSend;
+    ShareWithGroupAdapter mGroupAdapter;
+    String allGroupIDs = "";
+    String allGroupNames = "";
 
     public ShareWithGroupFragment() {
         //Empty Constructor...
@@ -44,6 +51,8 @@ public class ShareWithGroupFragment extends Fragment implements RequestNotifier 
         View root = inflater.inflate(R.layout.generic_list_view, container, false);
         contactnumber = getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).getString("loginContact", "7841023392");
         grouplist = (ListView) root.findViewById(R.id.generic_list);
+        btnSend = (Button) root.findViewById(R.id.send);
+        btnSend.setVisibility(View.VISIBLE);
         getData(contactnumber);
 
         try {
@@ -63,6 +72,60 @@ public class ShareWithGroupFragment extends Fragment implements RequestNotifier 
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        btnSend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                List getGroupIds = mGroupAdapter.getGroupIdsList();
+                List getGroupNames = mGroupAdapter.getGroupNamesList();
+                allGroupIDs = "";
+                allGroupNames = "";
+                for (int i = 0; i < getGroupIds.size(); i++) {
+                    if (!getGroupIds.get(i).equals("0") && !getGroupNames.get(i).equals("")) {
+                        if (allGroupIDs.equals("") && allGroupNames.equals("")) {
+                            allGroupIDs = (String) getGroupIds.get(i);
+                            allGroupNames = (String) getGroupNames.get(i);
+                        } else {
+                            allGroupIDs = allGroupIDs + "," + getGroupIds.get(i);
+                            allGroupNames = allGroupNames + "," + getGroupNames.get(i);
+                        }
+
+                    }
+                }
+
+                Log.i("group", "names" + allGroupNames);
+                Log.i("group", "ids" + allGroupIDs);
+                if (allGroupIDs.equals(""))
+                    CustomToast.customToast(getActivity(), "Please select group to share data");
+                else {
+                    Bundle b = new Bundle();
+                    b.putString("generic_list_view", sharedata);
+                    b.putInt("store_id", store_id);
+                    b.putInt("vehicle_id", vehicle_id);
+                    b.putInt("product_id", product_id);
+                    b.putInt("service_id", service_id);
+                    b.putString("profile_contact", profile_contact);
+                    b.putInt("search_id", search_id);
+                    b.putInt("status_id", status_id);
+                    b.putInt("auction_id", auction_id);
+                    b.putInt("loan_id", loan_id);
+                    b.putInt("exchange_id", exchange_id);
+                    b.putString("number", "");
+                    b.putString("keyword", keyword);
+                    b.putString("groupname", allGroupNames);
+                    b.putString("groupid", allGroupIDs);
+                    b.putString("tab", "group");
+
+                    ShareWithCaptionFragment frag = new ShareWithCaptionFragment();
+                    frag.setArguments(b);
+                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.shareInApp_container, frag);
+                    fragmentTransaction.addToBackStack("ShareWithCaptionFragment");
+                    fragmentTransaction.commit();
+                }
+            }
+        });
         return root;
     }
 
@@ -115,9 +178,9 @@ public class ShareWithGroupFragment extends Fragment implements RequestNotifier 
                     else
                         alldata.add(title + "=" + id + "=" + image);
                 }
-                ShareWithGroupAdapter adapter = new ShareWithGroupAdapter(getActivity(), alldata, sharedata, contactnumber, store_id,
+                mGroupAdapter = new ShareWithGroupAdapter(getActivity(), alldata, sharedata, contactnumber, store_id,
                         vehicle_id, product_id, service_id, profile_contact, search_id, status_id, auction_id, loan_id, exchange_id, keyword);
-                grouplist.setAdapter(adapter);
+                grouplist.setAdapter(mGroupAdapter);
             } else {
 //                if (isAdded())
 //                    CustomToast.customToast(getActivity(), getString(R.string._404_));
@@ -148,7 +211,7 @@ public class ShareWithGroupFragment extends Fragment implements RequestNotifier 
                 CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         } else {
             Log.i("Check Class-"
-                    , "Share With Group");
+                    , "Share With Group Fragment");
         }
 
     }

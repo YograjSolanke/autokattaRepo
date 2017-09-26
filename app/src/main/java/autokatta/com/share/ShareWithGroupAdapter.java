@@ -2,14 +2,12 @@ package autokatta.com.share;
 
 import android.app.Activity;
 import android.content.Context;
-import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -35,10 +33,11 @@ public class ShareWithGroupAdapter extends BaseAdapter {
     private List<String> group_id = new ArrayList<>();
     private List<String> title_array = new ArrayList<>();
     private List<String> image_array = new ArrayList<>();
+    private List<String> finalGroupNames = new ArrayList<>();
+    private List<String> finalGroupIds = new ArrayList<>();
 
-    private LayoutInflater mInflater;
-    private String sharedata,  contactnumber, number, profile_contact, keyword, groupname;
-    private int store_id,vehicle_id,groupid, product_id, service_id,
+    private String sharedata, contactnumber, number, profile_contact, keyword, groupname;
+    private int store_id, vehicle_id, groupid, product_id, service_id,
             search_id, status_id, auction_id, loan_id, exchange_id;
 
     ShareWithGroupAdapter(Activity activity, List<String> alldata,
@@ -64,18 +63,24 @@ public class ShareWithGroupAdapter extends BaseAdapter {
 
         for (int i = 0; i < alldata.size(); i++) {
             String array[] = alldata.get(i).split("=");
-
             title_array.add(array[0]);
             group_id.add(array[1]);
             image_array.add(array[2]);
+        }
 
+        if (finalGroupIds.size() == 0) {
+            for (int i = 0; i < this.title_array.size(); i++) {
+                finalGroupIds.add("0");
+                finalGroupNames.add("");
+            }
         }
 
     }
 
     static class ViewHolder {
-        TextView name, number1;
+        TextView name;
         ImageView profile_pic;
+        CheckBox checkBox;
     }
 
     @Override
@@ -96,21 +101,20 @@ public class ShareWithGroupAdapter extends BaseAdapter {
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
 
-        mInflater = (LayoutInflater) activity.
+        LayoutInflater mInflater = (LayoutInflater) activity.
                 getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         final ViewHolder holder;
         if (convertView == null) {
             holder = new ViewHolder();
-            convertView = mInflater.inflate(R.layout.adapter_share_contact, null);
+            convertView = mInflater.inflate(R.layout.adapter_share_with_groups, null);
             holder.name = (TextView) convertView.findViewById(R.id.name);
-            holder.number1 = (TextView) convertView.findViewById(R.id.number);
             holder.profile_pic = (ImageView) convertView.findViewById(R.id.profile_image);
+            holder.checkBox = (CheckBox) convertView.findViewById(R.id.checkbox);
             convertView.setTag(holder);
         } else
             holder = (ViewHolder) convertView.getTag();
 
         holder.name.setText(title_array.get(position));
-        holder.number1.setVisibility(View.GONE);
 
         if (image_array.get(position) == null || image_array.get(position).equals("null") || image_array.get(position).equals("")) {
             holder.profile_pic.setBackgroundResource(R.drawable.workers);
@@ -123,40 +127,36 @@ public class ShareWithGroupAdapter extends BaseAdapter {
                     .into(holder.profile_pic);
         }
 
-        convertView.setOnClickListener(new View.OnClickListener() {
+
+        if (!finalGroupIds.get(position).equalsIgnoreCase("0"))
+            holder.checkBox.setChecked(true);
+
+        holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onClick(View v) {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    finalGroupNames.set(position, holder.name.getText().toString());
+                    finalGroupIds.set(position, group_id.get(position));
+                } else {
+                    finalGroupNames.set(position, "");
+                    finalGroupIds.set(position, "0");
+                }
 
-                groupid = Integer.parseInt(group_id.get(position));
-                groupname = title_array.get(position);
-                Bundle b = new Bundle();
-                b.putString("generic_list_view", sharedata);
-                b.putInt("store_id", store_id);
-                b.putInt("vehicle_id", vehicle_id);
-                b.putInt("product_id", product_id);
-                b.putInt("service_id", service_id);
-                b.putString("profile_contact", profile_contact);
-                b.putInt("search_id", search_id);
-                b.putInt("status_id", status_id);
-                b.putInt("auction_id", auction_id);
-                b.putInt("loan_id", loan_id);
-                b.putInt("exchange_id", exchange_id);
-                b.putString("number", number);
-                b.putString("keyword", keyword);
-                b.putString("groupname", groupname);
-                b.putInt("groupid", groupid);
-                b.putString("tab", "group");
-
-                ShareWithCaptionFragment frag = new ShareWithCaptionFragment();
-                frag.setArguments(b);
-                FragmentManager fragmentManager = ((FragmentActivity) activity).getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.shareInApp_container, frag);
-                fragmentTransaction.addToBackStack("ShareWithCaptionFragment");
-                fragmentTransaction.commit();
+                System.out.println("finalGroupIds=" + finalGroupIds.get(position));
+                System.out.println("finalGroupNames=" + finalGroupNames.get(position));
             }
         });
+
+
         return convertView;
+    }
+
+    List getGroupIdsList() {
+        return finalGroupIds;
+    }
+
+    List getGroupNamesList() {
+        return finalGroupNames;
     }
 }
 
