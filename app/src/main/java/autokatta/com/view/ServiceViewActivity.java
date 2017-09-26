@@ -121,7 +121,7 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
     private ProgressDialog dialog;
     Button submitfeedback;
     RelativeLayout relativerate;
-    Button linearlike, linearunlike, linearshare;
+    Button linearlike, linearunlike, linearshare, linearReview;
     int lcnt;
     Button post, btnchat;
     String reviewstring = "";
@@ -213,6 +213,7 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
         mainlayout = (RelativeLayout) findViewById(R.id.mainlayout);
         mLinearLayout = (LinearLayout) findViewById(R.id.linearbtns);
         mUploadGroup = (Button) findViewById(R.id.upload_group);
+        linearReview = (Button) findViewById(R.id.linearReview);
         mainlayout.setVisibility(View.GONE);
 
         overallbar.setEnabled(false);
@@ -1324,6 +1325,14 @@ Get Admin data...
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+                break;
+
+            case R.id.linearReview:
+                Intent intent = new Intent(ServiceViewActivity.this, ReviewActivity.class);
+                intent.putExtra("service_id", service_id);
+                intent.putExtra("review_sender", contact);
+                startActivity(intent);
+
                 break;
         }
     }

@@ -120,7 +120,7 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
     String imagename = "", reviewstring = "", editMode = "", brandtagpart = "", finalbrandtags = "";
 
     int lcnt;
-    Button linearlike, linearshare, linearunlike;
+    Button linearlike, linearshare, linearunlike, linearReview;
     final List<String> brandTags = new ArrayList<>();
 
     // SharedPreferences settings;
@@ -202,6 +202,7 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
         linearlike = (Button) findViewById(R.id.linearlike);
         linearunlike = (Button) findViewById(R.id.linearunlike);
         linearshare = (Button) findViewById(R.id.linearshare);
+        linearReview = (Button) findViewById(R.id.linearReview);
 
 
         spinCategory = (Spinner) findViewById(R.id.spincategory);

@@ -242,7 +242,7 @@
                         android:layout_below="@+id/v2"
                         android:baselineAligned="false"
                         android:orientation="horizontal"
-                        android:weightSum="2">
+                        android:weightSum="3">
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -292,6 +292,25 @@
                                 android:drawableStart="@mipmap/new_share"
                                 android:text="Share" />
                         </LinearLayout>
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center">
+
+                            <Button
+                                android:id="@+id/linearReview"
+                                style="?android:attr/button"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:background="@android:color/transparent"
+                                android:drawableStart="@mipmap/new_share"
+                                android:text="Review" />
+                        </LinearLayout>
+
                     </LinearLayout>
 
                     <View
