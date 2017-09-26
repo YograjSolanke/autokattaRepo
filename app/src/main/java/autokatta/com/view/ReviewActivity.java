@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,6 +29,7 @@ import java.util.List;
 import java.util.Locale;
 
 import autokatta.com.R;
+import autokatta.com.adapter.ReviewAdapter;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.networkreceiver.ConnectionDetector;
@@ -43,9 +45,12 @@ public class ReviewActivity extends AppCompatActivity implements RequestNotifier
     String contact;
     KProgressHUD hud;
     private ProgressDialog dialog;
+    public List<ReviewAndReplyResponse.Success.ReviewMessage> topList = new ArrayList<>();
     public List<ReviewAndReplyResponse.Success.ReviewMessage> mainList = new ArrayList<>();
     public List<ReviewAndReplyResponse.Success.ReplayMessage> childlist;
     AlertDialog alert;
+    ListView listView;
+    ReviewAdapter adapter;
     int store_id, product_id, service_id, vehicle_id;
     ImageView uploadImage;
     TextView addimagetext;
@@ -67,6 +72,7 @@ public class ReviewActivity extends AppCompatActivity implements RequestNotifier
         dialog.setMessage("Loading...");
         mConnectionDetector = new ConnectionDetector(this);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        listView = (ListView) findViewById(R.id.msgview);
         fab.setOnClickListener(this);
 
         runOnUiThread(new Runnable() {
@@ -185,28 +191,32 @@ public class ReviewActivity extends AppCompatActivity implements RequestNotifier
                  */
                 if (response.body() instanceof ReviewAndReplyResponse) {
                     ReviewAndReplyResponse moduleResponse = (ReviewAndReplyResponse) response.body();
-
+                    childlist = new ArrayList<>();
                     ReviewAndReplyResponse.Success object = moduleResponse.getSuccess();
                     for (ReviewAndReplyResponse.Success.ReviewMessage obj : object.getReviewMessage()) {
-                        childlist = new ArrayList<>();
                         obj.setSenderContact(obj.getSenderContact());
                         obj.setReviewString(obj.getReviewString());
                         obj.setCreatedDate(obj.getCreatedDate());
                         obj.setReviewId(obj.getReviewId());
 
-                        for (ReviewAndReplyResponse.Success.ReplayMessage objectmatch : object.getReplayMessage()) {
-                            if (obj.getReviewId().equals(objectmatch.getReviewId())) {
-                                objectmatch.setCreatedDate(objectmatch.getCreatedDate());
-                                objectmatch.setReplayId(objectmatch.getReplayId());
-                                objectmatch.setSenderContact(objectmatch.getSenderContact());
-                                objectmatch.setReplayString(objectmatch.getReplayString());
-
-                                childlist.add(objectmatch);
-                            }
-                        }
                         obj.setReplayMessage(childlist);
                         mainList.add(obj);
+
                     }
+
+                    for (ReviewAndReplyResponse.Success.ReplayMessage objectmatch : object.getReplayMessage()) {
+                        objectmatch.setCreatedDate(objectmatch.getCreatedDate());
+                        objectmatch.setReplayId(objectmatch.getReplayId());
+                        objectmatch.setSenderContact(objectmatch.getSenderContact());
+                        objectmatch.setReplayString(objectmatch.getReplayString());
+                        childlist.add(objectmatch);
+
+                    }
+
+
+                    adapter = new ReviewAdapter(ReviewActivity.this, mainList, contact);
+                    listView.setAdapter(adapter);
+                    adapter.notifyDataSetChanged();
 
                 } else {
                     hud.dismiss();
@@ -241,11 +251,11 @@ public class ReviewActivity extends AppCompatActivity implements RequestNotifier
             if (str.equals("sent_review")) {
                 hud.dismiss();
                 CustomToast.customToast(ReviewActivity.this, "Review Posted");
-                //call webservice again
+                mApiCall.getReviewOrReply(store_id, product_id, service_id, vehicle_id);
             } else if (str.equals("sent_reply")) {
                 hud.dismiss();
                 CustomToast.customToast(ReviewActivity.this, "Reply Sent");
-                //call webservice again
+                mApiCall.getReviewOrReply(store_id, product_id, service_id, vehicle_id);
             }
         }
 

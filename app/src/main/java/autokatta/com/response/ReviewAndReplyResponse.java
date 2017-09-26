@@ -77,7 +77,15 @@ public class ReviewAndReplyResponse {
                 this.replayMessage = replayMessage;
             }
 
+            public String getKeyWord() {
+                return keyWord;
+            }
 
+            public void setKeyWord(String keyWord) {
+                this.keyWord = keyWord;
+            }
+
+            private String keyWord;
             @SerializedName("ReviewId")
             @Expose
             private Integer reviewId;
