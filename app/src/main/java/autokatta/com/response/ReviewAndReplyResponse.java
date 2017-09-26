@@ -51,6 +51,18 @@ public class ReviewAndReplyResponse {
         }
 
 
+        @SerializedName("ReplayMessage")
+        @Expose
+        private List<ReplayMessage> replayMessage = null;
+
+        public List<ReplayMessage> getReplayMessage() {
+            return replayMessage;
+        }
+
+        public void setReplayMessage(List<ReplayMessage> replayMessage) {
+            this.replayMessage = replayMessage;
+        }
+
         public class ReviewMessage {
 
             @SerializedName("ReplayMessage")
@@ -123,75 +135,77 @@ public class ReviewAndReplyResponse {
             }
 
 
-            public class ReplayMessage {
+        }
 
-                @SerializedName("ReplayId")
-                @Expose
-                private Integer replayId;
-                @SerializedName("ReviewId")
-                @Expose
-                private Integer reviewId;
-                @SerializedName("ReplayString")
-                @Expose
-                private String replayString;
-                @SerializedName("SenderContact")
-                @Expose
-                private String senderContact;
-                @SerializedName("CreatedDate_1")
-                @Expose
-                private String createdDate1;
-                @SerializedName("CreatedDate")
-                @Expose
-                private String createdDate;
+        public class ReplayMessage {
 
-                public Integer getReplayId() {
-                    return replayId;
-                }
+            @SerializedName("ReplayId")
+            @Expose
+            private Integer replayId;
+            @SerializedName("ReviewId")
+            @Expose
+            private Integer reviewId;
+            @SerializedName("ReplayString")
+            @Expose
+            private String replayString;
+            @SerializedName("SenderContact")
+            @Expose
+            private String senderContact;
+            @SerializedName("CreatedDate_1")
+            @Expose
+            private String createdDate1;
+            @SerializedName("CreatedDate")
+            @Expose
+            private String createdDate;
 
-                public void setReplayId(Integer replayId) {
-                    this.replayId = replayId;
-                }
+            public Integer getReplayId() {
+                return replayId;
+            }
 
-                public Integer getReviewId() {
-                    return reviewId;
-                }
+            public void setReplayId(Integer replayId) {
+                this.replayId = replayId;
+            }
 
-                public void setReviewId(Integer reviewId) {
-                    this.reviewId = reviewId;
-                }
+            public Integer getReviewId() {
+                return reviewId;
+            }
 
-                public String getReplayString() {
-                    return replayString;
-                }
+            public void setReviewId(Integer reviewId) {
+                this.reviewId = reviewId;
+            }
 
-                public void setReplayString(String replayString) {
-                    this.replayString = replayString;
-                }
+            public String getReplayString() {
+                return replayString;
+            }
 
-                public String getSenderContact() {
-                    return senderContact;
-                }
+            public void setReplayString(String replayString) {
+                this.replayString = replayString;
+            }
 
-                public void setSenderContact(String senderContact) {
-                    this.senderContact = senderContact;
-                }
+            public String getSenderContact() {
+                return senderContact;
+            }
 
-                public String getCreatedDate1() {
-                    return createdDate1;
-                }
+            public void setSenderContact(String senderContact) {
+                this.senderContact = senderContact;
+            }
 
-                public void setCreatedDate1(String createdDate1) {
-                    this.createdDate1 = createdDate1;
-                }
+            public String getCreatedDate1() {
+                return createdDate1;
+            }
 
-                public String getCreatedDate() {
-                    return createdDate;
-                }
+            public void setCreatedDate1(String createdDate1) {
+                this.createdDate1 = createdDate1;
+            }
 
-                public void setCreatedDate(String createdDate) {
-                    this.createdDate = createdDate;
-                }
+            public String getCreatedDate() {
+                return createdDate;
+            }
+
+            public void setCreatedDate(String createdDate) {
+                this.createdDate = createdDate;
             }
         }
+
     }
 }

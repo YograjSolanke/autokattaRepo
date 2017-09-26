@@ -228,6 +228,7 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
         btnchat.setOnClickListener(this);
         deleteservice.setOnClickListener(this);
         linearlike.setOnClickListener(this);
+        linearReview.setOnClickListener(this);
         linearunlike.setOnClickListener(this);
         submitfeedback.setOnClickListener(this);
         linearshare.setOnClickListener(this);
@@ -1330,7 +1331,6 @@ Get Admin data...
             case R.id.linearReview:
                 Intent intent = new Intent(ServiceViewActivity.this, ReviewActivity.class);
                 intent.putExtra("service_id", service_id);
-                intent.putExtra("review_sender", contact);
                 startActivity(intent);
 
                 break;

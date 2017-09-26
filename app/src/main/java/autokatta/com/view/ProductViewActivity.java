@@ -240,6 +240,7 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
         deleteproduct.setOnClickListener(this);
         linearlike.setOnClickListener(this);
         linearunlike.setOnClickListener(this);
+        linearReview.setOnClickListener(this);
         submitfeedback.setOnClickListener(this);
         linearshare.setOnClickListener(this);
         seellreview.setOnClickListener(this);
@@ -1235,7 +1236,13 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                 }
                 break;
 
+            case R.id.linearReview:
+                Intent intent = new Intent(ProductViewActivity.this, ReviewActivity.class);
+                intent.putExtra("product_id", product_id);
+                intent.putExtra("review_sender", contact);
+                startActivity(intent);
 
+                break;
         }
 
     }
