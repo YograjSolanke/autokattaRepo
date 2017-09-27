@@ -124,6 +124,7 @@ public class ChatActivity extends AppCompatActivity implements RequestNotifier, 
         relativeprofile = (RelativeLayout) findViewById(R.id.relativeprofile);
 
         relativeprofile.setOnClickListener(this);
+        MainRel.setOnClickListener(this);
         buttonRep.setOnClickListener(this);
 
         try {
@@ -164,6 +165,23 @@ public class ChatActivity extends AppCompatActivity implements RequestNotifier, 
                 break;
             case (R.id.replay):
                 sendmessage();
+                break;
+            case (R.id.MainRel):
+                if (Keyword.getText().toString().equalsIgnoreCase("Vehicle")) {
+                    Intent intent1 = new Intent(this, VehicleDetails.class);
+                    intent1.putExtra("vehicle_id", vehicle_id);
+                    startActivity(intent1);
+                }else if (Keyword.getText().toString().equalsIgnoreCase("Product"))
+            {
+                Intent intent2 = new Intent(this, ProductViewActivity.class);
+                intent2.putExtra("product_id", product_id);
+                startActivity(intent2);
+            }else
+            {
+                Intent intent3 = new Intent(this, ServiceViewActivity.class);
+                intent3.putExtra("service_id", service_id);
+                startActivity(intent3);
+            }
                 break;
         }
 

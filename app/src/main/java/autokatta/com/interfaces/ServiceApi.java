@@ -1348,7 +1348,12 @@ public interface ServiceApi {
 
 
     //post reviewe or reply here
-    @POST("GetReviewReplay")
+    @GET("GetReviewReplay")
     Call<ReviewAndReplyResponse> _autokattagetReviewReply(@Query("StoreID") int StoreID, @Query("ProductID") int ProductID, @Query("ServiceID") int ServiceID, @Query("VehicleID") int VehicleID);
+
+
+    //Vehicle offer chat
+    @GET("GetVehicleOfferChat")
+    Call<VehicleOfferRecivedResponse> getVehicleofferRecivedChat(@Query("MyContact") String MyContact);
 
 }

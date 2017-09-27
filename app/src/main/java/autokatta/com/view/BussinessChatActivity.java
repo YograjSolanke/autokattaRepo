@@ -8,7 +8,6 @@ import android.view.MenuItem;
 
 import autokatta.com.R;
 import autokatta.com.app_info.BusinessChatAppIntro;
-import autokatta.com.fragment.BussinessChatFragment;
 
 public class BussinessChatActivity extends AppCompatActivity {
 
@@ -31,7 +30,7 @@ public class BussinessChatActivity extends AppCompatActivity {
         fragmentTransaction.replace(R.id.bussines_chat_container, new BussinessChatFragment()).commit();*/
 
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.bussines_chat_container, new BussinessChatFragment(), "businessChat")
+                .replace(R.id.bussines_chat_container, new BussinessChatTabs(), "businessChat")
                 .addToBackStack("businessChat")
                 .commit();
     }

@@ -4942,6 +4942,38 @@ params.put("auction_id", bundleAuctionId);
         }
     }
 
+    /*Get My Bussiness Chat Offer
+ */
+    public void getVehicleOfferRecived(String mycontact) {
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<VehicleOfferRecivedResponse> mgetBChat = serviceApi.getVehicleofferRecivedChat(mycontact);
+                mgetBChat.enqueue(new Callback<VehicleOfferRecivedResponse>() {
+                    @Override
+                    public void onResponse(Call<VehicleOfferRecivedResponse> call, Response<VehicleOfferRecivedResponse> response) {
+                        mNotifier.notifySuccess(response);
+                    }
+
+                    @Override
+                    public void onFailure(Call<VehicleOfferRecivedResponse> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+
+            } else {
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
     /*
   Get getChatMessageData

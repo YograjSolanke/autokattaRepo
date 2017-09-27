@@ -1,6 +1,7 @@
 package autokatta.com.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -12,6 +13,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -37,6 +39,9 @@ import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.BroadcastReceivedResponse;
+import autokatta.com.view.ProductViewActivity;
+import autokatta.com.view.ServiceViewActivity;
+import autokatta.com.view.VehicleDetails;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import retrofit2.Response;
 
@@ -131,7 +136,7 @@ public class BussinessMsgSenders extends Fragment implements SwipeRefreshLayout.
                     Model.setText(bundle_model);
                     image = b.getString("image", "");
 
-                    if (b.getString("keyword", "").equalsIgnoreCase("Product")) {
+                    if (b.getString("keyword", "").equalsIgnoreCase("Products")) {
                         relCategory.setVisibility(View.GONE);
                         relBrand.setVisibility(View.GONE);
                         relModel.setVisibility(View.GONE);
@@ -147,7 +152,7 @@ public class BussinessMsgSenders extends Fragment implements SwipeRefreshLayout.
                         } else {
                             Image.setImageResource(R.drawable.logo);
                         }
-                    } else if (b.getString("keyword", "").equalsIgnoreCase("Service")) {
+                    } else if (b.getString("keyword", "").equalsIgnoreCase("Services")) {
                         relCategory.setVisibility(View.GONE);
                         relBrand.setVisibility(View.GONE);
                         relModel.setVisibility(View.GONE);
@@ -163,7 +168,7 @@ public class BussinessMsgSenders extends Fragment implements SwipeRefreshLayout.
                         } else {
                             Image.setImageResource(R.drawable.logo);
                         }
-                    } else if (b.getString("keyword", "").equalsIgnoreCase("Vehicle")) {
+                    } else if (b.getString("keyword", "").equalsIgnoreCase("Used Vehicle")) {
                         if (!image.equals("") && !image.equals("null")) {
                             fullpath = getString(R.string.base_image_url) + image;
                             fullpath = fullpath.replaceAll(" ", "%20");
@@ -182,6 +187,29 @@ public class BussinessMsgSenders extends Fragment implements SwipeRefreshLayout.
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+            }
+        });
+
+        /*go to details page*/
+        MainRel.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (bundle_keyword.equalsIgnoreCase("Used Vehicle")) {
+                    Intent intent = new Intent(getActivity(), VehicleDetails.class);
+                    intent.putExtra("vehicle_id", vehicle_id);
+                    getActivity().startActivity(intent);
+                }else
+                    if (bundle_keyword.equalsIgnoreCase("Products"))
+                    {
+                        Intent intent = new Intent(getActivity(), ProductViewActivity.class);
+                        intent.putExtra("product_id", product_id);
+                        getActivity().startActivity(intent);
+                    }else
+                    {
+                        Intent intent3 = new Intent(getActivity(), ServiceViewActivity.class);
+                        intent3.putExtra("service_id", service_id);
+                        getActivity().startActivity(intent3);
+                    }
             }
         });
         return root;

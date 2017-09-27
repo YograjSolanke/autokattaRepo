@@ -36,7 +36,7 @@ public class CategoryList extends Fragment {
         mList.add("Finance/Repo");
         mList.add("Insurance");
         mList.add("Scrap");
-        mList.add("Dealer Stock");
+        mList.add("Inventory");
         mList.add("Market Place");
 
         ArrayAdapter adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, mList);

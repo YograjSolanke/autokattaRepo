@@ -1,6 +1,7 @@
 package autokatta.com.view;
 
 import android.Manifest.permission;
+import android.app.Dialog;
 import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
@@ -19,8 +20,11 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.webkit.MimeTypeMap;
 import android.webkit.URLUtil;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -310,11 +314,11 @@ public class VehicleDetails extends AppCompatActivity implements RequestNotifier
                 mLike.setLabelTextColor(Color.BLACK);
                 mLikestr = "no";
             } else if (str.equals("success_message_saved")) {
-                CustomToast.customToast(getApplicationContext(), "Enquiry Sent");
+                CustomToast.customToast(getApplicationContext(), "Offer Sent");
             } else if (str.contains("yes")) {
                 mChat.setLabelText("Chat");
             } else if (str.contains("no")) {
-                mChat.setLabelText("Send Enquiry");
+                mChat.setLabelText("Send Offer");
 
             }
         }
@@ -337,10 +341,46 @@ public class VehicleDetails extends AppCompatActivity implements RequestNotifier
                 }
                 break;
             case R.id.chat_c:
-                if (mChat.getLabelText().equalsIgnoreCase("send enquiry")) {
-                    ApiCall mpApicall = new ApiCall(this, this);
-                    mpApicall.sendChatMessage(prefcontact, contact, "Please send information About this", "", 0,
-                            0, mVehicle_Id);
+
+                if (mChat.getLabelText().equalsIgnoreCase("send Offer")) {
+
+                    final Dialog openDialog = new Dialog(this);
+                    openDialog.setContentView(R.layout.give_offer);
+                    openDialog.setTitle("Fill Form For Offer");
+                    final EditText offerprice = (EditText) openDialog.findViewById(R.id.txtofferprice);
+                    final EditText paymentmode = (EditText) openDialog.findViewById(R.id.paymentmode);
+                    final EditText description = (EditText) openDialog.findViewById(R.id.description);
+
+                    Button sendQuotation = (Button) openDialog.findViewById(R.id.btnSend);
+
+                    sendQuotation.setOnClickListener(new OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            // TODO Auto-generated method stub
+                            String strprice = offerprice.getText().toString();
+                            String strpaymentmode = paymentmode.getText().toString();
+                            String strdescription = description.getText().toString();
+
+                            if (strprice.equalsIgnoreCase("")) {
+                                CustomToast.customToast(VehicleDetails.this, "please enter give offer price");
+                            }else if(strpaymentmode.equalsIgnoreCase(""))
+                            {
+                                CustomToast.customToast(VehicleDetails.this, "please enter Payment mode");
+                            }else if(strdescription.equalsIgnoreCase(""))
+                            {
+                                CustomToast.customToast(VehicleDetails.this, "please enter Description");
+                            }
+                            else {
+                                ApiCall mpApicall = new ApiCall(VehicleDetails.this, VehicleDetails.this);
+                                mpApicall.sendChatMessage(prefcontact, contact, "Offer Price-"+strprice+"\n"+
+                                                                                "Payment Mode-"+strpaymentmode+"\n"+
+                                                                                "Description-"+strdescription, "", 0, 0, mVehicle_Id);
+                                openDialog.dismiss();
+                            }
+                        }
+                    });
+                    openDialog.show();
+
                 } else {
                     Bundle b = new Bundle();
                     b.putString("sender", contact);
