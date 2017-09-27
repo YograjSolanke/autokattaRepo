@@ -17,7 +17,6 @@ import uk.co.senab.photoview.PhotoView;
 
 public class FullImageActivity extends AppCompatActivity {
     PhotoView imgFullImage;
-    //ImageView imgFullImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +27,6 @@ public class FullImageActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
-    //    setTitle("Image");
         imgFullImage = (PhotoView) findViewById(R.id.fullImage);
         final ProgressBar progressBar = (ProgressBar) findViewById(R.id.progress);
 
@@ -37,7 +35,7 @@ public class FullImageActivity extends AppCompatActivity {
 
         Glide.with(getApplicationContext())
                 .load(image)
-              //  .load(bitmap)
+                //  .load(bitmap)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .listener(new RequestListener<String, GlideDrawable>() {
                     @Override
@@ -53,7 +51,6 @@ public class FullImageActivity extends AppCompatActivity {
                     }
                 })
                 .into(imgFullImage);
-        //imgFullImage.setImageBitmap(bitmap);
     }
 
     @Override

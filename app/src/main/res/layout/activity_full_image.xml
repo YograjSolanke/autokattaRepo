@@ -5,15 +5,15 @@
     android:background="@color/black"
     android:gravity="center">
 
-  <!--  <ImageView
+    <!--  <ImageView
+          android:id="@+id/fullImage"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:contentDescription="@string/app_name" />-->
+    <uk.co.senab.photoview.PhotoView
         android:id="@+id/fullImage"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:contentDescription="@string/app_name" />-->
-  <uk.co.senab.photoview.PhotoView
-      android:id="@+id/fullImage"
-      android:layout_width="match_parent"
-      android:layout_height="match_parent" />
+        android:layout_height="match_parent" />
 
     <ProgressBar
         android:id="@+id/progress"
