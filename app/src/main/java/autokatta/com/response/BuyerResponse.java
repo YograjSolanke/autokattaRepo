@@ -784,7 +784,7 @@ public class BuyerResponse {
             private String fiananceExchange;
             @SerializedName("kms_running")
             @Expose
-            private int kmsRunning;
+            private String kmsRunning;
             @SerializedName("Hrs_running")
             @Expose
             private String hrsRunning;
@@ -1171,11 +1171,11 @@ public class BuyerResponse {
                 this.fiananceExchange = fiananceExchange;
             }
 
-            public int getKmsRunning() {
+            public String getKmsRunning() {
                 return kmsRunning;
             }
 
-            public void setKmsRunning(int kmsRunning) {
+            public void setKmsRunning(String kmsRunning) {
                 this.kmsRunning = kmsRunning;
             }
 

@@ -362,7 +362,7 @@ public class StoreNotificationAdapter extends RecyclerView.Adapter<RecyclerView.
                 int notiId = notificationList.get(mStoreHolder.getAdapterPosition()).getActionID();
                 mStoreHolder.mStoreFav.setVisibility(View.GONE);
                 mStoreHolder.mStoreUnfav.setVisibility(View.VISIBLE);
-                mApiCall.removeFromFavorite(mLoginContact, "", 0, "", notiId);
+                mApiCall.removeFromFavorite(mLoginContact, 0, 0, 0, 0, 0, notiId);
                 notificationList.get(mStoreHolder.getAdapterPosition()).setMyFavStatus("no");
             }
         });
@@ -374,7 +374,7 @@ public class StoreNotificationAdapter extends RecyclerView.Adapter<RecyclerView.
                 int notiId = notificationList.get(mStoreHolder.getAdapterPosition()).getActionID();
                 mStoreHolder.mStoreUnfav.setVisibility(View.GONE);
                 mStoreHolder.mStoreFav.setVisibility(View.VISIBLE);
-                mApiCall.addToFavorite(mLoginContact, "", 0, "", notiId);
+                mApiCall.addToFavorite(mLoginContact, 0, 0, 0, 0, 0, notiId);
                 notificationList.get(mStoreHolder.getAdapterPosition()).setMyFavStatus("yes");
             }
         });

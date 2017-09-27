@@ -833,7 +833,7 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
                     public void onClick(View v) {
                         //Unfavorite web service
                         int notiId = notificationList.get(mProfileHolder.getAdapterPosition()).getId();
-                        mApiCall.removeFromFavorite(mLoginContact, "", 0, "", notiId);
+                        mApiCall.removeFromFavorite(mLoginContact, 0, 0, 0, 0, 0, notiId);
                         //notificationList.get(mGroupHolder.getAdapterPosition()).setMyFavStatus("no");
                         notificationList.remove(mProfileHolder.getAdapterPosition());
                         notifyItemRemoved(mProfileHolder.getAdapterPosition());
@@ -1098,7 +1098,7 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
                     public void onClick(View v) {
                         //Unfavorite web service
                         int notiId = notificationList.get(mStoreHolder.getAdapterPosition()).getId();
-                        mApiCall.removeFromFavorite(mLoginContact, "", 0, "", notiId);
+                        mApiCall.removeFromFavorite(mLoginContact, 0, 0, 0, 0, 0, notiId);
                         notificationList.remove(mStoreHolder.getAdapterPosition());
                         notifyItemRemoved(mStoreHolder.getAdapterPosition());
                         notifyItemRangeChanged(mStoreHolder.getAdapterPosition(), notificationList.size());
@@ -1250,7 +1250,7 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
                     public void onClick(View v) {
                         //Unfavorite web service
                         int notiId = notificationList.get(mGroupHolder.getAdapterPosition()).getId();
-                        mApiCall.removeFromFavorite(mLoginContact, "", 0, "", notiId);
+                        mApiCall.removeFromFavorite(mLoginContact, 0, 0, 0, 0, 0, notiId);
                         notificationList.remove(mGroupHolder.getAdapterPosition());
                         notifyItemRemoved(mGroupHolder.getAdapterPosition());
                         notifyItemRangeChanged(mGroupHolder.getAdapterPosition(), notificationList.size());
@@ -1415,7 +1415,7 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
                     public void onClick(View v) {
                         //Remove Favorite web service
                         int SearchId = notificationList.get(mVehicleHolder.getAdapterPosition()).getSearchId();
-                        mApiCall.removeFromFavorite(mLoginContact, "", SearchId, "", 0);
+                        mApiCall.removeFromFavorite(mLoginContact, 0, 0, 0, 0, SearchId, 0);
                         notificationList.remove(mVehicleHolder.getAdapterPosition());
                         notifyItemRemoved(mVehicleHolder.getAdapterPosition());
                         notifyItemRangeChanged(mVehicleHolder.getAdapterPosition(), notificationList.size());
@@ -1638,7 +1638,7 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
                     public void onClick(View v) {
                         //Un Favorite web service
                         int notiId = notificationList.get(mProductHolder.getAdapterPosition()).getId();
-                        mApiCall.removeFromFavorite(mLoginContact, "", 0, "", notiId);
+                        mApiCall.removeFromFavorite(mLoginContact, 0, 0, 0, 0, 0, notiId);
                         notificationList.remove(mProductHolder.getAdapterPosition());
                         notifyItemRemoved(mProductHolder.getAdapterPosition());
                         notifyItemRangeChanged(mProductHolder.getAdapterPosition(), notificationList.size());
@@ -1850,7 +1850,7 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
                     public void onClick(View v) {
                         //un Favorite web service
                         int notiId = notificationList.get(mServiceHolder.getAdapterPosition()).getId();
-                        mApiCall.removeFromFavorite(mLoginContact, "", 0, "", notiId);
+                        mApiCall.removeFromFavorite(mLoginContact, 0, 0, 0, 0, 0, notiId);
                         notificationList.remove(mServiceHolder.getAdapterPosition());
                         notifyItemRemoved(mServiceHolder.getAdapterPosition());
                         notifyItemRangeChanged(mServiceHolder.getAdapterPosition(), notificationList.size());
@@ -2035,7 +2035,7 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
                     public void onClick(View v) {
                         //Remove Favorite web service
                         int SearchId = notificationList.get(mSearchHolder.getAdapterPosition()).getSearchId();
-                        mApiCall.removeFromFavorite(mLoginContact, "", SearchId, "", 0);
+                        mApiCall.removeFromFavorite(mLoginContact, 0, 0, 0, 0, SearchId, 0);
                         notificationList.remove(mSearchHolder.getAdapterPosition());
                         notifyItemRemoved(mSearchHolder.getAdapterPosition());
                         notifyItemRangeChanged(mSearchHolder.getAdapterPosition(), notificationList.size());
@@ -2276,8 +2276,8 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
                     @Override
                     public void onClick(View v) {
                         //Remove Favorite web service
-                        int SearchId = notificationList.get(mUpVehicleHolder.getAdapterPosition()).getSearchId();
-                        mApiCall.removeFromFavorite(mLoginContact, "", SearchId, "", 0);
+                        int notiId = notificationList.get(mUpVehicleHolder.getAdapterPosition()).getId();
+                        mApiCall.removeFromFavorite(mLoginContact, 0, 0, 0, 0, 0, notiId);
                         notificationList.remove(mUpVehicleHolder.getAdapterPosition());
                         notifyItemRemoved(mUpVehicleHolder.getAdapterPosition());
                         notifyItemRangeChanged(mUpVehicleHolder.getAdapterPosition(), notificationList.size());
@@ -2557,9 +2557,10 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
                     @Override
                     public void onClick(View v) {
 
-                        String BuyerId = notificationList.get(mBuyerHolder.getAdapterPosition()).getVvehicleId()
-                                + "," + notificationList.get(mBuyerHolder.getAdapterPosition()).getSsearchId();
-                        mApiCall.removeFromFavorite(mLoginContact, BuyerId, 0, "", 0);
+                        int buyerSearchid = notificationList.get(mBuyerHolder.getAdapterPosition()).getSsearchId();
+                        int buyerVehicleid = notificationList.get(mBuyerHolder.getAdapterPosition()).getVvehicleId();
+
+                        mApiCall.removeFromFavorite(mLoginContact, 0, 0, 0, buyerSearchid, buyerVehicleid, 0);
                         notificationList.remove(mBuyerHolder.getAdapterPosition());
                         notifyItemRemoved(mBuyerHolder.getAdapterPosition());
                         notifyItemRangeChanged(mBuyerHolder.getAdapterPosition(), notificationList.size());
@@ -2798,9 +2799,10 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
 
                     @Override
                     public void onClick(View v) {
-                        String SellerId = notificationList.get(mSellerHolder.getAdapterPosition()).getSsearchId()
-                                + "," + notificationList.get(mSellerHolder.getAdapterPosition()).getVvehicleId();
-                        mApiCall.removeFromFavorite(mLoginContact, "", 0, SellerId, 0);
+                        int sellerSearchid = notificationList.get(mSellerHolder.getAdapterPosition()).getSsearchId();
+                        int sellerVehicleid = notificationList.get(mSellerHolder.getAdapterPosition()).getVvehicleId();
+
+                        mApiCall.removeFromFavorite(mLoginContact, sellerSearchid, sellerVehicleid, 0, 0, 0, 0);
                         notificationList.remove(mSellerHolder.getAdapterPosition());
                         notifyItemRemoved(mSellerHolder.getAdapterPosition());
                         notifyItemRangeChanged(mSellerHolder.getAdapterPosition(), notificationList.size());
@@ -2833,7 +2835,7 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
                     public void onClick(View v) {
                         //unfavorite service
                         int SearchId = notificationList.get(mySearchHolder.getAdapterPosition()).getSearchId();
-                        mApiCall.removeFromFavorite(mLoginContact, "", SearchId, "", 0);
+                        mApiCall.removeFromFavorite(mLoginContact, 0, 0, 0, 0, SearchId, 0);
                         notificationList.remove(mySearchHolder.getAdapterPosition());
                         notifyItemRemoved(mySearchHolder.getAdapterPosition());
                         notifyItemRangeChanged(mySearchHolder.getAdapterPosition(), notificationList.size());

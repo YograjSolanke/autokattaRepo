@@ -353,7 +353,7 @@ public class GroupNotificationAdapter extends RecyclerView.Adapter<RecyclerView.
                         int notiId = notificationList.get(mGroupHolder.getAdapterPosition()).getActionID();
                         mGroupHolder.mGroupFavourite.setVisibility(View.GONE);
                         mGroupHolder.mGroupUnFav.setVisibility(View.VISIBLE);
-                        mApiCall.removeFromFavorite(mLoginContact, "", 0, "", notiId);
+                        mApiCall.removeFromFavorite(mLoginContact, 0, 0, 0, 0, 0, notiId);
                         notificationList.get(mGroupHolder.getAdapterPosition()).setMyFavStatus("no");
                     }
                 });
@@ -365,7 +365,7 @@ public class GroupNotificationAdapter extends RecyclerView.Adapter<RecyclerView.
                         int notiId = notificationList.get(mGroupHolder.getAdapterPosition()).getActionID();
                         mGroupHolder.mGroupUnFav.setVisibility(View.GONE);
                         mGroupHolder.mGroupFavourite.setVisibility(View.VISIBLE);
-                        mApiCall.addToFavorite(mLoginContact, "", 0, "", notiId);
+                        mApiCall.addToFavorite(mLoginContact, 0, 0, 0, 0, 0, notiId);
                         notificationList.get(mGroupHolder.getAdapterPosition()).setMyFavStatus("yes");
                     }
                 });
@@ -608,7 +608,7 @@ public class GroupNotificationAdapter extends RecyclerView.Adapter<RecyclerView.
                         int notiId = notificationList.get(mUpVehicleHolder.getAdapterPosition()).getActionID();
                         mUpVehicleHolder.mVehicleFavourite.setVisibility(View.GONE);
                         mUpVehicleHolder.mVehicleUnfav.setVisibility(View.VISIBLE);
-                        mApiCall.removeFromFavorite(mLoginContact, "", 0, "", notiId);
+                        mApiCall.removeFromFavorite(mLoginContact, 0, 0, 0, 0, 0, notiId);
                         notificationList.get(mUpVehicleHolder.getAdapterPosition()).setMyFavStatus("no");
                     }
                 });
@@ -620,7 +620,7 @@ public class GroupNotificationAdapter extends RecyclerView.Adapter<RecyclerView.
                         int notiId = notificationList.get(mUpVehicleHolder.getAdapterPosition()).getActionID();
                         mUpVehicleHolder.mVehicleUnfav.setVisibility(View.GONE);
                         mUpVehicleHolder.mVehicleFavourite.setVisibility(View.VISIBLE);
-                        mApiCall.addToFavorite(mLoginContact, "", 0, "", notiId);
+                        mApiCall.addToFavorite(mLoginContact, 0, 0, 0, 0, 0, notiId);
                         notificationList.get(mUpVehicleHolder.getAdapterPosition()).setMyFavStatus("yes");
                     }
                 });

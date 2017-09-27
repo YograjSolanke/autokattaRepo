@@ -204,7 +204,7 @@ public class MySearchAdapter extends RecyclerView.Adapter<MySearchAdapter.Search
             @Override
             public void onClick(View v) {
                 SearchId = mMainlist.get(holder.getAdapterPosition()).getSearchId();
-                apiCall.addToFavorite(myContact, "", SearchId, "", 0);
+                apiCall.addToFavorite(myContact, 0, 0, 0, 0, SearchId, 0);
                 holder.favImg.setVisibility(View.VISIBLE);
                 holder.unfavImg.setVisibility(View.GONE);
                 mMainlist.get(holder.getAdapterPosition()).setSearchstatus("yes");
@@ -217,7 +217,7 @@ public class MySearchAdapter extends RecyclerView.Adapter<MySearchAdapter.Search
             @Override
             public void onClick(View v) {
                 SearchId = mMainlist.get(holder.getAdapterPosition()).getSearchId();
-                apiCall.removeFromFavorite(myContact, "", SearchId, "", 0);
+                apiCall.removeFromFavorite(myContact, 0, 0, 0, 0, SearchId, 0);
                 holder.favImg.setVisibility(View.GONE);
                 holder.unfavImg.setVisibility(View.VISIBLE);
                 mMainlist.get(holder.getAdapterPosition()).setSearchstatus("no");
@@ -402,7 +402,7 @@ public class MySearchAdapter extends RecyclerView.Adapter<MySearchAdapter.Search
 
     static class SearchHolder extends RecyclerView.ViewHolder {
 
-        TextView textcategory, textbrand, textmodel, textprice, textyear, textsearchdate, BuyerLeads, Stopdate,stocktype;
+        TextView textcategory, textbrand, textmodel, textprice, textyear, textsearchdate, BuyerLeads, Stopdate, stocktype;
         ImageView editImg, deleteData, favImg, unfavImg, share;
         Button Stopsearch, Startsearch;
         RelativeLayout relativeLayout;

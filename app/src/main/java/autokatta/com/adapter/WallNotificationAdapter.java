@@ -922,7 +922,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                         int notiId = notificationList.get(mProfileHolder.getAdapterPosition()).getActionID();
                         mProfileHolder.mFav.setVisibility(View.GONE);
                         mProfileHolder.mUnfav.setVisibility(View.VISIBLE);
-                        mApiCall.removeFromFavorite(mLoginContact, "", 0, "", notiId);
+                        mApiCall.removeFromFavorite(mLoginContact, 0, 0, 0, 0, 0, notiId);
                         notificationList.get(mProfileHolder.getAdapterPosition()).setMyFavStatus("no");
                     }
                 });
@@ -934,7 +934,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                         int notiId = notificationList.get(mProfileHolder.getAdapterPosition()).getActionID();
                         mProfileHolder.mUnfav.setVisibility(View.GONE);
                         mProfileHolder.mFav.setVisibility(View.VISIBLE);
-                        mApiCall.addToFavorite(mLoginContact, "", 0, "", notiId);
+                        mApiCall.addToFavorite(mLoginContact, 0, 0, 0, 0, 0, notiId);
                         notificationList.get(mProfileHolder.getAdapterPosition()).setMyFavStatus("yes");
                     }
                 });
@@ -1272,7 +1272,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                         int notiId = notificationList.get(mStoreHolder.getAdapterPosition()).getActionID();
                         mStoreHolder.mStoreFav.setVisibility(View.GONE);
                         mStoreHolder.mStoreUnfav.setVisibility(View.VISIBLE);
-                        mApiCall.removeFromFavorite(mLoginContact, "", 0, "", notiId);
+                        mApiCall.removeFromFavorite(mLoginContact, 0, 0, 0, 0, 0, notiId);
                         notificationList.get(mStoreHolder.getAdapterPosition()).setMyFavStatus("no");
                     }
                 });
@@ -1284,7 +1284,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                         int notiId = notificationList.get(mStoreHolder.getAdapterPosition()).getActionID();
                         mStoreHolder.mStoreUnfav.setVisibility(View.GONE);
                         mStoreHolder.mStoreFav.setVisibility(View.VISIBLE);
-                        mApiCall.addToFavorite(mLoginContact, "", 0, "", notiId);
+                        mApiCall.addToFavorite(mLoginContact, 0, 0, 0, 0, 0, notiId);
                         notificationList.get(mStoreHolder.getAdapterPosition()).setMyFavStatus("yes");
                     }
                 });
@@ -1606,7 +1606,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                         int notiId = notificationList.get(mGroupHolder.getAdapterPosition()).getActionID();
                         mGroupHolder.mGroupFavourite.setVisibility(View.GONE);
                         mGroupHolder.mGroupUnFav.setVisibility(View.VISIBLE);
-                        mApiCall.removeFromFavorite(mLoginContact, "", 0, "", notiId);
+                        mApiCall.removeFromFavorite(mLoginContact, 0, 0, 0, 0, 0, notiId);
                         notificationList.get(mGroupHolder.getAdapterPosition()).setMyFavStatus("no");
                     }
                 });
@@ -1618,7 +1618,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                         int notiId = notificationList.get(mGroupHolder.getAdapterPosition()).getActionID();
                         mGroupHolder.mGroupUnFav.setVisibility(View.GONE);
                         mGroupHolder.mGroupFavourite.setVisibility(View.VISIBLE);
-                        mApiCall.addToFavorite(mLoginContact, "", 0, "", notiId);
+                        mApiCall.addToFavorite(mLoginContact, 0, 0, 0, 0, 0, notiId);
                         notificationList.get(mGroupHolder.getAdapterPosition()).setMyFavStatus("yes");
                     }
                 });
@@ -1856,7 +1856,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                         int notiId = notificationList.get(mVehicleHolder.getAdapterPosition()).getActionID();
                         mVehicleHolder.mVehicleFavourite.setVisibility(View.GONE);
                         mVehicleHolder.mVehicleUnfav.setVisibility(View.VISIBLE);
-                        mApiCall.removeFromFavorite(mLoginContact, "", 0, "", notiId);
+                        mApiCall.removeFromFavorite(mLoginContact, 0, 0, 0, 0, 0, notiId);
                         notificationList.get(mVehicleHolder.getAdapterPosition()).setMyFavStatus("no");
                     }
                 });
@@ -1868,7 +1868,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                         int notiId = notificationList.get(mVehicleHolder.getAdapterPosition()).getActionID();
                         mVehicleHolder.mVehicleUnfav.setVisibility(View.GONE);
                         mVehicleHolder.mVehicleFavourite.setVisibility(View.VISIBLE);
-                        mApiCall.addToFavorite(mLoginContact, "", 0, "", notiId);
+                        mApiCall.addToFavorite(mLoginContact, 0, 0, 0, 0, 0, notiId);
                         notificationList.get(mVehicleHolder.getAdapterPosition()).setMyFavStatus("yes");
                     }
                 });
@@ -2406,7 +2406,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                         int notiId = notificationList.get(mProductHolder.getAdapterPosition()).getActionID();
                         mProductHolder.mProductFav.setVisibility(View.GONE);
                         mProductHolder.mProductUnfav.setVisibility(View.VISIBLE);
-                        mApiCall.removeFromFavorite(mLoginContact, "", 0, "", notiId);
+                        mApiCall.removeFromFavorite(mLoginContact, 0, 0, 0, 0, 0, notiId);
                         notificationList.get(mProductHolder.getAdapterPosition()).setMyFavStatus("no");
                     }
                 });
@@ -2418,7 +2418,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                         int notiId = notificationList.get(mProductHolder.getAdapterPosition()).getActionID();
                         mProductHolder.mProductUnfav.setVisibility(View.GONE);
                         mProductHolder.mProductFav.setVisibility(View.VISIBLE);
-                        mApiCall.addToFavorite(mLoginContact, "", 0, "", notiId);
+                        mApiCall.addToFavorite(mLoginContact, 0, 0, 0, 0, 0, notiId);
                         notificationList.get(mProductHolder.getAdapterPosition()).setMyFavStatus("yes");
                     }
                 });
@@ -2884,7 +2884,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                         int notiId = notificationList.get(mServiceHolder.getAdapterPosition()).getActionID();
                         mServiceHolder.mServiceFavourite.setVisibility(View.GONE);
                         mServiceHolder.mServiceUnfav.setVisibility(View.VISIBLE);
-                        mApiCall.removeFromFavorite(mLoginContact, "", 0, "", notiId);
+                        mApiCall.removeFromFavorite(mLoginContact, 0, 0, 0, 0, 0, notiId);
                         notificationList.get(mServiceHolder.getAdapterPosition()).setMyFavStatus("no");
                     }
                 });
@@ -2896,7 +2896,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                         int notiId = notificationList.get(mServiceHolder.getAdapterPosition()).getActionID();
                         mServiceHolder.mServiceUnfav.setVisibility(View.GONE);
                         mServiceHolder.mServiceFavourite.setVisibility(View.VISIBLE);
-                        mApiCall.addToFavorite(mLoginContact, "", 0, "", notiId);
+                        mApiCall.addToFavorite(mLoginContact, 0, 0, 0, 0, 0, notiId);
                         notificationList.get(mServiceHolder.getAdapterPosition()).setMyFavStatus("yes");
                     }
                 });
@@ -3365,7 +3365,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                         int notiId = notificationList.get(mSearchHolder.getAdapterPosition()).getActionID();
                         mSearchHolder.mSearchFavorite.setVisibility(View.GONE);
                         mSearchHolder.mSearchUnfav.setVisibility(View.VISIBLE);
-                        mApiCall.removeFromFavorite(mLoginContact, "", 0, "", notiId);
+                        mApiCall.removeFromFavorite(mLoginContact, 0, 0, 0, 0, 0, notiId);
                         notificationList.get(mSearchHolder.getAdapterPosition()).setMyFavStatus("no");
                     }
                 });
@@ -3377,7 +3377,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                         int notiId = notificationList.get(mSearchHolder.getAdapterPosition()).getActionID();
                         mSearchHolder.mSearchUnfav.setVisibility(View.GONE);
                         mSearchHolder.mSearchFavorite.setVisibility(View.VISIBLE);
-                        mApiCall.addToFavorite(mLoginContact, "", 0, "", notiId);
+                        mApiCall.addToFavorite(mLoginContact, 0, 0, 0, 0, 0, notiId);
                         notificationList.get(mSearchHolder.getAdapterPosition()).setMyFavStatus("yes");
                     }
                 });
@@ -4082,7 +4082,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                         int notiId = notificationList.get(mUpVehicleHolder.getAdapterPosition()).getActionID();
                         mUpVehicleHolder.mVehicleFavourite.setVisibility(View.GONE);
                         mUpVehicleHolder.mVehicleUnfav.setVisibility(View.VISIBLE);
-                        mApiCall.removeFromFavorite(mLoginContact, "", 0, "", notiId);
+                        mApiCall.removeFromFavorite(mLoginContact, 0, 0, 0, 0, 0, notiId);
                         notificationList.get(mUpVehicleHolder.getAdapterPosition()).setMyFavStatus("no");
                     }
                 });
@@ -4094,7 +4094,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                         int notiId = notificationList.get(mUpVehicleHolder.getAdapterPosition()).getActionID();
                         mUpVehicleHolder.mVehicleUnfav.setVisibility(View.GONE);
                         mUpVehicleHolder.mVehicleFavourite.setVisibility(View.VISIBLE);
-                        mApiCall.addToFavorite(mLoginContact, "", 0, "", notiId);
+                        mApiCall.addToFavorite(mLoginContact, 0, 0, 0, 0, 0, notiId);
                         notificationList.get(mUpVehicleHolder.getAdapterPosition()).setMyFavStatus("yes");
                     }
                 });

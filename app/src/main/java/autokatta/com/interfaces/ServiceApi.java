@@ -783,18 +783,22 @@ public interface ServiceApi {
 
     //add to favourite
     @POST("AddMyFavourites")
-    Call<String> autokatta_AddToFavorite(@Query("Contact") String contact,
-                                         @Query("BuyerVehicleID") String buyer_vehicle_id,
-                                         @Query("SearchID") int search_id,
-                                         @Query("SellerVehicleID") String seller_vehicle_id,
+    Call<String> autokatta_AddToFavorite(@Query("Contact") String Contact,
+                                         @Query("SellerSearchID") int SellerSearchID,
+                                         @Query("SellerVehicleID") int SellerVehicleID,
+                                         @Query("BuyerSearchID") int BuyerSearchID,
+                                         @Query("BuyerVehicleID") int BuyerVehicleID,
+                                         @Query("SearchID") int SearchID,
                                          @Query("NotificationID") int noti_id);
 
     //Remove to favourite
     @POST("RemoveMyFavourites")
-    Call<String> autokatta_RemoveFromFavorite(@Query("Contact") String contact,
-                                              @Query("BuyerVehicleID") String buyer_vehicle_id,
-                                              @Query("SearchID") int search_id,
-                                              @Query("SellerVehicleID") String seller_vehicle_id,
+    Call<String> autokatta_RemoveFromFavorite(@Query("Contact") String Contact,
+                                              @Query("SellerSearchID") int SellerSearchID,
+                                              @Query("SellerVehicleID") int SellerVehicleID,
+                                              @Query("BuyerSearchID") int BuyerSearchID,
+                                              @Query("BuyerVehicleID") int BuyerVehicleID,
+                                              @Query("SearchID") int SearchID,
                                               @Query("NotificationID") int noti_id);
 
     //Save My Search
@@ -987,7 +991,7 @@ public interface ServiceApi {
     //Share data within app
     @POST("NewShare")
     Call<String> _autokattaShareData(@Query("SenderContact") String sender_contact, @Query("ReceiverContact") String receiver_contact,
-                                     @Query("GroupID") String group_id, @Query("BroadCastGroupID") String broadcastgroup_id,
+                                     @Query("GroupIDs") String group_id, @Query("BroadCastGroupIDs") String broadcastgroup_id,
                                      @Query("CaptionData") String caption_data, @Query("Layout") int layout,
                                      @Query("ProfileContact") String profile_id, @Query("StoreID") int store_id,
                                      @Query("VehicleID") int vehicle_id, @Query("ProductID") int product_id,

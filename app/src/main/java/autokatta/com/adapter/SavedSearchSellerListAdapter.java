@@ -84,7 +84,7 @@ public class SavedSearchSellerListAdapter extends RecyclerView.Adapter<SavedSear
         final SellerResponse.Success.MatchedResult object = matchedResultList.get(position);
         CheckBox checkBox[] = new CheckBox[matchedResultList.size()];
 
-        holder.buyerusername.setText(object.getUsername());
+        holder.sellerusername.setText(object.getUsername());
         holder.Title.setText(object.getTitle());
 
         //to set buyer last call date
@@ -240,7 +240,7 @@ public class SavedSearchSellerListAdapter extends RecyclerView.Adapter<SavedSear
             }
         });*/
 
-        holder.buyerusername.setOnClickListener(new View.OnClickListener() {
+        holder.sellerusername.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 recieverContact = object.getContactNo();
@@ -281,10 +281,9 @@ public class SavedSearchSellerListAdapter extends RecyclerView.Adapter<SavedSear
         holder.mFavimg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String VehiId = object.getVehicleId();
-                String SellerId = search_id + "," + VehiId;
+                int sellerVehicleId = object.getVehicleId();
 
-                apiCall.addToFavorite(myContact, "", 0, SellerId, 0);
+                apiCall.addToFavorite(myContact, search_id, sellerVehicleId, 0, 0, 0, 0);
                 holder.mFavimg.setVisibility(View.GONE);
                 holder.unmFavimg.setVisibility(View.VISIBLE);
 
@@ -297,10 +296,9 @@ public class SavedSearchSellerListAdapter extends RecyclerView.Adapter<SavedSear
         holder.unmFavimg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String VehiId = object.getVehicleId();
-                String SellerId = search_id + "," + VehiId;
+                int sellerVehicleId = object.getVehicleId();
 
-                apiCall.removeFromFavorite(myContact, "", 0, SellerId, 0);
+                apiCall.removeFromFavorite(myContact, search_id, sellerVehicleId, 0, 0, 0, 0);
                 holder.mFavimg.setVisibility(View.GONE);
                 holder.unmFavimg.setVisibility(View.VISIBLE);
                 object.setFavstatus("no");
@@ -351,14 +349,14 @@ public class SavedSearchSellerListAdapter extends RecyclerView.Adapter<SavedSear
 
         ImageView callseller, mFavimg, unmFavimg;
         ViewFlipper vehi_images;
-        TextView buyerusername, buyerlocation, lastCall, Compare, Vehic_cnt, UploadedDate, Title;
+        TextView sellerusername, buyerlocation, lastCall, Compare, Vehic_cnt, UploadedDate, Title;
         CheckBox checkBox1, checkBox2, checkBox3, checkBox4, checkBox5, checkBox6, checkBox7, checkBox8, checkBox9, checkBox10, chckbox;
         CheckBox checkBox[];
 
         SellerHolder(View itemView) {
             super(itemView);
 
-            buyerusername = (TextView) itemView.findViewById(R.id.username);
+            sellerusername = (TextView) itemView.findViewById(R.id.username);
             Compare = (TextView) itemView.findViewById(R.id.compare);
             Vehic_cnt = (TextView) itemView.findViewById(R.id.vehiclecount);
             UploadedDate = (TextView) itemView.findViewById(R.id.addon);

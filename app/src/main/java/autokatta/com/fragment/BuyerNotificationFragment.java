@@ -583,12 +583,12 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
                         favouritebuyer.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                String searchid = String.valueOf(mainList.get(finalI).getFound().get(finalJ).getSearchId());
-                                String BuyerId = String.valueOf(mainList.get(finalI).getFound().get(finalJ).getVehicleId())
-                                        + "," + searchid;
+                                int buyerSearchid = mainList.get(finalI).getFound().get(finalJ).getSearchId();
+                                int buyerVehicleid = mainList.get(finalI).getFound().get(finalJ).getVehicleId();
 
+                                mApiCall.addToFavorite(myContact, 0, 0, buyerSearchid,
+                                        buyerVehicleid, 0, 0);
 
-                                mApiCall.addToFavorite(myContact, BuyerId, 0, "", 0);
                                 unfavouritebuyer.setVisibility(View.VISIBLE);
                                 favouritebuyer.setVisibility(View.GONE);
 
@@ -602,12 +602,11 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
                         unfavouritebuyer.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                String searchid = String.valueOf(mainList.get(finalI).getFound().get(finalJ).getSearchId());
-                                String BuyerId = String.valueOf(mainList.get(finalI).getFound().get(finalJ).getVehicleId())
-                                        + "," + searchid;
+                                int buyerSearchid = mainList.get(finalI).getFound().get(finalJ).getSearchId();
+                                int buyerVehicleid = mainList.get(finalI).getFound().get(finalJ).getVehicleId();
 
-
-                                mApiCall.removeFromFavorite(myContact, BuyerId, 0, "", 0);
+                                mApiCall.removeFromFavorite(myContact, 0, 0, buyerSearchid,
+                                        buyerVehicleid, 0, 0);
                                 favouritebuyer.setVisibility(View.VISIBLE);
                                 unfavouritebuyer.setVisibility(View.GONE);
 
@@ -659,15 +658,9 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
 
                 case "success_favourite":
                     CustomToast.customToast(getActivity(), "Favorite");
-                /*mLike.setVisibility(View.GONE);
-                mUnlike.setVisibility(View.VISIBLE);*/
-                    //mLikestr = "no";
                     break;
                 case "success_remove":
                     CustomToast.customToast(getActivity(), "Unfavorite");
-                /*mLike.setVisibility(View.GONE);
-                mUnlike.setVisibility(View.VISIBLE);*/
-                    //mLikestr = "no";
                     break;
             }
         }

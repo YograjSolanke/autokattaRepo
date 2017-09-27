@@ -671,7 +671,7 @@ public class SellerResponse {
             private String noOfOwners;
             @SerializedName("vehicle_id")
             @Expose
-            private String vehicleId;
+            private Integer vehicleId;
             @SerializedName("air_condition")
             @Expose
             private String airCondition;
@@ -898,11 +898,11 @@ public class SellerResponse {
                 this.noOfOwners = noOfOwners;
             }
 
-            public String getVehicleId() {
+            public Integer getVehicleId() {
                 return vehicleId;
             }
 
-            public void setVehicleId(String vehicleId) {
+            public void setVehicleId(Integer vehicleId) {
                 this.vehicleId = vehicleId;
             }
 

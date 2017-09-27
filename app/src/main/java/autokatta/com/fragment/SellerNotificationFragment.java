@@ -332,7 +332,7 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
                         final String itemYearManu = mainList.get(i).getMatchedResult().get(j).getYearOfManufacture();
                         final String itemPrice = mainList.get(i).getMatchedResult().get(j).getPrice();
                         final String itemDate = mainList.get(i).getMatchedResult().get(j).getDate();
-                        final String itemvehicleId = mainList.get(i).getMatchedResult().get(j).getVehicleId();
+                        final int itemvehicleId = mainList.get(i).getMatchedResult().get(j).getVehicleId();
                         final String itemRto = mainList.get(i).getMatchedResult().get(j).getRtoCity();
 
                         final String favStatus = mainList.get(i).getMatchedResult().get(j).getFavstatus();
@@ -525,7 +525,7 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
                         final int finalI = i;
                         final int finalJ = j;
 
-                        final int v_ids = Integer.parseInt(mainList.get(i).getMatchedResult().get(j).getVehicleId());
+                        final int v_ids = mainList.get(i).getMatchedResult().get(j).getVehicleId();
                         checkBox[j].setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                             @Override
                             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -582,10 +582,10 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
                         mFavimg.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                String VehiId = mainList.get(finalI).getMatchedResult().get(finalJ).getVehicleId();
-                                String SellerId = mainList.get(finalI).getMatchedResult().get(finalJ).getSearchId()
-                                        + "," + VehiId;
-                                mApiCall.addToFavorite(myContact, "", 0, SellerId, 0);
+                                int sellerVehicleId = mainList.get(finalI).getMatchedResult().get(finalJ).getVehicleId();
+                                int sellerSearchId = mainList.get(finalI).getMatchedResult().get(finalJ).getSearchId();
+
+                                mApiCall.addToFavorite(myContact, sellerSearchId, sellerVehicleId, 0, 0, 0, 0);
                                 mFavimg.setVisibility(View.GONE);
                                 unmFavimg.setVisibility(View.VISIBLE);
 
@@ -599,10 +599,10 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
                         unmFavimg.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                String VehiId = mainList.get(finalI).getMatchedResult().get(finalJ).getVehicleId();
-                                String SellerId = mainList.get(finalI).getMatchedResult().get(finalJ).getSearchId()
-                                        + "," + VehiId;
-                                mApiCall.removeFromFavorite(myContact, "", 0, SellerId, 0);
+                                int sellerVehicleId = mainList.get(finalI).getMatchedResult().get(finalJ).getVehicleId();
+                                int sellerSearchId = mainList.get(finalI).getMatchedResult().get(finalJ).getSearchId();
+
+                                mApiCall.removeFromFavorite(myContact, sellerSearchId, sellerVehicleId, 0, 0, 0, 0);
                                 mFavimg.setVisibility(View.GONE);
                                 unmFavimg.setVisibility(View.VISIBLE);
                                 mainList.get(finalI).getMatchedResult().get(finalJ).setFavstatus("no");

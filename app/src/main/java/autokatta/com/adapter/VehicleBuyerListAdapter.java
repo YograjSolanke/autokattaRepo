@@ -214,28 +214,50 @@ public class VehicleBuyerListAdapter extends RecyclerView.Adapter<VehicleBuyerLi
             }
         });
 
+
         if (object.getFavstatus().equalsIgnoreCase("yes")) {
-            holder.favoritebuyer.setImageResource(R.drawable.fav2);
-            holder.favoritebuyer.setEnabled(false);
+            holder.unfavouritebuyer.setVisibility(View.VISIBLE);
+            holder.favouritebuyer.setVisibility(View.GONE);
         } else {
-            holder.favoritebuyer.setImageResource(R.drawable.fav1);
+            holder.unfavouritebuyer.setVisibility(View.GONE);
+            holder.favouritebuyer.setVisibility(View.VISIBLE);
         }
 
-        holder.favoritebuyer.setOnClickListener(new View.OnClickListener() {
+        holder.favouritebuyer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                int buyerSearchId = object.getSearchId();
+                int buyerVehicleId = vehicle_id;
 
+                apicall.addToFavorite(myContact, 0, 0, buyerSearchId, buyerVehicleId, 0, 0);
 
-                srchid = String.valueOf(object.getSearchId());
-                BuyerId = vehicle_id + "," + srchid;
-                apicall.addToFavorite(myContact, BuyerId, 0, "", 0);
-                holder.favoritebuyer.setImageResource(R.drawable.fav2);
+                holder.unfavouritebuyer.setVisibility(View.VISIBLE);
+                holder.favouritebuyer.setVisibility(View.GONE);
 
                 object.setFavstatus("yes");
             }
 
 
         });
+
+
+        holder.unfavouritebuyer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int buyerSearchId = object.getSearchId();
+                int buyerVehicleId = vehicle_id;
+
+                apicall.removeFromFavorite(myContact, 0, 0, buyerSearchId, buyerVehicleId, 0, 0);
+
+                holder.favouritebuyer.setVisibility(View.VISIBLE);
+                holder.unfavouritebuyer.setVisibility(View.GONE);
+
+                object.setFavstatus("no");
+            }
+
+
+        });
+
 
     }
 
@@ -286,7 +308,7 @@ public class VehicleBuyerListAdapter extends RecyclerView.Adapter<VehicleBuyerLi
 
     static class BuyerHolder extends RecyclerView.ViewHolder {
 
-        ImageView buyer_lead_image, callbuyer, favoritebuyer;
+        ImageView buyer_lead_image, callbuyer, favouritebuyer, unfavouritebuyer;
         TextView buyerusername, buyerlocation, namecity;
         CheckBox checkBox1, checkBox2, checkBox3, checkBox4, checkBox5, checkBox6, checkBox7, checkBox8, checkBox9, checkBox10;
 
@@ -298,7 +320,8 @@ public class VehicleBuyerListAdapter extends RecyclerView.Adapter<VehicleBuyerLi
             namecity = (TextView) itemView.findViewById(R.id.namecity);
 
             buyer_lead_image = (ImageView) itemView.findViewById(R.id.buyer_lead_image);
-            favoritebuyer = (ImageView) itemView.findViewById(R.id.favouritebuyer);
+            favouritebuyer = (ImageView) itemView.findViewById(R.id.favouritebuyer);
+            unfavouritebuyer = (ImageView) itemView.findViewById(R.id.unfavouritebuyer);
             callbuyer = (ImageView) itemView.findViewById(R.id.callbuyer);
             checkBox1 = (CheckBox) itemView.findViewById(R.id.checkBox1);
             checkBox2 = (CheckBox) itemView.findViewById(R.id.checkBox2);

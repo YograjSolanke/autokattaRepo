@@ -26,6 +26,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import autokatta.com.R;
 import autokatta.com.adapter.VehicleBuyerListAdapter;
@@ -70,7 +71,7 @@ public class UploadedVehicleBuyerList extends Fragment implements RequestNotifie
 
         apiCall = new ApiCall(getActivity(), this);
         mSharedPreferences = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE);
-        myContact = mSharedPreferences.getString("loginContact", "7841023392");
+        myContact = mSharedPreferences.getString("loginContact", "");
 
         mSwipeRefreshLayout = (SwipeRefreshLayout) myVehicles.findViewById(R.id.swipeRefreshLayoutUploadedVehicleBuyer);
         mRecyclerView = (RecyclerView) myVehicles.findViewById(R.id.buyerlist);
@@ -177,7 +178,7 @@ public class UploadedVehicleBuyerList extends Fragment implements RequestNotifie
 
     @Override
     public void notifySuccess(Response<?> response) {
-        DateFormat f = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        DateFormat f = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.getDefault());
 
         if (response != null) {
             if (response.isSuccessful()) {

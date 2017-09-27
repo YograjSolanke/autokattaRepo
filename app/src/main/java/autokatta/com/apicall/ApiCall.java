@@ -5290,8 +5290,8 @@ Get uploaded Vehicle Buyer list
 
 
     //add to favourite
-    public void addToFavorite(String contact, String buyer_vehicle_id, int search_id, String seller_vehicle_id,
-                              int notification_id) {
+    public void addToFavorite(String contact, int SellerSearchId, int SellerVehicleId, int buyerSearchId,
+                              int buyerVehicleId, int search_id, int notification_id) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 //JSON to Gson conversion
@@ -5305,8 +5305,8 @@ Get uploaded Vehicle Buyer list
                         .build();
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<String> createbrdcstgrp = serviceApi.autokatta_AddToFavorite(contact, buyer_vehicle_id, search_id,
-                        seller_vehicle_id, notification_id);
+                Call<String> createbrdcstgrp = serviceApi.autokatta_AddToFavorite(contact, SellerSearchId, SellerVehicleId,
+                        buyerSearchId, buyerVehicleId, search_id, notification_id);
                 createbrdcstgrp.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
@@ -5327,8 +5327,8 @@ Get uploaded Vehicle Buyer list
     }
 
     //Remove from favourite
-    public void removeFromFavorite(String contact, String buyer_vehicle_id, int search_id, String seller_vehicle_id,
-                                   int notification_id) {
+    public void removeFromFavorite(String contact, int SellerSearchId, int SellerVehicleId, int buyerSearchId,
+                                   int buyerVehicleId, int search_id, int notification_id) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 //JSON to Gson conversion
@@ -5342,8 +5342,8 @@ Get uploaded Vehicle Buyer list
                         .build();
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<String> createbrdcstgrp = serviceApi.autokatta_RemoveFromFavorite(contact, buyer_vehicle_id, search_id,
-                        seller_vehicle_id, notification_id);
+                Call<String> createbrdcstgrp = serviceApi.autokatta_RemoveFromFavorite(contact, SellerSearchId, SellerVehicleId,
+                        buyerSearchId, buyerVehicleId, search_id, notification_id);
                 createbrdcstgrp.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
