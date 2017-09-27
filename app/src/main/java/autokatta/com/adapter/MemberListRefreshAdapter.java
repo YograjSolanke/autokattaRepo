@@ -231,7 +231,7 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
                 MemberDetailTabs memberDetailTabs = new MemberDetailTabs();
                 memberDetailTabs.setArguments(bundle);
                 ((FragmentActivity) mActivity).getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.profile_groups_container, memberDetailTabs, "MemberList")
+                        .replace(R.id.memberFrame, memberDetailTabs, "MemberList")
                         .addToBackStack("MemberList")
                         .commit();
             }

@@ -57,7 +57,7 @@ public class VehicleDetails extends AppCompatActivity implements RequestNotifier
     CollapsingToolbarLayout collapsingToolbar;
     String name;
     FloatingActionMenu mFab;
-    FloatingActionButton mLike, mCall, mShare, mChat;
+    FloatingActionButton mLike, mCall, mShare, mChat, mReview;
     String Title, mPrice, mBrand, mModel, mYear, mRTO_City, mAddress, mRegistration, mSendImage, imgUrl;
     Double mKms;
     String contact, mLikestr, prefcontact, allDetails;
@@ -81,6 +81,7 @@ public class VehicleDetails extends AppCompatActivity implements RequestNotifier
         mLike = (FloatingActionButton) findViewById(R.id.like_l);
         mShare = (FloatingActionButton) findViewById(R.id.share);
         mChat = (FloatingActionButton) findViewById(R.id.chat_c);
+        mReview = (FloatingActionButton) findViewById(R.id.review);
 
         mApiCall = new ApiCall(VehicleDetails.this, this);
         mCall.setOnClickListener(this);
@@ -88,10 +89,12 @@ public class VehicleDetails extends AppCompatActivity implements RequestNotifier
         mFab.setOnClickListener(this);
         mShare.setOnClickListener(this);
         mChat.setOnClickListener(this);
+        mReview.setOnClickListener(this);
 
         mChat.setLabelTextColor(Color.BLACK);
         mCall.setLabelTextColor(Color.BLACK);
         mShare.setLabelTextColor(Color.BLACK);
+        mReview.setLabelTextColor(Color.BLACK);
 
         runOnUiThread(new Runnable() {
             @Override
@@ -479,6 +482,12 @@ public class VehicleDetails extends AppCompatActivity implements RequestNotifier
                 });
                 mPopupMenu.show(); //showing popup menu
 
+                break;
+
+            case R.id.review:
+                Intent intent = new Intent(VehicleDetails.this, ReviewActivity.class);
+                intent.putExtra("vehicle_id", mVehicle_Id);
+                startActivity(intent);
                 break;
         }
     }

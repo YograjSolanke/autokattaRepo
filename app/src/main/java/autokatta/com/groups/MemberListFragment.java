@@ -300,7 +300,7 @@ public class MemberListFragment extends Fragment implements SwipeRefreshLayout.O
 
                         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                        fragmentTransaction.replace(R.id.profile_groups_container, fragment);
+                        fragmentTransaction.replace(R.id.memberFrame, fragment);
                         fragmentTransaction.addToBackStack("groupcontactfragment");
                         fragmentTransaction.commit();
                     }

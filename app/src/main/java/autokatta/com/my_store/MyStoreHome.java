@@ -40,6 +40,7 @@ import autokatta.com.other.CustomToast;
 import autokatta.com.other.FullImageActivity;
 import autokatta.com.response.StoreOldAdminResponse;
 import autokatta.com.response.StoreResponse;
+import autokatta.com.view.ReviewActivity;
 import autokatta.com.view.StoreViewActivity;
 import retrofit2.Response;
 
@@ -221,6 +222,7 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
         mEnquiry.setOnClickListener(this);
         mBannerImage.setOnClickListener(this);
         mStoreImage.setOnClickListener(this);
+        mAddReview.setOnClickListener(this);
     }
 
     private void goToUrl(String url) {
@@ -277,6 +279,12 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
                 b.putString("image", imageStore);
                 intent.putExtras(b);
                 startActivity(intent);
+                break;
+
+            case R.id.add_review:
+                Intent intent2 = new Intent(getActivity(), ReviewActivity.class);
+                intent2.putExtra("store_id", store_id);
+                startActivity(intent2);
                 break;
         }
     }

@@ -1,7 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="autokatta.com.view.GroupsActivity">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/card_image_height"
+        android:src="@mipmap/no_image_auto"
+        android:contentDescription="@string/app_name" />
+
+    <GridView
+        android:id="@+id/group_grid_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:columnWidth="110dp"
+        android:gravity="center"
+        android:numColumns="auto_fit" />
+</LinearLayout>
+
+    <!--<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/profile_groups_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="autokatta.com.view.GroupsActivity" />
+    tools:context="autokatta.com.view.GroupsActivity" />-->
+
