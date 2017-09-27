@@ -1,29 +1,98 @@
 package autokatta.com.view;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.BaseAdapter;
+import android.widget.GridView;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import autokatta.com.R;
-import autokatta.com.initial_fragment.GroupDetailTabs;
+import autokatta.com.groups_container.CommunicationContainer;
+import autokatta.com.groups_container.GroupProductContainer;
+import autokatta.com.groups_container.GroupServiceContainer;
+import autokatta.com.groups_container.MemberContainer;
+import autokatta.com.groups_container.VehicleContainer;
 
 public class GroupsActivity extends AppCompatActivity {
     Bundle b = new Bundle();
     String className;
+    GridView androidGridView;
+
+    String[] gridViewString = {
+            "Communication", "Members", "Vehicle", "Product", "Service", "Video's",
+            "Image's", "Post's",};
+
+    int[] gridViewImageId = {
+            R.mipmap.product, R.mipmap.services, R.mipmap.used_vehicle, R.mipmap.sold_vehicle, R.mipmap.sold_vehicle,
+            R.mipmap.my_vehicle, R.mipmap.transfer_stock, R.mipmap.manual_enquiry,
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_groups);
-
+        setTitle("My Group");
         if (getSupportActionBar() != null) {
             getSupportActionBar().setHomeButtonEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
+        Intent i = getIntent();
+        String grouptype = i.getStringExtra("grouptype");
+        className = i.getStringExtra("className");
+        if (grouptype != null) {
+            b.putString("grouptype", i.getStringExtra("grouptype"));
+            b.putString("className", i.getStringExtra("className"));
+            b.putInt("bundle_GroupId", i.getIntExtra("bundle_GroupId", 0));
+            b.putString("bundle_GroupName", i.getStringExtra("bundle_GroupName"));
+            b.putString("tabIndex", i.getStringExtra("tabIndex"));
+            b.putString("bundle_Contact", i.getStringExtra("bundle_Contact"));
+        }
 
-        setTitle("Groups");
-        GroupDetailTabs groupDetailTabs = new GroupDetailTabs();
+        GroupsActivity.CustomGridViewActivity adapterViewAndroid = new GroupsActivity.CustomGridViewActivity(GroupsActivity.this, gridViewString, gridViewImageId);
+        androidGridView = (GridView) findViewById(R.id.group_grid_view);
+        androidGridView.setAdapter(adapterViewAndroid);
+
+        androidGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int i, long id) {
+                if (gridViewString[+i].equals("Communication")) {
+                    Intent communication = new Intent(getApplicationContext(), CommunicationContainer.class);
+                    communication.putExtras(b);
+                    startActivity(communication);
+                } else if (gridViewString[+i].equals("Members")) {
+                    Intent member = new Intent(getApplicationContext(), MemberContainer.class);
+                    member.putExtras(b);
+                    startActivity(member);
+                } else if (gridViewString[+i].equals("Vehicle")) {
+                    Intent vehicle = new Intent(getApplicationContext(), VehicleContainer.class);
+                    vehicle.putExtras(b);
+                    startActivity(vehicle);
+                } else if (gridViewString[+i].equals("Product")) {
+                    Intent product = new Intent(getApplicationContext(), GroupProductContainer.class);
+                    product.putExtras(b);
+                    startActivity(product);
+                } else if (gridViewString[+i].equals("Service")) {
+                    Intent service = new Intent(getApplicationContext(), GroupServiceContainer.class);
+                    service.putExtras(b);
+                    startActivity(service);
+                } else if (gridViewString[+i].equals("Video's")) {
+                } else if (gridViewString[+i].equals("Image's")) {
+                } else if (gridViewString[+i].equals("Post's")) {
+                }
+            }
+        });
+
+        /*GroupDetailTabs groupDetailTabs = new GroupDetailTabs();
         Intent i = getIntent();
         String grouptype = i.getStringExtra("grouptype");
         className = i.getStringExtra("className");
@@ -39,7 +108,7 @@ public class GroupsActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.profile_groups_container, groupDetailTabs, "GroupActivity")
                 .addToBackStack("GroupActivity")
-                .commit();
+                .commit();*/
     }
 
     @Override
@@ -54,9 +123,6 @@ public class GroupsActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-       /* super.onBackPressed();
-        finish();
-        overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);*/
         int fragments = getSupportFragmentManager().getBackStackEntryCount();
         if (fragments == 1) {
             finish();
@@ -68,43 +134,51 @@ public class GroupsActivity extends AppCompatActivity {
                 super.onBackPressed();
             }
         }
+    }
 
-        /*int fragments = getSupportFragmentManager().getBackStackEntryCount();
-        if (fragments == 1) {
-            *//*ActivityOptions options = ActivityOptions.makeCustomAnimation(GroupsActivity.this, R.anim.pull_in_left, R.anim.push_out_right);
-            startActivity(new Intent(getApplicationContext(), GroupsActivity.class), options.toBundle());*//*
-            finish();
-        } else {
-            if (getFragmentManager().getBackStackEntryCount() > 1) {
-                getFragmentManager().popBackStack();
+    private class CustomGridViewActivity extends BaseAdapter {
+
+        private Context mContext;
+        private final String[] gridViewString;
+        private final int[] gridViewImageId;
+
+        private CustomGridViewActivity(Context context, String[] gridViewString, int[] gridViewImageId) {
+            mContext = context;
+            this.gridViewImageId = gridViewImageId;
+            this.gridViewString = gridViewString;
+        }
+
+        @Override
+        public int getCount() {
+            return gridViewString.length;
+        }
+
+        @Override
+        public Object getItem(int i) {
+            return null;
+        }
+
+        @Override
+        public long getItemId(int i) {
+            return 0;
+        }
+
+        @Override
+        public View getView(int i, View convertView, ViewGroup parent) {
+            View gridViewAndroid;
+            LayoutInflater inflater = (LayoutInflater) mContext
+                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            if (convertView == null) {
+                gridViewAndroid = new View(mContext);
+                gridViewAndroid = inflater.inflate(R.layout.gridview_layout, null);
+                TextView textViewAndroid = (TextView) gridViewAndroid.findViewById(R.id.android_gridview_text);
+                ImageView imageViewAndroid = (ImageView) gridViewAndroid.findViewById(R.id.android_gridview_image);
+                textViewAndroid.setText(gridViewString[i]);
+                imageViewAndroid.setImageResource(gridViewImageId[i]);
             } else {
-                super.onBackPressed();
-                finishActivity(1);
-                *//*if (className == null) {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                        ActivityOptions options = ActivityOptions.makeCustomAnimation(GroupsActivity.this, R.anim.pull_in_left, R.anim.push_out_right);
-                        startActivity(new Intent(getApplicationContext(), UserProfile.class), options.toBundle());
-                        finish();
-                    } else {
-                        finish();
-                        startActivity(new Intent(getApplicationContext(), UserProfile.class));
-                    }
-                }*//*
+                gridViewAndroid = (View) convertView;
             }
-        }*/
-        /*if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
-            getSupportFragmentManager().popBackStack();
-        } else {
-            this.finish();
-        }*/
-        //additional code
-        /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            ActivityOptions options = ActivityOptions.makeCustomAnimation(GroupsActivity.this, R.anim.pull_in_left, R.anim.push_out_right);
-            startActivity(new Intent(getApplicationContext(), UserProfile.class), options.toBundle());
-            finish();
-        } else {
-            finish();
-            startActivity(new Intent(getApplicationContext(), UserProfile.class));
-        }*/
+            return gridViewAndroid;
+        }
     }
 }
