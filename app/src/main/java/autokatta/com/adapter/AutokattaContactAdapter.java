@@ -220,16 +220,15 @@ public class AutokattaContactAdapter extends RecyclerView.Adapter<AutokattaConta
         });
 
 
-
-
         holder.btnGroups.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 strGroupIds = new String[]{""};
                 groupTitleArray = new String[]{""};
-                if (contactdata.get(holder.getAdapterPosition()).getGroupIds().isEmpty()) {
+                /*if (contactdata.get(holder.getAdapterPosition()).getGroupIds().isEmpty()) {
                     //holder.btnGroups.setVisibility(GONE);
-                } else if (contactdata.get(holder.getAdapterPosition()).getGroupIds().contains(",")) {
+                } else */
+                if (contactdata.get(holder.getAdapterPosition()).getGroupIds().contains(",")) {
                     strGroupIds = contactdata.get(holder.getAdapterPosition()).getGroupIds().split(", ");
                     groupTitleArray = contactdata.get(holder.getAdapterPosition()).getGroupNames().trim().split(", ");
                 } else if (!contactdata.get(holder.getAdapterPosition()).getGroupIds().contains(",") &&
@@ -240,25 +239,28 @@ public class AutokattaContactAdapter extends RecyclerView.Adapter<AutokattaConta
                     groupTitleArray[0] = contactdata.get(holder.getAdapterPosition()).getGroupNames().trim();
                 }
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
-                builder.setTitle("Select Group To View");
-                builder.setItems(groupTitleArray, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int item) {
+                if (!contactdata.get(holder.getAdapterPosition()).getGroupIds().isEmpty()) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
+                    builder.setTitle("Select Group To View");
+                    builder.setItems(groupTitleArray, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int item) {
 
-                        Toast.makeText(mActivity, "Group" + strGroupIds[item], Toast.LENGTH_SHORT).show();
-                        Intent i = new Intent(mActivity, GroupsActivity.class);
-                        i.putExtra("grouptype", "OtherGroup");
-                        i.putExtra("className", "OtherProfile");
+                            Toast.makeText(mActivity, "Group" + strGroupIds[item], Toast.LENGTH_SHORT).show();
+                            Intent i = new Intent(mActivity, GroupsActivity.class);
+                            i.putExtra("grouptype", "OtherGroup");
+                            i.putExtra("className", "OtherProfile");
 
-                        i.putExtra("bundle_GroupId", Integer.parseInt(strGroupIds[item]));
-                        i.putExtra("bundle_GroupName", groupTitleArray[item]);
-                        i.putExtra("bundle_Contact", contactdata.get(holder.getAdapterPosition()).getContact());
-                        mActivity.startActivity(i);
-                        dialog.dismiss();
+                            i.putExtra("bundle_GroupId", Integer.parseInt(strGroupIds[item]));
+                            i.putExtra("bundle_GroupName", groupTitleArray[item]);
+                            i.putExtra("bundle_Contact", contactdata.get(holder.getAdapterPosition()).getContact());
+                            mActivity.startActivity(i);
+                            dialog.dismiss();
 
 
-                    }
-                }).show();
+                        }
+                    }).show();
+                } else
+                    CustomToast.customToast(mActivity, "No common groups available");
             }
         });
     }

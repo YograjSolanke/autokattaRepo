@@ -45,17 +45,17 @@
                 android:text="@string/number"
                 android:textColor="#2C3343"
                 android:textSize="15sp"
-                android:visibility="gone"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:visibility="gone" />
 
-     <!--       <ImageView
-                android:id="@+id/loc"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:contentDescription="@string/app_name"
-                android:layout_toStartOf="@+id/txtcity"
-                android:layout_below="@id/txtname"
-                android:layout_toEndOf="@id/profileImg"/>-->
+            <!--       <ImageView
+                       android:id="@+id/loc"
+                       android:layout_width="20dp"
+                       android:layout_height="20dp"
+                       android:contentDescription="@string/app_name"
+                       android:layout_toStartOf="@+id/txtcity"
+                       android:layout_below="@id/txtname"
+                       android:layout_toEndOf="@id/profileImg"/>-->
 
             <TextView
                 android:id="@+id/txtcity"
@@ -66,10 +66,10 @@
                 android:layout_toEndOf="@+id/profileImg"
                 android:layout_toStartOf="@+id/btnsendmsg"
                 android:text="@string/company_name"
-                android:visibility="gone"
                 android:textColor="#2C3343"
                 android:textSize="15sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:visibility="gone" />
 
 
             <TextView
@@ -81,18 +81,18 @@
                 android:layout_toEndOf="@+id/profileImg"
                 android:layout_toStartOf="@+id/btnsendmsg"
                 android:text="@string/city"
-                android:visibility="gone"
                 android:textColor="#2C3343"
                 android:textSize="15sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/txtstatus"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/txtcity"
-                android:layout_marginStart="5dp"
                 android:layout_marginEnd="5dp"
+                android:layout_marginStart="5dp"
                 android:layout_toEndOf="@+id/profileImg"
                 android:layout_toStartOf="@+id/btnsendmsg"
                 android:text="@string/selectStatus"
@@ -109,8 +109,8 @@
                 android:layout_marginStart="5dp"
                 android:contentDescription="@string/app_name"
                 android:padding="5dp"
-                android:visibility="gone"
-                android:src="@mipmap/new_call" />
+                android:src="@mipmap/new_call"
+                android:visibility="gone" />
 
             <Button
                 android:id="@+id/btnfollow"
@@ -153,13 +153,14 @@
                 android:id="@+id/btnGroups"
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
+                android:layout_below="@+id/txtstatus"
                 android:layout_marginTop="35dp"
+                android:layout_toEndOf="@+id/profileImg"
                 android:background="@drawable/buttonback"
                 android:gravity="center"
-                android:text="Groups"
+                android:padding="5dp"
+                android:text="Common Groups"
                 android:textAllCaps="false"
-                android:layout_toEndOf="@+id/profileImg"
-                android:layout_below="@+id/txtstatus"
                 android:textColor="@android:color/white"
                 android:textSize="12sp" />
         </RelativeLayout>
