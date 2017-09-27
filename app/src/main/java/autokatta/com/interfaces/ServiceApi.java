@@ -1348,7 +1348,7 @@ public interface ServiceApi {
 
 
     //post reviewe or reply here
-    @POST("AddReplayReviews")
+    @POST("GetReviewReplay")
     Call<ReviewAndReplyResponse> _autokattagetReviewReply(@Query("StoreID") int StoreID, @Query("ProductID") int ProductID, @Query("ServiceID") int ServiceID, @Query("VehicleID") int VehicleID);
 
 }
