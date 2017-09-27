@@ -723,4 +723,7 @@
     <string name="images">Images</string>
     <string name="blog">Blog</string>
     <string name="title_activity_review">ReviewActivity</string>
+
+    <string name="transfer_stock">Transfer Stock</string>
+    <string name="send_quot">Send Quot</string>
 </resources>

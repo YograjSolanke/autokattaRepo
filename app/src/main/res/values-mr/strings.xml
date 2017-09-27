@@ -704,4 +704,13 @@
 
     <string name="add_interest">ऍड इंटरेस्ट</string>
     <string name="confirm_interest">आपण आपली पोस्ट इंटरेस्ट सोबत ऍड करू इच्छित आहात का ???</string>
+
+    <string name="info">इन्फो</string>
+    <string name="actions">आकशन्स</string>
+    <string name="uploads">उपलोडस</string>
+    <string name="my_video">माय विडिओ</string>
+    <string name="images">इमेजेस</string>
+    <string name="blog">ब्लॉग</string>
+    <string name="transfer_stock">ट्रान्सफर स्टॉक</string>
+    <string name="send_quot">सेंड कोटेशन</string>
 </resources>
