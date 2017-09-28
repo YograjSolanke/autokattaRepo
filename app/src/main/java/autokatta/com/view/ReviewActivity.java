@@ -1,6 +1,6 @@
 package autokatta.com.view;
 
-import android.app.ProgressDialog;
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -265,25 +265,34 @@ public class ReviewActivity extends AppCompatActivity implements RequestNotifier
                         final ImageView replyImage = (ImageView) mLinearView.findViewById(R.id.reply);
                         final ImageView profile = (ImageView) mLinearView.findViewById(R.id.profile);
                         mLinearScrollSecond[i] = (LinearLayout) mLinearView.findViewById(R.id.linear_scroll);
-//
-//                        //checkes if menu is already opened or not
-//                        if (!isFirstViewClick[i]) {
-//                            mLinearScrollSecond[i].setVisibility(View.GONE);
-//                            //mImageArrowFirst.setBackgroundResource(R.drawable.arw_lt);
-//                        } else {
-//                            mLinearScrollSecond[i].setVisibility(View.VISIBLE);
-//                            //mImageArrowFirst.setBackgroundResource(R.drawable.arw_down);
-//                        }
-
-//                        final int villll = i;
-//                        mLinearFirstArrow.setOnClickListener(new View.OnClickListener() {
-//                            @Override
-//                            public void onClick(View v) {
-//                                setViewsVisible(villll);
-//                            }
-//                        });
 
                         msg.setText(mainList.get(i).getReviewString());
+
+
+                        final int finalI2 = i;
+                        profile.setOnClickListener(new View.OnClickListener() {
+                            Bundle bundle = new Bundle();
+
+                            @Override
+                            public void onClick(View view) {
+
+                                bundle.putString("contactOtherProfile", mainList.get(finalI2).getContact());
+                                if (myContact.equalsIgnoreCase(mainList.get(finalI2).getContact())) {
+                                    ActivityOptions options = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.ok_left_to_right, R.anim.ok_right_to_left);
+                                    Intent i = new Intent(getApplicationContext(), UserProfile.class);
+                                    i.putExtras(bundle);
+                                    startActivity(i, options.toBundle());
+
+                                } else {
+                                    ActivityOptions options = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.ok_left_to_right, R.anim.ok_right_to_left);
+                                    Intent i = new Intent(getApplicationContext(), OtherProfile.class);
+                                    i.putExtras(bundle);
+                                    startActivity(i, options.toBundle());
+
+                                }
+                            }
+                        });
+
 
 
                         if (!mainList.get(i).getProfilePic().equals("")) {
@@ -351,6 +360,30 @@ public class ReviewActivity extends AppCompatActivity implements RequestNotifier
                                         .into(profilePic);
                             }
 
+                            final int finalI1 = i;
+                            final int finalJ = j;
+                            profilePic.setOnClickListener(new View.OnClickListener() {
+                                Bundle bundle = new Bundle();
+
+                                @Override
+                                public void onClick(View view) {
+
+                                    bundle.putString("contactOtherProfile", mainList.get(finalI1).getReplayMessage().get(finalJ).getContact());
+                                    if (myContact.equalsIgnoreCase(mainList.get(finalI1).getReplayMessage().get(finalJ).getContact())) {
+                                        ActivityOptions options = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.ok_left_to_right, R.anim.ok_right_to_left);
+                                        Intent i = new Intent(getApplicationContext(), UserProfile.class);
+                                        i.putExtras(bundle);
+                                        startActivity(i, options.toBundle());
+
+                                    } else {
+                                        ActivityOptions options = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.ok_left_to_right, R.anim.ok_right_to_left);
+                                        Intent i = new Intent(getApplicationContext(), OtherProfile.class);
+                                        i.putExtras(bundle);
+                                        startActivity(i, options.toBundle());
+
+                                    }
+                                }
+                            });
 
                             try {
                                 TimeZone utc = TimeZone.getTimeZone("etc/UTC");
