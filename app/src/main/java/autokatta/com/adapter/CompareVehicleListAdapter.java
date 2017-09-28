@@ -48,7 +48,7 @@ public class CompareVehicleListAdapter extends RecyclerView.Adapter<RecyclerView
         mVehicleHolder.mBrand.setText(mVehicleCompareList.get(position).getManufacturer());
         mVehicleHolder.mInsuranceValid.setText(mVehicleCompareList.get(position).getInsuranceValid());
         mVehicleHolder.mInsurenceIDV.setText(mVehicleCompareList.get(position).getInsuranceIdv());
-        mVehicleHolder.mOwner.setText(mVehicleCompareList.get(position).getNoOfOwners());
+        mVehicleHolder.mOwner.setText(String.valueOf(mVehicleCompareList.get(position).getNoOfOwners()));
         mVehicleHolder.mFuel.setText(mVehicleCompareList.get(position).getFualType());
         mVehicleHolder.mColor.setText(mVehicleCompareList.get(position).getColor());
         mVehicleHolder.mRc.setText(mVehicleCompareList.get(position).getRcAvailable());

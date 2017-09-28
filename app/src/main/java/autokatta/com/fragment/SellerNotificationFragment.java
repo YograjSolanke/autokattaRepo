@@ -154,6 +154,7 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
                             objectmatch.setHpCapacity(objectmatch.getHpCapacity());
                             objectmatch.setTitle(objectmatch.getTitle());
                             objectmatch.setLastcall(objectmatch.getLastcall());
+                            objectmatch.setDate(objectmatch.getDate());
 
                             Date d = null, d1 = null;
                             try {
@@ -347,7 +348,7 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
                         }
 
                         //to set buyer last call date
-                        try {
+                        /*try {
                             DateFormat date = new SimpleDateFormat(" MMM dd ", Locale.getDefault());
                             DateFormat time = new SimpleDateFormat(" hh:mm a", Locale.getDefault());
 
@@ -355,16 +356,52 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
                                     time.format(mainList.get(i).getMatchedResult().get(j).getLastCallDateNew()));
                         } catch (Exception e) {
                             e.printStackTrace();
+                        }*/
+
+                        try {
+                            TimeZone utc = TimeZone.getTimeZone("etc/UTC");
+                            //format of date coming from services
+                            DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                            inputFormat.setTimeZone(utc);
+
+                            //format of date which we want to show
+                            DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
+                            outputFormat.setTimeZone(utc);
+
+                            Date date = inputFormat.parse(mainList.get(i).getMatchedResult().get(j).getLastcall());
+                            String output = outputFormat.format(date);
+
+                            mDateTime.setText("" + "Last call on :" + output);
+                        } catch (Exception e) {
+                            e.printStackTrace();
                         }
 
                         //to set vehicle uploaded date
-                        try {
+                        /*try {
                             DateFormat date = new SimpleDateFormat(" MMM dd ", Locale.getDefault());
                             DateFormat time = new SimpleDateFormat(" hh:mm a", Locale.getDefault());
 
                             mDateTime.setText("Uploaded On :" + date.format(mainList.get(i).getMatchedResult().get(j).getUploaddate()) +
                                     time.format(mainList.get(i).getMatchedResult().get(j).getUploaddate()));
 
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }*/
+
+                        try {
+                            TimeZone utc = TimeZone.getTimeZone("etc/UTC");
+                            //format of date coming from services
+                            DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                            inputFormat.setTimeZone(utc);
+
+                            //format of date which we want to show
+                            DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
+                            outputFormat.setTimeZone(utc);
+
+                            Date date = inputFormat.parse(mainList.get(i).getMatchedResult().get(j).getDate());
+                            String output = outputFormat.format(date);
+
+                            mDateTime.setText("" + "Uploaded On :" + output);
                         } catch (Exception e) {
                             e.printStackTrace();
                         }

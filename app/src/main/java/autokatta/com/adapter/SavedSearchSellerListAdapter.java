@@ -22,8 +22,10 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.TimeZone;
 
 import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
@@ -88,7 +90,7 @@ public class SavedSearchSellerListAdapter extends RecyclerView.Adapter<SavedSear
         holder.Title.setText(object.getTitle());
 
         //to set buyer last call date
-        try {
+       /* try {
 
             DateFormat date = new SimpleDateFormat(" MMM dd ", Locale.getDefault());
             DateFormat time = new SimpleDateFormat(" hh:mm a", Locale.getDefault());
@@ -97,10 +99,28 @@ public class SavedSearchSellerListAdapter extends RecyclerView.Adapter<SavedSear
 
         } catch (Exception e) {
             e.printStackTrace();
+        }*/
+
+        try {
+            TimeZone utc = TimeZone.getTimeZone("etc/UTC");
+            //format of date coming from services
+            DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+            inputFormat.setTimeZone(utc);
+
+            //format of date which we want to show
+            DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
+            outputFormat.setTimeZone(utc);
+
+            Date date = inputFormat.parse(object.getLastcall());
+            String output = outputFormat.format(date);
+
+            holder.lastCall.setText("" + "Last call on :" + output);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
         //to set vehicle uploaded date
-        try {
+        /*try {
 
             DateFormat date = new SimpleDateFormat(" MMM dd ", Locale.getDefault());
             DateFormat time = new SimpleDateFormat(" hh:mm a", Locale.getDefault());
@@ -109,8 +129,25 @@ public class SavedSearchSellerListAdapter extends RecyclerView.Adapter<SavedSear
 
         } catch (Exception e) {
             e.printStackTrace();
-        }
+        }*/
 
+        try {
+            TimeZone utc = TimeZone.getTimeZone("etc/UTC");
+            //format of date coming from services
+            DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+            inputFormat.setTimeZone(utc);
+
+            //format of date which we want to show
+            DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
+            outputFormat.setTimeZone(utc);
+
+            Date date = inputFormat.parse(object.getDate());
+            String output = outputFormat.format(date);
+
+            holder.UploadedDate.setText("" + "Uploaded On :" + output);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         holder.checkBox1.setText(category);
         holder.checkBox2.setText(brand);
