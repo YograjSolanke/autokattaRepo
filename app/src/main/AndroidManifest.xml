@@ -788,7 +788,11 @@
         <activity android:name=".groups_container.MemberContainer" />
         <activity android:name=".groups_container.VehicleContainer" />
         <activity android:name=".groups_container.GroupProductContainer" />
-        <activity android:name=".groups_container.GroupServiceContainer"></activity>
+        <activity android:name=".groups_container.GroupServiceContainer" />
+        <activity android:name=".groups_container.MemberCommunicationContainer" />
+        <activity android:name=".groups_container.MemberVehicleContainer" />
+        <activity android:name=".groups_container.MemberProductContainer" />
+        <activity android:name=".groups_container.MemberServiceContainer"></activity>
     </application>
 
 </manifest>

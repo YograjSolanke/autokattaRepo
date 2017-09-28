@@ -15,7 +15,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -60,7 +59,6 @@ import static android.content.Context.MODE_PRIVATE;
  */
 
 public class StoreVehicleAdapter extends RecyclerView.Adapter<StoreVehicleAdapter.VehicleHolder> implements RequestNotifier {
-
     Activity activity;
     private List<StoreInventoryResponse.Success.Vehicle> vehicleList = new ArrayList<>();
     private String myContact, storeContact;
@@ -77,7 +75,6 @@ public class StoreVehicleAdapter extends RecyclerView.Adapter<StoreVehicleAdapte
     private boolean[] itemsCheckedGroups;
     private String prevGroupIds = "", prevStoreIds = "";
 
-
     public StoreVehicleAdapter(Activity activity, List<StoreInventoryResponse.Success.Vehicle> vehicleList, String myContact,
                                String storeContact) {
         this.activity = activity;
@@ -86,7 +83,6 @@ public class StoreVehicleAdapter extends RecyclerView.Adapter<StoreVehicleAdapte
         this.storeContact = storeContact;
         apiCall = new ApiCall(activity, this);
         connectionDetector = new ConnectionDetector(activity);
-
     }
 
     @Override
@@ -97,11 +93,8 @@ public class StoreVehicleAdapter extends RecyclerView.Adapter<StoreVehicleAdapte
 
     @Override
     public void onBindViewHolder(final StoreVehicleAdapter.VehicleHolder holder, int position) {
-
-
         final StoreInventoryResponse.Success.Vehicle obj = vehicleList.get(position);
         List<String> vimages = new ArrayList<>();
-
         holder.edittitles.setText(obj.getTitle());
         holder.editprices.setText(obj.getPrice());
         holder.editcategorys.setText(obj.getCategory());
@@ -117,21 +110,18 @@ public class StoreVehicleAdapter extends RecyclerView.Adapter<StoreVehicleAdapte
 
         prevGroupIds = obj.getGroupIDs().replaceAll(" ", "");
         prevStoreIds = obj.getStoreIDs().replaceAll(" ", "");
-
+        holder.mMoreItems.setVisibility(View.GONE);
         if (myContact.equalsIgnoreCase(storeContact)) {
-
             holder.mLinear.setVisibility(View.VISIBLE);
-        } else {
+        } /*else {
             holder.delete.setVisibility(View.GONE);
             holder.mEnquiry.setVisibility(View.GONE);
             holder.mQoutation.setVisibility(View.GONE);
             holder.relativeleads.setVisibility(View.GONE);
             holder.mViewQuote.setVisibility(View.GONE);
-        }
+        }*/
 
         //To set Date
-
-
         try {
             TimeZone utc = TimeZone.getTimeZone("etc/UTC");
             //format of date coming from services
@@ -157,34 +147,26 @@ public class StoreVehicleAdapter extends RecyclerView.Adapter<StoreVehicleAdapte
         holder.edituploadedon.setEnabled(false);
         holder.editleads.setEnabled(false);
 
-
         try {
-
             if (obj.getImages().equalsIgnoreCase("") || obj.getImages().equalsIgnoreCase(null) || obj.getImages().equalsIgnoreCase("null")) {
-
                 holder.vehicleimage.setBackgroundResource(R.drawable.vehiimg);
             }
             if (!obj.getImages().equals("") || !obj.getImages().equalsIgnoreCase(null) || !obj.getImages().equalsIgnoreCase("null")) {
                 String[] parts = obj.getImages().split(",");
-
                 for (int l = 0; l < parts.length; l++) {
                     vimages.add(parts[l]);
                     System.out.println(parts[l]);
                 }
                 System.out.println(activity.getString(R.string.base_image_url) + vimages.get(0));
-
                 String vimagename = activity.getString(R.string.base_image_url) + vimages.get(0);
                 vimagename = vimagename.replaceAll(" ", "%20");
                 try {
-
-
                     Glide.with(activity)
                             .load(activity.getString(R.string.base_image_url) + vimages.get(0))
                             .diskCacheStrategy(DiskCacheStrategy.ALL)
                             .bitmapTransform(new CropCircleTransformation(activity))
                             .placeholder(R.drawable.logo)
                             .into(holder.vehicleimage);
-
                 } catch (Exception e) {
                     System.out.println("Error in uploading images");
                 }
@@ -192,21 +174,19 @@ public class StoreVehicleAdapter extends RecyclerView.Adapter<StoreVehicleAdapte
         } catch (Exception e) {
             e.printStackTrace();
         }
-        holder.delete.setOnClickListener(new View.OnClickListener() {
+
+        /*holder.delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 final int vehicle_id = obj.getVehicleId();
-
                 if (!connectionDetector.isConnectedToInternet()) {
                     Toast.makeText(activity, "Please try later", Toast.LENGTH_SHORT).show();
                 } else {
                     new android.support.v7.app.AlertDialog.Builder(activity)
                             .setTitle("Delete?")
                             .setMessage("Are You Sure You Want To Delete This Vehicle")
-
                             .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
-
                                     apiCall.deleteVehicle(vehicle_id, "delete");
                                     vehicleList.remove(holder.getAdapterPosition());
                                     notifyItemRemoved(holder.getAdapterPosition());
@@ -223,7 +203,7 @@ public class StoreVehicleAdapter extends RecyclerView.Adapter<StoreVehicleAdapte
                             .show();
                 }
             }
-        });
+        });*/
 
         holder.vehidetails.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -418,6 +398,7 @@ public class StoreVehicleAdapter extends RecyclerView.Adapter<StoreVehicleAdapte
         apiCall.VehiclePrivacy(activity.getSharedPreferences(activity.getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""),
                 mVehicleId, groupIds, storeIds);
     }
+
     @Override
     public int getItemCount() {
         return vehicleList.size();
@@ -450,7 +431,6 @@ public class StoreVehicleAdapter extends RecyclerView.Adapter<StoreVehicleAdapte
 
     @Override
     public void notifyString(String str) {
-
         if (str != null) {
             if (str.equals("success")) {
                 CustomToast.customToast(activity, "success");
@@ -461,8 +441,7 @@ public class StoreVehicleAdapter extends RecyclerView.Adapter<StoreVehicleAdapte
     }
 
     class VehicleHolder extends RecyclerView.ViewHolder {
-
-        ImageView vehicleimage;
+        ImageView vehicleimage, mMoreItems;
         TextView edittitles, editprices, editcategorys, editbrands, editmodels, editleads, edituploadedon;
         TextView Year, Location, Rto, Kms, Regno;
         Button vehidetails, delete, mUploadGroup, mUploadStore, mEnquiry, mQoutation, mViewQuote;
@@ -480,16 +459,16 @@ public class StoreVehicleAdapter extends RecyclerView.Adapter<StoreVehicleAdapte
             editleads = (TextView) itemView.findViewById(R.id.editleads);
             edituploadedon = (TextView) itemView.findViewById(R.id.edituploadedon);
             vehicleimage = (ImageView) itemView.findViewById(R.id.vehiprofile);
-            delete = (Button) itemView.findViewById(R.id.delete);
+            mMoreItems = (ImageView) itemView.findViewById(R.id.more_items);
+            //delete = (Button) itemView.findViewById(R.id.delete);
             mLinear = (LinearLayout) itemView.findViewById(R.id.linearbtns);
             mUploadGroup = (Button) itemView.findViewById(R.id.upload_group);
             mUploadStore = (Button) itemView.findViewById(R.id.upload_store);
             mUploadStore.setVisibility(View.GONE);
-            mQoutation = (Button) itemView.findViewById(R.id.quotation);
-            mEnquiry = (Button) itemView.findViewById(R.id.Enquiry);
+            //mQoutation = (Button) itemView.findViewById(R.id.quotation);
+            //mEnquiry = (Button) itemView.findViewById(R.id.Enquiry);
             vehidetails = (Button) itemView.findViewById(R.id.vehibtndetails);
-            mViewQuote = (Button) itemView.findViewById(R.id.view_quotation);
-
+            //mViewQuote = (Button) itemView.findViewById(R.id.view_quotation);
 
             Year = (TextView) itemView.findViewById(R.id.year);
             Kms = (TextView) itemView.findViewById(R.id.km_hrs);

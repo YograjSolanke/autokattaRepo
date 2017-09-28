@@ -123,7 +123,6 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
         setContentView(R.layout.activity_autokatta_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         if (getSupportActionBar() != null) {
             getSupportActionBar().setElevation(0);
             getSupportActionBar().setHomeButtonEnabled(true);
@@ -274,6 +273,13 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
         if (navigationView != null) {
             setupDrawerContent(navigationView);
         }
+        /*slideshow = (TextView) MenuItemCompat.getActionView(navigationView.getMenu().
+                findItem(R.id.profile));
+        slideshow.setGravity(Gravity.CENTER_VERTICAL);
+        slideshow.setTypeface(null, Typeface.BOLD);
+        slideshow.setTextColor(getResources().getColor(R.color.colorAccent));
+        //count is added
+        slideshow.setText("7");*/
 
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         if (viewPager != null) {

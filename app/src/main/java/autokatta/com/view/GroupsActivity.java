@@ -28,11 +28,11 @@ public class GroupsActivity extends AppCompatActivity {
 
     String[] gridViewString = {
             "Communication", "Members", "Vehicle", "Product", "Service", "Video's",
-            "Image's", "Post's",};
+            "Image's",};
 
     int[] gridViewImageId = {
-            R.mipmap.product, R.mipmap.services, R.mipmap.used_vehicle, R.mipmap.sold_vehicle, R.mipmap.sold_vehicle,
-            R.mipmap.my_vehicle, R.mipmap.transfer_stock, R.mipmap.manual_enquiry,
+            R.mipmap.communication, R.mipmap.members, R.mipmap.group_vehicles, R.mipmap.product, R.mipmap.services,
+            R.mipmap.videos, R.mipmap.images,
     };
 
     @Override
@@ -87,7 +87,6 @@ public class GroupsActivity extends AppCompatActivity {
                     startActivity(service);
                 } else if (gridViewString[+i].equals("Video's")) {
                 } else if (gridViewString[+i].equals("Image's")) {
-                } else if (gridViewString[+i].equals("Post's")) {
                 }
             }
         });
