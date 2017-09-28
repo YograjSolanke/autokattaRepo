@@ -366,18 +366,15 @@ public class VehicleDetails extends AppCompatActivity implements RequestNotifier
 
                             if (strprice.equalsIgnoreCase("")) {
                                 CustomToast.customToast(VehicleDetails.this, "please enter give offer price");
-                            }else if(strpaymentmode.equalsIgnoreCase(""))
-                            {
+                            } else if (strpaymentmode.equalsIgnoreCase("")) {
                                 CustomToast.customToast(VehicleDetails.this, "please enter Payment mode");
-                            }else if(strdescription.equalsIgnoreCase(""))
-                            {
+                            } else if (strdescription.equalsIgnoreCase("")) {
                                 CustomToast.customToast(VehicleDetails.this, "please enter Description");
-                            }
-                            else {
+                            } else {
                                 ApiCall mpApicall = new ApiCall(VehicleDetails.this, VehicleDetails.this);
-                                mpApicall.sendChatMessage(prefcontact, contact, "Offer Price-"+strprice+"\n"+
-                                                                                "Payment Mode-"+strpaymentmode+"\n"+
-                                                                                "Description-"+strdescription, "", 0, 0, mVehicle_Id);
+                                mpApicall.sendChatMessage(prefcontact, contact, "Offer Price-" + strprice + "\n" +
+                                        "Payment Mode-" + strpaymentmode + "\n" +
+                                        "Description-" + strdescription, "", 0, 0, mVehicle_Id);
                                 openDialog.dismiss();
                             }
                         }

@@ -2,6 +2,7 @@ package autokatta.com.fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -102,7 +103,25 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
                     obj.setImage(obj.getImage());
                     obj.setInsuranceValid(obj.getInsuranceValid());
                     obj.setHpCapacity(obj.getHpCapacity());
-                    obj.setDate(obj.getDate());
+
+                    try {
+                        TimeZone utc = TimeZone.getTimeZone("etc/UTC");
+
+                        DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd",
+                                Locale.getDefault());
+                        inputFormat.setTimeZone(utc);
+
+                        DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy",
+                                Locale.getDefault());
+                        outputFormat.setTimeZone(utc);
+
+                        Date date = inputFormat.parse(obj.getDate());
+                        String output = outputFormat.format(date);
+                        System.out.println("jjj" + output);
+                        obj.setDate(output);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
 
                     for (BuyerResponse.Success.Found objectmatch : objsuccess.getFound()) {
 
@@ -126,8 +145,6 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
                             objectmatch.setRcAvailable(objectmatch.getRcAvailable());
                             objectmatch.setInsuranceValid(objectmatch.getInsuranceValid());
                             objectmatch.setHpcapacity(objectmatch.getHpcapacity());
-                            objectmatch.setLastcall(objectmatch.getLastcall());
-
 
                             Date d = null;
                             try {
@@ -138,15 +155,32 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
 
                             objectmatch.setLastCallDateNew(d);
 
+                            try {
+                                TimeZone utc = TimeZone.getTimeZone("etc/UTC");
+
+                                DateFormat inputFormat = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss a",
+                                        Locale.getDefault());
+                                inputFormat.setTimeZone(utc);
+
+                                DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy hh:mm a",
+                                        Locale.getDefault());
+                                outputFormat.setTimeZone(utc);
+
+                                Date date = inputFormat.parse(objectmatch.getLastcall());
+                                String output = outputFormat.format(date);
+                                System.out.println("last call" + output);
+                                objectmatch.setLastcall(output);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+
                             childlist.add(objectmatch);
 
                         }
                     }
 
                     obj.setFound(childlist);
-
                     mainList.add(obj);
-
                 }
                 ///
                 mLinearScrollSecond = new LinearLayout[mainList.size()];
@@ -174,8 +208,8 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
                     final ImageView muparrow = (ImageView) mLinearView.findViewById(R.id.postuparrow);
                     ViewFlipper mViewFlipperbuyer = (ViewFlipper) mLinearView.findViewById(R.id.buyervehicalimgflicker);
                     final RelativeLayout mLinearFirstArrow = (RelativeLayout) mLinearView.findViewById(R.id.linearFirst);
-                    //final TextView mUploadDate = (TextView) mLinearView.findViewById(R.id.uploaddate);
-                    final TextView mUploadDate = (TextView) mLinearView.findViewById(R.id.strSearchDate);
+                    //final TextView mUploadedDate = (TextView) mLinearView.findViewById(R.id.uploaddate);
+                    final TextView mUploadedDate = (TextView) mLinearView.findViewById(R.id.strSearchDate);
                     //final ImageView mImageArrowFirst=(ImageView)mLinearView.findViewById(R.id.imageFirstArrow);
                     mLinearScrollSecond[i] = (LinearLayout) mLinearView.findViewById(R.id.linear_scroll);
 
@@ -193,14 +227,10 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
                     }
 
                     final int villll = i;
-                    final LinearLayout finalMLinearScrollSecond = mLinearScrollSecond[i];
 
-                    //Handles onclick effect on list item
                     mLinearFirstArrow.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-
-                            //Toast.makeText(getActivity(),"clicked:"+villll,Toast.LENGTH_LONG).show();
                             setViewsVisible(villll);
                         }
                     });
@@ -212,6 +242,7 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
                     mPriceName.setText(mainList.get(i).getPrice());
                     mYearName.setText(mainList.get(i).getYearOfManufacture());
                     mRto_city.setText(mainList.get(i).getRtoCity());
+
                     if (mainList.get(i).getRtoCity().equalsIgnoreCase("Unregistered") || mainList.get(i).getRtoCity().equalsIgnoreCase("") || mainList.get(i).getRtoCity().isEmpty()) {
                         mRegno.setVisibility(View.GONE);
                         myreg.setVisibility(View.GONE);
@@ -230,26 +261,8 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
                         muparrow.setVisibility(View.GONE);
                     }
 
-                    try {
-                        TimeZone utc = TimeZone.getTimeZone("etc/UTC");
-                        //format of date coming from services
-                        //DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",
-                        DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd",
-                                Locale.getDefault());
-                        inputFormat.setTimeZone(utc);
-                        //format of date which want to show
-                        DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy",
-                                Locale.getDefault());
-                        outputFormat.setTimeZone(utc);
 
-                        Date date = inputFormat.parse(mainList.get(i).getDate());
-                        String output = outputFormat.format(date);
-                        System.out.println("jjj" + output);
-                        mUploadDate.setText(output);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-
+                    mUploadedDate.setText(mainList.get(i).getDate());
 
                     final String imagenames = mainList.get(i).getImage().replaceAll(" ", "");
 
@@ -279,10 +292,7 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
                                 imageView[l].setBackgroundResource(R.drawable.vehiimg);
                                 mViewFlipperbuyer.addView(imageView[l]);
                             }
-
                         }
-
-
                     } else
                         mViewFlipperbuyer.setBackgroundResource(R.drawable.vehiimg);
 
@@ -318,11 +328,11 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
                         CheckBox checkBoxINSRight = (CheckBox) mLinearView2.findViewById(R.id.checkBoxINSRight);
                         CheckBox checkBoxHPcapRight = (CheckBox) mLinearView2.findViewById(R.id.checkBoxHPcapRight);
 
+                        mBuyerUserName.setTextColor(Color.BLUE);
                         mBuyerUserName.setText(mainList.get(i).getFound().get(j).getReceivername());
                         mBuyerLocation.setText(mainList.get(i).getFound().get(j).getLocationCity());
 
                         String image_buyer = mainList.get(i).getFound().get(j).getReceiverPic();
-
 
                         if (image_buyer.equals("")) {
                             buyer_lead_image.setBackgroundResource(R.drawable.profile);
@@ -351,68 +361,14 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
                             checkBoxHPcapRight.setVisibility(View.VISIBLE);
                         }
 
-
-                        final String favStatus = mainList.get(i).getFound().get(j).getFavstatus();
-                        final int vehicle_idget = mainList.get(i).getFound().get(j).getVehicleId();
-                        final int search_idget = mainList.get(i).getFound().get(j).getSearchId();
-                        final String lastcall = mainList.get(i).getFound().get(j).getLastcall();
-
-                        if (favStatus.equalsIgnoreCase("yes")) {
-                            unfavouritebuyer.setVisibility(View.VISIBLE);
-                            favouritebuyer.setVisibility(View.GONE);
-                        } else {
-                            unfavouritebuyer.setVisibility(View.GONE);
-                            favouritebuyer.setVisibility(View.VISIBLE);
-                        }
-
-
-                        //mItemNameCity.setText("Last call on: " + lastcall);
-                        //to set buyer last call date
-                        /*try {
-
-                            DateFormat date = new SimpleDateFormat(" MMM dd ", Locale.getDefault());
-                            DateFormat time = new SimpleDateFormat(" hh:mm a", Locale.getDefault());
-
-                            DateFormat inputDate = new SimpleDateFormat("MM-dd-dd", Locale.getDefault());
-                            DateFormat newDateFormat = new SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault());
-
-                            holder.uploadDates.setText(newDateFormat.format(inputDate.parse(mGetOwnVehiclesList.get(position).getUploaddate())));
-
-                            mItemNameCity.setText("Last call on:" + date.format(lastcall) +
-                                    time.format(lastcall));
-
-                            mItemNameCity.setText("Last call on:" + newDateFormat.format(inputDate.parse(lastcall)) + time.format(inputDate.parse(lastcall)));
-
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }*/
-
-                        try {
-                            TimeZone utc = TimeZone.getTimeZone("etc/UTC");
-                            //format of date coming from services
-                            //DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",
-                            DateFormat inputFormat = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss a",
-                                    Locale.getDefault());
-                            inputFormat.setTimeZone(utc);
-                            //format of date which want to show
-                            DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy hh:mm a",
-                                    Locale.getDefault());
-                            outputFormat.setTimeZone(utc);
-
-                            Date date = inputFormat.parse(lastcall);
-                            String output = outputFormat.format(date);
-                            System.out.println("last call" + output);
-                            mItemNameCity.setText("" + "Last call on:" + output);
-//                            mItemNameCity.setText("Last call on:" + newDateFormat.format(inputDate.parse(lastcall)) + time.format(inputDate.parse(lastcall)));
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
+                        mItemNameCity.setText("" + "Last call On:" + mainList.get(i).getFound().get(j).getLastcall());
 
                         checkBox1.setText(mainList.get(i).getCategory());
                         checkBox2.setText(mainList.get(i).getManufacturer());
                         checkBox3.setText(mainList.get(i).getModel());
                         checkBox4.setText(mainList.get(i).getYearOfManufacture());
                         checkBox5.setText(mainList.get(i).getRtoCity());
+
                         if (mainList.get(i).getRcAvailable().startsWith("-Select RC Available-") ||
                                 mainList.get(i).getRcAvailable().equalsIgnoreCase("") || mainList.get(i).getRcAvailable().equalsIgnoreCase("-"))
                             checkBoxRc.setText("RC avl-NA");
@@ -522,7 +478,6 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
                             public void onClick(View v) {
 
                                 recieverContact = mainList.get(finalI).getFound().get(finalJ).getContactNo();
-
                                 if (!recieverContact.equalsIgnoreCase(myContact)) {
 
                                     Bundle bundle = new Bundle();
@@ -541,7 +496,6 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
                             public void onClick(View v) {
                                 recieverContact = mainList.get(finalI).getFound().get(finalJ).getContactNo();
                                 if (!recieverContact.equalsIgnoreCase(myContact)) {
-
                                     Bundle bundle = new Bundle();
                                     bundle.putString("contactOtherProfile", recieverContact);
                                     bundle.putString("action", "otherProfile");
@@ -558,8 +512,6 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
                                 recieverContact = mainList.get(finalI).getFound().get(finalJ).getContactNo();
 
                                 Calendar c = Calendar.getInstance();
-                                System.out.println("Current time => " + c.getTime());
-
                                 SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
                                 String calldate = df.format(c.getTime());
 
@@ -607,6 +559,7 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
 
                                 mApiCall.removeFromFavorite(myContact, 0, 0, buyerSearchid,
                                         buyerVehicleid, 0, 0);
+
                                 favouritebuyer.setVisibility(View.VISIBLE);
                                 unfavouritebuyer.setVisibility(View.GONE);
 
@@ -617,9 +570,7 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
                         });
 
                         mLinearScrollSecond[i].addView(mLinearView2);
-
                     }
-
                     mLinearListView.addView(mLinearView);
                 }
             }
@@ -655,7 +606,6 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
 
         if (str != null) {
             switch (str) {
-
                 case "success_favourite":
                     CustomToast.customToast(getActivity(), "Favorite");
                     break;

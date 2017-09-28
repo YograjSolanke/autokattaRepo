@@ -2,6 +2,7 @@ package autokatta.com.adapter;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
@@ -18,7 +19,6 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import java.net.SocketTimeoutException;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
@@ -42,7 +42,7 @@ public class VehicleBuyerListAdapter extends RecyclerView.Adapter<VehicleBuyerLi
     Activity activity;
     private List<BuyerResponse.Success.Found> foundList;
     private String vcategory, brand, vmodel, manufacture_year, rto_city;
-    private String recieverContact, srchid, BuyerId;
+    private String recieverContact;
     private String calldate;
     int vehicle_id;
     String myContact;
@@ -74,21 +74,11 @@ public class VehicleBuyerListAdapter extends RecyclerView.Adapter<VehicleBuyerLi
 
         final BuyerResponse.Success.Found object = foundList.get(position);
 
+        holder.buyerusername.setTextColor(Color.BLUE);
         holder.buyerusername.setText(object.getReceivername());
         holder.buyerlocation.setText(object.getLocationCity());
-        //to set buyer last call date
-        try {
 
-            DateFormat date = new SimpleDateFormat(" MMM dd ", Locale.getDefault());
-            DateFormat time = new SimpleDateFormat(" hh:mm a", Locale.getDefault());
-
-
-            holder.namecity.setText("Last call on:" + date.format(object.getLastCallDateNew()) + time.format(object.getLastCallDateNew()));
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
+        holder.namecity.setText("" + "Last call On:" + object.getLastcall());
 
         holder.checkBox1.setText(vcategory);
         holder.checkBox2.setText(brand);
@@ -96,13 +86,11 @@ public class VehicleBuyerListAdapter extends RecyclerView.Adapter<VehicleBuyerLi
         holder.checkBox4.setText(manufacture_year);
         holder.checkBox5.setText(rto_city);
 
-
         holder.checkBox6.setText(object.getCategory());
         holder.checkBox7.setText(object.getManufacturer());
         holder.checkBox8.setText(object.getModel());
         holder.checkBox9.setText(object.getYearOfManufacture());
         holder.checkBox10.setText(object.getRtoCity());
-
 
         try {
 
@@ -168,14 +156,11 @@ public class VehicleBuyerListAdapter extends RecyclerView.Adapter<VehicleBuyerLi
             @Override
             public void onClick(View view) {
                 recieverContact = object.getContactNo();
-
                 Bundle bundle = new Bundle();
                 bundle.putString("contactOtherProfile", recieverContact);
                 Intent intent = new Intent(activity, OtherProfile.class);
                 intent.putExtras(bundle);
                 activity.startActivity(intent);
-
-
             }
         });
 //
@@ -197,20 +182,13 @@ public class VehicleBuyerListAdapter extends RecyclerView.Adapter<VehicleBuyerLi
                 recieverContact = object.getContactNo();
 
                 Calendar c = Calendar.getInstance();
-                System.out.println("Current time => " + c.getTime());
-
                 SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
                 calldate = df.format(c.getTime());
-                // formattedDate have current date/time
-                System.out.println("current time=============================" + calldate);
 
-                call(recieverContact);
-                Intent callIntent = new Intent(Intent.ACTION_CALL);
-                callIntent.setData(Uri.parse(recieverContact));
-
-                apicall.sendLastCallDate(myContact, recieverContact, calldate, "1");
-
-
+                if (!recieverContact.equals(myContact)) {
+                    call(recieverContact);
+                    apicall.sendLastCallDate(myContact, recieverContact, calldate, "1");
+                }
             }
         });
 
@@ -230,10 +208,8 @@ public class VehicleBuyerListAdapter extends RecyclerView.Adapter<VehicleBuyerLi
                 int buyerVehicleId = vehicle_id;
 
                 apicall.addToFavorite(myContact, 0, 0, buyerSearchId, buyerVehicleId, 0, 0);
-
                 holder.unfavouritebuyer.setVisibility(View.VISIBLE);
                 holder.favouritebuyer.setVisibility(View.GONE);
-
                 object.setFavstatus("yes");
             }
 
@@ -251,14 +227,11 @@ public class VehicleBuyerListAdapter extends RecyclerView.Adapter<VehicleBuyerLi
 
                 holder.favouritebuyer.setVisibility(View.VISIBLE);
                 holder.unfavouritebuyer.setVisibility(View.GONE);
-
                 object.setFavstatus("no");
             }
 
 
         });
-
-
     }
 
     @Override
@@ -290,20 +263,14 @@ public class VehicleBuyerListAdapter extends RecyclerView.Adapter<VehicleBuyerLi
     public void notifyString(String str) {
 
         if (str != null) {
-
             if (str.equals("success")) {
                 CustomToast.customToast(activity, "Call date Submitted");
             } else if (str.equals("success_favourite")) {
                 CustomToast.customToast(activity, "favourite data submitted");
-
             }
-
-
         } else {
             CustomToast.customToast(activity, activity.getString(R.string.no_response));
         }
-
-
     }
 
     static class BuyerHolder extends RecyclerView.ViewHolder {
@@ -312,7 +279,7 @@ public class VehicleBuyerListAdapter extends RecyclerView.Adapter<VehicleBuyerLi
         TextView buyerusername, buyerlocation, namecity;
         CheckBox checkBox1, checkBox2, checkBox3, checkBox4, checkBox5, checkBox6, checkBox7, checkBox8, checkBox9, checkBox10;
 
-        public BuyerHolder(View itemView) {
+        BuyerHolder(View itemView) {
             super(itemView);
 
             buyerusername = (TextView) itemView.findViewById(R.id.buyerusername);
@@ -333,8 +300,6 @@ public class VehicleBuyerListAdapter extends RecyclerView.Adapter<VehicleBuyerLi
             checkBox8 = (CheckBox) itemView.findViewById(R.id.checkBox8);
             checkBox9 = (CheckBox) itemView.findViewById(R.id.checkBox9);
             checkBox10 = (CheckBox) itemView.findViewById(R.id.checkBox10);
-
-
         }
     }
 

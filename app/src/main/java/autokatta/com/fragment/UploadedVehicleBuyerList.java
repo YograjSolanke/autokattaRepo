@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.TimeZone;
 
 import autokatta.com.R;
 import autokatta.com.adapter.VehicleBuyerListAdapter;
@@ -203,7 +204,7 @@ public class UploadedVehicleBuyerList extends Fragment implements RequestNotifie
                             found.setReceiverPic(found.getReceiverPic());
                             found.setContactNo(found.getContactNo());
                             found.setFavstatus(found.getFavstatus());
-                            found.setLastcall(found.getLastcall());
+                            //found.setLastcall(found.getLastcall());
 
 
                             Date d = null;
@@ -214,6 +215,25 @@ public class UploadedVehicleBuyerList extends Fragment implements RequestNotifie
                             }
 
                             found.setLastCallDateNew(d);
+
+                            try {
+                                TimeZone utc = TimeZone.getTimeZone("etc/UTC");
+
+                                DateFormat inputFormat = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss a",
+                                        Locale.getDefault());
+                                inputFormat.setTimeZone(utc);
+
+                                DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy hh:mm a",
+                                        Locale.getDefault());
+                                outputFormat.setTimeZone(utc);
+
+                                Date date = inputFormat.parse(found.getLastcall());
+                                String output = outputFormat.format(date);
+                                System.out.println("last call" + output);
+                                found.setLastcall(output);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
 
                             myUploadedVehiclesResponseList.add(found);
                         }

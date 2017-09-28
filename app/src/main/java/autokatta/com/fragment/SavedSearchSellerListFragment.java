@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.TimeZone;
 
 import autokatta.com.R;
 import autokatta.com.adapter.SavedSearchSellerListAdapter;
@@ -65,6 +66,8 @@ public class SavedSearchSellerListFragment extends Fragment implements RequestNo
     RelativeLayout relativeLayout1, relativeLayout2;
     ConnectionDetector mTestConnection;
     LinearLayout llSearchDate, llBuyerLead;
+    RelativeLayout relativeLayout;
+    Button compare;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -88,7 +91,6 @@ public class SavedSearchSellerListFragment extends Fragment implements RequestNo
         mSwipeRefreshLayout = (SwipeRefreshLayout) myVehicles.findViewById(R.id.swipeRefreshLayoutMySearchSellerlst);
         mRecyclerView = (RecyclerView) myVehicles.findViewById(R.id.sellerlist);
 
-
         textcategory = (TextView) myVehicles.findViewById(R.id.mysearch_category);
         textbrand = (TextView) myVehicles.findViewById(R.id.mysearch_brand);
         textmodel = (TextView) myVehicles.findViewById(R.id.mysearch_model);
@@ -111,13 +113,15 @@ public class SavedSearchSellerListFragment extends Fragment implements RequestNo
         llBuyerLead = (LinearLayout) myVehicles.findViewById(R.id.llLeads);
         Stopdate = (TextView) myVehicles.findViewById(R.id.txtdate);
 
+        relativeLayout = (RelativeLayout) myVehicles.findViewById(R.id.tablerow1);
+        compare = (Button) myVehicles.findViewById(R.id.conpare);
+
         mRecyclerView.setHasFixedSize(true);
 
         LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(getActivity());
         mLinearLayoutManager.setReverseLayout(true);
         mLinearLayoutManager.setStackFromEnd(true);
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
-
 
         try {
 
@@ -129,7 +133,6 @@ public class SavedSearchSellerListFragment extends Fragment implements RequestNo
             b_manu_year = b.getString("year");
             b_rto_city = b.getString("rto_city");
             b_price = b.getString("price");
-            // getSellerData();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -168,7 +171,6 @@ public class SavedSearchSellerListFragment extends Fragment implements RequestNo
         llSearchDate.setVisibility(View.GONE);
         llBuyerLead.setVisibility(View.GONE);
 
-
     }
 
     private void getSellerdata(String myContact) {
@@ -194,7 +196,7 @@ public class SavedSearchSellerListFragment extends Fragment implements RequestNo
 
         if (response != null) {
             if (response.isSuccessful()) {
-                //mSwipeRefreshLayout.setRefreshing(false);
+
                 myUploadedVehiclesResponseList = new ArrayList<>();
                 SellerResponse sellerResponse = (SellerResponse) response.body();
 
@@ -218,8 +220,6 @@ public class SavedSearchSellerListFragment extends Fragment implements RequestNo
                             found.setProfilePic(found.getProfilePic());
                             found.setContactNo(found.getContactNo());
                             found.setFavstatus(found.getFavstatus());
-                            found.setLastcall(found.getLastcall());
-
 
                             Date d = null, d1 = null;
                             try {
@@ -232,6 +232,44 @@ public class SavedSearchSellerListFragment extends Fragment implements RequestNo
                             found.setLastCallDateNew(d);
                             found.setUploaddate(d1);
 
+                            //to set buyer last call date
+                            try {
+                                TimeZone utc = TimeZone.getTimeZone("etc/UTC");
+                                //format of date coming from services
+                                DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                                inputFormat.setTimeZone(utc);
+
+                                //format of date which we want to show
+                                DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
+                                outputFormat.setTimeZone(utc);
+
+                                Date date = inputFormat.parse(found.getLastcall());
+                                String output = outputFormat.format(date);
+
+                                found.setLastcall(output);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+
+                            //to set vehicle uploaded date
+                            try {
+                                TimeZone utc = TimeZone.getTimeZone("etc/UTC");
+                                //format of date coming from services
+                                DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                                inputFormat.setTimeZone(utc);
+
+                                //format of date which we want to show
+                                DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
+                                outputFormat.setTimeZone(utc);
+
+                                Date date = inputFormat.parse(found.getDate());
+                                String output = outputFormat.format(date);
+
+                                found.setDate(output);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+
                             myUploadedVehiclesResponseList.add(found);
                         }
 
@@ -242,7 +280,7 @@ public class SavedSearchSellerListFragment extends Fragment implements RequestNo
                         mSwipeRefreshLayout.setRefreshing(false);
 
                         adapter = new SavedSearchSellerListAdapter(getActivity(), myUploadedVehiclesResponseList, b_search_id,
-                                b_category, b_brand, b_model, b_manu_year, b_rto_city);
+                                b_category, b_brand, b_model, b_manu_year, b_rto_city, relativeLayout, compare);
                         mRecyclerView.setAdapter(adapter);
                         adapter.notifyDataSetChanged();
                     } else {
@@ -305,7 +343,6 @@ public class SavedSearchSellerListFragment extends Fragment implements RequestNo
         super.setUserVisibleHint(isVisibleToUser);
         if (this.isVisible()) {
             if (isVisibleToUser && !hasViewCreated) {
-
                 getSellerdata(myContact);
                 hasViewCreated = true;
             }

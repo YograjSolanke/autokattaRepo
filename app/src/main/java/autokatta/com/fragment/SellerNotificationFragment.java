@@ -2,6 +2,7 @@ package autokatta.com.fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -52,7 +53,6 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
 
     public List<SellerResponse.Success.SavedSearch> mainList = new ArrayList<>();
     public List<SellerResponse.Success.MatchedResult> childlist;
-
     private LinearLayout mLinearListView;
     boolean isFirstViewClick[];
     String myContact;
@@ -104,7 +104,6 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
         }
     }
 
-
     @Override
     public void notifySuccess(Response<?> response) {
         DateFormat f = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.getDefault());
@@ -132,7 +131,29 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
                     obj.setRcAvailable(obj.getRcAvailable());
                     obj.setInsuranceValid(obj.getInsuranceValid());
                     obj.setHpcapacity(obj.getHpcapacity());
-                    obj.setDate(obj.getDate());
+
+                    try {
+                        TimeZone utc = TimeZone.getTimeZone("etc/UTC");
+                        //format of date coming from services
+                        DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                        /*DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",
+                                Locale.getDefault());*/
+                        inputFormat.setTimeZone(utc);
+
+                        //format of date which we want to show
+                        DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
+                        /*DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy hh:mm aa",
+                                Locale.getDefault());*/
+                        outputFormat.setTimeZone(utc);
+
+                        Date date = inputFormat.parse(obj.getDate());
+                        //System.out.println("jjj"+date);
+                        String output = outputFormat.format(date);
+                        //System.out.println(mainList.get(i).getDate()+" jjj " + output);
+                        obj.setDate(output);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
 
                     for (SellerResponse.Success.MatchedResult objectmatch : objsuccess.getMatchedResult()) {
                         if (obj.getSearchId().equals(objectmatch.getSearchId())) {
@@ -153,8 +174,6 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
                             objectmatch.setInsuranceValid(objectmatch.getInsuranceValid());
                             objectmatch.setHpCapacity(objectmatch.getHpCapacity());
                             objectmatch.setTitle(objectmatch.getTitle());
-                            objectmatch.setLastcall(objectmatch.getLastcall());
-                            objectmatch.setDate(objectmatch.getDate());
 
                             Date d = null, d1 = null;
                             try {
@@ -165,6 +184,45 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
                             }
                             objectmatch.setLastCallDateNew(d);
                             objectmatch.setUploaddate(d1);
+
+                            //to set buyer last call date
+                            try {
+                                TimeZone utc = TimeZone.getTimeZone("etc/UTC");
+                                //format of date coming from services
+                                DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                                inputFormat.setTimeZone(utc);
+
+                                //format of date which we want to show
+                                DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
+                                outputFormat.setTimeZone(utc);
+
+                                Date date = inputFormat.parse(objectmatch.getLastcall());
+                                String output = outputFormat.format(date);
+
+                                objectmatch.setLastcall(output);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+
+                            //to set vehicle uploaded date
+                            try {
+                                TimeZone utc = TimeZone.getTimeZone("etc/UTC");
+                                //format of date coming from services
+                                DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                                inputFormat.setTimeZone(utc);
+
+                                //format of date which we want to show
+                                DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
+                                outputFormat.setTimeZone(utc);
+
+                                Date date = inputFormat.parse(objectmatch.getDate());
+                                String output = outputFormat.format(date);
+
+                                objectmatch.setDate(output);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+
                             childlist.add(objectmatch);
                         }
                     }
@@ -240,34 +298,12 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
                         mYearName.setText(mainList.get(i).getYearOfManufacture());
                     }
 
-                    //Rajashree
                     mrtoname.setText(mainList.get(i).getRtoCity());
                     mkmsname.setText(mainList.get(i).getKmsRunning());
                     mlocationname.setText(mainList.get(i).getLocationCity());
                     mregnoname.setText(mainList.get(i).getRegistrationNumber());
+                    mSearchDate.setText(mainList.get(i).getDate());
 
-                    try {
-                        TimeZone utc = TimeZone.getTimeZone("etc/UTC");
-                        //format of date coming from services
-                        DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-                        /*DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",
-                                Locale.getDefault());*/
-                        inputFormat.setTimeZone(utc);
-
-                        //format of date which we want to show
-                        DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
-                        /*DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy hh:mm aa",
-                                Locale.getDefault());*/
-                        outputFormat.setTimeZone(utc);
-
-                        Date date = inputFormat.parse(mainList.get(i).getDate());
-                        //System.out.println("jjj"+date);
-                        String output = outputFormat.format(date);
-                        //System.out.println(mainList.get(i).getDate()+" jjj " + output);
-                        mSearchDate.setText(output);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
 
                     if (!(mainList.get(i).getMatchedResult().size() == 0)) {
                         msellerMatchCount.setText(String.valueOf(mainList.get(i).getMatchedResult().size()));
@@ -347,68 +383,13 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
                             checkBoxHpRight.setVisibility(View.VISIBLE);
                         }
 
-                        //to set buyer last call date
-                        /*try {
-                            DateFormat date = new SimpleDateFormat(" MMM dd ", Locale.getDefault());
-                            DateFormat time = new SimpleDateFormat(" hh:mm a", Locale.getDefault());
 
-                            lastcall.setText("Last call on:" + date.format(mainList.get(i).getMatchedResult().get(j).getLastCallDateNew()) +
-                                    time.format(mainList.get(i).getMatchedResult().get(j).getLastCallDateNew()));
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }*/
-
-                        try {
-                            TimeZone utc = TimeZone.getTimeZone("etc/UTC");
-                            //format of date coming from services
-                            DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-                            inputFormat.setTimeZone(utc);
-
-                            //format of date which we want to show
-                            DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
-                            outputFormat.setTimeZone(utc);
-
-                            Date date = inputFormat.parse(mainList.get(i).getMatchedResult().get(j).getLastcall());
-                            String output = outputFormat.format(date);
-
-                            mDateTime.setText("" + "Last call on :" + output);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-
-                        //to set vehicle uploaded date
-                        /*try {
-                            DateFormat date = new SimpleDateFormat(" MMM dd ", Locale.getDefault());
-                            DateFormat time = new SimpleDateFormat(" hh:mm a", Locale.getDefault());
-
-                            mDateTime.setText("Uploaded On :" + date.format(mainList.get(i).getMatchedResult().get(j).getUploaddate()) +
-                                    time.format(mainList.get(i).getMatchedResult().get(j).getUploaddate()));
-
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }*/
-
-                        try {
-                            TimeZone utc = TimeZone.getTimeZone("etc/UTC");
-                            //format of date coming from services
-                            DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-                            inputFormat.setTimeZone(utc);
-
-                            //format of date which we want to show
-                            DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
-                            outputFormat.setTimeZone(utc);
-
-                            Date date = inputFormat.parse(mainList.get(i).getMatchedResult().get(j).getDate());
-                            String output = outputFormat.format(date);
-
-                            mDateTime.setText("" + "Uploaded On :" + output);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
+                        mDateTime.setText("" + "Last call On :" + mainList.get(i).getMatchedResult().get(j).getLastcall());
+                        mDateTime.setText("" + "Uploaded On :" + mainList.get(i).getMatchedResult().get(j).getDate());
 
                         mtitle.setText(mainList.get(i).getMatchedResult().get(j).getTitle());
+                        mUserName.setTextColor(Color.BLUE);
                         mUserName.setText(itemUserName);
-                        //mDateTime.setText(itemDate);
 
                         checkBox1.setText(mainList.get(i).getCategory());
                         checkBox2.setText(mainList.get(i).getManufacturer());
@@ -556,9 +537,6 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
                         }
 
 
-                        /*if (showcheckboc == 0)
-                            checkBox[j].setVisibility(View.VISIBLE);*/
-
                         final int finalI = i;
                         final int finalJ = j;
 
@@ -640,8 +618,8 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
                                 int sellerSearchId = mainList.get(finalI).getMatchedResult().get(finalJ).getSearchId();
 
                                 mApiCall.removeFromFavorite(myContact, sellerSearchId, sellerVehicleId, 0, 0, 0, 0);
-                                mFavimg.setVisibility(View.GONE);
-                                unmFavimg.setVisibility(View.VISIBLE);
+                                mFavimg.setVisibility(View.VISIBLE);
+                                unmFavimg.setVisibility(View.GONE);
                                 mainList.get(finalI).getMatchedResult().get(finalJ).setFavstatus("no");
                             }
 
@@ -666,14 +644,12 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
                 else
                     getBundle_vehicle_id = getBundle_vehicle_id + "," + vehicleids.get(i).toString();
             }
-
         }
 
         if (flag > 1)
             relativeLayout.setVisibility(View.VISIBLE);
         else
             relativeLayout.setVisibility(View.GONE);
-
     }
 
 

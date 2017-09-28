@@ -2,6 +2,7 @@ package autokatta.com.adapter;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
@@ -9,8 +10,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
 
@@ -18,14 +22,11 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import java.net.SocketTimeoutException;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.TimeZone;
 
 import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
@@ -48,14 +49,16 @@ public class SavedSearchSellerListAdapter extends RecyclerView.Adapter<SavedSear
     Activity activity;
     ApiCall apiCall;
     private String category, brand, model, rto_city, manufacture_year, myContact;
-    private String recieverContact, SenderContact, SellerId, VehiId, calldate;
+    private String recieverContact;
     private int search_id;
     private List<Integer> checkedvehicle_ids = new ArrayList<>();
     private String getBundle_vehicle_id = "";
-
+    SellerHolder mView;
+    private RelativeLayout relativeLayout;
+    private Button compare;
 
     public SavedSearchSellerListAdapter(Activity activity, List<SellerResponse.Success.MatchedResult> matchedResults, int search_id,
-                                        String category, String brand, String model, String manufacture_year, String rto_city) {
+                                        String category, String brand, String model, String manufacture_year, String rto_city, RelativeLayout relativeLayout, Button compare) {
         this.activity = activity;
         this.matchedResultList = matchedResults;
         this.search_id = search_id;
@@ -72,6 +75,10 @@ public class SavedSearchSellerListAdapter extends RecyclerView.Adapter<SavedSear
         for (int j = 0; j < matchedResults.size(); j++) {
             checkedvehicle_ids.add(0);
         }
+
+        this.relativeLayout = relativeLayout;
+        this.compare = compare;
+
     }
 
     @Override
@@ -80,74 +87,57 @@ public class SavedSearchSellerListAdapter extends RecyclerView.Adapter<SavedSear
         return new SellerHolder(view);
     }
 
+    static class SellerHolder extends RecyclerView.ViewHolder {
+
+        ImageView callseller, mFavimg, unmFavimg;
+        ViewFlipper vehi_images;
+        TextView sellerusername, lastCall, Compare, Vehic_cnt, UploadedDate, Title;
+        CheckBox checkBox1, checkBox2, checkBox3, checkBox4, checkBox5, checkBox6, checkBox7, checkBox8, checkBox9, checkBox10, chckbox;
+
+        SellerHolder(View itemView) {
+            super(itemView);
+
+            sellerusername = (TextView) itemView.findViewById(R.id.username);
+            Compare = (TextView) itemView.findViewById(R.id.compare);
+            Vehic_cnt = (TextView) itemView.findViewById(R.id.vehiclecount);
+            UploadedDate = (TextView) itemView.findViewById(R.id.addon);
+            Title = (TextView) itemView.findViewById(R.id.title);
+
+            vehi_images = (ViewFlipper) itemView.findViewById(R.id.sellvehicalimgflicker);
+            callseller = (ImageView) itemView.findViewById(R.id.sellcallimg);
+
+            checkBox1 = (CheckBox) itemView.findViewById(R.id.sellcheckBox1);
+            checkBox2 = (CheckBox) itemView.findViewById(R.id.sellcheckBox2);
+            checkBox3 = (CheckBox) itemView.findViewById(R.id.sellcheckBox3);
+            checkBox4 = (CheckBox) itemView.findViewById(R.id.sellcheckBox4);
+            checkBox5 = (CheckBox) itemView.findViewById(R.id.sellcheckBox5);
+            checkBox6 = (CheckBox) itemView.findViewById(R.id.sellcheckBox6);
+            checkBox7 = (CheckBox) itemView.findViewById(R.id.sellcheckBox7);
+            checkBox8 = (CheckBox) itemView.findViewById(R.id.sellcheckBox8);
+            checkBox9 = (CheckBox) itemView.findViewById(R.id.sellcheckBox9);
+            checkBox10 = (CheckBox) itemView.findViewById(R.id.sellcheckBox10);
+
+            chckbox = (CheckBox) itemView.findViewById(R.id.checkauc);
+
+            mFavimg = (ImageView) itemView.findViewById(R.id.sellfevimg);
+            unmFavimg = (ImageView) itemView.findViewById(R.id.sellunfevimg);
+            lastCall = (TextView) itemView.findViewById(R.id.lastcall);
+        }
+    }
+
     @Override
     public void onBindViewHolder(final SavedSearchSellerListAdapter.SellerHolder holder, final int position) {
 
+        mView = holder;
         final SellerResponse.Success.MatchedResult object = matchedResultList.get(position);
-        CheckBox checkBox[] = new CheckBox[matchedResultList.size()];
 
+        holder.sellerusername.setTextColor(Color.BLUE);
         holder.sellerusername.setText(object.getUsername());
         holder.Title.setText(object.getTitle());
 
-        //to set buyer last call date
-       /* try {
 
-            DateFormat date = new SimpleDateFormat(" MMM dd ", Locale.getDefault());
-            DateFormat time = new SimpleDateFormat(" hh:mm a", Locale.getDefault());
-
-            holder.lastCall.setText("Last call on:" + date.format(object.getLastCallDateNew()) + time.format(object.getLastCallDateNew()));
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }*/
-
-        try {
-            TimeZone utc = TimeZone.getTimeZone("etc/UTC");
-            //format of date coming from services
-            DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-            inputFormat.setTimeZone(utc);
-
-            //format of date which we want to show
-            DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
-            outputFormat.setTimeZone(utc);
-
-            Date date = inputFormat.parse(object.getLastcall());
-            String output = outputFormat.format(date);
-
-            holder.lastCall.setText("" + "Last call on :" + output);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        //to set vehicle uploaded date
-        /*try {
-
-            DateFormat date = new SimpleDateFormat(" MMM dd ", Locale.getDefault());
-            DateFormat time = new SimpleDateFormat(" hh:mm a", Locale.getDefault());
-
-            holder.UploadedDate.setText("Uploadede On :" + date.format(object.getDate()) + time.format(object.getDate()));
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }*/
-
-        try {
-            TimeZone utc = TimeZone.getTimeZone("etc/UTC");
-            //format of date coming from services
-            DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-            inputFormat.setTimeZone(utc);
-
-            //format of date which we want to show
-            DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
-            outputFormat.setTimeZone(utc);
-
-            Date date = inputFormat.parse(object.getDate());
-            String output = outputFormat.format(date);
-
-            holder.UploadedDate.setText("" + "Uploaded On :" + output);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        holder.UploadedDate.setText("" + "Uploaded On :" + object.getDate());
+        holder.lastCall.setText("" + "Last call On :" + object.getLastcall());
 
         holder.checkBox1.setText(category);
         holder.checkBox2.setText(brand);
@@ -205,9 +195,9 @@ public class SavedSearchSellerListAdapter extends RecyclerView.Adapter<SavedSear
         holder.checkBox10.setEnabled(false);
 
 
-        holder.Compare.setVisibility(View.GONE);
+        //holder.Compare.setVisibility(View.GONE);
         holder.Vehic_cnt.setVisibility(View.GONE);
-        holder.chckbox.setVisibility(View.GONE);
+        //holder.chckbox.setVisibility(View.GONE);
 
         final String imagenames = object.getImage();
         List<String> iname = new ArrayList<String>();
@@ -263,8 +253,8 @@ public class SavedSearchSellerListAdapter extends RecyclerView.Adapter<SavedSear
             mFlippingsell = 0;
         }
 
-        /*final int v_ids = Integer.parseInt(matchedResultList.get(holder.getAdapterPosition()).getVehicleId());
-        checkBox[holder.getAdapterPosition()].setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        final int v_ids = matchedResultList.get(holder.getAdapterPosition()).getVehicleId();
+        holder.chckbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
@@ -275,13 +265,12 @@ public class SavedSearchSellerListAdapter extends RecyclerView.Adapter<SavedSear
                     VisibleCompareButton(checkedvehicle_ids);
                 }
             }
-        });*/
+        });
 
         holder.sellerusername.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 recieverContact = object.getContactNo();
-
                 Bundle bundle = new Bundle();
                 bundle.putString("contactOtherProfile", recieverContact);
                 Intent intent = new Intent(activity, OtherProfile.class);
@@ -290,13 +279,11 @@ public class SavedSearchSellerListAdapter extends RecyclerView.Adapter<SavedSear
             }
         });
 
-
         holder.callseller.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 recieverContact = object.getContactNo();
                 Calendar c = Calendar.getInstance();
-                System.out.println("Current time => " + c.getTime());
                 SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
                 String calldate = df.format(c.getTime());
                 if (!recieverContact.equals(myContact)) {
@@ -319,11 +306,9 @@ public class SavedSearchSellerListAdapter extends RecyclerView.Adapter<SavedSear
             @Override
             public void onClick(View v) {
                 int sellerVehicleId = object.getVehicleId();
-
                 apiCall.addToFavorite(myContact, search_id, sellerVehicleId, 0, 0, 0, 0);
                 holder.mFavimg.setVisibility(View.GONE);
                 holder.unmFavimg.setVisibility(View.VISIBLE);
-
                 object.setFavstatus("yes");
             }
 
@@ -334,10 +319,9 @@ public class SavedSearchSellerListAdapter extends RecyclerView.Adapter<SavedSear
             @Override
             public void onClick(View v) {
                 int sellerVehicleId = object.getVehicleId();
-
                 apiCall.removeFromFavorite(myContact, search_id, sellerVehicleId, 0, 0, 0, 0);
-                holder.mFavimg.setVisibility(View.GONE);
-                holder.unmFavimg.setVisibility(View.VISIBLE);
+                holder.mFavimg.setVisibility(View.VISIBLE);
+                holder.unmFavimg.setVisibility(View.GONE);
                 object.setFavstatus("no");
 
             }
@@ -345,7 +329,7 @@ public class SavedSearchSellerListAdapter extends RecyclerView.Adapter<SavedSear
 
         });
 
-        holder.Compare.setOnClickListener(new View.OnClickListener() {
+        compare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(activity, CompareVehicleListActivity.class);
@@ -367,61 +351,18 @@ public class SavedSearchSellerListAdapter extends RecyclerView.Adapter<SavedSear
                 else
                     getBundle_vehicle_id = getBundle_vehicle_id + "," + vehicleids.get(i).toString();
             }
-
         }
 
-       /* if (flag > 1)
+        if (flag > 1)
             relativeLayout.setVisibility(View.VISIBLE);
         else
-            relativeLayout.setVisibility(View.GONE);*/
+            relativeLayout.setVisibility(View.GONE);
 
     }
 
     @Override
     public int getItemCount() {
         return matchedResultList.size();
-    }
-
-    static class SellerHolder extends RecyclerView.ViewHolder {
-
-        ImageView callseller, mFavimg, unmFavimg;
-        ViewFlipper vehi_images;
-        TextView sellerusername, buyerlocation, lastCall, Compare, Vehic_cnt, UploadedDate, Title;
-        CheckBox checkBox1, checkBox2, checkBox3, checkBox4, checkBox5, checkBox6, checkBox7, checkBox8, checkBox9, checkBox10, chckbox;
-        CheckBox checkBox[];
-
-        SellerHolder(View itemView) {
-            super(itemView);
-
-            sellerusername = (TextView) itemView.findViewById(R.id.username);
-            Compare = (TextView) itemView.findViewById(R.id.compare);
-            Vehic_cnt = (TextView) itemView.findViewById(R.id.vehiclecount);
-            UploadedDate = (TextView) itemView.findViewById(R.id.addon);
-            Title = (TextView) itemView.findViewById(R.id.title);
-
-
-            vehi_images = (ViewFlipper) itemView.findViewById(R.id.sellvehicalimgflicker);
-            callseller = (ImageView) itemView.findViewById(R.id.sellcallimg);
-
-            checkBox1 = (CheckBox) itemView.findViewById(R.id.sellcheckBox1);
-            checkBox2 = (CheckBox) itemView.findViewById(R.id.sellcheckBox2);
-            checkBox3 = (CheckBox) itemView.findViewById(R.id.sellcheckBox3);
-            checkBox4 = (CheckBox) itemView.findViewById(R.id.sellcheckBox4);
-            checkBox5 = (CheckBox) itemView.findViewById(R.id.sellcheckBox5);
-            checkBox6 = (CheckBox) itemView.findViewById(R.id.sellcheckBox6);
-            checkBox7 = (CheckBox) itemView.findViewById(R.id.sellcheckBox7);
-            checkBox8 = (CheckBox) itemView.findViewById(R.id.sellcheckBox8);
-            checkBox9 = (CheckBox) itemView.findViewById(R.id.sellcheckBox9);
-            checkBox10 = (CheckBox) itemView.findViewById(R.id.sellcheckBox10);
-
-            chckbox = (CheckBox) itemView.findViewById(R.id.checkauc);
-
-            //checkBox[getAdapterPosition()] = (CheckBox) itemView.findViewById(R.id.checkauc);
-
-            mFavimg = (ImageView) itemView.findViewById(R.id.sellfevimg);
-            unmFavimg = (ImageView) itemView.findViewById(R.id.sellunfevimg);
-            lastCall = (TextView) itemView.findViewById(R.id.lastcall);
-        }
     }
 
     @Override
@@ -448,19 +389,15 @@ public class SavedSearchSellerListAdapter extends RecyclerView.Adapter<SavedSear
     public void notifyString(String str) {
 
         if (str != null) {
-
             if (str.equals("success")) {
                 CustomToast.customToast(activity, "Call date Submitted");
             } else if (str.equals("success_favourite")) {
                 CustomToast.customToast(activity, "favourite data submitted");
             }
 
-
         } else {
             CustomToast.customToast(activity, activity.getString(R.string.no_response));
         }
-
-
     }
 
     private void call(String recieverContact) {

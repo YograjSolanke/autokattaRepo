@@ -35,8 +35,8 @@ public class VehicleDetails_Details extends Fragment implements RequestNotifier 
 
     View mVehicleDetails;
     TextView mTitleStr, mPriceStr, mViewsStr, mCallStr, mEnquiryStr;
-    String contact,mycontact;
-    TextView mAddressDetails, mCategoryDetails, mSubCatDetails, mBrandDetails, mModelDetails, mVersionDetails, mYearDetails,mStockType;
+    String contact, mycontact;
+    TextView mAddressDetails, mCategoryDetails, mSubCatDetails, mBrandDetails, mModelDetails, mVersionDetails, mYearDetails, mStockType;
     ConnectionDetector mTestConnection;
 
     @Nullable
@@ -45,8 +45,8 @@ public class VehicleDetails_Details extends Fragment implements RequestNotifier 
         mVehicleDetails = inflater.inflate(R.layout.fragment_vehicle_details_details, container, false);
 
         mTestConnection = new ConnectionDetector(getActivity());
-mycontact=getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE)
-        .getString("loginContact", "");
+        mycontact = getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE)
+                .getString("loginContact", "");
         mTitleStr = (TextView) mVehicleDetails.findViewById(R.id.title_str);
         mPriceStr = (TextView) mVehicleDetails.findViewById(R.id.price_str);
         mViewsStr = (TextView) mVehicleDetails.findViewById(R.id.views_str);
@@ -80,15 +80,15 @@ mycontact=getActivity().getSharedPreferences(getString(R.string.my_preference), 
 
         /* go to other profile by clicking on name*/
 
-            mTitleStr.setTextColor(Color.BLUE);
-            mTitleStr.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent i = new Intent(getActivity(), OtherProfile.class);
-                    i.putExtra("contactOtherProfile", contact);
-                    getActivity().startActivity(i);
-                }
-            });
+        mTitleStr.setTextColor(Color.BLUE);
+        mTitleStr.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getActivity(), OtherProfile.class);
+                i.putExtra("contactOtherProfile", contact);
+                getActivity().startActivity(i);
+            }
+        });
 
         return mVehicleDetails;
     }
@@ -108,7 +108,7 @@ mycontact=getActivity().getSharedPreferences(getString(R.string.my_preference), 
             ApiCall mApiCall = new ApiCall(getActivity(), this);
             mApiCall.getVehicleById(contact, mVehicleId);
         } else {
-            CustomToast.customToast(getActivity(),getString(R.string.no_internet));
+            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
             // errorMessage(getActivity(), getString(R.string.no_internet));
         }
     }
@@ -123,7 +123,7 @@ mycontact=getActivity().getSharedPreferences(getString(R.string.my_preference), 
                     GetVehicleByIdResponse mVehicleByIdResponse = (GetVehicleByIdResponse) response.body();
                     for (GetVehicleByIdResponse.VehicleDatum datum : mVehicleByIdResponse.getSuccess().getVehicleData()) {
                         datum.setVehicleId(datum.getVehicleId());
-                        contact=datum.getContact();
+                        contact = datum.getContact();
                         mTitleStr.setText(datum.getUsername());
                         mPriceStr.setText(datum.getPrice());
                         mCategoryDetails.setText(datum.getCategory());
@@ -196,19 +196,19 @@ mycontact=getActivity().getSharedPreferences(getString(R.string.my_preference), 
     @Override
     public void notifyError(Throwable error) {
         if (error instanceof SocketTimeoutException) {
-            CustomToast.customToast(getActivity(),getString(R.string._404_));
+            CustomToast.customToast(getActivity(), getString(R.string._404_));
             //   showMessage(getActivity(), getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
-            CustomToast.customToast(getActivity(),getString(R.string.no_response));
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
             // showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            CustomToast.customToast(getActivity(),getString(R.string.no_response));
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
             //   showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
-            CustomToast.customToast(getActivity(),getString(R.string.no_internet));
+            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
             //   errorMessage(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
-            CustomToast.customToast(getActivity(),getString(R.string.no_internet));
+            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
             //   errorMessage(getActivity(), getString(R.string.no_internet));
         } else {
             Log.i("Check Class-", "VehicleDetails_Details");
