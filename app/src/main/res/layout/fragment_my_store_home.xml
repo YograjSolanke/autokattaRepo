@@ -222,11 +222,11 @@
             <ImageView
                 android:id="@+id/add_review"
                 android:layout_width="match_parent"
-                android:layout_height="25dp"
+                android:layout_height="35dp"
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:contentDescription="@string/app_name"
-                android:src="@drawable/ic_attachment" />
+                android:src="@mipmap/review_gray" />
 
         </LinearLayout>
         </RelativeLayout>

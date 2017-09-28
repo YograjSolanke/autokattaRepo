@@ -23,6 +23,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.kaopiz.kprogresshud.KProgressHUD;
 
 import java.net.SocketTimeoutException;
@@ -48,9 +50,8 @@ public class ReviewActivity extends AppCompatActivity implements RequestNotifier
 
     ConnectionDetector mConnectionDetector;
     ApiCall mApiCall;
-    String contact;
+    String myContact, inComingContact;
     KProgressHUD hud;
-    private ProgressDialog dialog;
     public List<ReviewAndReplyResponse.Success.ReviewMessage> topList = new ArrayList<>();
     public List<ReviewAndReplyResponse.Success.ReviewMessage> mainList = new ArrayList<>();
     public List<ReviewAndReplyResponse.Success.ReplayMessage> childlist;
@@ -64,6 +65,7 @@ public class ReviewActivity extends AppCompatActivity implements RequestNotifier
     boolean isFirstViewClick[];
     LinearLayout mLinearScrollSecond[];
     RelativeLayout relativeLayout;
+    FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,14 +76,12 @@ public class ReviewActivity extends AppCompatActivity implements RequestNotifier
         setTitle("Reviews");
 
         mApiCall = new ApiCall(ReviewActivity.this, this);
-        contact = getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
+        myContact = getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
                 .getString("loginContact", "");
 
 
-        dialog = new ProgressDialog(this);
-        dialog.setMessage("Loading...");
         mConnectionDetector = new ConnectionDetector(this);
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab = (FloatingActionButton) findViewById(R.id.fab);
         // listView = (ListView) findViewById(R.id.msgview);
         mLinearListView = (LinearLayout) findViewById(R.id.linear_ListView);
 
@@ -101,10 +101,12 @@ public class ReviewActivity extends AppCompatActivity implements RequestNotifier
                         product_id = getIntent().getExtras().getInt("product_id", 0);
                         service_id = getIntent().getExtras().getInt("service_id", 0);
                         vehicle_id = getIntent().getExtras().getInt("vehicle_id", 0);
+                        inComingContact = getIntent().getExtras().getString("contact");
 
                     }
 
-
+                    if (inComingContact.equals(myContact))
+                        fab.setVisibility(View.GONE);
 
                     hud = KProgressHUD.create(ReviewActivity.this)
                             .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
@@ -155,7 +157,7 @@ public class ReviewActivity extends AppCompatActivity implements RequestNotifier
         final TextView wordCount = (TextView) convertView.findViewById(R.id.counttxt);
         alertDialog.setView(convertView);
         alert = alertDialog.show();
-        alertDialog.setTitle("Send Message");
+        //alertDialog.setTitle("Send Message");
         message.addTextChangedListener(new TextWatcher() {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -177,7 +179,7 @@ public class ReviewActivity extends AppCompatActivity implements RequestNotifier
         send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mApiCall.postReviewOrReply(review_id, keyword, contact, message.getText().toString(), store_id, product_id, service_id, vehicle_id);
+                mApiCall.postReviewOrReply(review_id, keyword, myContact, message.getText().toString(), store_id, product_id, service_id, vehicle_id);
                 alert.dismiss();
             }
         });
@@ -226,6 +228,7 @@ public class ReviewActivity extends AppCompatActivity implements RequestNotifier
                         obj.setCreatedDate(obj.getCreatedDate());
                         obj.setReviewId(obj.getReviewId());
                         obj.setUsername(obj.getUsername());
+                        obj.setProfilePic(obj.getProfilePic());
 
 
                         for (ReviewAndReplyResponse.Success.ReplayMessage objectmatch : object.getReplayMessage()) {
@@ -234,6 +237,7 @@ public class ReviewActivity extends AppCompatActivity implements RequestNotifier
                                 objectmatch.setReplayId(objectmatch.getReplayId());
                                 objectmatch.setSenderContact(objectmatch.getSenderContact());
                                 objectmatch.setReplayString(objectmatch.getReplayString());
+                                objectmatch.setProfilePic(objectmatch.getProfilePic());
                                 childlist.add(objectmatch);
                             }
 
@@ -259,6 +263,7 @@ public class ReviewActivity extends AppCompatActivity implements RequestNotifier
                         final TextView dateNtime = (TextView) mLinearView.findViewById(R.id.dateNtime);
                         final RelativeLayout mLinearFirstArrow = (RelativeLayout) mLinearView.findViewById(R.id.linearFirst);
                         final ImageView replyImage = (ImageView) mLinearView.findViewById(R.id.reply);
+                        final ImageView profile = (ImageView) mLinearView.findViewById(R.id.profile);
                         mLinearScrollSecond[i] = (LinearLayout) mLinearView.findViewById(R.id.linear_scroll);
 //
 //                        //checkes if menu is already opened or not
@@ -280,16 +285,27 @@ public class ReviewActivity extends AppCompatActivity implements RequestNotifier
 
                         msg.setText(mainList.get(i).getReviewString());
 
+
+                        if (!mainList.get(i).getProfilePic().equals("")) {
+                            String dp_path = getString(R.string.base_image_url) + mainList.get(i).getProfilePic();
+                            Glide.with(this)
+                                    .load(dp_path)
+                                    .centerCrop()
+                                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                    .placeholder(R.drawable.logo)
+                                    .into(profile);
+                        }
+
                         try {
                             TimeZone utc = TimeZone.getTimeZone("etc/UTC");
                             //format of date coming from services
-                            DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                            DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.getDefault());
                         /*DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",
                                 Locale.getDefault());*/
                             inputFormat.setTimeZone(utc);
 
                             //format of date which we want to show
-                            DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
+                            DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy hh:mm a", Locale.getDefault());
                         /*DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy hh:mm aa",
                                 Locale.getDefault());*/
                             outputFormat.setTimeZone(utc);
@@ -320,21 +336,32 @@ public class ReviewActivity extends AppCompatActivity implements RequestNotifier
                             View mLinearView2 = inflater2.inflate(R.layout.reply_layout, null);
 
                             TextView reply = (TextView) mLinearView2.findViewById(R.id.msgr);
+                            ImageView profilePic = (ImageView) mLinearView2.findViewById(R.id.profile);
 
                             TextView repdateNtime = (TextView) mLinearView2.findViewById(R.id.dateNtime);
                             reply.setText(mainList.get(i).getReplayMessage().get(j).getReplayString());
+
+                            if (!mainList.get(i).getReplayMessage().get(j).getProfilePic().equals("")) {
+                                String dp_path = getString(R.string.base_image_url) + mainList.get(i).getReplayMessage().get(j).getProfilePic();
+                                Glide.with(getApplicationContext())
+                                        .load(dp_path)
+                                        .centerCrop()
+                                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                        .placeholder(R.drawable.logo)
+                                        .into(profilePic);
+                            }
 
 
                             try {
                                 TimeZone utc = TimeZone.getTimeZone("etc/UTC");
                                 //format of date coming from services
-                                DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                                DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.getDefault());
                         /*DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",
                                 Locale.getDefault());*/
                                 inputFormat.setTimeZone(utc);
 
                                 //format of date which we want to show
-                                DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
+                                DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy hh:mm a", Locale.getDefault());
                         /*DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy hh:mm aa",
                                 Locale.getDefault());*/
                                 outputFormat.setTimeZone(utc);
@@ -343,7 +370,7 @@ public class ReviewActivity extends AppCompatActivity implements RequestNotifier
                                 //System.out.println("jjj"+date);
                                 String output = outputFormat.format(date);
                                 //System.out.println(mainList.get(i).getDate()+" jjj " + output);
-                                repdateNtime.setText(output);
+                                repdateNtime.setText(mainList.get(i).getReplayMessage().get(j).getUsername() + " replied " + output);
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
@@ -402,6 +429,7 @@ public class ReviewActivity extends AppCompatActivity implements RequestNotifier
             intent.putExtra("product_id", product_id);
             intent.putExtra("store_id", store_id);
             intent.putExtra("vehicle_id", vehicle_id);
+            intent.putExtra("contact", inComingContact);
             startActivity(intent);
         }
 

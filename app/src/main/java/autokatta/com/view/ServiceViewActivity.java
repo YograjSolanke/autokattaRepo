@@ -1331,6 +1331,7 @@ Get Admin data...
             case R.id.linearReview:
                 Intent intent = new Intent(ServiceViewActivity.this, ReviewActivity.class);
                 intent.putExtra("service_id", service_id);
+                intent.putExtra("contact", receiver_contact);
                 startActivity(intent);
 
                 break;

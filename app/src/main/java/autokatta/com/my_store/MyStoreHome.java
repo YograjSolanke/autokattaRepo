@@ -284,6 +284,7 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
             case R.id.add_review:
                 Intent intent2 = new Intent(getActivity(), ReviewActivity.class);
                 intent2.putExtra("store_id", store_id);
+                intent2.putExtra("contact", storeOtherContact);
                 startActivity(intent2);
                 break;
         }

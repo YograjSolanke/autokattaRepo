@@ -487,6 +487,7 @@ public class VehicleDetails extends AppCompatActivity implements RequestNotifier
             case R.id.review:
                 Intent intent = new Intent(VehicleDetails.this, ReviewActivity.class);
                 intent.putExtra("vehicle_id", mVehicle_Id);
+                intent.putExtra("contact", contact);
                 startActivity(intent);
                 break;
         }

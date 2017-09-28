@@ -1239,7 +1239,7 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
             case R.id.linearReview:
                 Intent intent = new Intent(ProductViewActivity.this, ReviewActivity.class);
                 intent.putExtra("product_id", product_id);
-                intent.putExtra("review_sender", contact);
+                intent.putExtra("contact", receiver_contact);
                 startActivity(intent);
 
                 break;
