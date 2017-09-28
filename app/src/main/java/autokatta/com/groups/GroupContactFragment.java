@@ -145,6 +145,28 @@ public class GroupContactFragment extends Fragment implements RequestNotifier {
                             }
                         }
                     }
+                }else if(call.equalsIgnoreCase("request"))
+                    {
+                        //For Group Which Doesn't Have Any Contact No In WebService
+                        if (cntlist.size() == 0) {
+                            flag = true;
+                        }
+
+                        //If Group Already Contains Selected Contact
+                        else {
+                            for (int i = 0; i < GetList.size(); i++) {
+                                String no = GetList.get(i);
+                                String[] parts = allcontacts.split(",");
+                                for (int j = 0; j < parts.length; j++) {
+                                    if (parts[j].contains(no)) {
+                                        CustomToast.customToast(getActivity(), "Sorry..No Is Already added in Group");
+                                        // showMessage(getActivity(),  "Sorry..No Is Already added in Group");
+
+                                        flag = false;
+                                    }
+                                }
+                            }
+                        }
                 }
                 if (!flag) {
                     Intent intent = new Intent(getActivity(), GroupsActivity.class);
@@ -154,7 +176,7 @@ public class GroupContactFragment extends Fragment implements RequestNotifier {
                     intent.putExtra("bundle_GroupName", bundle_GroupName);
                     getActivity().startActivity(intent);
 
-                } else if (flag) {
+                } else if (flag && !call.equalsIgnoreCase("request")) {
                     if (call.equalsIgnoreCase("newGroup")) {
                         allcontacts = allcontacts + "," + mContact;
                     }
@@ -167,6 +189,19 @@ public class GroupContactFragment extends Fragment implements RequestNotifier {
                             mApiCall.Like(mContact, receiver_contact, "3", 0, mGroup_id, 0, 0, 0, 0, 0);
                         }
                     }
+                }else if (flag && call.equalsIgnoreCase("request"))
+                {
+                    /*Request to add contact*/
+                   // mApiCall.addContactInGroup(mGroup_id, allcontacts);
+                    String[] parts = allcontacts.split(",");
+
+                    for (int i = 0; i < parts.length; i++) {
+                        receiver_contact = parts[i];
+                        if (!receiver_contact.equalsIgnoreCase(mContact)) {
+                         //   mApiCall.Like(mContact, receiver_contact, "3", 0, mGroup_id, 0, 0, 0, 0, 0);
+                        }
+                    }
+
                 }
             }
 
@@ -287,5 +322,7 @@ public class GroupContactFragment extends Fragment implements RequestNotifier {
         }
 
     }
+
+
 
 }

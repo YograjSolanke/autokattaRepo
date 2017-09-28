@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/relative"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:id="@+id/relImg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/pro_pic"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="7dp"
+                android:background="@drawable/logo"
+                android:contentDescription="@string/app_name"/>
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignBottom="@+id/pro_pic"
+                android:layout_marginStart="58dp"
+                android:contentDescription="@string/app_name"
+                android:src="@drawable/contact1" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/relContact"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/relImg">
+
+            <TextView
+                android:id="@+id/names"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="7dp"
+                android:text="@string/names"
+                android:textColor="#2C3343"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/contact"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/names"
+                android:layout_marginStart="7dp"
+                android:text="@string/number"
+                android:textColor="#2C3343"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/delete_member"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginEnd="5dp"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/contact"
+                android:layout_marginTop="15dp"
+                android:background="@color/background"
+                android:text="Add"
+                android:textColor="@color/white" />
+
+        </RelativeLayout>
+
+
+
+        <ImageView
+            android:id="@+id/cal_cnt"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginBottom="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:contentDescription="@string/app_name"
+            android:padding="7dp"
+            android:src="@mipmap/new_call" />
+
+    </RelativeLayout>
+
+
+    <View
+        android:id="@+id/vieww"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_below="@+id/relative"
+        android:background="@color/grey" />
+</RelativeLayout>

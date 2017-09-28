@@ -8,8 +8,6 @@ import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -29,7 +27,6 @@ import java.util.List;
 import autokatta.com.R;
 import autokatta.com.adapter.MemberListRefreshAdapter;
 import autokatta.com.apicall.ApiCall;
-import autokatta.com.interfaces.ItemClickListener;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.other.CustomToast;
@@ -37,10 +34,11 @@ import autokatta.com.response.GetGroupContactsResponse;
 import retrofit2.Response;
 
 /**
- * Created by ak-001 on 25/3/17.
+ * Created by ak-005 on 28/9/17.
  */
 
-public class MemberListFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, RequestNotifier, ItemClickListener {
+public class RequestedMembersList extends Fragment implements SwipeRefreshLayout.OnRefreshListener, RequestNotifier {
+
     View mMemberList;
     RecyclerView mRecyclerView;
     SwipeRefreshLayout mSwipeRefreshLayout;
@@ -59,14 +57,14 @@ public class MemberListFragment extends Fragment implements SwipeRefreshLayout.O
     boolean _hasLoadedOnce = false;
     Activity activity;
 
-    public MemberListFragment() {
+    public RequestedMembersList() {
         //empty constructor...
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mMemberList = inflater.inflate(R.layout.fragment_member_list, container, false);
+        mMemberList = inflater.inflate(R.layout.requested_members_list, container, false);
         return mMemberList;
     }
 
@@ -79,7 +77,7 @@ public class MemberListFragment extends Fragment implements SwipeRefreshLayout.O
             mApiCall.getGroupContacts(group_id);
         } else {
             if (isAdded())
-            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
+                CustomToast.customToast(getActivity(), getString(R.string.no_internet));
             //errorMessage(activity, getString(R.string.no_internet));
         }
     }
@@ -172,7 +170,7 @@ public class MemberListFragment extends Fragment implements SwipeRefreshLayout.O
         } else {
             mSwipeRefreshLayout.setRefreshing(false);
             if (isAdded())
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+                CustomToast.customToast(getActivity(), getString(R.string.no_response));
             //showMessage(activity, getString(R.string.no_response));
         }
     }
@@ -202,11 +200,11 @@ public class MemberListFragment extends Fragment implements SwipeRefreshLayout.O
             //   showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
             if (isAdded())
-            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
+                CustomToast.customToast(getActivity(), getString(R.string.no_internet));
             //   errorMessage(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
             if (isAdded())
-            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
+                CustomToast.customToast(getActivity(), getString(R.string.no_internet));
             //   errorMessage(getActivity(), getString(R.string.no_internet));
         } else {
             Log.i("Check Class-"
@@ -248,26 +246,11 @@ public class MemberListFragment extends Fragment implements SwipeRefreshLayout.O
             public void run() {
                 mTestConnection = new ConnectionDetector(getActivity());
                 mRecyclerView = (RecyclerView) mMemberList.findViewById(R.id.rv_recycler_view);
-                floatCreateGroup = (com.github.clans.fab.FloatingActionButton) mMemberList.findViewById(R.id.fab);
                 mSwipeRefreshLayout = (SwipeRefreshLayout) mMemberList.findViewById(R.id.swipeRefreshLayout);
-                mRequestedContacts = (Button) mMemberList.findViewById(R.id.requesttoadd);
                 mNoData = (TextView) mMemberList.findViewById(R.id.no_category);
                 mRecyclerView.setHasFixedSize(true);
                 //group_id = getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).getString("group_id", "");
-                bundle = getArguments();
-                if (bundle != null) {
-                    // group_id = bundle.getString("id");
-                    call = bundle.getString("call");
-                    System.out.println("Call in MemberList:" + call);
-                }
-                Bundle bundle = getArguments();
-                if (bundle != null) {
-                    mCallfrom = bundle.getString("grouptype");
-                    mGroupId = bundle.getInt("bundle_GroupId");
-                    bundle_GroupName = bundle.getString("bundle_GroupName");
-                    Log.i("Other", "->" + mCallfrom);
-                    Log.i("GroupId", "MemberList->" + mGroupId);
-                }
+
 
                 LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
                 mLayoutManager.setReverseLayout(true);
@@ -286,82 +269,6 @@ public class MemberListFragment extends Fragment implements SwipeRefreshLayout.O
                         getGroupContact(mGroupId);
                     }
                 });
-
-                //For Other Profile
-                if (mCallfrom.equalsIgnoreCase("OtherGroup") || mCallfrom.equalsIgnoreCase("JoinedGroups")) {
-                 //   floatCreateGroup.setVisibility(View.GONE);
-
-                    floatCreateGroup.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            GroupContactFragment fragment = new GroupContactFragment();
-                            Bundle b = new Bundle();
-                            b.putInt("bundle_GroupId", mGroupId);
-                            b.putString("bundle_GroupName", bundle_GroupName);
-                            b.putStringArrayList("list", (ArrayList<String>) ContactNoList);
-                            b.putString("call", "request");
-                            fragment.setArguments(b);
-
-                            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                            fragmentTransaction.replace(R.id.memberFrame, fragment);
-                            fragmentTransaction.addToBackStack("groupcontactfragment");
-                            fragmentTransaction.commit();
-                        }
-                    });
-
-                }else {
-
-                    floatCreateGroup.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            GroupContactFragment fragment = new GroupContactFragment();
-                            Bundle b = new Bundle();
-                            b.putInt("bundle_GroupId", mGroupId);
-                            b.putString("bundle_GroupName", bundle_GroupName);
-                            b.putStringArrayList("list", (ArrayList<String>) ContactNoList);
-                            b.putString("call", "existGroup");
-                            fragment.setArguments(b);
-
-                            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                            fragmentTransaction.replace(R.id.memberFrame, fragment);
-                            fragmentTransaction.addToBackStack("groupcontactfragment");
-                            fragmentTransaction.commit();
-                        }
-                    });
-                }
-                /*
-                On Scrolled Changed Listener...
-                 */
-
-                mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-                    @Override
-                    public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                        /*if (dy > 0 ||dy<0 && mFab.isShown())
-                            mFab.hide();*/
-                        if (dy > 0) {
-                            // Scroll Down
-                            if (floatCreateGroup.isShown()) {
-                                floatCreateGroup.hide(true);
-                            }
-                        } else if (dy < 0) {
-                            // Scroll Up
-                            if (!floatCreateGroup.isShown()) {
-                                floatCreateGroup.show(true);
-                            }
-                        }
-
-                    }
-
-                    @Override
-                    public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                        /*if (newState == RecyclerView.SCROLL_STATE_IDLE){
-                            mFab.show();
-                        }*/
-                        super.onScrollStateChanged(recyclerView, newState);
-                    }
-                });
             }
         });
         mSwipeRefreshLayout.setOnRefreshListener(this);
@@ -374,8 +281,4 @@ public class MemberListFragment extends Fragment implements SwipeRefreshLayout.O
         getGroupContact(mGroupId);
     }
 
-    @Override
-    public void onClick(View view, int position) {
-
-    }
 }

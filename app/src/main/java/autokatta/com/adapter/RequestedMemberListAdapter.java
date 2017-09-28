@@ -35,6 +35,7 @@ import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.GetGroupContactsResponse;
+import autokatta.com.response.GetGroupContactsResponse.Success;
 import autokatta.com.view.GroupsActivity;
 import autokatta.com.view.OtherProfile;
 import autokatta.com.view.UserProfile;
@@ -42,12 +43,12 @@ import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import retrofit2.Response;
 
 /**
- * Created by ak-001 on 25/3/17.
+ * Created by ak-005 on 28/9/17.
  */
 
-public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRefreshAdapter.MyViewHolder> implements RequestNotifier {
+public class RequestedMemberListAdapter extends RecyclerView.Adapter<RequestedMemberListAdapter.MyViewHolder> implements RequestNotifier {
     private Activity mActivity;
-    private List<GetGroupContactsResponse.Success> mItemList = new ArrayList<>();
+    private List<Success> mItemList = new ArrayList<>();
     private String mCallFrom;
     private String bundle_GroupName;
     private String myContact;
@@ -78,7 +79,7 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
         }
     }
 
-    public MemberListRefreshAdapter(Activity mActivity1, int GroupId,
+    public RequestedMemberListAdapter(Activity mActivity1, int GroupId,
                                     List<GetGroupContactsResponse.Success> mItemList, String mCallfrom, String bundle_GroupName,Button btnRequestedcontacts) {
         this.mActivity = mActivity1;
         mGroupId = GroupId;
@@ -91,7 +92,7 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
     }
 
     @Override
-    public MemberListRefreshAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RequestedMemberListAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // create a new view
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.custom_group_member_list, parent, false);
@@ -100,7 +101,7 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
     }
 
     @Override
-    public void onBindViewHolder(final MemberListRefreshAdapter.MyViewHolder holder, int position) {
+    public void onBindViewHolder(final RequestedMemberListAdapter.MyViewHolder holder, int position) {
         mView = holder;
         myContact = mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference),
                 Context.MODE_PRIVATE).getString("loginContact", "");
@@ -205,19 +206,10 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
                 }
             }
         }
-
-        /*Requested Member check if admin*/
-        if (mItemList.get(position).getMember().equals("Admin"))
-        {
-            mRequestedCntacts.setVisibility(View.VISIBLE);
-        }else
-        {
-            mRequestedCntacts.setVisibility(View.GONE);
-        }
         mRequestedCntacts.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-              CustomToast.customToast(mActivity,"Clicked----------------");
+
             }
         });
         holder.mCall.setOnClickListener(new OnClickListener() {
