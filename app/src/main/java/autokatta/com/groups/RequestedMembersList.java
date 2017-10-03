@@ -15,7 +15,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
 import java.net.ConnectException;
@@ -25,12 +24,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import autokatta.com.R;
-import autokatta.com.adapter.MemberListRefreshAdapter;
+import autokatta.com.adapter.RequestedMemberListAdapter;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.other.CustomToast;
-import autokatta.com.response.GetGroupContactsResponse;
+import autokatta.com.response.GetRequestedContactsResponse;
 import retrofit2.Response;
 
 /**
@@ -42,18 +41,14 @@ public class RequestedMembersList extends Fragment implements SwipeRefreshLayout
     View mMemberList;
     RecyclerView mRecyclerView;
     SwipeRefreshLayout mSwipeRefreshLayout;
-    com.github.clans.fab.FloatingActionButton floatCreateGroup;
-    List<GetGroupContactsResponse.Success> mSuccesses = new ArrayList<>();
+    List<GetRequestedContactsResponse.Success> mSuccesses = new ArrayList<>();
     List<String> ContactNoList;
-    MemberListRefreshAdapter mMemberListAdapter;
+    RequestedMemberListAdapter mMemberListAdapter;
     String call;
     Bundle bundle = new Bundle();
-    //String group_id;
-    String mCallfrom = "", bundle_GroupName = "";
     int mGroupId;
     TextView mNoData;
     ConnectionDetector mTestConnection;
-    Button mRequestedContacts;
     boolean _hasLoadedOnce = false;
     Activity activity;
 
@@ -74,7 +69,7 @@ public class RequestedMembersList extends Fragment implements SwipeRefreshLayout
     private void getGroupContact(int group_id) {
         if (mTestConnection.isConnectedToInternet()) {
             ApiCall mApiCall = new ApiCall(getActivity(), this);
-            mApiCall.getGroupContacts(group_id);
+            mApiCall.getRequestedContacts(group_id);
         } else {
             if (isAdded())
                 CustomToast.customToast(getActivity(), getString(R.string.no_internet));
@@ -95,20 +90,15 @@ public class RequestedMembersList extends Fragment implements SwipeRefreshLayout
                 String[] projection = new String[]{ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME,
                         ContactsContract.CommonDataKinds.Phone.NUMBER};
 
-                GetGroupContactsResponse mGetGroupContactsResponse = (GetGroupContactsResponse) response.body();
+                GetRequestedContactsResponse mGetGroupContactsResponse = (GetRequestedContactsResponse) response.body();
                 if (!mGetGroupContactsResponse.getSuccess().isEmpty()) {
                     mNoData.setVisibility(View.GONE);
-                    for (GetGroupContactsResponse.Success success : mGetGroupContactsResponse.getSuccess()) {
+                    for (GetRequestedContactsResponse.Success success : mGetGroupContactsResponse.getSuccess()) {
                         success.setUsername(success.getUsername());
+                        success.setRequestID(success.getRequestID());
                         success.setContact(success.getContact());
-                        success.setStatus(success.getStatus());
-                        success.setDp(success.getDp());
-                        success.setMember(success.getMember());
-                        success.setVehiclecount(success.getVehiclecount());
-                        success.setProductcount(success.getProductcount());
-                        success.setServicecount(success.getServicecount());
-                        if (success.getStatus() == null)
-                            success.setStatus("No Status");
+                        success.setProfilePic(success.getProfilePic());
+                        success.setGroupID(success.getGroupID());
 
                         success.setContact(success.getContact().replaceAll(" ", "").replaceAll(",", "").replaceAll("-", "").
                                 replace("(", "").replace(")", ""));
@@ -155,7 +145,7 @@ public class RequestedMembersList extends Fragment implements SwipeRefreshLayout
                         }
                         mSuccesses.add(success);
                     }
-                    mMemberListAdapter = new MemberListRefreshAdapter(getActivity(), mGroupId, mSuccesses, mCallfrom, bundle_GroupName,mRequestedContacts);
+                    mMemberListAdapter = new RequestedMemberListAdapter(getActivity(),mSuccesses);
                     mRecyclerView.setAdapter(mMemberListAdapter);
                     mMemberListAdapter.notifyDataSetChanged();
                 } else {
@@ -249,6 +239,8 @@ public class RequestedMembersList extends Fragment implements SwipeRefreshLayout
                 mSwipeRefreshLayout = (SwipeRefreshLayout) mMemberList.findViewById(R.id.swipeRefreshLayout);
                 mNoData = (TextView) mMemberList.findViewById(R.id.no_category);
                 mRecyclerView.setHasFixedSize(true);
+                Bundle b=getArguments();
+               mGroupId= b.getInt("bundle_GroupId");
                 //group_id = getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).getString("group_id", "");
 
 
@@ -258,6 +250,7 @@ public class RequestedMembersList extends Fragment implements SwipeRefreshLayout
                 mRecyclerView.setLayoutManager(mLayoutManager);
                 //getData();//Get Api...
 
+              //  getActivity().setTitle("Recived Requests To Add");
                 mSwipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
                         android.R.color.holo_green_light,
                         android.R.color.holo_orange_light,

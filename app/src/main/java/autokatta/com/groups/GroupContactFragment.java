@@ -192,7 +192,7 @@ public class GroupContactFragment extends Fragment implements RequestNotifier {
                 }else if (flag && call.equalsIgnoreCase("request"))
                 {
                     /*Request to add contact*/
-                   // mApiCall.addContactInGroup(mGroup_id, allcontacts);
+                    mApiCall.requestToAddMember(mGroup_id, allcontacts);
                     String[] parts = allcontacts.split(",");
 
                     for (int i = 0; i < parts.length; i++) {
@@ -315,7 +315,13 @@ public class GroupContactFragment extends Fragment implements RequestNotifier {
                 getActivity().startActivity(intent);*/
                     getActivity().getSupportFragmentManager().popBackStack();
                 }
-            } else {
+            }else   if (str.equalsIgnoreCase("sent_request")) {
+                if(isAdded())
+                CustomToast.customToast(getActivity(), "Request to Add Contact Sent");
+                getActivity().getSupportFragmentManager().popBackStack();
+
+            }else
+            {
                 if (isAdded())
                 CustomToast.customToast(getActivity(), "Error");
             }

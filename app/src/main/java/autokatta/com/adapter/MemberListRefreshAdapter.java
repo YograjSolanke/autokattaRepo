@@ -31,6 +31,7 @@ import java.util.List;
 import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.groups.MemberDetailTabs;
+import autokatta.com.groups.RequestedMembersList;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.other.CustomToast;
@@ -48,6 +49,7 @@ import retrofit2.Response;
 public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRefreshAdapter.MyViewHolder> implements RequestNotifier {
     private Activity mActivity;
     private List<GetGroupContactsResponse.Success> mItemList = new ArrayList<>();
+    private  List<Boolean> mCheckList=new ArrayList<>();
     private String mCallFrom;
     private String bundle_GroupName;
     private String myContact;
@@ -55,7 +57,7 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
     private ApiCall mApiCall;
     private MyViewHolder mView;
     private ConnectionDetector mTestConnection;
-    private Button mRequestedCntacts;
+    private com.github.clans.fab.FloatingActionButton mRequestedCntacts;
 
     static class MyViewHolder extends RecyclerView.ViewHolder {
         TextView mName, mContact, mVehicleCount, mAdmin, mproductcnt, mServicecnt;
@@ -79,7 +81,7 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
     }
 
     public MemberListRefreshAdapter(Activity mActivity1, int GroupId,
-                                    List<GetGroupContactsResponse.Success> mItemList, String mCallfrom, String bundle_GroupName,Button btnRequestedcontacts) {
+                                    List<GetGroupContactsResponse.Success> mItemList, String mCallfrom, String bundle_GroupName,com.github.clans.fab.FloatingActionButton btnRequestedcontacts) {
         this.mActivity = mActivity1;
         mGroupId = GroupId;
         this.mItemList = mItemList;
@@ -88,6 +90,7 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
         mApiCall = new ApiCall(mActivity, this);
         mTestConnection = new ConnectionDetector(mActivity);
         this.mRequestedCntacts= btnRequestedcontacts;
+        mCheckList.clear();
     }
 
     @Override
@@ -205,9 +208,16 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
                 }
             }
         }
-
         /*Requested Member check if admin*/
-        if (mItemList.get(position).getMember().equals("Admin"))
+        if (mItemList.get(position).getContact().equalsIgnoreCase(myContact) && mItemList.get(position).getMember().equalsIgnoreCase("Admin"))
+        {
+            mCheckList.add(true);
+        }else
+        {
+            mCheckList.add(false);
+        }
+
+        if (mCheckList.contains(true))
         {
             mRequestedCntacts.setVisibility(View.VISIBLE);
         }else
@@ -217,7 +227,14 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
         mRequestedCntacts.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-              CustomToast.customToast(mActivity,"Clicked----------------");
+                Bundle b=new Bundle();
+                b.putInt("bundle_GroupId", mGroupId);
+                RequestedMembersList mRequestedMembersList = new RequestedMembersList();
+                mRequestedMembersList.setArguments(b);
+                ((FragmentActivity) mActivity).getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.memberFrame, mRequestedMembersList, "requestedMemberList")
+                        .addToBackStack("MemberList")
+                        .commit();
             }
         });
         holder.mCall.setOnClickListener(new OnClickListener() {

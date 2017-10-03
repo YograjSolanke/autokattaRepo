@@ -512,8 +512,8 @@ public interface ServiceApi {
     Call<String> deleteGroup(@Query("GroupID") int group_id, @Query("Keyword") String keyword, @Query("Mycontact") String contact);
 
     //All Live Events
-    @GET("getAllLiveEvents.php")
-    Call<GetLiveEventsResponse> getLiveEvents(@Query("contact") String contact);
+    @GET("getAllLiveEvents")
+    Call<GetLiveEventsResponse> getLiveEvents(@Query("Contact") String contact);
 
     //All Live Loan Events
     @GET("GetAllLiveLoanEvents")
@@ -568,8 +568,8 @@ public interface ServiceApi {
     Call<GetLiveSaleEventsResponse> getGoingSaleEvents(@Query("Contact") String userName);
 
     //All Upcoming Events
-    @GET("getAllUpcomingEventsUpto50kms.php")
-    Call<GetLiveEventsResponse> getUpcomingEvents(@Query("contact") String userName);
+    @GET("GetAllUpcomingEventUpTo50Kms")
+    Call<GetLiveEventsResponse> getUpcomingEvents(@Query("Contact") String userName);
 
     //delete my search item
     @GET("DeleteUpdateMySearch")
@@ -1355,5 +1355,17 @@ public interface ServiceApi {
     //Vehicle offer chat
     @GET("GetVehicleOfferChat")
     Call<VehicleOfferRecivedResponse> getVehicleofferRecivedChat(@Query("MyContact") String MyContact);
+
+    //Add request to member
+    @POST("RequestToAddContacts")
+    Call<String> _autokattaRequestToAdd(@Query("GroupID") int GroupID,@Query("Contacts") String Contacts);
+
+ //get requested to member
+    @GET("GetRequestedContacts")
+    Call<GetRequestedContactsResponse> _autokattaGetRequestedContacts(@Query("GroupID") int GroupID);
+
+    //delete requested to member
+    @POST("RemoveRequestAfterAccept")
+    Call<String> _autokattaDeleteRequestedContacts(@Query("RequestedID") int RequestedID);
 
 }
