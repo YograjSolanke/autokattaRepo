@@ -22,7 +22,6 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -51,6 +50,7 @@ import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.fragment.UploadedVehicleBuyerList;
 import autokatta.com.generic.SetMyDateAndTime;
+import autokatta.com.initial_fragment.AddSoldVehicle;
 import autokatta.com.initial_fragment.CreateGroupFragment;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.interfaces.ServiceApi;
@@ -553,7 +553,20 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
                                     .setMessage("Are you sure you want to sale this vehicle?")
                                     .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int which) {
-                                            View view = activity.getLayoutInflater().inflate(R.layout.custom_sold_vehicle_info, null);
+
+                                            AddSoldVehicle vehicle = new AddSoldVehicle();
+                                            Bundle bundle = new Bundle();
+                                            bundle.putInt("getVehicleId", mMainList.get(holder.getAdapterPosition()).getVehicleId());
+                                            vehicle.setArguments(bundle);
+
+                                            ((FragmentActivity) activity).getSupportFragmentManager().beginTransaction()
+                                                    .replace(R.id.myUsedVehicleFrame, vehicle, "addSoldVehicle")
+                                                    .addToBackStack("addSoldVehicle")
+                                                    .commit();
+
+                                            mMainList.remove(holder.getAdapterPosition());
+                                            notifyDataSetChanged();
+                                            /*View view = activity.getLayoutInflater().inflate(R.layout.custom_sold_vehicle_info, null);
                                             final EditText mCustomerName = (EditText) view.findViewById(R.id.customer_name);
                                             final EditText mContact = (EditText) view.findViewById(R.id.contact);
                                             final EditText mAddress = (EditText) view.findViewById(R.id.address);
@@ -561,7 +574,7 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
                                             final EditText mSellingPrice = (EditText) view.findViewById(R.id.selling_price);
                                             Button mSave = (Button) view.findViewById(R.id.submit);
                                             ImageView mClose = (ImageView) view.findViewById(R.id.close);
-                                            //ImageView mContactList = (ImageView) view.findViewById(R.id.contact_list);
+                                            ImageView mContactList = (ImageView) view.findViewById(R.id.contact_list);
                                             mLocation.setAdapter(new GooglePlacesAdapter(activity, R.layout.registration_spinner));
 
                                             final Dialog mBottomSheetDialog = new Dialog(activity, R.style.MaterialDialogSheet);
@@ -578,13 +591,12 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
                                                 }
                                             });
 
-                                   /* mContactList.setOnClickListener(new OnClickListener() {
-                                        @Override
-                                        public void onClick(View v) {
-                                            Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
-                                            activity.startActivityForResult(intent, REQUEST_CODE);
-                                        }
-                                    });*/
+                                            mContactList.setOnClickListener(new OnClickListener() {
+                                                @Override
+                                                public void onClick(View v) {
+
+                                                }
+                                            });
 
                                             mSave.setOnClickListener(new OnClickListener() {
                                                 @Override
@@ -598,7 +610,7 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
                                                     mMainList.remove(holder.getAdapterPosition());
                                                     notifyDataSetChanged();
                                                 }
-                                            });
+                                            });*/
                                         }
                                     })
 

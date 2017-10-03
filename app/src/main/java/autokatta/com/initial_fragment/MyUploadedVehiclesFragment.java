@@ -212,5 +212,4 @@ public class MyUploadedVehiclesFragment extends Fragment implements RequestNotif
     public void notifyString(String str) {
 
     }
-
 }

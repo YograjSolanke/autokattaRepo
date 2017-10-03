@@ -3,24 +3,14 @@
     android:id="@+id/popup_window"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_gravity="bottom|center"
-    android:background="@android:color/white"
     android:orientation="vertical"
     android:padding="10dp">
-
-    <ImageView
-        android:id="@+id/close"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end"
-        android:contentDescription="@string/app_name"
-        android:src="@android:drawable/ic_menu_close_clear_cancel" />
 
     <EditText
         android:id="@+id/customer_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Customer Name"
+        android:hint="@string/names"
         android:inputType="text"
         android:labelFor="@+id/transfer_date"
         android:textAppearance="?android:attr/textAppearanceMedium" />
@@ -35,13 +25,13 @@
             android:id="@+id/contact"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Contact"
+            android:hint="@string/contact_no"
             android:maxLength="10"
             android:inputType="phone"
             android:labelFor="@+id/transfer_date"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
-        <!--<LinearLayout
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true">
@@ -53,21 +43,21 @@
                 android:contentDescription="@string/app_name"
                 android:src="@drawable/ic_contact_phone_black_24dp"
                 android:visibility="visible" />
-        </LinearLayout>-->
+        </LinearLayout>
     </RelativeLayout>
 
     <AutoCompleteTextView
         android:id="@+id/autoAddress"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Location"
+        android:hint="@string/location"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <EditText
         android:id="@+id/address"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Address"
+        android:hint="@string/address"
         android:inputType="text"
         android:labelFor="@+id/transfer_date"
         android:textAppearance="?android:attr/textAppearanceMedium" />

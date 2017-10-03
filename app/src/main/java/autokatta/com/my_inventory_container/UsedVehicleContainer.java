@@ -23,8 +23,8 @@ public class UsedVehicleContainer extends AppCompatActivity {
             public void run() {
                 try {
                     getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.myUsedVehicleFrame, new MyUploadedVehiclesFragment(), "myUsedVehicleFrame")
-                            //.addToBackStack("MyUploadedVehicleTabs")
+                            .replace(R.id.myUsedVehicleFrame, new MyUploadedVehiclesFragment(), "MyUploadedVehiclesFragment")
+                            .addToBackStack("MyUploadedVehiclesFragment")
                             .commit();
                 } catch (Exception e) {
                     e.printStackTrace();
