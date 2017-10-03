@@ -1,5 +1,6 @@
 package autokatta.com.fragment;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -26,7 +27,6 @@ import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -48,9 +48,8 @@ import retrofit2.Response;
  * Created by ak-003 on 21/4/17.
  */
 public class SellerNotificationFragment extends Fragment implements RequestNotifier {
-    public SellerNotificationFragment() {
-    }
 
+    View mSellerView;
     public List<SellerResponse.Success.SavedSearch> mainList = new ArrayList<>();
     public List<SellerResponse.Success.MatchedResult> childlist;
     private LinearLayout mLinearListView;
@@ -61,22 +60,40 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
     Button compare;
     String getBundle_vehicle_id = "";
     ApiCall mApiCall;
+    boolean _hasLoadedOnce = false;
+    private ProgressDialog dialog;
+
+    public SellerNotificationFragment() {
+        //Empty constructor
+    }
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater infl, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        mSellerView = inflater.inflate(R.layout.example, container, false);
+        return mSellerView;
+    }
 
-        View view = infl.inflate(R.layout.example, container, false);
-
-        mLinearListView = (LinearLayout) view.findViewById(R.id.linear_ListView);
-
-        relativeLayout = (RelativeLayout) view.findViewById(R.id.tablerow1);
-        compare = (Button) view.findViewById(R.id.conpare);
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         mApiCall = new ApiCall(getActivity(), this);
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                dialog = new ProgressDialog(getActivity());
+                dialog.setMessage("Loading Seller...");
+                mLinearListView = (LinearLayout) mSellerView.findViewById(R.id.linear_ListView);
+                relativeLayout = (RelativeLayout) mSellerView.findViewById(R.id.tablerow1);
+                compare = (Button) mSellerView.findViewById(R.id.conpare);
 
-        myContact = getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).
-                getString("loginContact", "");
-        mApiCall.getSavedSearchSellerList(myContact);
+                myContact = getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).
+                        getString("loginContact", "");
+
+                getSavedSearchSellerList(myContact);
+            }
+        });
+
 
         compare.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,8 +104,24 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
                 getActivity().startActivity(intent);
             }
         });
+    }
 
-        return view;
+    private void getSavedSearchSellerList(String myContact) {
+        dialog.show();
+        mApiCall.getSavedSearchSellerList(myContact);
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        // Make sure that we are currently visible
+        if (this.isVisible()) {
+            // If we are becoming invisible, then...
+            if (isVisibleToUser && !_hasLoadedOnce) {
+                getSavedSearchSellerList(myContact);
+                _hasLoadedOnce = true;
+            }
+        }
     }
 
     public void setViewsVisible(int s) {
@@ -107,7 +140,10 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
     @Override
     public void notifySuccess(Response<?> response) {
         DateFormat f = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.getDefault());
-        if (response.isSuccessful()) {
+        if (response != null) {
+            if (dialog.isShowing()) {
+                dialog.dismiss();
+            }
             if (response.isSuccessful()) {
                 Log.i("seller Response", "" + response);
                 SellerResponse object = (SellerResponse) response.body();
@@ -132,28 +168,31 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
                     obj.setInsuranceValid(obj.getInsuranceValid());
                     obj.setHpcapacity(obj.getHpcapacity());
 
-                    try {
-                        TimeZone utc = TimeZone.getTimeZone("etc/UTC");
-                        //format of date coming from services
-                        DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                    if (!obj.getDate().equalsIgnoreCase("")) {
+                        try {
+                            TimeZone utc = TimeZone.getTimeZone("etc/UTC");
+                            //format of date coming from services
+                            DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
                         /*DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",
                                 Locale.getDefault());*/
-                        inputFormat.setTimeZone(utc);
+                            inputFormat.setTimeZone(utc);
 
-                        //format of date which we want to show
-                        DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
+                            //format of date which we want to show
+                            DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
                         /*DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy hh:mm aa",
                                 Locale.getDefault());*/
-                        outputFormat.setTimeZone(utc);
+                            outputFormat.setTimeZone(utc);
 
-                        Date date = inputFormat.parse(obj.getDate());
-                        //System.out.println("jjj"+date);
-                        String output = outputFormat.format(date);
-                        //System.out.println(mainList.get(i).getDate()+" jjj " + output);
-                        obj.setDate(output);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+                            Date date = inputFormat.parse(obj.getDate());
+                            //System.out.println("jjj"+date);
+                            String output = outputFormat.format(date);
+                            //System.out.println(mainList.get(i).getDate()+" jjj " + output);
+                            obj.setDate(output);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    } else
+                        obj.setDate("");
 
                     for (SellerResponse.Success.MatchedResult objectmatch : objsuccess.getMatchedResult()) {
                         if (obj.getSearchId().equals(objectmatch.getSearchId())) {
@@ -175,7 +214,7 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
                             objectmatch.setHpCapacity(objectmatch.getHpCapacity());
                             objectmatch.setTitle(objectmatch.getTitle());
 
-                            Date d = null, d1 = null;
+                            /*Date d = null, d1 = null;
                             try {
                                 d = f.parse(objectmatch.getLastcall());
                                 d1 = f.parse(objectmatch.getDate());
@@ -183,45 +222,51 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
                                 e.printStackTrace();
                             }
                             objectmatch.setLastCallDateNew(d);
-                            objectmatch.setUploaddate(d1);
+                            objectmatch.setUploaddate(d1);*/
 
                             //to set buyer last call date
-                            try {
-                                TimeZone utc = TimeZone.getTimeZone("etc/UTC");
-                                //format of date coming from services
-                                DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-                                inputFormat.setTimeZone(utc);
+                            if (!objectmatch.getLastcall().equalsIgnoreCase("")) {
+                                try {
+                                    TimeZone utc = TimeZone.getTimeZone("etc/UTC");
+                                    //format of date coming from services
+                                    DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                                    inputFormat.setTimeZone(utc);
 
-                                //format of date which we want to show
-                                DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
-                                outputFormat.setTimeZone(utc);
+                                    //format of date which we want to show
+                                    DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
+                                    outputFormat.setTimeZone(utc);
 
-                                Date date = inputFormat.parse(objectmatch.getLastcall());
-                                String output = outputFormat.format(date);
+                                    Date date = inputFormat.parse(objectmatch.getLastcall());
+                                    String output = outputFormat.format(date);
 
-                                objectmatch.setLastcall(output);
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
+                                    objectmatch.setLastcall(output);
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            } else
+                                objectmatch.setLastcall("");
 
                             //to set vehicle uploaded date
-                            try {
-                                TimeZone utc = TimeZone.getTimeZone("etc/UTC");
-                                //format of date coming from services
-                                DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-                                inputFormat.setTimeZone(utc);
+                            if (!objectmatch.getDate().equalsIgnoreCase("")) {
+                                try {
+                                    TimeZone utc = TimeZone.getTimeZone("etc/UTC");
+                                    //format of date coming from services
+                                    DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                                    inputFormat.setTimeZone(utc);
 
-                                //format of date which we want to show
-                                DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
-                                outputFormat.setTimeZone(utc);
+                                    //format of date which we want to show
+                                    DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
+                                    outputFormat.setTimeZone(utc);
 
-                                Date date = inputFormat.parse(objectmatch.getDate());
-                                String output = outputFormat.format(date);
+                                    Date date = inputFormat.parse(objectmatch.getDate());
+                                    String output = outputFormat.format(date);
 
-                                objectmatch.setDate(output);
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
+                                    objectmatch.setDate(output);
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            } else
+                                objectmatch.setDate("");
 
                             childlist.add(objectmatch);
                         }
@@ -630,6 +675,8 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
                     mLinearListView.addView(mLinearView);
                 }
             }
+        } else {
+            dialog.setMessage("No Seller data");
         }
     }
 

@@ -1,10 +1,12 @@
 package autokatta.com.fragment;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,7 +25,6 @@ import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -45,8 +46,6 @@ import retrofit2.Response;
  */
 
 public class BuyerNotificationFragment extends Fragment implements RequestNotifier {
-    public BuyerNotificationFragment() {
-    }
 
     public List<BuyerResponse.Success.Vehicle> mainList = new ArrayList<>();
     public List<BuyerResponse.Success.Found> childlist;
@@ -56,26 +55,70 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
     String recieverContact;
     LinearLayout mLinearScrollSecond[];
     ApiCall mApiCall;
+    View mBuyerView;
+    boolean _hasLoadedOnce = false;
+    private ProgressDialog dialog;
+
+    public BuyerNotificationFragment() {
+        //Empty constructor
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        mBuyerView = inflater.inflate(R.layout.example, container, false);
+        return mBuyerView;
+    }
 
     @Override
-    public View onCreateView(LayoutInflater infl, ViewGroup container, Bundle savedInstanceState) {
-        View view = infl.inflate(R.layout.example, container, false);
-        mLinearListView = (LinearLayout) view.findViewById(R.id.linear_ListView);
-        mApiCall = new ApiCall(getActivity(), this);
-        myContact = getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).
-                getString("loginContact", "");
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
-        mApiCall.getUploadedVehicleBuyerlist(myContact);
-        return view;
+        mApiCall = new ApiCall(getActivity(), this);
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                dialog = new ProgressDialog(getActivity());
+                dialog.setMessage("Loading Buyer...");
+
+                mLinearListView = (LinearLayout) mBuyerView.findViewById(R.id.linear_ListView);
+                myContact = getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).
+                        getString("loginContact", "");
+
+                getUploadedVehicleBuyerlist(myContact);
+            }
+        });
     }
+
+    private void getUploadedVehicleBuyerlist(String myContact) {
+        dialog.show();
+        mApiCall.getUploadedVehicleBuyerlist(myContact);
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        // Make sure that we are currently visible
+        if (this.isVisible()) {
+            // If we are becoming invisible, then...
+            if (isVisibleToUser && !_hasLoadedOnce) {
+                getUploadedVehicleBuyerlist(myContact);
+                _hasLoadedOnce = true;
+            }
+        }
+    }
+
 
     @Override
     public void notifySuccess(Response<?> response) {
         DateFormat f = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.getDefault());
-        if (response.isSuccessful()) {
+        if (response != null) {
 
+            if (dialog.isShowing()) {
+                dialog.dismiss();
+            }
             if (response.isSuccessful()) {
-                Log.i("seller Response", "" + response);
+                Log.i("buyer Response", "" + response);
                 BuyerResponse object = (BuyerResponse) response.body();
                 BuyerResponse.Success objsuccess = object.getSuccess();
 
@@ -104,24 +147,27 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
                     obj.setInsuranceValid(obj.getInsuranceValid());
                     obj.setHpCapacity(obj.getHpCapacity());
 
-                    try {
-                        TimeZone utc = TimeZone.getTimeZone("etc/UTC");
+                    if (!obj.getDate().equalsIgnoreCase("")) {
+                        try {
+                            TimeZone utc = TimeZone.getTimeZone("etc/UTC");
 
-                        DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd",
-                                Locale.getDefault());
-                        inputFormat.setTimeZone(utc);
+                            DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd",
+                                    Locale.getDefault());
+                            inputFormat.setTimeZone(utc);
 
-                        DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy",
-                                Locale.getDefault());
-                        outputFormat.setTimeZone(utc);
+                            DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy",
+                                    Locale.getDefault());
+                            outputFormat.setTimeZone(utc);
 
-                        Date date = inputFormat.parse(obj.getDate());
-                        String output = outputFormat.format(date);
-                        System.out.println("jjj" + output);
-                        obj.setDate(output);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+                            Date date = inputFormat.parse(obj.getDate());
+                            String output = outputFormat.format(date);
+                            System.out.println("jjj" + output);
+                            obj.setDate(output);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    } else
+                        obj.setDate("");
 
                     for (BuyerResponse.Success.Found objectmatch : objsuccess.getFound()) {
 
@@ -146,33 +192,36 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
                             objectmatch.setInsuranceValid(objectmatch.getInsuranceValid());
                             objectmatch.setHpcapacity(objectmatch.getHpcapacity());
 
-                            Date d = null;
+                           /* Date d = null;
                             try {
                                 d = f.parse(objectmatch.getLastcall());
                             } catch (ParseException e) {
                                 e.printStackTrace();
                             }
 
-                            objectmatch.setLastCallDateNew(d);
+                            objectmatch.setLastCallDateNew(d);*/
 
-                            try {
-                                TimeZone utc = TimeZone.getTimeZone("etc/UTC");
+                            if (!objectmatch.getLastcall().equalsIgnoreCase("")) {
+                                try {
+                                    TimeZone utc = TimeZone.getTimeZone("etc/UTC");
 
-                                DateFormat inputFormat = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss a",
-                                        Locale.getDefault());
-                                inputFormat.setTimeZone(utc);
+                                    DateFormat inputFormat = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss a",
+                                            Locale.getDefault());
+                                    inputFormat.setTimeZone(utc);
 
-                                DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy hh:mm a",
-                                        Locale.getDefault());
-                                outputFormat.setTimeZone(utc);
+                                    DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy hh:mm a",
+                                            Locale.getDefault());
+                                    outputFormat.setTimeZone(utc);
 
-                                Date date = inputFormat.parse(objectmatch.getLastcall());
-                                String output = outputFormat.format(date);
-                                System.out.println("last call" + output);
-                                objectmatch.setLastcall(output);
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
+                                    Date date = inputFormat.parse(objectmatch.getLastcall());
+                                    String output = outputFormat.format(date);
+                                    System.out.println("last call" + output);
+                                    objectmatch.setLastcall(output);
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            } else
+                                objectmatch.setLastcall("");
 
                             childlist.add(objectmatch);
 
@@ -574,6 +623,8 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
                     mLinearListView.addView(mLinearView);
                 }
             }
+        } else {
+            dialog.setMessage("No Buyer data");
         }
 
     }
