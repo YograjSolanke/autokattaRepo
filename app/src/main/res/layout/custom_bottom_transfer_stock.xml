@@ -3,18 +3,8 @@
     android:id="@+id/popup_window"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_gravity="bottom|center"
-    android:background="@android:color/white"
     android:orientation="vertical"
     android:padding="10dp">
-
-    <ImageView
-        android:id="@+id/close"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end"
-        android:contentDescription="@string/app_name"
-        android:src="@android:drawable/ic_menu_close_clear_cancel" />
 
     <EditText
         android:id="@+id/owner_name"
@@ -24,13 +14,34 @@
         android:labelFor="@+id/owner_name"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
-    <EditText
-        android:id="@+id/contact_no"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Contact Number"
-        android:labelFor="@+id/contact_no"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:layout_marginTop="@dimen/layout_top"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/contact_no"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Contact Number"
+            android:labelFor="@+id/contact_no"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true">
+
+            <ImageView
+                android:id="@+id/contact_list"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/app_name"
+                android:src="@drawable/ic_contact_phone_black_24dp"
+                android:visibility="visible" />
+        </LinearLayout>
+    </RelativeLayout>
 
     <EditText
         android:id="@+id/transfer_date"

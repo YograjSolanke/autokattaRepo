@@ -51,6 +51,7 @@ import autokatta.com.apicall.ApiCall;
 import autokatta.com.fragment.UploadedVehicleBuyerList;
 import autokatta.com.generic.SetMyDateAndTime;
 import autokatta.com.initial_fragment.AddSoldVehicle;
+import autokatta.com.initial_fragment.AddTransferVehicle;
 import autokatta.com.initial_fragment.CreateGroupFragment;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.interfaces.ServiceApi;
@@ -357,7 +358,7 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
                     @Override
                     public void onClick(View v) {
                         mBottomSheetDialog.dismiss();
-                        View view = activity.getLayoutInflater().inflate(R.layout.custom_bottom_transfer_stock, null);
+                        /*View view = activity.getLayoutInflater().inflate(R.layout.custom_bottom_transfer_stock, null);
                         EditText txtBackup = (EditText) view.findViewById(R.id.owner_name);
                         EditText txtDetail = (EditText) view.findViewById(R.id.contact_no);
                         EditText txtOpen = (EditText) view.findViewById(R.id.transfer_date);
@@ -377,7 +378,13 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
                             public void onClick(View v) {
                                 mBottomSheetDialog.dismiss();
                             }
-                        });
+                        });*/
+                        AddTransferVehicle vehicle = new AddTransferVehicle();
+
+                        ((FragmentActivity) activity).getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.myUsedVehicleFrame, vehicle, "addTransferVehicle")
+                                .addToBackStack("addTransferVehicle")
+                                .commit();
                     }
                 });
 

@@ -56,7 +56,7 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
     AutoCompleteTextView autoAddress;
     Spinner spnInventory, spnStatus;
     String myContact;
-    LinearLayout txtUser, txtInvite,mInventory;
+    LinearLayout txtUser, txtInvite, mInventory;
     ImageView imgContact;
     RelativeLayout mRelative;
     android.support.v4.widget.NestedScrollView scrollView;
@@ -68,7 +68,7 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
     String fullpath = "";
     Dialog mBottomSheetDialog;
     //int mSId,mVId,mPId;
-    String mId,mKeyword,mTitle,mPrice,mCategory,mBrand,mModel,mClassname,mImage;
+    String mId, mKeyword, mTitle, mPrice, mCategory, mBrand, mModel, mClassname, mImage;
     private final int REQUEST_CODE = 99;
     Button mSubmit;
 
@@ -103,7 +103,7 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
                 imgContact = (ImageView) findViewById(R.id.contact_list);
                 txtInvite = (LinearLayout) findViewById(R.id.txtInvite);
                 mInventory = (LinearLayout) findViewById(R.id.selctinventory);
-                mSubmit= (Button) findViewById(R.id.sub);
+                mSubmit = (Button) findViewById(R.id.sub);
 
 
                 RadioGroup mRadioGroup = (RadioGroup) findViewById(R.id.exchange);
@@ -200,18 +200,18 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
                     edtContact.setSelection(edtContact.getText().length());
 
 
-                   mKeyword= getIntent().getExtras().getString("keyword");
+                    mKeyword = getIntent().getExtras().getString("keyword");
                     Keyword.setText(mKeyword);
                     Category.setText(getIntent().getExtras().getString("category"));
                     Title.setText(getIntent().getExtras().getString("title"));
                     Brand.setText(getIntent().getExtras().getString("brand"));
                     Model.setText(getIntent().getExtras().getString("model"));
                     price.setText(getIntent().getExtras().getString("price"));
-                    mImage=getIntent().getExtras().getString("image","");
-                    mId= String.valueOf(getIntent().getExtras().getInt("id"));
-                    mClassname=getIntent().getExtras().getString("classname");
+                    mImage = getIntent().getExtras().getString("image", "");
+                    mId = String.valueOf(getIntent().getExtras().getInt("id"));
+                    mClassname = getIntent().getExtras().getString("classname");
 
-                    if (getIntent().getExtras().getString("keyword","").equalsIgnoreCase("Products")) {
+                    if (getIntent().getExtras().getString("keyword", "").equalsIgnoreCase("Products")) {
                         relBrand.setVisibility(View.GONE);
                         relModel.setVisibility(View.GONE);
                         if (!mImage.equals("") && !mImage.equals("null")) {
@@ -226,7 +226,7 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
                         } else {
                             Image.setImageResource(R.drawable.logo);
                         }
-                    } else if (getIntent().getExtras().getString("keyword","").equalsIgnoreCase("Services")) {
+                    } else if (getIntent().getExtras().getString("keyword", "").equalsIgnoreCase("Services")) {
                         relCategory.setVisibility(View.GONE);
                         relBrand.setVisibility(View.GONE);
                         relModel.setVisibility(View.GONE);
@@ -242,7 +242,7 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
                         } else {
                             Image.setImageResource(R.drawable.logo);
                         }
-                    } else if (getIntent().getExtras().getString("keyword","").equalsIgnoreCase("Used Vehicle")) {
+                    } else if (getIntent().getExtras().getString("keyword", "").equalsIgnoreCase("Used Vehicle")) {
                         if (!mImage.equals("") && !mImage.equals("null")) {
                             fullpath = getString(R.string.base_image_url) + mImage;
                             fullpath = fullpath.replaceAll(" ", "%20");
@@ -261,13 +261,13 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
                         public void onClick(View view) {
                             String custInventoryType = "", custEnquiryStatus = "";
                             Boolean flag = false;
-                          //  int strPos = spnInventory.getSelectedItemPosition();
+                            //  int strPos = spnInventory.getSelectedItemPosition();
                             int strPos1 = spnStatus.getSelectedItemPosition();
                             String custName = edtName.getText().toString();
                             String custContact = edtContact.getText().toString();
                             String custAddress = autoAddress.getText().toString();
                             String custFullAddress = edtAddress.getText().toString();
-                            custInventoryType=mKeyword;
+                            custInventoryType = mKeyword;
 /*
                             if (strPos != 0) {
                                 custInventoryType = spnInventory.getSelectedItem().toString();
@@ -288,7 +288,7 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
                                         flag = true;
                                         break;
                                     } else {
-                                        CustomToast.customToast(AddManualEnquiry.this,"Please Select Valid Address ");
+                                        CustomToast.customToast(AddManualEnquiry.this, "Please Select Valid Address ");
                                         flag = false;
                                     }
                                 }
@@ -312,7 +312,7 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
                             } /*else if (spnInventory.getSelectedItemPosition() == 0 && custInventoryType.equalsIgnoreCase("")) {
                                 CustomToast.customToast(getApplicationContext(), "Please provide inventory");
                                 spnInventory.requestFocus();
-                            } */else if (spnStatus.getSelectedItemPosition() == 0) {
+                            } */ else if (spnStatus.getSelectedItemPosition() == 0) {
                                 CustomToast.customToast(getApplicationContext(), "Please provide status");
                                 spnStatus.requestFocus();
                             } /*else if (discussion.equals("")) {
@@ -322,11 +322,11 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
                                 edtDate.setError("Enter Date");
                                 edtDate.requestFocus();
                             } else {
-                                    AddEnquiryData(custName, custContact, custAddress, custFullAddress, custInventoryType, custEnquiryStatus,
-                                            discussion, nextFollowupDate, mId);
-                                }
-
+                                AddEnquiryData(custName, custContact, custAddress, custFullAddress, custInventoryType, custEnquiryStatus,
+                                        discussion, nextFollowupDate, mId);
                             }
+
+                        }
                     });
                 }
 
@@ -519,10 +519,10 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
                     bundle.putString("discussion", discussion);
                     bundle.putString("nextFollowupDate", nextFollowupDate);
 
-                        ActivityOptions options = ActivityOptions.makeCustomAnimation(AddManualEnquiry.this, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
-                        Intent intent = new Intent(getApplicationContext(), ManualEnquiryVehicleList.class);
-                        intent.putExtras(bundle);
-                        startActivity(intent, options.toBundle());
+                    ActivityOptions options = ActivityOptions.makeCustomAnimation(AddManualEnquiry.this, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
+                    Intent intent = new Intent(getApplicationContext(), ManualEnquiryVehicleList.class);
+                    intent.putExtras(bundle);
+                    startActivity(intent, options.toBundle());
 
 
                 }
