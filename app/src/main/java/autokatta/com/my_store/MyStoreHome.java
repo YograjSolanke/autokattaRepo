@@ -303,6 +303,28 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
         }
     }
 
+    private void getCallContactList() {
+
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity());
+// ...Irrelevant code for customizing the buttons and title
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.admin_contact_call_layout, null);
+        dialogBuilder.setView(dialogView);
+
+        RecyclerView recyclerView = (RecyclerView) dialogView.findViewById(R.id.listview);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setHasFixedSize(true);
+
+
+        AlertDialog alertDialog = dialogBuilder.create();
+
+        adapter = new AdminCallContactAdapter(getActivity(), storeAdmins);
+        recyclerView.setAdapter(adapter);
+        alertDialog.show();
+
+    }
+
     @Override
     public void notifySuccess(Response<?> response) {
         if (dialog.isShowing()) {
@@ -522,23 +544,6 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
         }
     }
 
-    //call list of admin contacts
-    public void createCotactsList() {
-        final AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
-        LayoutInflater inflater = getActivity().getLayoutInflater();
-        View convertView = inflater.inflate(R.layout.custom_store_rate_layout, null);
-        alertDialog.setView(convertView);
-        final AlertDialog alert = alertDialog.show();
-        alert.setTitle("Rate This Store");
-
-        convertView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                v.getParent().requestDisallowInterceptTouchEvent(true);
-                return false;
-            }
-        });
-    }
 
     /*
     Rate Store...
@@ -755,27 +760,7 @@ public class MyStoreHome extends Fragment implements View.OnClickListener, Reque
         startActivity(intent);
     }
 
-    private void getCallContactList() {
 
-        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity());
-// ...Irrelevant code for customizing the buttons and title
-        LayoutInflater inflater = getActivity().getLayoutInflater();
-        View dialogView = inflater.inflate(R.layout.admin_contact_call_layout, null);
-        dialogBuilder.setView(dialogView);
-
-        RecyclerView recyclerView = (RecyclerView) dialogView.findViewById(R.id.listview);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setHasFixedSize(true);
-
-
-        AlertDialog alertDialog = dialogBuilder.create();
-
-        adapter = new AdminCallContactAdapter(getActivity(), storeAdmins);
-        recyclerView.setAdapter(adapter);
-        alertDialog.show();
-
-    }
 
 
 }

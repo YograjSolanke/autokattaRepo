@@ -1,0 +1,489 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:id="@+id/mainScroll"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="autokatta.com.view.StoreInfoActivity"
+    tools:showIn="@layout/activity_store_info">
+
+    <RelativeLayout
+        android:id="@+id/info_home"
+        android:layout_width="368dp"
+        android:layout_height="wrap_content"
+        tools:layout_editor_absoluteY="0dp"
+        tools:layout_editor_absoluteX="8dp">
+
+        <ImageView
+            android:id="@+id/editStore"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="10dp"
+            android:contentDescription="@string/app_name"
+            android:src="@mipmap/ic_edit"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/enquiry"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginEnd="10dp"
+            android:layout_toStartOf="@+id/editStore"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/ic_comment_question_outline"
+            android:visibility="gone" />
+
+        <RelativeLayout
+            android:id="@+id/relativetitle"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/editStore"
+            android:visibility="visible">
+
+
+            <RelativeLayout
+                android:id="@+id/relativestorename"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/txtstorename"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/store_name"
+                    android:textColor="@color/textColor"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/editstname"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/txtstorename"
+                    android:layout_marginTop="5dp"
+                    android:hint="@string/names"
+                    android:maxLength="25"
+                    android:textColor="#000000"
+                    android:textColorHint="#848484"
+                    android:textSize="15sp" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.1dp"
+                android:layout_below="@+id/relativestorename"
+                android:background="@color/black" />
+
+
+            <RelativeLayout
+                android:id="@+id/relativestoreOwner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/relativestorename"
+                android:visibility="visible">
+
+                <TextView
+                    android:id="@+id/txtstoreOwner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/owner"
+                    android:textColor="@color/textColor"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/editstOwner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/txtstoreOwner"
+                    android:layout_marginTop="5dp"
+                    android:hint="@string/names"
+                    android:maxLength="25"
+                    android:textColor="#000000"
+                    android:textColorHint="#848484"
+                    android:textSize="15sp" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.1dp"
+                android:layout_below="@+id/relativestoreOwner"
+                android:background="@color/black" />
+
+            <RelativeLayout
+                android:id="@+id/relativestoreloc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/relativeopentime"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:id="@+id/txtlocation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/location"
+                    android:textColor="@color/textColor"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/autolocation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/txtlocation"
+                    android:layout_marginTop="5dp"
+                    android:hint="@string/location"
+                    android:textColor="@color/textColor"
+                    android:textColorHint="#848484"
+                    android:textSize="15sp" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.1dp"
+                android:layout_below="@+id/relativestoreloc"
+                android:background="@color/black" />
+
+            <RelativeLayout
+                android:id="@+id/relativeaddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/relativestoreloc"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:id="@+id/txtaddress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/address"
+                    android:textColor="@color/textColor"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/editaddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/txtaddress"
+                    android:layout_marginTop="5dp"
+                    android:hint="@string/address"
+                    android:textColor="@color/textColor"
+                    android:textColorHint="#848484"
+                    android:textSize="15sp" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.1dp"
+                android:layout_below="@+id/relativeaddress"
+                android:background="@color/black" />
+
+            <RelativeLayout
+                android:id="@+id/relativestorewebsite"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/relativestoreOwner"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:id="@+id/txtwebsite"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/website"
+                    android:textColor="@color/textColor"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/editwebsite"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/txtwebsite"
+                    android:layout_marginTop="5dp"
+                    android:hint="@string/website"
+                    android:textColor="#2C3343"
+                    android:textColorHint="#848484"
+                    android:textSize="15sp" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.1dp"
+                android:layout_below="@+id/relativestorewebsite"
+                android:background="@color/black" />
+
+            <RelativeLayout
+                android:id="@+id/relativeopentime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/relativeworkdays"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:id="@+id/txtopentime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/timing"
+                    android:textColor="@color/textColor"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/edittiming"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/txtopentime"
+                    android:layout_marginTop="5dp"
+                    android:editable="false"
+                    android:hint="@string/open"
+                    android:textColor="@color/textColor"
+                    android:textColorHint="#848484"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/txtclosetime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/txtopentime"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_toEndOf="@id/edittiming"
+                    android:text="@string/to"
+                    android:textColor="@color/textColor"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/edittiming1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/txtopentime"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_toEndOf="@+id/txtclosetime"
+                    android:editable="false"
+                    android:hint="@string/closed"
+                    android:textColor="@color/textColor"
+                    android:textColorHint="#848484"
+                    android:textSize="15sp" />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.1dp"
+                android:layout_below="@+id/relativeopentime"
+                android:background="@color/black" />
+
+            <RelativeLayout
+                android:id="@+id/relativeworkdays"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/relativestorewebsite"
+                android:layout_marginTop="10dp"
+                android:visibility="visible">
+
+                <TextView
+                    android:id="@+id/txtworkingdays"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/working_day"
+                    android:textColor="@color/textColor"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/editworkingdays"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/txtworkingdays"
+                    android:layout_marginTop="5dp"
+                    android:hint="@string/working_day"
+                    android:textColor="@color/textColor"
+                    android:textSize="15sp" />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.1dp"
+                android:layout_below="@+id/relativeworkdays"
+                android:background="@color/black" />
+
+            <RelativeLayout
+                android:id="@+id/relativeStoretype"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/relativeaddress"
+                android:layout_marginTop="10dp"
+                android:visibility="visible">
+
+                <TextView
+                    android:id="@+id/txtType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/store_type"
+                    android:textColor="@color/textColor"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/storetype"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/txtType"
+                    android:layout_marginTop="5dp"
+                    android:hint="@string/store_type"
+                    android:textColor="@color/textColor"
+                    android:textSize="15sp"
+                    android:visibility="visible" />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.1dp"
+                android:layout_below="@+id/relativeStoretype"
+                android:background="@color/black" />
+
+            <RelativeLayout
+                android:id="@+id/relativecategory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/relativeStoretype"
+                android:layout_marginTop="10dp"
+                android:visibility="visible">
+
+                <TextView
+                    android:id="@+id/txtcategory"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/services_offered"
+                    android:textColor="@color/textColor"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/autoservices"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/txtcategory"
+                    android:layout_marginTop="5dp"
+                    android:hint="@string/services_offered"
+                    android:textColor="@color/textColor"
+                    android:textSize="15sp"
+                    android:visibility="visible" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.1dp"
+                android:layout_below="@+id/relativecategory"
+                android:background="@color/black" />
+
+            <RelativeLayout
+                android:id="@+id/linear12"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/relativecategory"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:id="@+id/txtdescription"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/store_description"
+                    android:textColor="@color/textColor"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/editstoredescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/txtdescription"
+                    android:layout_marginTop="5dp"
+                    android:hint="@string/store_description"
+                    android:maxLength="200"
+                    android:textColor="@color/textColor"
+                    android:textColorHint="#848484"
+                    android:textSize="15sp" />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.1dp"
+                android:layout_below="@+id/linear12"
+                android:background="@color/black" />
+
+            <RelativeLayout
+                android:id="@+id/linear13"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/linear12"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:id="@+id/txtbrandtags"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/brand_tags"
+                    android:textColor="@color/textColor"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/editbrandtags"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/txtbrandtags"
+                    android:layout_marginTop="5dp"
+                    android:hint="@string/brand_tags"
+                    android:textColor="@color/textColor"
+                    android:textColorHint="#848484"
+                    android:textSize="15sp" />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.1dp"
+                android:layout_below="@+id/linear13"
+                android:background="@color/black" />
+
+            <RelativeLayout
+                android:id="@+id/linear14"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/linear13"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:id="@+id/txtAdminContact"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/admin_contact"
+                    android:textColor="@color/textColor"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/editAdminContact"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/txtAdminContact"
+                    android:layout_marginTop="5dp"
+                    android:hint="@string/admin_contact"
+                    android:textColor="@color/textColor"
+                    android:textColorHint="#848484"
+                    android:textSize="15sp" />
+            </RelativeLayout>
+        </RelativeLayout>
+    </RelativeLayout>
+
+</android.support.v4.widget.NestedScrollView>

@@ -792,7 +792,23 @@
         <activity android:name=".groups_container.MemberCommunicationContainer" />
         <activity android:name=".groups_container.MemberVehicleContainer" />
         <activity android:name=".groups_container.MemberProductContainer" />
-        <activity android:name=".groups_container.MemberServiceContainer"></activity>
+        <activity android:name=".groups_container.MemberServiceContainer" />
+        <activity
+            android:name=".view.StoreInfoActivity"
+            android:label="@string/title_activity_store_info"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".view.StoreProductActivity"
+            android:label="@string/title_activity_store_product"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".view.StoreServiceActivity"
+            android:label="@string/title_activity_store_service"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".view.StoreVehicleActivity"
+            android:label="@string/title_activity_store_vehicle"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
