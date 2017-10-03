@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+    android:layout_width="300dp"
     android:layout_height="match_parent"
     android:background="@color/white"
     android:orientation="vertical">
 
-    <ScrollView
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -83,302 +83,521 @@
                     android:src="@mipmap/new_favourite" />
             </RelativeLayout>
 
-
-            <TextView
-                android:id="@+id/txtcompname"
+            <LinearLayout
+                android:id="@+id/llcomp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="#80bebebe"
-                android:gravity="center"
-                android:text="Company Name :" />
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/txtmodel"
+                <TextView
+                    android:id="@+id/txtcompname1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Company Name :"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txtcompname"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#80bebebe"
+                    android:gravity="start"
+                    android:text="Company Name :" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llmodel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:background="#80bebebe"
-                android:gravity="center"
-                android:text="Model :" />
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/txtversion"
+                <TextView
+                    android:id="@+id/txtmodel1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/model"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txtmodel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#80bebebe"
+                    android:gravity="start"
+                    android:text="@string/model" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llversion"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:background="#80bebebe"
-                android:text="Version :"
-                android:visibility="gone" />
+                android:orientation="vertical"
+                android:visibility="gone">
 
-            <TextView
-                android:id="@+id/txtmakeyr"
+                <TextView
+                    android:id="@+id/txtversion1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/version"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txtversion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#80bebebe"
+                    android:gravity="start"
+                    android:text="@string/version" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llmfgYear"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:background="#80bebebe"
-                android:gravity="center"
-                android:text="Make Year :" />
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/txtregyr"
+                <TextView
+                    android:id="@+id/txtmakeyr1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/year_of_mfg"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txtmakeyr"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#80bebebe"
+                    android:gravity="start"
+                    android:text="@string/year_of_mfg" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llregYear"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:background="#80bebebe"
-                android:gravity="center"
-                android:text="Registration Year :" />
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/txtkm"
+                <TextView
+                    android:id="@+id/txtregyr1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/registration_year"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txtregyr"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#80bebebe"
+                    android:gravity="start"
+                    android:text="@string/registration_year" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llkms"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:background="#80bebebe"
-                android:gravity="center"
-                android:text="KM Driven :" />
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/txtcity"
-                android:layout_width="match_parent"
-                android:layout_height="55dp"
-                android:layout_marginTop="5dp"
-                android:background="#80bebebe"
-                android:gravity="center"
-                android:text="City :" />
+                <TextView
+                    android:id="@+id/txtkm1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/kms_hrs"
+                    android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/txtregcity"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:text="Regstration City :"
-                android:textColor="@color/white"
-                android:visibility="gone" />
+                <TextView
+                    android:id="@+id/txtkm"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#80bebebe"
+                    android:gravity="start"
+                    android:text="@string/kms_hrs" />
+            </LinearLayout>
 
-            <TextView
-                android:id="@+id/txtowner"
+            <LinearLayout
+                android:id="@+id/llcity"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:background="#80bebebe"
-                android:gravity="center"
-                android:text="No Of Owners :" />
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/txtprice"
+                <TextView
+                    android:id="@+id/txtcity1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/location_city"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txtcity"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#80bebebe"
+                    android:gravity="start"
+                    android:text="@string/location_city" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llregcity"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:background="#80bebebe"
-                android:gravity="center"
-                android:text="Ask Price :" />
+                android:orientation="vertical"
+                android:visibility="gone">
 
-            <TextView
-                android:id="@+id/txtregno"
+                <TextView
+                    android:id="@+id/txtregcity1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Regstration City :"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txtregcity"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#80bebebe"
+                    android:gravity="start"
+                    android:text="Regstration City :" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llowner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:background="#80bebebe"
-                android:gravity="center"
-                android:text="Registration No :" />
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/txthypo"
+                <TextView
+                    android:id="@+id/txtowner1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/no_of_owners"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txtowner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#80bebebe"
+                    android:gravity="start"
+                    android:text="@string/no_of_owners" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llprice"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:background="#80bebebe"
-                android:gravity="center"
-                android:text="Hypothetication/Finence :" />
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/txtinsurenceval"
+                <TextView
+                    android:id="@+id/txtprice1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/price"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txtprice"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#80bebebe"
+                    android:gravity="start"
+                    android:text="@string/price" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llregno"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:background="#80bebebe"
-                android:gravity="center"
-                android:text="Insurence Validity Date :" />
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/txtinsurenceIdv"
+                <TextView
+                    android:id="@+id/txtregno1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/registration_no"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txtregno"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#80bebebe"
+                    android:gravity="start"
+                    android:text="@string/registration_no" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llhypo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:background="#80bebebe"
-                android:gravity="center"
-                android:text="Insurence Idv :" />
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/txtrcavailabel"
+                <TextView
+                    android:id="@+id/txthypo1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/hypothetication"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txthypo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#80bebebe"
+                    android:gravity="start"
+                    android:text="@string/hypothetication" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llins"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:background="#80bebebe"
-                android:gravity="center"
-                android:text="RC Availabel :" />
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/txtpermit"
+                <TextView
+                    android:id="@+id/txtinsurenceval1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/insurance_date"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txtinsurenceval"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#80bebebe"
+                    android:gravity="start"
+                    android:text="@string/insurance_date" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llinsidv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:background="#80bebebe"
-                android:gravity="center"
-                android:text="Permit Validity:" />
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/txttaxavailable"
+                <TextView
+                    android:id="@+id/txtinsurenceIdv1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/insurance_idv"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txtinsurenceIdv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#80bebebe"
+                    android:gravity="start"
+                    android:text="@string/insurance_idv" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llrc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:background="#80bebebe"
-                android:gravity="center"
-                android:text="Tax Availabel :" />
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/txttaxpaid"
+                <TextView
+                    android:id="@+id/txtrcavailabel1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/rc_available"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txtrcavailabel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#80bebebe"
+                    android:gravity="start"
+                    android:text="@string/rc_available" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llpermit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="#80bebebe"
-                android:gravity="center"
-                android:text="Tax Paid Upto :"
-                android:visibility="gone" />
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/txtcolor"
+                <TextView
+                    android:id="@+id/txtpermit1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/permit_validity"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txtpermit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#80bebebe"
+                    android:gravity="start"
+                    android:text="@string/permit_validity" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/lltax"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:background="#80bebebe"
-                android:gravity="center"
-                android:text="Color :" />
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/txtfualtype"
+                <TextView
+                    android:id="@+id/txttaxavailable1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/tax_validity"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txttaxavailable"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#80bebebe"
+                    android:gravity="start"
+                    android:text="@string/tax_validity" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/lltaxdate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:background="#80bebebe"
-                android:gravity="center"
-                android:text="Fual type :" />
+                android:orientation="vertical"
+                android:visibility="gone">
 
-            <TextView
-                android:id="@+id/txttyrecon"
+                <TextView
+                    android:id="@+id/txttaxpaid1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/tax_paid"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txttaxpaid"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#80bebebe"
+                    android:gravity="start"
+                    android:text="@string/tax_paid" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llcolor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="#80bebebe"
-                android:gravity="center"
-                android:text="Tyre Condition :"
-                android:visibility="gone" />
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/txtengineno"
+                <TextView
+                    android:id="@+id/txtcolor1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/color"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txtcolor"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#80bebebe"
+                    android:gravity="start"
+                    android:text="@string/color" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llfuel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:background="#80bebebe"
-                android:gravity="center"
-                android:text="Engine No :" />
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/txtchessicno"
+                <TextView
+                    android:id="@+id/txtfualtype1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/fuel_type"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txtfualtype"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#80bebebe"
+                    android:gravity="start"
+                    android:text="@string/fuel_type" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/lltyrecond"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:background="#80bebebe"
-                android:gravity="center"
-                android:text="Chessic No :" />
+                android:orientation="vertical"
+                android:visibility="gone">
 
-            <TextView
-                android:id="@+id/txtseatingcap"
+                <TextView
+                    android:id="@+id/txttyrecon1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/tyre_condition"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txttyrecon"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#80bebebe"
+                    android:gravity="start"
+                    android:text="@string/tyre_condition" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llengine"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:background="#80bebebe"
-                android:gravity="center"
-                android:text="Seating Capacity :" />
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/txtfeatness"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:background="#80bebebe"
-                android:gravity="center"
-                android:text="Fitness Validity :" />
+                <TextView
+                    android:id="@+id/txtengineno1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/engine_no"
+                    android:textStyle="bold" />
 
+                <TextView
+                    android:id="@+id/txtengineno"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#80bebebe"
+                    android:gravity="start"
+                    android:text="@string/engine_no" />
+            </LinearLayout>
 
-            <TextView
-                android:id="@+id/txtdrivetype"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:background="#80bebebe"
-                android:gravity="center"
-                android:text="Drive Type :" />
+            <include layout="@layout/adapter_compare_vehicle_list1">
 
-            <TextView
-                android:id="@+id/txtbodystyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:background="#80bebebe"
-                android:gravity="center"
-                android:text="Body Style :" />
-
-            <TextView
-                android:id="@+id/txtair"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:background="#80bebebe"
-                android:gravity="center"
-                android:text="Air Condition :"
-                android:visibility="gone" />
-
-
-            <TextView
-                android:id="@+id/txtbustype"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:background="#80bebebe"
-                android:text="Bus Type :"
-                android:visibility="gone" />
-
-            <TextView
-                android:id="@+id/txtinvoice"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="#80bebebe"
-                android:text="Invoice Availabel :"
-                android:visibility="gone" />
-
-            <TextView
-                android:id="@+id/txtappl"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:background="#80bebebe"
-                android:gravity="center"
-                android:text="Application :" />
-
-            <TextView
-                android:id="@+id/txtimpl"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:background="#80bebebe"
-                android:text="Implement Attached :"
-                android:visibility="gone" />
-
+            </include>
         </LinearLayout>
-    </ScrollView>
+    </android.support.v4.widget.NestedScrollView>
 
 
 </RelativeLayout>

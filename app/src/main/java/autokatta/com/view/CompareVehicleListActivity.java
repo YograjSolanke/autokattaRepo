@@ -8,7 +8,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.net.ConnectException;
@@ -27,13 +26,7 @@ import retrofit2.Response;
 
 public class CompareVehicleListActivity extends AppCompatActivity implements RequestNotifier {
 
-    TextView companyname, insurencevaltext, insurenceIDVtext, ownertext, fueltext, colortext, rctext, insvaltext, taxpaidtext, fitnesstext, permitvaltext, seatingtext;
-    TextView permittext, hypotext, drivetext, transmissiontext, bodytext, boattext, rvtext, applicationtext, citytext, askpricetext, kmdriventext;
-    TextView tyretext, bustypetext, airtext, invoicetext, impltext, registrationtext, enginetext, chassictext, makeyeartext, taxavailabeltext;
-    TextView modeltext, versiontext, regyeartext, regcitytext;
-    ImageView imgvehi;
     RecyclerView mHorizontalRecyclerView;
-    int content = 0;
     TextView textcount;
     String vehicle_ids;
     List<VehicleForCompareResponse.Success.UsedVehicle> mVehicleCompareList = new ArrayList<>();
@@ -63,43 +56,8 @@ public class CompareVehicleListActivity extends AppCompatActivity implements Req
         });*/
 
         mHorizontalRecyclerView = (RecyclerView) findViewById(R.id.comphorizontl);
-
         textcount = (TextView) findViewById(R.id.countcomp);
 
-        companyname = (TextView) findViewById(R.id.txtcompname);
-        modeltext = (TextView) findViewById(R.id.txtmodel);
-        versiontext = (TextView) findViewById(R.id.txtversion);
-        insurencevaltext = (TextView) findViewById(R.id.txtinsurenceval);
-        insurenceIDVtext = (TextView) findViewById(R.id.txtinsurenceIdv);
-        ownertext = (TextView) findViewById(R.id.txtowner);
-        citytext = (TextView) findViewById(R.id.txtcity);
-        regcitytext = (TextView) findViewById(R.id.txtregcity);
-        regyeartext = (TextView) findViewById(R.id.txtregyr);
-        rctext = (TextView) findViewById(R.id.txtrcavailabel);
-        taxpaidtext = (TextView) findViewById(R.id.txttaxpaid);
-        fitnesstext = (TextView) findViewById(R.id.txtfeatness);
-        seatingtext = (TextView) findViewById(R.id.txtseatingcap);
-        permitvaltext = (TextView) findViewById(R.id.txtpermit);
-        hypotext = (TextView) findViewById(R.id.txthypo);
-        drivetext = (TextView) findViewById(R.id.txtdrivetype);
-        bodytext = (TextView) findViewById(R.id.txtbodystyle);
-        applicationtext = (TextView) findViewById(R.id.txtappl);
-        tyretext = (TextView) findViewById(R.id.txttyrecon);
-        bustypetext = (TextView) findViewById(R.id.txtbustype);
-        airtext = (TextView) findViewById(R.id.txtair);
-        invoicetext = (TextView) findViewById(R.id.txtinvoice);
-        impltext = (TextView) findViewById(R.id.txtimpl);
-        fueltext = (TextView) findViewById(R.id.txtfualtype);
-        colortext = (TextView) findViewById(R.id.txtcolor);
-        registrationtext = (TextView) findViewById(R.id.txtregno);
-        enginetext = (TextView) findViewById(R.id.txtengineno);
-        chassictext = (TextView) findViewById(R.id.txtchessicno);
-        askpricetext = (TextView) findViewById(R.id.txtprice);
-        kmdriventext = (TextView) findViewById(R.id.txtkm);
-        makeyeartext = (TextView) findViewById(R.id.txtmakeyr);
-        taxavailabeltext = (TextView) findViewById(R.id.txttaxavailable);
-
-        imgvehi = (ImageView) findViewById(R.id.imgvehicle);
 
         mHorizontalRecyclerView.setHasFixedSize(true);
         mHorizontalRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
@@ -205,9 +163,7 @@ public class CompareVehicleListActivity extends AppCompatActivity implements Req
                         mVehicleCompareList.add(success);
 
                     }
-                    content = mVehicleCompareList.size();
-                    System.out.println("no of items in list================================================" + content);
-                    textcount.setText(String.valueOf(content));
+                    textcount.setText(String.valueOf(mVehicleCompareList.size()));
 
                     CompareVehicleListAdapter mAdapter = new CompareVehicleListAdapter(this, mVehicleCompareList);
                     mHorizontalRecyclerView.setAdapter(mAdapter);

@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/llchasis"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/txtchessicno1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/chassic_no"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/txtchessicno"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#80bebebe"
+            android:gravity="start"
+            android:text="@string/chassic_no" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llseating"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/txtseatingcap1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/seating_capacity"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/txtseatingcap"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#80bebebe"
+            android:gravity="start"
+            android:text="@string/seating_capacity" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llfitness"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/txtfeatness1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/fitness_validity"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/txtfeatness"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#80bebebe"
+            android:gravity="start"
+            android:text="@string/fitness_validity" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lldrive"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/txtdrivetype1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/drive_type"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/txtdrivetype"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#80bebebe"
+            android:gravity="start"
+            android:text="@string/drive_type" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llbody"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/txtbodystyle1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/body_type"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/txtbodystyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#80bebebe"
+            android:gravity="start"
+            android:text="@string/body_type" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llaircon"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/txtair1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/air_condition"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/txtair"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#80bebebe"
+            android:gravity="start"
+            android:text="@string/air_condition" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llbus"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/txtbustype1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/bus_type"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/txtbustype"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#80bebebe"
+            android:gravity="start"
+            android:text="@string/bus_type" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llinvoice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/txtinvoice1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/invoice_available"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/txtinvoice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#80bebebe"
+            android:gravity="start"
+            android:text="@string/invoice_available" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llappl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/txtappl1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/application"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/txtappl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#80bebebe"
+            android:gravity="start"
+            android:text="@string/application" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llimpl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/txtimpl1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/implementation"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/txtimpl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#80bebebe"
+            android:gravity="start"
+            android:text="@string/implementation" />
+    </LinearLayout>
+
+
+</LinearLayout>
