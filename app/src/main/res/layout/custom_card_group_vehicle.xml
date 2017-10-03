@@ -140,7 +140,9 @@
                         android:textColor="@color/enteredTextColor"
                         android:textSize="@dimen/text_size"
                         android:textStyle="bold" />
+
                 </LinearLayout>
+
             </LinearLayout>
 
             <ImageButton
@@ -154,7 +156,15 @@
                 android:src="@mipmap/new_call" />
 
         </LinearLayout>
-
+       <!-- <Button
+            android:layout_width="100dp"
+            android:layout_height="20dp"
+            android:text="send offer"
+            android:background="@color/background"
+            android:layout_marginLeft="250dp"
+            android:id="@+id/chat_c"
+            android:visibility=""
+            />-->
         <View
             android:id="@+id/line_one"
             android:layout_width="match_parent"
@@ -361,7 +371,29 @@
             android:baselineAligned="false"
             android:gravity="center"
             android:orientation="horizontal"
-            android:weightSum="2">
+            android:weightSum="3">
+
+
+            <LinearLayout
+                android:id="@+id/offer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:visibility="gone">
+
+                <Button
+                    android:id="@+id/chat_c"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="4dp"
+                    android:text="Send Offer"
+                    android:textColor="@color/text_color"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/rellike"
