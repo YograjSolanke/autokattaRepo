@@ -21,14 +21,13 @@ import java.util.List;
 
 import autokatta.com.R;
 import autokatta.com.adapter.StoreVehicleAdapter;
-import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.StoreInventoryResponse;
 import retrofit2.Response;
 
-public class StoreVehicleActivity extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener, RequestNotifier {
+public class StoreNewVehicleActiviy extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener, RequestNotifier {
 
 
     String Sharedcontact, storeContact;
@@ -43,18 +42,19 @@ public class StoreVehicleActivity extends AppCompatActivity implements SwipeRefr
     boolean hasMoreView = false;
     ConnectionDetector mTestConnection;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_store_vehicle);
+        setContentView(R.layout.activity_store_new_vehicle_activiy);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         mTestConnection = new ConnectionDetector(this);
         mLayoutManager = new LinearLayoutManager(this);
+
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setVisibility(View.GONE);
-
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 //        fab.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {
@@ -62,6 +62,7 @@ public class StoreVehicleActivity extends AppCompatActivity implements SwipeRefr
 //                        .setAction("Action", null).show();
 //            }
 //        });
+
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().setHomeButtonEnabled(true);
@@ -96,7 +97,7 @@ public class StoreVehicleActivity extends AppCompatActivity implements SwipeRefr
                     @Override
                     public void run() {
                         mSwipeRefreshLayout.setRefreshing(true);
-                        getStoreVehicles(store_id, Sharedcontact);
+                        //getStoreVehicles(store_id, Sharedcontact);
                     }
                 });
             }
@@ -104,10 +105,11 @@ public class StoreVehicleActivity extends AppCompatActivity implements SwipeRefr
         mSwipeRefreshLayout.setOnRefreshListener(this);
     }
 
-    private void getStoreVehicles(int store_id, String sharedcontact) {
+
+    private void getStoreNewVehicles(int store_id, String sharedcontact) {
         if (mTestConnection.isConnectedToInternet()) {
-            ApiCall apiCall = new ApiCall(this, this);
-            apiCall.getStoreInventory(store_id, sharedcontact);
+//            ApiCall apiCall = new ApiCall(this, this);
+//            apiCall.getStoreInventory(store_id, sharedcontact);
         } else {
             mSwipeRefreshLayout.setRefreshing(false);
             mNoData.setVisibility(View.GONE);
@@ -118,7 +120,7 @@ public class StoreVehicleActivity extends AppCompatActivity implements SwipeRefr
     @Override
     public void onRefresh() {
         vehicleList.clear();
-        getStoreVehicles(store_id, Sharedcontact);
+        getStoreNewVehicles(store_id, Sharedcontact);
     }
 
 

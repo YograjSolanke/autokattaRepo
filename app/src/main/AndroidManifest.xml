@@ -808,6 +808,10 @@
         <activity
             android:name=".view.StoreVehicleActivity"
             android:label="@string/title_activity_store_vehicle"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".view.StoreNewVehicleActiviy"
+            android:label="@string/title_activity_store_new_vehicle_activiy"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

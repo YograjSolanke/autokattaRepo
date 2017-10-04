@@ -104,7 +104,7 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
     String strDetailsShare = "";
     private ProgressDialog dialog;
     AdminCallContactAdapter adapter;
-    LinearLayout mLinear, mAbout, mProducts, mService, mVehicle;
+    LinearLayout mLinear, mAbout, mProducts, mService, mVehicle, mNewVehicle;
     ImageView mBannerImage, mStoreImage;
     TextView mStoreName, mWebSite, mLocation, mLikeCount, mFollowCount;
     ImageView mCall;
@@ -160,6 +160,7 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
                     mProducts = (LinearLayout) findViewById(R.id.product);
                     mService = (LinearLayout) findViewById(R.id.service);
                     mVehicle = (LinearLayout) findViewById(R.id.vehicle);
+                    mNewVehicle = (LinearLayout) findViewById(R.id.new_vehicle);
 
                     mBannerImage = (ImageView) findViewById(R.id.other_store_image);
                     mStoreImage = (ImageView) findViewById(R.id.other_store_images);
@@ -320,6 +321,7 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
         mProducts.setOnClickListener(this);
         mService.setOnClickListener(this);
         mVehicle.setOnClickListener(this);
+        mNewVehicle.setOnClickListener(this);
     }
 
     public void hideFloatingButton() {
@@ -819,6 +821,14 @@ Call Intent...
                 startActivity(intentvehicle, options.toBundle());
                 break;
 
+
+            case R.id.new_vehicle:
+                b.putInt("store_id", store_id);
+                Intent intentnewvehicle = new Intent(StoreViewActivity.this, StoreNewVehicleActiviy.class);
+                intentnewvehicle.putExtras(b);
+                startActivity(intentnewvehicle, options.toBundle());
+                break;
+
         }
 
     }
@@ -860,13 +870,13 @@ Call Intent...
                         Intent intent = new Intent(StoreViewActivity.this, AddProductActivity.class);
                         intent.putExtras(bundle);
                         startActivity(intent);
-                        finish();
+                        //finish();
 
                     } else if (strName.equals("Add Service")) {
                         Intent intent = new Intent(StoreViewActivity.this, AddServiceActivity.class);
                         intent.putExtras(bundle);
                         startActivity(intent);
-                        finish();
+                        //finish();
 
                     } else if (strName.equals("Add Vehicle")) {
                         if (isDealing.equalsIgnoreCase("false")) {
@@ -952,6 +962,8 @@ Call Intent...
                         storeOtherContact = success.getContact();
                         storeCoverImage = success.getCoverImage();
                         storeWebsite = success.getWebsite();
+                        if (storeWebsite.equals("") || storeWebsite.equals(" ") || storeWebsite == null)
+                            mWebSite.setVisibility(View.GONE);
                         storeTiming = success.getStoreOpenTime() + " " + success.getStoreCloseTime();
                         storeLocation = success.getLocation();
                         storeWorkingDays = success.getWorkingDays();

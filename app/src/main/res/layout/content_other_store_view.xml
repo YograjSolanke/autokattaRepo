@@ -458,9 +458,9 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:drawablePadding="@dimen/fab_margin"
-                                android:drawableStart="@mipmap/store_vehicle"
+                                android:drawableStart="@mipmap/store_used_vehicle"
                                 android:gravity="center"
-                                android:text="@string/vehicle"
+                                android:text="@string/used_vehicle"
                                 android:textStyle="bold" />
 
                         </LinearLayout>
@@ -486,45 +486,45 @@
                         android:layout_marginTop="@dimen/inset"
                         android:background="#cccccc" />
 
-                    <!--<LinearLayout-->
-                    <!--android:id="@+id/follow"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:baselineAligned="false"-->
-                    <!--android:orientation="horizontal"-->
-                    <!--android:padding="@dimen/card_margin"-->
-                    <!--android:weightSum="1">-->
+                    <LinearLayout
+                        android:id="@+id/new_vehicle"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:baselineAligned="false"
+                        android:orientation="horizontal"
+                        android:padding="@dimen/card_margin"
+                        android:weightSum="1">
 
-                    <!--<LinearLayout-->
-                    <!--android:layout_width="0dp"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_weight="0.8">-->
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.8">
 
-                    <!--<TextView-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:drawablePadding="@dimen/fab_margin"-->
-                    <!--android:drawableStart="@mipmap/ic_account"-->
-                    <!--android:gravity="center"-->
-                    <!--android:text="@string/follow"-->
-                    <!--android:textStyle="bold" />-->
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:drawablePadding="@dimen/fab_margin"
+                                android:drawableStart="@mipmap/new_vehicle"
+                                android:gravity="center"
+                                android:text="@string/new_vehicle"
+                                android:textStyle="bold" />
 
-                    <!--</LinearLayout>-->
+                        </LinearLayout>
 
-                    <!--<LinearLayout-->
-                    <!--android:layout_width="0dp"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_gravity="center"-->
-                    <!--android:layout_weight="0.2"-->
-                    <!--android:gravity="end">-->
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="0.2"
+                            android:gravity="end">
 
-                    <!--<ImageView-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:contentDescription="@string/app_name"-->
-                    <!--android:src="@drawable/ic_chevron_right" />-->
-                    <!--</LinearLayout>-->
-                    <!--</LinearLayout>-->
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:contentDescription="@string/app_name"
+                                android:src="@drawable/ic_chevron_right" />
+                        </LinearLayout>
+                    </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
 

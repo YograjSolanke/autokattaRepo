@@ -442,8 +442,8 @@ public class AddProductActivity extends AppCompatActivity implements RequestNoti
 
                     Bundle b = new Bundle();
                     b.putInt("store_id", store_id);
-                    b.putString("flow_tab_name", "FromProduct");
-                    Intent intent = new Intent(AddProductActivity.this, StoreViewActivity.class);
+                    // b.putString("flow_tab_name", "FromProduct");
+                    Intent intent = new Intent(AddProductActivity.this, StoreProductActivity.class);
                     intent.putExtras(b);
                     startActivity(intent);
                     finish();

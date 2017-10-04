@@ -38,6 +38,8 @@
     <string name="browse_store">Browse Store</string>
     <string name="search_store">Search Store</string>
     <string name="vehicle">Vehicle</string>
+    <string name="used_vehicle">Used Vehicle</string>
+    <string name="new_vehicle">New Vehicle</string>
     <string name="upload_vehicle">Upload Vehicle</string>
     <string name="search_vehicle">Search Vehicle</string>
     <string name="my_search">My Search</string>
@@ -730,4 +732,5 @@
     <string name="title_activity_store_product">StoreProductActivity</string>
     <string name="title_activity_store_service">StoreServiceActivity</string>
     <string name="title_activity_store_vehicle">StoreVehicleActivity</string>
+    <string name="title_activity_store_new_vehicle_activiy">StoreNewVehicleActiviy</string>
 </resources>

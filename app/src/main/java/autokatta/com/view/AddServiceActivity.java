@@ -462,8 +462,8 @@ public class AddServiceActivity extends AppCompatActivity implements RequestNoti
 
                     Bundle b = new Bundle();
                     b.putInt("store_id", store_id);
-                    b.putString("flow_tab_name", "FromService");
-                    Intent intent = new Intent(AddServiceActivity.this, StoreViewActivity.class);
+                    //  b.putString("flow_tab_name", "FromService");
+                    Intent intent = new Intent(AddServiceActivity.this, StoreServiceActivity.class);
                     intent.putExtras(b);
                     startActivity(intent);
                     finish();
