@@ -133,7 +133,6 @@ public class About extends Fragment implements RequestNotifier, MaterialIntroLis
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mAbout = inflater.inflate(R.layout.fragment_profile_about, container, false);
-
         return mAbout;
     }
 
@@ -152,7 +151,6 @@ public class About extends Fragment implements RequestNotifier, MaterialIntroLis
         if (parts.length > 5) {
             mSkills.setError("You can add maximum five skills");
         }
-
     }
 
     @Override
@@ -177,7 +175,6 @@ public class About extends Fragment implements RequestNotifier, MaterialIntroLis
                         interest = mProfileAboutResponse.getSuccess().get(0).getInterests();
                         brand = mProfileAboutResponse.getSuccess().get(0).getBrandName();
                         strIndustry = mProfileAboutResponse.getSuccess().get(0).getIndustry();
-
 
                         mContact.setText(contact);
                         Log.i("RegId-->", "   --->" + RegId);
@@ -335,8 +332,7 @@ public class About extends Fragment implements RequestNotifier, MaterialIntroLis
                         brandSpinner.setAdapter(dataadapter);
                     } else
                         CustomToast.customToast(getActivity(), getString(R.string.no_response));
-                }
-                if (response.body() instanceof CategoryResponse) {
+                } else if (response.body() instanceof CategoryResponse) {
                     CategoryResponse moduleResponse = (CategoryResponse) response.body();
                     final List<String> module = new ArrayList<>();
                     if (!moduleResponse.getSuccess().isEmpty()) {
@@ -489,8 +485,7 @@ public class About extends Fragment implements RequestNotifier, MaterialIntroLis
                 if (b!=null){
                     mApiCall.profileAbout(b.getString("otherContact"), b.getString("otherContact"));
                     mEdit.setVisibility(View.GONE);
-                }else
-                {
+                } else {
                     mApiCall.profileAbout(Sharedcontact, Sharedcontact);
                 }
                 mApiCall.getSkills();
@@ -786,8 +781,7 @@ public class About extends Fragment implements RequestNotifier, MaterialIntroLis
                             if (mUpdateAbout.equalsIgnoreCase("")||mUpdateAbout.equalsIgnoreCase(null)) {
                                 mAbouttxt.setError("Enter About Name");
                                 mAbouttxt.requestFocus();
-                            }else
-                            {
+                            } else {
                                 Log.i("InterestsAbout", getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
                                         .getString("interest", interest));
 
@@ -819,7 +813,6 @@ public class About extends Fragment implements RequestNotifier, MaterialIntroLis
                 mEditTags.setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
                         Intent intent = new Intent(getActivity(), AddTags.class);
                         intent.putExtra("interest", interest);
                         startActivity(intent);
@@ -917,7 +910,6 @@ public class About extends Fragment implements RequestNotifier, MaterialIntroLis
 
                 break;
             case (spinnerbrand):
-
                 if (brandSpinner.getSelectedItem().toString().equalsIgnoreCase("Other")) {
                     otherbrandlayout.setVisibility(View.VISIBLE);
                 } else {

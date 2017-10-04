@@ -78,4 +78,12 @@ public class GroupContainer extends AppCompatActivity implements View.OnClickLis
                 break;
         }
     }
+    /*
+    Destroy Activity
+     */
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
 }

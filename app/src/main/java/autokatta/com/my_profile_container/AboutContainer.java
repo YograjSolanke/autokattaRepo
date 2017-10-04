@@ -58,4 +58,13 @@ public class AboutContainer extends AppCompatActivity {
             }
         }
     }
+
+    /*
+    Destroy Activity
+     */
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
 }

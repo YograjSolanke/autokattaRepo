@@ -375,7 +375,7 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
         */
     private void updateProfile() {
         ApiCall mApiCall = new ApiCall(UserProfile.this, this);
-        if (lastWord != "") {
+        if (lastWord.equals("")) {
             mApiCall.updateUsername(RegID, lastWord, updatedUsername);
         } else
             mApiCall.updateUsername(RegID, dp, updatedUsername);
@@ -408,7 +408,6 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
         }
         if (response != null) {
             if (response.isSuccessful()) {
-                //hud.dismiss();
                 ProfileAboutResponse mProfileAboutResponse = (ProfileAboutResponse) response.body();
                 if (!mProfileAboutResponse.getSuccess().isEmpty()) {
                     dp = mProfileAboutResponse.getSuccess().get(0).getProfilePic();
@@ -442,11 +441,9 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
 
                 }
             } else {
-                //hud.dismiss();
                 Snackbar.make(mUserParent, getString(R.string._404_), Snackbar.LENGTH_SHORT).show();
             }
         } else {
-            //hud.dismiss();
             Snackbar.make(mUserParent, getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
         }
     }
@@ -570,9 +567,7 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
                 ///storage/emulated/0/DCIM/Camera/20170411_124425.jpg
                 lastWord = mediaPath.substring(mediaPath.lastIndexOf("/") + 1);
                 Log.i("Media", "path" + lastWord);
-
                 //mediaPath = compressImage(mediaPath);
-
             } else if (requestCode == 101) {
                 if (resultCode == RESULT_OK) {
                     if (data != null) {
@@ -599,14 +594,12 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
                         Random generator = new Random();
                         int n = 10000;
                         n = generator.nextInt(n);
-
 //                            Give the file name that u want
                         fname = "Autokatta" + n + ".jpg";
 
                         mediaPath = root + "/androidlift/" + fname;
                         file = new File(myDir, fname);
                         saveFile(bitmapRotate, file);
-
                     }
                 }
             }
@@ -638,11 +631,9 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
 
     public static Bitmap rotateImage(Bitmap source, float angle) {
         Bitmap retVal;
-
         Matrix matrix = new Matrix();
         matrix.postRotate(angle);
         retVal = Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(), matrix, true);
-
         return retVal;
     }
 
@@ -693,14 +684,6 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
         super.onBackPressed();
         finish();
         overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
-        /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            ActivityOptions options = ActivityOptions.makeCustomAnimation(UserProfile.this, R.anim.pull_in_left, R.anim.push_out_right);
-            startActivity(new Intent(getApplicationContext(), AutokattaMainActivity.class), options.toBundle());
-            finish();
-        } else {
-            finish();
-            startActivity(new Intent(getApplicationContext(), AutokattaMainActivity.class));
-        }*/
     }
 
     @Override
@@ -1020,5 +1003,14 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
             valueAnimator.setDuration(400);
             valueAnimator.start();
         }
+    }
+
+    /*
+    Destroy Activity
+     */
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 }

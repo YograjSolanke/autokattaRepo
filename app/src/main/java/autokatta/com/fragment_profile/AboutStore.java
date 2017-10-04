@@ -51,7 +51,6 @@ public class AboutStore extends Fragment implements RequestNotifier, View.OnClic
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-
         if (context instanceof Activity) {
             if (mActivity != null)
                 mActivity = getActivity();
@@ -79,7 +78,7 @@ public class AboutStore extends Fragment implements RequestNotifier, View.OnClic
             mApiCall.getStoreProfileInfo(loginContact);
         } else {
             if (isAdded())
-            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
+                CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         }
     }
 
@@ -126,7 +125,7 @@ public class AboutStore extends Fragment implements RequestNotifier, View.OnClic
         }
         if (error instanceof SocketTimeoutException) {
             if (isAdded())
-            CustomToast.customToast(getActivity(), getString(R.string._404_));
+                CustomToast.customToast(getActivity(), getString(R.string._404_));
 
         } else if (error instanceof NullPointerException) {
 //

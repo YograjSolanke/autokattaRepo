@@ -58,4 +58,12 @@ public class MyPostContainer extends AppCompatActivity {
             }
         }
     }
+    /*
+    Destroy Activity
+     */
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
 }
