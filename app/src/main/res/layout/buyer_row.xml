@@ -47,212 +47,253 @@
                 android:id="@+id/buyervehicalimgflicker"
                 android:layout_width="80dip"
                 android:layout_height="80dip"
-                android:layout_alignParentEnd="true"
                 android:layout_margin="10dp"
                 android:flipInterval="500" />
 
-            <TextView
-                android:id="@+id/bbrand"
-                android:layout_width="80dip"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dip"
-                android:layout_marginTop="2dip"
-                android:text="@string/brand_no"
-                android:textColor="#808080"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/setbrand"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="2dip"
-                android:layout_toEndOf="@+id/bbrand"
-                android:layout_toStartOf="@+id/buyervehicalimgflicker"
-                android:text="--"
-                android:textColor="#808080" />
-
-            <TextView
-                android:id="@+id/mmodel"
-                android:layout_width="80dip"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/setbrand"
-                android:layout_marginStart="5dip"
-                android:layout_marginTop="2dip"
-                android:text="@string/model"
-                android:textColor="#808080"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/setmodel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/setbrand"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="2dip"
-                android:layout_toEndOf="@+id/mmodel"
-                android:layout_toStartOf="@+id/buyervehicalimgflicker"
-                android:text="--"
-                android:textColor="#808080" />
-
-            <TextView
-                android:id="@+id/pprice"
-                android:layout_width="80dip"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/setmodel"
-                android:layout_marginStart="5dip"
-                android:layout_marginTop="2dip"
-                android:text="@string/price"
-                android:textColor="#808080"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/setprice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/setmodel"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="2dip"
-                android:layout_toEndOf="@+id/pprice"
-                android:layout_toStartOf="@+id/buyervehicalimgflicker"
-                android:text="--"
-                android:textColor="#808080" />
-
-            <TextView
-                android:id="@+id/yyear"
-                android:layout_width="80dip"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/setprice"
-                android:layout_marginStart="5dip"
-                android:layout_marginTop="2dip"
-                android:text="@string/years"
-                android:textColor="#808080"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/setyear"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/setprice"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="2dip"
-                android:layout_toEndOf="@+id/yyear"
-                android:layout_toStartOf="@+id/buyervehicalimgflicker"
-                android:text="--"
-                android:textColor="#808080" />
-
-            <TextView
-                android:id="@+id/yrto"
-                android:layout_width="80dip"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/setyear"
-                android:layout_marginStart="5dip"
-                android:layout_marginTop="2dip"
-                android:text="@string/rto_citys"
-                android:textColor="#808080"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/setrto"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/setyear"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="2dip"
-                android:layout_toEndOf="@+id/yrto"
-                android:layout_toStartOf="@+id/buyervehicalimgflicker"
-                android:text="--"
-                android:textColor="#808080" />
-
-            <TextView
-                android:id="@+id/ykms"
-                android:layout_width="80dip"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/setrto"
-                android:layout_marginStart="5dip"
-                android:layout_marginTop="2dip"
-                android:text="@string/kms_run"
-                android:textColor="#808080"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/setkms"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/setrto"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="2dip"
-                android:layout_toEndOf="@+id/ykms"
-                android:layout_toStartOf="@+id/buyervehicalimgflicker"
-                android:text="--"
-                android:textColor="#808080" />
-
-            <TextView
-                android:id="@+id/llocation"
-                android:layout_width="80dip"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/setkms"
-                android:layout_marginStart="5dip"
-                android:layout_marginTop="2dip"
-                android:text="@string/location"
-                android:textColor="#808080"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/setlocation"
+            <LinearLayout
+                android:id="@+id/llBrand"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/setkms"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="2dip"
-                android:layout_toEndOf="@+id/llocation"
-                android:text="--"
-                android:textColor="#808080" />
+                android:layout_below="@+id/buyervehicalimgflicker"
+                android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/yreg"
-                android:layout_width="110dp"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/setlocation"
-                android:layout_marginStart="5dip"
-                android:layout_marginTop="2dip"
-                android:text="@string/registration_no"
-                android:textColor="#808080"
-                android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/bbrand"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dip"
+                    android:layout_marginTop="2dip"
+                    android:text="@string/brand_no"
+                    android:textColor="#808080"
+                    android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/setregno"
+                <TextView
+                    android:id="@+id/setbrand"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="2dip"
+                    android:text="--"
+                    android:textColor="#808080" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llModel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/setlocation"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="2dip"
-                android:layout_toEndOf="@+id/yreg"
-                android:text="--"
-                android:textColor="#808080" />
+                android:layout_below="@+id/llBrand"
+                android:orientation="horizontal">
 
+                <TextView
+                    android:id="@+id/mmodel"
+                    android:layout_width="80dip"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dip"
+                    android:layout_marginTop="2dip"
+                    android:text="@string/model"
+                    android:textColor="#808080"
+                    android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/uploaddate"
-                android:layout_width="110dp"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/yreg"
-                android:layout_marginStart="5dip"
-                android:layout_marginTop="2dip"
-                android:text="@string/uploaded_date"
-                android:textColor="#808080"
-                android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/setmodel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="2dip"
+                    android:text="--"
+                    android:textColor="#808080" />
+            </LinearLayout>
 
-            <TextView
-                android:id="@+id/strSearchDate"
+            <LinearLayout
+                android:id="@+id/llPrice"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/setregno"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="2dip"
-                android:layout_toEndOf="@+id/yreg"
-                android:text="--"
-                android:textColor="#808080" />
+                android:layout_below="@+id/llModel"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/pprice"
+                    android:layout_width="80dip"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dip"
+                    android:layout_marginTop="2dip"
+                    android:text="@string/price"
+                    android:textColor="#808080"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/setprice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="2dip"
+                    android:text="--"
+                    android:textColor="#808080" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llMfgYear"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/llPrice"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/yyear"
+                    android:layout_width="80dip"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dip"
+                    android:layout_marginTop="2dip"
+                    android:text="@string/years"
+                    android:textColor="#808080"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/setyear"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="2dip"
+                    android:text="--"
+                    android:textColor="#808080" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llRto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/llMfgYear"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/yrto"
+                    android:layout_width="80dip"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dip"
+                    android:layout_marginTop="2dip"
+                    android:text="@string/rto_citys"
+                    android:textColor="#808080"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/setrto"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="2dip"
+                    android:text="--"
+                    android:textColor="#808080" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llKms"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/llRto"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/ykms"
+                    android:layout_width="80dip"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dip"
+                    android:layout_marginTop="2dip"
+                    android:text="@string/kms_run"
+                    android:textColor="#808080"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/setkms"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="2dip"
+                    android:text="--"
+                    android:textColor="#808080" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llLocation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/llKms"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/llocation"
+                    android:layout_width="80dip"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dip"
+                    android:layout_marginTop="2dip"
+                    android:text="@string/location"
+                    android:textColor="#808080"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/setlocation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="2dip"
+                    android:text="--"
+                    android:textColor="#808080" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llRegNo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/llLocation"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/yreg"
+                    android:layout_width="110dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dip"
+                    android:layout_marginTop="2dip"
+                    android:text="@string/registration_no"
+                    android:textColor="#808080"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/setregno"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="2dip"
+                    android:text="--"
+                    android:textColor="#808080" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/llDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/llRegNo"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/uploaddate"
+                    android:layout_width="110dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dip"
+                    android:layout_marginTop="2dip"
+                    android:text="@string/uploaded_date"
+                    android:textColor="#808080"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/strSearchDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="2dip"
+                    android:text="--"
+                    android:textColor="#808080" />
+            </LinearLayout>
+
         </RelativeLayout>
 
         <View

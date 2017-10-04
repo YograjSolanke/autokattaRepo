@@ -62,6 +62,7 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
     ApiCall mApiCall;
     boolean _hasLoadedOnce = false;
     private ProgressDialog dialog;
+    TextView mNoData;
 
     public SellerNotificationFragment() {
         //Empty constructor
@@ -89,16 +90,16 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
 
                 myContact = getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).
                         getString("loginContact", "");
+                mNoData = (TextView) mSellerView.findViewById(R.id.no_category);
+                mNoData.setVisibility(View.GONE);
 
-                getSavedSearchSellerList(myContact);
+                //getSavedSearchSellerList(myContact);
             }
         });
-
 
         compare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Intent intent = new Intent(getActivity(), CompareVehicleListActivity.class);
                 intent.putExtra("vehicle_ids", getBundle_vehicle_id);
                 getActivity().startActivity(intent);
@@ -107,7 +108,6 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
     }
 
     private void getSavedSearchSellerList(String myContact) {
-        dialog.show();
         mApiCall.getSavedSearchSellerList(myContact);
     }
 
@@ -117,7 +117,8 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
         // Make sure that we are currently visible
         if (this.isVisible()) {
             // If we are becoming invisible, then...
-            if (isVisibleToUser && !_hasLoadedOnce) {
+            if (isVisibleToUser) {
+                dialog.show();
                 getSavedSearchSellerList(myContact);
                 _hasLoadedOnce = true;
             }
@@ -141,10 +142,10 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
     public void notifySuccess(Response<?> response) {
         DateFormat f = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.getDefault());
         if (response != null) {
-            if (dialog.isShowing()) {
-                dialog.dismiss();
-            }
+
             if (response.isSuccessful()) {
+                mNoData.setVisibility(View.GONE);
+                //mainList.clear();
                 Log.i("seller Response", "" + response);
                 SellerResponse object = (SellerResponse) response.body();
                 SellerResponse.Success objsuccess = object.getSuccess();
@@ -184,9 +185,7 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
                             outputFormat.setTimeZone(utc);
 
                             Date date = inputFormat.parse(obj.getDate());
-                            //System.out.println("jjj"+date);
                             String output = outputFormat.format(date);
-                            //System.out.println(mainList.get(i).getDate()+" jjj " + output);
                             obj.setDate(output);
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -213,16 +212,6 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
                             objectmatch.setInsuranceValid(objectmatch.getInsuranceValid());
                             objectmatch.setHpCapacity(objectmatch.getHpCapacity());
                             objectmatch.setTitle(objectmatch.getTitle());
-
-                            /*Date d = null, d1 = null;
-                            try {
-                                d = f.parse(objectmatch.getLastcall());
-                                d1 = f.parse(objectmatch.getDate());
-                            } catch (ParseException e) {
-                                e.printStackTrace();
-                            }
-                            objectmatch.setLastCallDateNew(d);
-                            objectmatch.setUploaddate(d1);*/
 
                             //to set buyer last call date
                             if (!objectmatch.getLastcall().equalsIgnoreCase("")) {
@@ -274,16 +263,15 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
                     obj.setMatchedResult(childlist);
                     mainList.add(obj);
                 }
-                System.out.println("main list size=" + mainList.size());
                 mLinearScrollSecond = new LinearLayout[mainList.size()];
                 isFirstViewClick = new boolean[mainList.size()];
 
                 //Adds data into first row
                 for (int i = 0; i < mainList.size(); i++) {
                     LayoutInflater inflater = null;
-                    // int mFlippingsell = 0;
                     inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                     View mLinearView = inflater.inflate(R.layout.seller_row, null);
+
                     final TextView mTitleName = (TextView) mLinearView.findViewById(R.id.settitle);
                     final TextView mModelName = (TextView) mLinearView.findViewById(R.id.setmodel);
                     final TextView mBrandName = (TextView) mLinearView.findViewById(R.id.setbrand);
@@ -298,23 +286,33 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
                     ImageView mselleruparrow = (ImageView) mLinearView.findViewById(R.id.selleruparrow);
                     final RelativeLayout mLinearFirstArrow = (RelativeLayout) mLinearView.findViewById(R.id.linearFirst);
                     final TextView mSearchDate = (TextView) mLinearView.findViewById(R.id.strsearchdate);
-                    //final ImageView mImageArrowFirst=(ImageView)mLinearView.findViewById(R.id.imageFirstArrow);
                     mLinearScrollSecond[i] = (LinearLayout) mLinearView.findViewById(R.id.linear_scroll);
 
                     //checkes if menu is already opened or not
                     if (!isFirstViewClick[i]) {
                         mLinearScrollSecond[i].setVisibility(View.GONE);
-                        //mImageArrowFirst.setBackgroundResource(R.drawable.arw_lt);
                     } else {
                         mLinearScrollSecond[i].setVisibility(View.VISIBLE);
-                        //mImageArrowFirst.setBackgroundResource(R.drawable.arw_down);
                     }
 
-                    final int villll = i;
+                    final int finalI = i;
+                    if (!(mainList.get(i).getMatchedResult().size() == 0)) {
+                        msellerMatchCount.setText(String.valueOf(mainList.get(i).getMatchedResult().size()));
+                    } else {
+                        msellerMatchCount.setText("0");
+                    }
+
+                    if (mainList.get(i).getMatchedResult().size() == 0) {
+                        msellerdownarrow.setVisibility(View.GONE);
+                        mselleruparrow.setVisibility(View.GONE);
+                    }
                     mLinearFirstArrow.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            setViewsVisible(villll);
+                            if (mainList.get(finalI).getMatchedResult().size() == 0)
+                                CustomToast.customToast(getActivity(), "No Seller Leads Found");
+                            else
+                                setViewsVisible(finalI);
                         }
                     });
 
@@ -348,18 +346,6 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
                     mlocationname.setText(mainList.get(i).getLocationCity());
                     mregnoname.setText(mainList.get(i).getRegistrationNumber());
                     mSearchDate.setText(mainList.get(i).getDate());
-
-
-                    if (!(mainList.get(i).getMatchedResult().size() == 0)) {
-                        msellerMatchCount.setText(String.valueOf(mainList.get(i).getMatchedResult().size()));
-                    } else {
-                        msellerMatchCount.setText("0");
-                    }
-
-                    if (mainList.get(i).getMatchedResult().size() == 0) {
-                        msellerdownarrow.setVisibility(View.GONE);
-                        mselleruparrow.setVisibility(View.GONE);
-                    }
 
                     final List<Integer> checkedvehicle_ids = new ArrayList<>(mainList.get(i).getMatchedResult().size());
                     for (int j = 0; j < mainList.get(i).getMatchedResult().size(); j++) {
@@ -429,7 +415,7 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
                         }
 
 
-                        mDateTime.setText("" + "Last call On :" + mainList.get(i).getMatchedResult().get(j).getLastcall());
+                        lastcall.setText("" + "Last call On :" + mainList.get(i).getMatchedResult().get(j).getLastcall());
                         mDateTime.setText("" + "Uploaded On :" + mainList.get(i).getMatchedResult().get(j).getDate());
 
                         mtitle.setText(mainList.get(i).getMatchedResult().get(j).getTitle());
@@ -467,7 +453,6 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
                         checkBox8.setText(itemModel);
                         checkBox9.setText(itemYearManu);
                         checkBox10.setText(itemRto);
-
 
                         if (itemrc.startsWith("-Select RC Available-") || itemrc.equalsIgnoreCase("") || itemrc.equalsIgnoreCase("-"))
                             checkBoxRcright.setText("RC avl-NA");
@@ -545,10 +530,9 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
 
                         String[] imagenamecame = imagenames.split(",");
                         if (imagenamecame.length != 0 && !imagenamecame[0].equals("")) {
-                            for (int z = 0; z < imagenamecame.length; z++) {
-                                iname.add(imagenamecame[z]);
+                            for (String anImagenamecame : imagenamecame) {
+                                iname.add(anImagenamecame);
                             }
-                            System.out.println("lis=" + iname);
                             ImageView[] imageView = new ImageView[iname.size()];
 
                             for (int l = 0; l < imageView.length; l++) {
@@ -571,18 +555,11 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
 
                         int mFlippingsell = 0;
 
-                        if (mFlippingsell == 0) {
-                            /** Start Flipping */
-                            mViewFlippersell.startFlipping();
-                            mFlippingsell = 1;
-                        } else {
-                            /** Stop Flipping */
-                            mViewFlippersell.stopFlipping();
-                            mFlippingsell = 0;
-                        }
+                        /** Start Flipping */
+                        mViewFlippersell.startFlipping();
+                        mFlippingsell = 1;
 
 
-                        final int finalI = i;
                         final int finalJ = j;
 
                         final int v_ids = mainList.get(i).getMatchedResult().get(j).getVehicleId();
@@ -620,7 +597,6 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
                             public void onClick(View v) {
                                 String recieverContact = mainList.get(finalI).getMatchedResult().get(finalJ).getContactNo();
                                 Calendar c = Calendar.getInstance();
-                                System.out.println("Current time => " + c.getTime());
                                 SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
                                 String calldate = df.format(c.getTime());
                                 if (!recieverContact.equals(myContact)) {
@@ -673,10 +649,22 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
                         mLinearScrollSecond[i].addView(mLinearView2);
                     }
                     mLinearListView.addView(mLinearView);
+
                 }
+                if (dialog.isShowing()) {
+                    dialog.dismiss();
+                }
+            } else {
+                if (dialog.isShowing()) {
+                    dialog.dismiss();
+                }
+                mNoData.setVisibility(View.VISIBLE);
             }
         } else {
-            dialog.setMessage("No Seller data");
+            if (dialog.isShowing()) {
+                dialog.dismiss();
+            }
+            mNoData.setVisibility(View.VISIBLE);
         }
     }
 
@@ -702,6 +690,7 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
 
     @Override
     public void notifyError(Throwable error) {
+        mNoData.setVisibility(View.VISIBLE);
         if (error instanceof SocketTimeoutException) {
             if (isAdded())
                 CustomToast.customToast(getActivity(), getString(R.string._404_));
@@ -733,7 +722,7 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
         try {
             getActivity().startActivity(in);
         } catch (android.content.ActivityNotFoundException ex) {
-            System.out.println("No Activity Found For Call in Service View Fragment\n");
+            ex.printStackTrace();
         }
     }
 }

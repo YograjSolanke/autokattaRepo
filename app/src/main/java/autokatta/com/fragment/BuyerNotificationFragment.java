@@ -58,6 +58,7 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
     View mBuyerView;
     boolean _hasLoadedOnce = false;
     private ProgressDialog dialog;
+    TextView mNoData;
 
     public BuyerNotificationFragment() {
         //Empty constructor
@@ -84,14 +85,16 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
                 mLinearListView = (LinearLayout) mBuyerView.findViewById(R.id.linear_ListView);
                 myContact = getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).
                         getString("loginContact", "");
+                mNoData = (TextView) mBuyerView.findViewById(R.id.no_category);
+                mNoData.setVisibility(View.GONE);
 
-                getUploadedVehicleBuyerlist(myContact);
+                //getUploadedVehicleBuyerlist(myContact);
             }
         });
     }
 
     private void getUploadedVehicleBuyerlist(String myContact) {
-        dialog.show();
+
         mApiCall.getUploadedVehicleBuyerlist(myContact);
     }
 
@@ -101,7 +104,8 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
         // Make sure that we are currently visible
         if (this.isVisible()) {
             // If we are becoming invisible, then...
-            if (isVisibleToUser && !_hasLoadedOnce) {
+            if (isVisibleToUser) {
+                dialog.show();
                 getUploadedVehicleBuyerlist(myContact);
                 _hasLoadedOnce = true;
             }
@@ -114,14 +118,12 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
         DateFormat f = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.getDefault());
         if (response != null) {
 
-            if (dialog.isShowing()) {
-                dialog.dismiss();
-            }
             if (response.isSuccessful()) {
+                mNoData.setVisibility(View.GONE);
                 Log.i("buyer Response", "" + response);
                 BuyerResponse object = (BuyerResponse) response.body();
                 BuyerResponse.Success objsuccess = object.getSuccess();
-
+                //mainList.clear();
                 for (BuyerResponse.Success.Vehicle obj : objsuccess.getVehicles()) {
                     childlist = new ArrayList<>();
 
@@ -161,7 +163,6 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
 
                             Date date = inputFormat.parse(obj.getDate());
                             String output = outputFormat.format(date);
-                            System.out.println("jjj" + output);
                             obj.setDate(output);
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -192,15 +193,6 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
                             objectmatch.setInsuranceValid(objectmatch.getInsuranceValid());
                             objectmatch.setHpcapacity(objectmatch.getHpcapacity());
 
-                           /* Date d = null;
-                            try {
-                                d = f.parse(objectmatch.getLastcall());
-                            } catch (ParseException e) {
-                                e.printStackTrace();
-                            }
-
-                            objectmatch.setLastCallDateNew(d);*/
-
                             if (!objectmatch.getLastcall().equalsIgnoreCase("")) {
                                 try {
                                     TimeZone utc = TimeZone.getTimeZone("etc/UTC");
@@ -215,7 +207,6 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
 
                                     Date date = inputFormat.parse(objectmatch.getLastcall());
                                     String output = outputFormat.format(date);
-                                    System.out.println("last call" + output);
                                     objectmatch.setLastcall(output);
                                 } catch (Exception e) {
                                     e.printStackTrace();
@@ -224,14 +215,13 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
                                 objectmatch.setLastcall("");
 
                             childlist.add(objectmatch);
-
                         }
                     }
 
                     obj.setFound(childlist);
                     mainList.add(obj);
                 }
-                ///
+
                 mLinearScrollSecond = new LinearLayout[mainList.size()];
                 isFirstViewClick = new boolean[mainList.size()];
 
@@ -257,30 +247,35 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
                     final ImageView muparrow = (ImageView) mLinearView.findViewById(R.id.postuparrow);
                     ViewFlipper mViewFlipperbuyer = (ViewFlipper) mLinearView.findViewById(R.id.buyervehicalimgflicker);
                     final RelativeLayout mLinearFirstArrow = (RelativeLayout) mLinearView.findViewById(R.id.linearFirst);
-                    //final TextView mUploadedDate = (TextView) mLinearView.findViewById(R.id.uploaddate);
                     final TextView mUploadedDate = (TextView) mLinearView.findViewById(R.id.strSearchDate);
-                    //final ImageView mImageArrowFirst=(ImageView)mLinearView.findViewById(R.id.imageFirstArrow);
                     mLinearScrollSecond[i] = (LinearLayout) mLinearView.findViewById(R.id.linear_scroll);
+                    LinearLayout mLinearRegNo = (LinearLayout) mLinearView.findViewById(R.id.llRegNo);
 
                     //checkes if menu is already opened or not
                     if (!isFirstViewClick[i]) {
                         mLinearScrollSecond[i].setVisibility(View.GONE);
                         muparrow.setVisibility(View.GONE);
                         mdownarrow.setVisibility(View.VISIBLE);
-                        //mImageArrowFirst.setBackgroundResource(R.drawable.arw_lt);
                     } else {
                         mLinearScrollSecond[i].setVisibility(View.VISIBLE);
                         muparrow.setVisibility(View.VISIBLE);
                         mdownarrow.setVisibility(View.GONE);
-                        //mImageArrowFirst.setBackgroundResource(R.drawable.arw_down);
                     }
 
-                    final int villll = i;
+                    final int finalI = i;
+                    String count = String.valueOf(mainList.get(i).getFound().size());
 
+                    if (count.equalsIgnoreCase("0")) {
+                        mdownarrow.setVisibility(View.GONE);
+                        muparrow.setVisibility(View.GONE);
+                    }
                     mLinearFirstArrow.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            setViewsVisible(villll);
+                            if (mainList.get(finalI).getFound().size() == 0)
+                                CustomToast.customToast(getActivity(), "No Buyer Leads Found");
+                            else
+                                setViewsVisible(finalI);
                         }
                     });
 
@@ -293,23 +288,13 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
                     mRto_city.setText(mainList.get(i).getRtoCity());
 
                     if (mainList.get(i).getRtoCity().equalsIgnoreCase("Unregistered") || mainList.get(i).getRtoCity().equalsIgnoreCase("") || mainList.get(i).getRtoCity().isEmpty()) {
-                        mRegno.setVisibility(View.GONE);
-                        myreg.setVisibility(View.GONE);
+                        mLinearRegNo.setVisibility(View.GONE);
                     } else {
                         mRegno.setText(mainList.get(i).getRegistrationNumber());
 
                     }
                     mKms.setText(String.valueOf(mainList.get(i).getKmsRunning()));
                     mmatchCount.setText(String.valueOf(mainList.get(i).getFound().size()));
-
-                    String count = String.valueOf(mainList.get(i).getFound().size());
-                    System.out.print("Leads at position=" + i + "=" + count);
-
-                    if (count.equalsIgnoreCase("0")) {
-                        mdownarrow.setVisibility(View.GONE);
-                        muparrow.setVisibility(View.GONE);
-                    }
-
 
                     mUploadedDate.setText(mainList.get(i).getDate());
 
@@ -321,8 +306,8 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
                         String[] imagenamecame = imagenames.split(",");
 
                         if (imagenamecame.length != 0 && !imagenamecame[0].equals("")) {
-                            for (int z = 0; z < imagenamecame.length; z++) {
-                                iname.add(imagenamecame[z]);
+                            for (String anImagenamecame : imagenamecame) {
+                                iname.add(anImagenamecame);
                             }
 
                             ImageView[] imageView = new ImageView[iname.size()];
@@ -520,7 +505,6 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
                         checkBoxINSRight.setEnabled(false);
                         checkBoxHPcapRight.setEnabled(false);
 
-                        final int finalI = i;
                         final int finalJ = j;
                         mBuyerUserName.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -621,16 +605,28 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
                         mLinearScrollSecond[i].addView(mLinearView2);
                     }
                     mLinearListView.addView(mLinearView);
+
                 }
+                if (dialog.isShowing()) {
+                    dialog.dismiss();
+                }
+            } else {
+                if (dialog.isShowing()) {
+                    dialog.dismiss();
+                }
+                mNoData.setVisibility(View.VISIBLE);
             }
         } else {
-            dialog.setMessage("No Buyer data");
+            if (dialog.isShowing()) {
+                dialog.dismiss();
+            }
+            mNoData.setVisibility(View.VISIBLE);
         }
-
     }
 
     @Override
     public void notifyError(Throwable error) {
+        mNoData.setVisibility(View.VISIBLE);
         if (error instanceof SocketTimeoutException) {
             if (isAdded())
                 CustomToast.customToast(getActivity(), getString(R.string._404_));
@@ -670,12 +666,10 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
 
     private void call(String recieverContact) {
         Intent in = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + recieverContact));
-
-        System.out.println("calling started");
         try {
             getActivity().startActivity(in);
         } catch (android.content.ActivityNotFoundException ex) {
-            System.out.println("No Activity Found For Call in Service View Fragment\n");
+            ex.printStackTrace();
         }
     }
 
