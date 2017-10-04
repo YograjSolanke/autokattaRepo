@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
@@ -20,8 +21,6 @@ import autokatta.com.R;
 import autokatta.com.response.GetRegisteredContactsResponse;
 import autokatta.com.response.GetRegisteredContactsResponse.Success;
 
-import static autokatta.com.groups.GroupContactFragment.AddContacts;
-
 
 /**
  * Created by ak-005 on 20/4/17.
@@ -34,14 +33,16 @@ public class GroupContactListAdapter extends BaseAdapter {
     private List<GetRegisteredContactsResponse.Success> mListCopy;
     Activity activity;
     CheckBox checkbox;
+    Button mBtnAddContacts;
     private List<Boolean> positionArray = new ArrayList<>();
     private List<String> contactlist = new ArrayList<>();
 
 
-    public GroupContactListAdapter(Activity a, List<GetRegisteredContactsResponse.Success> mListt) {
+    public GroupContactListAdapter(Activity a, List<GetRegisteredContactsResponse.Success> mListt, Button addcontact) {
         this.activity = a;
         this.mList = mListt;
         this.mListCopy = mListt;
+        this.mBtnAddContacts=addcontact;
 
 
         for (int i = 0; i < mList.size(); i++) {
@@ -110,9 +111,9 @@ public class GroupContactListAdapter extends BaseAdapter {
                 //For Button visible/invisible
 
                 if (positionArray.contains(true))
-                    AddContacts.setEnabled(true);
+                    mBtnAddContacts.setEnabled(true);
                 else
-                    AddContacts.setEnabled(false);
+                    mBtnAddContacts.setEnabled(false);
 
             }
 

@@ -17,7 +17,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
@@ -52,7 +51,7 @@ public class GroupContactFragment extends Fragment implements RequestNotifier {
     Bundle args = new Bundle();
     ConnectionDetector mTestConnection;
 
-    public static Button AddContacts;
+    public Button mBtnAddContacts;
     EditText inputSearch;
     List<String> clist = new ArrayList<>();
     List<String> alreadyMemberList = new ArrayList<>();
@@ -71,7 +70,7 @@ public class GroupContactFragment extends Fragment implements RequestNotifier {
         mGcontact = inflater.inflate(R.layout.group_contact_list, container, false);
         mTestConnection = new ConnectionDetector(getActivity());
         getActivity().setTitle("Add Contacts");
-        AddContacts = (Button) mGcontact.findViewById(R.id.add_contacts);
+        mBtnAddContacts = (Button) mGcontact.findViewById(R.id.add_contacts);
         inputSearch = (EditText) mGcontact.findViewById(R.id.inputSearch);
         lv = (ListView) mGcontact.findViewById(R.id.list_view);
 
@@ -91,10 +90,15 @@ public class GroupContactFragment extends Fragment implements RequestNotifier {
         mGroup_id = args.getInt("bundle_GroupId", 0);
         bundle_GroupName = args.getString("bundle_GroupName", "");
         call = args.getString("call", "");
-        alreadyMemberList = args.getStringArrayList("list");
-        AddContacts.setEnabled(false);
+        if(call.equalsIgnoreCase("newGroup")){
+            alreadyMemberList.add("");
+        }else{
+            alreadyMemberList = args.getStringArrayList("list");
+        }
 
-        AddContacts.setOnClickListener(new OnClickListener() {
+        mBtnAddContacts.setEnabled(false);
+
+        mBtnAddContacts.setOnClickListener(new OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -271,11 +275,13 @@ public class GroupContactFragment extends Fragment implements RequestNotifier {
                 }
             }
             if (cntlist.size() != 0) {
-                CntctListadapter = new GroupContactListAdapter(getActivity(), cntlist);
+                CntctListadapter = new GroupContactListAdapter(getActivity(), cntlist,mBtnAddContacts);
                 lv.setAdapter(CntctListadapter);
                 CntctListadapter.notifyDataSetChanged();
-            } else
-                Toast.makeText(getActivity(), "no contacts found", Toast.LENGTH_SHORT).show();
+            } else {
+                if (isAdded())
+                    CustomToast.customToast(getActivity(), "no contacts found");
+            }
         }
     }
 
@@ -307,7 +313,6 @@ public class GroupContactFragment extends Fragment implements RequestNotifier {
             if (str.startsWith("success")) {
                 if (isAdded()) {
                     CustomToast.customToast(getActivity(), "Contact Added");
-                    Log.i("Notification send", "success add group member");
                 /*Intent intent = new Intent(getActivity(), GroupsActivity.class);
                 intent.putExtra("grouptype", "MyGroup");
                 intent.putExtra("className", "GroupContactFragment");
@@ -317,8 +322,8 @@ public class GroupContactFragment extends Fragment implements RequestNotifier {
                 }
             }else   if (str.equalsIgnoreCase("sent_request")) {
                 if(isAdded())
-                CustomToast.customToast(getActivity(), "Request to Add Contact Sent");
-                getActivity().getSupportFragmentManager().popBackStack();
+                    CustomToast.customToast(getActivity(), "Request to Add Contact Sent");
+                    getActivity().getSupportFragmentManager().popBackStack();
 
             }else
             {

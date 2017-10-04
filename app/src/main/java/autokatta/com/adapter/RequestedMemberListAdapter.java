@@ -50,7 +50,7 @@ public class RequestedMemberListAdapter extends RecyclerView.Adapter<RequestedMe
     private ConnectionDetector mTestConnection;
 
     static class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView mName, mContact, mVehicleCount, mAdmin, mproductcnt, mServicecnt;
+        TextView mName, mContact;
         ImageView mCall, mProfilePic;
         Button mAddMember;
         RelativeLayout mRelativeLayout;
@@ -86,7 +86,7 @@ public class RequestedMemberListAdapter extends RecyclerView.Adapter<RequestedMe
     }
 
     @Override
-    public void onBindViewHolder(final RequestedMemberListAdapter.MyViewHolder holder, int position) {
+    public void onBindViewHolder(final RequestedMemberListAdapter.MyViewHolder holder, final int position) {
         mView = holder;
         mGroupId=mItemList.get(position).getGroupID();
         mRequestedContact=mItemList.get(position).getRequestedContact();
@@ -113,6 +113,8 @@ public class RequestedMemberListAdapter extends RecyclerView.Adapter<RequestedMe
             @Override
             public void onClick(View view) {
                 mApiCall.addContactInGroup(mGroupId,mRequestedContact);
+                mItemList.remove(holder.getAdapterPosition());
+                notifyDataSetChanged();
             }
         });
 
@@ -185,7 +187,7 @@ public class RequestedMemberListAdapter extends RecyclerView.Adapter<RequestedMe
     @Override
     public void notifyString(String str) {
         if (str != null) {
-            if (str.startsWith("success")) {
+            if (str.equalsIgnoreCase("success\nsuccess_add_contact")) {
                 CustomToast.customToast(mActivity, "Contact Added successfully");
                 mApiCall.Like(mMyContact, mRequestedContact, "3", 0, mGroupId, 0, 0, 0, 0, 0);
                 mApiCall.DeleteRequestedMember(mRequestId);
