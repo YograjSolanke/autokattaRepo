@@ -70,7 +70,7 @@ public class MyActiveAuctionHighBidResponse {
         private int auctionid;
         @SerializedName("vehicleid")
         @Expose
-        private String vehicleid;
+        private int vehicleid;
         @SerializedName("title")
         @Expose
         private String title;
@@ -131,11 +131,11 @@ public class MyActiveAuctionHighBidResponse {
             this.auctionid = auctionid;
         }
 
-        public String getVehicleid() {
+        public int getVehicleid() {
             return vehicleid;
         }
 
-        public void setVehicleid(String vehicleid) {
+        public void setVehicleid(int vehicleid) {
             this.vehicleid = vehicleid;
         }
 
@@ -284,7 +284,7 @@ public class MyActiveAuctionHighBidResponse {
         private int auctionid;
         @SerializedName("vehicleid")
         @Expose
-        private String vehicleid;
+        private int vehicleid;
         @SerializedName("contact")
         @Expose
         private String contact;
@@ -324,11 +324,11 @@ public class MyActiveAuctionHighBidResponse {
             this.auctionid = auctionid;
         }
 
-        public String getVehicleid() {
+        public int getVehicleid() {
             return vehicleid;
         }
 
-        public void setVehicleid(String vehicleid) {
+        public void setVehicleid(int vehicleid) {
             this.vehicleid = vehicleid;
         }
 

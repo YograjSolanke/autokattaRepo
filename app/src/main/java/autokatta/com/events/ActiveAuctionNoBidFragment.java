@@ -27,7 +27,6 @@ import java.util.List;
 
 import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
-import autokatta.com.auction.AdminVehicleDetails;
 import autokatta.com.auction.MyAuctionVehicleDetails;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.networkreceiver.ConnectionDetector;
@@ -159,7 +158,6 @@ public class ActiveAuctionNoBidFragment extends Fragment implements SwipeRefresh
                         auctionAllVehicleData.setVehicleLocation_city(success.getLocation());
                         auctionAllVehicleData.setVehicleRTOCity(success.getRtoCity());
                         auctionAllVehicleData.setVehicleColor(success.getColor());
-                        // auctionAllVehicleData.setVehicleImages(success.getImage());
                         auctionAllVehicleData.setVehicleRegistrationNo(success.getRegNo());
                         auctionAllVehicleData.setVehicleStartPrice(success.getStartPrice());
                         auctionAllVehicleData.setVehicleReservedPrice(success.getReservePrice());
@@ -275,7 +273,7 @@ public class ActiveAuctionNoBidFragment extends Fragment implements SwipeRefresh
         }
 
         @Override
-        public void onBindViewHolder(final ActiveAuctionNoBidAdapter.MyViewHolder holder, final int position) {
+        public void onBindViewHolder(final ActiveAuctionNoBidAdapter.MyViewHolder holder, int position) {
             if (mItemList.get(position).getVehicleSingleImage() == null || mItemList.get(position).getVehicleSingleImage().equals("")
                     || mItemList.get(position).getVehicleSingleImage().isEmpty()) {
                 holder.mAuctionVehicleImage.setBackgroundResource(R.drawable.vehiimg);
@@ -304,9 +302,9 @@ public class ActiveAuctionNoBidFragment extends Fragment implements SwipeRefresh
             holder.mViewMore.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (!mItemList.get(position).getVehicleId().startsWith("A ")) {
+                    /*if (!mItemList.get(position).getVehicleId().startsWith("A ")) {*/
                         Bundle b = new Bundle();
-                        b.putString("vehicle_id", mItemList.get(position).getVehicleId());
+                    b.putInt("vehicle_id", mItemList.get(holder.getAdapterPosition()).getVehicleId());
                         b.putInt("auction_id", mAuctionId);
 
                         Intent intent = new Intent(getActivity(), MyAuctionVehicleDetails.class);
@@ -315,9 +313,9 @@ public class ActiveAuctionNoBidFragment extends Fragment implements SwipeRefresh
                         getActivity().finish();
 
 
-                    } else {
+                   /* } else {
                         Bundle b = new Bundle();
-                        b.putString("vehicle_id", mItemList.get(position).getVehicleId());
+                        b.putInt("vehicle_id", mItemList.get(holder.getAdapterPosition()).getVehicleId());
                         b.putString("lotNo", holder.mSetLotNo.getText().toString());
 
                         Intent intent = new Intent(getActivity(), AdminVehicleDetails.class);
@@ -326,7 +324,7 @@ public class ActiveAuctionNoBidFragment extends Fragment implements SwipeRefresh
                         getActivity().finish();
 
 
-                    }
+                    }*/
                 }
             });
         }

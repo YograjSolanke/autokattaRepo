@@ -23,6 +23,7 @@ import com.github.clans.fab.FloatingActionMenu;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 
 import autokatta.com.R;
 import autokatta.com.adapter.TabAdapterName;
@@ -79,7 +80,6 @@ public class PreviewNextMyActiveAuctionActivity extends AppCompatActivity implem
         strCategory = getIntent().getExtras().getString("category");
         strLocation = getIntent().getExtras().getString("location");
 
-
         mCollapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         mTabLayout = (TabLayout) findViewById(R.id.preview_next_myactive_auction_tabs);
         mViewPager = (ViewPager) findViewById(R.id.preview_next_myactive_auction_viewpager);
@@ -112,7 +112,6 @@ public class PreviewNextMyActiveAuctionActivity extends AppCompatActivity implem
             @Override
             public void run() {
                 try {
-
                     menuRed = (FloatingActionMenu) findViewById(R.id.menu_red);
                     menuRed.setClosedOnTouchOutside(true);
                     mCollapsingToolbar.setTitle("Title: " + strAuctionTitle);
@@ -122,7 +121,7 @@ public class PreviewNextMyActiveAuctionActivity extends AppCompatActivity implem
                     txtEndTime.setText(strEndTime);
                     txtVehicle.setText(String.valueOf(strVehicleCount));
                     txtParticipant.setText(String.valueOf(strParticipantcount));
-                    txtCategory.setText("Category: " + strCategory);
+                    txtCategory.setText("" + "Category: " + strCategory);
                     txtLocation.setText(strLocation);
                     //mAuctionText.setText(getString(R.string.live_auction));
                     mBundle.putInt("auctionid", strAuctionId);
@@ -138,7 +137,7 @@ public class PreviewNextMyActiveAuctionActivity extends AppCompatActivity implem
                         cdt.cancel();
                         cdt = null;
                     }
-                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
                     try {
                         Date futureDate = dateFormat.parse(strEnddatetime);
                         Date currentDate = dateFormat.parse(strEnddatetime);
@@ -170,7 +169,9 @@ public class PreviewNextMyActiveAuctionActivity extends AppCompatActivity implem
                                 if (millisUntilFinished > DateUtils.SECOND_IN_MILLIS) {
                                     seconds = (int) (millisUntilFinished / DateUtils.SECOND_IN_MILLIS);
                                 }
-                                sDate += " " + String.format("%02d", hours) + ":" + String.format("%02d", minutes) + ":" + String.format("%02d", seconds);
+                                sDate += " " + String.format(Locale.getDefault(), "%02d", hours) + ":" +
+                                        String.format(Locale.getDefault(), "%02d", minutes) + ":" +
+                                        String.format(Locale.getDefault(), "%02d", seconds);
                                 tv.setText(sDate.trim());
                             }
 
@@ -235,7 +236,6 @@ public class PreviewNextMyActiveAuctionActivity extends AppCompatActivity implem
                 alertDialog.setView(input);
 
 
-
                 alertDialog.setNeutralButton("cancel",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
@@ -261,7 +261,6 @@ public class PreviewNextMyActiveAuctionActivity extends AppCompatActivity implem
 
     @Override
     public void onBackPressed() {
-        //super.onBackPressed();
         int fragments = getSupportFragmentManager().getBackStackEntryCount();
         if (fragments == 1) {
             finish();

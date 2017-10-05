@@ -14,7 +14,6 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -61,7 +60,6 @@ public class AuctionConfirmAdapter extends BaseAdapter implements RequestNotifie
             isSave.add(false);
         }
 
-
         mInflater = (LayoutInflater) activity.
                 getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
@@ -84,18 +82,15 @@ public class AuctionConfirmAdapter extends BaseAdapter implements RequestNotifie
 
     @Override
     public int getViewTypeCount() {
-
         return getCount();
     }
 
     @Override
     public int getItemViewType(int position) {
-
         return position;
     }
 
     public static class ViewHolder {
-
         TextView texttitle;
         TextView textcategory;
         TextView textbrand;
@@ -106,16 +101,13 @@ public class AuctionConfirmAdapter extends BaseAdapter implements RequestNotifie
         ImageView image;
         EditText startprice1, reserveprice1;
         Button btnsave, btnedit;
-
         CheckBox checkBox;
-
     }
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
 
         final ViewHolder holder;
-
 
         if (convertView == null) {
             convertView = mInflater.inflate(R.layout.adapter_auction_confirm, null);
@@ -163,11 +155,11 @@ public class AuctionConfirmAdapter extends BaseAdapter implements RequestNotifie
         System.out.println("AAAAAAAAA startprice" + obj.vehicleStartPrice);
         System.out.println("AAAAAAAAA reserveprice" + obj.vehicleReservedPrice);
 
-        if (obj.vehicleId.startsWith("A ")) {
+        /*if (obj.vehicleId.startsWith("A ")) {
             holder.startprice1.setText(obj.vehicleStartPrice);
             holder.reserveprice1.setText(obj.vehicleReservedPrice);
 
-        }
+        }*/
 
         if (obj.getVehicleSingleImage() != null || !obj.getVehicleSingleImage().equals("")) {
 
@@ -211,7 +203,7 @@ public class AuctionConfirmAdapter extends BaseAdapter implements RequestNotifie
 
                 String startPrice = holder.startprice1.getText().toString();
                 String reservedPrice = holder.reserveprice1.getText().toString();
-                String vehicleId = obj.vehicleId;
+                int vehicleId = obj.vehicleId;
                 if (holder.checkBox.isChecked()) {
 
                     if (startPrice.equals("")) {
@@ -224,7 +216,6 @@ public class AuctionConfirmAdapter extends BaseAdapter implements RequestNotifie
 
                         addPrice(startPrice, reservedPrice, vehicleId);
                         isSave.set(position, true);
-
 
                         holder.startprice1.setEnabled(false);
                         holder.reserveprice1.setEnabled(false);
@@ -245,11 +236,9 @@ public class AuctionConfirmAdapter extends BaseAdapter implements RequestNotifie
             }
         });
 
-
         convertView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-
 //                v.getParent().requestDisallowInterceptTouchEvent(true);
                 return false;
             }
@@ -263,7 +252,7 @@ public class AuctionConfirmAdapter extends BaseAdapter implements RequestNotifie
         return checkedVehicleData;
     }
 
-    private void addPrice(final String startPrice, final String reservedPrice, String vehicleId) {
+    private void addPrice(final String startPrice, final String reservedPrice, int vehicleId) {
         ApiCall apiCall = new ApiCall(activity, this);
         apiCall.Start_ReservedPrice(auctionId, vehicleId, startPrice, reservedPrice);
     }
@@ -295,7 +284,7 @@ public class AuctionConfirmAdapter extends BaseAdapter implements RequestNotifie
             if (str.equalsIgnoreCase("Success")) {
                 CustomToast.customToast(activity, "Thank you price saved successfully");
             } else {
-                Toast.makeText(activity, "Price not saved", Toast.LENGTH_SHORT).show();
+                CustomToast.customToast(activity, "Price not saved");
                 Log.i("Response", "->addPrice:" + str);
             }
         } else

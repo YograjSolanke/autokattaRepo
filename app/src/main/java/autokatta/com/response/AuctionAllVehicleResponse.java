@@ -75,7 +75,7 @@ public class AuctionAllVehicleResponse {
 
             @SerializedName("vehicle_id")
             @Expose
-            private String vehicleId;
+            private int vehicleId;
             @SerializedName("title")
             @Expose
             private String title;
@@ -119,11 +119,11 @@ public class AuctionAllVehicleResponse {
             @Expose
             private String reservedPrice;
 
-            public String getVehicleId() {
+            public int getVehicleId() {
                 return vehicleId;
             }
 
-            public void setVehicleId(String vehicleId) {
+            public void setVehicleId(int vehicleId) {
                 this.vehicleId = vehicleId;
             }
 
@@ -246,7 +246,7 @@ public class AuctionAllVehicleResponse {
 
             @SerializedName("vehicle_id")
             @Expose
-            private String vehicleId;
+            private int vehicleId;
             @SerializedName("title")
             @Expose
             private String title;
@@ -290,11 +290,11 @@ public class AuctionAllVehicleResponse {
             @Expose
             private String reservedPrice;
 
-            public String getVehicleId() {
+            public int getVehicleId() {
                 return vehicleId;
             }
 
-            public void setVehicleId(String vehicleId) {
+            public void setVehicleId(int vehicleId) {
                 this.vehicleId = vehicleId;
             }
 
@@ -416,7 +416,7 @@ public class AuctionAllVehicleResponse {
 
             @SerializedName("vehicle_id")
             @Expose
-            private String vehicleId;
+            private int vehicleId;
             @SerializedName("contactNo")
             @Expose
             private String contactNo;
@@ -466,11 +466,11 @@ public class AuctionAllVehicleResponse {
             @Expose
             private String reservedPrice;
 
-            public String getVehicleId() {
+            public int getVehicleId() {
                 return vehicleId;
             }
 
-            public void setVehicleId(String vehicleId) {
+            public void setVehicleId(int vehicleId) {
                 this.vehicleId = vehicleId;
             }
 

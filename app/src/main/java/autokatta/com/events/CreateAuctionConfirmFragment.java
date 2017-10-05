@@ -140,11 +140,9 @@ public class CreateAuctionConfirmFragment extends Fragment implements RequestNot
             }
         });
 
-
         adapter = new AuctionConfirmAdapter(getActivity(), bundleAuctionId, finalVehiclesData);
         vehiclelistview.setAdapter(adapter);
         adapter.notifyDataSetChanged();
-
 
         btnconfirm.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -179,7 +177,7 @@ public class CreateAuctionConfirmFragment extends Fragment implements RequestNot
                         AuctionAllVehicleData obj = vehicleIdsCame.get(i);
 
                         if (stringVehicleIds.equals(""))
-                            stringVehicleIds = obj.vehicleId;
+                            stringVehicleIds = String.valueOf(obj.vehicleId);
                         else
                             stringVehicleIds = stringVehicleIds + "," + obj.vehicleId;
                     }
@@ -187,19 +185,15 @@ public class CreateAuctionConfirmFragment extends Fragment implements RequestNot
                     System.out.println("Vehicle iddddd" + stringVehicleIds);
 
                     AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
-
-//                    alertDialogBuilder.setTitle("Your Title");
-
                     alertDialogBuilder
                             .setMessage("Do you want to ACTIVATE or SAVE an auction ?")
                             .setCancelable(true)
                             .setPositiveButton("ACTIVATE", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
-//                                    Toast.makeText(getActivity(), "Auction Activated", Toast.LENGTH_SHORT).show();
+
                                     SaveActivate = "ACTIVE";
                                     UpdateAuction();
                                     dialog.cancel();
-
                                 }
                             })
                             .setNegativeButton("SAVE", new DialogInterface.OnClickListener() {
@@ -208,20 +202,15 @@ public class CreateAuctionConfirmFragment extends Fragment implements RequestNot
                                     SaveActivate = "SAVE";
                                     UpdateAuction();
                                     dialog.cancel();
-
                                 }
                             });
-
                     AlertDialog alertDialog = alertDialogBuilder.create();
                     alertDialog.show();
-
                 }
-
             }
         });
 
         System.out.println("finalVehiclesData " + finalVehiclesData.size());
-
         return root;
     }
 
@@ -258,23 +247,6 @@ public class CreateAuctionConfirmFragment extends Fragment implements RequestNot
         if (str != null) {
             if (str.startsWith("Success")) {
                 CustomToast.customToast(getActivity(),  "Auction Created Successfully");
-                /*Update data in SqLite
-                sqlite_obj.open();
-                SQlitewallDB.DatabaseHelper obg = new SQlitewallDB.DatabaseHelper(getActivity());
-
-
-                obg.updateAuction(bundleAuctionId, bundleAuctionTitle, bundleAuctionStartDate, bundleAuctionStartTime,
-                        bundleAuctionEndDate, bundleAuctionEndTime, bundleSpecialClauses, stringNoofVehicle);
-
-                sqlite_obj.close();*/
-
-               /* if (SaveActivate.equals("ACTIVE")) {
-                    getActivity().finish();
-                    startActivity(new Intent(getActivity(), MyActiveEventsTabActivity.class));
-                } else {
-                    getActivity().finish();
-                    startActivity(new Intent(getActivity(), MySavedAuctionEventActivity.class));
-                }*/
 
                 startActivity(new Intent(getActivity(), Create_Event.class));
                 getActivity().finish();

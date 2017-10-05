@@ -71,7 +71,7 @@ public class MyActiveAuctionAboveReservedResponse {
         private int auctionid;
         @SerializedName("vehicleid")
         @Expose
-        private String vehicleid;
+        private int vehicleid;
         @SerializedName("title")
         @Expose
         private String title;
@@ -132,11 +132,11 @@ public class MyActiveAuctionAboveReservedResponse {
             this.auctionid = auctionid;
         }
 
-        public String getVehicleid() {
+        public int getVehicleid() {
             return vehicleid;
         }
 
-        public void setVehicleid(String vehicleid) {
+        public void setVehicleid(int vehicleid) {
             this.vehicleid = vehicleid;
         }
 
@@ -285,7 +285,7 @@ public class MyActiveAuctionAboveReservedResponse {
         private int auctionid;
         @SerializedName("vehicleid")
         @Expose
-        private String vehicleid;
+        private int vehicleid;
         @SerializedName("contact")
         @Expose
         private String contact;
@@ -328,11 +328,11 @@ public class MyActiveAuctionAboveReservedResponse {
             this.auctionid = auctionid;
         }
 
-        public String getVehicleid() {
+        public int getVehicleid() {
             return vehicleid;
         }
 
-        public void setVehicleid(String vehicleid) {
+        public void setVehicleid(int vehicleid) {
             this.vehicleid = vehicleid;
         }
 

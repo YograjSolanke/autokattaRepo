@@ -4093,7 +4093,7 @@ params.put("auction_id", bundleAuctionId);
 
     //Add start and reserved price
 
-    public void Start_ReservedPrice(int auctionId, String vehicleId, String startPrice, String reservedPrice) {
+    public void Start_ReservedPrice(int auctionId, int vehicleId, String startPrice, String reservedPrice) {
 
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
@@ -4437,7 +4437,7 @@ params.put("auction_id", bundleAuctionId);
     }
 
     //Add vehicle in reauction
-    public void addToReauction(String vehicleid, int mAuctionId) {
+    public void addToReauction(int vehicleid, int mAuctionId) {
 
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
@@ -4474,7 +4474,8 @@ params.put("auction_id", bundleAuctionId);
     }
 
     //approve auction vehicle with bid
-    public void ApproveVehicle(int mAuctionId, String keyword1, String vehicleid, String bidderContact, String bidPrice) {
+    public void ApproveVehicle(int mAuctionId, String keyword1, int vehicleid, String bidderContact,
+                               String bidPrice) {
 
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
@@ -7364,9 +7365,9 @@ get product data
         }
     }
 
-  /*
-get product data
-*/
+    /*
+  get product data
+  */
     public void getRequestedContacts(int groupid) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {

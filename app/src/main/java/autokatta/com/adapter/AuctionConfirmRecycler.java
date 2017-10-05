@@ -71,7 +71,7 @@ public class AuctionConfirmRecycler extends RecyclerView.Adapter<AuctionConfirmR
     }
 
     @Override
-    public void onBindViewHolder(final AuctionConfirmRecycler.AuctionHolder holder, final int position) {
+    public void onBindViewHolder(final AuctionConfirmRecycler.AuctionHolder holder, int position) {
 
         final AuctionAllVehicleData obj = finalVehiclesData.get(position);
 
@@ -93,11 +93,11 @@ public class AuctionConfirmRecycler extends RecyclerView.Adapter<AuctionConfirmR
         System.out.println("AAAAAAAAA startprice" + obj.vehicleStartPrice);
         System.out.println("AAAAAAAAA reserveprice" + obj.vehicleReservedPrice);
 
-        if (obj.vehicleId.startsWith("A ")) {
+        /*if (obj.vehicleId.startsWith("A ")) {
             holder.startprice1.setText(obj.vehicleStartPrice);
             holder.reserveprice1.setText(obj.vehicleReservedPrice);
 
-        }
+        }*/
 
         if (obj.getVehicleSingleImage() != null || !obj.getVehicleSingleImage().equals("")) {
 
@@ -120,14 +120,14 @@ public class AuctionConfirmRecycler extends RecyclerView.Adapter<AuctionConfirmR
                     CreateAuctionConfirmFragment.noOfVehicles++;
                     CreateAuctionConfirmFragment.editvehicle.setText(String.valueOf(CreateAuctionConfirmFragment.noOfVehicles));
 
-                    positionArray.set(position, true);
+                    positionArray.set(holder.getAdapterPosition(), true);
                     checkedVehicleData.add(obj);
 
                 } else {
                     CreateAuctionConfirmFragment.noOfVehicles--;
                     CreateAuctionConfirmFragment.editvehicle.setText(String.valueOf(CreateAuctionConfirmFragment.noOfVehicles));
 
-                    positionArray.set(position, false);
+                    positionArray.set(holder.getAdapterPosition(), false);
                     checkedVehicleData.remove(obj);
                 }
             }
@@ -141,7 +141,7 @@ public class AuctionConfirmRecycler extends RecyclerView.Adapter<AuctionConfirmR
 
                 String startPrice = holder.startprice1.getText().toString();
                 String reservedPrice = holder.reserveprice1.getText().toString();
-                String vehicleId = obj.vehicleId;
+                int vehicleId = obj.vehicleId;
 
                 if (startPrice.equals("")) {
                     //isSave.set(position,false);
@@ -152,7 +152,7 @@ public class AuctionConfirmRecycler extends RecyclerView.Adapter<AuctionConfirmR
                 } else if (!startPrice.equals("") && !reservedPrice.equals("")) {
 
                     addPrice(startPrice, reservedPrice, vehicleId);
-                    isSave.set(position, true);
+                    isSave.set(holder.getAdapterPosition(), true);
 
 
                     holder.startprice1.setEnabled(false);
@@ -215,7 +215,7 @@ public class AuctionConfirmRecycler extends RecyclerView.Adapter<AuctionConfirmR
         return checkedVehicleData;
     }
 
-    private void addPrice(final String startPrice, final String reservedPrice, String vehicleId) {
+    private void addPrice(final String startPrice, final String reservedPrice, int vehicleId) {
         ApiCall apiCall = new ApiCall(mActivity, this);
         apiCall.Start_ReservedPrice(auctionId, vehicleId, startPrice, reservedPrice);
     }

@@ -30,7 +30,6 @@ import java.util.List;
 
 import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
-import autokatta.com.auction.AdminVehicleDetails;
 import autokatta.com.auction.MyAuctionVehicleDetails;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.networkreceiver.ConnectionDetector;
@@ -53,8 +52,6 @@ public class MyEndedAuctionApprovedFragment extends Fragment implements RequestN
     private int mAuctionId = 0;
     private String mSpecialClauses = "";
     private String myContact = "";
-    private String VehiId = "";
-    private String RContact = "";
     List<EndedAuctionApprovedVehiResponse.BiddersList> mBiddersLists;
     List<EndedAuctionApprovedVehiResponse.VehicleList> mVehicleLists;
     LinearLayout mLinearScrollSecond[];
@@ -110,7 +107,7 @@ public class MyEndedAuctionApprovedFragment extends Fragment implements RequestN
             mApiCall.EndedAuctionApprovedVehi(myContact, strAuctionId);
         } else {
             if (isAdded())
-            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
+                CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         }
     }
 
@@ -162,7 +159,7 @@ public class MyEndedAuctionApprovedFragment extends Fragment implements RequestN
 
                         for (EndedAuctionApprovedVehiResponse.BiddersList bidderList : subSuccess.getBiddersList()) {
 
-                            if (vehicleList.getVehicleid().equals(bidderList.getVehicleid())) {
+                            if (vehicleList.getVehicleid() == bidderList.getVehicleid()) {
 
                                 bidderList.setAuctionid(bidderList.getAuctionid());
                                 bidderList.setContact(bidderList.getContact());
@@ -221,17 +218,12 @@ public class MyEndedAuctionApprovedFragment extends Fragment implements RequestN
 
                         mLinearScrollSecond[i] = (LinearLayout) mLinearView.findViewById(R.id.linear2);
 
-
                         //checkes if menu is already opened or not
                         if (!isFirstViewClick[i]) {
                             mLinearScrollSecond[i].setVisibility(View.GONE);
-
-
                         } else {
                             mLinearScrollSecond[i].setVisibility(View.VISIBLE);
-
                         }
-
 
                         final int listPos = i;
 
@@ -240,7 +232,6 @@ public class MyEndedAuctionApprovedFragment extends Fragment implements RequestN
                             public void onClick(View v) {
 
                                 setViewsVisible(listPos);
-//
                             }
                         });
 
@@ -265,8 +256,6 @@ public class MyEndedAuctionApprovedFragment extends Fragment implements RequestN
                         Location.setText(mVehicleLists.get(i).getLocation());
                         lotNo.setText(mVehicleLists.get(i).getLotNo());
                         //Vehikms.setText(mVehicleLists.get(i).getvehihrs());
-
-                        VehiId = mVehicleLists.get(i).getVehicleid();
 
                         String vehicleSingleImg = "";
                         if ((mVehicleLists.get(i).getImage() == null) || mVehicleLists.get(i).getImage().equals("") || mVehicleLists.get(i).getImage().equals("null")) {
@@ -295,34 +284,30 @@ public class MyEndedAuctionApprovedFragment extends Fragment implements RequestN
 
                         }
 
-
                         final int finalI = i;
                         Moredetails.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                if (!mVehicleLists.get(finalI).getVehicleid().startsWith("A ")) {
+                                /*if (!mVehicleLists.get(finalI).getVehicleid().startsWith("A ")) {*/
+                                Bundle b = new Bundle();
+                                b.putInt("vehicle_id", mVehicleLists.get(finalI).getVehicleid());
+                                b.putInt("auction_id", mAuctionId);
+
+                                Intent intent = new Intent(getActivity(), MyAuctionVehicleDetails.class);
+                                intent.putExtras(b);
+                                getActivity().startActivity(intent);
+                                getActivity().finish();
+
+                                /*} else {
                                     Bundle b = new Bundle();
-                                    b.putString("vehicle_id", mVehicleLists.get(finalI).getVehicleid());
-                                    b.putInt("auction_id", mAuctionId);
-
-                                    Intent intent = new Intent(getActivity(), MyAuctionVehicleDetails.class);
-                                    intent.putExtras(b);
-                                    getActivity().startActivity(intent);
-                                    getActivity().finish();
-
-
-                                } else {
-                                    Bundle b = new Bundle();
-                                    b.putString("vehicle_id", mVehicleLists.get(finalI).getVehicleid());
+                                    b.putInt("vehicle_id", mVehicleLists.get(finalI).getVehicleid());
                                     b.putString("lotNo", lotNo.getText().toString());
 
                                     Intent intent = new Intent(getActivity(), AdminVehicleDetails.class);
                                     intent.putExtras(b);
                                     getActivity().startActivity(intent);
                                     getActivity().finish();
-
-
-                                }
+                                }*/
                             }
                         });
 
@@ -364,7 +349,6 @@ public class MyEndedAuctionApprovedFragment extends Fragment implements RequestN
                             final Button addBacklist = (Button) mLinearView2.findViewById(R.id.backlist);
                             final Button removeBacklist = (Button) mLinearView2.findViewById(R.id.backlist1);
 
-
                             approve.setVisibility(View.GONE);
                             reject.setVisibility(View.GONE);
 
@@ -384,10 +368,6 @@ public class MyEndedAuctionApprovedFragment extends Fragment implements RequestN
                                     if (mVehicleLists.get(finalI).getBiddersList().get(finalJ1).getContact().equals(myContact)) {
                                         Snackbar.make(v, "You can't call yourself", Snackbar.LENGTH_SHORT).show();
                                     } else {
-//                                    action = "call";
-//                                    //vehicle_id = v_ids[position];
-//                                    Rcontact = holder.contact.getText().toString();
-//                                    new submitview().execute();
                                         call(mVehicleLists.get(finalI).getBiddersList().get(finalJ1).getContact());
                                     }
                                 }
@@ -427,9 +407,7 @@ public class MyEndedAuctionApprovedFragment extends Fragment implements RequestN
                                 }
                             });
                             mLinearScrollSecond[i].addView(mLinearView2);
-
                         }
-
                         mLinearLayout.addView(mLinearView);
                     }
 
@@ -439,7 +417,7 @@ public class MyEndedAuctionApprovedFragment extends Fragment implements RequestN
                 }
             } else {
                 if (isAdded())
-                CustomToast.customToast(getActivity(), getString(R.string.no_response));
+                    CustomToast.customToast(getActivity(), getString(R.string.no_response));
             }
         } else {
             if (isAdded())
@@ -460,10 +438,10 @@ public class MyEndedAuctionApprovedFragment extends Fragment implements RequestN
             // CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
             if (isAdded())
-            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
+                CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
             if (isAdded())
-            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
+                CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         } else {
             Log.i("Check class", "MyEnded Auction Approved Fragment");
             error.printStackTrace();
@@ -476,22 +454,22 @@ public class MyEndedAuctionApprovedFragment extends Fragment implements RequestN
             if (str.equals("success")) {
                 if (keyword.equals("blacklist")) {
                     if (isAdded())
-                    CustomToast.customToast(getActivity(), "Add To Blacklist");
+                        CustomToast.customToast(getActivity(), "Add To Blacklist");
                 } else {
                     if (isAdded())
-                    CustomToast.customToast(getActivity(), "Remove from blacklist");
+                        CustomToast.customToast(getActivity(), "Remove from blacklist");
                 }
             } else if (str.equals("success_reauction")) {
                 if (isAdded())
-                CustomToast.customToast(getActivity(), "Vehicle added to reauction");
+                    CustomToast.customToast(getActivity(), "Vehicle added to reauction");
             } else {
                 if (isAdded())
-                CustomToast.customToast(getActivity(), "Problem while adding vehicle to reauction Please try Later");
+                    CustomToast.customToast(getActivity(), "Problem while adding vehicle to reauction Please try Later");
             }
 
         } else {
             if (isAdded())
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+                CustomToast.customToast(getActivity(), getString(R.string.no_response));
         }
     }
 
@@ -506,15 +484,13 @@ public class MyEndedAuctionApprovedFragment extends Fragment implements RequestN
 
     }
 
-    private void addvehicleToReauction(String vehicleid) {
+    private void addvehicleToReauction(int vehicleid) {
 
         if (mTestConnection.isConnectedToInternet()) {
             mApiCall.addToReauction(vehicleid, mAuctionId);
-            //mApiCall.addToReauction(vehicleid, "379");
         } else {
             if (isAdded())
-            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
-            //   errorMessage(getActivity(), getString(R.string.no_internet));
+                CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         }
     }
 
@@ -525,7 +501,7 @@ public class MyEndedAuctionApprovedFragment extends Fragment implements RequestN
             //mApiCall.Add_RemoveBlacklistContact(myContact, "379", rContact, keyword);
         } else {
             if (isAdded())
-            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
+                CustomToast.customToast(getActivity(), getString(R.string.no_internet));
             //   errorMessage(getActivity(), getString(R.string.no_internet));
         }
     }

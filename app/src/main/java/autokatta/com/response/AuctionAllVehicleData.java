@@ -8,16 +8,16 @@ import java.util.Date;
 
 public class AuctionAllVehicleData {
 
-    public String vehicleId, vehicleTitle, vehicleCategory, vehicleSubCategory, vehicleBrand, vehicleModel, vehicleVersion, vehicleMfgYear, vehicleRegYear, vehicleRTOCity, vehicleLocation_city, vehicleImages, vehicleColor, vehiclePrice, vehicleSingleImage, vehicleContact, vehicleStatus, vehicleLikeStatus, vehicleUsername, vehicleRegistrationNo, vehicleStartPrice, vehicleReservedPrice, vehicleKms, vehicleHrs, vehicelLeadsNo, vehicleRc, vehicleInsuranceValid, vehicleInsuranceIDV, vehicleTaxValid, vehicleFitnessValid, vehiclePermitValid, vehicleFuel, vehicleSeatingCapacity, vehicleOwers, vehicleBidRecieved, vehicleCurrentBidPrice, vehicleReauctionStatus, vehicleNotificationStatus, vehicleUploadDateString, vehicleLotNo, vehicleRepodate, vehicleYardRent, vehicleLikeCount;
-
+    public String vehicleTitle, vehicleCategory, vehicleSubCategory, vehicleBrand, vehicleModel, vehicleVersion, vehicleMfgYear, vehicleRegYear, vehicleRTOCity, vehicleLocation_city, vehicleImages, vehicleColor, vehiclePrice, vehicleSingleImage, vehicleContact, vehicleStatus, vehicleLikeStatus, vehicleUsername, vehicleRegistrationNo, vehicleStartPrice, vehicleReservedPrice, vehicleKms, vehicleHrs, vehicelLeadsNo, vehicleRc, vehicleInsuranceValid, vehicleInsuranceIDV, vehicleTaxValid, vehicleFitnessValid, vehiclePermitValid, vehicleFuel, vehicleSeatingCapacity, vehicleOwers, vehicleBidRecieved, vehicleCurrentBidPrice, vehicleReauctionStatus, vehicleNotificationStatus, vehicleUploadDateString, vehicleLotNo, vehicleRepodate, vehicleYardRent, vehicleLikeCount;
+    public int vehicleId;
     public Date vehicleUploadDate;
     public Boolean vehicleVisibility;
 
-    public String getVehicleId() {
+    public int getVehicleId() {
         return vehicleId;
     }
 
-    public void setVehicleId(String vehicleId) {
+    public void setVehicleId(int vehicleId) {
         this.vehicleId = vehicleId;
     }
 

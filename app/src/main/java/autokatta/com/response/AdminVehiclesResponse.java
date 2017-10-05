@@ -28,7 +28,7 @@ public class AdminVehiclesResponse {
 
         @SerializedName("id")
         @Expose
-        private String id;
+        private int id;
         @SerializedName("userid")
         @Expose
         private String userid;
@@ -207,11 +207,11 @@ public class AdminVehiclesResponse {
         @Expose
         private String status;
 
-        public String getId() {
+        public int getId() {
             return id;
         }
 
-        public void setId(String id) {
+        public void setId(int id) {
             this.id = id;
         }
 

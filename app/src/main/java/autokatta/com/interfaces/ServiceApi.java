@@ -586,7 +586,7 @@ public interface ServiceApi {
 
     //Addstart and reserved price
     @POST("AddStartReservedPrice")
-    Call<String> _autokattaAddStart_ReservedPrice(@Query("AuctionID") int auctionId, @Query("VehicleID") String vehicleId,
+    Call<String> _autokattaAddStart_ReservedPrice(@Query("AuctionID") int auctionId, @Query("VehicleID") int vehicleId,
                                                   @Query("StartPrice") String startPrice, @Query("ReservedPrice") String reservedPrice);
 
     //Send Auction mail...
@@ -633,12 +633,12 @@ public interface ServiceApi {
 
     //add vehicle for reauction
     @POST("AddToReauction")
-    Call<String> _autokattaAddVehicleToReauction(@Query("VehicleId") String vehicleid, @Query("AuctionID") int mAuctionId);
+    Call<String> _autokattaAddVehicleToReauction(@Query("VehicleId") int vehicleid, @Query("AuctionID") int mAuctionId);
 
     //Approve an vehicle
     @POST("AddToApprovedVehicles")
     Call<ApprovedVehicleResponse> _autokattaApproveAnVehiclewithBid(@Query("AuctionID") int mAuctionId, @Query("Keyword") String keyword1,
-                                                                    @Query("VehicleID") String vehicleid, @Query("BidderContact") String bidderContact,
+                                                                    @Query("VehicleID") int vehicleid, @Query("BidderContact") String bidderContact,
                                                                     @Query("BidAmount") String bidPrice);
 
     //get Browse store data
@@ -1358,9 +1358,9 @@ public interface ServiceApi {
 
     //Add request to member
     @POST("RequestToAddContacts")
-    Call<String> _autokattaRequestToAdd(@Query("GroupID") int GroupID,@Query("Contacts") String Contacts);
+    Call<String> _autokattaRequestToAdd(@Query("GroupID") int GroupID, @Query("Contacts") String Contacts);
 
- //get requested to member
+    //get requested to member
     @GET("GetRequestedContacts")
     Call<GetRequestedContactsResponse> _autokattaGetRequestedContacts(@Query("GroupID") int GroupID);
 

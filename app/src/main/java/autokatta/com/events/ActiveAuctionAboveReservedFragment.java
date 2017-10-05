@@ -29,7 +29,6 @@ import java.util.List;
 
 import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
-import autokatta.com.auction.AdminVehicleDetails;
 import autokatta.com.auction.MyAuctionVehicleDetails;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.networkreceiver.ConnectionDetector;
@@ -50,8 +49,6 @@ public class ActiveAuctionAboveReservedFragment extends Fragment implements Requ
     private LinearLayout mLinearLayout;
     private int mAuctionId = 0;
     private String myContact = "";
-    private String VehiId = "";
-    private String RContact = "";
     List<MyActiveAuctionAboveReservedResponse.BiddersList> mBiddersLists;
     List<MyActiveAuctionAboveReservedResponse.VehicleList> mVehicleLists;
     LinearLayout mLinearScrollSecond[];
@@ -159,7 +156,7 @@ public class ActiveAuctionAboveReservedFragment extends Fragment implements Requ
 
                         for (MyActiveAuctionAboveReservedResponse.BiddersList bidderList : subSuccess.getBiddersList()) {
 
-                            if (vehicleList.getVehicleid().equals(bidderList.getVehicleid())) {
+                            if (vehicleList.getVehicleid() == bidderList.getVehicleid()) {
 
                                 bidderList.setAuctionid(bidderList.getAuctionid());
                                 bidderList.setContact(bidderList.getContact());
@@ -241,10 +238,14 @@ public class ActiveAuctionAboveReservedFragment extends Fragment implements Requ
 
                         VehiRegno.setText(mVehicleLists.get(i).getRegNo());
                         VehiRtocity.setText(mVehicleLists.get(i).getRtoCity());
-                        Vehikms.setText(mVehicleLists.get(i).getKmsRunning());
+                        //Vehikms.setText(mVehicleLists.get(i).getKmsRunning());
                         Location.setText(mVehicleLists.get(i).getLocation());
                         lotNo.setText(mVehicleLists.get(i).getLotNo());
                         //Vehikms.setText(mVehicleLists.get(i).getvehihrs());
+                        if (!mVehicleLists.get(i).getKmsRunning().equals("") || mVehicleLists.get(i).getKmsRunning() != null)
+                            Vehikms.setText("" + mVehicleLists.get(i).getKmsRunning() + "Kms");
+                        else
+                            Vehikms.setText("" + mVehicleLists.get(i).getHrsRunning() + "Hrs");
 
 
                         String vehicleSingleImg = "";
@@ -276,9 +277,9 @@ public class ActiveAuctionAboveReservedFragment extends Fragment implements Requ
                         Moredetails.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                if (!mVehicleLists.get(finalI).getVehicleid().startsWith("A ")) {
+                                /*if (!mVehicleLists.get(finalI).getVehicleid().startsWith("A ")) {*/
                                     Bundle b = new Bundle();
-                                    b.putString("vehicle_id", mVehicleLists.get(finalI).getVehicleid());
+                                b.putInt("vehicle_id", mVehicleLists.get(finalI).getVehicleid());
                                     b.putInt("auction_id", mAuctionId);
 
                                     Intent intent = new Intent(getActivity(), MyAuctionVehicleDetails.class);
@@ -286,19 +287,16 @@ public class ActiveAuctionAboveReservedFragment extends Fragment implements Requ
                                     getActivity().startActivity(intent);
                                     getActivity().finish();
 
-
-                                } else {
+                                /*} else {
                                     Bundle b = new Bundle();
-                                    b.putString("vehicle_id", mVehicleLists.get(finalI).getVehicleid());
+                                    b.putInt("vehicle_id", mVehicleLists.get(finalI).getVehicleid());
                                     b.putString("lotNo", lotNo.getText().toString());
 
                                     Intent intent = new Intent(getActivity(), AdminVehicleDetails.class);
                                     intent.putExtras(b);
                                     getActivity().startActivity(intent);
                                     getActivity().finish();
-
-
-                                }
+                                }*/
                             }
                         });
                         //Adds data into second row
@@ -328,12 +326,7 @@ public class ActiveAuctionAboveReservedFragment extends Fragment implements Requ
                                     if (mVehicleLists.get(finalI1).getBiddersList().get(finalJ).getContact().equals(myContact)) {
                                         Snackbar.make(v, "You can't call yourself", Snackbar.LENGTH_SHORT).show();
                                     } else {
-//                                    action = "call";
-//                                    //vehicle_id = v_ids[position];
-//                                    Rcontact = holder.contact.getText().toString();
-//                                    new submitview().execute();
                                         call(mVehicleLists.get(finalI1).getBiddersList().get(finalJ).getContact());
-                                        System.out.println("Calling Image Called From vehicle image load adapter \n");
                                     }
                                 }
                             });
@@ -354,7 +347,7 @@ public class ActiveAuctionAboveReservedFragment extends Fragment implements Requ
             }
         } else {
             if (isAdded())
-            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
+                CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         }
 
     }
@@ -365,7 +358,7 @@ public class ActiveAuctionAboveReservedFragment extends Fragment implements Requ
         try {
             getActivity().startActivity(in);
         } catch (android.content.ActivityNotFoundException ex) {
-            System.out.println("No Activity Found For Call in Car Details Fragment\n");
+            ex.printStackTrace();
         }
 
     }
@@ -396,10 +389,10 @@ public class ActiveAuctionAboveReservedFragment extends Fragment implements Requ
             //CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
             if (isAdded())
-            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
+                CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
             if (isAdded())
-            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
+                CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         } else {
             Log.i("Check class", "Active Auction AboveReservedBid Fragment");
             error.printStackTrace();

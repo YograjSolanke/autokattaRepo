@@ -28,7 +28,7 @@ public class AuctionReauctionVehicleResponse {
 
         @SerializedName("vehicle_id")
         @Expose
-        private String vehicleId;
+        private int vehicleId;
         @SerializedName("title")
         @Expose
         private String title;
@@ -66,11 +66,11 @@ public class AuctionReauctionVehicleResponse {
         @Expose
         private String image;
 
-        public String getVehicleId() {
+        public int getVehicleId() {
             return vehicleId;
         }
 
-        public void setVehicleId(String vehicleId) {
+        public void setVehicleId(int vehicleId) {
             this.vehicleId = vehicleId;
         }
 

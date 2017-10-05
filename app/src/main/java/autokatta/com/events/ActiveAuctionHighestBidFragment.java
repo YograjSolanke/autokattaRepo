@@ -29,7 +29,6 @@ import java.util.List;
 
 import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
-import autokatta.com.auction.AdminVehicleDetails;
 import autokatta.com.auction.MyAuctionVehicleDetails;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.networkreceiver.ConnectionDetector;
@@ -158,7 +157,7 @@ public class ActiveAuctionHighestBidFragment extends Fragment implements Request
 
                         for (MyActiveAuctionHighBidResponse.BiddersList bidderList : subSuccess.getBiddersList()) {
 
-                            if (vehicleList.getVehicleid().equals(bidderList.getVehicleid())) {
+                            if (vehicleList.getVehicleid() == bidderList.getVehicleid()) {
 
                                 bidderList.setAuctionid(bidderList.getAuctionid());
                                 bidderList.setContact(bidderList.getContact());
@@ -275,9 +274,9 @@ public class ActiveAuctionHighestBidFragment extends Fragment implements Request
                         Moredetails.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                if (!mVehicleLists.get(finalI).getVehicleid().startsWith("A ")) {
+                                //if (!mVehicleLists.get(finalI).getVehicleid().startsWith("A ")) {
                                     Bundle b = new Bundle();
-                                    b.putString("vehicle_id", mVehicleLists.get(finalI).getVehicleid());
+                                b.putInt("vehicle_id", mVehicleLists.get(finalI).getVehicleid());
                                     b.putInt("auction_id", mAuctionId);
 
                                     Intent intent = new Intent(getActivity(), MyAuctionVehicleDetails.class);
@@ -286,9 +285,9 @@ public class ActiveAuctionHighestBidFragment extends Fragment implements Request
                                     getActivity().finish();
 
 
-                                } else {
+                                /*} else {
                                     Bundle b = new Bundle();
-                                    b.putString("vehicle_id", mVehicleLists.get(finalI).getVehicleid());
+                                    b.putInt("vehicle_id", mVehicleLists.get(finalI).getVehicleid());
                                     b.putString("lotNo", lotNo.getText().toString());
 
                                     Intent intent = new Intent(getActivity(), AdminVehicleDetails.class);
@@ -297,7 +296,7 @@ public class ActiveAuctionHighestBidFragment extends Fragment implements Request
                                     getActivity().finish();
 
 
-                                }
+                                }*/
                             }
                         });
                         //Adds data into second row
