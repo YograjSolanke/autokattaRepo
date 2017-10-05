@@ -106,49 +106,144 @@ public class CompareVehicleListActivity extends AppCompatActivity implements Req
 
                         success.setVehicleId(success.getVehicleId());
                         success.setContactNo(success.getContactNo());
-                        success.setPrice(success.getPrice());
+
+                        success.setPrice((success.getPrice().equalsIgnoreCase("")) ? "NA" : success.getPrice());
+
+                        success.setYearOfRegistration((success.getYearOfRegistration() == null ||
+                                success.getYearOfRegistration().equalsIgnoreCase("null") ||
+                                success.getYearOfRegistration().equalsIgnoreCase("")) ? "NA" : success.getYearOfRegistration());
+
+                        success.setYearOfManufacture((success.getYearOfManufacture() == null ||
+                                success.getYearOfManufacture().equalsIgnoreCase("null") ||
+                                success.getYearOfManufacture().equalsIgnoreCase("")) ? "NA" : success.getYearOfManufacture());
+
+                        success.setColor((success.getColor() == null ||
+                                success.getColor().equalsIgnoreCase("null") ||
+                                success.getColor().equalsIgnoreCase("")) ? "NA" : success.getColor());
+
+                        success.setRegistrationNumber((success.getRegistrationNumber() == null ||
+                                success.getRegistrationNumber().equalsIgnoreCase("null") ||
+                                success.getRegistrationNumber().equalsIgnoreCase("")) ? "NA" : success.getRegistrationNumber());
+
+                        success.setRcAvailable((success.getRcAvailable() == null ||
+                                success.getRcAvailable().equalsIgnoreCase("null") ||
+                                success.getRcAvailable().equalsIgnoreCase("")) ? "NA" : success.getRcAvailable());
+
+                        success.setInsuranceValid((success.getInsuranceValid() == null ||
+                                success.getInsuranceValid().equalsIgnoreCase("null") ||
+                                success.getInsuranceValid().equalsIgnoreCase("")) ? "NA" : success.getInsuranceValid());
+
+                        success.setInsuranceIdv((success.getInsuranceIdv() == null ||
+                                success.getInsuranceIdv().equalsIgnoreCase("null") ||
+                                success.getInsuranceIdv().equalsIgnoreCase("")) ? "NA" : success.getInsuranceIdv());
+
+                        success.setTaxValidity((success.getTaxValidity() == null ||
+                                success.getTaxValidity().equalsIgnoreCase("null") ||
+                                success.getTaxValidity().equalsIgnoreCase("")) ? "NA" : success.getTaxValidity());
+
+                        success.setFitnessValidity((success.getFitnessValidity() == null ||
+                                success.getFitnessValidity().equalsIgnoreCase("null") ||
+                                success.getFitnessValidity().equalsIgnoreCase("")) ? "NA" : success.getFitnessValidity());
+
+                        success.setPermitValidity((success.getPermitValidity() == null ||
+                                success.getPermitValidity().equalsIgnoreCase("null") ||
+                                success.getPermitValidity().equalsIgnoreCase("")) ? "NA" : success.getPermitValidity());
+
+                        success.setFualType((success.getFualType() == null ||
+                                success.getFualType().equalsIgnoreCase("null") ||
+                                success.getFualType().equalsIgnoreCase("")) ? "NA" : success.getFualType());
+
+                        success.setSeatingCapacity((success.getSeatingCapacity() == null ||
+                                success.getSeatingCapacity().equalsIgnoreCase("null") ||
+                                success.getSeatingCapacity().equalsIgnoreCase("")) ? "NA" : success.getSeatingCapacity());
+
+                        success.setPermit((success.getPermit() == null ||
+                                success.getPermit().equalsIgnoreCase("null") ||
+                                success.getPermit().equalsIgnoreCase("")) ? "NA" : success.getPermit());
+
+                        success.setHypothication((success.getHypothication() == null ||
+                                success.getHypothication().equalsIgnoreCase("null") ||
+                                success.getHypothication().equalsIgnoreCase("")) ? "NA" : success.getHypothication());
+
+                        success.setEngineNo((success.getEngineNo() == null ||
+                                success.getEngineNo().equalsIgnoreCase("null") ||
+                                success.getEngineNo().equalsIgnoreCase("")) ? "NA" : success.getEngineNo());
+
+                        success.setChassisNo((success.getChassisNo() == null ||
+                                success.getChassisNo().equalsIgnoreCase("null") ||
+                                success.getChassisNo().equalsIgnoreCase("")) ? "NA" : success.getChassisNo());
+
+                        success.setDrive((success.getDrive() == null ||
+                                success.getDrive().equalsIgnoreCase("null") ||
+                                success.getDrive().equalsIgnoreCase("")) ? "NA" : success.getDrive());
+
+                        success.setTransmission((success.getTransmission() == null ||
+                                success.getTransmission().equalsIgnoreCase("null") ||
+                                success.getTransmission().equalsIgnoreCase("")) ? "NA" : success.getTransmission());
+
+                        success.setBodyType((success.getBodyType() == null ||
+                                success.getBodyType().equalsIgnoreCase("null") ||
+                                success.getBodyType().equalsIgnoreCase("")) ? "NA" : success.getBodyType());
+
+                        success.setBoatType((success.getBoatType() == null ||
+                                success.getBoatType().equalsIgnoreCase("null") ||
+                                success.getBoatType().equalsIgnoreCase("")) ? "NA" : success.getBoatType());
+
+                        success.setRvType((success.getRvType() == null ||
+                                success.getRvType().equalsIgnoreCase("null") ||
+                                success.getRvType().equalsIgnoreCase("")) ? "NA" : success.getRvType());
+
+                        success.setTyreCondition((success.getTyreCondition() == null ||
+                                success.getTyreCondition().equalsIgnoreCase("null") ||
+                                success.getTyreCondition().equalsIgnoreCase("")) ? "NA" : success.getTyreCondition());
+
+                        success.setBusType((success.getBusType() == null ||
+                                success.getBusType().equalsIgnoreCase("null") ||
+                                success.getBusType().equalsIgnoreCase("")) ? "NA" : success.getBusType());
+
+                        success.setAirCondition((success.getAirCondition() == null ||
+                                success.getAirCondition().equalsIgnoreCase("null") ||
+                                success.getAirCondition().equalsIgnoreCase("")) ? "NA" : success.getAirCondition());
+
+                        success.setInvoice((success.getInvoice() == null ||
+                                success.getInvoice().equalsIgnoreCase("null") ||
+                                success.getInvoice().equalsIgnoreCase("")) ? "NA" : success.getInvoice());
+
+                        success.setImplements((success.getImplements() == null ||
+                                success.getImplements().equalsIgnoreCase("null") ||
+                                success.getImplements().equalsIgnoreCase("")) ? "NA" : success.getImplements());
+
+                        success.setApplication((success.getApplication() == null ||
+                                success.getApplication().equalsIgnoreCase("null") ||
+                                success.getApplication().equalsIgnoreCase("")) ? "NA" : success.getApplication());
+
+                        success.setBodyManufacturer((success.getBodyManufacturer() == null ||
+                                success.getBodyManufacturer().equalsIgnoreCase("null") ||
+                                success.getBodyManufacturer().equalsIgnoreCase("")) ? "NA" : success.getBodyManufacturer());
+
+                        success.setSeatManufacturer((success.getSeatManufacturer() == null ||
+                                success.getSeatManufacturer().equalsIgnoreCase("null") ||
+                                success.getSeatManufacturer().equalsIgnoreCase("")) ? "NA" : success.getSeatManufacturer());
+
+                        success.setYearOfManufacture((success.getYearOfManufacture() == null ||
+                                success.getYearOfManufacture().equalsIgnoreCase("null") ||
+                                success.getYearOfManufacture().equalsIgnoreCase("")) ? "NA" : success.getYearOfManufacture());
+
+                        success.setTaxPaidUpto((success.getTaxPaidUpto() == null ||
+                                success.getTaxPaidUpto().equalsIgnoreCase("null") ||
+                                success.getTaxPaidUpto().equalsIgnoreCase("")) ? "NA" : success.getTaxPaidUpto());
+
                         success.setCategory(success.getCategory());
                         success.setSubCategory(success.getSubCategory());
                         success.setModel(success.getModel());
                         success.setManufacturer(success.getManufacturer());
                         success.setRtoCity(success.getRtoCity());
                         success.setLocationCity(success.getLocationCity());
-                        success.setYearOfRegistration(success.getYearOfRegistration());
-                        success.setYearOfManufaturer(success.getYearOfManufaturer());
-                        success.setColor(success.getColor());
-                        success.setRegistrationNumber(success.getRegistrationNumber());
-                        success.setRcAvailable(success.getRcAvailable());
-                        success.setInsuranceValid(success.getInsuranceValid());
-                        success.setInsuranceIdv(success.getInsuranceIdv());
-                        success.setTaxValidity(success.getTaxValidity());
-                        success.setFitnessValidity(success.getFitnessValidity());
-                        success.setPermitValidity(success.getPermitValidity());
-                        success.setFualType(success.getFualType());
-                        success.setSeatingCapacity(success.getSeatingCapacity());
-                        success.setPermit(success.getPermit());
                         success.setKmsRunning(success.getKmsRunning());
                         success.setNoOfOwners(success.getNoOfOwners());
-                        success.setHypothication(success.getHypothication());
-                        success.setEngineNo(success.getEngineNo());
-                        success.setChassisNo(success.getChassisNo());
-                        success.setDrive(success.getDrive());
-                        success.setTransmission(success.getTransmission());
-                        success.setBodyType(success.getBodyType());
-                        success.setBoatType(success.getBoatType());
-                        success.setRvType(success.getRvType());
-                        success.setTyreCondition(success.getTyreCondition());
-                        success.setBusType(success.getBusType());
-                        success.setAirCondition(success.getAirCondition());
-                        success.setInvoice(success.getInvoice());
-                        success.setImplements(success.getImplements());
-                        success.setApplication(success.getApplication());
                         success.setViewcount(success.getViewcount());
                         success.setCallcount(success.getCallcount());
-                        success.setBodyManufacturer(success.getBodyManufacturer());
-                        success.setSeatManufacturer(success.getSeatManufacturer());
                         success.setStatus(success.getStatus());
-                        success.setYearOfManufacture(success.getYearOfManufacture());
-                        success.setTaxPaidUpto(success.getTaxPaidUpto());
                         String vehicleImage = success.getImage();
                         if (vehicleImage.contains(",")) {
                             String[] items = vehicleImage.split(",");

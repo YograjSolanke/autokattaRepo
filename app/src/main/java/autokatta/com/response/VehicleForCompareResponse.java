@@ -276,7 +276,7 @@ public class VehicleForCompareResponse {
             private String steering;
             @SerializedName("YearOfManufaturer")
             @Expose
-            private Object yearOfManufaturer;
+            private String yearOfManufaturer;
             @SerializedName("enquiryCount")
             @Expose
             private Integer enquiryCount;
@@ -873,11 +873,11 @@ public class VehicleForCompareResponse {
                 this.steering = steering;
             }
 
-            public Object getYearOfManufaturer() {
+            public String getYearOfManufaturer() {
                 return yearOfManufaturer;
             }
 
-            public void setYearOfManufaturer(Object yearOfManufaturer) {
+            public void setYearOfManufaturer(String yearOfManufaturer) {
                 this.yearOfManufaturer = yearOfManufaturer;
             }
 
