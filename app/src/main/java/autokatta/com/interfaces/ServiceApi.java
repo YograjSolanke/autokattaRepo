@@ -493,9 +493,9 @@ public interface ServiceApi {
     Call<AuctionAllVehicleResponse> _autokattaGetAuctionAllVehicles(@Query("Contact") String contact);
 
     //get All vehicles for Auction
-    @GET("getReauctionVehicleByNameAndContact.php")
-    Call<AuctionReauctionVehicleResponse> _autokattaGetReauctionedVehicle(@Query("contact") String contact,
-                                                                          @Query("auctionID") int auctionID);
+    @GET("GetReauctionVehicleByNameAndContact")
+    Call<AuctionReauctionVehicleResponse> _autokattaGetReauctionedVehicle(@Query("Contact") String contact,
+                                                                          @Query("AuctionID") int auctionID);
 
 
     //send notification of upload vehicle
@@ -512,7 +512,7 @@ public interface ServiceApi {
     Call<String> deleteGroup(@Query("GroupID") int group_id, @Query("Keyword") String keyword, @Query("Mycontact") String contact);
 
     //All Live Events
-    @GET("getAllLiveEvents")
+    @GET("GetAllLiveEvents")
     Call<GetLiveEventsResponse> getLiveEvents(@Query("Contact") String contact);
 
     //All Live Loan Events
@@ -668,20 +668,20 @@ public interface ServiceApi {
             , @Query("Keyword") String keyword, @Query("GroupID") int groupid);
 
     //Get Your Bid Response
-    @GET("userYourBid.php")
-    Call<YourBidResponse> getYourBid(@Query("auctionId") String id, @Query("userContactNo") String contact);
+    @GET("UserYourBid")
+    Call<YourBidResponse> getYourBid(@Query("AuctionID") String id, @Query("UserContact") String contact);
 
     //Get Out Bid Response
     @GET("UserOutBid")
     Call<YourBidResponse> getOutBid(@Query("AuctionID") String id, @Query("UserContact") String contact);
 
     //Get Highest Bid Response
-    @GET("userHighestBid.php")
-    Call<YourBidResponse> getHighestBid(@Query("auctionId") String id, @Query("userContactNo") String contact);
+    @GET("UserHighestBid")
+    Call<YourBidResponse> getHighestBid(@Query("AuctionID") String id, @Query("UserContact") String contact);
 
-    //Get Highest Bid Response
-    @GET("userWatchedItems.php")
-    Call<YourBidResponse> userWatchedItems(@Query("auctionId") String id, @Query("userContactNo") String contact);
+    //Get UserWatchedItems  Response
+    @GET("UserWatchedItems")
+    Call<YourBidResponse> userWatchedItems(@Query("AuctionID") String id, @Query("UserContact") String contact);
 
     //send broadcast message
     @POST("SendBroadCastMessage")
@@ -828,7 +828,7 @@ public interface ServiceApi {
     Call<StoreResponse> getStoreData(@Query("MyContact") String contact, @Query("StoreID") int store_id);
 
     @GET("GetVehicleForAuction")
-    Call<GetVehicleForAuctionResponse> getVehicleAuction(@Query("AuctionID") int auctionId, @Query("VehicleID") String vehicleId,
+    Call<GetVehicleForAuctionResponse> getVehicleAuction(@Query("AuctionID") int auctionId, @Query("VehicleID") int vehicleId,
                                                          @Query("Contact") String contact);
 
     //contact not used

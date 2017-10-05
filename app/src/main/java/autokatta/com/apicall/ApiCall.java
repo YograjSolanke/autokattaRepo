@@ -5538,7 +5538,7 @@ Get saved search Seller list
     Get Vehicle Auction response.
      */
 
-    public void getVehicleAuction(int auctionId, String vehicleId, String contact) {
+    public void getVehicleAuction(int auctionId, int vehicleId, String contact) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 Retrofit mRetrofit = new Retrofit.Builder()
