@@ -25,12 +25,7 @@ import android.widget.TextView;
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
-import java.util.TimeZone;
 
 import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
@@ -108,46 +103,11 @@ public class MySearchAdapter extends RecyclerView.Adapter<MySearchAdapter.Search
         holder.stocktype.setText(mMainlist.get(position).getStocktype());
 
         //To set Date
-
-        try {
-            TimeZone utc = TimeZone.getTimeZone("etc/UTC");
-            //format of date coming from services
-            DateFormat inputFormat = new SimpleDateFormat("yyyy-mm-dd HH:mm:ss",
-                    Locale.US);
-            inputFormat.setTimeZone(utc);
-            //format of date which want to show
-            DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy hh:mm aa",
-                    Locale.US);
-            outputFormat.setTimeZone(utc);
-
-            Date date = inputFormat.parse(mMainlist.get(position).getSearchdate());
-            String output = outputFormat.format(date);
-            System.out.println("jjj" + output);
-            holder.textsearchdate.setText(output);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        holder.textsearchdate.setText(mMainlist.get(position).getSearchdate());
 
         //To set LastDate
+        holder.Stopdate.setText(mMainlist.get(position).getStopdate());
 
-        try {
-            TimeZone utc = TimeZone.getTimeZone("etc/UTC");
-            //format of date coming from services
-            DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",
-                    Locale.US);
-            inputFormat.setTimeZone(utc);
-            //format of date which want to show
-            DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy hh:mm aa",
-                    Locale.US);
-            outputFormat.setTimeZone(utc);
-
-            Date date = inputFormat.parse(mMainlist.get(position).getStopdate());
-            String output = outputFormat.format(date);
-            System.out.println("jjj" + output);
-            holder.Stopdate.setText(output);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
         holder.editImg.setOnClickListener(new View.OnClickListener() {
             @Override

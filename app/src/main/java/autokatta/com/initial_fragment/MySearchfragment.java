@@ -18,8 +18,13 @@ import android.widget.TextView;
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 
 import autokatta.com.R;
 import autokatta.com.adapter.MySearchAdapter;
@@ -123,21 +128,52 @@ public class MySearchfragment extends Fragment implements SwipeRefreshLayout.OnR
                         mySearchSuccess.setSearchstatus(mySearchSuccess.getSearchstatus());
                         mySearchSuccess.setBuyerLeads(mySearchSuccess.getBuyerLeads());
                         mySearchSuccess.setMysearchstatus(mySearchSuccess.getMysearchstatus());
-                        mySearchSuccess.setSearchdate(mySearchSuccess.getSearchdate().replaceAll("T", " "));
-                        mySearchSuccess.setStopdate(mySearchSuccess.getStopdate());
+                        //mySearchSuccess.setSearchdate(mySearchSuccess.getSearchdate().replaceAll("T", " "));
+                        //mySearchSuccess.setStopdate(mySearchSuccess.getStopdate());
                         mySearchSuccess.setStocktype(mySearchSuccess.getStocktype());
 
-/*
-                        Date d = null, d1 = null;
+                        //To set Date
                         try {
-                            d = f.parse(mySearchSuccess.getSearchdate().replace("T"," "));
-                            d1 = f.parse(mySearchSuccess.getStopdate());
-                        } catch (ParseException e) {
+                            TimeZone utc = TimeZone.getTimeZone("etc/UTC");
+                            //format of date coming from services
+                            DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",
+                                    Locale.US);
+                            inputFormat.setTimeZone(utc);
+                            //format of date which want to show
+                            DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy hh:mm aa",
+                                    Locale.US);
+                            outputFormat.setTimeZone(utc);
+
+                            Date date = inputFormat.parse(mySearchSuccess.getSearchdate());
+                            String output = outputFormat.format(date);
+                            System.out.println("jjj" + output);
+                            mySearchSuccess.setSearchdate(output);
+                        } catch (Exception e) {
                             e.printStackTrace();
                         }
 
-                        mySearchSuccess.setSearchDateNew(d);
-                        mySearchSuccess.setStopDateNew(d1);*/
+                        if (!mySearchSuccess.getStopdate().equalsIgnoreCase("")) {
+                            try {
+                                TimeZone utc = TimeZone.getTimeZone("etc/UTC");
+                                //format of date coming from services
+                                DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",
+                                        Locale.US);
+                                inputFormat.setTimeZone(utc);
+                                //format of date which want to show
+                                DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy hh:mm aa",
+                                        Locale.US);
+                                outputFormat.setTimeZone(utc);
+
+                                Date date = inputFormat.parse(mySearchSuccess.getStopdate());
+                                String output = outputFormat.format(date);
+                                System.out.println("jjj" + output);
+                                mySearchSuccess.setStopdate(output);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        } else
+                            mySearchSuccess.setStopdate("");
+
 
                         mySearchResponseList.add(mySearchSuccess);
                     }
