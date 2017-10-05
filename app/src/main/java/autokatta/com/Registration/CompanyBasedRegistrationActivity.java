@@ -1,5 +1,6 @@
 package autokatta.com.Registration;
 
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -28,7 +29,6 @@ import java.util.List;
 import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
-import autokatta.com.my_store.CreateStoreFragment;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.GetCompaniesResponse;
 import autokatta.com.response.GetDesignationResponse;
@@ -36,6 +36,7 @@ import autokatta.com.response.GetDistrictsResponse;
 import autokatta.com.response.GetSkillsResponse;
 import autokatta.com.response.GetStatesResponse;
 import autokatta.com.response.getDealsResponse;
+import autokatta.com.view.CreateStoreActivity;
 import retrofit2.Response;
 
 public class CompanyBasedRegistrationActivity extends AppCompatActivity implements RequestNotifier, View.OnClickListener, Multispinner.MultiSpinnerListener, MultiSelectionSpinner.MultiSpinnerListener {
@@ -425,8 +426,12 @@ public class CompanyBasedRegistrationActivity extends AppCompatActivity implemen
 
                                         Bundle b = new Bundle();
                                         b.putString("className", "interestbased");
-                                        CreateStoreFragment fr = new CreateStoreFragment();
-                                        fr.setArguments(b);
+                                        ActivityOptions options = ActivityOptions.makeCustomAnimation(CompanyBasedRegistrationActivity.this, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
+                                        Intent intent = new Intent(CompanyBasedRegistrationActivity.this, CreateStoreActivity.class);
+                                        intent.putExtras(b);
+                                        startActivity(intent, options.toBundle());
+//                                        CreateStoreFragment fr = new CreateStoreFragment();
+//                                        fr.setArguments(b);
                                         finish();
                                         dialog.cancel();
 

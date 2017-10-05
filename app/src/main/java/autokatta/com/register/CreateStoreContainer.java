@@ -1,13 +1,13 @@
 package autokatta.com.register;
 
+import android.app.ActivityOptions;
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
 import autokatta.com.R;
-import autokatta.com.my_store.CreateStoreFragment;
+import autokatta.com.view.CreateStoreActivity;
 
 public class CreateStoreContainer extends AppCompatActivity {
 
@@ -26,11 +26,15 @@ public class CreateStoreContainer extends AppCompatActivity {
                 String mCall = getIntent().getExtras().getString("className");
                 Bundle bundle = new Bundle();
                 bundle.putString("className", mCall);
-                CreateStoreFragment storeFragment = new CreateStoreFragment();
-                storeFragment.setArguments(bundle);
-                FragmentManager manager = getSupportFragmentManager();
-                FragmentTransaction mFragmentTransaction = manager.beginTransaction();
-                mFragmentTransaction.replace(R.id.create_store_container, storeFragment).commit();
+//                CreateStoreFragment storeFragment = new CreateStoreFragment();
+//                storeFragment.setArguments(bundle);
+//                FragmentManager manager = getSupportFragmentManager();
+//                FragmentTransaction mFragmentTransaction = manager.beginTransaction();
+//                mFragmentTransaction.replace(R.id.create_store_container, storeFragment).commit();
+                ActivityOptions options = ActivityOptions.makeCustomAnimation(CreateStoreContainer.this, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
+                Intent intent = new Intent(CreateStoreContainer.this, CreateStoreActivity.class);
+                intent.putExtras(bundle);
+                startActivity(intent, options.toBundle());
             }
         });
     }

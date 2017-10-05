@@ -1,6 +1,6 @@
-package autokatta.com.my_store;
+package autokatta.com.view;
 
-import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -15,18 +15,16 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.InputType;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -62,6 +60,8 @@ import autokatta.com.generic.SetMyDateAndTime;
 import autokatta.com.interfaces.ImageUpload;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.interfaces.ServiceApi;
+import autokatta.com.my_store.MultiSelectionSpinner;
+import autokatta.com.my_store.MultiSelectionSpinnerForBrands;
 import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.BrandsTagResponse;
@@ -78,13 +78,9 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-import static android.app.Activity.RESULT_OK;
+public class CreateStoreActivity extends AppCompatActivity implements Multispinner.MultiSpinnerListener, View.OnClickListener, View.OnTouchListener, MultiSelectionSpinner.MultiSpinnerListener,
+        RequestNotifier, MultiSelectionSpinnerForBrands.MultiSpinnerListener {
 
-/**
- * Created by ak-003 on 29/3/17.
- */
-
-public class CreateStoreFragment extends Fragment implements Multispinner.MultiSpinnerListener, View.OnClickListener, View.OnTouchListener, MultiSelectionSpinner.MultiSpinnerListener, RequestNotifier, MultiSelectionSpinnerForBrands.MultiSpinnerListener {
 
     TextView textstore, storetypetext;
     Button btnaddprofile, create, btnaddcover;
@@ -105,8 +101,6 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
     private GenericFunctions genericFunctions;
     private ImageUpload mImageUpload;
 
-    List<String> brandtagIdList = new ArrayList<>();
-    List<String> brandTagsList = new ArrayList<>();
     LinearLayout mLinearautobrand;
     RelativeLayout mRelativeBrand, mParent;
 
@@ -117,39 +111,44 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
     ConnectionDetector mTestConnection;
     KProgressHUD hud;
 
-    public CreateStoreFragment() {
-        //empty constructor
-    }
-
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View mCreateStore = inflater.inflate(R.layout.fragment_create_store, container, false);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_create_store);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setHomeButtonEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
-        getActivity().setTitle("Create Store");
-        mTestConnection = new ConnectionDetector(getActivity());
-        storename = (EditText) mCreateStore.findViewById(R.id.editstorename);
-        storecontact = (EditText) mCreateStore.findViewById(R.id.editstorecontact);
-        storelocation = (AutoCompleteTextView) mCreateStore.findViewById(R.id.editstoreloc);
-        opentime = (EditText) mCreateStore.findViewById(R.id.editopen);
-        closetime = (EditText) mCreateStore.findViewById(R.id.editclose);
-        multiautotext = (MultiAutoCompleteTextView) mCreateStore.findViewById(R.id.multiautotext);
-        storeaddress = (EditText) mCreateStore.findViewById(R.id.editstoreadd);
-        edtStoreDesc = (EditText) mCreateStore.findViewById(R.id.editstoredescription);
-        weekspn = (MultiSelectionSpinner) mCreateStore.findViewById(R.id.multiweekdays);
-        storewebsite = (EditText) mCreateStore.findViewById(R.id.editstorewebsite);
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setVisibility(View.GONE);
+
+        setTitle("Create Store");
+        mTestConnection = new ConnectionDetector(this);
+        storename = (EditText) findViewById(R.id.editstorename);
+        storecontact = (EditText) findViewById(R.id.editstorecontact);
+        storelocation = (AutoCompleteTextView) findViewById(R.id.editstoreloc);
+        opentime = (EditText) findViewById(R.id.editopen);
+        closetime = (EditText) findViewById(R.id.editclose);
+        multiautotext = (MultiAutoCompleteTextView) findViewById(R.id.multiautotext);
+        storeaddress = (EditText) findViewById(R.id.editstoreadd);
+        edtStoreDesc = (EditText) findViewById(R.id.editstoredescription);
+        weekspn = (MultiSelectionSpinner) findViewById(R.id.multiweekdays);
+        storewebsite = (EditText) findViewById(R.id.editstorewebsite);
         //textstore = (TextView) mCreateStore.findViewById(R.id.textstore);
-        rbtstoreproduct = (CheckBox) mCreateStore.findViewById(R.id.rbtproduct);
-        rbtstoreservice = (CheckBox) mCreateStore.findViewById(R.id.rbtservice);
-        rbtstorevehicle = (CheckBox) mCreateStore.findViewById(R.id.rbtvehicle);
-        create = (Button) mCreateStore.findViewById(R.id.btncreatestore);
-        btnaddprofile = (Button) mCreateStore.findViewById(R.id.btnaddphoto);
-        btnaddcover = (Button) mCreateStore.findViewById(R.id.btnaddcover);
-        storetypetext = (TextView) mCreateStore.findViewById(R.id.textstoretype);
-        multiautobrand = (MultiAutoCompleteTextView) mCreateStore.findViewById(R.id.multiautobrand);
-        mLinearautobrand = (LinearLayout) mCreateStore.findViewById(R.id.linearautobrand);
-        mRelativeBrand = (RelativeLayout) mCreateStore.findViewById(R.id.rell);
-        mParent = (RelativeLayout) mCreateStore.findViewById(R.id.relativeparent);
+        rbtstoreproduct = (CheckBox) findViewById(R.id.rbtproduct);
+        rbtstoreservice = (CheckBox) findViewById(R.id.rbtservice);
+        rbtstorevehicle = (CheckBox) findViewById(R.id.rbtvehicle);
+        create = (Button) findViewById(R.id.btncreatestore);
+        btnaddprofile = (Button) findViewById(R.id.btnaddphoto);
+        btnaddcover = (Button) findViewById(R.id.btnaddcover);
+        storetypetext = (TextView) findViewById(R.id.textstoretype);
+        multiautobrand = (MultiAutoCompleteTextView) findViewById(R.id.multiautobrand);
+        mLinearautobrand = (LinearLayout) findViewById(R.id.linearautobrand);
+        mRelativeBrand = (RelativeLayout) findViewById(R.id.rell);
+        mParent = (RelativeLayout) findViewById(R.id.relativeparent);
         //  brandSpinner = (MultiSelectionSpinnerForBrands) mCreateStore.findViewById(R.id.brandSpinner);
 
         btnaddprofile.setOnClickListener(this);
@@ -160,7 +159,7 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
         opentime.setOnTouchListener(this);
         closetime.setOnTouchListener(this);
 
-        mApiCall = new ApiCall(getActivity(), this);
+        mApiCall = new ApiCall(this, this);
         genericFunctions = new GenericFunctions();
         /*
         Image upload to server
@@ -172,18 +171,20 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
         // Change base URL to your upload server URL.
         mImageUpload = new Retrofit.Builder().baseUrl(getString(R.string.base_url)).client(client).build().create(ImageUpload.class);
 
-        bundle = getArguments();
-        callFrom = bundle.getString("className");
-        System.out.println("Call from in Store Fragment" + callFrom);
-        myContact = getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).getString("loginContact", "");
+        if (getIntent().getExtras() != null) {
+            callFrom = getIntent().getExtras().getString("className");
+
+            System.out.println("Call from in Store Fragment" + callFrom);
+        }
+        myContact = getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).getString("loginContact", "");
         if (callFrom.equals("StoreViewActivity")) {
-            store_id = bundle.getInt("store_id");
+            store_id = getIntent().getExtras().getInt("store_id");
             //create.setText("update");
-            getActivity().setTitle("Update Store");
+            setTitle("Update Store");
             // textstore.setText("Update Store");
             getBrandTags();
 
-            hud = KProgressHUD.create(getActivity())
+            hud = KProgressHUD.create(this)
                     .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
                     .setLabel("Please wait")
                     .setMaxProgress(100)
@@ -192,22 +193,24 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
         }
 
 
-        getActivity().runOnUiThread(new Runnable() {
+        storelocation.setAdapter(new GooglePlacesAdapter(this, R.layout.simple));
+        weekdays.add("Mon");
+        weekdays.add("Tue");
+        weekdays.add("Wed");
+        weekdays.add("Thu");
+        weekdays.add("Fri");
+        weekdays.add("Sat");
+        weekdays.add("Sun");
+        weekspn.setItems(weekdays, "-Select Working Days-", this);
+
+
+        runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 try {
                     storecontact.setText(myContact);
                     storecontact.setEnabled(false);
 
-                    storelocation.setAdapter(new GooglePlacesAdapter(getActivity(), R.layout.simple));
-                    weekdays.add("Mon");
-                    weekdays.add("Tue");
-                    weekdays.add("Wed");
-                    weekdays.add("Thu");
-                    weekdays.add("Fri");
-                    weekdays.add("Sat");
-                    weekdays.add("Sun");
-                    weekspn.setItems(weekdays, "-Select Working Days-", CreateStoreFragment.this);
 
                     multiautotext.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
                     multiautobrand.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
@@ -266,8 +269,9 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
             }
         });
 
-        return mCreateStore;
+
     }
+
 
     public boolean check() {
         String text = multiautobrand.getText().toString();
@@ -438,17 +442,17 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
                     closetime.setError("Enter Close Time");
                     closetime.requestFocus();
                 } else if (opentime.getText().toString().contains("PM") && closetime.getText().toString().contains("AM")) {
-                    CustomToast.customToast(getActivity(), "Enter Valid Time");
+                    CustomToast.customToast(getApplicationContext(), "Enter Valid Time");
                 } else if (flagtime) {
-                    CustomToast.customToast(getActivity(), "Close time & open time should not same");
+                    CustomToast.customToast(getApplicationContext(), "Close time & open time should not same");
                 } else if (workdays.equals("-Select Working Days-") || workdays.equals("")) {
-                    CustomToast.customToast(getActivity(), "Please select Working Days");
+                    CustomToast.customToast(getApplicationContext(), "Please select Working Days");
                 } else if (storetype.equalsIgnoreCase("")) {
-                    CustomToast.customToast(getActivity(), "Select store type");
+                    CustomToast.customToast(getApplicationContext(), "Select store type");
                 } else if (category.equalsIgnoreCase("")) {
-                    CustomToast.customToast(getActivity(), "Provide services offered");
+                    CustomToast.customToast(getApplicationContext(), "Provide services offered");
                 } else if ((rbtstoreproduct.isChecked() || rbtstoreservice.isChecked()) && finalbrandtags.equals("")) {
-                    CustomToast.customToast(getActivity(), "Provide brand tags");
+                    CustomToast.customToast(getApplicationContext(), "Provide brand tags");
                     multiautobrand.requestFocus();
                 } else if (check()) {
                     multiautobrand.setError("You can add maximum five tags only");
@@ -461,7 +465,7 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
                 else {
                     if (!callFrom.equals("StoreViewActivity")) {
 
-                        hud = KProgressHUD.create(getActivity())
+                        hud = KProgressHUD.create(this)
                                 .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
                                 .setLabel("Please wait")
                                 .setMaxProgress(100)
@@ -475,7 +479,7 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
                             coverlastWord = preCoverLastWord;
 
 
-                        hud = KProgressHUD.create(getActivity())
+                        hud = KProgressHUD.create(this)
                                 .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
                                 .setLabel("Please wait")
                                 .setMaxProgress(100)
@@ -491,9 +495,9 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
 
 
     public void onPickImage(View view, String whichButton) {
-        getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).edit().putString("imageCallStore", whichButton).apply();
+        getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).edit().putString("imageCallStore", whichButton).apply();
         final CharSequence[] options = {"Take Photo", "Choose from Gallery", "Cancel"};
-        final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Add Photo!");
         builder.setItems(options, new DialogInterface.OnClickListener() {
             @Override
@@ -518,14 +522,14 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         try {
-            String result = getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).getString("imageCallStore", "");
+            String result = getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).getString("imageCallStore", "");
             String fname;
             if (result.equalsIgnoreCase("addProfile")) {
                 if (requestCode == 0 && resultCode == RESULT_OK && null != data) {
                     // Get the Image from data
                     Uri selectedImage = data.getData();
                     String[] filePathColumn = {MediaStore.Images.Media.DATA};
-                    Cursor cursor = getActivity().getContentResolver().query(selectedImage, filePathColumn, null, null, null);
+                    Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
                     assert cursor != null;
                     cursor.moveToFirst();
                     int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
@@ -544,7 +548,7 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
                         if (data != null) {
                             selectedImage = data.getData(); // the uri of the image taken
                             if (String.valueOf((Bitmap) data.getExtras().get("data")).equals("null")) {
-                                bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), selectedImage);
+                                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), selectedImage);
                             } else {
                                 bitmap = (Bitmap) data.getExtras().get("data");
                             }
@@ -557,7 +561,7 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
                             //mProfilePic.setImageBitmap(bitmapRotate);
 
 //                            Saving image to mobile internal memory for sometime
-                            String root = getActivity().getFilesDir().toString();
+                            String root = getFilesDir().toString();
                             File myDir = new File(root + "/androidlift");
                             myDir.mkdirs();
 
@@ -579,7 +583,7 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
                     // Get the Image from data
                     Uri selectedImage = data.getData();
                     String[] filePathColumn = {MediaStore.Images.Media.DATA};
-                    Cursor cursor = getActivity().getContentResolver().query(selectedImage, filePathColumn, null, null, null);
+                    Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
                     assert cursor != null;
                     cursor.moveToFirst();
                     int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
@@ -598,7 +602,7 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
                         if (data != null) {
                             selectedImage = data.getData(); // the uri of the image taken
                             if (String.valueOf((Bitmap) data.getExtras().get("data")).equals("null")) {
-                                bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), selectedImage);
+                                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), selectedImage);
                             } else {
                                 bitmap = (Bitmap) data.getExtras().get("data");
                             }
@@ -611,7 +615,7 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
                             //mProfilePic.setImageBitmap(bitmapRotate);
 
 //                            Saving image to mobile internal memory for sometime
-                            String root = getActivity().getFilesDir().toString();
+                            String root = getFilesDir().toString();
                             File myDir = new File(root + "/androidlift");
                             myDir.mkdirs();
 
@@ -643,7 +647,7 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
             out.flush();
             out.close();
 
-            String result = getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).getString("imageCallStore", "");
+            String result = getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).getString("imageCallStore", "");
             if (result.equalsIgnoreCase("addProfile"))
                 lastWord = mediaPath.substring(mediaPath.lastIndexOf("/") + 1);
             else if (result.equalsIgnoreCase("addCover"))
@@ -695,7 +699,7 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
             });
         } else {
 
-            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
 
         }
     }
@@ -704,7 +708,7 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
     private int getImageOrientation() {
         final String[] imageColumns = {MediaStore.Images.Media._ID, MediaStore.Images.ImageColumns.ORIENTATION};
         final String imageOrderBy = MediaStore.Images.Media._ID + " DESC";
-        Cursor cursor = getActivity().getContentResolver().query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+        Cursor cursor = getContentResolver().query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
                 imageColumns, null, null, imageOrderBy);
 
         if (cursor.moveToFirst()) {
@@ -734,7 +738,7 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
                 if (action == MotionEvent.ACTION_DOWN) {
                     opentime.setInputType(InputType.TYPE_NULL);
                     opentime.setError(null);
-                    new SetMyDateAndTime("time", opentime, getActivity());
+                    new SetMyDateAndTime("time", opentime, this);
                 }
                 break;
 
@@ -742,7 +746,7 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
                 if (action == MotionEvent.ACTION_DOWN) {
                     closetime.setInputType(InputType.TYPE_NULL);
                     closetime.setError(null);
-                    new SetMyDateAndTime("time", closetime, getActivity());
+                    new SetMyDateAndTime("time", closetime, this);
                 }
                 break;
         }
@@ -765,14 +769,14 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
     private void getBrandTags() {
         String type = "";
         if (typeproduct && !typeservice)
-           // type = "1";
-        type="product";
+            // type = "1";
+            type = "product";
 
         else if (typeservice && !typeproduct)
-          //  type = "2";
+            //  type = "2";
             type = "service";
         else
-           // type = "1,2";
+            // type = "1,2";
             type = "both";
 
         mApiCall.getBrandTags(type);
@@ -822,10 +826,10 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
                         for (CategoryResponse.Success message : moduleResponse.getSuccess()) {
                             module.add(message.getTitle());
                         }
-                        ArrayAdapter<String> dataadapter = new ArrayAdapter<>(getActivity(), R.layout.addproductspinner_color, module);
+                        ArrayAdapter<String> dataadapter = new ArrayAdapter<>(this, R.layout.addproductspinner_color, module);
                         multiautotext.setAdapter(dataadapter);
                     } else
-                        CustomToast.customToast(getActivity(), getString(R.string.no_response));
+                        CustomToast.customToast(this, getString(R.string.no_response));
                 }
                 /*
                         Response to get Brand tags
@@ -839,12 +843,12 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
                             message.setTagName(message.getTagName());
                             brandTags.add(message.getTagName());
                         }
-                        if (getActivity() != null) {
-                            ArrayAdapter<String> dataadapter = new ArrayAdapter<>(getActivity(), R.layout.registration_spinner, brandTags);
-                            multiautobrand.setAdapter(dataadapter);
-                        }
+
+                        ArrayAdapter<String> dataadapter = new ArrayAdapter<>(this, R.layout.registration_spinner, brandTags);
+                        multiautobrand.setAdapter(dataadapter);
+
                     } else
-                        CustomToast.customToast(getActivity(), getString(R.string.no_response));
+                        CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
                 }
                  /*
                         Response after creating store
@@ -854,33 +858,37 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
                     if (createStoreResponse.getSuccess() != null) {
                         int id = createStoreResponse.getSuccess().getStoreID();
                         hud.dismiss();
-                        Toast.makeText(getActivity(), "Store created", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Store created", Toast.LENGTH_SHORT).show();
                         if (!lastWord.equals(""))
-                        uploadImage(mediaPath);
+                            uploadImage(mediaPath);
                         if (!coverlastWord.equals(""))
-                        uploadImage(mediaPath1);
+                            uploadImage(mediaPath1);
 
                         bundle = new Bundle();
                         bundle.putInt("store_id", id);
                         bundle.putString("call", callFrom);
+                        ActivityOptions options = ActivityOptions.makeCustomAnimation(this, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
+                        Intent intent = new Intent(CreateStoreActivity.this, AddAdminsForStoreActivity.class);
+                        intent.putExtras(bundle);
+                        startActivity(intent, options.toBundle());
 
-                        if (callFrom.equals("interestbased") || callFrom.equals("VehicleList")) {
-                            AddMoreAdminsForStoreFrag addAdmin = new AddMoreAdminsForStoreFrag();
-                            addAdmin.setArguments(bundle);
-                            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                            fragmentTransaction.replace(R.id.create_store_container, addAdmin).commit();
-                        } else {
-                            AddMoreAdminsForStoreFrag addAdmin = new AddMoreAdminsForStoreFrag();
-                            addAdmin.setArguments(bundle);
-                            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                            fragmentTransaction.replace(R.id.myStoreListFrame, addAdmin).commit();
-                        }
+//                        if (callFrom.equals("interestbased") || callFrom.equals("VehicleList")) {
+//                            AddMoreAdminsForStoreFrag addAdmin = new AddMoreAdminsForStoreFrag();
+//                            addAdmin.setArguments(bundle);
+//                            FragmentManager fragmentManager = getSupportFragmentManager();
+//                            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//                            fragmentTransaction.replace(R.id.create_store_container, addAdmin).commit();
+//                        } else {
+//                            AddMoreAdminsForStoreFrag addAdmin = new AddMoreAdminsForStoreFrag();
+//                            addAdmin.setArguments(bundle);
+//                            FragmentManager fragmentManager = getSupportFragmentManager();
+//                            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//                            fragmentTransaction.replace(R.id.myStoreListFrame, addAdmin).commit();
+//                        }
                         //getActivity().finish();
 
                     } else {
-                        CustomToast.customToast(getActivity(), getString(R.string.no_response));
+                        CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
                     }
                 }
 
@@ -892,7 +900,7 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
                             storename.setText(success.getName());
                             storelocation.setText(success.getLocation());
                             storewebsite.setText(success.getWebsite());
-                            weekspn.setItems(weekdays, success.getWorkingDays(), CreateStoreFragment.this);
+                            weekspn.setItems(weekdays, success.getWorkingDays(), this);
                             opentime.setText(success.getStoreOpenTime());
                             closetime.setText(success.getStoreCloseTime());
                             storeaddress.setText(success.getAddress());
@@ -926,15 +934,15 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
                         }
                     } else {
                         hud.dismiss();
-                        CustomToast.customToast(getActivity(), getString(R.string.no_response));
+                        CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
                     }
                 }
             } else {
-                CustomToast.customToast(getActivity(), getString(R.string._404));
+                CustomToast.customToast(getApplicationContext(), getString(R.string._404));
             }
         } else {
             hud.dismiss();
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
         }
     }
 
@@ -942,19 +950,18 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
     public void notifyError(Throwable error) {
         hud.dismiss();
         if (error instanceof SocketTimeoutException) {
-            if (isAdded())
-            CustomToast.customToast(getActivity(), getString(R.string._404));
+            CustomToast.customToast(getApplicationContext(), getString(R.string._404));
         } else if (error instanceof NullPointerException) {
             //CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
             // CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
-            if (isAdded())
-            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
+
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
 
         } else if (error instanceof UnknownHostException) {
-            if (isAdded())
-            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
+
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
 
         } else {
             Log.i("Check Class-", "Create Store Fragment");
@@ -963,30 +970,16 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
     }
 
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-
-        Activity a;
-
-        if (context instanceof Activity) {
-            a = (Activity) context;
-        }
-    }
-
-
-    @Override
     public void notifyString(String str) {
         if (str != null) {
             if (str.equalsIgnoreCase("brand_tag_added")) {
-                if (isAdded())
-                CustomToast.customToast(getActivity(), "No  Brand Tags Added");
+
+                CustomToast.customToast(getApplicationContext(), "Brand Tags Added");
 
             } else if (str.equals("store_updated")) {
 
                 hud.dismiss();
-
-                if (isAdded())
-                CustomToast.customToast(getActivity(), "Store updated");
+                CustomToast.customToast(getApplicationContext(), "Store updated");
                 if (!lastWord.equals(preLastWord) && !lastWord.equals(""))
                     uploadImage(mediaPath);
                 if (!coverlastWord.equals(preCoverLastWord) && !coverlastWord.equals(""))
@@ -997,16 +990,15 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
                 bundle.putInt("store_id", store_id);
                 bundle.putString("call", callFrom);
 
-                AddMoreAdminsForStoreFrag addAdmin = new AddMoreAdminsForStoreFrag();
-                addAdmin.setArguments(bundle);
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.myStoreListFrame, addAdmin).commit();
+                ActivityOptions options = ActivityOptions.makeCustomAnimation(this, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
+                Intent intent = new Intent(CreateStoreActivity.this, AddAdminsForStoreActivity.class);
+                intent.putExtras(bundle);
+                startActivity(intent, options.toBundle());
 
 
             }
         } else
-            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
 
     }
 
@@ -1148,7 +1140,7 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
 
     private String getRealPathFromURI(String contentURI) {
         Uri contentUri = Uri.parse(contentURI);
-        Cursor cursor = getActivity().getContentResolver().query(contentUri, null, null, null, null);
+        Cursor cursor = getContentResolver().query(contentUri, null, null, null, null);
         if (cursor == null) {
             return contentUri.getPath();
         } else {
@@ -1176,4 +1168,24 @@ public class CreateStoreFragment extends Fragment implements Multispinner.MultiS
 
         return inSampleSize;
     }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+        overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
+    }
+
 }

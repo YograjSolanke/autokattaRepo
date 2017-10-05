@@ -2,6 +2,7 @@ package autokatta.com.view;
 
 import android.app.Activity;
 import android.app.ActivityOptions;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -40,6 +41,7 @@ public class StoreInfoActivity extends AppCompatActivity implements RequestNotif
     RelativeLayout adminContactLayout;
     NestedScrollView scrollView;
     RelativeLayout mRel;
+    private ProgressDialog dialog;
     TextView storeName, storeLocation, storeWebsite, storeWorkDays, storeOpen, editbrandtags, storeOwner,
             storeClose, storeAddress, storeServiceOffered, storeType, storeDescription, mNoData, adminContacts;
     ConnectionDetector mTestConnection;
@@ -58,6 +60,9 @@ public class StoreInfoActivity extends AppCompatActivity implements RequestNotif
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
+
+        dialog = new ProgressDialog(this);
+        dialog.setMessage("Loading...");
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -140,6 +145,7 @@ public class StoreInfoActivity extends AppCompatActivity implements RequestNotif
 
     private void getStoredata(String myContact, int store_id) {
         if (mTestConnection.isConnectedToInternet()) {
+            dialog.show();
             ApiCall mApiCall = new ApiCall(this, this);
             mApiCall.getStoreData(myContact, store_id);
             mApiCall.StoreAdmin(store_id);
@@ -154,11 +160,11 @@ public class StoreInfoActivity extends AppCompatActivity implements RequestNotif
     public void notifySuccess(Response<?> response) {
         if (response != null) {
             if (response.isSuccessful()) {
-
                 if (response.body() instanceof StoreResponse) {
                     StoreResponse storeResponse = (StoreResponse) response.body();
                     if (!storeResponse.getSuccess().isEmpty()) {
 
+                        dialog.dismiss();
                         for (StoreResponse.Success success : storeResponse.getSuccess()) {
                             storeName.setText(success.getName());
                             storeOwner.setText(success.getOwnerName());
@@ -195,7 +201,7 @@ public class StoreInfoActivity extends AppCompatActivity implements RequestNotif
                             }
                         }
                     } else {
-
+                        dialog.dismiss();
                     }
                 } else if (response.body() instanceof StoreOldAdminResponse) {
                     StoreOldAdminResponse adminResponse = (StoreOldAdminResponse) response.body();
@@ -224,9 +230,11 @@ public class StoreInfoActivity extends AppCompatActivity implements RequestNotif
                     }
                 }
             } else {
+                dialog.dismiss();
                 //     CustomToast.customToast(getActivity(),getString(R.string._404));
             }
         } else {
+            dialog.dismiss();
             CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
         }
 
@@ -272,7 +280,7 @@ public class StoreInfoActivity extends AppCompatActivity implements RequestNotif
                 bundle.putInt("store_id", Store_id);
                 bundle.putString("className", "StoreViewActivity");
                 ActivityOptions options = ActivityOptions.makeCustomAnimation(this, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
-                Intent intent = new Intent(StoreInfoActivity.this, MyStoreListActivity.class);
+                Intent intent = new Intent(StoreInfoActivity.this, CreateStoreActivity.class);
                 intent.putExtras(bundle);
                 startActivity(intent, options.toBundle());
                 //getActivity().finish();

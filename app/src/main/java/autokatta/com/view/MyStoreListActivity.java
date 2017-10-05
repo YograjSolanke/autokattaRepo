@@ -12,7 +12,6 @@ import android.view.MenuItem;
 import autokatta.com.R;
 import autokatta.com.app_info.CreateStoreAppIntro;
 import autokatta.com.initial_fragment.MyStoreListFragment;
-import autokatta.com.my_store.CreateStoreFragment;
 
 public class MyStoreListActivity extends AppCompatActivity {
 
@@ -35,26 +34,26 @@ public class MyStoreListActivity extends AppCompatActivity {
             @Override
             public void run() {
                 try {
-                    if (getIntent().getExtras() != null) {
-                        Bundle bundle = new Bundle();
-                        bundle.putString("className", getIntent().getExtras().getString("className"));
-                        bundle.putInt("store_id", getIntent().getExtras().getInt("store_id"));
-                        CreateStoreFragment fragment = new CreateStoreFragment();
-                        fragment.setArguments(bundle);
-
-                        FragmentManager mFragmentManager = getSupportFragmentManager();
-                        FragmentTransaction mFragmentTransaction = mFragmentManager.beginTransaction();
-                        mFragmentTransaction.replace(R.id.myStoreListFrame, fragment, "createStoreFragment")
-                                .addToBackStack("createStoreFragment")
-                                .commit();
-
-                    } else {
+//                    if (getIntent().getExtras() != null) {
+//                        Bundle bundle = new Bundle();
+//                        bundle.putString("className", getIntent().getExtras().getString("className"));
+//                        bundle.putInt("store_id", getIntent().getExtras().getInt("store_id"));
+//                        CreateStoreFragment fragment = new CreateStoreFragment();
+//                        fragment.setArguments(bundle);
+//
+//                        FragmentManager mFragmentManager = getSupportFragmentManager();
+//                        FragmentTransaction mFragmentTransaction = mFragmentManager.beginTransaction();
+//                        mFragmentTransaction.replace(R.id.myStoreListFrame, fragment, "createStoreFragment")
+//                                .addToBackStack("createStoreFragment")
+//                                .commit();
+//
+//                    } else {
                         FragmentManager mFragmentManager = getSupportFragmentManager();
                         FragmentTransaction mFragmentTransaction = mFragmentManager.beginTransaction();
                         mFragmentTransaction.replace(R.id.myStoreListFrame, new MyStoreListFragment(), "myStoreListFragment")
                                 .addToBackStack("myStoreListFragment")
                                 .commit();
-                    }
+//                    }
 
                 } catch (Exception e) {
                     e.printStackTrace();

@@ -19,8 +19,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import autokatta.com.R;
-import autokatta.com.my_store.AddMoreAdminsForStoreFrag;
 import autokatta.com.response.Db_AutokattaContactResponse;
+import autokatta.com.view.AddAdminsForStoreActivity;
 
 /**
  * Created by ak-003 on 29/3/17.
@@ -87,7 +87,7 @@ public class StoreAdminAdapter extends RecyclerView.Adapter<StoreAdminAdapter.It
         this.alreadyAdmin = alreadyAdmin;
         boxdata = new ArrayList<>(contactdata.size());
         isSave = new ArrayList<>(contactdata.size());
-        AddMoreAdminsForStoreFrag.ok.setVisibility(View.VISIBLE);
+        AddAdminsForStoreActivity.ok.setVisibility(View.VISIBLE);
         positionArray = new ArrayList<Boolean>(contactdata.size());
         for (int i = 0; i < contactdata.size(); i++) {
             positionArray.add(false);
@@ -147,7 +147,7 @@ public class StoreAdminAdapter extends RecyclerView.Adapter<StoreAdminAdapter.It
                 if (isChecked) {
 
                     positionArray.set(position, true);
-                    AddMoreAdminsForStoreFrag.ok.setVisibility(View.VISIBLE);
+                    AddAdminsForStoreActivity.ok.setVisibility(View.VISIBLE);
                     holder.rolelayout.setVisibility(View.VISIBLE);
                     boxdata.set(position, holder.text1.getText().toString() + "-" + holder.roleText.getText().toString());
 
@@ -158,7 +158,7 @@ public class StoreAdminAdapter extends RecyclerView.Adapter<StoreAdminAdapter.It
                     holder.rolelayout.setVisibility(View.GONE);
                     System.out.println("Boxdata at position=" + position + " " + boxdata.get(position));
                     if (!positionArray.contains(true)) {
-                        AddMoreAdminsForStoreFrag.ok.setVisibility(View.GONE);
+                        AddAdminsForStoreActivity.ok.setVisibility(View.GONE);
                     }
                 }
             }

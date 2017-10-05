@@ -45,13 +45,8 @@ import java.util.ArrayList;
 import autokatta.com.R;
 import autokatta.com.adapter.AdminCallContactAdapter;
 import autokatta.com.apicall.ApiCall;
-import autokatta.com.fragment.StoreInfo;
-import autokatta.com.fragment.StoreProducts;
-import autokatta.com.fragment.StoreServices;
-import autokatta.com.fragment.StoreVehicles;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.model.LikeUnlike;
-import autokatta.com.my_store.MyStoreHome;
 import autokatta.com.other.CustomToast;
 import autokatta.com.other.FullImageActivity;
 import autokatta.com.response.StoreOldAdminResponse;
@@ -84,11 +79,7 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
     RatingBar csbar, qwbar, frbar, prbar, tmbar, overallbar;
     Float csrate = 0.0f, qwrate = 0.0f, frrate = 0.0f, prrate = 0.0f, tmrate = 0.0f, total = 0.0f, count = 0.0f;
     FloatingActionButton mGoogleMap, mAdd, mShare, mTeamProduct, mTeamServices, mTeamVehicle;
-    MyStoreHome mMyStoreHome;
-    StoreInfo storeInfo;
-    StoreProducts storeProducts;
-    StoreServices storeServices;
-    StoreVehicles storeVehicles;
+
     ApiCall mApiCall;
     CoordinatorLayout mLayout;
     String storeName = "";
@@ -106,7 +97,7 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
     AdminCallContactAdapter adapter;
     LinearLayout mLinear, mAbout, mProducts, mService, mVehicle, mNewVehicle;
     ImageView mBannerImage, mStoreImage;
-    TextView mStoreName, mWebSite, mLocation, mLikeCount, mFollowCount;
+    TextView mStoreName, mWebSite, mLocation, mLikeCount, mFollowCount, mStoreType;
     ImageView mCall;
     LinearLayout otherViewLayout;
     ImageView mLike, mUnlike, mRating, mFollow, mUnFollow, mMap, mAddReview;
@@ -170,6 +161,7 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
                     mLocation = (TextView) findViewById(R.id.location);
                     mLikeCount = (TextView) findViewById(R.id.likeCount);
                     mFollowCount = (TextView) findViewById(R.id.followCount);
+                    mStoreType = (TextView) findViewById(R.id.storeType);
                     mCall = (ImageView) findViewById(R.id.call);
 
 
@@ -182,17 +174,6 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
                     mGoogleMap.setLabelTextColor(Color.BLACK);
                     mAdd.setLabelTextColor(Color.BLACK);
 
-//                    mMyStoreHome = new MyStoreHome();
-//
-//                    mMyStoreHome.setArguments(mBundle);
-//                    storeInfo = new StoreInfo();
-//                    storeInfo.setArguments(mBundle);
-//                    storeProducts = new StoreProducts();
-//                    storeProducts.setArguments(mBundle);
-//                    storeServices = new StoreServices();
-//                    storeServices.setArguments(mBundle);
-//                    storeVehicles = new StoreVehicles();
-//                    storeVehicles.setArguments(mBundle);
 
                     if (getIntent().getExtras() != null) {
                         store_id = getIntent().getExtras().getInt("store_id");
@@ -1023,6 +1004,7 @@ Call Intent...
                     mStoreName.setText(storeName);
                     mLocation.setText(storeLocation);
                     mWebSite.setText(storeWebsite);
+                    mStoreType.setText("Type:" + storeType);
                     mFollowCount.setText("Followers(" + String.valueOf(storeFollowCount) + ")");
                     mLikeCount.setText("Likes(" + String.valueOf(storeLikeCount) + ")");
 
@@ -1061,9 +1043,11 @@ Call Intent...
                 }
 
             } else {
+                dialog.dismiss();
                 //  CustomToast.customToast(getApplicationContext(), getString(R.string._404_));
             }
         } else {
+            dialog.dismiss();
             CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
         }
 

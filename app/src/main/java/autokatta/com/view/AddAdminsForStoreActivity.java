@@ -1,21 +1,21 @@
-package autokatta.com.my_store;
+package autokatta.com.view;
 
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
@@ -37,16 +37,11 @@ import autokatta.com.other.CustomToast;
 import autokatta.com.register.InvitationCompanyBased;
 import autokatta.com.response.Db_AutokattaContactResponse;
 import autokatta.com.response.StoreOldAdminResponse;
-import autokatta.com.view.StoreViewActivity;
 import retrofit2.Response;
 
 import static autokatta.com.database.DbConstants.userName;
 
-/**
- * Created by ak-003 on 29/3/17.
- */
-
-public class AddMoreAdminsForStoreFrag extends Fragment implements RequestNotifier {
+public class AddAdminsForStoreActivity extends AppCompatActivity implements RequestNotifier {
 
     ArrayList<Db_AutokattaContactResponse> contactdata = new ArrayList<>();
     RecyclerView mRecyclerView;
@@ -65,46 +60,52 @@ public class AddMoreAdminsForStoreFrag extends Fragment implements RequestNotifi
     ApiCall apiCall;
     DbOperation dbOperation;
 
-    public AddMoreAdminsForStoreFrag() {
-        //empty  constructor
-    }
-
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        super.onCreateView(inflater, container, savedInstanceState);
-        final View root = inflater.inflate(R.layout.fragment_add_more_admin, container, false);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_add_admins_for_store);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setHomeButtonEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
-        mRecyclerView = (RecyclerView) root.findViewById(R.id.l1);
-        btnlayout = (RelativeLayout) root.findViewById(R.id.btnrelative);
-        ok = (Button) root.findViewById(R.id.ok);
-        cancel = (Button) root.findViewById(R.id.cancel);
-        inputSearch = (EditText) root.findViewById(R.id.inputSearch);
-        mainlayout = (RelativeLayout) root.findViewById(R.id.mainlayout);
-        noContacts = (TextView) root.findViewById(R.id.textview);
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setVisibility(View.GONE);
+
+
+        mRecyclerView = (RecyclerView) findViewById(R.id.l1);
+        btnlayout = (RelativeLayout) findViewById(R.id.btnrelative);
+        ok = (Button) findViewById(R.id.ok);
+        cancel = (Button) findViewById(R.id.cancel);
+        inputSearch = (EditText) findViewById(R.id.inputSearch);
+        mainlayout = (RelativeLayout) findViewById(R.id.mainlayout);
+        noContacts = (TextView) findViewById(R.id.textview);
         inputSearch.setVisibility(View.GONE);
 
         mRecyclerView.setHasFixedSize(true);
-        LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(getActivity());
+        LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(this);
         mLinearLayoutManager.setReverseLayout(true);
         mLinearLayoutManager.setStackFromEnd(true);
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
         //Set animation attribute to each item
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL));
+        mRecyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
 
-        apiCall = new ApiCall(getActivity(), this);
-        dbOperation = new DbOperation(getActivity());
+        apiCall = new ApiCall(this, this);
+        dbOperation = new DbOperation(this);
 
         try {
-            Bundle b = getArguments();
-            store_id = b.getInt("store_id");
-            callFrom = b.getString("call");
+            if (getIntent().getExtras() != null) {
+                store_id = getIntent().getExtras().getInt("store_id");
+                callFrom = getIntent().getExtras().getString("call");
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        DbOperation dbAdpter = new DbOperation(getActivity());
+        DbOperation dbAdpter = new DbOperation(this);
         dbAdpter.OPEN();
         Cursor cursor = dbAdpter.getAutokattaContact();
         if (cursor.getCount() > 0) {
@@ -136,17 +137,17 @@ public class AddMoreAdminsForStoreFrag extends Fragment implements RequestNotifi
                 b.putInt("store_id", store_id);
                 b.putString("flow_tab_name", "adminMore");
                 if (!callFrom.equalsIgnoreCase("interestbased")) {
-                    getActivity().finish();
-                    ActivityOptions options = ActivityOptions.makeCustomAnimation(getActivity(), R.anim.ok_left_to_right, R.anim.ok_right_to_left);
-                    Intent intent = new Intent(getActivity(), StoreViewActivity.class);
+                    finish();
+                    ActivityOptions options = ActivityOptions.makeCustomAnimation(AddAdminsForStoreActivity.this, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
+                    Intent intent = new Intent(AddAdminsForStoreActivity.this, StoreViewActivity.class);
                     intent.putExtras(b);
-                    getActivity().startActivity(intent, options.toBundle());
+                    startActivity(intent, options.toBundle());
 
                 } else {
-                    ActivityOptions options = ActivityOptions.makeCustomAnimation(getActivity(), R.anim.ok_left_to_right, R.anim.ok_right_to_left);
-                    Intent i = new Intent(getActivity(), InvitationCompanyBased.class);
-                    getActivity().startActivity(i, options.toBundle());
-                    getActivity().finish();
+                    ActivityOptions options = ActivityOptions.makeCustomAnimation(AddAdminsForStoreActivity.this, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
+                    Intent i = new Intent(AddAdminsForStoreActivity.this, InvitationCompanyBased.class);
+                    startActivity(i, options.toBundle());
+                    finish();
 
                 }
 
@@ -159,21 +160,21 @@ public class AddMoreAdminsForStoreFrag extends Fragment implements RequestNotifi
                 boolean flag = false;
 
                 for (int i = 0; i < StoreAdminAdapter.boxdata.size(); i++) {
-                        if (!StoreAdminAdapter.boxdata.get(i).equalsIgnoreCase("0")) {
-                            if (StoreAdminAdapter.isSave.get(i).equals(false)) {
-                                CustomToast.customToast(getActivity(), "Save Role First");
-                                flag = true;
-                                break;
-                            } else {
-                                flag = false;
-                                if (finaladmins.equals(""))
-                                    finaladmins = StoreAdminAdapter.boxdata.get(i);
-                                else
-                                    finaladmins = finaladmins + "," + StoreAdminAdapter.boxdata.get(i);
-                            }
-
+                    if (!StoreAdminAdapter.boxdata.get(i).equalsIgnoreCase("0")) {
+                        if (StoreAdminAdapter.isSave.get(i).equals(false)) {
+                            CustomToast.customToast(getApplicationContext(), "Save Role First");
+                            flag = true;
+                            break;
+                        } else {
+                            flag = false;
+                            if (finaladmins.equals(""))
+                                finaladmins = StoreAdminAdapter.boxdata.get(i);
+                            else
+                                finaladmins = finaladmins + "," + StoreAdminAdapter.boxdata.get(i);
                         }
+
                     }
+                }
 
                 if (flag == false) {
 
@@ -182,7 +183,7 @@ public class AddMoreAdminsForStoreFrag extends Fragment implements RequestNotifi
                         System.out.println("finalAdmins=====" + finaladmins);
                         addStoreAdmins(store_id, finaladmins);
                     } else {
-                        CustomToast.customToast(getActivity(), "Please Select Atleast Single contact");
+                        CustomToast.customToast(getApplicationContext(), "Please Select Atleast Single contact");
 
                     }
                 }
@@ -204,7 +205,8 @@ public class AddMoreAdminsForStoreFrag extends Fragment implements RequestNotifi
             public void afterTextChanged(Editable s) {
             }
         });
-        return root;
+
+
     }
 
     private void getAlreadyAdminData() {
@@ -236,9 +238,9 @@ public class AddMoreAdminsForStoreFrag extends Fragment implements RequestNotifi
                     } /*else
                         CustomToast.customToast(getActivity(), getString(R.string.no_response));*/
                     if (alreadyAdmin.size() != 0)
-                        adapter = new StoreAdminAdapter(getActivity(), contactdata, alreadyAdmin);
+                        adapter = new StoreAdminAdapter(this, contactdata, alreadyAdmin);
                     else {
-                        adapter = new StoreAdminAdapter(getActivity(), contactdata);
+                        adapter = new StoreAdminAdapter(this, contactdata);
                     }
                     mRecyclerView.setAdapter(adapter);
                 }
@@ -246,25 +248,22 @@ public class AddMoreAdminsForStoreFrag extends Fragment implements RequestNotifi
                 //  CustomToast.customToast(getActivity(), getString(R.string._404_));
             }
         } else {
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
         }
     }
 
     @Override
     public void notifyError(Throwable error) {
         if (error instanceof SocketTimeoutException) {
-            if (isAdded())
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
         } else if (error instanceof NullPointerException) {
             //  CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
             // CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
-            if (isAdded())
-            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
-            if (isAdded())
-            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
         } else {
             Log.i("Check Class-", "Add more Admins Store Fragment");
             error.printStackTrace();
@@ -280,17 +279,17 @@ public class AddMoreAdminsForStoreFrag extends Fragment implements RequestNotifi
                 b.putInt("store_id", store_id);
                 b.putString("flow_tab_name", "adminMore");
                 if (!callFrom.equalsIgnoreCase("interestbased")) {
-                    getActivity().finish();
-                    ActivityOptions options = ActivityOptions.makeCustomAnimation(getActivity(), R.anim.ok_left_to_right, R.anim.ok_right_to_left);
-                    Intent intent = new Intent(getActivity(), StoreViewActivity.class);
+                    finish();
+                    ActivityOptions options = ActivityOptions.makeCustomAnimation(this, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
+                    Intent intent = new Intent(this, StoreViewActivity.class);
                     intent.putExtras(b);
-                    getActivity().startActivity(intent, options.toBundle());
+                    startActivity(intent, options.toBundle());
 
                 } else {
-                    ActivityOptions options = ActivityOptions.makeCustomAnimation(getActivity(), R.anim.ok_left_to_right, R.anim.ok_right_to_left);
-                    Intent i = new Intent(getActivity(), CompanyBasedInvitation.class);
-                    getActivity().startActivity(i, options.toBundle());
-                    getActivity().finish();
+                    ActivityOptions options = ActivityOptions.makeCustomAnimation(this, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
+                    Intent i = new Intent(this, CompanyBasedInvitation.class);
+                    startActivity(i, options.toBundle());
+                    finish();
 
                 }
             }
@@ -299,4 +298,24 @@ public class AddMoreAdminsForStoreFrag extends Fragment implements RequestNotifi
         }
 
     }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+        overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
+    }
+
 }

@@ -548,6 +548,7 @@
     <string name="approve">Approve</string>
     <string name="reject">Reject</string>
     <string name="add_photo">Add Photo</string>
+    <string name="createstore">Create Store</string>
     <string name="add_cover_photo">Add Cover Photo</string>
     <string name="product">Product</string>
     <string name="service">Service</string>
@@ -733,4 +734,6 @@
     <string name="title_activity_store_service">StoreServiceActivity</string>
     <string name="title_activity_store_vehicle">StoreVehicleActivity</string>
     <string name="title_activity_store_new_vehicle_activiy">StoreNewVehicleActiviy</string>
+    <string name="title_activity_create_store">CreateStoreActivity</string>
+    <string name="title_activity_add_admins_for_store">AddAdminsForStoreActivity</string>
 </resources>

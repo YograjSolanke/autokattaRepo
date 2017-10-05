@@ -631,12 +631,6 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".apicall.DeleteActivity"
-            android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustResize" />
-        <activity
             android:name=".other.AddTags"
             android:screenOrientation="portrait" />
         <activity
@@ -818,6 +812,14 @@
         <activity
             android:name=".view.StoreNewVehicleActiviy"
             android:label="@string/title_activity_store_new_vehicle_activiy"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".view.CreateStoreActivity"
+            android:label="@string/title_activity_create_store"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".view.AddAdminsForStoreActivity"
+            android:label="@string/title_activity_add_admins_for_store"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

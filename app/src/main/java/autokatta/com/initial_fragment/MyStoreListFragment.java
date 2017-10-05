@@ -1,10 +1,10 @@
 package autokatta.com.initial_fragment;
 
+import android.app.ActivityOptions;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -25,10 +25,10 @@ import autokatta.com.R;
 import autokatta.com.adapter.MyStoreListAdapter;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
-import autokatta.com.my_store.CreateStoreFragment;
 import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.MyStoreResponse;
+import autokatta.com.view.CreateStoreActivity;
 import retrofit2.Response;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -103,14 +103,19 @@ public class MyStoreListFragment extends Fragment implements View.OnClickListene
 
                     Bundle bundle = new Bundle();
                     bundle.putString("className", "MyStoreListFragment");
-                    CreateStoreFragment createStoreFragment = new CreateStoreFragment();
-                    createStoreFragment.setArguments(bundle);
 
-                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                    fragmentTransaction.replace(R.id.myStoreListFrame, createStoreFragment, "createStoreFragment")
-                            .addToBackStack("createStoreFragment")
-                            .commitAllowingStateLoss();
+                    ActivityOptions options = ActivityOptions.makeCustomAnimation(getActivity(), R.anim.ok_left_to_right, R.anim.ok_right_to_left);
+                    Intent intent = new Intent(getActivity(), CreateStoreActivity.class);
+                    intent.putExtras(bundle);
+                    getActivity().startActivity(intent, options.toBundle());
+//                    CreateStoreFragment createStoreFragment = new CreateStoreFragment();
+//                    createStoreFragment.setArguments(bundle);
+//
+//                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+//                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//                    fragmentTransaction.replace(R.id.myStoreListFrame, createStoreFragment, "createStoreFragment")
+//                            .addToBackStack("createStoreFragment")
+//                            .commitAllowingStateLoss();
                 }
             } else {
                 mSwipeRefreshLayout.setRefreshing(false);
@@ -156,19 +161,20 @@ public class MyStoreListFragment extends Fragment implements View.OnClickListene
             case R.id.fabCreateStore:
                 Bundle bundle = new Bundle();
                 bundle.putString("className", "MyStoreListFragment");
-                CreateStoreFragment createStoreFragment = new CreateStoreFragment();
-                createStoreFragment.setArguments(bundle);
 
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.myStoreListFrame, createStoreFragment, "createStoreFragment")
-                        .addToBackStack("createStoreFragment")
-                        .commit();
+                ActivityOptions options = ActivityOptions.makeCustomAnimation(getActivity(), R.anim.ok_left_to_right, R.anim.ok_right_to_left);
+                Intent intent = new Intent(getActivity(), CreateStoreActivity.class);
+                intent.putExtras(bundle);
+                getActivity().startActivity(intent, options.toBundle());
+//                CreateStoreFragment createStoreFragment = new CreateStoreFragment();
+//                createStoreFragment.setArguments(bundle);
+//
+//                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+//                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//                fragmentTransaction.replace(R.id.myStoreListFrame, createStoreFragment, "createStoreFragment")
+//                        .addToBackStack("createStoreFragment")
+//                        .commit();
 
-                /*getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.myStoreListFrame, createStoreFragment, "createStoreFragment")
-                        .addToBackStack("createStoreFragment")
-                        .commit();*/
 
         }
     }
