@@ -5572,7 +5572,7 @@ Get saved search Seller list
     Get Admin Auction response.
      */
 
-    public void getAdminAuction(String vehicleId, String contact) {
+    public void getAdminAuction(int vehicleId, String contact) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 Retrofit mRetrofit = new Retrofit.Builder()

@@ -19,7 +19,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import autokatta.com.R;
-import autokatta.com.auction.AdminVehicleDetails;
 import autokatta.com.auction.MyAuctionVehicleDetails;
 import autokatta.com.response.GetAuctionEventResponse;
 
@@ -76,12 +75,11 @@ public class PreviewAuctionAdapter extends RecyclerView.Adapter<PreviewAuctionAd
     public PreviewAuctionAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.custom_preview_live_event_list, parent, false);
-        // set the view's size, margins, paddings and layout parameters
         return new MyViewHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(final PreviewAuctionAdapter.MyViewHolder holder, final int position) {
+    public void onBindViewHolder(final PreviewAuctionAdapter.MyViewHolder holder, int position) {
         if (mItemList.get(position).getImage() == null || mItemList.get(position).getImage().equals("")
                 || mItemList.get(position).getImage().isEmpty()||mItemList.get(position).getImage().equals(null)){
         holder.mAuctionVehicleImage.setBackgroundResource(R.drawable.vehiimg);
@@ -132,42 +130,24 @@ public class PreviewAuctionAdapter extends RecyclerView.Adapter<PreviewAuctionAd
         holder.mViewMore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!mItemList.get(position).getVehicleId().startsWith("A ")) {
+               /* if (!mItemList.get(holder.getAdapterPosition()).getVehicleId().startsWith("A ")) {*/
                     Bundle b = new Bundle();
-                    b.putString("vehicle_id", mItemList.get(position).getVehicleId());
+                b.putInt("vehicle_id", mItemList.get(holder.getAdapterPosition()).getVehicleId());
                     b.putInt("auction_id", auctionId);
 
                     Intent intent = new Intent(mActivity, MyAuctionVehicleDetails.class);
                     intent.putExtras(b);
                     mActivity.startActivity(intent);
-                    //mActivity.finish();
-                                /*FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                                fragmentTransaction.replace(R.id.containerView, frag);
-                                fragmentTransaction.addToBackStack("myauctionvehicledetails");
-                                fragmentTransaction.commit();*/
 
-                } else {
+                /*} else {
                     Bundle b = new Bundle();
-                    b.putString("vehicle_id", mItemList.get(position).getVehicleId());
+                    b.putInt("vehicle_id", mItemList.get(holder.getAdapterPosition()).getVehicleId());
                     b.putString("lotNo", holder.mSetLotNo.getText().toString());
 
                     Intent intent = new Intent(mActivity, AdminVehicleDetails.class);
                     intent.putExtras(b);
                     mActivity.startActivity(intent);
-                    //mActivity.finish();
-                                /*Toast.makeText(getActivity(),"Admin vehicle",Toast.LENGTH_SHORT).show();
-                                Bundle b = new Bundle();
-                                b.putString("vehicle_id", VehiId);
-                                b.putString("lotNo", lotNo.getText().toString());
-
-                                AdminVehicleMoreDetails fragment = new AdminVehicleMoreDetails();
-                                fragment.setArguments(b);
-                                FragmentManager mFragmentManagerm = getActivity().getSupportFragmentManager();
-                                FragmentTransaction fragmentTransaction = mFragmentManagerm.beginTransaction();
-                                fragmentTransaction.replace(R.id.containerView, fragment).addToBackStack("adminvehiclemoredetails").commit();
-*/
-                }
+                }*/
             }
         });
     }

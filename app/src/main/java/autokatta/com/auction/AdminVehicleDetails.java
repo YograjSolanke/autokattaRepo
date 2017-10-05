@@ -27,9 +27,10 @@ import retrofit2.Response;
 
 public class AdminVehicleDetails extends AppCompatActivity implements RequestNotifier {
 
-    String contactnumber, auction_id, vehicle_id;
+    String contactnumber, auction_id;
+    int vehicle_id = 0;
     StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-    String vvehicle_id, title, contact_no, category, sub_category, model, manufacturer, Version, rto_city, location_city, year_of_registration, year_of_manufacture, colorr, registration_number, rc_available, kms_running, Hrs_running, no_of_owners, fual_type, seating_capacity, hypothication, engine_no, chassis_no, price, image, body_type, boat_type, bus_type, implementsd, finance_req, hp_capacity, JIB, Boon, tyre_condition, insurance_valid, insurance_idv, fitness_validity, permit_validity, air_condition, rv_type, transmission, tax_validity, application, permit_yesno, drive, lotNostr, bundle_lotNo, Repodate, Yardrent;
+    String vvehicle_id, title, contact_no, category, sub_category, model, manufacturer, Version, rto_city, location_city, year_of_registration, year_of_manufacture, colorr, registration_number, rc_available, kms_running = "", Hrs_running, no_of_owners, fual_type, seating_capacity, hypothication, engine_no, chassis_no, price, image, body_type, boat_type, bus_type, implementsd, finance_req, hp_capacity, JIB, Boon, tyre_condition, insurance_valid, insurance_idv, fitness_validity, permit_validity, air_condition, rv_type, transmission, tax_validity, application, permit_yesno, drive, lotNostr, bundle_lotNo, Repodate, Yardrent;
     TextView vehiclemodel, vehicletitle, vehiclebrand, vehicleyear, vehicle_km_hrs, vehiclerc_invoice, vehicle_rto_city, vehicle_location, current_bid, moredetail, startpricetxt, startprice, lotNo;
     TextView categorydetails, regyeardetails, insurencedetails, ownerdetails, rc_availabledetails, ins_validitydetails, tax_validitydetails, fitness_validitydetails, permit_validitydetails, fueldetails, seatingdetails, hypodetails, permitdetails, drivedetails, transmissiondetails, bodydetails, boatdetails, rvdetails, applicationdetails, colordetails, tyredetails, bustypedetails, airdetails, registrationdetails, enginedetails, implementationdetails, chassicdetails, hpcapacitydetails, jibdetails,
             boondetails;
@@ -137,7 +138,7 @@ public class AdminVehicleDetails extends AppCompatActivity implements RequestNot
         vrepo = (View) findViewById(R.id.vrepo);
         vyard = (View) findViewById(R.id.vyard);
 
-        vehicle_id = getIntent().getExtras().getString("vehicle_id");
+        vehicle_id = getIntent().getExtras().getInt("vehicle_id");
         bundle_lotNo = getIntent().getExtras().getString("lotNo");
 
         //Async call
@@ -302,7 +303,7 @@ public class AdminVehicleDetails extends AppCompatActivity implements RequestNot
                 boondetails.setText(Boon);
 
                 repodetails.setText(Repodate);
-                yardrentdetails.setText(Yardrent + "Rs.");
+                yardrentdetails.setText("" + Yardrent + "Rs.");
 
                 if (category.equalsIgnoreCase("bus")) {
                     bustypedetails.setVisibility(View.VISIBLE);
@@ -360,10 +361,10 @@ public class AdminVehicleDetails extends AppCompatActivity implements RequestNot
                     boontxt.setVisibility(View.VISIBLE);
                     vjib.setVisibility(View.VISIBLE);
                 }
-                if (kms_running != null || !kms_running.equals(""))
-                    vehicle_km_hrs.setText(kms_running + "Kms");
+                if (!kms_running.equals("") || kms_running != null)
+                    vehicle_km_hrs.setText("" + kms_running + "Kms");
                 else
-                    vehicle_km_hrs.setText(Hrs_running + "Hrs");
+                    vehicle_km_hrs.setText("" + Hrs_running + "Hrs");
             } else {
                 // CustomToast.customToast(getApplicationContext(), getString(R.string._404));
             }

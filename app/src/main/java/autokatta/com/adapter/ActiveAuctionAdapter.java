@@ -35,6 +35,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 import autokatta.com.R;
 import autokatta.com.events.PreviewMyActiveAuctionActivity;
@@ -91,7 +92,7 @@ public class ActiveAuctionAdapter extends RecyclerView.Adapter<ActiveAuctionAdap
             cdt = null;
         }
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
         try {
             Date futureDate = dateFormat.parse(auctionDetailsArrayList.get(position).getEndDateTime().replace("T"," "));
             Date currentDate = dateFormat.parse(auctionDetailsArrayList.get(position).getStartDateTime().replace("T"," "));
@@ -129,7 +130,10 @@ public class ActiveAuctionAdapter extends RecyclerView.Adapter<ActiveAuctionAdap
                         seconds = (int) (millisUntilFinished / DateUtils.SECOND_IN_MILLIS);
                     }
 
-                    sDate += " " + String.format("%02d", hours) + ":" + String.format("%02d", minutes) + ":" + String.format("%02d", seconds);
+                    sDate += " " + String.format(Locale.getDefault(), "%02d", hours) + ":" +
+                            String.format(Locale.getDefault(), "%02d", minutes) + ":" +
+                            String.format(Locale.getDefault(), "%02d", seconds);
+
                     tv.setText(sDate.trim());
                 }
 

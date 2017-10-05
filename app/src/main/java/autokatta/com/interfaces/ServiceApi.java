@@ -833,7 +833,7 @@ public interface ServiceApi {
 
     //contact not used
     @POST("AdminVehicleMoreDetails")
-    Call<GetAdminVehicleResponse> getAdminAuction(@Query("VehicleID") String vehicleId, @Query("contact") String contact);
+    Call<GetAdminVehicleResponse> getAdminAuction(@Query("VehicleID") int vehicleId, @Query("contact") String contact);
 
     //get tags For Brand
     @GET("GetBrandTag")

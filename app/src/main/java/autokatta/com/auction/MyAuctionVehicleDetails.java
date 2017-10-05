@@ -13,9 +13,7 @@ import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.daimajia.slider.library.Tricks.ViewPagerEx;
 
 import java.net.SocketTimeoutException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
@@ -26,20 +24,12 @@ import retrofit2.Response;
 
 public class MyAuctionVehicleDetails extends AppCompatActivity implements RequestNotifier, BaseSliderView.OnSliderClickListener, ViewPagerEx.OnPageChangeListener {
 
-    String contactnumber, vehicle_id;
-    int auction_id = 0;
-    //String aauction_id, action_title, auctioncontact, start_date, start_time, end_date, end_time, auction_type, location, special_clauses, no_of_vehicles, endDateTime, highbid;
-    //String vvehicle_id, title, contact_no, category, sub_category, model, manufacturer, Version, rto_city, location_city, year_of_registration, year_of_manufacture, colorr, registration_number, rc_available, kms_running, Hrs_running, no_of_owners, fual_type, seating_capacity, hypothication, engine_no, chassis_no, price, image, body_type, boat_type, bus_type, implementsd, finance_req, hp_capacity, JIB, Boon, tyre_condition, insurance_valid, insurance_idv, fitness_validity, permit_validity, air_condition, rv_type, transmission, tax_validity, application, permit_yesno, drive, lotNostr;
-    //String CurrentBid_price;
-
+    String contactnumber;
+    int auction_id = 0, vehicle_id = 0;
     TextView vehiclemodel, vehicletitle, vehiclebrand, vehicleyear, vehicle_km_hrs, vehiclerc_invoice, vehicle_rto_city, vehicle_location, current_bid, moredetail, startpricetxt, startprice, lotNo;
     TextView categorydetails, regyeardetails, insurencedetails, ownerdetails, rc_availabledetails, ins_validitydetails, tax_validitydetails, fitness_validitydetails, permit_validitydetails, fueldetails, seatingdetails, hypodetails, permitdetails, drivedetails, transmissiondetails, bodydetails, boatdetails, rvdetails, applicationdetails, colordetails, tyredetails, bustypedetails, airdetails, registrationdetails, enginedetails, implementationdetails, chassicdetails, hpcapacitydetails, jibdetails, boondetails;
-    //ImageView vehicleImage;
     View vhapcapacity, vimplement, vair, vbus, vapp, vboat, vbody, vtrans, vdrive, vseat, vboon, vjib, vrv, vfuel, vhypo, vtyre, vengine, vchassic;
     TextView hpcapacitytxt, jibtxt, boontxt, bustext, airtext, seatcaptxt, implimentstext, applicationtext, transmissiontext, drivetext, bodytext, boattext, rvtext;
-    TextView cameracount;
-    String sendImage = "", Allimages = "";
-    List<String> iname = new ArrayList<>();
     SliderLayout sliderLayout;
     HashMap<String, String> Hash_file_maps;
 
@@ -133,7 +123,7 @@ public class MyAuctionVehicleDetails extends AppCompatActivity implements Reques
 
         sliderLayout = (SliderLayout) findViewById(R.id.auctionimage);
 
-        vehicle_id = getIntent().getExtras().getString("vehicle_id");
+        vehicle_id = getIntent().getExtras().getInt("vehicle_id");
         auction_id = getIntent().getExtras().getInt("auction_id");
 
         startpricetxt.setVisibility(View.GONE);
@@ -172,22 +162,7 @@ public class MyAuctionVehicleDetails extends AppCompatActivity implements Reques
                     categorydetails.setText(auction.getCategory());
                     vehicletitle.setText(auction.getTitle());
                     vehicleyear.setText(auction.getYear());
-                   /* if ((auction.getImage() == null) || auction.getImage().equals("") || auction.getImage().equals("null")) {
-                        vehicleImage.setBackgroundResource(R.drawable.vehiimg);
-                        sendImage = "http://autokatta.com/mobile/uploads/amitkamble.jpg";
-                    } else {
-                        String[] imagenamecame = auction.getImage().split(",");
-                        for (int z = 0; z < imagenamecame.length; z++) {
-                            iname.add(imagenamecame[z].replaceAll(" ", "%20"));
-                        }
-                        sendImage = iname.get(0);
-                        Glide.with(MyAuctionVehicleDetails.this)
-                                .load("http://autokatta.com/mobile/uploads/" + sendImage)
-                                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                                .override(100, 100)
-                                .into(vehicleImage);
 
-                    }*/
 
                     Hash_file_maps = new HashMap<>();
                     String dp_path = getApplicationContext().getString(R.string.base_image_url);
@@ -374,18 +349,6 @@ public class MyAuctionVehicleDetails extends AppCompatActivity implements Reques
 
     }
 
-    /*    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            ActivityOptions options = ActivityOptions.makeCustomAnimation(MyAuctionVehicleDetails.this, R.anim.pull_in_left, R.anim.push_out_right);
-            startActivity(new Intent(getApplicationContext(), AutokattaMainActivity.class), options.toBundle());
-            finish();
-        } else {
-            finish();
-            startActivity(new Intent(getApplicationContext(), AutokattaMainActivity.class));
-        }
-    }*/
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {

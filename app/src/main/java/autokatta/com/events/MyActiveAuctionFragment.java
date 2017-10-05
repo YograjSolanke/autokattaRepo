@@ -105,7 +105,7 @@ public class MyActiveAuctionFragment extends Fragment implements RequestNotifier
             apiCall.MyActiveAuction(loginContact, active);
         } else {
             if (isAdded())
-            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
+                CustomToast.customToast(getActivity(), getString(R.string.no_internet));
             // errorMessage(getActivity(), getString(R.string.no_internet));
         }
 
@@ -142,37 +142,24 @@ public class MyActiveAuctionFragment extends Fragment implements RequestNotifier
 
                         try {
                             TimeZone utc = TimeZone.getTimeZone("etc/UTC");
-                            //  TimeZone utc1 = TimeZone.getTimeZone("etc/UTC");
-                            //format of date coming from services
                             DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-                            // DateFormat inputFormat1 = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss a", Locale.getDefault());
-                        /*DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",
-                                Locale.getDefault());*/
                             inputFormat.setTimeZone(utc);
-                            //   inputFormat1.setTimeZone(utc1);
 
                             //format of date which we want to show
                             DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
                             DateFormat outputFormat1 = new SimpleDateFormat("dd MMM yyyy hh:mm:ss a", Locale.getDefault());
-                        /*DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy hh:mm aa",
-                                Locale.getDefault());*/
+
                             outputFormat.setTimeZone(utc);
-                            //   outputFormat1.setTimeZone(utc1);
 
                             Date date = inputFormat.parse(auctionSuccess.getStartDate());
                             Date date1 = inputFormat.parse(auctionSuccess.getEndDate());
-                            //   Date date2 = inputFormat.parse(auctionSuccess.getStartDateTime());
-                            //  Date date3 = inputFormat.parse(auctionSuccess.getEndDateTime());
-                            //System.out.println("jjj"+date);
+
                             String output = outputFormat.format(date);
                             String output1 = outputFormat.format(date1);
-                            //  String output2 = outputFormat.format(date2);
-                            // String output3 = outputFormat.format(date3);
-                            //System.out.println(mainList.get(i).getDate()+" jjj " + output);
+
                             auctionSuccess.setStartDate(output);
                             auctionSuccess.setEndDate(output1);
-                            //  auctionSuccess.setEndDateTime(output3);
-                            //   auctionSuccess.setStartDateTime(output2);
+
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -216,7 +203,7 @@ public class MyActiveAuctionFragment extends Fragment implements RequestNotifier
 
         } else {
             if (isAdded())
-            CustomToast.customToast(getActivity(), getActivity().getString(R.string.no_response));
+                CustomToast.customToast(getActivity(), getActivity().getString(R.string.no_response));
         }
 
     }
@@ -236,11 +223,11 @@ public class MyActiveAuctionFragment extends Fragment implements RequestNotifier
             //    showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
             if (isAdded())
-            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
+                CustomToast.customToast(getActivity(), getString(R.string.no_internet));
             //  errorMessage(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
             if (isAdded())
-            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
+                CustomToast.customToast(getActivity(), getString(R.string.no_internet));
             //  errorMessage(getActivity(), getString(R.string.no_internet));
         } else {
             Log.i("Check Class-", "My Active Auction Fragment");

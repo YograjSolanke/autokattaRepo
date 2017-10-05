@@ -28,6 +28,7 @@ import java.net.UnknownHostException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 
 import autokatta.com.R;
 import autokatta.com.adapter.TabAdapterName;
@@ -130,7 +131,7 @@ public class PreviewMyActiveAuctionActivity extends AppCompatActivity implements
                     txtEndTime.setText(strEndTime);
                     txtVehicle.setText(String.valueOf(strVehicleCount));
                     txtParticipant.setText(String.valueOf(strParticipantcount));
-                    txtCategory.setText("Category: " + strCategory);
+                    txtCategory.setText("" + "Category: " + strCategory);
                     txtLocation.setText(strLocation);
                     //mAuctionText.setText(getString(R.string.live_auction));
                     mBundle.putInt("auctionid", strAuctionId);
@@ -146,7 +147,7 @@ public class PreviewMyActiveAuctionActivity extends AppCompatActivity implements
                         cdt.cancel();
                         cdt = null;
                     }
-                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
                     try {
                         Date futureDate = dateFormat.parse(strEnddatetime);
                         Date currentDate = dateFormat.parse(strEnddatetime);
@@ -178,7 +179,9 @@ public class PreviewMyActiveAuctionActivity extends AppCompatActivity implements
                                 if (millisUntilFinished > DateUtils.SECOND_IN_MILLIS) {
                                     seconds = (int) (millisUntilFinished / DateUtils.SECOND_IN_MILLIS);
                                 }
-                                sDate += " " + String.format("%02d", hours) + ":" + String.format("%02d", minutes) + ":" + String.format("%02d", seconds);
+                                sDate += " " + String.format(Locale.getDefault(), "%02d", hours) + ":" +
+                                        String.format(Locale.getDefault(), "%02d", minutes) + ":" +
+                                        String.format(Locale.getDefault(), "%02d", seconds);
                                 tv.setText(sDate.trim());
                             }
 
@@ -297,19 +300,14 @@ public class PreviewMyActiveAuctionActivity extends AppCompatActivity implements
     public void notifyError(Throwable error) {
         if (error instanceof SocketTimeoutException) {
             CustomToast.customToast(getApplicationContext(), getString(R.string._404_));
-            //   showMessage(getActivity(), getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
             CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
-            // showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
             CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
-            //   showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
             CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
-            //   errorMessage(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
             CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
-            //   errorMessage(getActivity(), getString(R.string.no_internet));
         } else {
             Log.i("Check Class-", "Preview My Active Auction Activity");
             error.printStackTrace();
