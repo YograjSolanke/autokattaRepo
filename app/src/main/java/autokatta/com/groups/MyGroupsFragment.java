@@ -134,8 +134,7 @@ public class MyGroupsFragment extends Fragment implements SwipeRefreshLayout.OnR
         mSwipeRefreshLayout.setRefreshing(false);
         if (error instanceof SocketTimeoutException) {
             if (isAdded())
-            CustomToast.customToast(getActivity(),getString(R.string._404_));
-            //   showMessage(getActivity(), getString(R.string._404_));
+                CustomToast.customToast(getActivity(), getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
             // CustomToast.customToast(getActivity(),getString(R.string.no_response));
             // showMessage(getActivity(), getString(R.string.no_response));
@@ -144,11 +143,11 @@ public class MyGroupsFragment extends Fragment implements SwipeRefreshLayout.OnR
             //   showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
             if (isAdded())
-            CustomToast.customToast(getActivity(),getString(R.string.no_internet));
+                CustomToast.customToast(getActivity(), getString(R.string.no_internet));
             //   errorMessage(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
             if (isAdded())
-            CustomToast.customToast(getActivity(),getString(R.string.no_internet));
+                CustomToast.customToast(getActivity(), getString(R.string.no_internet));
             //   errorMessage(getActivity(), getString(R.string.no_internet));
         } else {
             Log.i("Check Class-"
@@ -203,6 +202,7 @@ public class MyGroupsFragment extends Fragment implements SwipeRefreshLayout.OnR
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        mApiCall = new ApiCall(getActivity(), this);
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -218,7 +218,8 @@ public class MyGroupsFragment extends Fragment implements SwipeRefreshLayout.OnR
                 mLayoutManager.setReverseLayout(true);
                 mLayoutManager.setStackFromEnd(true);
                 mRecyclerView.setLayoutManager(mLayoutManager);
-                //getData();//Get Api...
+                getData(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
+                        .getString("loginContact", ""));//Get Api...
                 mSwipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
                         android.R.color.holo_green_light,
                         android.R.color.holo_orange_light,
@@ -234,11 +235,9 @@ public class MyGroupsFragment extends Fragment implements SwipeRefreshLayout.OnR
                         }
                     }
                 });
-
                 /*
                 On Scrolled Changed Listener...
                  */
-
                 mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
                     @Override
                     public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
@@ -255,7 +254,6 @@ public class MyGroupsFragment extends Fragment implements SwipeRefreshLayout.OnR
                                 mFab.show(true);
                             }
                         }
-
                     }
 
                     @Override
@@ -270,7 +268,6 @@ public class MyGroupsFragment extends Fragment implements SwipeRefreshLayout.OnR
         });
         mSwipeRefreshLayout.setOnRefreshListener(this);
         mFab.setOnClickListener(this);
-        mApiCall = new ApiCall(getActivity(), this);
     }
 
 }

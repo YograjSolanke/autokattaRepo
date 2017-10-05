@@ -67,14 +67,16 @@ public class PostStatus extends AppCompatActivity implements RequestNotifier {
             getSupportActionBar().setHomeButtonEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
-
         /*
             Get Profile Data
              */
         getProfileData();
-
-
         mStatusText = (EditText) findViewById(R.id.status);
+        if (getIntent() != null) {
+            String url = getIntent().getStringExtra(Intent.EXTRA_TEXT);
+            mStatusText.setText(url);
+            Log.i("URL", "->" + url);
+        }
         mProfile_image = (ImageView) findViewById(R.id.profile_image);
         mProfile_name = (TextView) findViewById(R.id.profile_name);
         mPictureVideo = (TextView) findViewById(R.id.picture_video);

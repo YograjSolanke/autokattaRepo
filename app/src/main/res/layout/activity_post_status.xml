@@ -80,6 +80,7 @@
             android:drawableStart="@drawable/ic_post_pictures"
             android:text="Picture/Video"
             android:drawablePadding="@dimen/card_margin"
+            android:gravity="center|start"
             android:textColor="#2C3343"
             android:textSize="16sp"
             android:textStyle="bold" />
@@ -89,6 +90,28 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_below="@+id/picture_video"
+            android:layout_marginTop="5dp"
+            android:background="#cccccc" />
+
+        <TextView
+            android:id="@+id/youtube_link"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/view2"
+            android:layout_marginTop="5dp"
+            android:drawableStart="@android:drawable/ic_menu_upload_you_tube"
+            android:text="Youtube Link"
+            android:drawablePadding="@dimen/card_margin"
+            android:textColor="#2C3343"
+            android:gravity="center|start"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <View
+            android:id="@+id/view3"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/youtube_link"
             android:layout_marginTop="5dp"
             android:background="#cccccc" />
 

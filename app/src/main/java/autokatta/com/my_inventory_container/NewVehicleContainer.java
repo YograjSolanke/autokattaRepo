@@ -24,7 +24,7 @@ public class NewVehicleContainer extends AppCompatActivity {
                 try {
                     getSupportFragmentManager().beginTransaction()
                             .replace(R.id.myNewVehicleFrame, new NewVehicle(), "myNewVehicleFrame")
-                            //.addToBackStack("MyUploadedVehicleTabs")
+                            .addToBackStack("myNewVehicleFrame")
                             .commit();
                 } catch (Exception e) {
                     e.printStackTrace();
