@@ -341,11 +341,12 @@ public class RegistrationContinue extends AppCompatActivity implements RequestNo
                         RegId = mProfileAboutResponse.getSuccess().get(0).getRegId();
                         interest = mProfileAboutResponse.getSuccess().get(0).getInterests();
                         about = mProfileAboutResponse.getSuccess().get(0).getAbout();
+                        lastWord=mProfileAboutResponse.getSuccess().get(0).getProfilePic();
 
                         mAboutUs.setText(about);
                         mWebSite.setText(websitestr);
                         Glide.with(getApplicationContext())
-                                .load(getString(R.string.base_image_url) + mProfileAboutResponse.getSuccess().get(0).getProfilePic())
+                                .load(getString(R.string.base_image_url) +lastWord )
                                 .bitmapTransform(new CropCircleTransformation(this)) //To display image in Circular form.
                                 .diskCacheStrategy(DiskCacheStrategy.ALL) //For caching diff versions of image.
                                 .override(110, 100)

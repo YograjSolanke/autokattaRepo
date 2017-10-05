@@ -128,7 +128,7 @@ public class GroupContactFragment extends Fragment implements RequestNotifier {
                 }
 
                 //Existing Group
-                else if (call.equalsIgnoreCase("existGroup")) {
+               /* else if (call.equalsIgnoreCase("existGroup")) {
                     //For Group Which Doesn't Have Any Contact No In WebService
                     if (cntlist.size() == 0) {
                         flag = true;
@@ -141,7 +141,7 @@ public class GroupContactFragment extends Fragment implements RequestNotifier {
                             String[] parts = allcontacts.split(",");
                             for (int j = 0; j < parts.length; j++) {
                                 if (parts[j].contains(no)) {
-                                    CustomToast.customToast(getActivity(), "Sorry..No Is Already added in Group");
+                                    CustomToast.customToast(getActivity(), "Sorry..Number Is Already added in Group");
                                     // showMessage(getActivity(),  "Sorry..No Is Already added in Group");
 
                                     flag = false;
@@ -163,7 +163,7 @@ public class GroupContactFragment extends Fragment implements RequestNotifier {
                                 String[] parts = allcontacts.split(",");
                                 for (int j = 0; j < parts.length; j++) {
                                     if (parts[j].contains(no)) {
-                                        CustomToast.customToast(getActivity(), "Sorry..No Is Already added in Group");
+                                        CustomToast.customToast(getActivity(), "Sorry..Number Is Already added in Group");
                                         // showMessage(getActivity(),  "Sorry..No Is Already added in Group");
 
                                         flag = false;
@@ -171,7 +171,7 @@ public class GroupContactFragment extends Fragment implements RequestNotifier {
                                 }
                             }
                         }
-                }
+                }*/
                 if (!flag) {
                     Intent intent = new Intent(getActivity(), GroupsActivity.class);
                     intent.putExtra("grouptype", "MyGroup");
@@ -202,7 +202,7 @@ public class GroupContactFragment extends Fragment implements RequestNotifier {
                     for (int i = 0; i < parts.length; i++) {
                         receiver_contact = parts[i];
                         if (!receiver_contact.equalsIgnoreCase(mContact)) {
-                         //   mApiCall.Like(mContact, receiver_contact, "3", 0, mGroup_id, 0, 0, 0, 0, 0);
+                          //  mApiCall.Like(mContact, receiver_contact, "3", 0, mGroup_id, 0, 0, 0, 0, 0);
                         }
                     }
 
@@ -280,7 +280,7 @@ public class GroupContactFragment extends Fragment implements RequestNotifier {
                 CntctListadapter.notifyDataSetChanged();
             } else {
                 if (isAdded())
-                    CustomToast.customToast(getActivity(), "no contacts found");
+                    CustomToast.customToast(getActivity(), "No Contacts Found For Add");
             }
         }
     }
