@@ -9,6 +9,7 @@ import android.widget.TimePicker;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Locale;
 
 /**
  * Created by ak-004 on 24/3/17.
@@ -54,7 +55,7 @@ public class SetMyDateAndTime implements DatePickerDialog.OnDateSetListener, Tim
         // this.editText.setText();
 
         //  String myFormat = "MMM dd, yyyy"; //In which you need put here
-        SimpleDateFormat sdformat = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat sdformat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
         myCalendar.set(Calendar.YEAR, year);
         myCalendar.set(Calendar.MONTH, monthOfYear);
         myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);

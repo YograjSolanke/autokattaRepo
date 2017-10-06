@@ -1,9 +1,7 @@
 package autokatta.com.firebase;
 
 import android.app.ActivityManager;
-import android.content.ComponentName;
 import android.content.Context;
-import android.os.Build;
 
 import java.util.List;
 
@@ -22,7 +20,7 @@ public class NotificationListener {
      * Method checks if the app is in background or not
      */
     public static boolean isAppIsInBackground(Context context) {
-        boolean isInBackground = true;
+       /* boolean isInBackground = true;
         ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT_WATCH) {
             List<ActivityManager.RunningAppProcessInfo> runningProcesses = am.getRunningAppProcesses();
@@ -43,6 +41,22 @@ public class NotificationListener {
             }
         }
 
-        return isInBackground;
+        return isInBackground;*/
+
+        ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningAppProcessInfo> runningProcesses = am.getRunningAppProcesses();
+        for (ActivityManager.RunningAppProcessInfo processInfo : runningProcesses) {
+            if (processInfo.importance == ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND) {
+                for (String activeProcess : processInfo.pkgList) {
+                    if (activeProcess.equals(context.getPackageName())) {
+                        //If your app is the process in foreground, then it's not in running in background
+                        return false;
+                    }
+                }
+            }
+        }
+
+
+        return true;
     }
 }
