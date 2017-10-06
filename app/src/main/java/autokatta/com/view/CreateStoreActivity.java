@@ -81,8 +81,7 @@ import retrofit2.Retrofit;
 public class CreateStoreActivity extends AppCompatActivity implements Multispinner.MultiSpinnerListener, View.OnClickListener, View.OnTouchListener, MultiSelectionSpinner.MultiSpinnerListener,
         RequestNotifier, MultiSelectionSpinnerForBrands.MultiSpinnerListener {
 
-
-    TextView textstore, storetypetext;
+    TextView storetypetext;
     Button btnaddprofile, create, btnaddcover;
     CheckBox rbtstoreproduct, rbtstoreservice, rbtstorevehicle;
     String myContact, callFrom, lastWord = "", coverlastWord = "",
@@ -99,7 +98,7 @@ public class CreateStoreActivity extends AppCompatActivity implements Multispinn
     private ApiCall mApiCall;
     final List<String> brandTags = new ArrayList<>();
     private GenericFunctions genericFunctions;
-    private ImageUpload mImageUpload;
+    ImageUpload mImageUpload;
 
     LinearLayout mLinearautobrand;
     RelativeLayout mRelativeBrand, mParent;
@@ -264,30 +263,21 @@ public class CreateStoreActivity extends AppCompatActivity implements Multispinn
         multiautobrand.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
-
                 check();
-//
             }
         });
-
-
     }
-
 
     public boolean check() {
         String text = multiautobrand.getText().toString();
-        System.out.println("texttttttttttttttttt" + text.substring(0, text.length() - 1));
         if (text.endsWith(","))
             text = text.substring(0, text.length() - 1);
         String[] parts = text.split(",");
-        System.out.println("size of partssssssssssssssssss" + parts.length);
         if (parts.length > 5) {
             multiautobrand.setError("You can add maximum five tags only");
             return true;
         } else
             return false;
-
     }
 
 
@@ -304,7 +294,7 @@ public class CreateStoreActivity extends AppCompatActivity implements Multispinn
                 Boolean flag = false;
                 Boolean flagtime = false;
                 String address = "", name = "", contact = "", location = "", website = "", storeDescription = "", workdays = "",
-                        stropen = "", strclose = "", category = "", strBrandSpinner = "";
+                        stropen = "", strclose = "", category = "";
                 List<String> resultList;
 
                 address = storeaddress.getText().toString();
@@ -321,8 +311,6 @@ public class CreateStoreActivity extends AppCompatActivity implements Multispinn
 //                strBrandSpinner = brandSpinner.getSelectedItem().toString().replaceAll(" ", "");
 
                 ArrayList<String> tempbrands = new ArrayList<String>();
-
-
                 String textbrand = multiautobrand.getText().toString();
 
                 if (textbrand.endsWith(","))
@@ -331,7 +319,6 @@ public class CreateStoreActivity extends AppCompatActivity implements Multispinn
                 textbrand = textbrand.trim();
 
                 if (!textbrand.equals("")) {
-
                     String[] bparts = textbrand.split(",");
                     for (int o = 0; o < bparts.length; o++) {
                         brandtagpart = bparts[o].trim();
@@ -344,24 +331,16 @@ public class CreateStoreActivity extends AppCompatActivity implements Multispinn
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
-
-
                         }
-
                     }
                 }
-
 
                 for (int n = 0; n < tempbrands.size(); n++) {
                     if (finalbrandtags.equals(""))
                         finalbrandtags = tempbrands.get(n);
                     else
                         finalbrandtags = finalbrandtags + "," + tempbrands.get(n);
-
                 }
-
-
-                System.out.println("finalBrandTags=" + finalbrandtags);
 
                 if (rbtstoreproduct.isChecked() && !rbtstoreservice.isChecked() && !rbtstorevehicle.isChecked()) {
                     storetype = "product";
@@ -378,8 +357,6 @@ public class CreateStoreActivity extends AppCompatActivity implements Multispinn
                 } else if (rbtstoreproduct.isChecked() && rbtstoreservice.isChecked() && rbtstorevehicle.isChecked()) {
                     storetype = "product,service,vehicle";
                 }
-
-                System.out.println("Storetype=" + storetype);
 
                 category = category.trim();
                 if (category.endsWith(","))
@@ -492,7 +469,6 @@ public class CreateStoreActivity extends AppCompatActivity implements Multispinn
                 }
                 break;
         }
-
     }
 
 
@@ -700,9 +676,7 @@ public class CreateStoreActivity extends AppCompatActivity implements Multispinn
                 }
             });
         } else {
-
             CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
-
         }
     }
 
@@ -727,7 +701,6 @@ public class CreateStoreActivity extends AppCompatActivity implements Multispinn
     public boolean onTouch(View v, MotionEvent event) {
         int action = event.getAction();
         switch (v.getId()) {
-
             case R.id.multiautotext:
                 getCategory();
                 break;
