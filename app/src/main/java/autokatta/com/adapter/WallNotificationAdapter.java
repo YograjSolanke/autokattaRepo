@@ -84,16 +84,17 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
     private boolean isLoading;
     private int visibleThreshold = 5;
     private OnLoadMoreListener mOnLoadMoreListener;
-    private String mLoginContact = "", shareKey = "";
+    private String mLoginContact, shareKey = "";
     private ApiCall mApiCall;
     private int mAuctionId, profile_likecountint, profile_followcountint, product_likecountint, service_likecountint, store_likecountint,
             store_followcountint, store_sharecountint, vehicle_likecountint, vehicle_followcountint, vehicle_sharecountint;
     private ConnectionDetector mConnectionDetector;
 
-    public WallNotificationAdapter(Activity mActivity1, List<WallResponse.Success.WallNotification> notificationList) {
+    public WallNotificationAdapter(Activity mActivity1, List<WallResponse.Success.WallNotification> notificationList, String mLoginContact) {
         this.mActivity = mActivity1;
         this.notificationList = notificationList;
         this.mApiCall = new ApiCall(mActivity, this);
+        this.mLoginContact = mLoginContact;
         mConnectionDetector = new ConnectionDetector(mActivity);
     }
 
@@ -658,8 +659,6 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         Log.i("Wall", "Adapter-LayoutNo ->" + holder.getItemViewType());
-        mLoginContact = mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).
-                getString("loginContact", "");
         // SpannableStringBuilder sb = new SpannableStringBuilder();
         switch (holder.getItemViewType()) {
             case 1:

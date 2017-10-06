@@ -826,7 +826,8 @@
         <activity
             android:name=".view.SearchNewVehicleActivity"
             android:label="@string/title_activity_search_new_vehicle"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".payment_gateway.PayDemo"></activity>
     </application>
 
 </manifest>

@@ -165,6 +165,15 @@ public class MyGroupsFragment extends Fragment implements SwipeRefreshLayout.OnR
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.fabCreateGroup:
+                /*(1) Create groups after the last step of adding members
+                     Allow adding members but after adding check for payment and ask for payment.
+                     And (2) On click of a group name in groups list check if payment made.
+                     750/- Per month
+                     2100/- per quarter
+                     3900 /- half yearly
+                     6600/- annual
+                     */
+
                 CreateGroupFragment createGroupFragment = new CreateGroupFragment();
                 Bundle b = new Bundle();
                 b.putString("classname", "MyGroupFragment");

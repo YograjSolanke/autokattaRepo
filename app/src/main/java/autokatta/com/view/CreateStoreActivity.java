@@ -117,6 +117,8 @@ public class CreateStoreActivity extends AppCompatActivity implements Multispinn
         setContentView(R.layout.activity_create_store);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        /*Create store in registration and also MY store (create store)*/
         if (getSupportActionBar() != null) {
             getSupportActionBar().setHomeButtonEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);

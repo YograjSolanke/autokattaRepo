@@ -378,7 +378,7 @@ public class WallNotificationFragment extends Fragment implements SwipeRefreshLa
 
                         notificationList.add(notification);
                     }
-                    adapter = new WallNotificationAdapter(getActivity(), notificationList);
+                    adapter = new WallNotificationAdapter(getActivity(), notificationList, mLoginContact);
                     mRecyclerView.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
                 } else {
