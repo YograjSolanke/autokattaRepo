@@ -50,7 +50,6 @@ public class SaleParticipantsAdapter extends RecyclerView.Adapter<SaleParticipan
     @Override
     public SaleParticipantsAdapter.SaleAdapter onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_loan_participant, parent, false);
-
         return new SaleAdapter(v);
     }
 
@@ -64,7 +63,7 @@ public class SaleParticipantsAdapter extends RecyclerView.Adapter<SaleParticipan
         holder.Profession.setText(obj.getProfession());
 
 
-        if (!obj.getProfilePhoto().equals(null) || !obj.getProfilePhoto().equals("") || !obj.getProfilePhoto().equals("null")) {
+        if (obj.getProfilePhoto() != null || !obj.getProfilePhoto().equals("") || !obj.getProfilePhoto().equals("null")) {
 
             Glide.with(mActivity)
                     .load(mActivity.getString(R.string.base_image_url) + obj.getProfilePhoto())
@@ -176,7 +175,7 @@ public class SaleParticipantsAdapter extends RecyclerView.Adapter<SaleParticipan
         try {
             mActivity.startActivity(in);
         } catch (android.content.ActivityNotFoundException ex) {
-            System.out.println("No Activity Found For Call in Car Details Fragment\n");
+            ex.printStackTrace();
         }
     }
 

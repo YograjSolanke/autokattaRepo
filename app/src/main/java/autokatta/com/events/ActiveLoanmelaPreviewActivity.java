@@ -24,6 +24,7 @@ import com.github.clans.fab.FloatingActionMenu;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 
 import autokatta.com.R;
 import autokatta.com.adapter.TabAdapterName;
@@ -47,6 +48,7 @@ public class ActiveLoanmelaPreviewActivity extends AppCompatActivity implements 
     private int strloanid = 0;
     TextView txtTimer;
     CountDownTimer cdt;
+    Toolbar toolbar;
     private HashMap<TextView, CountDownTimer> counters = new HashMap<TextView, CountDownTimer>();
     LoanMelaAnalyticsFragment loanMelaAnalyticsFragment = new LoanMelaAnalyticsFragment();
     LoanMelaParticipantsFragment loanMelaParticipantsFragment = new LoanMelaParticipantsFragment();
@@ -58,7 +60,7 @@ public class ActiveLoanmelaPreviewActivity extends AppCompatActivity implements 
         setContentView(R.layout.activity_active_loanmela_preview);
         mViewPager = (ViewPager) findViewById(R.id.preview_myactive_mela_viewpager);
         mTabLayout = (TabLayout) findViewById(R.id.preview_myactive_mela_tabs);
-        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         if (getSupportActionBar() != null) {
@@ -116,7 +118,7 @@ public class ActiveLoanmelaPreviewActivity extends AppCompatActivity implements 
                     cdt.cancel();
                     cdt = null;
                 }
-                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
                 try {
                     Date futureDate = dateFormat.parse(strEndDateTime);
                     Date currentDate = dateFormat.parse(strEndDateTime);
@@ -148,7 +150,9 @@ public class ActiveLoanmelaPreviewActivity extends AppCompatActivity implements 
                             if (millisUntilFinished > DateUtils.SECOND_IN_MILLIS) {
                                 seconds = (int) (millisUntilFinished / DateUtils.SECOND_IN_MILLIS);
                             }
-                            sDate += " " + String.format("%02d", hours) + ":" + String.format("%02d", minutes) + ":" + String.format("%02d", seconds);
+                            sDate += " " + String.format(Locale.getDefault(), "%02d", hours) + ":" +
+                                    String.format(Locale.getDefault(), "%02d", minutes) + ":" +
+                                    String.format(Locale.getDefault(), "%02d", seconds);
                             tv.setText(sDate.trim());
                         }
 

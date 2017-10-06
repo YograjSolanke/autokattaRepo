@@ -24,6 +24,7 @@ import com.github.clans.fab.FloatingActionMenu;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 
 import autokatta.com.R;
 import autokatta.com.adapter.TabAdapterName;
@@ -47,10 +48,8 @@ public class ActiveExchangeMelaPreviewActivity extends AppCompatActivity impleme
     CountDownTimer cdt;
     private HashMap<TextView, CountDownTimer> counters = new HashMap<TextView, CountDownTimer>();
 
-
     ExchangeMelaParticipantsFragment exchangeMelaParticipantsFragment = new ExchangeMelaParticipantsFragment();
     ExchangeMelaAnalyticsFragment exchangeMelaAnalyticsFragment = new ExchangeMelaAnalyticsFragment();
-
     ViewPager mViewPager;
     TabLayout mTabLayout;
 
@@ -119,7 +118,7 @@ public class ActiveExchangeMelaPreviewActivity extends AppCompatActivity impleme
                     cdt.cancel();
                     cdt = null;
                 }
-                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
                 try {
                     Date futureDate = dateFormat.parse(strEndDateTime);
                     Date currentDate = dateFormat.parse(strEndDateTime);
@@ -151,7 +150,9 @@ public class ActiveExchangeMelaPreviewActivity extends AppCompatActivity impleme
                             if (millisUntilFinished > DateUtils.SECOND_IN_MILLIS) {
                                 seconds = (int) (millisUntilFinished / DateUtils.SECOND_IN_MILLIS);
                             }
-                            sDate += " " + String.format("%02d", hours) + ":" + String.format("%02d", minutes) + ":" + String.format("%02d", seconds);
+                            sDate += " " + String.format(Locale.getDefault(), "%02d", hours) + ":" +
+                                    String.format(Locale.getDefault(), "%02d", minutes) + ":" +
+                                    String.format(Locale.getDefault(), "%02d", seconds);
                             tv.setText(sDate.trim());
                         }
 

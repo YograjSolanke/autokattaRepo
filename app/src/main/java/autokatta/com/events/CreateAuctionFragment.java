@@ -63,8 +63,7 @@ import static android.content.Context.MODE_PRIVATE;
  * Created by ak-004 on 23/3/17.
  */
 
-public class CreateAuctionFragment extends Fragment
-        implements View.OnClickListener, RequestNotifier, View.OnTouchListener, RadioGroup.OnCheckedChangeListener, Multispinner.MultiSpinnerListener {
+public class CreateAuctionFragment extends Fragment implements View.OnClickListener, RequestNotifier, View.OnTouchListener, RadioGroup.OnCheckedChangeListener, Multispinner.MultiSpinnerListener {
 
     EditText auctioname, startdate, starttime, enddate, endtime;
     AutoCompleteTextView address;
@@ -85,7 +84,6 @@ public class CreateAuctionFragment extends Fragment
     String Radiobtn_click = "";
     GenericFunctions validObj;
     String ids = "", cluases = "", name, stdate, sttime, eddate, edtime, type, location, auctionCategory, stockLocation;
-    String newSttime, newEdtime;
     private ConnectionDetector mConnectionDetector;
     HashMap<String, Integer> mStatelist1 = new HashMap<>();
     List<String> stateLst = new ArrayList<>();
@@ -132,21 +130,7 @@ public class CreateAuctionFragment extends Fragment
 
         address.setAdapter(new GooglePlacesAdapter(getActivity(), R.layout.simple));
         apiCall.getSpecialClauses("getClause", "");
-
-        //apiCall.getAllStates();
         apiCall.getStates();
-
-
-//        //date comparision
-//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-//        Date now = new Date();
-//        String dateString = sdf.format(now);
-//        SimpleDateFormat tm = new SimpleDateFormat("HH:mm");
-//        String time = tm.format(Calendar.getInstance().getTime());
-//
-//        System.out.println("current date=" + dateString);
-//        System.out.println("current time=" + time);
-
 
         return createAuctionView;
     }
@@ -292,8 +276,8 @@ public class CreateAuctionFragment extends Fragment
                         CustomToast.customToast(getActivity(), "Please select states ");
                         stockLocationSpinner.requestFocus();
 
-                    } else if (auctionCategory.equalsIgnoreCase("-Select Auction Category-")) {
-                        CustomToast.customToast(getActivity(), "Please select category of auction");
+                    } else if (auctionCategory.equalsIgnoreCase("-Select Stock Type-")) {
+                        CustomToast.customToast(getActivity(), "Please select stock type for auction");
                         auctionCategorySpinner.requestFocus();
                     } else {
 
@@ -347,7 +331,6 @@ public class CreateAuctionFragment extends Fragment
                             canclebtn.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-                                    //                                    Radiobtn_click=((RadioButton)dialog.findViewById(radiogroup.getCheckedRadioButtonId())).getText().toString();
                                     dialog.dismiss();
                                 }
                             });
@@ -355,12 +338,8 @@ public class CreateAuctionFragment extends Fragment
                         }
                     }
                 }
-
                 break;
-
-
         }
-
     }
 
     @Override
@@ -371,17 +350,13 @@ public class CreateAuctionFragment extends Fragment
             case (R.id.auctionstartdate):
 
                 if (action == MotionEvent.ACTION_DOWN) {
-                    //whichclick = "enddate";
                     startdate.setInputType(InputType.TYPE_NULL);
                     startdate.setError(null);
                     new SetMyDateAndTime("date", startdate, getActivity());
                 }
                 break;
             case (R.id.auctionstarttime):
-
-
                 if (action == MotionEvent.ACTION_DOWN) {
-                    //whichclick = "enddate";
                     starttime.setInputType(InputType.TYPE_NULL);
                     starttime.setError(null);
                     new SetMyDateAndTime("time", starttime, getActivity());
@@ -390,7 +365,6 @@ public class CreateAuctionFragment extends Fragment
             case (R.id.auctionenddate):
 
                 if (action == MotionEvent.ACTION_DOWN) {
-                    //whichclick = "enddate";
                     enddate.setInputType(InputType.TYPE_NULL);
                     enddate.setError(null);
                     new SetMyDateAndTime("date", enddate, getActivity());
@@ -400,7 +374,6 @@ public class CreateAuctionFragment extends Fragment
             case (R.id.auctionendtime):
 
                 if (action == MotionEvent.ACTION_DOWN) {
-                    //whichclick = "enddate";
                     endtime.setInputType(InputType.TYPE_NULL);
                     endtime.setError(null);
                     new SetMyDateAndTime("time", endtime, getActivity());
@@ -420,7 +393,6 @@ public class CreateAuctionFragment extends Fragment
 
         if (response != null) {
             if (response.isSuccessful()) {
-
                 /*
                         AuctionAllVehicleData to get category
                  */
@@ -517,9 +489,7 @@ public class CreateAuctionFragment extends Fragment
 
                     }
 
-                }
-
-                else if (response.body() instanceof GetStatesResponse) {
+                } else if (response.body() instanceof GetStatesResponse) {
                     stateLst.clear();
                     GetStatesResponse mGetState = (GetStatesResponse) response.body();
                     if (!mGetState.getSuccess().isEmpty()) {
@@ -540,7 +510,7 @@ public class CreateAuctionFragment extends Fragment
             }
         } else {
             if (isAdded())
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+                CustomToast.customToast(getActivity(), getString(R.string.no_response));
         }
 
 
@@ -574,14 +544,11 @@ public class CreateAuctionFragment extends Fragment
         } else {
             address.setVisibility(View.GONE);
         }
-
     }
 
     @Override
     public void onItemsSelected(boolean[] selected) {
-
     }
-
 
     private class SpecialCluasesAdapter extends BaseAdapter {
 
@@ -589,9 +556,7 @@ public class CreateAuctionFragment extends Fragment
         FragmentActivity fragmentActivity;
         List<String> ids, clauses;
         boolean positionArray[];
-
         private LayoutInflater inflater = null;
-
         List<Integer> checked_ids;
         List<String> checked_clauses;
 

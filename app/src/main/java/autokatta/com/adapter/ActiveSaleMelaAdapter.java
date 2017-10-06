@@ -40,9 +40,7 @@ public class ActiveSaleMelaAdapter extends RecyclerView.Adapter<ActiveSaleMelaAd
     FragmentActivity ctx;
     String allDetails;
 
-
     public ActiveSaleMelaAdapter(Activity activity, List<MyActiveSaleMelaResponse.Success> itemlist) {
-
         this.mActivity = activity;
         this.mMainlist = itemlist;
     }
@@ -57,7 +55,7 @@ public class ActiveSaleMelaAdapter extends RecyclerView.Adapter<ActiveSaleMelaAd
     }
 
     @Override
-    public void onBindViewHolder(ActiveSaleMelaAdapter.LoanHolder holder, final int position) {
+    public void onBindViewHolder(final ActiveSaleMelaAdapter.LoanHolder holder, int position) {
 
         holder.mtitle.setText("Sale Title:");
         holder.title.setText(mMainlist.get(position).getName());
@@ -87,17 +85,17 @@ public class ActiveSaleMelaAdapter extends RecyclerView.Adapter<ActiveSaleMelaAd
             @Override
             public void onClick(View view) {
                 Bundle b=new Bundle();
-                b.putString("title",mMainlist.get(position).getName());
-                b.putString("startdate",mMainlist.get(position).getStartDate());
-                b.putString("starttime",mMainlist.get(position).getStartTime());
-                b.putString("enddate",mMainlist.get(position).getEndDate());
-                b.putString("endtime",mMainlist.get(position).getEndTime());
-                b.putString("location",mMainlist.get(position).getLocation());
-                b.putString("enddatetime", mMainlist.get(position).getEndDateTime());
-                b.putString("details", mMainlist.get(position).getDetails());
-                b.putInt("saleid",mMainlist.get(position).getId());
+                b.putString("title", mMainlist.get(holder.getAdapterPosition()).getName());
+                b.putString("startdate", mMainlist.get(holder.getAdapterPosition()).getStartDate());
+                b.putString("starttime", mMainlist.get(holder.getAdapterPosition()).getStartTime());
+                b.putString("enddate", mMainlist.get(holder.getAdapterPosition()).getEndDate());
+                b.putString("endtime", mMainlist.get(holder.getAdapterPosition()).getEndTime());
+                b.putString("location", mMainlist.get(holder.getAdapterPosition()).getLocation());
+                b.putString("enddatetime", mMainlist.get(holder.getAdapterPosition()).getEndDateTime());
+                b.putString("details", mMainlist.get(holder.getAdapterPosition()).getDetails());
+                b.putInt("saleid", mMainlist.get(holder.getAdapterPosition()).getId());
 
-                Log.i("hhhhhhhjjj", mMainlist.get(position).getEndDateTime());
+                Log.i("hhhhhhhjjj", mMainlist.get(holder.getAdapterPosition()).getEndDateTime());
                 ActivityOptions options = ActivityOptions.makeCustomAnimation(mActivity, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
                 Intent i=new Intent(mActivity, ActiveSaleMelaPreviewActivity.class);
                 i.putExtras(b);
@@ -115,18 +113,18 @@ public class ActiveSaleMelaAdapter extends RecyclerView.Adapter<ActiveSaleMelaAd
             @Override
             public void onClick(View v) {
 
-                allDetails = mMainlist.get(position).getName() + "="
-                        + mMainlist.get(position).getStartDate() + "="
-                        + mMainlist.get(position).getEndDate() + "=" +
-                        mMainlist.get(position).getEndTime() + "=" +
-                        mMainlist.get(position).getLocation() + "=" +
+                allDetails = mMainlist.get(holder.getAdapterPosition()).getName() + "="
+                        + mMainlist.get(holder.getAdapterPosition()).getStartDate() + "="
+                        + mMainlist.get(holder.getAdapterPosition()).getEndDate() + "=" +
+                        mMainlist.get(holder.getAdapterPosition()).getEndTime() + "=" +
+                        mMainlist.get(holder.getAdapterPosition()).getLocation() + "=" +
                         "0" + "=" + "0" + "=" + "a";
 
 
                 mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
                         putString("Share_sharedata", allDetails).apply();
                 mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                        putInt("Share_sale_id", mMainlist.get(position).getId()).apply();
+                        putInt("Share_sale_id", mMainlist.get(holder.getAdapterPosition()).getId()).apply();
                 mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
                         putString("Share_keyword", "salemela").apply();
 
@@ -145,24 +143,18 @@ public class ActiveSaleMelaAdapter extends RecyclerView.Adapter<ActiveSaleMelaAd
             @Override
             public void onClick(View v) {
 
-                allDetails = mMainlist.get(position).getName() + "="
-                        + mMainlist.get(position).getStartDate() + "="
-                        + mMainlist.get(position).getEndDate() + "=" +
-                        mMainlist.get(position).getEndTime() + "=" +
-                        mMainlist.get(position).getLocation() + "=" +
+                allDetails = mMainlist.get(holder.getAdapterPosition()).getName() + "="
+                        + mMainlist.get(holder.getAdapterPosition()).getStartDate() + "="
+                        + mMainlist.get(holder.getAdapterPosition()).getEndDate() + "=" +
+                        mMainlist.get(holder.getAdapterPosition()).getEndTime() + "=" +
+                        mMainlist.get(holder.getAdapterPosition()).getLocation() + "=" +
                         "0" + "=" + "0" + "=" + "a";
 
 
                 mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
                         putString("Share_sharedata", allDetails).apply();
-//                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-//                        putString("Share_auction_id", auctionDetailsArrayList.get(position).getAuctionId()).apply();
                 mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
                         putString("Share_keyword", "loanmela").apply();
-
-                System.out.println("Share Image \n");
-
-                intent.setType("text/plain");
 
                 intent.putExtra(Intent.EXTRA_SUBJECT, "Please Find Below Attachments");
                 intent.putExtra(Intent.EXTRA_TEXT, allDetails);
@@ -184,7 +176,8 @@ public class ActiveSaleMelaAdapter extends RecyclerView.Adapter<ActiveSaleMelaAd
         ImageView image;
         Button mPreview,mShare;
         RelativeLayout relativeshare;
-        public LoanHolder(View itemView) {
+
+        LoanHolder(View itemView) {
             super(itemView);
 
             title = (TextView) itemView.findViewById(R.id.title);

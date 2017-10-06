@@ -35,7 +35,6 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class SaleMelaParticipantsFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, RequestNotifier {
 
-
     View mSaleParticipants;
     RecyclerView mRecyclerView;
     SwipeRefreshLayout mSwipeRefreshLayout;

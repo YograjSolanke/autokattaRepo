@@ -74,7 +74,7 @@ public class ActiveAuctionAdapter extends RecyclerView.Adapter<ActiveAuctionAdap
     }
 
     @Override
-    public void onBindViewHolder(final ActiveAuctionAdapter.AuctionHolder holder, final int position) {
+    public void onBindViewHolder(final ActiveAuctionAdapter.AuctionHolder holder, int position) {
 
         holder.action_title.setText(auctionDetailsArrayList.get(position).getActionTitle());
         holder.auction_vehicle.setText(auctionDetailsArrayList.get(position).getNoOfVehicle());
@@ -199,19 +199,19 @@ public class ActiveAuctionAdapter extends RecyclerView.Adapter<ActiveAuctionAdap
             @Override
             public void onClick(View v) {
                 Bundle b = new Bundle();
-                b.putInt("auctionid", auctionDetailsArrayList.get(position).getAuctionId());
-                b.putString("auctiontitle", auctionDetailsArrayList.get(position).getActionTitle());
-                b.putString("vehicle_count", auctionDetailsArrayList.get(position).getNoOfVehicle());
-                b.putString("auctionstartdate", auctionDetailsArrayList.get(position).getStartDate());
-                b.putString("auctionstarttime", auctionDetailsArrayList.get(position).getStartTime());
-                b.putString("auctionenddate", auctionDetailsArrayList.get(position).getEndDate());
-                b.putString("auctionendtime", auctionDetailsArrayList.get(position).getEndTime());
-                b.putString("specialclauses", auctionDetailsArrayList.get(position).getSpecialClauses());
-                b.putString("enddatetime", auctionDetailsArrayList.get(position).getEndDateTime().replace("T"," "));
-                b.putString("startdatetime", auctionDetailsArrayList.get(position).getStartDateTime().replace("T"," "));
-                b.putInt("participant_count", auctionDetailsArrayList.get(position).getGoingcount());
-                b.putString("category", auctionDetailsArrayList.get(position).getAuctioncategory());
-                b.putString("location", auctionDetailsArrayList.get(position).getStockLocation());
+                b.putInt("auctionid", auctionDetailsArrayList.get(holder.getAdapterPosition()).getAuctionId());
+                b.putString("auctiontitle", auctionDetailsArrayList.get(holder.getAdapterPosition()).getActionTitle());
+                b.putString("vehicle_count", auctionDetailsArrayList.get(holder.getAdapterPosition()).getNoOfVehicle());
+                b.putString("auctionstartdate", auctionDetailsArrayList.get(holder.getAdapterPosition()).getStartDate());
+                b.putString("auctionstarttime", auctionDetailsArrayList.get(holder.getAdapterPosition()).getStartTime());
+                b.putString("auctionenddate", auctionDetailsArrayList.get(holder.getAdapterPosition()).getEndDate());
+                b.putString("auctionendtime", auctionDetailsArrayList.get(holder.getAdapterPosition()).getEndTime());
+                b.putString("specialclauses", auctionDetailsArrayList.get(holder.getAdapterPosition()).getSpecialClauses());
+                b.putString("enddatetime", auctionDetailsArrayList.get(holder.getAdapterPosition()).getEndDateTime().replace("T", " "));
+                b.putString("startdatetime", auctionDetailsArrayList.get(holder.getAdapterPosition()).getStartDateTime().replace("T", " "));
+                b.putInt("participant_count", auctionDetailsArrayList.get(holder.getAdapterPosition()).getGoingcount());
+                b.putString("category", auctionDetailsArrayList.get(holder.getAdapterPosition()).getAuctioncategory());
+                b.putString("location", auctionDetailsArrayList.get(holder.getAdapterPosition()).getStockLocation());
 
                 //activity.finish();
                 Intent intent = new Intent(activity, PreviewMyActiveAuctionActivity.class);
@@ -236,11 +236,11 @@ public class ActiveAuctionAdapter extends RecyclerView.Adapter<ActiveAuctionAdap
                     public boolean onMenuItemClick(MenuItem item) {
                         switch (item.getItemId()) {
                             case R.id.autokatta:
-                                allDetails = auctionDetailsArrayList.get(position).getActionTitle() + "="
-                                        + auctionDetailsArrayList.get(position).getNoOfVehicle() + "="
-                                        + auctionDetailsArrayList.get(position).getEndDate() + "=" +
-                                        auctionDetailsArrayList.get(position).getEndTime() + "=" +
-                                        auctionDetailsArrayList.get(position).getAuctionType() + "=" +
+                                allDetails = auctionDetailsArrayList.get(holder.getAdapterPosition()).getActionTitle() + "="
+                                        + auctionDetailsArrayList.get(holder.getAdapterPosition()).getNoOfVehicle() + "="
+                                        + auctionDetailsArrayList.get(holder.getAdapterPosition()).getEndDate() + "=" +
+                                        auctionDetailsArrayList.get(holder.getAdapterPosition()).getEndTime() + "=" +
+                                        auctionDetailsArrayList.get(holder.getAdapterPosition()).getAuctionType() + "=" +
                                         "0" + "=" + "0" + "=" + "a";
                                 String mAuction = "auction";
 
@@ -248,7 +248,7 @@ public class ActiveAuctionAdapter extends RecyclerView.Adapter<ActiveAuctionAdap
                                 activity.getSharedPreferences(activity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
                                         putString("Share_sharedata", allDetails).apply();
                                 activity.getSharedPreferences(activity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                                        putInt("Share_auction_id", auctionDetailsArrayList.get(position).getAuctionId()).apply();
+                                        putInt("Share_auction_id", auctionDetailsArrayList.get(holder.getAdapterPosition()).getAuctionId()).apply();
                                 activity.getSharedPreferences(activity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
                                         putString("Share_keyword", mAuction).apply();
 
@@ -264,11 +264,11 @@ public class ActiveAuctionAdapter extends RecyclerView.Adapter<ActiveAuctionAdap
                                 Intent intent = new Intent(Intent.ACTION_SEND);
 
 
-                                allDetails = "Auction Title: " + auctionDetailsArrayList.get(position).getActionTitle() + "\n" +
-                                        "No Of Vehicle: " + auctionDetailsArrayList.get(position).getNoOfVehicle() + "\n" +
-                                        "Auction End Date: " + auctionDetailsArrayList.get(position).getEndDate() + "\n" +
-                                        "Auction End Time: " + auctionDetailsArrayList.get(position).getEndTime() + "\n" +
-                                        "Auction Type: " + auctionDetailsArrayList.get(position).getAuctionType() + "\n";
+                                allDetails = "Auction Title: " + auctionDetailsArrayList.get(holder.getAdapterPosition()).getActionTitle() + "\n" +
+                                        "No Of Vehicle: " + auctionDetailsArrayList.get(holder.getAdapterPosition()).getNoOfVehicle() + "\n" +
+                                        "Auction End Date: " + auctionDetailsArrayList.get(holder.getAdapterPosition()).getEndDate() + "\n" +
+                                        "Auction End Time: " + auctionDetailsArrayList.get(holder.getAdapterPosition()).getEndTime() + "\n" +
+                                        "Auction Type: " + auctionDetailsArrayList.get(holder.getAdapterPosition()).getAuctionType() + "\n";
 
                                 Log.e("TAG", "img : " + imagename);
 

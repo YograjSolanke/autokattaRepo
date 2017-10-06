@@ -33,7 +33,7 @@ import jp.wasabeef.glide.transformations.CropCircleTransformation;
  * Created by ak-005 on 27/4/17.
  */
 
-public class ActiveServiceMelaAdapter extends RecyclerView.Adapter<ActiveServiceMelaAdapter.LoanHolder>  {
+public class ActiveServiceMelaAdapter extends RecyclerView.Adapter<ActiveServiceMelaAdapter.LoanHolder> {
 
     List<MyActiveServiceMelaResponse.Success> mMainlist = new ArrayList<>();
     Activity mActivity;
@@ -41,7 +41,6 @@ public class ActiveServiceMelaAdapter extends RecyclerView.Adapter<ActiveService
     String allDetails;
 
     public ActiveServiceMelaAdapter(Activity activity, List<MyActiveServiceMelaResponse.Success> itemlist) {
-
         this.mActivity = activity;
         this.mMainlist = itemlist;
     }
@@ -56,7 +55,7 @@ public class ActiveServiceMelaAdapter extends RecyclerView.Adapter<ActiveService
     }
 
     @Override
-    public void onBindViewHolder(ActiveServiceMelaAdapter.LoanHolder holder, final int position) {
+    public void onBindViewHolder(final ActiveServiceMelaAdapter.LoanHolder holder, int position) {
 
         holder.mtitle.setText("Service Title:");
         holder.title.setText(mMainlist.get(position).getName());
@@ -85,20 +84,20 @@ public class ActiveServiceMelaAdapter extends RecyclerView.Adapter<ActiveService
         holder.mPreview.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                Bundle b=new Bundle();
-                b.putString("title",mMainlist.get(position).getName());
-                b.putString("startdate",mMainlist.get(position).getStartDate());
-                b.putString("starttime",mMainlist.get(position).getStartTime());
-                b.putString("enddate",mMainlist.get(position).getEndDate());
-                b.putString("endtime",mMainlist.get(position).getEndTime());
-                b.putString("location",mMainlist.get(position).getLocation());
-                b.putString("enddatetime", mMainlist.get(position).getEndDateTime());
-                b.putString("details", mMainlist.get(position).getDetails());
-                b.putInt("serviceid",mMainlist.get(position).getId());
+                Bundle b = new Bundle();
+                b.putString("title", mMainlist.get(holder.getAdapterPosition()).getName());
+                b.putString("startdate", mMainlist.get(holder.getAdapterPosition()).getStartDate());
+                b.putString("starttime", mMainlist.get(holder.getAdapterPosition()).getStartTime());
+                b.putString("enddate", mMainlist.get(holder.getAdapterPosition()).getEndDate());
+                b.putString("endtime", mMainlist.get(holder.getAdapterPosition()).getEndTime());
+                b.putString("location", mMainlist.get(holder.getAdapterPosition()).getLocation());
+                b.putString("enddatetime", mMainlist.get(holder.getAdapterPosition()).getEndDateTime());
+                b.putString("details", mMainlist.get(holder.getAdapterPosition()).getDetails());
+                b.putInt("serviceid", mMainlist.get(holder.getAdapterPosition()).getId());
 
-                Log.i("hhhhhhhjjj", mMainlist.get(position).getEndDateTime());
+                Log.i("hhhhhhhjjj", mMainlist.get(holder.getAdapterPosition()).getEndDateTime());
                 ActivityOptions options = ActivityOptions.makeCustomAnimation(mActivity, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
-                Intent i=new Intent(mActivity, ActiveServiceMelaPreviewActivity.class);
+                Intent i = new Intent(mActivity, ActiveServiceMelaPreviewActivity.class);
                 i.putExtras(b);
                 mActivity.startActivityForResult(i, 1, options.toBundle());
 
@@ -108,25 +107,20 @@ public class ActiveServiceMelaAdapter extends RecyclerView.Adapter<ActiveService
 
         //Share Within App
         holder.relativeshare.setOnClickListener(new View.OnClickListener() {
-
             Intent intent = new Intent(Intent.ACTION_SEND);
-            String imageFilePath;
 
             @Override
             public void onClick(View v) {
 
-                allDetails = mMainlist.get(position).getName() + "="
-                        + mMainlist.get(position).getStartDate() + "="
-                        + mMainlist.get(position).getEndDate() + "=" +
-                        mMainlist.get(position).getEndTime() + "=" +
-                        mMainlist.get(position).getLocation() + "=" +
+                allDetails = mMainlist.get(holder.getAdapterPosition()).getName() + "="
+                        + mMainlist.get(holder.getAdapterPosition()).getStartDate() + "="
+                        + mMainlist.get(holder.getAdapterPosition()).getEndDate() + "=" +
+                        mMainlist.get(holder.getAdapterPosition()).getEndTime() + "=" +
+                        mMainlist.get(holder.getAdapterPosition()).getLocation() + "=" +
                         "0" + "=" + "0" + "=" + "a";
-
 
                 mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
                         putString("Share_sharedata", allDetails).apply();
-               /* mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                       putInt("Share_service_id", mMainlist.get(position).getId()).apply();*/
                 mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
                         putString("Share_keyword", "servicemela").apply();
 
@@ -140,34 +134,28 @@ public class ActiveServiceMelaAdapter extends RecyclerView.Adapter<ActiveService
         holder.mShare.setOnClickListener(new View.OnClickListener() {
 
             Intent intent = new Intent(Intent.ACTION_SEND);
-            String imageFilePath;
 
             @Override
             public void onClick(View v) {
 
-                allDetails = mMainlist.get(position).getName() + "="
-                        + mMainlist.get(position).getStartDate() + "="
-                        + mMainlist.get(position).getEndDate() + "=" +
-                        mMainlist.get(position).getEndTime() + "=" +
-                        mMainlist.get(position).getLocation() + "=" +
+                allDetails = mMainlist.get(holder.getAdapterPosition()).getName() + "="
+                        + mMainlist.get(holder.getAdapterPosition()).getStartDate() + "="
+                        + mMainlist.get(holder.getAdapterPosition()).getEndDate() + "=" +
+                        mMainlist.get(holder.getAdapterPosition()).getEndTime() + "=" +
+                        mMainlist.get(holder.getAdapterPosition()).getLocation() + "=" +
                         "0" + "=" + "0" + "=" + "a";
 
 
                 mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
                         putString("Share_sharedata", allDetails).apply();
-//                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-//                        putString("Share_auction_id", auctionDetailsArrayList.get(position).getAuctionId()).apply();
                 mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
                         putString("Share_keyword", "loanmela").apply();
 
-                System.out.println("Share Image \n");
 
                 intent.setType("text/plain");
-
                 intent.putExtra(Intent.EXTRA_SUBJECT, "Please Find Below Attachments");
                 intent.putExtra(Intent.EXTRA_TEXT, allDetails);
                 mActivity.startActivity(intent);
-
             }
         });
 
@@ -180,11 +168,12 @@ public class ActiveServiceMelaAdapter extends RecyclerView.Adapter<ActiveService
 
     static class LoanHolder extends RecyclerView.ViewHolder {
 
-        TextView title, enddate, endtime, startdate, starttime, location, address, details,mtitle;
+        TextView title, enddate, endtime, startdate, starttime, location, address, details, mtitle;
         ImageView image;
-        Button mPreview,mShare;
+        Button mPreview, mShare;
         RelativeLayout relativeshare;
-        public LoanHolder(View itemView) {
+
+        LoanHolder(View itemView) {
             super(itemView);
 
             title = (TextView) itemView.findViewById(R.id.title);
@@ -196,9 +185,9 @@ public class ActiveServiceMelaAdapter extends RecyclerView.Adapter<ActiveService
             endtime = (TextView) itemView.findViewById(R.id.editText);
             image = (ImageView) itemView.findViewById(R.id.loanmelaimg);
             details = (TextView) itemView.findViewById(R.id.typeofauction2);
-            mPreview= (Button) itemView.findViewById(R.id.button);
-            mShare= (Button) itemView.findViewById(R.id.share);
-            mtitle= (TextView) itemView.findViewById(R.id.title2);
+            mPreview = (Button) itemView.findViewById(R.id.button);
+            mShare = (Button) itemView.findViewById(R.id.share);
+            mtitle = (TextView) itemView.findViewById(R.id.title2);
             relativeshare = (RelativeLayout) itemView.findViewById(R.id.relativeshare);
 
         }

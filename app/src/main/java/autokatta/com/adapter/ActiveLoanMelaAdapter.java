@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,15 +33,11 @@ import jp.wasabeef.glide.transformations.CropCircleTransformation;
 public class ActiveLoanMelaAdapter extends RecyclerView.Adapter<ActiveLoanMelaAdapter.LoanHolder> {
     List<MyActiveLoanMelaResponse.Success> mMainlist = new ArrayList<>();
     Activity mActivity;
-    FragmentActivity ctx;
     String allDetails;
 
-
     public ActiveLoanMelaAdapter(Activity activity, List<MyActiveLoanMelaResponse.Success> itemlist) {
-
         this.mActivity = activity;
         this.mMainlist = itemlist;
-
     }
 
     @Override
@@ -55,7 +50,7 @@ public class ActiveLoanMelaAdapter extends RecyclerView.Adapter<ActiveLoanMelaAd
     }
 
     @Override
-    public void onBindViewHolder(ActiveLoanMelaAdapter.LoanHolder holder, final int position) {
+    public void onBindViewHolder(final ActiveLoanMelaAdapter.LoanHolder holder, int position) {
 
         holder.title.setText(mMainlist.get(position).getName());
         holder.startdate.setText(mMainlist.get(position).getStartDate());
@@ -68,7 +63,6 @@ public class ActiveLoanMelaAdapter extends RecyclerView.Adapter<ActiveLoanMelaAd
         if (mMainlist.get(position).getImage().equals("") || mMainlist.get(position).getImage().equals("null")) {
             holder.image.setImageResource(R.mipmap.loan_mela);
         } else {
-            //mItemList.get(position).getImage() = mItemList.get(position).getImage().replaceAll(" ", "%20");
             String dppath = mActivity.getString(R.string.base_image_url) + mMainlist.get(position).getImage().trim();
             Glide.with(mActivity)
                     .load(dppath)
@@ -83,15 +77,15 @@ public class ActiveLoanMelaAdapter extends RecyclerView.Adapter<ActiveLoanMelaAd
             @Override
             public void onClick(View view) {
                 Bundle b = new Bundle();
-                b.putString("title", mMainlist.get(position).getName());
-                b.putString("startdate", mMainlist.get(position).getStartDate().replace("T00:00:00", ""));
-                b.putString("starttime", mMainlist.get(position).getStartTime());
-                b.putString("enddate", mMainlist.get(position).getEndDate().replace("T00:00:00", ""));
-                b.putString("endtime", mMainlist.get(position).getEndTime());
-                b.putString("location", mMainlist.get(position).getLocation());
-                b.putString("enddatetime", mMainlist.get(position).getEndDateTime());
-                b.putString("details", mMainlist.get(position).getDetails());
-                b.putInt("loanid", mMainlist.get(position).getId());
+                b.putString("title", mMainlist.get(holder.getAdapterPosition()).getName());
+                b.putString("startdate", mMainlist.get(holder.getAdapterPosition()).getStartDate().replace("T00:00:00", ""));
+                b.putString("starttime", mMainlist.get(holder.getAdapterPosition()).getStartTime());
+                b.putString("enddate", mMainlist.get(holder.getAdapterPosition()).getEndDate().replace("T00:00:00", ""));
+                b.putString("endtime", mMainlist.get(holder.getAdapterPosition()).getEndTime());
+                b.putString("location", mMainlist.get(holder.getAdapterPosition()).getLocation());
+                b.putString("enddatetime", mMainlist.get(holder.getAdapterPosition()).getEndDateTime());
+                b.putString("details", mMainlist.get(holder.getAdapterPosition()).getDetails());
+                b.putInt("loanid", mMainlist.get(holder.getAdapterPosition()).getId());
                 //mActivity.finish();
                 Intent i = new Intent(mActivity, ActiveLoanmelaPreviewActivity.class);
                 i.putExtras(b);
@@ -109,18 +103,16 @@ public class ActiveLoanMelaAdapter extends RecyclerView.Adapter<ActiveLoanMelaAd
             @Override
             public void onClick(View v) {
 
-                allDetails = mMainlist.get(position).getName() + "="
-                        + mMainlist.get(position).getStartDate() + "="
-                        + mMainlist.get(position).getEndDate() + "=" +
-                        mMainlist.get(position).getEndTime() + "=" +
-                        mMainlist.get(position).getLocation() + "=" +
+                allDetails = mMainlist.get(holder.getAdapterPosition()).getName() + "="
+                        + mMainlist.get(holder.getAdapterPosition()).getStartDate() + "="
+                        + mMainlist.get(holder.getAdapterPosition()).getEndDate() + "=" +
+                        mMainlist.get(holder.getAdapterPosition()).getEndTime() + "=" +
+                        mMainlist.get(holder.getAdapterPosition()).getLocation() + "=" +
                         "0" + "=" + "0" + "=" + "a";
 
 
                 mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
                         putString("Share_sharedata", allDetails).apply();
-                //   mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                //       putString("Share_auction_id", mMainlist.get(position).getAuctionId()).apply();
                 mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
                         putString("Share_keyword", "loanmela").apply();
 
@@ -134,34 +126,27 @@ public class ActiveLoanMelaAdapter extends RecyclerView.Adapter<ActiveLoanMelaAd
         holder.mShare.setOnClickListener(new View.OnClickListener() {
 
             Intent intent = new Intent(Intent.ACTION_SEND);
-            String imageFilePath;
 
             @Override
             public void onClick(View v) {
 
-                allDetails = mMainlist.get(position).getName() + "="
-                        + mMainlist.get(position).getStartDate() + "="
-                        + mMainlist.get(position).getEndDate() + "=" +
-                        mMainlist.get(position).getEndTime() + "=" +
-                        mMainlist.get(position).getLocation() + "=" +
+                allDetails = mMainlist.get(holder.getAdapterPosition()).getName() + "="
+                        + mMainlist.get(holder.getAdapterPosition()).getStartDate() + "="
+                        + mMainlist.get(holder.getAdapterPosition()).getEndDate() + "=" +
+                        mMainlist.get(holder.getAdapterPosition()).getEndTime() + "=" +
+                        mMainlist.get(holder.getAdapterPosition()).getLocation() + "=" +
                         "0" + "=" + "0" + "=" + "a";
 
 
                 mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
                         putString("Share_sharedata", allDetails).apply();
-//                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-//                        putString("Share_auction_id", auctionDetailsArrayList.get(position).getAuctionId()).apply();
                 mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
                         putString("Share_keyword", "loanmela").apply();
 
-                System.out.println("Share Image \n");
-
                 intent.setType("text/plain");
-
                 intent.putExtra(Intent.EXTRA_SUBJECT, "Please Find Below Attachments");
                 intent.putExtra(Intent.EXTRA_TEXT, allDetails);
                 mActivity.startActivity(intent);
-
             }
         });
 
@@ -179,7 +164,7 @@ public class ActiveLoanMelaAdapter extends RecyclerView.Adapter<ActiveLoanMelaAd
         Button mPreview, mShare;
         RelativeLayout relativeshare;
 
-        public LoanHolder(View itemView) {
+        LoanHolder(View itemView) {
             super(itemView);
 
             title = (TextView) itemView.findViewById(R.id.title);
@@ -194,7 +179,6 @@ public class ActiveLoanMelaAdapter extends RecyclerView.Adapter<ActiveLoanMelaAd
             mPreview = (Button) itemView.findViewById(R.id.button);
             mShare = (Button) itemView.findViewById(R.id.share);
             relativeshare = (RelativeLayout) itemView.findViewById(R.id.relativeshare);
-
         }
     }
 }

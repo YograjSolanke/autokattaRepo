@@ -64,7 +64,7 @@ public class ServiceParticipantsAdapter extends RecyclerView.Adapter<ServicePart
         holder.Profession.setText(obj.getProfession());
 
 
-        if (!obj.getProfilePhoto().equals(null) || !obj.getProfilePhoto().equals("") || !obj.getProfilePhoto().equals("null")) {
+        if (obj.getProfilePhoto() != null || !obj.getProfilePhoto().equals("") || !obj.getProfilePhoto().equals("null")) {
 
             Glide.with(mActivity)
                     .load(mActivity.getString(R.string.base_image_url) + obj.getProfilePhoto())
@@ -176,7 +176,7 @@ public class ServiceParticipantsAdapter extends RecyclerView.Adapter<ServicePart
         try {
             mActivity.startActivity(in);
         } catch (android.content.ActivityNotFoundException ex) {
-            System.out.println("No Activity Found For Call in Car Details Fragment\n");
+            ex.printStackTrace();
         }
     }
 
@@ -215,7 +215,6 @@ public class ServiceParticipantsAdapter extends RecyclerView.Adapter<ServicePart
                     CustomToast.customToast(mActivity, "Added To Blacklist");
                 } else {
                     CustomToast.customToast(mActivity, "Removed from blacklist");
-
                 }
             }
         }
