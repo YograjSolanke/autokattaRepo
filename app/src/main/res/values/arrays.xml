@@ -209,6 +209,11 @@
         <item>Under Working</item>
     </string-array>
 
+    <string-array name="uploadvehicleInventory">
+        <item>-Select Inventory-</item>
+        <item>New Vehicle</item>
+        <item>Used Vehicle</item>
+    </string-array>
 
     <!--User Inventory
     new vehicle, used vehicle, product, services-->

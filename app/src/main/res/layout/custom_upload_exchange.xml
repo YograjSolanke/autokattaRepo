@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/popup_window"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_gravity="bottom|center"
+              android:background="@android:color/white"
+              android:orientation="vertical"
+              android:padding="10dp">
+
+    <ImageView
+        android:id="@+id/close"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:contentDescription="@string/app_name"
+        android:src="@android:drawable/ic_menu_close_clear_cancel"/>
+
+
+    <EditText
+        android:id="@+id/cust_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Customer Name"
+        android:inputType="textPersonName"
+        android:labelFor="@+id/transfer_date"
+        android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+    <EditText
+        android:id="@+id/cust_contact"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:digits="1234567890"
+        android:hint="Customer contact"
+        android:maxLength="10"
+        android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+    <AutoCompleteTextView
+        android:id="@+id/cust_address"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Customer Address"
+        android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+    <EditText
+        android:id="@+id/cust_detailaddress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:digits="abcdefghijklmnopqrstuvwxyz0123456789,"
+        android:hint="Customer Detail Address"
+        android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+    <EditText
+        android:id="@+id/exchange_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:digits="abcdefghijklmnopqrstuvwxyz"
+        android:hint="Description"
+        android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+    <RelativeLayout
+        android:id="@+id/rel_status"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="3dp"
+        android:layout_marginTop="@dimen/card_margin"
+        android:background="@drawable/spinner_background"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingEnd="@dimen/card_margin"
+        android:paddingStart="@dimen/card_margin">
+
+        <Spinner
+            android:id="@+id/status"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center"
+            android:layout_marginStart="5dp"
+            android:background="@android:color/transparent"
+            android:entries="@array/ManualEnquiryStatus"
+            android:gravity="center"
+            android:spinnerMode="dropdown"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center"
+            android:contentDescription="@string/app_name"
+            android:src="@mipmap/ic_down"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rel_inventory"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="3dp"
+        android:layout_marginTop="@dimen/card_margin"
+        android:background="@drawable/spinner_background"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingEnd="@dimen/card_margin"
+        android:paddingStart="@dimen/card_margin">
+
+        <Spinner
+            android:id="@+id/inventory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center"
+            android:layout_marginStart="5dp"
+            android:background="@android:color/transparent"
+            android:entries="@array/uploadvehicleInventory"
+            android:gravity="center"
+            android:spinnerMode="dropdown"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center"
+            android:contentDescription="@string/app_name"
+            android:src="@mipmap/ic_down"/>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/layout_top"
+        android:orientation="horizontal"
+        android:weightSum="3">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/followdate"
+            android:textStyle="bold"/>
+
+        <EditText
+            android:id="@+id/edtDate"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/card_title_height"
+            android:layout_marginEnd="@dimen/layout_top"
+            android:layout_weight="1"
+            android:background="@color/edit_background"
+            android:editable="false"
+            android:hint="@string/date"
+            android:inputType="datetime"
+            android:paddingEnd="@dimen/card_margin"
+            android:paddingStart="@dimen/card_margin"
+            android:textColor="#708090"/>
+
+        <EditText
+            android:id="@+id/edtTime"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/card_title_height"
+            android:layout_weight="1"
+            android:background="@color/edit_background"
+            android:editable="false"
+            android:hint="@string/time"
+            android:inputType="datetime"
+            android:paddingEnd="@dimen/card_margin"
+            android:paddingStart="@dimen/card_margin"
+            android:textColor="#708090"/>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="end">
+
+        <Button
+            android:id="@+id/submit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/button_default"
+            android:text="ADD"
+            android:textColor="@color/white"
+            android:textStyle="bold"/>
+    </LinearLayout>
+</LinearLayout>

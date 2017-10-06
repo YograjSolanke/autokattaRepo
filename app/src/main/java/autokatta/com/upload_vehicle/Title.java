@@ -1,26 +1,36 @@
 package autokatta.com.upload_vehicle;
 
+import android.app.ActivityOptions;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.text.InputType;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -34,7 +44,9 @@ import java.util.HashMap;
 import java.util.List;
 
 import autokatta.com.R;
+import autokatta.com.adapter.GooglePlacesAdapter;
 import autokatta.com.apicall.ApiCall;
+import autokatta.com.generic.SetMyDateAndTime;
 import autokatta.com.initial_fragment.CreateGroupFragment;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
@@ -47,9 +59,11 @@ import autokatta.com.response.GetVehicleSubTypeResponse;
 import autokatta.com.response.GetVehicleVersionResponse;
 import autokatta.com.response.MyStoreResponse;
 import autokatta.com.response.ProfileGroupResponse;
+import autokatta.com.view.ManualEnquiryVehicleList;
 import retrofit2.Response;
 
 import static android.content.Context.MODE_PRIVATE;
+import static autokatta.com.R.id.edtTime;
 
 /**
  * Created by ak-001 on 19/3/17.
@@ -60,9 +74,11 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
     ScrollView scrollView1;
     RadioButton radioButton1, radioButton2, storeradioyes, storeradiono, financeyes, financeno, exchangeyes, exchangeno;
     RadioButton mTouristPassing, mPrivatePassing;
+    RadioGroup mExchangeradio;
     EditText title;
     TextView mCategory;
     Button mSubmit;
+    Dialog mBottomSheetDialog;
     List<String> groupIdList = new ArrayList<>();
     List<String> groupTitleList = new ArrayList<>();
     List<String> storeIdList = new ArrayList<>();
@@ -127,7 +143,7 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(final LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable Bundle savedInstanceState) {
         mTitle = inflater.inflate(R.layout.fragment_upload_vehicle_title, container, false);
         getActivity().setTitle("Upload Vehicle");
         scrollView1 = (ScrollView) mTitle.findViewById(R.id.scrollView1);
@@ -142,6 +158,153 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
         financeno = (RadioButton) mTitle.findViewById(R.id.financeNo);
         exchangeyes = (RadioButton) mTitle.findViewById(R.id.exchangeYes);
         exchangeno = (RadioButton) mTitle.findViewById(R.id.exchangeNo);
+
+        mExchangeradio= (RadioGroup) mTitle.findViewById(R.id.exchangeradio);
+
+/*Exchange vehicle customer info*/
+        mExchangeradio.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
+                if (checkedId == R.id.exchangeYes) {
+
+                    View view = getActivity().getLayoutInflater().inflate(R.layout.custom_upload_exchange, null);
+
+                    final ImageView[] mClose = {(ImageView) view.findViewById(R.id.close)};
+                    Button mAdd = (Button) view.findViewById(R.id.submit);
+                    final EditText excustomername= (EditText) view.findViewById(R.id.custname);
+                    final EditText excustcontact= (EditText) view.findViewById(R.id.cust_contact);
+                    final EditText excustdescription= (EditText) view.findViewById(R.id.description);
+                    final EditText excustdetailaddress= (EditText) view.findViewById(R.id.cust_detailaddress);
+                    final EditText excustfollowupdate= (EditText) view.findViewById(R.id.edtDate);
+                    final EditText excustfollowuptime= (EditText) view.findViewById(edtTime);
+                    final Spinner excuststatus= (Spinner) view.findViewById(R.id.status);
+                    final Spinner inventory= (Spinner) view.findViewById(R.id.inventory);
+                    final AutoCompleteTextView excustautoAddress= (AutoCompleteTextView) view.findViewById(R.id.cust_address);
+                    final int strPos = excuststatus.getSelectedItemPosition();
+                    final int strPos1 = inventory.getSelectedItemPosition();
+                    excustautoAddress.setAdapter(new GooglePlacesAdapter(getActivity(), R.layout.registration_spinner));
+
+                    mBottomSheetDialog = new Dialog(getActivity(), R.style.MaterialDialogSheet);
+                    mBottomSheetDialog.setContentView(view);
+                    mBottomSheetDialog.setCancelable(true);
+                    mBottomSheetDialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                    mBottomSheetDialog.getWindow().setGravity(Gravity.BOTTOM);
+                    mBottomSheetDialog.show();
+
+                    mClose[0].setOnClickListener(new OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            mBottomSheetDialog.dismiss();
+                        }
+                    });
+
+                        excustfollowupdate.setOnTouchListener(new OnTouchListener() {
+                            @Override
+                            public boolean onTouch(View view, MotionEvent motionEvent) {
+
+                                if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+                                    excustfollowupdate.setInputType(InputType.TYPE_NULL);
+                                    excustfollowupdate.setError(null);
+                                    new SetMyDateAndTime("date", excustfollowupdate, getActivity());
+
+                                }
+                                return false;
+                            }
+                        });
+
+                    excustfollowuptime.setOnTouchListener(new OnTouchListener() {
+                        @Override
+                        public boolean onTouch(View view, MotionEvent motionEvent) {
+                            if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+                                excustfollowuptime.setInputType(InputType.TYPE_NULL);
+                                excustfollowuptime.setError(null);
+                                new SetMyDateAndTime("time", excustfollowuptime, getActivity());
+                            }
+                            return false;
+                        }
+                    });
+                    mAdd.setOnClickListener(new OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            String custInventoryType = "", custEnquiryStatus = "";
+                            Boolean flag = false;
+
+
+                            if (strPos != 0)
+                                custEnquiryStatus = excuststatus.getSelectedItem().toString();
+
+                            if (strPos1 != 0)
+                                custEnquiryStatus = inventory.getSelectedItem().toString();
+
+
+                            String discussion = excustdescription.getText().toString();
+                            String custName = excustomername.getText().toString();
+                            String custContact = excustcontact.getText().toString();
+                            String custFullAddress = excustdetailaddress.getText().toString();
+                            String custAddress = excustautoAddress.getText().toString();
+                            String nextFollowupDate = excustfollowupdate.getText().toString() + " " + excustfollowuptime.getText().toString();
+
+                            if (!excustautoAddress.getText().toString().isEmpty()) {
+                                List<String> resultList = GooglePlacesAdapter.getResultList();
+                                for (int i = 0; i < resultList.size(); i++) {
+                                    if (excustautoAddress.getText().toString().equalsIgnoreCase(resultList.get(i))) {
+                                        flag = true;
+                                        break;
+                                    } else {
+                                        flag = false;
+                                    }
+                                }
+                            }
+
+                            if (custName.equalsIgnoreCase("") || custName.startsWith(" ") && custName.startsWith(" ")) {
+                                excustomername.setError("Please provide customer name");
+                                excustomername.requestFocus();
+                            } else if (custContact.isEmpty() || custContact.startsWith(" ") && custContact.startsWith(" ")) {
+                                excustcontact.setError("Please provide customer contact");
+                                excustcontact.requestFocus();
+                            } else if (custAddress.equals("") || custAddress.startsWith(" ") && custAddress.startsWith(" ")) {
+                                excustautoAddress.setError("Enter Address");
+                                excustautoAddress.requestFocus();
+                            } else if (!flag) {
+                                excustautoAddress.setError("Please provide proper address");
+                                excustautoAddress.requestFocus();
+                            } else if (custFullAddress.equals("")) {
+                                excustdetailaddress.setError("Enter detailed address");
+                                excustdetailaddress.requestFocus();
+                            } else if (excuststatus.getSelectedItemPosition() == 0) {
+                                CustomToast.customToast(getActivity(), "Please provide status");
+                                excuststatus.requestFocus();
+                            } /*else if (discussion.equals("")) {
+                    edtDiscussion.setError("Enter discussion data");
+                    edtDiscussion.requestFocus();
+                }*/ else if (nextFollowupDate.equals("") || nextFollowupDate.startsWith(" ")) {
+                                excustfollowupdate.setError("Enter Date");
+                                excustfollowupdate.requestFocus();
+                            } else {
+                                Bundle bundle = new Bundle();
+                                bundle.putString("spinnerValue", inventory.getSelectedItem().toString());
+                                bundle.putString("custName", custName);
+                                bundle.putString("custContact", custContact);
+                                bundle.putString("custAddress", custAddress);
+                                bundle.putString("custFullAddress", custFullAddress);
+                                bundle.putString("custInventoryType", custInventoryType);
+                                bundle.putString("custEnquiryStatus", custEnquiryStatus);
+                                bundle.putString("discussion", discussion);
+                                bundle.putString("nextFollowupDate", nextFollowupDate);
+                                bundle.putString("callfrom", "uploadvehicle");
+
+                                ActivityOptions options = ActivityOptions.makeCustomAnimation(getActivity(), R.anim.ok_left_to_right, R.anim.ok_right_to_left);
+                                Intent intent = new Intent(getActivity(), ManualEnquiryVehicleList.class);
+                                intent.putExtras(bundle);
+                                startActivity(intent, options.toBundle());
+
+
+                            }
+                        }
+                    });
+                }
+            }
+        });
 
          /*
         mSub type...
@@ -1377,4 +1540,5 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
             fm.popBackStack();
         }
     }
+
 }

@@ -230,14 +230,14 @@ public class About extends Fragment implements RequestNotifier, MaterialIntroLis
                             mCategorylay.setVisibility(View.GONE);
                             mIndusttxt.setText(mProfileAboutResponse.getSuccess().get(0).getIndustry()+"-"+mProfileAboutResponse.getSuccess().get(0).getSubProfession());
                         }
-                        if (!mProfileAboutResponse.getSuccess().get(0).getSubProfession().startsWith("New vehicle")||!mProfileAboutResponse.getSuccess().get(0).getSubProfession().startsWith("Used vehicle"))
+                        if (subProfession.startsWith("New vehicle")||subProfession.startsWith("Used vehicle"))
                         {
-                            mBrandlay.setVisibility(View.GONE);
+                            mBrandlay.setVisibility(View.VISIBLE);
+                            mBrandtxt.setText(brand);
                         }
                         else
                         {
-                            mBrandlay.setVisibility(View.VISIBLE);
-                            mBrandtxt.setText(mProfileAboutResponse.getSuccess().get(0).getBrandName());
+                            mBrandlay.setVisibility(View.GONE);
                         }
                         if (interest.contains(",")) {
                             String[] commaSplit = interest.split(",");
@@ -304,15 +304,15 @@ public class About extends Fragment implements RequestNotifier, MaterialIntroLis
                     }
                 } else if (response.body() instanceof IndustryResponse) {
                     IndustryResponse moduleResponse = (IndustryResponse) response.body();
-                    final List<String> module = new ArrayList<>();
+                    final List<String> Industry = new ArrayList<>();
                     if (!moduleResponse.getSuccess().isEmpty()) {
-                        module.add("Select Industry");
+                        Industry.add("Select Industry");
                         for (IndustryResponse.Success message : moduleResponse.getSuccess()) {
-                            module.add(message.getIndusName());
+                            Industry.add(message.getIndusName());
                         }
-                        module.add("Other");
-                        INDUSTRY = new String[module.size()];
-                        INDUSTRY = (String[]) module.toArray(INDUSTRY);
+                        Industry.add("Other");
+                        INDUSTRY = new String[Industry.size()];
+                        INDUSTRY = (String[]) Industry.toArray(INDUSTRY);
                         ArrayAdapter<String> dataadapter = new ArrayAdapter<>(getActivity(), R.layout.registration_spinner, INDUSTRY);
                         industrySpinner.setAdapter(dataadapter);
                     } else
@@ -334,15 +334,15 @@ public class About extends Fragment implements RequestNotifier, MaterialIntroLis
                         CustomToast.customToast(getActivity(), getString(R.string.no_response));
                 } else if (response.body() instanceof CategoryResponse) {
                     CategoryResponse moduleResponse = (CategoryResponse) response.body();
-                    final List<String> module = new ArrayList<>();
+                    final List<String> Category = new ArrayList<>();
                     if (!moduleResponse.getSuccess().isEmpty()) {
-                        module.add("Select Category");
+                        Category.add("Select Category");
                         for (CategoryResponse.Success message : moduleResponse.getSuccess()) {
-                            module.add(message.getTitle());
+                            Category.add(message.getTitle());
                         }
-                        module.add("Other");
-                        MODULE = new String[module.size()];
-                        MODULE = (String[]) module.toArray(MODULE);
+                        Category.add("Other");
+                        MODULE = new String[Category.size()];
+                        MODULE = (String[]) Category.toArray(MODULE);
                         ArrayAdapter<String> dataadapter = new ArrayAdapter<>(getActivity(), R.layout.registration_spinner, MODULE);
                         moduleSpinner.setAdapter(dataadapter);
                     } else {
@@ -395,6 +395,11 @@ public class About extends Fragment implements RequestNotifier, MaterialIntroLis
                 industrySpinner.setVisibility(View.GONE);
                 moduleSpinner.setVisibility(View.GONE);
                 brandSpinner.setVisibility(View.GONE);
+
+                usertypeSpinner.setAdapter(null);
+                industrySpinner.setAdapter(null);
+                moduleSpinner.setAdapter(null);
+                brandSpinner.setAdapter(null);
 
             }
         }
@@ -756,7 +761,7 @@ public class About extends Fragment implements RequestNotifier, MaterialIntroLis
                                 otherCategory.setError("Enter Profession");
                             } else if (subProfession.equalsIgnoreCase("other") && !otherCategory.getText().toString().matches("[a-zA-Z ]*")) {
                                 otherCategory.setError("Enter  Valid Profession");
-                            } else if (subProfession.startsWith("New vehicle") ||subProfession.startsWith("Used vehicle")&& brand.equalsIgnoreCase("-Select Brand")) {
+                            } else if ((subProfession.startsWith("New vehicle") ||subProfession.startsWith("Used vehicle"))&& brand.equalsIgnoreCase("-Select Brand")) {
                                     Toast.makeText(getActivity(), "Please select Brand", Toast.LENGTH_LONG).show();
                             }else if (brand.equalsIgnoreCase("other") && otherbrand.getText().toString().equalsIgnoreCase("")) {
                                 otherbrand.setError("Enter Brand");

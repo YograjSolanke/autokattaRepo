@@ -33,7 +33,7 @@ public class ManualEnquiryVehicleList extends AppCompatActivity implements Reque
     String mInventoryType, addArray = "";
     ListView mListView;
     String custName, custContact, custAddress, custFullAddress, custInventoryType = "", custEnquiryStatus = "";
-    String discussion, nextFollowupDate;
+    String discussion, nextFollowupDate,callfrom;
     Button mSubmit;
     List<String> arrayList = new ArrayList<>();
 
@@ -66,6 +66,7 @@ public class ManualEnquiryVehicleList extends AppCompatActivity implements Reque
             custEnquiryStatus = getIntent().getExtras().getString("custEnquiryStatus");
             discussion = getIntent().getExtras().getString("discussion");
             nextFollowupDate = getIntent().getExtras().getString("nextFollowupDate");
+            callfrom = getIntent().getExtras().getString("callfrom","");
         }
     }
 
@@ -285,11 +286,15 @@ public class ManualEnquiryVehicleList extends AppCompatActivity implements Reque
                     }
                 }
 
-                if (!addArray.equals("")) {
-                    AddEnquiryData(custName, custContact, custAddress, custFullAddress, custInventoryType, custEnquiryStatus,
-                            discussion, nextFollowupDate, addArray);
-                } else {
-                    CustomToast.customToast(this, "Please Select Atleat One...");
+                if (!callfrom.equalsIgnoreCase("uploadvehicle")) {
+                    if (!addArray.equals("")) {
+                        AddEnquiryData(custName, custContact, custAddress, custFullAddress, custInventoryType, custEnquiryStatus,
+                                discussion, nextFollowupDate, addArray);
+                    } else {
+                        CustomToast.customToast(this, "Please Select Atleat One...");
+                    }
+                }else {
+                    CustomToast.customToast(getApplicationContext(),"Working");
                 }
                 break;
         }
