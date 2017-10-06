@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -34,12 +35,13 @@ public class AuctionAdminVehiclesAdapter extends BaseAdapter {
     private List<Boolean> positionArray;
     private List<AuctionAllVehicleData> checkedVehiclesData;
     String MyContact;
+    private EditText editNoOfVehicles;
 
-
-    public AuctionAdminVehiclesAdapter(Activity activity, List<AuctionAllVehicleData> adminVehiclesData) {
+    public AuctionAdminVehiclesAdapter(Activity activity, List<AuctionAllVehicleData> adminVehiclesData, EditText editNoOfVehicles) {
 
         this.activity = activity;
         this.adminVehiclesData = adminVehiclesData;
+        this.editNoOfVehicles = editNoOfVehicles;
 
         positionArray = new ArrayList<>(adminVehiclesData.size());
         checkedVehiclesData = new ArrayList<>(adminVehiclesData.size());
@@ -151,7 +153,7 @@ public class AuctionAdminVehiclesAdapter extends BaseAdapter {
                 if (isChecked) {
 
                     AddVehiclesForAuctionFragment.IntVehicleNo++;
-                    AddVehiclesForAuctionFragment.editNoOfVehicles.setText(String.valueOf(AddVehiclesForAuctionFragment.IntVehicleNo));
+                    editNoOfVehicles.setText(String.valueOf(AddVehiclesForAuctionFragment.IntVehicleNo));
 
                     positionArray.set(position, true);
 
@@ -160,7 +162,7 @@ public class AuctionAdminVehiclesAdapter extends BaseAdapter {
                 } else {
 
                     AddVehiclesForAuctionFragment.IntVehicleNo--;
-                    AddVehiclesForAuctionFragment.editNoOfVehicles.setText(String.valueOf(AddVehiclesForAuctionFragment.IntVehicleNo));
+                    editNoOfVehicles.setText(String.valueOf(AddVehiclesForAuctionFragment.IntVehicleNo));
 
                     positionArray.set(position, false);
                     checkedVehiclesData.remove(obj);
@@ -175,8 +177,6 @@ public class AuctionAdminVehiclesAdapter extends BaseAdapter {
                 return false;
             }
         });
-
-
         return convertView;
     }
 

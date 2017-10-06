@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -29,17 +30,17 @@ import autokatta.com.response.AuctionAllVehicleData;
 public class AuctionReauctionVehiclesAdapter extends BaseAdapter {
     Activity activity;
     private LayoutInflater mInflater;
-
     private List<AuctionAllVehicleData> UploadedVehiclesData = new ArrayList<>();
-
     private List<Boolean> positionArray;
     private List<AuctionAllVehicleData> checkedVehiclesData;
+    private EditText editNoOfVehicles;
 
     public AuctionReauctionVehiclesAdapter(Activity activity
-            , List<AuctionAllVehicleData> UploadedVehiclesData) {
+            , List<AuctionAllVehicleData> UploadedVehiclesData, EditText editNoOfVehicles) {
 
         this.activity = activity;
         this.UploadedVehiclesData = UploadedVehiclesData;
+        this.editNoOfVehicles = editNoOfVehicles;
 
         positionArray = new ArrayList<>(UploadedVehiclesData.size());
         checkedVehiclesData = new ArrayList<>(UploadedVehiclesData.size());
@@ -144,7 +145,7 @@ public class AuctionReauctionVehiclesAdapter extends BaseAdapter {
                 if (isChecked) {
 
                     AddVehiclesForAuctionFragment.IntVehicleNo++;
-                    AddVehiclesForAuctionFragment.editNoOfVehicles.setText(String.valueOf(AddVehiclesForAuctionFragment.IntVehicleNo));
+                    editNoOfVehicles.setText(String.valueOf(AddVehiclesForAuctionFragment.IntVehicleNo));
 
                     positionArray.set(position, true);
                     checkedVehiclesData.add(obj);
@@ -152,7 +153,7 @@ public class AuctionReauctionVehiclesAdapter extends BaseAdapter {
                 } else {
 
                     AddVehiclesForAuctionFragment.IntVehicleNo--;
-                    AddVehiclesForAuctionFragment.editNoOfVehicles.setText(String.valueOf(AddVehiclesForAuctionFragment.IntVehicleNo));
+                    editNoOfVehicles.setText(String.valueOf(AddVehiclesForAuctionFragment.IntVehicleNo));
 
                     positionArray.set(position, false);
                     checkedVehiclesData.remove(obj);

@@ -69,7 +69,7 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
 
     TextView mNoData;
     String contactnumber, str, UserId, sheet = "", ExcelsheetName = "";
-    public static EditText editNoOfVehicles;
+    private EditText editNoOfVehicles;
     public static int IntVehicleNo;
     EditText auctionTitle, startDate, startTime, endDate, endTime;
     Button btnspecial_clauses;
@@ -740,15 +740,15 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
                         }
                     }
 
-                    selfadapter = new AuctionBySelfVehiclesAdapter(getActivity(), uploadedVehicleData);
+                    selfadapter = new AuctionBySelfVehiclesAdapter(getActivity(), uploadedVehicleData, editNoOfVehicles);
                     byself_listview.setAdapter(selfadapter);
                     btnbyself.setText("By self(" + String.valueOf(uploadedVehicleData.size()) + ")");
 
-                    reauctionadapter = new AuctionReauctionVehiclesAdapter(getActivity(), reauctionAuctionAllVehicleData);
+                    reauctionadapter = new AuctionReauctionVehiclesAdapter(getActivity(), reauctionAuctionAllVehicleData, editNoOfVehicles);
                     byreauction_listview.setAdapter(reauctionadapter);
                     btnbyreauction.setText("Reauction(" + String.valueOf(reauctionAuctionAllVehicleData.size()) + ")");
 
-                    adminadapter = new AuctionAdminVehiclesAdapter(getActivity(), adminVehicleData);
+                    adminadapter = new AuctionAdminVehiclesAdapter(getActivity(), adminVehicleData, editNoOfVehicles);
                     byadmin_listview.setAdapter(adminadapter);
                     btnbyadmin.setText("By Admin(" + String.valueOf(adminVehicleData.size()) + ")");
 
@@ -828,7 +828,7 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
                             adminData.add(auctionAllVehicleData);
                         }
 
-                        adminadapter = new AuctionAdminVehiclesAdapter(getActivity(), adminData);
+                        adminadapter = new AuctionAdminVehiclesAdapter(getActivity(), adminData, editNoOfVehicles);
                         byadmin_listview.setAdapter(adminadapter);
                         btnbyadmin.setText("By admin(" + String.valueOf(adminData.size()) + ")");
                     } else {
@@ -877,7 +877,7 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
 
                             reaucionData.add(auctionAllVehicleData);
                         }
-                        reauctionadapter = new AuctionReauctionVehiclesAdapter(getActivity(), reaucionData);
+                        reauctionadapter = new AuctionReauctionVehiclesAdapter(getActivity(), reaucionData, editNoOfVehicles);
                         byreauction_listview.setAdapter(reauctionadapter);
                         btnbyreauction.setText("Reauction(" + String.valueOf(reaucionData.size()) + ")");
 
