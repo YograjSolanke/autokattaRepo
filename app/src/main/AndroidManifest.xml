@@ -737,7 +737,9 @@
             android:windowSoftInputMode="adjustResize">
             <intent-filter android:label="Share with Autokatta">
                 <action android:name="android.intent.action.SEND" />
+
                 <category android:name="android.intent.category.DEFAULT" />
+
                 <data android:mimeType="text/plain" />
             </intent-filter>
         </activity>
@@ -812,7 +814,7 @@
         <activity
             android:name=".view.StoreNewVehicleActiviy"
             android:label="@string/title_activity_store_new_vehicle_activiy"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".view.CreateStoreActivity"
             android:label="@string/title_activity_create_store"
@@ -820,6 +822,10 @@
         <activity
             android:name=".view.AddAdminsForStoreActivity"
             android:label="@string/title_activity_add_admins_for_store"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".view.SearchNewVehicleActivity"
+            android:label="@string/title_activity_search_new_vehicle"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

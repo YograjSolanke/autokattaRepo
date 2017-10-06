@@ -47,6 +47,7 @@ import autokatta.com.response.GetVehicleListResponse;
 import autokatta.com.response.GetVehicleSubTypeResponse;
 import autokatta.com.response.ProfileAboutResponse;
 import autokatta.com.response.getDealsResponse;
+import autokatta.com.view.CreateStoreActivity;
 import retrofit2.Response;
 
 public class RegistrationCompanyBased extends AppCompatActivity implements RequestNotifier, View.OnClickListener
@@ -866,10 +867,10 @@ public class RegistrationCompanyBased extends AppCompatActivity implements Reque
                                         ActivityOptions options = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.ok_left_to_right, R.anim.ok_right_to_left);
                                         Bundle b = new Bundle();
                                         b.putString("className", "interestbased");
-                                        Intent intent = new Intent(getApplicationContext(), CreateStoreContainer.class);
+                                        Intent intent = new Intent(getApplicationContext(), CreateStoreActivity.class);
                                         intent.putExtras(b);
                                         startActivity(intent, options.toBundle());
-                                        finish();
+                                        // finish();
                                     }
                                 })
                         .setNegativeButton("No",

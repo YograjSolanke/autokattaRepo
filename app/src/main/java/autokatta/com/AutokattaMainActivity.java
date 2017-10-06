@@ -79,6 +79,7 @@ import autokatta.com.view.MyStoreListActivity;
 import autokatta.com.view.MyUpcomingEventsTabActivity;
 import autokatta.com.view.OtherProfile;
 import autokatta.com.view.ProductViewActivity;
+import autokatta.com.view.SearchNewVehicleActivity;
 import autokatta.com.view.SearchStoreActivity;
 import autokatta.com.view.SearchVehicleActivity;
 import autokatta.com.view.ServiceViewActivity;
@@ -513,6 +514,8 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
                             Bundle bundle = new Bundle();
                             bundle.putString("className", "Main");
                             startActivity(new Intent(AutokattaMainActivity.this, SearchVehicleActivity.class).putExtras(bundle));
+                        } else if (menuItem.getItemId() == R.id.search_new_vehicle) {
+                            startActivity(new Intent(AutokattaMainActivity.this, SearchNewVehicleActivity.class));
                         } else if (menuItem.getItemId() == R.id.my_search) {
                             startActivity(new Intent(AutokattaMainActivity.this, MySearchActivity.class));
                         } else if (menuItem.getItemId() == R.id.my_vehicle) {

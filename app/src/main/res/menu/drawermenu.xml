@@ -55,6 +55,11 @@
                 android:id="@+id/search_vehicle"
                 android:icon="@mipmap/ic_drawer_vehicl_search"
                 android:title="@string/search_vehicle" />
+
+            <item
+                android:id="@+id/search_new_vehicle"
+                android:icon="@mipmap/new_vehicle"
+                android:title="@string/search_new_vehicle" />
             <item
                 android:id="@+id/my_search"
                 android:icon="@mipmap/ic_drawer_my_search"

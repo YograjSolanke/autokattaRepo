@@ -42,6 +42,7 @@
     <string name="new_vehicle">New Vehicle</string>
     <string name="upload_vehicle">Upload Vehicle</string>
     <string name="search_vehicle">Search Vehicle</string>
+    <string name="search_new_vehicle">Search New Vehicle</string>
     <string name="my_search">My Search</string>
     <string name="my_uploaded_vehicle">My Uploaded Vehicles</string>
     <string name="my_inventory_catalog">My Inventory/Catalog</string>
@@ -736,4 +737,5 @@
     <string name="title_activity_store_new_vehicle_activiy">StoreNewVehicleActiviy</string>
     <string name="title_activity_create_store">CreateStoreActivity</string>
     <string name="title_activity_add_admins_for_store">AddAdminsForStoreActivity</string>
+    <string name="title_activity_search_new_vehicle">SearchNewVehicleActivity</string>
 </resources>
