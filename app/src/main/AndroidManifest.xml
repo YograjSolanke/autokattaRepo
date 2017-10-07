@@ -827,7 +827,11 @@
             android:name=".view.SearchNewVehicleActivity"
             android:label="@string/title_activity_search_new_vehicle"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".payment_gateway.PayDemo"></activity>
+        <activity android:name=".payment_gateway.PayDemo" />
+        <activity
+            android:name=".view.SearchedNewVehicleResultActivity"
+            android:label="@string/title_activity_searched_new_vehicle_result"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

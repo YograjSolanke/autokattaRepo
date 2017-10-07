@@ -190,6 +190,7 @@
     <string name="puc">PUC</string>
     <string name="last_service_date">Last Service Date</string>
     <string name="next_service_date">Next Service Date</string>
+    <string name="search_result_new">New Vehicle Search Result</string>
 
     <!--Custom Card Group Vehicle -->
     <string name="no_register">Reg No :-</string>

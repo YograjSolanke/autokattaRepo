@@ -257,6 +257,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/rowModel"
+            android:id="@+id/btnSearch"
             android:layout_centerHorizontal="true"
             android:background="@drawable/buttonback"
             android:layout_marginTop="15dp"

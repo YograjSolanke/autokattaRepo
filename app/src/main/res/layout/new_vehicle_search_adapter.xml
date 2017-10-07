@@ -1,0 +1,632 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/card_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="@dimen/margin_small"
+        android:layout_marginTop="@dimen/margin_small"
+        card_view:cardCornerRadius="2dp"
+        card_view:contentPadding="5dp">
+
+        <RelativeLayout
+            android:id="@+id/r1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:padding="1dp">
+
+            <ImageView
+                android:id="@+id/vehiprofile"
+                android:layout_width="70dip"
+                android:layout_height="70dip"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/relativetitle"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="10dip"
+                android:contentDescription="@string/app_name" />
+
+            <RelativeLayout
+                android:id="@+id/relativeuploadedon"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/relativemodel"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:id="@+id/uploadedon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:gravity="center"
+                    android:text="@string/uploaded_on"
+                    android:textColor="#808080"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/dash6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@+id/uploadedon"
+                    android:gravity="center"
+                    android:text="-"
+                    android:textColor="#808080"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/edituploadedon"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@+id/dash6"
+                    android:textColor="#808080" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/yearrel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/relativeuploadedon"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp">
+
+                <TextView
+                    android:id="@+id/yeartxt"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/years"
+                    android:textColor="#808080"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/year"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@+id/yeartxt"
+                    android:hint="@string/not_mentioned"
+                    android:textColor="#808080" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/kmrel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/yearrel"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp">
+
+                <TextView
+                    android:id="@+id/kmtxt"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/kms_hrs"
+                    android:textColor="#808080"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/km_hrs"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@+id/kmtxt"
+                    android:hint="@string/not_mentioned"
+                    android:textColor="#808080" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/RTOrel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/kmrel"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp">
+
+                <TextView
+                    android:id="@+id/RTOtxt"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/rto_citys"
+                    android:textColor="#808080"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/RTO"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@+id/RTOtxt"
+                    android:hint="@string/not_mentioned"
+                    android:textColor="#808080" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/locationrel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/RTOrel"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp">
+
+                <TextView
+                    android:id="@+id/locationtxt"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/location"
+                    android:textColor="#808080"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/location"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@+id/locationtxt"
+                    android:hint="@string/not_mentioned"
+                    android:textColor="#808080" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/regrel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/locationrel"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp">
+
+                <TextView
+                    android:id="@+id/regtxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/registration_no"
+                    android:textColor="#808080"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/registrationNo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@+id/regtxt"
+                    android:hint="@string/not_mentioned"
+                    android:textColor="#808080" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/relativetitle"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:baselineAligned="false"
+                android:weightSum="1">
+
+                <RelativeLayout
+                    android:id="@+id/title_rel"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.9">
+
+                    <TextView
+                        android:id="@+id/title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="@string/title"
+                        android:textColor="@color/black"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/dash1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_toEndOf="@+id/title"
+                        android:gravity="center"
+                        android:text="-"
+                        android:textColor="@color/black"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/edittitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="45dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_toEndOf="@+id/dash1"
+                        android:textColor="@color/black"
+                        android:textStyle="bold" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/relativebroadcast"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.1">
+
+                    <ImageView
+                        android:id="@+id/more_items"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/ic_more_grey" />
+                </RelativeLayout>
+                <!--<RelativeLayout
+                    android:id="@+id/relativebroadcast"
+                    android:layout_width="50dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="5dp"
+                    android:visibility="visible">
+
+                    <ImageView
+                        android:id="@+id/broadcast"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginStart="10dp"
+                        android:contentDescription="@string/app_name"
+                        android:src="@mipmap/broadcast" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="15dp"
+                        android:layout_below="@+id/broadcast"
+                        android:text="@string/broadcast"
+                        android:textColor="@color/black"
+                        android:textSize="12sp" />
+                </RelativeLayout>-->
+            </LinearLayout>
+
+            <!--<Button
+                android:id="@+id/delete"
+                android:layout_width="40dp"
+                android:layout_height="20dp"
+                android:layout_alignParentEnd="true"
+                android:layout_below="@+id/Enquiry"
+                android:layout_marginEnd="5dp"
+                android:layout_marginTop="5dp"
+                android:background="@color/background"
+                android:text="@string/sold"
+                android:textColor="@color/white"
+                android:visibility="visible" />
+
+            <Button
+                android:id="@+id/Enquiry"
+                android:layout_width="60dp"
+                android:layout_height="20dp"
+                android:layout_alignParentEnd="true"
+                android:layout_below="@+id/quotation"
+                android:layout_marginEnd="5dp"
+                android:layout_marginTop="5dp"
+                android:background="@color/background"
+                android:text="@string/enquiry"
+                android:textColor="@color/white"
+                android:visibility="visible" />
+
+            <Button
+                android:id="@+id/quotation"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_alignParentEnd="true"
+                android:layout_below="@+id/transfer_stock"
+                android:layout_marginTop="5dp"
+                android:background="@color/background"
+                android:text="@string/send_quot"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                android:visibility="visible" />
+            &lt;!&ndash;android:text="@string/get_quot"&ndash;&gt;
+
+            <Button
+                android:id="@+id/view_quotation"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_alignParentEnd="true"
+                android:layout_below="@+id/relativetitle"
+                android:layout_marginTop="5dp"
+                android:background="@color/background"
+                android:text="@string/view_quot"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                android:visibility="visible" />
+
+            <Button
+                android:id="@+id/transfer_stock"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_alignParentEnd="true"
+                android:layout_below="@+id/view_quotation"
+                android:layout_marginTop="5dp"
+                android:background="@color/background"
+                android:text="@string/transfer_stock"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                android:visibility="visible" />-->
+
+            <RelativeLayout
+                android:id="@+id/relativeprice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/relativetitle"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_toEndOf="@+id/vehiprofile">
+
+                <TextView
+                    android:id="@+id/price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:gravity="center"
+                    android:text="@string/price"
+                    android:textColor="#808080"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/dash2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@+id/price"
+                    android:gravity="center"
+                    android:text="-"
+                    android:textColor="#808080"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/editprice"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@+id/dash2"
+                    android:hint="@string/not_mentioned"
+                    android:textColor="#808080" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/relativeleads"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/relativeprice"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_toEndOf="@+id/vehiprofile">
+
+                <TextView
+                    android:id="@+id/leads"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:gravity="center"
+                    android:text="@string/no_of_leads"
+                    android:textColor="#808080"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/dash"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@+id/leads"
+                    android:gravity="center"
+                    android:text="-"
+                    android:textColor="#808080"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/editleads"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@+id/dash"
+                    android:textColor="#0f0ff0" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/relativecategory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/relativeleads"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_toEndOf="@+id/vehiprofile">
+
+                <TextView
+                    android:id="@+id/category"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:gravity="center"
+                    android:text="@string/category"
+                    android:textColor="#808080"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/dash3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@+id/category"
+                    android:gravity="center"
+                    android:text="-"
+                    android:textColor="#808080"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/editcategory"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@+id/dash3"
+                    android:textColor="#808080" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/relativebrand"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/relativecategory"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_toEndOf="@+id/vehiprofile">
+
+                <TextView
+                    android:id="@+id/brand"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:gravity="center"
+                    android:text="@string/brand"
+                    android:textColor="#808080"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/dash4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@+id/brand"
+                    android:gravity="center"
+                    android:text="-"
+                    android:textColor="#808080"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/editbrand"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@+id/dash4"
+                    android:textColor="#808080" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/relativemodel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/relativebrand"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_toEndOf="@+id/vehiprofile">
+
+                <TextView
+                    android:id="@+id/model"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:gravity="center"
+                    android:text="@string/model"
+                    android:textColor="#808080"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/dash5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@+id/model"
+                    android:gravity="center"
+                    android:text="-"
+                    android:textColor="#808080"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/editmodel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@+id/dash5"
+                    android:textColor="#808080" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/linearbtns"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/regrel"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/upload_in"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/upload_group"
+                    style="?android:attr/button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:layout_marginEnd="@dimen/card_margin"
+                    android:background="@android:color/transparent"
+                    android:drawableEnd="@drawable/ic_upload"
+                    android:text="@string/groups" />
+
+                <Button
+                    android:id="@+id/upload_store"
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:background="@android:color/transparent"
+                    android:drawableEnd="@drawable/ic_upload"
+                    android:text="@string/store" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearbtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/linearbtns"
+                android:orientation="horizontal"
+                android:visibility="visible">
+
+                <Button
+                    android:id="@+id/vehibtndetails"
+                    style="?android:buttonBarButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dip"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/buttonback"
+                    android:text="@string/view_details"
+                    android:textColor="@color/white"
+                    android:visibility="visible" />
+
+                <Button
+                    android:id="@+id/btnnotify"
+                    style="?android:buttonBarButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dip"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/buttonback"
+                    android:text="@string/stop_notifications"
+                    android:textColor="@color/white"
+                    android:visibility="gone" />
+            </LinearLayout>
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+
+
+</RelativeLayout>

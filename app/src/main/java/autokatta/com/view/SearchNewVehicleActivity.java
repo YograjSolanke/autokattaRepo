@@ -1,5 +1,6 @@
 package autokatta.com.view;
 
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -38,7 +40,7 @@ public class SearchNewVehicleActivity extends AppCompatActivity implements Reque
 
     String action = "", subCategory, Sbrand, Smodel, Scategory;
     int position_brand_id, position_model_id;
-
+    Button btnSearch;
     int count = 0, owner1, Sid, vehicle_id, sub_category_id;
 
     @Override
@@ -51,6 +53,7 @@ public class SearchNewVehicleActivity extends AppCompatActivity implements Reque
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setVisibility(View.GONE);
+        btnSearch = (Button) findViewById(R.id.btnSearch);
 //        fab.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {
@@ -88,6 +91,19 @@ public class SearchNewVehicleActivity extends AppCompatActivity implements Reque
                 getVehicleCategory();
 
 
+            }
+        });
+
+
+        btnSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Bundle b = new Bundle();
+                b.putInt("store_id", 0);
+                ActivityOptions options = ActivityOptions.makeCustomAnimation(SearchNewVehicleActivity.this, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
+                Intent intentnewvehicle = new Intent(SearchNewVehicleActivity.this, SearchedNewVehicleResultActivity.class);
+                intentnewvehicle.putExtras(b);
+                startActivity(intentnewvehicle, options.toBundle());
             }
         });
     }
