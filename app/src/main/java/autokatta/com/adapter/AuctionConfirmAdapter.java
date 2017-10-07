@@ -24,7 +24,6 @@ import java.util.List;
 
 import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
-import autokatta.com.events.CreateAuctionConfirmFragment;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.AuctionAllVehicleData;
@@ -42,13 +41,18 @@ public class AuctionConfirmAdapter extends BaseAdapter implements RequestNotifie
     private List<Boolean> positionArray;
     private List<AuctionAllVehicleData> checkedVehicleData;
     private int auctionId = 0;
-    public static ArrayList<Boolean> isSave;
+    private List<Boolean> isSave;
+    private EditText editvehicle;
+    private Integer noOfVehicles;
 
-    public AuctionConfirmAdapter(Activity activity, int bundleAuctionId, List<AuctionAllVehicleData> finalVehiclesData) {
+    public AuctionConfirmAdapter(Activity activity, int bundleAuctionId, List<AuctionAllVehicleData> finalVehiclesData,
+                                 EditText editvehicle, Integer noOfVehicles) {
 
         this.activity = activity;
         this.finalVehiclesData = finalVehiclesData;
         auctionId = bundleAuctionId;
+        this.editvehicle = editvehicle;
+        this.noOfVehicles = noOfVehicles;
 
         positionArray = new ArrayList<>(finalVehiclesData.size());
         checkedVehicleData = new ArrayList<>(finalVehiclesData.size());
@@ -179,15 +183,15 @@ public class AuctionConfirmAdapter extends BaseAdapter implements RequestNotifie
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
 
-                    CreateAuctionConfirmFragment.noOfVehicles++;
-                    CreateAuctionConfirmFragment.editvehicle.setText(String.valueOf(CreateAuctionConfirmFragment.noOfVehicles));
+                    noOfVehicles++;
+                    editvehicle.setText(String.valueOf(noOfVehicles));
 
                     positionArray.set(position, true);
                     checkedVehicleData.add(obj);
 
                 } else {
-                    CreateAuctionConfirmFragment.noOfVehicles--;
-                    CreateAuctionConfirmFragment.editvehicle.setText(String.valueOf(CreateAuctionConfirmFragment.noOfVehicles));
+                    noOfVehicles--;
+                    editvehicle.setText(String.valueOf(noOfVehicles));
 
                     positionArray.set(position, false);
                     checkedVehicleData.remove(obj);
@@ -239,7 +243,6 @@ public class AuctionConfirmAdapter extends BaseAdapter implements RequestNotifie
         convertView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-//                v.getParent().requestDisallowInterceptTouchEvent(true);
                 return false;
             }
         });
@@ -290,6 +293,10 @@ public class AuctionConfirmAdapter extends BaseAdapter implements RequestNotifie
         } else
             CustomToast.customToast(activity, activity.getString(R.string.no_response));
 
+    }
+
+    public List<Boolean> returnIsSave() {
+        return isSave;
     }
 
 }

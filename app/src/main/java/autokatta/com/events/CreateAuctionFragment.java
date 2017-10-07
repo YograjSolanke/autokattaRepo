@@ -195,16 +195,12 @@ public class CreateAuctionFragment extends Fragment implements View.OnClickListe
                     location = address.getText().toString();
 
 
-                    //date comparision
-                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                    //current date
+                    SimpleDateFormat sdf = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
                     Date now = new Date();
                     String dateString = sdf.format(now);
                     SimpleDateFormat tm = new SimpleDateFormat("hh:mm a", Locale.getDefault());
                     String time = tm.format(Calendar.getInstance().getTime());
-
-                    System.out.println("current date=" + dateString);
-                    System.out.println("current time=" + time);
-
 
                     auctionCategory = auctionCategorySpinner.getSelectedItem().toString();
                     stockLocation = stockLocationSpinner.getSelectedItem().toString();
@@ -233,16 +229,15 @@ public class CreateAuctionFragment extends Fragment implements View.OnClickListe
                     if (name.equals("") || name.startsWith(" ") && name.endsWith(" ")) {
                         auctioname.setError("Enter auction title");
                         auctioname.requestFocus();
-                        //CustomToast.customToast(getActivity(), "Enter auction title");
-//                    auctioname.setFocusable(true);
+
                     } else if (stdate.equals("")) {
                         startdate.requestFocus();
                         startdate.setError("Enter start date");
-                        //CustomToast.customToast(getActivity(), "Enter start date");
+
                     } else if (sttime.equals("")) {
                         starttime.requestFocus();
                         starttime.setError("Enter start time");
-                        //CustomToast.customToast(getActivity(),"Enter start time");
+
                     } else if (stdate.equals(dateString) && !validObj.startTimeEndTimeValidation(time, sttime)) {
                         starttime.setError("time is invalid");
                         starttime.requestFocus();
@@ -250,17 +245,19 @@ public class CreateAuctionFragment extends Fragment implements View.OnClickListe
                     } else if (eddate.equals("")) {
                         enddate.requestFocus();
                         enddate.setError("Enter end date");
-                        //CustomToast.customToast(getActivity(), "Enter end date");
+
                     } else if (edtime.equals("")) {
                         endtime.requestFocus();
                         endtime.setError("Enter end time");
-                        //CustomToast.customToast(getActivity(), "Enter end time");
+
                     } else if (!validObj.startDateValidatioon(stdate)) {
                         startdate.setError("Enter valid Date");
                         startdate.requestFocus();
+
                     } else if (!validObj.startDateEndDateValidation(eddate, stdate)) {
                         enddate.requestFocus();
                         enddate.setError("Enter valid Date");
+
                     } else if (stdate.equals(eddate) && sttime.equals(edtime)) {
                         endtime.setError("End time should be greater than start time");
                         endtime.requestFocus();
@@ -272,13 +269,14 @@ public class CreateAuctionFragment extends Fragment implements View.OnClickListe
                     } else if (address.getVisibility() == View.VISIBLE && !flag) {
                         address.setError("Please Select Location From Dropdown Only");
                         address.requestFocus();
-                    } else if (stockLocation.equalsIgnoreCase("-Select State-") || stockLocation.equals("")) {
-                        CustomToast.customToast(getActivity(), "Please select states ");
-                        stockLocationSpinner.requestFocus();
 
                     } else if (auctionCategory.equalsIgnoreCase("-Select Stock Type-")) {
                         CustomToast.customToast(getActivity(), "Please select stock type for auction");
                         auctionCategorySpinner.requestFocus();
+                    } else if (stockLocation.equalsIgnoreCase("-Select State-") || stockLocation.equals("")) {
+                        CustomToast.customToast(getActivity(), "Please select states ");
+                        stockLocationSpinner.requestFocus();
+
                     } else {
 
                         checkedids = adapter.checkedids();

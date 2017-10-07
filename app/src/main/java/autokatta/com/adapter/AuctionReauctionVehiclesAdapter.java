@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import autokatta.com.R;
-import autokatta.com.events.AddVehiclesForAuctionFragment;
 import autokatta.com.response.AuctionAllVehicleData;
 
 /**
@@ -34,13 +33,15 @@ public class AuctionReauctionVehiclesAdapter extends BaseAdapter {
     private List<Boolean> positionArray;
     private List<AuctionAllVehicleData> checkedVehiclesData;
     private EditText editNoOfVehicles;
+    private int IntVehicleNo;
 
     public AuctionReauctionVehiclesAdapter(Activity activity
-            , List<AuctionAllVehicleData> UploadedVehiclesData, EditText editNoOfVehicles) {
+            , List<AuctionAllVehicleData> UploadedVehiclesData, EditText editNoOfVehicles, int IntVehicleNo) {
 
         this.activity = activity;
         this.UploadedVehiclesData = UploadedVehiclesData;
         this.editNoOfVehicles = editNoOfVehicles;
+        this.IntVehicleNo = IntVehicleNo;
 
         positionArray = new ArrayList<>(UploadedVehiclesData.size());
         checkedVehiclesData = new ArrayList<>(UploadedVehiclesData.size());
@@ -80,9 +81,7 @@ public class AuctionReauctionVehiclesAdapter extends BaseAdapter {
         TextView textreg;
         TextView textYOM;
         ImageView textimage;
-
         CheckBox checkBox;
-
     }
 
 
@@ -124,7 +123,7 @@ public class AuctionReauctionVehiclesAdapter extends BaseAdapter {
         holder.textreg.setText(obj.getVehicleRegistrationNo());
         holder.textYOM.setText(obj.getVehicleMfgYear());
 
-        if (obj.getVehicleSingleImage() != null || !obj.getVehicleSingleImage().isEmpty() || !obj.getVehicleSingleImage().equals("")) {
+        if (obj.getVehicleSingleImage() != null && (!obj.getVehicleSingleImage().isEmpty() || !obj.getVehicleSingleImage().equals(""))) {
 
             Glide.with(activity)
                     .load(activity.getString(R.string.base_image_url) + obj.getVehicleSingleImage().replaceAll(" ", "%20"))
@@ -144,16 +143,16 @@ public class AuctionReauctionVehiclesAdapter extends BaseAdapter {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
 
-                    AddVehiclesForAuctionFragment.IntVehicleNo++;
-                    editNoOfVehicles.setText(String.valueOf(AddVehiclesForAuctionFragment.IntVehicleNo));
+                    IntVehicleNo++;
+                    editNoOfVehicles.setText(String.valueOf(IntVehicleNo));
 
                     positionArray.set(position, true);
                     checkedVehiclesData.add(obj);
 
                 } else {
 
-                    AddVehiclesForAuctionFragment.IntVehicleNo--;
-                    editNoOfVehicles.setText(String.valueOf(AddVehiclesForAuctionFragment.IntVehicleNo));
+                    IntVehicleNo--;
+                    editNoOfVehicles.setText(String.valueOf(IntVehicleNo));
 
                     positionArray.set(position, false);
                     checkedVehiclesData.remove(obj);
@@ -165,11 +164,9 @@ public class AuctionReauctionVehiclesAdapter extends BaseAdapter {
         convertView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-
                 return false;
             }
         });
-
 
         return convertView;
     }

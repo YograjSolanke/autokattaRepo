@@ -43,7 +43,6 @@
                 android:layout_alignParentTop="true"
                 android:layout_centerVertical="true"
                 android:layout_toEndOf="@+id/checkbox"
-                android:background="@drawable/vehiimg"
                 android:contentDescription="@string/app_name" />
 
             <RelativeLayout

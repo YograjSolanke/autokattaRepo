@@ -70,7 +70,7 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
     TextView mNoData;
     String contactnumber, str, UserId, sheet = "", ExcelsheetName = "";
     private EditText editNoOfVehicles;
-    public static int IntVehicleNo;
+    private int IntVehicleNo;
     EditText auctionTitle, startDate, startTime, endDate, endTime;
     Button btnspecial_clauses;
     ImageView editpencil, donecheck;
@@ -137,7 +137,7 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
         startTime.setText(bundleAuctionStartTime);
         endDate.setText(bundleAuctionEndDate);
         endTime.setText(bundleAuctionEndTime);
-        //IntVehicleNo = 0;
+
         editNoOfVehicles.setText(String.valueOf(IntVehicleNo));
 
         editpencil = (ImageView) root.findViewById(R.id.editpencil);
@@ -271,8 +271,8 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
                 getIdsArray = getClauses.toArray(getIdsArray);
                 specialClausesIDUpdate = "";
                 specialClausesUpdate = "";
-                final List seletedItems = new ArrayList();
-                final List<String> selectedIds = new ArrayList<String>();
+                final List<Integer> seletedItems = new ArrayList<>();
+                final List<String> selectedIds = new ArrayList<>();
                 AlertDialog dialog = new AlertDialog.Builder(getActivity())
                         .setTitle("Select Special clauses")
                         .setCancelable(true)
@@ -400,7 +400,7 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
             case R.id.donecheck:
 
                 //date comparision
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                SimpleDateFormat sdf = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
                 Date now = new Date();
                 String dateString = sdf.format(now);
                 SimpleDateFormat tm = new SimpleDateFormat("hh:mm a", Locale.getDefault());
@@ -418,47 +418,46 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
                 if (auctionTitleUpdate.equals("")) {
                     auctionTitle.setError("Enter auction title");
                     auctionTitle.requestFocus();
-                    //  CustomToast.customToast(getActivity(), "Enter auction title");
-//                    auctioname.setFocusable(true);
+
                 } else if (startDateUpdate.equals("")) {
                     startDate.setError("Enter start date");
                     startDate.requestFocus();
-                    //  CustomToast.customToast(getActivity(), "Enter start date");
+
                 } else if (startTimeUpdate.equals("")) {
                     startTime.setError("Enter start time");
                     startTime.requestFocus();
-                    // CustomToast.customToast(getActivity(), "Enter start time");
+
                 } else if (startDateUpdate.equals(dateString) && !genericFunctions.startTimeEndTimeValidation(time, startTimeUpdate)) {
-                    //CustomToast.customToast(getActivity(), "time is invalid");
                     startTime.setError("Time is invalid");
                     startTime.requestFocus();
 
+                } else if (!genericFunctions.startDateEndDateValidation(startDateUpdate, dateString)) {
+                    startDate.setError("invalid start date");
+                    startDate.requestFocus();
+
                 } else if (endDateUpdate.equals("")) {
-                    //   CustomToast.customToast(getActivity(), "Enter end date");
                     endDate.setError("Enter end date");
                     endDate.requestFocus();
+
                 } else if (endTimeUpdate.equals("")) {
-                    // CustomToast.customToast(getActivity(), "Enter end time");
                     endTime.setError("Enter end time");
                     endTime.requestFocus();
+
                 } else if (!genericFunctions.startDateValidatioon(startDateUpdate)) {
                     startDate.setError("Enter valid Date");
                     startDate.requestFocus();
+
                 } else if (!genericFunctions.startDateEndDateValidation(endDateUpdate, startDateUpdate)) {
                     endDate.setError("Enter valid Date");
                     endDate.requestFocus();
+
                 } else if (specialClausesIDUpdate.equals(""))
                     Toast.makeText(getActivity(), "Please select atleast one clause", Toast.LENGTH_LONG).show();
-                else if (startDateUpdate.equals(endDateUpdate)) {
-                    if (!genericFunctions.startTimeEndTimeValidation(startTimeUpdate, endTimeUpdate)) {
-                        endTime.setError("Enter valid time");
-                        endTime.requestFocus();
-                    } else {
-                        //new UpdateAuctionCreation().execute();
-                        UpdateAuctionData();
-                    }
+                else if (startDateUpdate.equals(endDateUpdate) && !genericFunctions.startTimeEndTimeValidation(startTimeUpdate, endTimeUpdate)) {
+                    endTime.setError("Enter valid time");
+                    endTime.requestFocus();
+
                 } else {
-                    //new UpdateAuctionCreation().execute();
                     UpdateAuctionData();
                 }
 
@@ -740,15 +739,15 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
                         }
                     }
 
-                    selfadapter = new AuctionBySelfVehiclesAdapter(getActivity(), uploadedVehicleData, editNoOfVehicles);
+                    selfadapter = new AuctionBySelfVehiclesAdapter(getActivity(), uploadedVehicleData, editNoOfVehicles, IntVehicleNo);
                     byself_listview.setAdapter(selfadapter);
                     btnbyself.setText("By self(" + String.valueOf(uploadedVehicleData.size()) + ")");
 
-                    reauctionadapter = new AuctionReauctionVehiclesAdapter(getActivity(), reauctionAuctionAllVehicleData, editNoOfVehicles);
+                    reauctionadapter = new AuctionReauctionVehiclesAdapter(getActivity(), reauctionAuctionAllVehicleData, editNoOfVehicles, IntVehicleNo);
                     byreauction_listview.setAdapter(reauctionadapter);
                     btnbyreauction.setText("Reauction(" + String.valueOf(reauctionAuctionAllVehicleData.size()) + ")");
 
-                    adminadapter = new AuctionAdminVehiclesAdapter(getActivity(), adminVehicleData, editNoOfVehicles);
+                    adminadapter = new AuctionAdminVehiclesAdapter(getActivity(), adminVehicleData, editNoOfVehicles, IntVehicleNo);
                     byadmin_listview.setAdapter(adminadapter);
                     btnbyadmin.setText("By Admin(" + String.valueOf(adminVehicleData.size()) + ")");
 
@@ -828,7 +827,7 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
                             adminData.add(auctionAllVehicleData);
                         }
 
-                        adminadapter = new AuctionAdminVehiclesAdapter(getActivity(), adminData, editNoOfVehicles);
+                        adminadapter = new AuctionAdminVehiclesAdapter(getActivity(), adminData, editNoOfVehicles, IntVehicleNo);
                         byadmin_listview.setAdapter(adminadapter);
                         btnbyadmin.setText("By admin(" + String.valueOf(adminData.size()) + ")");
                     } else {
@@ -877,7 +876,7 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
 
                             reaucionData.add(auctionAllVehicleData);
                         }
-                        reauctionadapter = new AuctionReauctionVehiclesAdapter(getActivity(), reaucionData, editNoOfVehicles);
+                        reauctionadapter = new AuctionReauctionVehiclesAdapter(getActivity(), reaucionData, editNoOfVehicles, IntVehicleNo);
                         byreauction_listview.setAdapter(reauctionadapter);
                         btnbyreauction.setText("Reauction(" + String.valueOf(reaucionData.size()) + ")");
 

@@ -65,7 +65,7 @@
 
         <EditText
             android:id="@+id/startdate"
-            android:layout_width="80dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/editvehicle"
             android:layout_marginStart="30dp"
@@ -88,7 +88,7 @@
 
         <EditText
             android:id="@+id/stattime"
-            android:layout_width="80dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/editvehicle"
             android:layout_marginStart="30dp"
@@ -121,7 +121,7 @@
 
         <EditText
             android:id="@+id/endtime"
-            android:layout_width="80dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignStart="@+id/stattime"
             android:layout_below="@+id/start2"
@@ -133,7 +133,7 @@
 
         <EditText
             android:id="@+id/enddate"
-            android:layout_width="80dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignStart="@+id/startdate"
             android:layout_below="@+id/start2"

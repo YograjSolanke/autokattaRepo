@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import autokatta.com.R;
-import autokatta.com.events.AddVehiclesForAuctionFragment;
 import autokatta.com.response.AuctionAllVehicleData;
 
 /**
@@ -32,16 +31,18 @@ public class AuctionBySelfVehiclesAdapter extends BaseAdapter {
     private LayoutInflater mInflater;
     private EditText editNoOfVehicles;
     private List<AuctionAllVehicleData> UploadedVehiclesData;
-
     private List<Boolean> positionArray;
     private List<AuctionAllVehicleData> checkedVehiclesData;
+    private int IntVehicleNo;
 
 
-    public AuctionBySelfVehiclesAdapter(Activity activity, List<AuctionAllVehicleData> UploadedVehiclesData, EditText editNoOfVehicles) {
+    public AuctionBySelfVehiclesAdapter(Activity activity, List<AuctionAllVehicleData> UploadedVehiclesData,
+                                        EditText editNoOfVehicles, int IntVehicleNo) {
 
         this.activity = activity;
         this.UploadedVehiclesData = UploadedVehiclesData;
         this.editNoOfVehicles = editNoOfVehicles;
+        this.IntVehicleNo = IntVehicleNo;
 
         positionArray = new ArrayList<Boolean>(UploadedVehiclesData.size());
         checkedVehiclesData = new ArrayList<>(UploadedVehiclesData.size());
@@ -49,7 +50,6 @@ public class AuctionBySelfVehiclesAdapter extends BaseAdapter {
         for (int i = 0; i < UploadedVehiclesData.size(); i++) {
             positionArray.add(false);
         }
-
 
         mInflater = (LayoutInflater) activity.
                 getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -82,9 +82,7 @@ public class AuctionBySelfVehiclesAdapter extends BaseAdapter {
         TextView textreg;
         TextView textYOM;
         ImageView image;
-
         CheckBox checkBox;
-
     }
 
 
@@ -126,7 +124,7 @@ public class AuctionBySelfVehiclesAdapter extends BaseAdapter {
         holder.textreg.setText(obj.vehicleRegistrationNo);
         holder.textYOM.setText(obj.vehicleMfgYear);
 
-        if (obj.getVehicleSingleImage() != null || !obj.getVehicleSingleImage().isEmpty() || !obj.getVehicleSingleImage().equals("")) {
+        if (obj.getVehicleSingleImage() != null && (!obj.getVehicleSingleImage().isEmpty() || !obj.getVehicleSingleImage().equals(""))) {
 
             Glide.with(activity)
                     .load(activity.getString(R.string.base_image_url) + obj.getVehicleSingleImage().replaceAll(" ", "%20"))
@@ -147,17 +145,16 @@ public class AuctionBySelfVehiclesAdapter extends BaseAdapter {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
 
-                    AddVehiclesForAuctionFragment.IntVehicleNo++;
-                    editNoOfVehicles.setText(String.valueOf(AddVehiclesForAuctionFragment.IntVehicleNo));
+                    IntVehicleNo++;
+                    editNoOfVehicles.setText(String.valueOf(IntVehicleNo));
 
                     positionArray.set(position, true);
-
                     checkedVehiclesData.add(obj);
 
                 } else {
 
-                    AddVehiclesForAuctionFragment.IntVehicleNo--;
-                    editNoOfVehicles.setText(String.valueOf(AddVehiclesForAuctionFragment.IntVehicleNo));
+                    IntVehicleNo--;
+                    editNoOfVehicles.setText(String.valueOf(IntVehicleNo));
 
                     positionArray.set(position, false);
                     checkedVehiclesData.remove(obj);
@@ -173,7 +170,6 @@ public class AuctionBySelfVehiclesAdapter extends BaseAdapter {
                 return false;
             }
         });
-
 
         return convertView;
     }

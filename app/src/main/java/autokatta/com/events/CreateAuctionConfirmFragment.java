@@ -31,8 +31,6 @@ import autokatta.com.response.AuctionAllVehicleData;
 import autokatta.com.view.Create_Event;
 import retrofit2.Response;
 
-import static autokatta.com.adapter.AuctionConfirmAdapter.isSave;
-
 /**
  * Created by ak-003 on 4/4/17.
  */
@@ -50,32 +48,23 @@ public class CreateAuctionConfirmFragment extends Fragment implements RequestNot
     String contactnumber;
     String bundleAuctionTitle, bundleAuctionStartDate, bundleAuctionStartTime, bundleAuctionEndDate, bundleAuctionEndTime, bundleSpecialClauses;
     private int bundleAuctionId = 0;
-    public static EditText editvehicle;
-    public static Integer noOfVehicles;
+    private EditText editvehicle, auctionTitle, startDate, startTime, endDate, endTime;
+    private Integer noOfVehicles;
 
-    EditText auctionTitle, startDate, startTime, endDate, endTime;
-
-
-    ArrayList<AuctionAllVehicleData> finalVehiclesData = new ArrayList<>();
-
+    List<AuctionAllVehicleData> finalVehiclesData = new ArrayList<>();
     AuctionConfirmAdapter adapter;
-
     String stringVehicleIds = "", SaveActivate = "", ShowHide, stringNoofVehicle;
     RadioButton showprice, hideprice;
-    //SQlitewallDB sqlite_obj;
-
+    private List<Boolean> isSave;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         final View root = inflater.inflate(R.layout.fragment_create_auction_confirm, null);
 
-
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
         contactnumber = getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).getString("loginContact", "7841023392");
-
-        System.out.println("AuctionCreateConfirm contact " + contactnumber);
 
         auctionTitle = (EditText) root.findViewById(R.id.typeofauction2);
         startDate = (EditText) root.findViewById(R.id.startdate);
@@ -101,13 +90,10 @@ public class CreateAuctionConfirmFragment extends Fragment implements RequestNot
         bundleAuctionEndDate = b.getString("enddate");
         bundleAuctionEndTime = b.getString("endtime");
         bundleSpecialClauses = b.getString("specialClauses");
+        noOfVehicles = Integer.valueOf(b.getString("vehiclecount"));
 
         finalVehiclesData = (ArrayList<AuctionAllVehicleData>) b.getSerializable("finalVehiclesData");
 
-        System.out.println("bundleSpecialClauses" + bundleSpecialClauses);
-
-
-        noOfVehicles = 0;
         auctionTitle.setText(bundleAuctionTitle);
         startDate.setText(bundleAuctionStartDate);
         startTime.setText(bundleAuctionStartTime);
@@ -140,7 +126,7 @@ public class CreateAuctionConfirmFragment extends Fragment implements RequestNot
             }
         });
 
-        adapter = new AuctionConfirmAdapter(getActivity(), bundleAuctionId, finalVehiclesData);
+        adapter = new AuctionConfirmAdapter(getActivity(), bundleAuctionId, finalVehiclesData, editvehicle, noOfVehicles);
         vehiclelistview.setAdapter(adapter);
         adapter.notifyDataSetChanged();
 
@@ -149,6 +135,8 @@ public class CreateAuctionConfirmFragment extends Fragment implements RequestNot
             public void onClick(View v) {
                 boolean flag = false;
                 int count = 0;
+
+                isSave = adapter.returnIsSave();
                 for (int i = 0; i < isSave.size(); i++) {
                     if (isSave.get(i).equals(true)) {
                         count++;
@@ -166,10 +154,9 @@ public class CreateAuctionConfirmFragment extends Fragment implements RequestNot
                 if (vehicleIdsCame.size() == 0 || ShowHide == null || ShowHide.isEmpty() || ShowHide.equals(""))
                     Toast.makeText(getActivity(), "Please select vehicle to confirm", Toast.LENGTH_LONG).show();
 
-
                 else if (vehicleIdsCame.size() != count) {
                     Toast.makeText(getActivity(), "Please save start and reserved price", Toast.LENGTH_LONG).show();
-                    //ConfirmVehiclesAdapter.ViewHolder.startprice1.setError("Please provide start price");
+
                 } else {
                     Toast.makeText(getActivity(), "Vehicle ids=" + vehicleIdsCame, Toast.LENGTH_LONG);
 
@@ -230,7 +217,7 @@ public class CreateAuctionConfirmFragment extends Fragment implements RequestNot
     public void notifyError(Throwable error) {
         if (error instanceof SocketTimeoutException) {
             if (isAdded())
-            CustomToast.customToast(getActivity(), getString(R.string._404));
+                CustomToast.customToast(getActivity(), getString(R.string._404));
         } else if (error instanceof NullPointerException) {
             // CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
@@ -246,7 +233,7 @@ public class CreateAuctionConfirmFragment extends Fragment implements RequestNot
     public void notifyString(String str) {
         if (str != null) {
             if (str.startsWith("Success")) {
-                CustomToast.customToast(getActivity(),  "Auction Created Successfully");
+                CustomToast.customToast(getActivity(), "Auction Created Successfully");
 
                 startActivity(new Intent(getActivity(), Create_Event.class));
                 getActivity().finish();
