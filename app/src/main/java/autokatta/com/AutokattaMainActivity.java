@@ -10,6 +10,7 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
@@ -19,6 +20,7 @@ import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -34,6 +36,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.iid.FirebaseInstanceId;
@@ -102,6 +105,7 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
     private IntentIntegrator qrScan;
     private ViewPager viewPager;
     TabLayout tabLayout;
+    TextView mLeads;
     Locale myLocale;
     String mLanguage;
     AlertDialog alertDialog;
@@ -274,13 +278,14 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
         if (navigationView != null) {
             setupDrawerContent(navigationView);
         }
-        /*slideshow = (TextView) MenuItemCompat.getActionView(navigationView.getMenu().
-                findItem(R.id.profile));
-        slideshow.setGravity(Gravity.CENTER_VERTICAL);
-        slideshow.setTypeface(null, Typeface.BOLD);
-        slideshow.setTextColor(getResources().getColor(R.color.colorAccent));
+
+        mLeads = (TextView) MenuItemCompat.getActionView(navigationView.getMenu().
+                findItem(R.id.leads));
+        mLeads.setTypeface(null, Typeface.BOLD);
+        mLeads.setTextColor(getResources().getColor(R.color.white));
+        //mLeads.setBackgroundDrawable(getResources().getDrawable(R.drawable.ic_badge));
         //count is added
-        slideshow.setText("7");*/
+        mLeads.setText("7");
 
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         if (viewPager != null) {

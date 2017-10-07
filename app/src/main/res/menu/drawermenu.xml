@@ -10,8 +10,8 @@
     <item
         android:id="@+id/profile"
         android:icon="@mipmap/ic_drawer_profile"
-        app:actionViewClass="android.widget.TextView"
-        android:title="@string/my_profile" />
+        android:title="@string/my_profile"
+        app:actionViewClass="android.widget.TextView" />
 
     <item
         android:id="@+id/my_contacts"
@@ -125,10 +125,16 @@
                 android:id="@+id/business_Chat"
                 android:icon="@mipmap/ic_drawer_bussiness_chat"
                 android:title="@string/business_chat" />
-          <!--  <item
-                android:id="@+id/locality"
-                android:icon="@mipmap/ic_map_marker"
-                android:title="@string/locality" />-->
+            <!--  <item
+                  android:id="@+id/locality"
+                  android:icon="@mipmap/ic_map_marker"
+                  android:title="@string/locality" />-->
+
+            <item
+                android:id="@+id/leads"
+                android:icon="@mipmap/ic_drawer_language"
+                android:title="@string/leads"
+                app:actionViewClass="android.widget.TextView" />
 
             <item
                 android:id="@+id/change_language"
@@ -138,12 +144,9 @@
         </menu>
     </item>
 
-    <item android:title="">
-        <menu>
-            <item
-                android:id="@+id/sign_out"
-                android:icon="@mipmap/signout"
-                android:title="@string/sign_out" />
-        </menu>
-    </item>
+    <item
+        android:id="@+id/sign_out"
+        android:icon="@mipmap/signout"
+        android:title="@string/sign_out" />
+
 </menu>

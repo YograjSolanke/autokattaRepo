@@ -632,6 +632,7 @@
     <string name="uploaded_on">Uploaded On</string>
     <string name="year_dash">Year  -</string>
     <string name="no_of_leads">No of leads</string>
+    <string name="leads">Leads</string>
     <string name="view_details">View  Details</string>
     <string name="start_notifications">Start Notification</string>
     <string name="stop_notifications">Stop Notification</string>
