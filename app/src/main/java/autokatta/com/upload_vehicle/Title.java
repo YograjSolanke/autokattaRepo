@@ -166,14 +166,15 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
             @Override
             public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
                 if (checkedId == R.id.exchangeYes) {
+                    getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("exchange", "yes").apply();
 
                     View view = getActivity().getLayoutInflater().inflate(R.layout.custom_upload_exchange, null);
 
                     final ImageView[] mClose = {(ImageView) view.findViewById(R.id.close)};
                     Button mAdd = (Button) view.findViewById(R.id.submit);
-                    final EditText excustomername= (EditText) view.findViewById(R.id.custname);
+                    final EditText excustomername= (EditText) view.findViewById(R.id.cust_name);
                     final EditText excustcontact= (EditText) view.findViewById(R.id.cust_contact);
-                    final EditText excustdescription= (EditText) view.findViewById(R.id.description);
+                    final EditText excustdescription= (EditText) view.findViewById(R.id.exchange_description);
                     final EditText excustdetailaddress= (EditText) view.findViewById(R.id.cust_detailaddress);
                     final EditText excustfollowupdate= (EditText) view.findViewById(R.id.edtDate);
                     final EditText excustfollowuptime= (EditText) view.findViewById(edtTime);
@@ -271,8 +272,14 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                             } else if (custFullAddress.equals("")) {
                                 excustdetailaddress.setError("Enter detailed address");
                                 excustdetailaddress.requestFocus();
+                            }  else if (discussion.equals("")) {
+                                excustdescription.setError("Enter discussion");
+                                excustdescription.requestFocus();
                             } else if (excuststatus.getSelectedItemPosition() == 0) {
                                 CustomToast.customToast(getActivity(), "Please provide status");
+                                excuststatus.requestFocus();
+                            }else if (inventory.getSelectedItemPosition() == 0) {
+                                CustomToast.customToast(getActivity(), "Please provide inventory Type");
                                 excuststatus.requestFocus();
                             } /*else if (discussion.equals("")) {
                     edtDiscussion.setError("Enter discussion data");
@@ -298,6 +305,14 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                                 intent.putExtras(bundle);
                                 startActivity(intent, options.toBundle());
 
+                                getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("ex_cust_name", custName).apply();
+                                getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("ex_cust_contact", custContact).apply();
+                                getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("ex_cust_address", custAddress).apply();
+                                getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("ex_cust_full_addr", custFullAddress).apply();
+                                getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("inventory_type", custInventoryType).apply();
+                                getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("enquiry_status", custEnquiryStatus).apply();
+                                getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("discussion", discussion).apply();
+                                getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("nextFollowupDate", nextFollowupDate).apply();
 
                             }
                         }

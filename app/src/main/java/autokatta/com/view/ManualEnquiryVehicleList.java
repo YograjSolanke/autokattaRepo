@@ -294,7 +294,9 @@ public class ManualEnquiryVehicleList extends AppCompatActivity implements Reque
                         CustomToast.customToast(this, "Please Select Atleat One...");
                     }
                 }else {
-                    CustomToast.customToast(getApplicationContext(),"Working");
+                    CustomToast.customToast(getApplicationContext(),"Enquiry For Exchange Will Be Added");
+                    getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("Ids_for_manual_enquiry", addArray).apply();
+                    finish();
                 }
                 break;
         }

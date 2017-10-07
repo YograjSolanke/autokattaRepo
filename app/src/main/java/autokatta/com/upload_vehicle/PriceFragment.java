@@ -30,6 +30,7 @@ import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.interfaces.ServiceApi;
 import autokatta.com.other.CustomToast;
+import autokatta.com.response.AddManualEnquiryResponse;
 import autokatta.com.response.PriceSuggestionResponse;
 import autokatta.com.response.UploadUsedVehicleResponse;
 import autokatta.com.view.VehicleDetails;
@@ -68,9 +69,12 @@ public class PriceFragment extends Fragment implements RequestNotifier, View.OnC
             strFitnessDate = "", strPermitDate = "", strChasis = "", strEngine = "", strDrive = "", strTrans = "", strBustype = "", strAir = "",
             strApp = "", strImplementStr = "", strSeatcap = "", strTyreContext = "", strFuel = "", strHp = "", strJib = "", strBoon = "",
             strImages = "", strColor = "", strBodytype = "", strImplement = "", strMfgYr = "", strBrandName = "",
-            strModelName = "", strVersionName = "",strStocktype;
+            strModelName = "", strVersionName = "",strStocktype,strScrapCustName="",strScrapCustContact="",strScrapCustAddress,strScrapCustFullAddress,
+            strScrapPurchaseDate="",strExCustName="",strExCustContact="",strExCustAddress="",strExFullAddress="",strExInventoryType,strExEnquiryStatus,
+    strExDescription="",strExNextFollowUpdate="",strEnquiryVehiIds="",strloanaccno="",strBorrowerName="",strBorrowerContact="",
+    strBranchManagerName="",strManagerContact="",strExchange="",strDealerName="",strBranchCity="",strStockYardName="",strStockYardAddr="",strInwardDate="";
     double strKms;
-    int strOwner, strCategoryId, vehicle_id, strSubcategoryId, strBrandId, strModelId, strVersionId;
+    int strOwner, strCategoryId, vehicle_id, strSubcategoryId, strBrandId, strModelId, strVersionId,strScrapPurchasePrice;
 
     String myContact;
     String imageNames = "";
@@ -168,6 +172,43 @@ public class PriceFragment extends Fragment implements RequestNotifier, View.OnC
         strMfgYr = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("upload_mfgYear", "20");
         strStocktype = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("upload_auction_categoryName", "");
 
+        /*scrap/inventory data*/
+
+        strScrapCustName = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("scrap_cust_name", "");
+        strScrapCustContact = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("scap_cust_contact", "");
+        strScrapCustAddress = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("scrap_cust_address", "");
+        strScrapCustFullAddress = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("scrap_cust_full_addr", "");
+        strScrapPurchasePrice = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getInt("scrap_purchase_price",0);
+        strScrapPurchaseDate = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("scrap_purchase_date", "");
+
+        /*Exchange and enquiry data*/
+
+        strExCustName = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("ex_cust_name", "");
+        strExCustContact = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("ex_cust_contact", "");
+        strExCustAddress = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("ex_cust_address", "");
+        strExFullAddress = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("ex_cust_full_addr", "");
+        strExInventoryType = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("inventory_type", "");
+        strExEnquiryStatus = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("enquiry_status", "");
+        strExDescription = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("discussion", "");
+        strExNextFollowUpdate = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("nextFollowupDate", "");
+        strEnquiryVehiIds = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("Ids_for_manual_enquiry", "");
+        strExchange = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("exchange", "");
+
+
+        /*Repo and insurance*/
+
+        strloanaccno = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loan_acc_no", "");
+        strBorrowerName = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("borrower_name", "");
+        strBorrowerContact = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("borrower_contact", "");
+        strBranchManagerName = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("branchmanagername", "");
+        strManagerContact = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("managercontact", "");
+        strDealerName = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("dealername", "");
+        strBranchCity = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("branchcity", "");
+        strStockYardName = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("stockyardname", "");
+        strStockYardAddr = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("stockyardaddr", "");
+        strInwardDate = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("inwarddate", "");
+
+
         System.out.println("incoming images=" + strImages);
         Log.i("incoming images=", "->" + strImages);
         getActivity().runOnUiThread(new Runnable() {
@@ -223,6 +264,7 @@ public class PriceFragment extends Fragment implements RequestNotifier, View.OnC
                 }
 
                 uploadVehicle();
+                //AddEnquiryData();
                 break;
         }
 
@@ -250,6 +292,24 @@ public class PriceFragment extends Fragment implements RequestNotifier, View.OnC
                 strInvoice, strImplement, strGroupprivacy, strHp, strJib,
                 strBoon, strBrakename, strPumpname, strInsuDate, strEmission, strExhangestatus, strStearing,
                 strCategoryId, strSubcategoryId, strBrandId, strModelId, strVersionId,strStocktype);
+    }
+
+    private void AddEnquiryData() {
+        apiCall.addManualEnquiryData(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "")
+                , strExCustName, strExCustContact, strExCustAddress, strExFullAddress, strExInventoryType,
+                strExEnquiryStatus, strExDescription, strExNextFollowUpdate, strEnquiryVehiIds);//check if vehicle id or ids
+    }
+
+    private void addvehicleexchangedata() {
+        apiCall.VehicleExchangeType(strExCustName,strExCustContact,strExCustAddress,strExFullAddress,strExDescription,strEnquiryVehiIds,vehicle_id);
+    }
+
+    private void addvehiclerepodata() {
+        apiCall.VehicleRepoInsurance(strloanaccno,strBorrowerName,strBorrowerContact,strBranchCity,strBranchManagerName,strManagerContact,strDealerName,strStockYardName,strStockYardAddr,strInwardDate,vehicle_id);
+    }
+
+    private void addvehiclescrapdata() {
+        apiCall.VehicleInventorySrcap(strScrapCustName,strScrapCustContact,strScrapCustAddress,strScrapCustFullAddress,strScrapPurchasePrice,strScrapPurchaseDate,vehicle_id);
     }
 
     @Override
@@ -345,12 +405,38 @@ public class PriceFragment extends Fragment implements RequestNotifier, View.OnC
                             getActivity().startActivity(intent);
                             getActivity().finish();
                         }
+
+                        if (strStocktype.equalsIgnoreCase("Scrap") || strStocktype.equalsIgnoreCase("Inventory"))
+                        {
+                            addvehiclescrapdata();
+                        }else
+                        if (strStocktype.equalsIgnoreCase("Finance/Repo")||strStocktype.equalsIgnoreCase("Insurance"))
+                        {
+                            addvehiclerepodata();
+                        }
+                        if (strExchange.equalsIgnoreCase("yes"))
+                        {
+                            addvehicleexchangedata();
+                         //   AddEnquiryData();
+                        }
                     } else {
                         if (isAdded())
                             CustomToast.customToast(getActivity(), getActivity().getString(R.string.no_response));
                     }
+                }else
+                if (response.body() instanceof AddManualEnquiryResponse) {
+                    AddManualEnquiryResponse enquiryResponse = (AddManualEnquiryResponse) response.body();
+                    if (enquiryResponse.getSuccess() != null) {
+                        if (enquiryResponse.getSuccess().getSuccess().equalsIgnoreCase("Data successfully Inserted.")) {
+                            if (isAdded())
+                                CustomToast.customToast(getActivity(), "Manual Enquiry Added Successfully");
+                        }
+                    }else
+                    {
+                        if (isAdded())
+                            CustomToast.customToast(getActivity(), getActivity().getString(R.string.no_response));
+                    }
                 }
-
             } else {
                 /*if (isAdded())
                     CustomToast.customToast(getActivity(), getActivity().getString(R.string._404));*/
@@ -389,7 +475,22 @@ public class PriceFragment extends Fragment implements RequestNotifier, View.OnC
 
     @Override
     public void notifyString(String str) {
-
+        if (str != null) {
+           if (str.equalsIgnoreCase("success_scrap"))
+           {
+               if (isAdded())
+                   CustomToast.customToast(getActivity(), " Customer Data Added scrap");
+           }else if (str.equalsIgnoreCase("success_exchange"))
+           {
+               if (isAdded())
+                   CustomToast.customToast(getActivity(), " Customer Data Added exchang");
+           }else
+               if (str.equalsIgnoreCase("success_repo"))
+               {
+                   if (isAdded())
+                       CustomToast.customToast(getActivity(), " Customer Data Added repo");
+               }
+        }
     }
 
     @Override

@@ -7,7 +7,6 @@
               android:background="@android:color/white"
               android:orientation="vertical"
               android:padding="10dp">
-
     <ImageView
         android:id="@+id/close"
         android:layout_width="wrap_content"
@@ -30,8 +29,8 @@
         android:id="@+id/cust_contact"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Customer contact"
         android:inputType="number"
+        android:hint="Customer contact"
         android:maxLength="10"
         android:textAppearance="?android:attr/textAppearanceMedium"/>
 
@@ -51,82 +50,13 @@
         android:textAppearance="?android:attr/textAppearanceMedium"/>
 
     <EditText
-        android:id="@+id/exchange_description"
+        android:id="@+id/purchaseprice"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:digits="abcdefghijklmnopqrstuvwxyz"
+        android:inputType="number"
         android:hint="Description"
         android:textAppearance="?android:attr/textAppearanceMedium"/>
 
-    <RelativeLayout
-        android:id="@+id/rel_status"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="3dp"
-        android:layout_marginTop="@dimen/card_margin"
-        android:background="@drawable/spinner_background"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:paddingEnd="@dimen/card_margin"
-        android:paddingStart="@dimen/card_margin">
-
-        <Spinner
-            android:id="@+id/status"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_gravity="center"
-            android:layout_marginStart="5dp"
-            android:background="@android:color/transparent"
-            android:entries="@array/ManualEnquiryStatus"
-            android:gravity="center"
-            android:spinnerMode="dropdown"/>
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:layout_gravity="center"
-            android:contentDescription="@string/app_name"
-            android:src="@mipmap/ic_down"/>
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/rel_inventory"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="3dp"
-        android:layout_marginTop="@dimen/card_margin"
-        android:background="@drawable/spinner_background"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:paddingEnd="@dimen/card_margin"
-        android:paddingStart="@dimen/card_margin">
-
-        <Spinner
-            android:id="@+id/inventory"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_gravity="center"
-            android:layout_marginStart="5dp"
-            android:background="@android:color/transparent"
-            android:entries="@array/uploadvehicleInventory"
-            android:gravity="center"
-            android:spinnerMode="dropdown"/>
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:layout_gravity="center"
-            android:contentDescription="@string/app_name"
-            android:src="@mipmap/ic_down"/>
-
-    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -139,7 +69,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/followdate"
+            android:text="Purchase Date"
             android:textStyle="bold"/>
 
         <EditText
@@ -156,18 +86,6 @@
             android:paddingStart="@dimen/card_margin"
             android:textColor="#708090"/>
 
-        <EditText
-            android:id="@+id/edtTime"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/card_title_height"
-            android:layout_weight="1"
-            android:background="@color/edit_background"
-            android:editable="false"
-            android:hint="@string/time"
-            android:inputType="datetime"
-            android:paddingEnd="@dimen/card_margin"
-            android:paddingStart="@dimen/card_margin"
-            android:textColor="#708090"/>
     </LinearLayout>
 
 
@@ -182,6 +100,16 @@
             android:layout_height="wrap_content"
             android:background="@color/button_default"
             android:text="ADD"
+            android:textColor="@color/white"
+            android:textStyle="bold"/>
+
+        <Button
+            android:id="@+id/skip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:background="@color/button_default"
+            android:text="skip"
             android:textColor="@color/white"
             android:textStyle="bold"/>
     </LinearLayout>
