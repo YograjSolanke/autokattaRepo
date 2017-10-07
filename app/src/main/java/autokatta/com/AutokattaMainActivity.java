@@ -30,6 +30,7 @@ import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -281,9 +282,9 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
 
         mLeads = (TextView) MenuItemCompat.getActionView(navigationView.getMenu().
                 findItem(R.id.leads));
+        mLeads.setGravity(Gravity.CENTER_VERTICAL);
         mLeads.setTypeface(null, Typeface.BOLD);
-        mLeads.setTextColor(getResources().getColor(R.color.white));
-        //mLeads.setBackgroundDrawable(getResources().getDrawable(R.drawable.ic_badge));
+        mLeads.setTextColor(getResources().getColor(R.color.red));
         //count is added
         mLeads.setText("7");
 
