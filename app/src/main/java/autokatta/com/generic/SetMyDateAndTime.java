@@ -55,7 +55,7 @@ public class SetMyDateAndTime implements DatePickerDialog.OnDateSetListener, Tim
         // this.editText.setText();
 
         //  String myFormat = "MMM dd, yyyy"; //In which you need put here
-        SimpleDateFormat sdformat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        SimpleDateFormat sdformat = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
         myCalendar.set(Calendar.YEAR, year);
         myCalendar.set(Calendar.MONTH, monthOfYear);
         myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
@@ -66,38 +66,41 @@ public class SetMyDateAndTime implements DatePickerDialog.OnDateSetListener, Tim
 
 
     @Override
-    public void onTimeSet(TimePicker timePicker, int i, int i1) {
+    public void onTimeSet(TimePicker timePicker, int currentHour, int currentMinute) {
 
         if (key.equals("timeEvent")) {
-            startTime = valid.getTimeFormat(i, i1, myCalendar.get(Calendar.SECOND));
+            startTime = valid.getTimeFormat(currentHour, currentMinute, myCalendar.get(Calendar.SECOND));
             editText.setText(startTime);
         } else if (key.equals("time")) {
             final String AM_PM, hour, minute;
 
-            if (i < 12) {
+            if (currentHour < 12) {
                 AM_PM = "AM";
-                if (i < 10) {
-                    hour = "0" + String.valueOf(i);
+                if (currentHour < 10) {
+                    hour = "0" + String.valueOf(currentHour);
                 } else
-                    hour = String.valueOf(i);
+                    hour = String.valueOf(currentHour);
 
-                if (i1 < 10)
-                    minute = "0" + String.valueOf(i1);
+                if (currentMinute < 10)
+                    minute = "0" + String.valueOf(currentMinute);
                 else
-                    minute = String.valueOf(i1);
+                    minute = String.valueOf(currentMinute);
 
             } else {
                 AM_PM = "PM";
-                i = i - 12;
-                if (i < 10) {
-                    hour = "0" + String.valueOf(i);
-                } else
-                    hour = String.valueOf(i);
-
-                if (i1 < 10)
-                    minute = "0" + String.valueOf(i1);
+                currentHour = currentHour - 12;
+                if (currentHour < 10)
+                    hour = "0" + String.valueOf(currentHour);
+                else if (currentHour == 0)
+                    hour = "12";
                 else
-                    minute = String.valueOf(i1);
+                    hour = String.valueOf(currentHour);
+
+
+                if (currentMinute < 10)
+                    minute = "0" + String.valueOf(currentMinute);
+                else
+                    minute = String.valueOf(currentMinute);
             }
 
             editText.setText(hour + ":" + minute + " " + AM_PM);

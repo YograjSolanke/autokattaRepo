@@ -10,6 +10,7 @@ import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -44,9 +45,8 @@ public class GenericFunctions {
     public Boolean getbirthdate(String dob) {
         Boolean flag = true;
         long date = System.currentTimeMillis();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd", Locale.getDefault());
         String dateString = sdf.format(date);
-        System.out.println("current date====" + dateString);
 
         String[] partc = dateString.split("-");
         String[] partu = dob.split("-");
@@ -79,7 +79,6 @@ public class GenericFunctions {
                 flag = false;
                 System.out.println("Mothns checking");
                 System.out.println("Months checked invalid user ");
-                //dobtext.setError("Minimum 8 year age required");
             } else if (Integer.parseInt(partc[1]) - Integer.parseInt(partu[1]) == 0) {
 
                 System.out.println("Mothns checking");
@@ -90,7 +89,6 @@ public class GenericFunctions {
                     flag = false;
                     System.out.println("day checking");
                     System.out.println("date checked invalid user ");
-                    //dobtext.setError("Minimum 8 year age required");
                 }
             }
 
@@ -98,6 +96,7 @@ public class GenericFunctions {
         return flag;
     }
 
+    /* function for  bitmap */
     public Bitmap decodeFile(String filePath) {
 
         System.out.println("filePath: " + filePath);
@@ -144,14 +143,23 @@ public class GenericFunctions {
 
     }
 
+    /* function for start date validation */
     public Boolean startDateValidatioon(String startdate) {
 
         Boolean flag2 = true;
-        long date = System.currentTimeMillis();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
         Date now = new Date();
         String dateString = sdf.format(now);
         //String dateString = sdf.format(date);
+
+        Date userDate = new Date();
+        try {
+            userDate = sdf.parse(startdate);
+        } catch (ParseException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        startdate = sdf.format(userDate);
 
 
         System.out.println("current date====" + dateString);
@@ -217,9 +225,41 @@ public class GenericFunctions {
         return flag2;
     }
 
+    /* function for start date and end date validation */
     public Boolean startDateEndDateValidation(String endDate, String startDate) {
 
         Boolean flag1 = true;
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        /*Date userDateEnd = new Date();
+        Date userDateStart = new Date();
+        try {
+            userDateEnd = sdf.parse(endDate);
+            userDateStart = sdf.parse(startDate);
+        } catch (ParseException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        endDate = sdf.format(userDateEnd);
+        startDate = sdf.format(userDateStart);*/
+
+        Date userDateEnd, userDateStart;
+        try {
+
+            if (!endDate.contains("-")) {
+                userDateEnd = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault()).parse(endDate);
+                endDate = sdf.format(userDateEnd);
+            }
+
+            if (!startDate.contains("-")) {
+                userDateStart = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault()).parse(startDate);
+                startDate = sdf.format(userDateStart);
+            }
+
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
         String[] partc = endDate.split("-");
         String[] partu = startDate.split("-");
@@ -256,12 +296,13 @@ public class GenericFunctions {
         return flag1;
     }
 
+    /* function for start time and end time validation */
     public Boolean startTimeEndTimeValidation(String startTime, String endTime) {
 
         Boolean flag;
 
-        SimpleDateFormat displayFormat = new SimpleDateFormat("HH:mm");
-        SimpleDateFormat parseFormat = new SimpleDateFormat("hh:mm a");
+        SimpleDateFormat displayFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
+        SimpleDateFormat parseFormat = new SimpleDateFormat("hh:mm a", Locale.getDefault());
         Date starttm = null;
         Date endtm = null;
         try {
@@ -281,13 +322,16 @@ public class GenericFunctions {
         System.out.println("dddddddddddd end time=" + edTime);
 
 
-        if (sttime.compareTo(edTime) > 0) {
+        if (sttime.compareTo(edTime) > 0)
             flag = false;
-        } else {
+        else if (sttime.compareTo(edTime) == 0)
+            flag = false;
+        else
             flag = true;
-        }
+
         return flag;
     }
+
 
     public String getTimeFormat(int selectedHour, int selectedMinute, int selectedSecond) {
 
@@ -316,7 +360,7 @@ public class GenericFunctions {
         Time startTime = null, endTime = null;
 
         try {
-            SimpleDateFormat ra = new SimpleDateFormat("hh:mm");
+            SimpleDateFormat ra = new SimpleDateFormat("hh:mm", Locale.getDefault());
             Date yourDate = null;
             Date yourdate2 = null;
             yourDate = ra.parse(st);
