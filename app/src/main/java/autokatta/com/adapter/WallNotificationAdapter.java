@@ -7,10 +7,10 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PopupMenu;
@@ -20,6 +20,7 @@ import android.text.SpannableStringBuilder;
 import android.text.TextPaint;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
+import android.text.style.StyleSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -681,11 +682,10 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                 sb1.append(notificationList.get(position).getReceiverName());
                 sb1.append(" Profile");
 
-        /*sender name*/
+                /*sender name*/
                 sb1.setSpan(new ClickableSpan() {
                                 @Override
                                 public void onClick(View widget) {
-
                                     if (notificationList.get(mProfileHolder.getAdapterPosition()).getLayoutType().equalsIgnoreCase("MyAction")) {
                                         mActivity.startActivity(new Intent(mActivity, UserProfile.class));
                                     } else {
@@ -699,16 +699,18 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
 
                                 @Override
                                 public void updateDrawState(TextPaint ds) {
-                                    ds.setUnderlineText(false);
+                                    /*ds.setUnderlineText(false);
                                     ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
                                     ds.setFakeBoldText(true);
                                     ds.setTextSize((float) 31.0);
-                                    Log.i("TextSize", "->" + ds.getTextSize());
+                                    Log.i("TextSize", "->" + ds.getTextSize());*/
                                 }
                             }, 0, notificationList.get(position).getSenderName().length(),
                         Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
-         /*receiver name*/
+                sb1.setSpan(new StyleSpan(Typeface.BOLD), 0,
+                        notificationList.get(position).getSenderName().length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                /*receiver name*/
                 sb1.setSpan(new ClickableSpan() {
                                 @Override
                                 public void onClick(View widget) {
@@ -729,10 +731,10 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
 
                                 @Override
                                 public void updateDrawState(TextPaint ds) {
-                                    ds.setUnderlineText(false);
+                                    /*ds.setUnderlineText(false);
                                     ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
                                     ds.setFakeBoldText(true);
-                                    ds.setTextSize((float) 31.0);
+                                    ds.setTextSize((float) 31.0);*/
                                 }
                             }, notificationList.get(position).getSenderName().length() +
                                 notificationList.get(position).getAction().length() +
@@ -743,6 +745,15 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                                 2 +
                                 notificationList.get(position).getReceiverName().length()
                         , Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                /*
+                Set Bold Font
+                 */
+                sb1.setSpan(new StyleSpan(Typeface.BOLD), notificationList.get(position).getSenderName().length() +
+                                notificationList.get(position).getAction().length() + 2,
+                        notificationList.get(position).getSenderName().length() +
+                                notificationList.get(position).getAction().length() + 2 +
+                                notificationList.get(position).getReceiverName().length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
                 mProfileHolder.mProfileAction.setSingleLine(false);
                 mProfileHolder.mProfileAction.setText(sb1);
@@ -1086,15 +1097,17 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
 
                     @Override
                     public void updateDrawState(TextPaint ds) {
-                        ds.setUnderlineText(false);
+                       /* ds.setUnderlineText(false);
                         ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
                         ds.setFakeBoldText(true);
                         ds.setTextSize((float) 31.0);
-                        Log.i("TextSize", "->" + ds.getTextSize());
+                        Log.i("TextSize", "->" + ds.getTextSize());*/
                     }
                 }, 0, notificationList.get(position).getSenderName().length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
-        /*receiver name */
+                sb2.setSpan(new StyleSpan(Typeface.BOLD), 0, notificationList.get(position).getSenderName().length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                /*receiver name */
                 sb2.setSpan(new ClickableSpan() {
                                 @Override
                                 public void onClick(View widget) {
@@ -1113,10 +1126,10 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
 
                                 @Override
                                 public void updateDrawState(TextPaint ds) {
-                                    ds.setUnderlineText(false);
+                                    /*ds.setUnderlineText(false);
                                     ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
                                     ds.setFakeBoldText(true);
-                                    ds.setTextSize((float) 31.0);
+                                    ds.setTextSize((float) 31.0);*/
                                 }
                             }, notificationList.get(position).getSenderName().length() +
                                 notificationList.get(position).getAction().length() +
@@ -1128,6 +1141,12 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                                 notificationList.get(position).getReceiverName().length()
                         , Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
+                sb2.setSpan(new StyleSpan(Typeface.BOLD), notificationList.get(position).getSenderName().length() +
+                        notificationList.get(position).getAction().length() +
+                        2, notificationList.get(position).getSenderName().length() +
+                        notificationList.get(position).getAction().length() +
+                        2 +
+                        notificationList.get(position).getReceiverName().length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
             /* store name */
                 sb2.setSpan(new ClickableSpan() {
                                 @Override
@@ -1141,10 +1160,10 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
 
                                 @Override
                                 public void updateDrawState(TextPaint ds) {
-                                    ds.setUnderlineText(false);
+                                    /*ds.setUnderlineText(false);
                                     ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
                                     ds.setFakeBoldText(true);
-                                    ds.setTextSize((float) 31.0);
+                                    ds.setTextSize((float) 31.0);*/
                                 }
                             }, notificationList.get(position).getSenderName().length() +
                                 notificationList.get(position).getAction().length() +
@@ -1157,6 +1176,18 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                                 3 +
                                 notificationList.get(position).getStoreName().length() + 1
                         , Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                /*
+                Font style bold
+                 */
+                sb2.setSpan(new StyleSpan(Typeface.BOLD), notificationList.get(position).getSenderName().length() +
+                        notificationList.get(position).getAction().length() +
+                        notificationList.get(position).getReceiverName().length() +
+                        3, notificationList.get(position).getSenderName().length() +
+                        notificationList.get(position).getAction().length() +
+                        notificationList.get(position).getReceiverName().length() +
+                        3 +
+                        notificationList.get(position).getStoreName().length() + 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
                 mStoreHolder.mStoreActionName.setSingleLine(false);
                 mStoreHolder.mStoreActionName.setText(sb2);
@@ -1470,15 +1501,18 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
 
                     @Override
                     public void updateDrawState(TextPaint ds) {
-                        ds.setUnderlineText(false);
+                        /*ds.setUnderlineText(false);
                         ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
                         ds.setFakeBoldText(true);
                         ds.setTextSize((float) 31.0);
-                        Log.i("TextSize", "->" + ds.getTextSize());
+                        Log.i("TextSize", "->" + ds.getTextSize());*/
                     }
                 }, 0, notificationList.get(position).getSenderName().length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
-         /* receiver name*/
+                sb3.setSpan(new StyleSpan(Typeface.BOLD), 0,
+                        notificationList.get(position).getSenderName().length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                /* receiver name*/
                 sb3.setSpan(new ClickableSpan() {
                                 @Override
                                 public void onClick(View widget) {
@@ -1497,10 +1531,10 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
 
                                 @Override
                                 public void updateDrawState(TextPaint ds) {
-                                    ds.setUnderlineText(false);
+                                    /*ds.setUnderlineText(false);
                                     ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
                                     ds.setFakeBoldText(true);
-                                    ds.setTextSize((float) 31.0);
+                                    ds.setTextSize((float) 31.0);*/
                                 }
                             }, notificationList.get(position).getSenderName().length() +
                                 notificationList.get(position).getAction().length() + 2,
@@ -1510,7 +1544,14 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                                 notificationList.get(position).getReceiverName().length()
                         , Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
-            /*group name */
+                sb3.setSpan(new StyleSpan(Typeface.BOLD), notificationList.get(position).getSenderName().length() +
+                                notificationList.get(position).getAction().length() + 2,
+                        notificationList.get(position).getSenderName().length() +
+                                notificationList.get(position).getAction().length() + 2 +
+                                notificationList.get(position).getReceiverName().length(),
+                        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                /*group name */
                 sb3.setSpan(new ClickableSpan() {
                                 @Override
                                 public void onClick(View widget) {
@@ -1535,10 +1576,10 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
 
                                 @Override
                                 public void updateDrawState(TextPaint ds) {
-                                    ds.setUnderlineText(false);
+                                    /*ds.setUnderlineText(false);
                                     ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
                                     ds.setFakeBoldText(true);
-                                    ds.setTextSize((float) 31.0);
+                                    ds.setTextSize((float) 31.0);*/
                                 }
                             }, notificationList.get(position).getSenderName().length() +
                                 notificationList.get(position).getAction().length() +
@@ -1550,6 +1591,15 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                                 notificationList.get(position).getGroupName().length() + 1
                         , Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
+                sb3.setSpan(new StyleSpan(Typeface.BOLD), notificationList.get(position).getSenderName().length() +
+                                notificationList.get(position).getAction().length() +
+                                notificationList.get(position).getReceiverName().length() + 5,
+
+                        notificationList.get(position).getSenderName().length() +
+                                notificationList.get(position).getAction().length() +
+                                notificationList.get(position).getReceiverName().length() + 5 +
+                                notificationList.get(position).getGroupName().length() + 1,
+                        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
                 mGroupHolder.mActionName.setSingleLine(false);
                 mGroupHolder.mActionName.setText(sb3);
@@ -1674,19 +1724,22 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
 
                     @Override
                     public void updateDrawState(TextPaint ds) {
-                        ds.setUnderlineText(false);
+                        /*ds.setUnderlineText(false);
                         ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
                         ds.setFakeBoldText(true);
                         ds.setTextSize((float) 31.0);
-                        Log.i("TextSize", "->" + ds.getTextSize());
+                        Log.i("TextSize", "->" + ds.getTextSize());*/
                     }
                 }, 0, notificationList.get(position).getSenderName().length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
-        /* receiver name */
+                sb4.setSpan(new StyleSpan(Typeface.BOLD), 0,
+                        notificationList.get(position).getSenderName().length(),
+                        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                /* receiver name */
                 sb4.setSpan(new ClickableSpan() {
                                 @Override
                                 public void onClick(View widget) {
-
                                     if (notificationList.get(mVehicleHolder.getAdapterPosition()).getLayoutType().equalsIgnoreCase("MyAction") ||
                                             notificationList.get(mVehicleHolder.getAdapterPosition()).getLayoutType().equalsIgnoreCase("MyNotification")) {
                                         mActivity.startActivity(new Intent(mActivity, UserProfile.class));
@@ -1701,10 +1754,10 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
 
                                 @Override
                                 public void updateDrawState(TextPaint ds) {
-                                    ds.setUnderlineText(false);
+                                    /*ds.setUnderlineText(false);
                                     ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
                                     ds.setFakeBoldText(true);
-                                    ds.setTextSize((float) 31.0);
+                                    ds.setTextSize((float) 31.0);*/
                                 }
                             }, notificationList.get(position).getSenderName().length() +
                                 notificationList.get(position).getAction().length() + 2,
@@ -1714,7 +1767,18 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                                 notificationList.get(position).getReceiverName().length()
                         , Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
-            /* vehicle name */
+                /*
+                Set Bold font
+                 */
+                sb4.setSpan(new StyleSpan(Typeface.BOLD), notificationList.get(position).getSenderName().length() +
+                                notificationList.get(position).getAction().length() + 2,
+
+                        notificationList.get(position).getSenderName().length() +
+                                notificationList.get(position).getAction().length() + 2 +
+                                notificationList.get(position).getReceiverName().length(),
+                        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                /* vehicle name */
                 sb4.setSpan(new ClickableSpan() {
                                 @Override
                                 public void onClick(View widget) {
@@ -1725,10 +1789,10 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
 
                                 @Override
                                 public void updateDrawState(TextPaint ds) {
-                                    ds.setUnderlineText(false);
+                                    /*ds.setUnderlineText(false);
                                     ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
                                     ds.setFakeBoldText(true);
-                                    ds.setTextSize((float) 31.0);
+                                    ds.setTextSize((float) 31.0);*/
                                 }
                             }, notificationList.get(position).getSenderName().length() +
                                 notificationList.get(position).getAction().length() +
@@ -1740,11 +1804,20 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                                 notificationList.get(position).getUpVehicleTitle().length() + 1
                         , Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
+                sb4.setSpan(new StyleSpan(Typeface.BOLD), notificationList.get(position).getSenderName().length() +
+                                notificationList.get(position).getAction().length() +
+                                notificationList.get(position).getReceiverName().length() + 3,
+
+                        notificationList.get(position).getSenderName().length() +
+                                notificationList.get(position).getAction().length() +
+                                notificationList.get(position).getReceiverName().length() + 3 +
+                                notificationList.get(position).getUpVehicleTitle().length() + 1,
+                        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
                 mVehicleHolder.mActionName.setSingleLine(false);
                 mVehicleHolder.mActionName.setText(sb4);
                 mVehicleHolder.mActionName.setMovementMethod(LinkMovementMethod.getInstance());
                 mVehicleHolder.mActionName.setHighlightColor(Color.TRANSPARENT);
-
 
                 mVehicleHolder.mActionTime.setText(notificationList.get(position).getDateTime());
                 mVehicleHolder.mVehicleName.setText(notificationList.get(position).getUpVehicleTitle());
@@ -2171,15 +2244,22 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
 
                         @Override
                         public void updateDrawState(TextPaint ds) {
-                            ds.setUnderlineText(false);
+                            /*ds.setUnderlineText(false);
                             ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
                             ds.setFakeBoldText(true);
                             ds.setTextSize((float) 31.0);
-                            Log.i("TextSize", "->" + ds.getTextSize());
+                            Log.i("TextSize", "->" + ds.getTextSize());*/
                         }
                     }, 0, notificationList.get(position).getSenderName().length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
-        /* product name */
+                    /*
+                    set Bold Font...
+                     */
+                    sb5.setSpan(new StyleSpan(Typeface.BOLD), 0,
+                            notificationList.get(position).getSenderName().length(),
+                            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                    /* product name */
                     sb5.setSpan(new ClickableSpan() {
                                     @Override
                                     public void onClick(View widget) {
@@ -2190,10 +2270,10 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
 
                                     @Override
                                     public void updateDrawState(TextPaint ds) {
-                                        ds.setUnderlineText(false);
+                                        /*ds.setUnderlineText(false);
                                         ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
                                         ds.setFakeBoldText(true);
-                                        ds.setTextSize((float) 31.0);
+                                        ds.setTextSize((float) 31.0);*/
                                     }
                                 }, notificationList.get(position).getSenderName().length() +
                                     notificationList.get(position).getAction().length() +
@@ -2204,6 +2284,19 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                                     2 +
                                     notificationList.get(position).getProductName().length() + 1
                             , Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                    /*
+                    Set Bold Font
+                     */
+                    sb5.setSpan(new StyleSpan(Typeface.BOLD), notificationList.get(position).getSenderName().length() +
+                                    notificationList.get(position).getAction().length() +
+                                    +2,
+
+                            notificationList.get(position).getSenderName().length() +
+                                    notificationList.get(position).getAction().length() +
+                                    2 +
+                                    notificationList.get(position).getProductName().length() + 1,
+                            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                 } else {
                     sb5.append(notificationList.get(position).getSenderName());
                     sb5.append(" ");
@@ -2232,19 +2325,25 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
 
                         @Override
                         public void updateDrawState(TextPaint ds) {
-                            ds.setUnderlineText(false);
+                            /*ds.setUnderlineText(false);
                             ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
                             ds.setFakeBoldText(true);
                             ds.setTextSize((float) 31.0);
-                            Log.i("TextSize", "->" + ds.getTextSize());
+                            Log.i("TextSize", "->" + ds.getTextSize());*/
                         }
                     }, 0, notificationList.get(position).getSenderName().length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
-         /* receiver name */
+                    /*
+                    Set Bold Font
+                     */
+                    sb5.setSpan(new StyleSpan(Typeface.BOLD), 0,
+                            notificationList.get(position).getSenderName().length(),
+                            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                    /* receiver name */
                     sb5.setSpan(new ClickableSpan() {
                                     @Override
                                     public void onClick(View widget) {
-
                                         if (notificationList.get(mProductHolder.getAdapterPosition()).getLayoutType().equalsIgnoreCase("MyAction") ||
                                                 notificationList.get(mProductHolder.getAdapterPosition()).getLayoutType().equalsIgnoreCase("MyNotification")) {
                                             mActivity.startActivity(new Intent(mActivity, UserProfile.class));
@@ -2259,10 +2358,10 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
 
                                     @Override
                                     public void updateDrawState(TextPaint ds) {
-                                        ds.setUnderlineText(false);
+                                        /*ds.setUnderlineText(false);
                                         ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
                                         ds.setFakeBoldText(true);
-                                        ds.setTextSize((float) 31.0);
+                                        ds.setTextSize((float) 31.0);*/
                                     }
                                 }, notificationList.get(position).getSenderName().length() +
                                     notificationList.get(position).getAction().length() + 2,
@@ -2272,6 +2371,16 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                                     notificationList.get(position).getReceiverName().length()
                             , Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
+                    /*
+                    Set Bold Font
+                     */
+                    sb5.setSpan(new StyleSpan(Typeface.BOLD), notificationList.get(position).getSenderName().length() +
+                                    notificationList.get(position).getAction().length() + +2,
+
+                            notificationList.get(position).getSenderName().length() +
+                                    notificationList.get(position).getAction().length() + 2 +
+                                    notificationList.get(position).getReceiverName().length(),
+                            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
             /* product name */
                     sb5.setSpan(new ClickableSpan() {
                                     @Override
@@ -2283,10 +2392,10 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
 
                                     @Override
                                     public void updateDrawState(TextPaint ds) {
-                                        ds.setUnderlineText(false);
+                                        /*ds.setUnderlineText(false);
                                         ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
                                         ds.setFakeBoldText(true);
-                                        ds.setTextSize((float) 31.0);
+                                        ds.setTextSize((float) 31.0);*/
                                     }
                                 }, notificationList.get(position).getSenderName().length() + notificationList.get(position).getAction().length() +
                                     notificationList.get(position).getReceiverName().length() + 3,
@@ -2296,6 +2405,18 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                                     notificationList.get(position).getReceiverName().length() + 3 +
                                     notificationList.get(position).getProductName().length() + 1
                             , Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                    /*
+                    Set Bold Font
+                     */
+                    sb5.setSpan(new StyleSpan(Typeface.BOLD), notificationList.get(position).getSenderName().length() + notificationList.get(position).getAction().length() +
+                                    notificationList.get(position).getReceiverName().length() + 3,
+
+                            notificationList.get(position).getSenderName().length() +
+                                    notificationList.get(position).getAction().length() +
+                                    notificationList.get(position).getReceiverName().length() + 3 +
+                                    notificationList.get(position).getProductName().length() + 1,
+                            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                 }
 
                 mProductHolder.mProductActionName.setSingleLine(false);
@@ -2634,7 +2755,8 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                     sb6.append(notificationList.get(position).getServiceName());
                     sb6.append(" Service");
 
-            /* sender name*/
+
+                    /* sender name*/
                     sb6.setSpan(new ClickableSpan() {
                         @Override
                         public void onClick(View widget) {
@@ -2652,15 +2774,22 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
 
                         @Override
                         public void updateDrawState(TextPaint ds) {
-                            ds.setUnderlineText(false);
+                            /*ds.setUnderlineText(false);
                             ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
                             ds.setFakeBoldText(true);
                             ds.setTextSize((float) 31.0);
-                            Log.i("TextSize", "->" + ds.getTextSize());
+                            Log.i("TextSize", "->" + ds.getTextSize());*/
                         }
                     }, 0, notificationList.get(position).getSenderName().length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
-            /*service name*/
+                    /*
+                    Set Bold Font
+                     */
+                    sb6.setSpan(new StyleSpan(Typeface.BOLD), 0,
+                            notificationList.get(position).getSenderName().length(),
+                            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                    /*service name*/
                     sb6.setSpan(new ClickableSpan() {
                                     @Override
                                     public void onClick(View widget) {
@@ -2671,20 +2800,31 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
 
                                     @Override
                                     public void updateDrawState(TextPaint ds) {
-                                        ds.setUnderlineText(false);
+                                        /*ds.setUnderlineText(false);
                                         ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
                                         ds.setFakeBoldText(true);
-                                        ds.setTextSize((float) 31.0);
+                                        ds.setTextSize((float) 31.0);*/
                                     }
                                 }, notificationList.get(position).getSenderName().length() +
-                                    notificationList.get(position).getAction().length() +
-                                    +2,
+                                    notificationList.get(position).getAction().length() + 2,
 
                             notificationList.get(position).getSenderName().length() +
                                     notificationList.get(position).getAction().length() +
                                     2 +
                                     notificationList.get(position).getServiceName().length() + 1
                             , Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                     /*
+                    Set Bold Font
+                     */
+                    sb6.setSpan(new StyleSpan(Typeface.BOLD), notificationList.get(position).getSenderName().length() +
+                                    notificationList.get(position).getAction().length() + 2,
+
+                            notificationList.get(position).getSenderName().length() +
+                                    notificationList.get(position).getAction().length() +
+                                    2 +
+                                    notificationList.get(position).getServiceName().length() + 1,
+                            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                 } else {
                     sb6.append(notificationList.get(position).getSenderName());
                     sb6.append(" ");
@@ -2713,15 +2853,22 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
 
                         @Override
                         public void updateDrawState(TextPaint ds) {
-                            ds.setUnderlineText(false);
+                           /* ds.setUnderlineText(false);
                             ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
                             ds.setFakeBoldText(true);
                             ds.setTextSize((float) 31.0);
-                            Log.i("TextSize", "->" + ds.getTextSize());
+                            Log.i("TextSize", "->" + ds.getTextSize());*/
                         }
                     }, 0, notificationList.get(position).getSenderName().length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
-            /* receiver name */
+                    /*
+                    Set Bold Font
+                     */
+                    sb6.setSpan(new StyleSpan(Typeface.BOLD), 0,
+                            notificationList.get(position).getSenderName().length(),
+                            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                    /* receiver name */
                     sb6.setSpan(new ClickableSpan() {
                                     @Override
                                     public void onClick(View widget) {
@@ -2740,17 +2887,27 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
 
                                     @Override
                                     public void updateDrawState(TextPaint ds) {
-                                        ds.setUnderlineText(false);
+                                        /*ds.setUnderlineText(false);
                                         ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
                                         ds.setFakeBoldText(true);
-                                        ds.setTextSize((float) 31.0);
+                                        ds.setTextSize((float) 31.0);*/
                                     }
                                 }, notificationList.get(position).getSenderName().length() + notificationList.get(position).getAction().length() + 2,
                             notificationList.get(position).getSenderName().length() +
                                     notificationList.get(position).getAction().length() + 2 + notificationList.get(position).getReceiverName().length()
                             , Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
-            /* service name */
+                    /*
+                    Set Bold Font
+                     */
+                    sb6.setSpan(new StyleSpan(Typeface.BOLD), notificationList.get(position).getSenderName().length() +
+                                    notificationList.get(position).getAction().length() + 2,
+                            notificationList.get(position).getSenderName().length() +
+                                    notificationList.get(position).getAction().length() + 2 +
+                                    notificationList.get(position).getReceiverName().length(),
+                            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                    /* service name */
                     sb6.setSpan(new ClickableSpan() {
                                     @Override
                                     public void onClick(View widget) {
@@ -2761,10 +2918,10 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
 
                                     @Override
                                     public void updateDrawState(TextPaint ds) {
-                                        ds.setUnderlineText(false);
+                                        /*ds.setUnderlineText(false);
                                         ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
                                         ds.setFakeBoldText(true);
-                                        ds.setTextSize((float) 31.0);
+                                        ds.setTextSize((float) 31.0);*/
                                     }
                                 }, notificationList.get(position).getSenderName().length() + notificationList.get(position).getAction().length() +
                                     notificationList.get(position).getReceiverName().length() + 3,
@@ -2774,6 +2931,18 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                                     notificationList.get(position).getReceiverName().length() + 3 +
                                     notificationList.get(position).getServiceName().length() + 1
                             , Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                    /*
+                    Set Bold Font
+                     */
+                    sb6.setSpan(new StyleSpan(Typeface.BOLD), notificationList.get(position).getSenderName().length() +
+                                    notificationList.get(position).getAction().length() +
+                                    notificationList.get(position).getReceiverName().length() + 3,
+                            notificationList.get(position).getSenderName().length() +
+                                    notificationList.get(position).getAction().length() +
+                                    notificationList.get(position).getReceiverName().length() + 3 +
+                                    notificationList.get(position).getServiceName().length() + 1,
+                            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                 }
 
                 mServiceHolder.mServiceActionName.setSingleLine(false);
@@ -3119,13 +3288,20 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
 
                     @Override
                     public void updateDrawState(TextPaint ds) {
-                        ds.setUnderlineText(false);
+                        /*ds.setUnderlineText(false);
                         ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
                         ds.setFakeBoldText(true);
                         ds.setTextSize((float) 31.0);
-                        Log.i("TextSize", "->" + ds.getTextSize());
+                        Log.i("TextSize", "->" + ds.getTextSize());*/
                     }
                 }, 0, notificationList.get(position).getSenderName().length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                 /*
+                    Set Bold Font
+                     */
+                sb7.setSpan(new StyleSpan(Typeface.BOLD), 0,
+                        notificationList.get(position).getSenderName().length(),
+                        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
                 mPostHolder.mAction.setSingleLine(false);
                 mPostHolder.mAction.setText(sb7);
@@ -3265,13 +3441,20 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
 
                     @Override
                     public void updateDrawState(TextPaint ds) {
-                        ds.setUnderlineText(false);
+                       /* ds.setUnderlineText(false);
                         ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
                         ds.setFakeBoldText(true);
                         ds.setTextSize((float) 31.0);
-                        Log.i("TextSize", "->" + ds.getTextSize());
+                        Log.i("TextSize", "->" + ds.getTextSize());*/
                     }
                 }, 0, notificationList.get(position).getSenderName().length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                 /*
+                    Set Bold Font
+                     */
+                sb8.setSpan(new StyleSpan(Typeface.BOLD), 0,
+                        notificationList.get(position).getSenderName().length(),
+                        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
                 mSearchHolder.mSearchActionName.setSingleLine(false);
                 mSearchHolder.mSearchActionName.setText(sb8);
@@ -3894,15 +4077,22 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
 
                     @Override
                     public void updateDrawState(TextPaint ds) {
-                        ds.setUnderlineText(false);
+                        /*ds.setUnderlineText(false);
                         ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
                         ds.setFakeBoldText(true);
                         ds.setTextSize((float) 31.0);
-                        Log.i("TextSize", "->" + ds.getTextSize());
+                        Log.i("TextSize", "->" + ds.getTextSize());*/
                     }
                 }, 0, notificationList.get(position).getSenderName().length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
-        /* vehicle name */
+                   /*
+                    Set Bold Font
+                     */
+                sb10.setSpan(new StyleSpan(Typeface.BOLD), 0,
+                        notificationList.get(position).getSenderName().length(),
+                        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                /* vehicle name */
                 sb10.setSpan(new ClickableSpan() {
                                  @Override
                                  public void onClick(View widget) {
@@ -3914,10 +4104,10 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
 
                                  @Override
                                  public void updateDrawState(TextPaint ds) {
-                                     ds.setUnderlineText(false);
+                                     /*ds.setUnderlineText(false);
                                      ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
                                      ds.setFakeBoldText(true);
-                                     ds.setTextSize((float) 31.0);
+                                     ds.setTextSize((float) 31.0);*/
                                  }
                              }, notificationList.get(position).getSenderName().length() +
                                 notificationList.get(position).getAction().length() + 2,
@@ -3927,7 +4117,17 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                                 notificationList.get(position).getUpVehicleTitle().length()
                         , Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
-        /* group name */
+                    /*
+                    Set Bold Font
+                     */
+                sb10.setSpan(new StyleSpan(Typeface.BOLD), notificationList.get(position).getSenderName().length() +
+                                notificationList.get(position).getAction().length() + 2,
+                        notificationList.get(position).getSenderName().length() +
+                                notificationList.get(position).getAction().length() + 2 +
+                                notificationList.get(position).getUpVehicleTitle().length(),
+                        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                 /* group name */
                 sb10.setSpan(new ClickableSpan() {
                                  @Override
                                  public void onClick(View widget) {
@@ -3951,10 +4151,10 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
 
                                  @Override
                                  public void updateDrawState(TextPaint ds) {
-                                     ds.setUnderlineText(false);
+                                     /*ds.setUnderlineText(false);
                                      ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
                                      ds.setFakeBoldText(true);
-                                     ds.setTextSize((float) 31.0);
+                                     ds.setTextSize((float) 31.0);*/
                                  }
                              }, notificationList.get(position).getSenderName().length() +
                                 notificationList.get(position).getAction().length() +
@@ -3966,11 +4166,23 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                                 notificationList.get(position).getGroupName().length() + 1
                         , Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
+                /*
+                    Set Bold Font
+                     */
+                sb10.setSpan(new StyleSpan(Typeface.BOLD), notificationList.get(position).getSenderName().length() +
+                                notificationList.get(position).getAction().length() +
+                                notificationList.get(position).getUpVehicleTitle().length() + 14,
+                        notificationList.get(position).getSenderName().length() +
+                                notificationList.get(position).getAction().length() +
+                                notificationList.get(position).getUpVehicleTitle().length() + 14 +
+                                notificationList.get(position).getGroupName().length() + 1,
+                        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+
                 mUpVehicleHolder.mActionName.setSingleLine(false);
                 mUpVehicleHolder.mActionName.setText(sb10);
                 mUpVehicleHolder.mActionName.setMovementMethod(LinkMovementMethod.getInstance());
                 mUpVehicleHolder.mActionName.setHighlightColor(Color.TRANSPARENT);
-
 
                 mUpVehicleHolder.mActionTime.setText(notificationList.get(position).getDateTime());
                 mUpVehicleHolder.mVehicleName.setText(notificationList.get(position).getUpVehicleTitle());

@@ -412,6 +412,7 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
                 if (!mProfileAboutResponse.getSuccess().isEmpty()) {
                     dp = mProfileAboutResponse.getSuccess().get(0).getProfilePic();
                     mUserName.setText(mProfileAboutResponse.getSuccess().get(0).getUsername());
+                    setTitle(mProfileAboutResponse.getSuccess().get(0).getUsername());
                     names = mProfileAboutResponse.getSuccess().get(0).getUsername();
                     mWorkedAt.setText(mProfileAboutResponse.getSuccess().get(0).getCompanyName());
                     RegID = mProfileAboutResponse.getSuccess().get(0).getRegId();
