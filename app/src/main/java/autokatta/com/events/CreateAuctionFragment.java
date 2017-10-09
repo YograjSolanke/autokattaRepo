@@ -157,9 +157,10 @@ public class CreateAuctionFragment extends Fragment implements View.OnClickListe
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 recieve = input.getText().toString();
-                                if (recieve.equals("") || recieve.startsWith(" ") && recieve.endsWith(" "))
-                                    CustomToast.customToast(getActivity(), "Please enter clause");
-                                else {
+                                if (recieve.equals("") || recieve.startsWith(" ") && recieve.endsWith(" ")) {
+                                    if (isAdded())
+                                        CustomToast.customToast(getActivity(), "Please enter clause");
+                                } else {
                                     apiCall.addSpecialClauses("setClause", recieve);
                                 }
 
@@ -179,7 +180,8 @@ public class CreateAuctionFragment extends Fragment implements View.OnClickListe
 
             case (R.id.btncreate):
                 if (!mConnectionDetector.isConnectedToInternet()) {
-                    CustomToast.customToast(getActivity(), getString(R.string.no_internet));
+                    if (isAdded())
+                        CustomToast.customToast(getActivity(), getString(R.string.no_internet));
 
                 } else {
                     Boolean flag = false;
@@ -201,9 +203,6 @@ public class CreateAuctionFragment extends Fragment implements View.OnClickListe
 
                     auctionCategory = auctionCategorySpinner.getSelectedItem().toString();
                     stockLocation = stockLocationSpinner.getSelectedItem().toString();
-                    Log.i("category", "->" + auctionCategory);
-                    Log.i("states", "->" + stockLocation);
-
 
                     if (!location.isEmpty()) {
 
@@ -255,10 +254,9 @@ public class CreateAuctionFragment extends Fragment implements View.OnClickListe
                         enddate.requestFocus();
                         enddate.setError("Enter valid Date");
 
-                    } else if (stdate.equals(eddate) && sttime.equals(edtime)) {
+                    } else if (stdate.equals(eddate) && !validObj.startTimeEndTimeValidation(sttime, edtime)) {
                         endtime.setError("End time should be greater than start time");
                         endtime.requestFocus();
-
                     } else if (address.getVisibility() == View.VISIBLE && location.isEmpty()) {
                         address.setError("Enter Location");
                         address.requestFocus();
@@ -268,10 +266,12 @@ public class CreateAuctionFragment extends Fragment implements View.OnClickListe
                         address.requestFocus();
 
                     } else if (auctionCategory.equalsIgnoreCase("-Select Stock Type-")) {
-                        CustomToast.customToast(getActivity(), "Please select stock type for auction");
+                        if (isAdded())
+                            CustomToast.customToast(getActivity(), "Please select stock type for auction");
                         auctionCategorySpinner.requestFocus();
                     } else if (stockLocation.equalsIgnoreCase("-Select State-") || stockLocation.equals("")) {
-                        CustomToast.customToast(getActivity(), "Please select states ");
+                        if (isAdded())
+                            CustomToast.customToast(getActivity(), "Please select states ");
                         stockLocationSpinner.requestFocus();
 
                     } else {
@@ -301,9 +301,10 @@ public class CreateAuctionFragment extends Fragment implements View.OnClickListe
 
                         System.out.println(checkedids + "positionArray " + positionArrayList.size());
 
-                        if (ids.equals(""))
-                            CustomToast.customToast(getActivity(), "Please select atleast single clause");
-                        else {
+                        if (ids.equals("")) {
+                            if (isAdded())
+                                CustomToast.customToast(getActivity(), "Please select atleast single clause");
+                        } else {
                             final Dialog dialog = new Dialog(getActivity());
                             dialog.setTitle("Auction");
                             dialog.setContentView(R.layout.dailogbox);
@@ -413,7 +414,8 @@ public class CreateAuctionFragment extends Fragment implements View.OnClickListe
 
                         String id = moduleResponse.getSuccess().getClauseID().toString();
                         Log.i("ClauseId", "->" + id);
-                        CustomToast.customToast(getActivity(), "Clause Added Successfully");
+                        if (isAdded())
+                            CustomToast.customToast(getActivity(), "Clause Added Successfully");
                         apiCall.getSpecialClauses("getClause", "");
                     }
 
@@ -422,7 +424,8 @@ public class CreateAuctionFragment extends Fragment implements View.OnClickListe
                     if (createResponse.getSuccess() != null) {
                         final int Aucid = createResponse.getSuccess().getAuctionID();
                         Log.i("AuctId", "->" + Aucid);
-                        CustomToast.customToast(getActivity(), "Auction Created Successfully");
+                        if (isAdded())
+                            CustomToast.customToast(getActivity(), "Auction Created Successfully");
 
                         if (Aucid != 0) {
                             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
@@ -466,7 +469,8 @@ public class CreateAuctionFragment extends Fragment implements View.OnClickListe
                                     .setNegativeButton("Later", new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int id) {
 
-                                            CustomToast.customToast(getActivity(), "Auction saved in my saved event");
+                                            if (isAdded())
+                                                CustomToast.customToast(getActivity(), "Auction saved in my saved event");
                                             Intent intent = new Intent(getActivity(), MySavedAuctionEventActivity.class);
                                             getActivity().startActivity(intent);
                                             getActivity().finish();

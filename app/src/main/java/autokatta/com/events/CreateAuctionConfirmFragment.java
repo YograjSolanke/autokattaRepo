@@ -16,7 +16,6 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.Toast;
 
 import java.net.SocketTimeoutException;
 import java.util.ArrayList;
@@ -35,6 +34,7 @@ import retrofit2.Response;
  * Created by ak-003 on 4/4/17.
  */
 
+@SuppressWarnings("unchecked")
 public class CreateAuctionConfirmFragment extends Fragment implements RequestNotifier {
 
     public CreateAuctionConfirmFragment() {
@@ -48,8 +48,7 @@ public class CreateAuctionConfirmFragment extends Fragment implements RequestNot
     String contactnumber;
     String bundleAuctionTitle, bundleAuctionStartDate, bundleAuctionStartTime, bundleAuctionEndDate, bundleAuctionEndTime, bundleSpecialClauses;
     private int bundleAuctionId = 0;
-    private EditText editvehicle, auctionTitle, startDate, startTime, endDate, endTime;
-    private Integer noOfVehicles;
+    private EditText editvehicle;
 
     List<AuctionAllVehicleData> finalVehiclesData = new ArrayList<>();
     AuctionConfirmAdapter adapter;
@@ -66,11 +65,11 @@ public class CreateAuctionConfirmFragment extends Fragment implements RequestNot
 
         contactnumber = getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).getString("loginContact", "7841023392");
 
-        auctionTitle = (EditText) root.findViewById(R.id.typeofauction2);
-        startDate = (EditText) root.findViewById(R.id.startdate);
-        startTime = (EditText) root.findViewById(R.id.stattime);
-        endDate = (EditText) root.findViewById(R.id.enddate);
-        endTime = (EditText) root.findViewById(R.id.endtime);
+        EditText auctionTitle = (EditText) root.findViewById(R.id.typeofauction2);
+        EditText startDate = (EditText) root.findViewById(R.id.startdate);
+        EditText startTime = (EditText) root.findViewById(R.id.stattime);
+        EditText endDate = (EditText) root.findViewById(R.id.enddate);
+        EditText endTime = (EditText) root.findViewById(R.id.endtime);
         editvehicle = (EditText) root.findViewById(R.id.editvehicle);
         vehiclelistview = (ListView) root.findViewById(R.id.vehiclelistview);
 
@@ -90,7 +89,7 @@ public class CreateAuctionConfirmFragment extends Fragment implements RequestNot
         bundleAuctionEndDate = b.getString("enddate");
         bundleAuctionEndTime = b.getString("endtime");
         bundleSpecialClauses = b.getString("specialClauses");
-        noOfVehicles = Integer.valueOf(b.getString("vehiclecount"));
+        Integer noOfVehicles = Integer.valueOf(b.getString("vehiclecount"));
 
         finalVehiclesData = (ArrayList<AuctionAllVehicleData>) b.getSerializable("finalVehiclesData");
 
@@ -149,16 +148,14 @@ public class CreateAuctionConfirmFragment extends Fragment implements RequestNot
 
                 List<AuctionAllVehicleData> vehicleIdsCame = adapter.checkboxVehicleIds();
 
-                System.out.println("vehicleIdsCame.size()" + vehicleIdsCame.size() + "ShowHide" + ShowHide);
-
-                if (vehicleIdsCame.size() == 0 || ShowHide == null || ShowHide.isEmpty() || ShowHide.equals(""))
-                    Toast.makeText(getActivity(), "Please select vehicle to confirm", Toast.LENGTH_LONG).show();
-
-                else if (vehicleIdsCame.size() != count) {
-                    Toast.makeText(getActivity(), "Please save start and reserved price", Toast.LENGTH_LONG).show();
+                if (vehicleIdsCame.size() == 0 || ShowHide == null || ShowHide.isEmpty() || ShowHide.equals("")) {
+                    if (isAdded())
+                        CustomToast.customToast(getActivity(), "Please select vehicle to confirm");
+                } else if (vehicleIdsCame.size() != count) {
+                    if (isAdded())
+                        CustomToast.customToast(getActivity(), "Please save start and reserved price");
 
                 } else {
-                    Toast.makeText(getActivity(), "Vehicle ids=" + vehicleIdsCame, Toast.LENGTH_LONG);
 
                     for (int i = 0; i < vehicleIdsCame.size(); i++) {
                         AuctionAllVehicleData obj = vehicleIdsCame.get(i);
@@ -231,7 +228,8 @@ public class CreateAuctionConfirmFragment extends Fragment implements RequestNot
     public void notifyString(String str) {
         if (str != null) {
             if (str.startsWith("Success")) {
-                CustomToast.customToast(getActivity(), "Auction Created Successfully");
+                if (isAdded())
+                    CustomToast.customToast(getActivity(), "Auction Created Successfully");
 
                 startActivity(new Intent(getActivity(), Create_Event.class));
                 getActivity().finish();

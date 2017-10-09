@@ -61,6 +61,7 @@ import retrofit2.Response;
  * Created by ak-003 on 1/4/17.
  */
 
+@SuppressWarnings("unchecked")
 public class AddVehiclesForAuctionFragment extends Fragment implements RequestNotifier, View.OnTouchListener, View.OnClickListener, MaterialIntroListener {
 
     public AddVehiclesForAuctionFragment() {
@@ -80,7 +81,7 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
     Spinner selectAuctionsSpinner;
     String className, bundleAuctionTitle, bundleAuctionStartDate, bundleAuctionStartTime, bundleAuctionEndDate,
             bundleAuctionEndTime, bundleIds, bundleClause, bundleCategory, bundleLocation;
-    ArrayList<Boolean> bundlepositionArray = new ArrayList<>();
+    List<Boolean> bundlepositionArray = new ArrayList<>();
     String auctionTitleUpdate, startDateUpdate, startTimeUpdate, endDateUpdate, endTimeUpdate, specialClausesUpdate, specialClausesIDUpdate;
 
     GenericFunctions genericFunctions = new GenericFunctions();
@@ -416,10 +417,6 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
                 SimpleDateFormat tm = new SimpleDateFormat("hh:mm a", Locale.getDefault());
                 String time = tm.format(Calendar.getInstance().getTime());
 
-                System.out.println("current date=" + dateString);
-                System.out.println("current time=" + time);
-
-
                 auctionTitleUpdate = auctionTitle.getText().toString();
                 startDateUpdate = startDate.getText().toString();
                 startTimeUpdate = startTime.getText().toString();
@@ -495,10 +492,13 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
                         finalVehiclesData.add(adminVehiclesData.get(i));
                     }
 
-                    if (finalVehiclesData.size() == 0)
-                        CustomToast.customToast(getActivity(), "Please select vehicle(s)");
-                    else {
-                        CustomToast.customToast(getActivity(), "Please confirm vehicles that you selected now");
+                    if (finalVehiclesData.size() == 0) {
+                        if (isAdded())
+                            CustomToast.customToast(getActivity(), "Please select vehicle(s)");
+                    } else {
+                        if (isAdded())
+                            CustomToast.customToast(getActivity(), "Please confirm vehicles that you selected now");
+
                         Bundle bundle = new Bundle();
                         bundle.putSerializable("finalVehiclesData", (Serializable) finalVehiclesData);
                         bundle.putInt("auction_id", auction_id);
@@ -574,9 +574,9 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
                         if (!ExcelsheetName.equals("")) {
                             getVehiclesByExcelSheet(ExcelsheetName);
                             dialog.dismiss();
-                            //Toast.makeText(getActivity(), "Web Service call to get vehicles", Toast.LENGTH_SHORT).show();
                         } else {
-                            CustomToast.customToast(getActivity(), "Please select checkbox");
+                            if (isAdded())
+                                CustomToast.customToast(getActivity(), "Please select checkbox");
                         }
 
                     }
@@ -937,7 +937,8 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
     public void notifyString(String str) {
         if (str != null) {
             if (str.startsWith("Success")) {
-                CustomToast.customToast(getActivity(), "Update Successfull");
+                if (isAdded())
+                    CustomToast.customToast(getActivity(), "Update Successfull");
                 auctionTitle.setEnabled(false);
                 startDate.setEnabled(false);
                 startTime.setEnabled(false);
@@ -965,6 +966,7 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
                 .performClick(true)
                 .setInfoText(text)
                 .setTarget(view)
+                .setIdempotent(true)
                 .setUsageId(id) //THIS SHOULD BE UNIQUE ID
                 .show();
     }
@@ -973,4 +975,6 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
     public void onUserClicked(String s) {
 
     }
+
+
 }

@@ -100,9 +100,9 @@ public class SavedAuctionFragment extends Fragment implements SwipeRefreshLayout
                     for (MySavedAuctionResponse.Success success : savedAuctionResponse.getSuccess()) {
                         success.setAuctionId(success.getAuctionId());
                         success.setActionTitle(success.getActionTitle());
-                        success.setStartDate(success.getStartDate());
+                        //success.setStartDate(success.getStartDate());
                         success.setStartTime(success.getStartTime());
-                        success.setEndDate(success.getEndDate());
+                        //success.setEndDate(success.getEndDate());
                         success.setEndTime(success.getEndTime());
                         success.setNoOfVehicles(success.getNoOfVehicles());
                         success.setSpecialClauses(success.getSpecialClauses());
@@ -118,37 +118,26 @@ public class SavedAuctionFragment extends Fragment implements SwipeRefreshLayout
 
                         try {
                             TimeZone utc = TimeZone.getTimeZone("etc/UTC");
-                            //     TimeZone utc1 = TimeZone.getTimeZone("etc/UTC");
+
                             //format of date coming from services
                             DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-                            //       DateFormat inputFormat1 = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss a", Locale.getDefault());
-                        /*DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",
-                                Locale.getDefault());*/
+
                             inputFormat.setTimeZone(utc);
-                            //     inputFormat1.setTimeZone(utc1);
 
                             //format of date which we want to show
                             DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
-                            //           DateFormat outputFormat1 = new SimpleDateFormat("dd MMM yyyy hh:mm:ss a", Locale.getDefault());
-                        /*DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy hh:mm aa",
-                                Locale.getDefault());*/
+
                             outputFormat.setTimeZone(utc);
-                            //             outputFormat1.setTimeZone(utc1);
 
                             Date date = inputFormat.parse(success.getStartDate());
                             Date date1 = inputFormat.parse(success.getEndDate());
-                            //              Date date2 = inputFormat.parse(successExchange.getStartDateTime());
-                            //               Date date3 = inputFormat.parse(successExchange.getEndDateTime());
-                            //System.out.println("jjj"+date);
+
                             String output = outputFormat.format(date);
                             String output1 = outputFormat.format(date1);
-                            //              String output2 = outputFormat.format(date2);
-                            //              String output3 = outputFormat.format(date3);
-                            //System.out.println(mainList.get(i).getDate()+" jjj " + output);
+
                             success.setStartDate(output);
                             success.setEndDate(output1);
-                            //            successExchange.setEndDateTime(output3);
-                            //            successExchange.setStartDateTime(output2);
+
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -161,11 +150,13 @@ public class SavedAuctionFragment extends Fragment implements SwipeRefreshLayout
                     adapter.notifyDataSetChanged();
                 }
             } else {
-                CustomToast.customToast(getActivity(), getString(R.string._404));
+                if (isAdded())
+                    CustomToast.customToast(getActivity(), getString(R.string._404));
             }
 
         } else {
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string.no_response));
         }
     }
 
@@ -173,19 +164,24 @@ public class SavedAuctionFragment extends Fragment implements SwipeRefreshLayout
     public void notifyError(Throwable error) {
         mSwipeRefreshLayout.setRefreshing(false);
         if (error instanceof SocketTimeoutException) {
-            CustomToast.customToast(getActivity(), getString(R.string._404_));
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string._404_));
             //   showMessage(getActivity(), getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string.no_response));
             // showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string.no_response));
             //   showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
-            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string.no_internet));
             //   errorMessage(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
-            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string.no_internet));
             //   errorMessage(getActivity(), getString(R.string.no_internet));
         } else {
             Log.i("Check Class-"
