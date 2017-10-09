@@ -80,7 +80,7 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
     Spinner selectAuctionsSpinner;
     String className, bundleAuctionTitle, bundleAuctionStartDate, bundleAuctionStartTime, bundleAuctionEndDate,
             bundleAuctionEndTime, bundleIds, bundleClause, bundleCategory, bundleLocation;
-    boolean bundlepositionArray[];
+    ArrayList<Boolean> bundlepositionArray = new ArrayList<>();
     String auctionTitleUpdate, startDateUpdate, startTimeUpdate, endDateUpdate, endTimeUpdate, specialClausesUpdate, specialClausesIDUpdate;
 
     GenericFunctions genericFunctions = new GenericFunctions();
@@ -97,6 +97,7 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
     ApiCall mApiCall;
     CollapsingToolbarLayout collapsingToolbar;
     private int auction_id = 0, singleAuctionId = 0;
+    boolean[] newArray;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -118,7 +119,16 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
         bundleClause = b.getString("cluase");
         bundleCategory = b.getString("category");
         bundleLocation = b.getString("location");
-        bundlepositionArray = b.getBooleanArray("positionArray");
+
+        bundlepositionArray = (ArrayList<Boolean>) b.getSerializable("positionArray");
+        if (bundlepositionArray != null) {
+            newArray = new boolean[bundlepositionArray.size()];
+
+            for (int i = 0; i < bundlepositionArray.size(); i++) {
+                newArray[i] = bundlepositionArray.get(i);
+            }
+        }
+
 
         specialClausesIDUpdate = bundleIds;
         specialClausesUpdate = bundleClause;
@@ -276,25 +286,25 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
                 AlertDialog dialog = new AlertDialog.Builder(getActivity())
                         .setTitle("Select Special clauses")
                         .setCancelable(true)
-                        .setMultiChoiceItems(getIdsArray, bundlepositionArray, new DialogInterface.OnMultiChoiceClickListener() {
+                        .setMultiChoiceItems(getIdsArray, newArray, new DialogInterface.OnMultiChoiceClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int indexSelected, boolean isChecked) {
                                 if (isChecked) {
                                     selectedIds.add(getIds.get(indexSelected));
                                     seletedItems.add(indexSelected);
-                                    bundlepositionArray[indexSelected] = true;
+                                    newArray[indexSelected] = true;
                                 } else if (seletedItems.contains(indexSelected)) {
                                     selectedIds.remove(getIds.get(indexSelected));
                                     seletedItems.remove(Integer.valueOf(indexSelected));
-                                    bundlepositionArray[indexSelected] = false;
+                                    newArray[indexSelected] = false;
                                 }
                             }
                         }).setPositiveButton("OK", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int id) {
                                 Toast.makeText(getActivity(), "Selected clauses" + selectedIds, Toast.LENGTH_LONG).show();
-                                for (int i = 0; i < bundlepositionArray.length; i++) {
-                                    if (bundlepositionArray[i]) {
+                                for (int i = 0; i < newArray.length; i++) {
+                                    if (newArray[i]) {
                                         if (specialClausesIDUpdate.equals("")) {
                                             specialClausesIDUpdate = getIds.get(i);
                                             specialClausesUpdate = getClauses.get(i);
@@ -400,7 +410,7 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
             case R.id.donecheck:
 
                 //date comparision
-                SimpleDateFormat sdf = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
                 Date now = new Date();
                 String dateString = sdf.format(now);
                 SimpleDateFormat tm = new SimpleDateFormat("hh:mm a", Locale.getDefault());

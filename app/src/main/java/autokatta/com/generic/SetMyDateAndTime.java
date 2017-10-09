@@ -44,18 +44,13 @@ public class SetMyDateAndTime implements DatePickerDialog.OnDateSetListener, Tim
             key = "timeEvent";
             new TimePickerDialog(context, this, myCalendar.get(Calendar.HOUR_OF_DAY), myCalendar.get(Calendar.MINUTE), true)
                     .show();
-
         }
-
-
     }
 
     @Override
     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-        // this.editText.setText();
 
-        //  String myFormat = "MMM dd, yyyy"; //In which you need put here
-        SimpleDateFormat sdformat = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
+        SimpleDateFormat sdformat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
         myCalendar.set(Calendar.YEAR, year);
         myCalendar.set(Calendar.MONTH, monthOfYear);
         myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);

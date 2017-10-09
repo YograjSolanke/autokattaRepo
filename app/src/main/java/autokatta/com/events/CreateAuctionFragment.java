@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
@@ -32,6 +31,7 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import java.io.Serializable;
 import java.net.SocketTimeoutException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -72,7 +72,7 @@ public class CreateAuctionFragment extends Fragment implements View.OnClickListe
     Button addmore, create, cancel;
     String myContact;
     SpecialCluasesAdapter adapter;
-    boolean positionArray[];
+    List positionArrayList = new ArrayList<>();
     String recieve = null;
     List<Integer> checkedids = new ArrayList<>();
     List<String> checkedspecialclauses = new ArrayList<>();
@@ -152,7 +152,6 @@ public class CreateAuctionFragment extends Fragment implements View.OnClickListe
                         LinearLayout.LayoutParams.MATCH_PARENT);
                 input.setLayoutParams(lp);
                 alertDialog.setView(input);
-                // alertDialog.setIcon(R.drawable.key);
 
                 alertDialog.setPositiveButton("Add",
                         new DialogInterface.OnClickListener() {
@@ -161,8 +160,6 @@ public class CreateAuctionFragment extends Fragment implements View.OnClickListe
                                 if (recieve.equals("") || recieve.startsWith(" ") && recieve.endsWith(" "))
                                     CustomToast.customToast(getActivity(), "Please enter clause");
                                 else {
-                                    //new AddClauseTask().execute();
-
                                     apiCall.addSpecialClauses("setClause", recieve);
                                 }
 
@@ -196,7 +193,7 @@ public class CreateAuctionFragment extends Fragment implements View.OnClickListe
 
 
                     //current date
-                    SimpleDateFormat sdf = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
                     Date now = new Date();
                     String dateString = sdf.format(now);
                     SimpleDateFormat tm = new SimpleDateFormat("hh:mm a", Locale.getDefault());
@@ -281,7 +278,7 @@ public class CreateAuctionFragment extends Fragment implements View.OnClickListe
 
                         checkedids = adapter.checkedids();
                         checkedspecialclauses = adapter.checkedspecialclauses();
-                        positionArray = adapter.positionArray();
+                        positionArrayList = adapter.positionArray();
 
                         for (int i = 0; i < checkedids.size(); i++) {
                             int idint = checkedids.get(i);
@@ -302,7 +299,7 @@ public class CreateAuctionFragment extends Fragment implements View.OnClickListe
                             }
                         }
 
-                        System.out.println(checkedids + "positionArray " + positionArray.length);
+                        System.out.println(checkedids + "positionArray " + positionArrayList.size());
 
                         if (ids.equals(""))
                             CustomToast.customToast(getActivity(), "Please select atleast single clause");
@@ -452,7 +449,7 @@ public class CreateAuctionFragment extends Fragment implements View.OnClickListe
                                             b.putString("category", auctionCategory);
                                             b.putString("location", stockLocation);
                                             b.putString("location", location);
-                                            b.putBooleanArray("positionArray", positionArray);
+                                            b.putSerializable("positionArray", (Serializable) positionArrayList);
                                             b.putString("noofvehicles", String.valueOf(0));
 
                                             AddVehiclesForAuctionFragment frag = new AddVehiclesForAuctionFragment();
@@ -551,9 +548,8 @@ public class CreateAuctionFragment extends Fragment implements View.OnClickListe
     private class SpecialCluasesAdapter extends BaseAdapter {
 
         Activity activity;
-        FragmentActivity fragmentActivity;
         List<String> ids, clauses;
-        boolean positionArray[];
+        List<Boolean> positionArrayList;
         private LayoutInflater inflater = null;
         List<Integer> checked_ids;
         List<String> checked_clauses;
@@ -564,19 +560,18 @@ public class CreateAuctionFragment extends Fragment implements View.OnClickListe
             this.ids = ids;
             this.clauses = clauses;
 
-            positionArray = new boolean[ids.size()];
-            checked_ids = new ArrayList<Integer>(ids.size());
-            checked_clauses = new ArrayList<String>(ids.size());
+            positionArrayList = new ArrayList<>(ids.size());
+            checked_ids = new ArrayList<>(ids.size());
+            checked_clauses = new ArrayList<>(ids.size());
 
             for (int i = 0; i < ids.size(); i++) {
                 checked_ids.add(0);
                 checked_clauses.add("0");
-                positionArray[i] = false;
+                positionArrayList.add(false);
             }
 
             inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-            System.out.println("checked_ids size " + checked_ids.size());
         }
 
         @Override
@@ -620,7 +615,7 @@ public class CreateAuctionFragment extends Fragment implements View.OnClickListe
             holder.clauses.setText(clauses.get(position));
 
             holder.checkbox.setFocusable(false);
-            holder.checkbox.setChecked(positionArray[position]);
+            holder.checkbox.setChecked(positionArrayList.get(position));
 
             holder.checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 
@@ -629,11 +624,12 @@ public class CreateAuctionFragment extends Fragment implements View.OnClickListe
                     if (isChecked) {
                         checked_ids.set(position, Integer.parseInt(ids.get(position)));
                         checked_clauses.set(position, clauses.get(position));
-                        positionArray[position] = true;
+                        positionArrayList.set(position, true);
+
                     } else if (checked_ids.contains(Integer.parseInt(ids.get(position)))) {
                         checked_ids.set(position, 0);
                         checked_clauses.set(position, "0");
-                        positionArray[position] = false;
+                        positionArrayList.set(position, false);
                     }
                 }
 
@@ -651,10 +647,8 @@ public class CreateAuctionFragment extends Fragment implements View.OnClickListe
             return checked_clauses;
         }
 
-        public boolean[] positionArray() {
-            return positionArray;
+        public List positionArray() {
+            return positionArrayList;
         }
-
-
     }
 }

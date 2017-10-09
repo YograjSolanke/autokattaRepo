@@ -19,6 +19,7 @@ import android.widget.LinearLayout;
 import android.widget.Scroller;
 import android.widget.TextView;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,16 +45,15 @@ public class SavedAuctionAdapter extends RecyclerView.Adapter<SavedAuctionAdapte
     @Override
     public SavedAuctionAdapter.AuctionHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.saved_auction_adapter, parent, false);
-        AuctionHolder holder = new AuctionHolder(view);
-        return holder;
+        return new AuctionHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(final SavedAuctionAdapter.AuctionHolder holder, final int position) {
+    public void onBindViewHolder(final SavedAuctionAdapter.AuctionHolder holder, int position) {
         holder.title.setText(mMainlist.get(position).getActionTitle());
-        holder.start_date.setText(mMainlist.get(position).getStartDate().replace("T00:00:00",""));
+        holder.start_date.setText(mMainlist.get(position).getStartDate().replace("T00:00:00", ""));
         holder.start_time.setText(mMainlist.get(position).getStartTime());
-        holder.end_date.setText(mMainlist.get(position).getEndDate().replace("T00:00:00",""));
+        holder.end_date.setText(mMainlist.get(position).getEndDate().replace("T00:00:00", ""));
         holder.end_time.setText(mMainlist.get(position).getEndTime());
         holder.editvehicle.setText(mMainlist.get(position).getNoOfVehicles());
         holder.mAuction_category.setText(mMainlist.get(position).getAuctioncategory());
@@ -62,20 +62,6 @@ public class SavedAuctionAdapter extends RecyclerView.Adapter<SavedAuctionAdapte
         holder.special_clauses.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*String clauses[] = new String[0];
-                try {
-                    clauses = mMainlist.get(position).getSpecialClauses().split(",");
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-                builder.setTitle("Special Clauses");
-                builder.setCancelable(true);
-                builder.setItems(clauses, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int item) {
-                        dialog.dismiss();
-                    }
-                }).show();*/
 
                 android.support.v7.app.AlertDialog dialog = new android.support.v7.app.AlertDialog.Builder(activity)
                         .setTitle("Special Clauses")
@@ -88,7 +74,6 @@ public class SavedAuctionAdapter extends RecyclerView.Adapter<SavedAuctionAdapte
                         .setIcon(android.R.drawable.ic_dialog_info)
                         .show();
                 TextView textView = (TextView) dialog.findViewById(android.R.id.message);
-                //textView.setMaxLines(5);
                 if (textView != null) {
                     textView.setScroller(new Scroller(activity));
                     textView.setVerticalScrollBarEnabled(true);
@@ -115,27 +100,25 @@ public class SavedAuctionAdapter extends RecyclerView.Adapter<SavedAuctionAdapte
             @Override
             public void onClick(View v) {
                 Bundle b = new Bundle();
-                b.putInt("auction_id", mMainlist.get(position).getAuctionId());
-                b.putString("title", mMainlist.get(position).getActionTitle());
-                b.putString("startdate", mMainlist.get(position).getStartDate().replace("T00:00:00",""));
-                b.putString("starttime", mMainlist.get(position).getStartTime());
-                b.putString("enddate", mMainlist.get(position).getEndDate().replace("T00:00:00",""));
-                b.putString("endtime", mMainlist.get(position).getEndTime());
+                b.putInt("auction_id", mMainlist.get(holder.getAdapterPosition()).getAuctionId());
+                b.putString("title", mMainlist.get(holder.getAdapterPosition()).getActionTitle());
+                b.putString("startdate", mMainlist.get(holder.getAdapterPosition()).getStartDate().replace("T00:00:00", ""));
+                b.putString("starttime", mMainlist.get(holder.getAdapterPosition()).getStartTime());
+                b.putString("enddate", mMainlist.get(holder.getAdapterPosition()).getEndDate().replace("T00:00:00", ""));
+                b.putString("endtime", mMainlist.get(holder.getAdapterPosition()).getEndTime());
                 b.putString("className", "SavedAuction");
-                b.putString("cluases", mMainlist.get(position).getSpecialClauses());
-                b.putString("category", mMainlist.get(position).getAuctioncategory());
-                b.putString("location", mMainlist.get(position).getStockLocation());
-                b.putString("ids", mMainlist.get(position).getSpecialIds());
-               if ( mMainlist.get(position).getNoOfVehicles()==null
-                     //  ||mMainlist.get(position).getNoOfVehicles().equalsIgnoreCase(null)
-               || mMainlist.get(position).getNoOfVehicles().isEmpty())
-               {
-                   b.putString("noofvehicles", "0");
-               }else
-               {
-                   b.putString("noofvehicles", mMainlist.get(position).getNoOfVehicles());
-               }
-                b.putBooleanArray("positionArray", mMainlist.get(position).getPositionArray());
+                b.putString("cluases", mMainlist.get(holder.getAdapterPosition()).getSpecialClauses());
+                b.putString("category", mMainlist.get(holder.getAdapterPosition()).getAuctioncategory());
+                b.putString("location", mMainlist.get(holder.getAdapterPosition()).getStockLocation());
+                b.putString("ids", mMainlist.get(holder.getAdapterPosition()).getSpecialIds());
+                if (mMainlist.get(holder.getAdapterPosition()).getNoOfVehicles() == null
+                        || mMainlist.get(holder.getAdapterPosition()).getNoOfVehicles().isEmpty()) {
+                    b.putString("noofvehicles", "0");
+                } else {
+                    b.putString("noofvehicles", mMainlist.get(holder.getAdapterPosition()).getNoOfVehicles());
+                }
+                b.putSerializable("positionArray", (Serializable) mMainlist.get(holder.getAdapterPosition()).getPositionArray());
+
                 new PreferencesManager(activity.getApplicationContext()).resetAll();
                 AddVehiclesForAuctionFragment frag = new AddVehiclesForAuctionFragment();
                 FragmentManager fragmentManager = ((FragmentActivity) activity).getSupportFragmentManager();

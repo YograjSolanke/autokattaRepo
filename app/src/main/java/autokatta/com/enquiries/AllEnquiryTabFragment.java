@@ -54,7 +54,7 @@ public class AllEnquiryTabFragment extends Fragment implements View.OnClickListe
         operation = new DbOperation(getActivity().getApplicationContext());
         operation.OPEN();
         Cursor cursor = operation.getEnquiryCount();
-        if (cursor.getCount() > 0) {
+        if (cursor != null && cursor.getCount() > 0) {
             cursor.moveToLast();
             mManualCount.setText(cursor.getString(cursor.getColumnIndex(DbConstants.enq_val)));
             Log.i("dsafdsfads", "->" + cursor.getString(cursor.getColumnIndex(DbConstants.enq_val)));

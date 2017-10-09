@@ -169,8 +169,6 @@ public class CreateAuctionConfirmFragment extends Fragment implements RequestNot
                             stringVehicleIds = stringVehicleIds + "," + obj.vehicleId;
                     }
 
-                    System.out.println("Vehicle iddddd" + stringVehicleIds);
-
                     AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
                     alertDialogBuilder
                             .setMessage("Do you want to ACTIVATE or SAVE an auction ?")

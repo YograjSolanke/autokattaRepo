@@ -62,9 +62,9 @@ public class MySavedAuctionResponse {
         @SerializedName("special_position")
         @Expose
         private String specialPosition;
-        @SerializedName("positionArray")
+        /*@SerializedName("positionArray")
         @Expose
-        private boolean positionArray[] = null;
+        private boolean positionArray[] = null;*/
 
         @SerializedName("auction_category")
         @Expose
@@ -73,6 +73,10 @@ public class MySavedAuctionResponse {
         @SerializedName("stockLocation")
         @Expose
         private String stockLocation;
+
+        @SerializedName("PositionArray")
+        @Expose
+        private List<Boolean> positionArray = null;
 
         public String getStockLocation() {
             return stockLocation;
@@ -186,11 +190,11 @@ public class MySavedAuctionResponse {
             this.specialPosition = specialPosition;
         }
 
-        public boolean[] getPositionArray() {
+        public List<Boolean> getPositionArray() {
             return positionArray;
         }
 
-        public void setPositionArray(boolean[] positionArray) {
+        public void setPositionArray(List<Boolean> positionArray) {
             this.positionArray = positionArray;
         }
 

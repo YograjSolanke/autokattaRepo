@@ -22,7 +22,6 @@ public class GenericFunctions {
 
 
     //email validation method defination
-
     public boolean isValidEmail(String email) {
         /*String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
                 + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
@@ -47,6 +46,17 @@ public class GenericFunctions {
         long date = System.currentTimeMillis();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd", Locale.getDefault());
         String dateString = sdf.format(date);
+
+        Date userDate;
+
+        try {
+            if (!dob.contains("-")) {
+                userDate = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault()).parse(dob);
+                dob = sdf.format(userDate);
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
         String[] partc = dateString.split("-");
         String[] partu = dob.split("-");
@@ -121,25 +131,26 @@ public class GenericFunctions {
         Bitmap bitmap = BitmapFactory.decodeFile(filePath, o2);
 
 
-        ExifInterface exif = null;
+        ExifInterface exif;
+        Matrix matrix = new Matrix();
         try {
             exif = new ExifInterface(filePath);
+
+            String orientString = exif.getAttribute(ExifInterface.TAG_ORIENTATION);
+            int orientation = orientString != null ? Integer.parseInt(orientString) : ExifInterface.ORIENTATION_NORMAL;
+            int rotationAngle = 0;
+            if (orientation == ExifInterface.ORIENTATION_ROTATE_90) rotationAngle = 90;
+            if (orientation == ExifInterface.ORIENTATION_ROTATE_180) rotationAngle = 180;
+            if (orientation == ExifInterface.ORIENTATION_ROTATE_270) rotationAngle = 270;
+            // Rotate Bitmap
+
+            matrix.setRotate(rotationAngle, (float) bitmap.getWidth() / 2, (float) bitmap.getHeight() / 2);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        String orientString = exif.getAttribute(ExifInterface.TAG_ORIENTATION);
-        int orientation = orientString != null ? Integer.parseInt(orientString) : ExifInterface.ORIENTATION_NORMAL;
-        int rotationAngle = 0;
-        if (orientation == ExifInterface.ORIENTATION_ROTATE_90) rotationAngle = 90;
-        if (orientation == ExifInterface.ORIENTATION_ROTATE_180) rotationAngle = 180;
-        if (orientation == ExifInterface.ORIENTATION_ROTATE_270) rotationAngle = 270;
-        // Rotate Bitmap
-        Matrix matrix = new Matrix();
-        matrix.setRotate(rotationAngle, (float) bitmap.getWidth() / 2, (float) bitmap.getHeight() / 2);
-        Bitmap rotatedBitmap = Bitmap.createBitmap(bitmap, 0, 0, o2.outWidth, o2.outHeight, matrix, true);
 
 
-        return rotatedBitmap;
+        return Bitmap.createBitmap(bitmap, 0, 0, o2.outWidth, o2.outHeight, matrix, true);
 
     }
 
@@ -148,29 +159,21 @@ public class GenericFunctions {
 
         Boolean flag2 = true;
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-        Date now = new Date();
-        String dateString = sdf.format(now);
-        //String dateString = sdf.format(date);
+        Date now = new Date(); //current Date
+        String dateString = sdf.format(now); // current date formatted with above format
 
-        Date userDate = new Date();
+        Date userDate;
         try {
-            userDate = sdf.parse(startdate);
+            if (!startdate.contains("-")) {
+                userDate = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault()).parse(startdate);
+                startdate = sdf.format(userDate);
+            }
         } catch (ParseException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        startdate = sdf.format(userDate);
 
-
-        System.out.println("current date====" + dateString);
-        // dobtext.getText();
-
-        System.out.println("Result here==================================================");
 
         String[] partc = dateString.split("-");
-
-        // dob = dobtext.getText().toString();
-
         String[] partu = startdate.split("-");
 
 
@@ -200,7 +203,6 @@ public class GenericFunctions {
                 System.out.println("Mothns checking");
                 System.out.println("valid user ");
 
-                //dobtext.setError("Minimum 8 year age required");
             } else if (Integer.parseInt(partc[1]) - Integer.parseInt(partu[1]) == 0) {
 
                 System.out.println("Mothns checking");
@@ -212,12 +214,10 @@ public class GenericFunctions {
 
                     System.out.println("day checking");
                     System.out.println("date checked valid user ");
-                    //dobtext.setError("Minimum 8 year age required");
+
                 } else if (Integer.parseInt(partc[2]) - Integer.parseInt(partu[2]) == 0) {
-                    // flag=false;
                     System.out.println("day checking");
                     System.out.println("date checked valid user ");
-                    //dobtext.setError("Minimum 8 year age required");
                 }
             }
 
@@ -270,7 +270,6 @@ public class GenericFunctions {
 
         if (currentyear - useryear > 0) {
             System.out.println("year ");
-//            System.out.println("valid date ");
 
         } else if (currentyear - useryear == 0) {
 
@@ -280,7 +279,7 @@ public class GenericFunctions {
             } else if (Integer.parseInt(partc[1]) - Integer.parseInt(partu[1]) < 0) {
                 flag1 = false;
                 System.out.println("Months checked invalid date ");
-                //dobtext.setError("Minimum 8 year age required");
+
             } else if (Integer.parseInt(partc[1]) - Integer.parseInt(partu[1]) == 0) {
 
                 if (Integer.parseInt(partc[2]) - Integer.parseInt(partu[2]) > 0) {
@@ -288,7 +287,6 @@ public class GenericFunctions {
                 } else if (Integer.parseInt(partc[2]) - Integer.parseInt(partu[2]) < 0) {
                     flag1 = false;
                     System.out.println("daty checked invalid date ");
-                    //dobtext.setError("Minimum 8 year age required");
                 }
             }
 
@@ -313,14 +311,8 @@ public class GenericFunctions {
             e.printStackTrace();
         }
 
-        // System.out.println(parseFormat.format(date) + " = " + displayFormat.format(date));
-
         String sttime = displayFormat.format(starttm);
         String edTime = displayFormat.format(endtm);
-
-        System.out.println("ddddddddddddddddd start time=" + sttime);
-        System.out.println("dddddddddddd end time=" + edTime);
-
 
         if (sttime.compareTo(edTime) > 0)
             flag = false;
@@ -357,12 +349,13 @@ public class GenericFunctions {
     public Boolean compareTime(String st, String end) {
 
         Boolean flagtime = false;
-        Time startTime = null, endTime = null;
+        Time startTime, endTime;
 
         try {
             SimpleDateFormat ra = new SimpleDateFormat("hh:mm", Locale.getDefault());
-            Date yourDate = null;
-            Date yourdate2 = null;
+            Date yourDate;
+            Date yourdate2;
+
             yourDate = ra.parse(st);
             yourdate2 = ra.parse(end);
 
