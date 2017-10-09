@@ -418,6 +418,7 @@ public class PriceFragment extends Fragment implements RequestNotifier, View.OnC
                         {
                             addvehicleexchangedata();
                          //   AddEnquiryData();
+                            getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().remove("exchange").commit();
                         }
                     } else {
                         if (isAdded())

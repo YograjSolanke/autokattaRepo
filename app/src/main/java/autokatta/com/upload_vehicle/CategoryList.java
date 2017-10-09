@@ -86,6 +86,20 @@ public class CategoryList extends Fragment {
                         mBottomSheetDialog.getWindow().setGravity(Gravity.BOTTOM);
                         mBottomSheetDialog.show();
 
+                        scrapcustpurchasedate.setOnTouchListener(new OnTouchListener() {
+                            @Override
+                            public boolean onTouch(View view, MotionEvent motionEvent) {
+
+                                if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+                                    scrapcustpurchasedate.setInputType(InputType.TYPE_NULL);
+                                    scrapcustpurchasedate.setError(null);
+                                    new SetMyDateAndTime("date", scrapcustpurchasedate, getActivity());
+
+                                }
+                                return false;
+                            }
+                        });
+
                         mClose[0].setOnClickListener(new OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -107,20 +121,6 @@ public class CategoryList extends Fragment {
                                 int custpurchaseprice=Integer.parseInt(custpurchaseprice1);
                                 String purchaseDate = scrapcustpurchasedate.getText().toString();
 
-
-                                scrapcustpurchasedate.setOnTouchListener(new OnTouchListener() {
-                                    @Override
-                                    public boolean onTouch(View view, MotionEvent motionEvent) {
-
-                                        if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-                                            scrapcustpurchasedate.setInputType(InputType.TYPE_NULL);
-                                            scrapcustpurchasedate.setError(null);
-                                            new SetMyDateAndTime("date", scrapcustpurchasedate, getActivity());
-
-                                        }
-                                        return false;
-                                    }
-                                });
                                 if (!excustautoAddress.getText().toString().isEmpty()) {
                                     List<String> resultList = GooglePlacesAdapter.getResultList();
                                     for (int i = 0; i < resultList.size(); i++) {
@@ -216,6 +216,20 @@ public class CategoryList extends Fragment {
                             }
                         });
 
+                        inwarddate.setOnTouchListener(new OnTouchListener() {
+                            @Override
+                            public boolean onTouch(View view, MotionEvent motionEvent) {
+
+                                if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+                                    inwarddate.setInputType(InputType.TYPE_NULL);
+                                    inwarddate.setError(null);
+                                    new SetMyDateAndTime("date", inwarddate, getActivity());
+
+                                }
+                                return false;
+                            }
+                        });
+
                         mAdd.setOnClickListener(new OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -233,20 +247,6 @@ public class CategoryList extends Fragment {
                                 String strstockyardadddress = stockyardadddress.getText().toString();
                                 String strinwarddate = inwarddate.getText().toString();
 
-
-                                inwarddate.setOnTouchListener(new OnTouchListener() {
-                                    @Override
-                                    public boolean onTouch(View view, MotionEvent motionEvent) {
-
-                                        if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-                                            inwarddate.setInputType(InputType.TYPE_NULL);
-                                            inwarddate.setError(null);
-                                            new SetMyDateAndTime("date", inwarddate, getActivity());
-
-                                        }
-                                        return false;
-                                    }
-                                });
                                 if (!branchcity.getText().toString().isEmpty()) {
                                     List<String> resultList = GooglePlacesAdapter.getResultList();
                                     for (int i = 0; i < resultList.size(); i++) {

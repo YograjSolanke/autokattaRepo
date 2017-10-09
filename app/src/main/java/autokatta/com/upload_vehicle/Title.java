@@ -166,7 +166,6 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
             @Override
             public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
                 if (checkedId == R.id.exchangeYes) {
-                    getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("exchange", "yes").apply();
 
                     View view = getActivity().getLayoutInflater().inflate(R.layout.custom_upload_exchange, null);
 
@@ -313,6 +312,7 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                                 getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("enquiry_status", custEnquiryStatus).apply();
                                 getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("discussion", discussion).apply();
                                 getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("nextFollowupDate", nextFollowupDate).apply();
+                                getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("exchange", "yes").apply();
 
                             }
                         }

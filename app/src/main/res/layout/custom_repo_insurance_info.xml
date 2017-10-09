@@ -7,6 +7,7 @@
               android:background="@android:color/white"
               android:orientation="vertical"
               android:padding="10dp">
+
     <ImageView
         android:id="@+id/close"
         android:layout_width="wrap_content"
@@ -15,134 +16,137 @@
         android:contentDescription="@string/app_name"
         android:src="@android:drawable/ic_menu_close_clear_cancel"/>
 
-<ScrollView
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-    <EditText
-        android:id="@+id/loan_no"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Loan Account Number"
-        android:digits="qwertyuioplkjhgfdsazxcvbnm0123456789"
-        android:labelFor="@+id/transfer_date"
-        android:textAppearance="?android:attr/textAppearanceMedium"/>
+        android:layout_height="match_parent">
 
-    <EditText
-        android:id="@+id/borrower_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:digits="qwertyuioplkjhgfdsazxcvbnm0123456789"
-        android:hint="Borrower Name"
-        android:maxLength="10"
-        android:textAppearance="?android:attr/textAppearanceMedium"/>
-
-    <EditText
-        android:id="@+id/borrower_contact"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:digits="qwertyuioplkjhgfdsazxcvbnm0123456789"
-        android:hint="Borrower Contact"
-        android:maxLength="10"
-        android:textAppearance="?android:attr/textAppearanceMedium"/>
-
-
-    <AutoCompleteTextView
-        android:id="@+id/branch_city"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Branch City"
-        android:textAppearance="?android:attr/textAppearanceMedium"/>
-
-    <EditText
-        android:id="@+id/manager_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:digits="abcdefghijklmnopqrstuvwxyz0123456789,"
-        android:hint="Manager Name"
-        android:textAppearance="?android:attr/textAppearanceMedium"/>
-
-    <EditText
-        android:id="@+id/manager_cnt"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:digits="abcdefghijklmnopqrstuvwxyz0123456789,"
-        android:hint="Manager Contact"
-        android:textAppearance="?android:attr/textAppearanceMedium"/>
-
-    <EditText
-        android:id="@+id/dealer_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:digits="abcdefghijklmnopqrstuvwxyz0123456789,"
-        android:hint="Dealer Name"
-        android:textAppearance="?android:attr/textAppearanceMedium"/>
-
-     <EditText
-        android:id="@+id/stock_yard_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:digits="abcdefghijklmnopqrstuvwxyz0123456789,"
-        android:hint="Stock Yard Name"
-        android:textAppearance="?android:attr/textAppearanceMedium"/>
-
-    <AutoCompleteTextView
-        android:id="@+id/stock_yard_addr"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Stock Yard Address"
-        android:textAppearance="?android:attr/textAppearanceMedium"/>
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/layout_top"
-        android:orientation="horizontal"
-        android:weightSum="3">
-
-        <TextView
-            android:layout_width="0dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Inward Date"
-            android:textStyle="bold"/>
+            android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/edtDate"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/card_title_height"
-            android:layout_marginEnd="@dimen/layout_top"
-            android:layout_weight="1"
-            android:background="@color/edit_background"
-            android:editable="false"
-            android:hint="@string/date"
-            android:inputType="datetime"
-            android:paddingEnd="@dimen/card_margin"
-            android:paddingStart="@dimen/card_margin"
-            android:textColor="#708090"/>
+            <EditText
+                android:id="@+id/loan_no"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:digits="qwertyuioplkjhgfdsazxcvbnm0123456789"
+                android:hint="Loan Account Number"
+                android:labelFor="@+id/transfer_date"
+                android:textAppearance="?android:attr/textAppearanceMedium"/>
 
-    </LinearLayout>
+            <EditText
+                android:id="@+id/borrower_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:digits="qwertyuioplkjhgfdsazxcvbnm0123456789"
+                android:hint="Borrower Name"
+                android:maxLength="10"
+                android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+            <EditText
+                android:id="@+id/borrower_contact"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Borrower Contact"
+                android:inputType="number"
+                android:maxLength="10"
+                android:textAppearance="?android:attr/textAppearanceMedium"/>
 
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="end">
+            <AutoCompleteTextView
+                android:id="@+id/branch_city"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Branch City"
+                android:textAppearance="?android:attr/textAppearanceMedium"/>
 
-        <Button
-            android:id="@+id/submit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@color/button_default"
-            android:text="ADD"
-            android:textColor="@color/white"
-            android:textStyle="bold"/>
+            <EditText
+                android:id="@+id/manager_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:digits="abcdefghijklmnopqrstuvwxyz0123456789,"
+                android:hint="Manager Name"
+                android:textAppearance="?android:attr/textAppearanceMedium"/>
 
-    </LinearLayout>
-    </LinearLayout>
-</ScrollView>
+            <EditText
+                android:id="@+id/manager_cnt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Manager Contact"
+                android:inputType="number"
+                android:maxLength="10"
+                android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+            <EditText
+                android:id="@+id/dealer_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:digits="abcdefghijklmnopqrstuvwxyz0123456789,"
+                android:hint="Dealer Name"
+                android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+            <EditText
+                android:id="@+id/stock_yard_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:digits="abcdefghijklmnopqrstuvwxyz0123456789,"
+                android:hint="Stock Yard Name"
+                android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+            <AutoCompleteTextView
+                android:id="@+id/stock_yard_addr"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Stock Yard Address"
+                android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/layout_top"
+                android:orientation="horizontal"
+                android:weightSum="3">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Inward Date"
+                    android:textStyle="bold"/>
+
+                <EditText
+                    android:id="@+id/edtDate"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/card_title_height"
+                    android:layout_marginEnd="@dimen/layout_top"
+                    android:layout_weight="1"
+                    android:background="@color/edit_background"
+                    android:editable="false"
+                    android:hint="@string/date"
+                    android:inputType="datetime"
+                    android:paddingEnd="@dimen/card_margin"
+                    android:paddingStart="@dimen/card_margin"
+                    android:textColor="#708090"/>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="end">
+
+                <Button
+                    android:id="@+id/submit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/button_default"
+                    android:text="ADD"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"/>
+
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>
