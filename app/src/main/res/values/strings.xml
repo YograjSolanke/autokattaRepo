@@ -740,4 +740,5 @@
     <string name="title_activity_create_store">CreateStoreActivity</string>
     <string name="title_activity_add_admins_for_store">AddAdminsForStoreActivity</string>
     <string name="title_activity_search_new_vehicle">SearchNewVehicleActivity</string>
+    <string name="title_activity_searched_new_vehicle_result">SearchedNewVehicleActivity</string>
 </resources>
