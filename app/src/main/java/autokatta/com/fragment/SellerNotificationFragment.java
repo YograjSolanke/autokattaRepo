@@ -93,7 +93,7 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
                 mNoData = (TextView) mSellerView.findViewById(R.id.no_category);
                 mNoData.setVisibility(View.GONE);
 
-                //getSavedSearchSellerList(myContact);
+                getSavedSearchSellerList(myContact);
             }
         });
 

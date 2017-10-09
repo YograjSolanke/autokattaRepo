@@ -10,7 +10,6 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
-import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.IdRes;
@@ -20,7 +19,6 @@ import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.GravityCompat;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -30,14 +28,12 @@ import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.iid.FirebaseInstanceId;
@@ -61,6 +57,7 @@ import autokatta.com.fragment.StoreNotification;
 import autokatta.com.fragment.WallNotificationFragment;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.DemoDelAct;
+import autokatta.com.other.Leads;
 import autokatta.com.other.PostStatus;
 import autokatta.com.other.SearchActivity;
 import autokatta.com.other.SessionManagement;
@@ -106,7 +103,7 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
     private IntentIntegrator qrScan;
     private ViewPager viewPager;
     TabLayout tabLayout;
-    TextView mLeads;
+    //TextView mLeads;
     Locale myLocale;
     String mLanguage;
     AlertDialog alertDialog;
@@ -280,13 +277,13 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
             setupDrawerContent(navigationView);
         }
 
-        mLeads = (TextView) MenuItemCompat.getActionView(navigationView.getMenu().
+        /*mLeads = (TextView) MenuItemCompat.getActionView(navigationView.getMenu().
                 findItem(R.id.leads));
         mLeads.setGravity(Gravity.CENTER_VERTICAL);
         mLeads.setTypeface(null, Typeface.BOLD);
         mLeads.setTextColor(getResources().getColor(R.color.red));
         //count is added
-        mLeads.setText("7");
+        mLeads.setText("7");*/
 
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         if (viewPager != null) {
@@ -547,7 +544,9 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
                         } /*else if (menuItem.getItemId() == R.id.locality) {
                             startActivity(new Intent(AutokattaMainActivity.this, MapsActivity.class));
                             //startActivity(new Intent(AutokattaMainActivity.this, DeleteActivity.class));
-                        } */ else if (menuItem.getItemId() == R.id.change_language) {
+                        } */ else if (menuItem.getItemId() == R.id.leads) {
+                            startActivity(new Intent(AutokattaMainActivity.this, Leads.class));
+                        } else if (menuItem.getItemId() == R.id.change_language) {
                             openDialog();
                         } else if (menuItem.getItemId() == R.id.sign_out) {
                             AlertDialog.Builder alert = new AlertDialog.Builder(AutokattaMainActivity.this);

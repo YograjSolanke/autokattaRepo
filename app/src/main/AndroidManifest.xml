@@ -831,7 +831,8 @@
         <activity
             android:name=".view.SearchedNewVehicleResultActivity"
             android:label="@string/title_activity_searched_new_vehicle_result"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".other.Leads"></activity>
     </application>
 
 </manifest>

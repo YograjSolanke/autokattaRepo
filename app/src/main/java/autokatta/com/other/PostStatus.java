@@ -4,8 +4,12 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Color;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -50,6 +54,8 @@ public class PostStatus extends AppCompatActivity implements RequestNotifier {
     TextView mProfile_name;
     String statusText;
     List<String> lst = new ArrayList<>();
+    private static final int SELECT_VIDEO = 3;
+    private String selectedPath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,9 +101,13 @@ public class PostStatus extends AppCompatActivity implements RequestNotifier {
                             intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
                             startActivityForResult(intent, 1);
                         } else if (options[item].equals("Videos")) {
-                            Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Video.Media.EXTERNAL_CONTENT_URI);
+                            /*Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Video.Media.EXTERNAL_CONTENT_URI);
                             intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-                            startActivityForResult(intent, 1);
+                            startActivityForResult(intent, 1);*/
+                            Intent intent = new Intent();
+                            intent.setType("video/*");
+                            intent.setAction(Intent.ACTION_GET_CONTENT);
+                            startActivityForResult(Intent.createChooser(intent, "Select a Video "), SELECT_VIDEO);
                         } else if (options[item].equals("Cancel")) {
                             dialog.dismiss();
                         }
@@ -109,6 +119,63 @@ public class PostStatus extends AppCompatActivity implements RequestNotifier {
                 //CustomToast.customToast(getApplicationContext(), "Coming soon... please be connected for update..");
             }
         });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK) {
+            if (requestCode == SELECT_VIDEO) {
+                System.out.println("SELECT_VIDEO");
+                Uri selectedImageUri = data.getData();
+                selectedPath = getPath(selectedImageUri);
+            }
+        }
+    }
+
+    public String getPath(Uri uri) {
+        Cursor cursor = getContentResolver().query(uri, null, null, null, null);
+        cursor.moveToFirst();
+        String document_id = cursor.getString(0);
+        document_id = document_id.substring(document_id.lastIndexOf(":") + 1);
+        cursor.close();
+
+        cursor = getContentResolver().query(
+                android.provider.MediaStore.Video.Media.EXTERNAL_CONTENT_URI,
+                null, MediaStore.Images.Media._ID + " = ? ", new String[]{document_id}, null);
+        cursor.moveToFirst();
+        String path = cursor.getString(cursor.getColumnIndex(MediaStore.Video.Media.DATA));
+        cursor.close();
+
+        return path;
+    }
+
+    private void uploadVideo() {
+        class UploadVideo extends AsyncTask<Void, Void, String> {
+            ProgressDialog uploading;
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                uploading = ProgressDialog.show(PostStatus.this, "Uploading File", "Please wait...", false, false);
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                uploading.dismiss();
+                //textViewResponse.setText(Html.fromHtml("<b>Uploaded at <a href='" + s + "'>" + s + "</a></b>"));
+                //textViewResponse.setMovementMethod(LinkMovementMethod.getInstance());
+            }
+
+            @Override
+            protected String doInBackground(Void... params) {
+                UploadVideos u = new UploadVideos();
+                String msg = u.uploadVideo(selectedPath);
+                return msg;
+            }
+        }
+        UploadVideo uv = new UploadVideo();
+        uv.execute();
     }
 
     @Override
