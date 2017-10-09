@@ -152,7 +152,7 @@ public class CreateLoanMelaFragment extends Fragment implements RequestNotifier,
 
 
                 //date comparision
-                SimpleDateFormat sdf = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
                 Date now = new Date();
                 String dateString = sdf.format(now);
                 SimpleDateFormat tm = new SimpleDateFormat("hh:mm a", Locale.getDefault());
@@ -189,7 +189,7 @@ public class CreateLoanMelaFragment extends Fragment implements RequestNotifier,
                     enddate.requestFocus();
                 } else if (stdate.equals(eddate) && !validObj.startTimeEndTimeValidation(sttime, edtime)) {
 
-                    endtime.setError("Enter valid time");
+                    endtime.setError("End Time Should Be Greater than Start Time");
                     endtime.requestFocus();
 
                 } else if (location.equals("")) {

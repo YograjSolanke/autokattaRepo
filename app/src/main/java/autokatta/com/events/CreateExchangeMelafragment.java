@@ -153,7 +153,7 @@ public class CreateExchangeMelafragment extends Fragment implements View.OnClick
 
 
                 //date comparision
-                SimpleDateFormat sdf = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
                 Date now = new Date();
                 String dateString = sdf.format(now);
                 SimpleDateFormat tm = new SimpleDateFormat("hh:mm a", Locale.getDefault());

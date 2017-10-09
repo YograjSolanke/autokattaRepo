@@ -22,21 +22,16 @@
             <RelativeLayout
                 android:id="@+id/mainrelative"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_toStartOf="@+id/checkbox">
 
-                <CheckBox
-                    android:id="@+id/checkbox"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true" />
+
 
                 <ImageView
                     android:id="@+id/vehicleimage"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
-                    android:layout_alignParentTop="true"
                     android:layout_centerVertical="true"
-                    android:layout_toEndOf="@+id/checkbox"
                     android:contentDescription="@string/app_name" />
 
                 <RelativeLayout
@@ -48,7 +43,7 @@
 
                     <TextView
                         android:id="@+id/byselftitle"
-                        android:layout_width="55dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/title"
                         android:textColor="#848484"
@@ -61,6 +56,7 @@
                         android:layout_height="wrap_content"
                         android:layout_toEndOf="@+id/byselftitle"
                         android:text="@string/title"
+                        android:layout_marginStart="5dp"
                         android:textColor="#848484"
                         android:textSize="12sp" />
 
@@ -76,7 +72,7 @@
 
                     <TextView
                         android:id="@+id/byselfcategory"
-                        android:layout_width="55dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/category"
                         android:textColor="#848484"
@@ -89,6 +85,7 @@
                         android:layout_height="wrap_content"
                         android:layout_toEndOf="@+id/byselfcategory"
                         android:text="@string/category"
+                        android:layout_marginStart="5dp"
                         android:textColor="#848484"
                         android:textSize="12sp" />
 
@@ -104,7 +101,7 @@
 
                     <TextView
                         android:id="@+id/byselfbrand"
-                        android:layout_width="55dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/brand"
                         android:textColor="#848484"
@@ -117,6 +114,7 @@
                         android:layout_height="wrap_content"
                         android:layout_toEndOf="@+id/byselfbrand"
                         android:text="@string/brand"
+                        android:layout_marginStart="5dp"
                         android:textColor="#848484"
                         android:textSize="12sp" />
 
@@ -132,7 +130,7 @@
 
                     <TextView
                         android:id="@+id/byselfmodel"
-                        android:layout_width="55dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/model"
                         android:textColor="#848484"
@@ -145,6 +143,7 @@
                         android:layout_height="wrap_content"
                         android:layout_toEndOf="@+id/byselfmodel"
                         android:text="@string/model"
+                        android:layout_marginStart="5dp"
                         android:textColor="#848484"
                         android:textSize="12sp" />
 
@@ -160,7 +159,7 @@
 
                     <TextView
                         android:id="@+id/byselfrtocity"
-                        android:layout_width="55dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/city"
                         android:textColor="#848484"
@@ -173,6 +172,7 @@
                         android:layout_height="wrap_content"
                         android:layout_toEndOf="@+id/byselfrtocity"
                         android:text="@string/city"
+                        android:layout_marginStart="5dp"
                         android:textColor="#848484"
                         android:textSize="12sp" />
 
@@ -188,7 +188,7 @@
 
                     <TextView
                         android:id="@+id/byselfcolor"
-                        android:layout_width="55dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/color"
                         android:textColor="#848484"
@@ -201,6 +201,7 @@
                         android:layout_height="wrap_content"
                         android:layout_toEndOf="@+id/byselfcolor"
                         android:text="@string/color"
+                        android:layout_marginStart="5dp"
                         android:textColor="#848484"
                         android:textSize="12sp" />
 
@@ -216,7 +217,7 @@
 
                     <TextView
                         android:id="@+id/byselfmfgyr"
-                        android:layout_width="55dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/year_of_mfg"
                         android:textColor="#848484"
@@ -229,11 +230,21 @@
                         android:layout_height="wrap_content"
                         android:layout_toEndOf="@+id/byselfmfgyr"
                         android:text="@string/year_of_mfg"
+                        android:layout_marginStart="5dp"
                         android:textColor="#848484"
                         android:textSize="12sp" />
                 </RelativeLayout>
+
+
             </RelativeLayout>
 
+
+            <CheckBox
+                android:id="@+id/checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true" />
             <RelativeLayout
                 android:id="@+id/c2"
                 android:layout_width="match_parent"

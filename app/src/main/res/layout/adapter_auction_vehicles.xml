@@ -29,20 +29,18 @@
             <!--android:layout_width="wrap_content"-->
             <!--android:layout_height="wrap_content" />-->
 
-            <CheckBox
-                android:id="@+id/checkbox"
-                android:layout_width="wrap_content"
+
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_centerVertical="true" />
+                android:id="@+id/relativeFrame"
+                android:layout_toStartOf="@+id/checkbox">
 
             <ImageView
                 android:id="@+id/byselfimage"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_alignParentTop="true"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
                 android:layout_centerVertical="true"
-                android:layout_toEndOf="@+id/checkbox"
                 android:contentDescription="@string/app_name" />
 
             <RelativeLayout
@@ -54,7 +52,7 @@
 
                 <TextView
                     android:id="@+id/byselftitle"
-                    android:layout_width="55dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/title"
                     android:textColor="#848484"
@@ -67,6 +65,7 @@
                     android:layout_height="wrap_content"
                     android:layout_toEndOf="@+id/byselftitle"
                     android:text="@string/title"
+                    android:layout_marginStart="5dp"
                     android:textColor="#848484"
                     android:textSize="12sp" />
 
@@ -82,7 +81,7 @@
 
                 <TextView
                     android:id="@+id/byselfcategory"
-                    android:layout_width="55dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/category"
                     android:textColor="#848484"
@@ -95,6 +94,7 @@
                     android:layout_height="wrap_content"
                     android:layout_toEndOf="@+id/byselfcategory"
                     android:text="@string/category"
+                    android:layout_marginStart="5dp"
                     android:textColor="#848484"
                     android:textSize="12sp" />
 
@@ -110,7 +110,7 @@
 
                 <TextView
                     android:id="@+id/byselfbrand"
-                    android:layout_width="55dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/brand"
                     android:textColor="#848484"
@@ -123,6 +123,7 @@
                     android:layout_height="wrap_content"
                     android:layout_toEndOf="@+id/byselfbrand"
                     android:text="@string/brand"
+                    android:layout_marginStart="5dp"
                     android:textColor="#848484"
                     android:textSize="12sp" />
 
@@ -138,7 +139,7 @@
 
                 <TextView
                     android:id="@+id/byselfmodel"
-                    android:layout_width="55dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/model"
                     android:textColor="#848484"
@@ -151,6 +152,7 @@
                     android:layout_height="wrap_content"
                     android:layout_toEndOf="@+id/byselfmodel"
                     android:text="@string/model"
+                    android:layout_marginStart="5dp"
                     android:textColor="#848484"
                     android:textSize="12sp" />
 
@@ -166,7 +168,7 @@
 
                 <TextView
                     android:id="@+id/byselfrtocity"
-                    android:layout_width="55dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/city"
                     android:textColor="#848484"
@@ -179,6 +181,7 @@
                     android:layout_height="wrap_content"
                     android:layout_toEndOf="@+id/byselfrtocity"
                     android:text="@string/city"
+                    android:layout_marginStart="5dp"
                     android:textColor="#848484"
                     android:textSize="12sp" />
 
@@ -194,7 +197,7 @@
 
                 <TextView
                     android:id="@+id/byselfcolor"
-                    android:layout_width="55dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/color"
                     android:textColor="#848484"
@@ -207,6 +210,7 @@
                     android:layout_height="wrap_content"
                     android:layout_toEndOf="@+id/byselfcolor"
                     android:text="@string/color"
+                    android:layout_marginStart="5dp"
                     android:textColor="#848484"
                     android:textSize="12sp" />
 
@@ -222,7 +226,7 @@
 
                 <TextView
                     android:id="@+id/byselfreg"
-                    android:layout_width="55dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/registration_no"
                     android:textColor="#848484"
@@ -235,6 +239,7 @@
                     android:layout_height="wrap_content"
                     android:layout_toEndOf="@+id/byselfreg"
                     android:text="-"
+                    android:layout_marginStart="5dp"
                     android:textColor="#848484"
                     android:textSize="12sp" />
 
@@ -250,7 +255,7 @@
 
                 <TextView
                     android:id="@+id/byself_manu_year"
-                    android:layout_width="110dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/manufacture_year"
                     android:textColor="#848484"
@@ -263,10 +268,20 @@
                     android:layout_height="wrap_content"
                     android:layout_toEndOf="@+id/byself_manu_year"
                     android:text="-"
+                    android:layout_marginStart="5dp"
                     android:textColor="#848484"
                     android:textSize="12sp" />
 
             </RelativeLayout>
+
+            </RelativeLayout>
+
+            <CheckBox
+                android:id="@+id/checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true" />
 
         </RelativeLayout>
     </android.support.v7.widget.CardView>

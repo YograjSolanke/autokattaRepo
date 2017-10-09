@@ -42,6 +42,7 @@ public class SearchNewVehicleActivity extends AppCompatActivity implements Reque
     int position_brand_id, position_model_id;
     Button btnSearch;
     int count = 0, owner1, Sid, vehicle_id, sub_category_id;
+    String categoryString, subCateString, modelString, brandString;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,6 +99,29 @@ public class SearchNewVehicleActivity extends AppCompatActivity implements Reque
         btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+
+                categoryString = allcategorySpinner.getSelectedItem().toString();
+                subCateString = subcategorySpinner.getSelectedItem().toString();
+                brandString = brandSpinner.getSelectedItem().toString();
+                modelString = modelSpinner.getSelectedItem().toString();
+
+                if (categoryString.startsWith("Select Category")) {
+
+                    CustomToast.customToast(getApplicationContext(), "Please Select Category");
+
+
+                } else if (subCateString.startsWith("Select Subcategory")) {
+
+                    CustomToast.customToast(getApplicationContext(), "Please Select Sub Category");
+
+
+                } else
+
+                {
+                }
+
+
                 Bundle b = new Bundle();
                 b.putInt("store_id", 0);
                 ActivityOptions options = ActivityOptions.makeCustomAnimation(SearchNewVehicleActivity.this, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
@@ -186,6 +210,7 @@ public class SearchNewVehicleActivity extends AppCompatActivity implements Reque
                         ArrayAdapter<String> adapter = new ArrayAdapter<>(getApplicationContext(), R.layout.registration_spinner, parsedData);
                         // adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                         allcategorySpinner.setAdapter(adapter);
+                        subcategorySpinner.setAdapter(null);
                         allcategorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                             @Override
                             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -216,7 +241,7 @@ public class SearchNewVehicleActivity extends AppCompatActivity implements Reque
                     final List<String> parsedData = new ArrayList<>();
                     final HashMap<String, Integer> mSubTypeMap = new HashMap<>();
 
-                    mSubTypeList.add("Select subcategory");
+                    mSubTypeList.add("Select Subcategory");
                     GetVehicleSubTypeResponse mGetVehicleSubTypeResponse = (GetVehicleSubTypeResponse) response.body();
                     for (GetVehicleSubTypeResponse.Success subTypeResponse : mGetVehicleSubTypeResponse.getSuccess()) {
                         subTypeResponse.setId(subTypeResponse.getId());

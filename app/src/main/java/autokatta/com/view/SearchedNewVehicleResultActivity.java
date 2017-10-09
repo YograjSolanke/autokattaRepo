@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -58,6 +59,13 @@ public class SearchedNewVehicleResultActivity extends AppCompatActivity implemen
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
+
+
+                if (getSupportActionBar() != null) {
+                    getSupportActionBar().setDisplayShowHomeEnabled(true);
+                    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+                    //getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
+                }
 
                 myContact = getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", null);
                 mRecyclerView.setHasFixedSize(true);
@@ -153,5 +161,24 @@ public class SearchedNewVehicleResultActivity extends AppCompatActivity implemen
     @Override
     public void notifyString(String str) {
 
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+        overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
     }
 }
