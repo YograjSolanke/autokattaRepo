@@ -747,4 +747,5 @@
     <string name="title_activity_store_videos">StoreVideosActivity</string>
     <string name="title_activity_store_images_tab">StoreImagesTabActivity</string>
     <string name="title_activity_upload_to_group_store">UploadToGroupStoreActivity</string>
+    <string name="getNewVehicle">Get New Vehicles Data</string>
 </resources>

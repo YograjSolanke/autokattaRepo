@@ -519,7 +519,9 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
                             bundle.putString("className", "Main");
                             startActivity(new Intent(AutokattaMainActivity.this, SearchVehicleActivity.class).putExtras(bundle));
                         } else if (menuItem.getItemId() == R.id.search_new_vehicle) {
-                            startActivity(new Intent(AutokattaMainActivity.this, SearchNewVehicleActivity.class));
+                            Intent intent = new Intent(getApplicationContext(), SearchNewVehicleActivity.class);
+                            intent.putExtra("callFrom", "MainActivity");
+                            startActivity(intent);
                         } else if (menuItem.getItemId() == R.id.my_search) {
                             startActivity(new Intent(AutokattaMainActivity.this, MySearchActivity.class));
                         } else if (menuItem.getItemId() == R.id.my_vehicle) {

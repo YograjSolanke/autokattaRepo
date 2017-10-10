@@ -184,7 +184,7 @@ public class UploadToGroupStoreActivity extends AppCompatActivity implements Req
     public void notifyString(String str) {
         if (str != null) {
             if (str.equalsIgnoreCase("uploadToGroupStore")) {
-
+                finish();
             }
         }
     }

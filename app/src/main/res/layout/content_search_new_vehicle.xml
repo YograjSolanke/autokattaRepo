@@ -253,17 +253,78 @@
             </RelativeLayout>
         </RelativeLayout>
 
-        <Button
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:id="@+id/rowVersion"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/rowModel"
+            android:layout_marginTop="10dip">
+
+            <TextView
+                android:id="@+id/versiontxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:text="@string/version"
+                android:textColor="#2C3343"
+                android:textSize="15sp" />
+
+            <!--<Spinner
+                android:id="@+id/ModelEdit1"
+                android:layout_width="200dp"
+                android:layout_height="40dip"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
+                android:background="#80bebebe"
+                android:ems="10" />-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/spinner_height"
+                android:layout_marginEnd="5dp"
+                android:layout_marginStart="150dp"
+                android:layout_marginTop="@dimen/card_margin"
+                android:background="@drawable/spinner_background"
+                android:orientation="horizontal"
+                android:paddingEnd="@dimen/card_margin"
+                android:paddingStart="@dimen/card_margin">
+
+                <Spinner
+                    android:id="@+id/VersionEdit1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="5dp"
+                    android:background="@android:color/transparent"
+                    android:gravity="center"
+                    android:spinnerMode="dropdown"
+                    android:textAlignment="center" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center"
+                    android:contentDescription="@string/app_name"
+                    android:src="@mipmap/ic_down" />
+
+            </RelativeLayout>
+        </RelativeLayout>
+
+        <Button
             android:id="@+id/btnSearch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rowVersion"
             android:layout_centerHorizontal="true"
-            android:background="@drawable/buttonback"
             android:layout_marginTop="15dp"
-            android:text="Search"
-            android:textColor="@color/white"
-            android:textAllCaps="false" />
+            android:background="@drawable/buttonback"
+            android:padding="7dp"
+            android:text="@string/search_new_vehicle"
+            android:textAllCaps="false"
+            android:textColor="@color/white" />
 
     </RelativeLayout>
 

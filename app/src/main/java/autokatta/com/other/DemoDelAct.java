@@ -18,13 +18,13 @@ import android.widget.Toast;
 import autokatta.com.R;
 import autokatta.com.my_inventory_container.BuyerNotificationContainer;
 import autokatta.com.my_inventory_container.MyVehicleContainer;
-import autokatta.com.my_inventory_container.NewVehicleContainer;
 import autokatta.com.my_inventory_container.ProductContainer;
 import autokatta.com.my_inventory_container.ServiceContainer;
 import autokatta.com.my_inventory_container.SoldVehicleContainer;
 import autokatta.com.my_inventory_container.UsedVehicleContainer;
 import autokatta.com.view.BussinessChatActivity;
 import autokatta.com.view.ManualEnquiry;
+import autokatta.com.view.SearchNewVehicleActivity;
 
 public class DemoDelAct extends AppCompatActivity {
 
@@ -64,7 +64,10 @@ public class DemoDelAct extends AppCompatActivity {
                 } else if (gridViewString[+i].equals("Used Vehicle")) {
                     startActivity(new Intent(getApplicationContext(), UsedVehicleContainer.class));
                 } else if (gridViewString[+i].equals("New Vehicle")) {
-                    startActivity(new Intent(getApplicationContext(), NewVehicleContainer.class));
+                    Intent intent = new Intent(getApplicationContext(), SearchNewVehicleActivity.class);
+                    intent.putExtra("callFrom", "MyInventory");
+                    startActivity(intent);
+                    // startActivity(new Intent(getApplicationContext(), SearchNewVehicleActivity.class));
                 } else if (gridViewString[+i].equals("Sold Vehicle")) {
                     startActivity(new Intent(getApplicationContext(), SoldVehicleContainer.class));
                 } else if (gridViewString[+i].equals("My Vehicle")) {

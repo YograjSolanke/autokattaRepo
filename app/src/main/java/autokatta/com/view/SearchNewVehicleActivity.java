@@ -4,7 +4,6 @@ import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -14,7 +13,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import java.net.SocketTimeoutException;
 import java.util.ArrayList;
@@ -30,19 +28,17 @@ import autokatta.com.response.GetVehicleBrandResponse;
 import autokatta.com.response.GetVehicleListResponse;
 import autokatta.com.response.GetVehicleModelResponse;
 import autokatta.com.response.GetVehicleSubTypeResponse;
+import autokatta.com.response.GetVehicleVersionResponse;
 import retrofit2.Response;
 
 public class SearchNewVehicleActivity extends AppCompatActivity implements RequestNotifier {
-    String myContact = "";
+    String myContact = "", mCallFrom = "";
     ApiCall mApiCall;
-
-    Spinner brandSpinner, modelSpinner, allcategorySpinner, subcategorySpinner;
-
+    Spinner brandSpinner, modelSpinner, allcategorySpinner, subcategorySpinner, versionSpinner;
     String action = "", subCategory, Sbrand, Smodel, Scategory;
-    int position_brand_id, position_model_id;
+    int vehicle_id = 0, sub_category_id = 0, position_brand_id = 0, position_model_id, position_version_id;
     Button btnSearch;
-    int count = 0, owner1, Sid, vehicle_id, sub_category_id;
-    String categoryString, subCateString, modelString, brandString;
+    String categoryString, subCateString, modelString, brandString, versionString;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,18 +46,18 @@ public class SearchNewVehicleActivity extends AppCompatActivity implements Reque
         setContentView(R.layout.activity_search_new_vehicle);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        setTitle("Search New Vehicle");
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setVisibility(View.GONE);
         btnSearch = (Button) findViewById(R.id.btnSearch);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
+
+        mCallFrom = getIntent().getExtras().getString("callFrom", "MainActivity");
+
+
+        if (mCallFrom.equalsIgnoreCase("MyInventory")) {
+            setTitle("Get New Vehicle");
+            btnSearch.setText(getString(R.string.getNewVehicle));
+        } else {
+            setTitle("Search New Vehicle");
+        }
 
         myContact = getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).getString("loginContact", "");
         mApiCall = new ApiCall(this, this);
@@ -71,27 +67,19 @@ public class SearchNewVehicleActivity extends AppCompatActivity implements Reque
         subcategorySpinner = (Spinner) findViewById(R.id.subCategory);
         brandSpinner = (Spinner) findViewById(R.id.BrandEdit1);
         modelSpinner = (Spinner) findViewById(R.id.ModelEdit1);
-
-
-        allcategorySpinner.setSelection(getIndex(allcategorySpinner, Scategory));
-        brandSpinner.setSelection(getIndex(brandSpinner, Sbrand));
-        modelSpinner.setSelection(getIndex(modelSpinner, Smodel));
+        versionSpinner = (Spinner) findViewById(R.id.VersionEdit1);
 
 
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
 
-
                 if (getSupportActionBar() != null) {
                     getSupportActionBar().setDisplayShowHomeEnabled(true);
                     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-                    //getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
                 }
 
                 getVehicleCategory();
-
-
             }
         });
 
@@ -100,35 +88,29 @@ public class SearchNewVehicleActivity extends AppCompatActivity implements Reque
             @Override
             public void onClick(View view) {
 
-
-                categoryString = allcategorySpinner.getSelectedItem().toString();
-                subCateString = subcategorySpinner.getSelectedItem().toString();
-                brandString = brandSpinner.getSelectedItem().toString();
-                modelString = modelSpinner.getSelectedItem().toString();
-
-                if (categoryString.startsWith("Select Category")) {
-
+                if (vehicle_id == 0) {
                     CustomToast.customToast(getApplicationContext(), "Please Select Category");
-
-
-                } else if (subCateString.startsWith("Select Subcategory")) {
-
+                } else if (sub_category_id == 0) {
                     CustomToast.customToast(getApplicationContext(), "Please Select Sub Category");
-
-
-                } else
-
-                {
+                } else if (position_brand_id == 0) {
+                    CustomToast.customToast(getApplicationContext(), "Please Select Brand");
+                } else if (position_model_id == 0) {
+                    CustomToast.customToast(getApplicationContext(), "Please Select Model");
+                } else if (position_version_id == 0) {
+                    CustomToast.customToast(getApplicationContext(), "Please Select Version");
+                } else {
+                    if (!mCallFrom.equalsIgnoreCase("MyInventory")) {
+                        Bundle b = new Bundle();
+                        ActivityOptions options = ActivityOptions.makeCustomAnimation(SearchNewVehicleActivity.this, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
+                        Intent intentnewvehicle = new Intent(SearchNewVehicleActivity.this, SearchedNewVehicleResultActivity.class);
+                        intentnewvehicle.putExtras(b);
+                        startActivity(intentnewvehicle, options.toBundle());
+                    } else {
+                        CustomToast.customToast(getApplicationContext(), "call service");
+                    }
                 }
-
-
-                Bundle b = new Bundle();
-                b.putInt("store_id", 0);
-                ActivityOptions options = ActivityOptions.makeCustomAnimation(SearchNewVehicleActivity.this, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
-                Intent intentnewvehicle = new Intent(SearchNewVehicleActivity.this, SearchedNewVehicleResultActivity.class);
-                intentnewvehicle.putExtras(b);
-                startActivity(intentnewvehicle, options.toBundle());
             }
+
         });
     }
 
@@ -155,6 +137,13 @@ public class SearchNewVehicleActivity extends AppCompatActivity implements Reque
   */
     private void getModel(int categoryId, int subCategoryId, int brandId) {
         mApiCall.getModel(categoryId, subCategoryId, brandId);
+    }
+
+    /*
+   Get Version...
+    */
+    private void getVersion(int categoryId, int subCategoryId, int brandId, int modelId) {
+        mApiCall.getVersion(categoryId, subCategoryId, brandId, modelId);
     }
 
 
@@ -208,7 +197,6 @@ public class SearchNewVehicleActivity extends AppCompatActivity implements Reque
 
                         parsedData.addAll(mCategoryId);
                         ArrayAdapter<String> adapter = new ArrayAdapter<>(getApplicationContext(), R.layout.registration_spinner, parsedData);
-                        // adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                         allcategorySpinner.setAdapter(adapter);
                         subcategorySpinner.setAdapter(null);
                         allcategorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -218,10 +206,7 @@ public class SearchNewVehicleActivity extends AppCompatActivity implements Reque
                                     vehicle_id = mCategoryMap.get(parsedData.get(position));
                                     String Category = parsedData.get(position);
 
-                                    count = 0;
-
                                     getSubCategoryTask(vehicle_id);
-
 
                                 }
                             }
@@ -252,7 +237,6 @@ public class SearchNewVehicleActivity extends AppCompatActivity implements Reque
                     parsedData.addAll(mSubTypeList);
                     ArrayAdapter<String> adapter =
                             new ArrayAdapter<>(getApplicationContext(), R.layout.registration_spinner, parsedData);
-                    //  adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     subcategorySpinner.setAdapter(adapter);
                     brandSpinner.setAdapter(null);
                     subcategorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -283,7 +267,7 @@ public class SearchNewVehicleActivity extends AppCompatActivity implements Reque
                     final List<String> brandData = new ArrayList<>();
                     final HashMap<String, Integer> mBrandMap = new HashMap<>();
 
-                    mBrandList.add("Select Brands");
+                    mBrandList.add("Select Brand");
                     GetVehicleBrandResponse getVehicleBrandResponse = (GetVehicleBrandResponse) response.body();
                     for (GetVehicleBrandResponse.Success brandResponse : getVehicleBrandResponse.getSuccess()) {
                         brandResponse.setBrandId(brandResponse.getBrandId());
@@ -326,7 +310,7 @@ public class SearchNewVehicleActivity extends AppCompatActivity implements Reque
                     final List<String> modelData = new ArrayList<>();
                     final HashMap<String, Integer> mModelMap = new HashMap<>();
 
-                    mModelList.add("Select model");
+                    mModelList.add("Select Model");
                     GetVehicleModelResponse getVehicleModelResponse = (GetVehicleModelResponse) response.body();
                     for (GetVehicleModelResponse.Success modelResponse : getVehicleModelResponse.getSuccess()) {
                         modelResponse.setModelId(modelResponse.getModelId());
@@ -339,9 +323,8 @@ public class SearchNewVehicleActivity extends AppCompatActivity implements Reque
                     Log.i("ListModel", "->" + mModelList);
                     ArrayAdapter<String> adapter =
                             new ArrayAdapter<>(getApplicationContext(), R.layout.registration_spinner, modelData);
-                    //    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     modelSpinner.setAdapter(adapter);
-                    // versionSpinner.setAdapter(null);
+                    versionSpinner.setAdapter(null);
                     modelSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -352,7 +335,47 @@ public class SearchNewVehicleActivity extends AppCompatActivity implements Reque
                                 System.out.println("modelSpinner id is::" + position_model_id);
                                 System.out.println("modelSpinner name::" + modelName);
 
-                                //getVersion(vehicle_id, sub_category_id, position_brand_id, position_model_id);
+                                getVersion(vehicle_id, sub_category_id, position_brand_id, position_model_id);
+                            }
+                        }
+
+                        @Override
+                        public void onNothingSelected(AdapterView<?> parent) {
+
+                        }
+                    });
+                }
+
+                //Vehicle Version
+                else if (response.body() instanceof GetVehicleVersionResponse) {
+                    Log.e("GetVehicleVersion", "->");
+                    List<String> mVersionIdList = new ArrayList<>();
+                    final List<String> versionData = new ArrayList<>();
+                    final HashMap<String, Integer> mVersionMap = new HashMap<>();
+
+                    mVersionIdList.add("Select Version");
+                    GetVehicleVersionResponse getVehicleVersionResponse = (GetVehicleVersionResponse) response.body();
+                    for (GetVehicleVersionResponse.Success versionResponse : getVehicleVersionResponse.getSuccess()) {
+                        versionResponse.setVersionId(versionResponse.getVersionId());
+                        versionResponse.setVersion(versionResponse.getVersion());
+                        mVersionIdList.add(versionResponse.getVersion());
+                        mVersionMap.put(versionResponse.getVersion(), versionResponse.getVersionId());
+                    }
+                    //mVersionIdList.add("other");
+                    versionData.addAll(mVersionIdList);
+                    Log.i("ListVersion", "->" + mVersionIdList);
+                    ArrayAdapter<String> adapter =
+                            new ArrayAdapter<>(getApplicationContext(), R.layout.registration_spinner, versionData);
+                    versionSpinner.setAdapter(adapter);
+                    versionSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                        @Override
+                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                            if (position != 0) {
+                                position_version_id = mVersionMap.get(versionData.get(position));
+                                String versionName = versionData.get(position);
+
+                                System.out.println("Version id is::" + position_version_id);
+                                System.out.println("Version name::" + versionName);
                             }
                         }
 
@@ -393,7 +416,6 @@ public class SearchNewVehicleActivity extends AppCompatActivity implements Reque
         if (str != null) {
 
             if (str.startsWith("success")) {
-                Toast.makeText(getApplicationContext(), "Your search saved successfully! you will get notification soon..!", Toast.LENGTH_SHORT).show();
                 finish();
                 startActivity(new Intent(SearchNewVehicleActivity.this, AutokattaMainActivity.class));
             }
