@@ -61,6 +61,7 @@ import autokatta.com.response.MyStoreResponse;
 import autokatta.com.response.MyUploadedVehiclesResponse;
 import autokatta.com.response.ProfileGroupResponse;
 import autokatta.com.view.AddManualEnquiry;
+import autokatta.com.view.BussinessChatActivity;
 import autokatta.com.view.MyVehicleQuotationListActivity;
 import autokatta.com.view.VehicleDetails;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
@@ -218,6 +219,7 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
                 Button mTransferStock = (Button) view.findViewById(R.id.transfer_stock);
                 Button mSold = (Button) view.findViewById(R.id.delete);
                 Button mViewQuote = (Button) view.findViewById(R.id.view_quotation);
+                Button mOfferRecived = (Button) view.findViewById(R.id.offerrecived);
 
                 final Dialog mBottomSheetDialog = new Dialog(activity, R.style.MaterialDialogSheet);
                 mBottomSheetDialog.setContentView(view);
@@ -629,6 +631,15 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
                                     .setIcon(android.R.drawable.ic_dialog_alert)
                                     .show();
                         }
+                    }
+                });
+
+                mOfferRecived.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent i =new Intent(activity, BussinessChatActivity.class);
+                        i.putExtra("callfrom","myuploadedvehicle");
+                        activity.startActivity(i);
                     }
                 });
             }

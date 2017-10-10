@@ -31,6 +31,13 @@
         android:background="@android:color/transparent" />
 
     <Button
+        android:id="@+id/offerrecived"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Offer Recived"
+        android:background="@android:color/transparent" />
+
+    <Button
         android:id="@+id/quotation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -50,4 +57,6 @@
         android:layout_height="wrap_content"
         android:text="@string/sold"
         android:background="@android:color/transparent" />
+
+
 </LinearLayout>

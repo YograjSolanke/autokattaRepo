@@ -11,6 +11,8 @@ import autokatta.com.app_info.BusinessChatAppIntro;
 
 public class BussinessChatActivity extends AppCompatActivity {
 
+    Bundle b1=new Bundle();
+    BussinessChatTabs bussinessChatTabs=new BussinessChatTabs();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,9 +30,14 @@ public class BussinessChatActivity extends AppCompatActivity {
        /* FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.bussines_chat_container, new BussinessChatFragment()).commit();*/
+       if (getIntent() != null) {
+           b1.putString("callfrom", getIntent().getStringExtra("callfrom"));
+           bussinessChatTabs.setArguments(b1);
+
+       }
 
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.bussines_chat_container, new BussinessChatTabs(), "businessChat")
+                .replace(R.id.bussines_chat_container,bussinessChatTabs , "businessChat")
                 .addToBackStack("businessChat")
                 .commit();
     }
