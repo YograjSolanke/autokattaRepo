@@ -57,6 +57,7 @@ import autokatta.com.fragment.StoreNotification;
 import autokatta.com.fragment.WallNotificationFragment;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.DemoDelAct;
+import autokatta.com.other.EnquiryActivity;
 import autokatta.com.other.Leads;
 import autokatta.com.other.PostStatus;
 import autokatta.com.other.SearchActivity;
@@ -544,7 +545,9 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
                         } /*else if (menuItem.getItemId() == R.id.locality) {
                             startActivity(new Intent(AutokattaMainActivity.this, MapsActivity.class));
                             //startActivity(new Intent(AutokattaMainActivity.this, DeleteActivity.class));
-                        } */ else if (menuItem.getItemId() == R.id.leads) {
+                        } */ else if (menuItem.getItemId() == R.id.enquiries) {
+                            startActivity(new Intent(AutokattaMainActivity.this, EnquiryActivity.class));
+                        } else if (menuItem.getItemId() == R.id.leads) {
                             startActivity(new Intent(AutokattaMainActivity.this, Leads.class));
                         } else if (menuItem.getItemId() == R.id.change_language) {
                             openDialog();
