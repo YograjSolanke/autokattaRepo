@@ -32,7 +32,7 @@ import autokatta.com.response.GetVehicleVersionResponse;
 import retrofit2.Response;
 
 public class SearchNewVehicleActivity extends AppCompatActivity implements RequestNotifier {
-    String myContact = "", mCallFrom = "";
+    String myContact = "";
     ApiCall mApiCall;
     Spinner brandSpinner, modelSpinner, allcategorySpinner, subcategorySpinner, versionSpinner;
     String action = "", subCategory, Sbrand, Smodel, Scategory;
@@ -49,15 +49,7 @@ public class SearchNewVehicleActivity extends AppCompatActivity implements Reque
 
         btnSearch = (Button) findViewById(R.id.btnSearch);
 
-        mCallFrom = getIntent().getExtras().getString("callFrom", "MainActivity");
-
-
-        if (mCallFrom.equalsIgnoreCase("MyInventory")) {
-            setTitle("Get New Vehicle");
-            btnSearch.setText(getString(R.string.getNewVehicle));
-        } else {
-            setTitle("Search New Vehicle");
-        }
+        setTitle("Search New Vehicle");
 
         myContact = getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).getString("loginContact", "");
         mApiCall = new ApiCall(this, this);
@@ -99,15 +91,13 @@ public class SearchNewVehicleActivity extends AppCompatActivity implements Reque
                 } else if (position_version_id == 0) {
                     CustomToast.customToast(getApplicationContext(), "Please Select Version");
                 } else {
-                    if (!mCallFrom.equalsIgnoreCase("MyInventory")) {
-                        Bundle b = new Bundle();
-                        ActivityOptions options = ActivityOptions.makeCustomAnimation(SearchNewVehicleActivity.this, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
-                        Intent intentnewvehicle = new Intent(SearchNewVehicleActivity.this, SearchedNewVehicleResultActivity.class);
-                        intentnewvehicle.putExtras(b);
-                        startActivity(intentnewvehicle, options.toBundle());
-                    } else {
-                        CustomToast.customToast(getApplicationContext(), "call service");
-                    }
+
+                    Bundle b = new Bundle();
+                    ActivityOptions options = ActivityOptions.makeCustomAnimation(SearchNewVehicleActivity.this, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
+                    Intent intentnewvehicle = new Intent(SearchNewVehicleActivity.this, SearchedNewVehicleResultActivity.class);
+                    intentnewvehicle.putExtras(b);
+                    startActivity(intentnewvehicle, options.toBundle());
+
                 }
             }
 
@@ -406,7 +396,7 @@ public class SearchNewVehicleActivity extends AppCompatActivity implements Reque
         } else if (error instanceof ClassCastException) {
             CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
         } else {
-            Log.i("Check Class-", "Search Vehicle Activity");
+            Log.i("Check Class-", "Search New Vehicle Activity");
             error.printStackTrace();
         }
     }

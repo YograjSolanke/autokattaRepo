@@ -173,13 +173,6 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".view.MyUploadedVehiclesActivity"
-            android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
-            android:label="@string/title_activity_my_uploaded_vehicles"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustResize" />
-        <activity
             android:name=".view.MyActiveEventsTabActivity"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
             android:label="@string/title_activity_my_active_events_tab"
@@ -772,7 +765,9 @@
         <activity android:name=".my_inventory_container.UsedVehicleContainer" />
         <activity android:name=".my_inventory_container.BuyerNotificationContainer" />
         <activity android:name=".my_inventory_container.MyVehicleContainer" />
-        <activity android:name=".my_inventory_container.NewVehicleContainer" />
+        <activity
+            android:name=".my_inventory_container.NewVehicleContainer"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".my_profile_container.AboutContainer" />
         <activity android:name=".my_profile_container.GroupContainer" />
         <activity android:name=".my_profile_container.StoreContainer" />

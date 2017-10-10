@@ -52,7 +52,6 @@ import autokatta.com.broadcastreceiver.Receiver;
 import autokatta.com.fragment.AuctionNotification;
 import autokatta.com.fragment.FavoriteNotificationFragment;
 import autokatta.com.fragment.GroupNotification;
-import autokatta.com.fragment.SocialFragment;
 import autokatta.com.fragment.StoreNotification;
 import autokatta.com.fragment.WallNotificationFragment;
 import autokatta.com.interfaces.RequestNotifier;
@@ -479,7 +478,7 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
     private void setupViewPager(ViewPager viewPager) {
         TabAdapter adapter = new TabAdapter(getSupportFragmentManager());
         adapter.addFragment(new WallNotificationFragment());
-        adapter.addFragment(new SocialFragment());
+        //adapter.addFragment(new SocialFragment());
         /*adapter.addFragment(new UpdatesFragment());*/
         adapter.addFragment(new AuctionNotification());
         adapter.addFragment(new StoreNotification());
@@ -519,9 +518,7 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
                             bundle.putString("className", "Main");
                             startActivity(new Intent(AutokattaMainActivity.this, SearchVehicleActivity.class).putExtras(bundle));
                         } else if (menuItem.getItemId() == R.id.search_new_vehicle) {
-                            Intent intent = new Intent(getApplicationContext(), SearchNewVehicleActivity.class);
-                            intent.putExtra("callFrom", "MainActivity");
-                            startActivity(intent);
+                            startActivity(new Intent(AutokattaMainActivity.this, SearchNewVehicleActivity.class));
                         } else if (menuItem.getItemId() == R.id.my_search) {
                             startActivity(new Intent(AutokattaMainActivity.this, MySearchActivity.class));
                         } else if (menuItem.getItemId() == R.id.my_vehicle) {
