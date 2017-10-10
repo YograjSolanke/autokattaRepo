@@ -63,6 +63,7 @@ import autokatta.com.view.ProductViewActivity;
 import autokatta.com.view.ServiceViewActivity;
 import autokatta.com.view.ShareWithinAppActivity;
 import autokatta.com.view.StoreViewActivity;
+import autokatta.com.view.UploadToGroupStoreActivity;
 import autokatta.com.view.UserProfile;
 import autokatta.com.view.VehicleDetails;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
@@ -3384,21 +3385,8 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                 mPostHolder.mPostShare.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        PopupMenu mPopupMenu = new PopupMenu(mActivity, mPostHolder.mPostShare);
-                        mPopupMenu.getMenuInflater().inflate(R.menu.more_menu, mPopupMenu.getMenu());
-                        mPopupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                            @Override
-                            public boolean onMenuItemClick(MenuItem item) {
-                                switch (item.getItemId()) {
-                                    case R.id.autokatta:
-                                        break;
-                                    case R.id.other:
-                                        break;
-                                }
-                                return false;
-                            }
-                        });
-                        mPopupMenu.show(); //showing popup menu
+                        Intent intent = new Intent(mActivity, UploadToGroupStoreActivity.class);
+                        mActivity.startActivity(intent);
                     }
                 });
 

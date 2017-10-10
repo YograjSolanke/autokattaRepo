@@ -840,6 +840,10 @@
         <activity
             android:name=".view.StoreImagesTabActivity"
             android:label="@string/title_activity_store_images_tab"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".view.UploadToGroupStoreActivity"
+            android:label="@string/title_activity_upload_to_group_store"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

@@ -189,7 +189,7 @@
                         android:layout_gravity="center"
                         android:background="@android:color/transparent"
                         android:drawableStart="@mipmap/new_share"
-                        android:text="share" />
+                        android:text="Upload" />
                 </LinearLayout>
             </LinearLayout>
             <!--<RelativeLayout

@@ -966,7 +966,6 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
                 .performClick(true)
                 .setInfoText(text)
                 .setTarget(view)
-                .setIdempotent(true)
                 .setUsageId(id) //THIS SHOULD BE UNIQUE ID
                 .show();
     }

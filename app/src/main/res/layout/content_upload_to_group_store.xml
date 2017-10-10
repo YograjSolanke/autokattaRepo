@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/TitleRelative"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="autokatta.com.view.UploadToGroupStoreActivity"
+    tools:showIn="@layout/activity_upload_to_group_store">
 
     <android.support.v4.widget.NestedScrollView
         android:id="@+id/scrl"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -26,9 +28,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
-                    android:text="@string/groups_where_your_vehicles_belongs"
+                    android:text="@string/groupList"
                     android:textStyle="bold" />
-
 
                 <ListView
                     android:id="@+id/grouplist"
@@ -53,7 +54,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
-                    android:text="@string/store_where_your_vehicles_belongs"
+                    android:text="@string/storeList"
                     android:textStyle="bold" />
 
                 <ListView
@@ -69,36 +70,35 @@
     </android.support.v4.widget.NestedScrollView>
 
 
-        <LinearLayout
-            android:id="@+id/relativebtnbottom"
+    <LinearLayout
+        android:id="@+id/relativebtnbottom"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/scrl"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="5dp">
+
+        <Button
+            android:id="@+id/cancel"
+            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_centerHorizontal="true"
-            android:layout_margin="5dp"
-            android:layout_below="@+id/scrl">
+            android:layout_height="wrap_content"
+            android:background="@drawable/buttonback"
+            android:text="Cancel"
+            android:textColor="@color/white"
+            android:textSize="15sp" />
 
-            <Button
-                android:id="@+id/cancel"
-                style="?android:attr/buttonBarButtonStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/buttonback"
-                android:text="Cancel"
-                android:textColor="@color/white"
-                android:textSize="15sp" />
+        <Button
+            android:id="@+id/ok"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:background="@drawable/buttonback"
+            android:text="Ok"
+            android:textColor="@color/white"
+            android:textSize="15sp" />
 
-            <Button
-                android:id="@+id/ok"
-                style="?android:attr/buttonBarButtonStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/buttonback"
-                android:text="Ok"
-                android:layout_marginStart="20dp"
-                android:textColor="@color/white"
-                android:textSize="15sp" />
-
-        </LinearLayout>
-
+    </LinearLayout>
 
 </RelativeLayout>

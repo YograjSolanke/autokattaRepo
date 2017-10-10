@@ -510,6 +510,8 @@
 
     <string name="groups_where_your_vehicles_belongs">Groups Where your vehicles belongs</string>
     <string name="store_where_your_vehicles_belongs">Stores Where your vehicles belongs</string>
+    <string name="groupList">Select Groups for uploading</string>
+    <string name="storeList">Select Stores for uploading</string>
 
     <string name="location_details">Location Details</string>
     <string name="parking_location">Parking location</string>
@@ -743,4 +745,5 @@
     <string name="title_activity_searched_new_vehicle_result">SearchedNewVehicleActivity</string>
     <string name="title_activity_store_videos">StoreVideosActivity</string>
     <string name="title_activity_store_images_tab">StoreImagesTabActivity</string>
+    <string name="title_activity_upload_to_group_store">UploadToGroupStoreActivity</string>
 </resources>
