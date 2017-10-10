@@ -832,7 +832,15 @@
             android:name=".view.SearchedNewVehicleResultActivity"
             android:label="@string/title_activity_searched_new_vehicle_result"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".other.Leads"></activity>
+        <activity android:name=".other.Leads" />
+        <activity
+            android:name=".StoreVideosActivity"
+            android:label="@string/title_activity_store_videos"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".view.StoreImagesTabActivity"
+            android:label="@string/title_activity_store_images_tab"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

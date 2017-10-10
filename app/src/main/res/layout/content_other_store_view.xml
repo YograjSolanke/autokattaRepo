@@ -529,120 +529,120 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <!--<LinearLayout-->
-            <!--android:id="@+id/linear_four"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_below="@+id/linear_three"-->
-            <!--android:layout_marginTop="@dimen/activity_half_margin"-->
-            <!--android:orientation="vertical">-->
+            <LinearLayout
+                android:id="@+id/linear_four"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/linear_three"
+                android:layout_marginTop="@dimen/activity_half_margin"
+                android:orientation="vertical">
 
-            <!--<TextView-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginStart="@dimen/indicator_size"-->
-            <!--android:text="@string/uploads"-->
-            <!--android:textStyle="bold" />-->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/indicator_size"
+                    android:text="@string/uploads"
+                    android:textStyle="bold" />
 
-            <!--<View-->
-            <!--android:id="@+id/view3"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="1dp"-->
-            <!--android:layout_marginTop="@dimen/inset"-->
-            <!--android:background="#cccccc" />-->
+                <View
+                    android:id="@+id/view3"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="@dimen/inset"
+                    android:background="#cccccc" />
 
-            <!--<LinearLayout-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginTop="@dimen/text_margin_top"-->
-            <!--android:background="#E6E6E6"-->
-            <!--android:orientation="vertical">-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/text_margin_top"
+                    android:background="#E6E6E6"
+                    android:orientation="vertical">
 
-            <!--<LinearLayout-->
-            <!--android:id="@+id/my_video"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:baselineAligned="false"-->
-            <!--android:orientation="horizontal"-->
-            <!--android:padding="@dimen/card_margin"-->
-            <!--android:weightSum="1">-->
+                    <LinearLayout
+                        android:id="@+id/my_video"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:baselineAligned="false"
+                        android:orientation="horizontal"
+                        android:padding="@dimen/card_margin"
+                        android:weightSum="1">
 
-            <!--<LinearLayout-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_weight="0.8">-->
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.8">
 
-            <!--<TextView-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:drawablePadding="@dimen/fab_margin"-->
-            <!--android:drawableStart="@mipmap/ic_account"-->
-            <!--android:gravity="center"-->
-            <!--android:text="@string/my_video"-->
-            <!--android:textStyle="bold" />-->
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:drawablePadding="@dimen/fab_margin"
+                                android:drawableStart="@mipmap/ic_account"
+                                android:gravity="center"
+                                android:text="@string/my_video"
+                                android:textStyle="bold" />
 
-            <!--</LinearLayout>-->
+                        </LinearLayout>
 
-            <!--<LinearLayout-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_gravity="center"-->
-            <!--android:layout_weight="0.2"-->
-            <!--android:gravity="end">-->
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="0.2"
+                            android:gravity="end">
 
-            <!--<ImageView-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:contentDescription="@string/app_name"-->
-            <!--android:src="@drawable/ic_chevron_right" />-->
-            <!--</LinearLayout>-->
-            <!--</LinearLayout>-->
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:contentDescription="@string/app_name"
+                                android:src="@drawable/ic_chevron_right" />
+                        </LinearLayout>
+                    </LinearLayout>
 
-            <!--<View-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="1dp"-->
-            <!--android:layout_marginTop="@dimen/inset"-->
-            <!--android:background="#cccccc" />-->
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="@dimen/inset"
+                        android:background="#cccccc" />
 
-            <!--<LinearLayout-->
-            <!--android:id="@+id/images"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:baselineAligned="false"-->
-            <!--android:orientation="horizontal"-->
-            <!--android:padding="@dimen/card_margin"-->
-            <!--android:weightSum="1">-->
+                    <LinearLayout
+                        android:id="@+id/images"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:baselineAligned="false"
+                        android:orientation="horizontal"
+                        android:padding="@dimen/card_margin"
+                        android:weightSum="1">
 
-            <!--<LinearLayout-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_weight="0.8">-->
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.8">
 
-            <!--<TextView-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:drawablePadding="@dimen/fab_margin"-->
-            <!--android:drawableStart="@mipmap/ic_account"-->
-            <!--android:gravity="center"-->
-            <!--android:text="@string/images"-->
-            <!--android:textStyle="bold" />-->
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:drawablePadding="@dimen/fab_margin"
+                                android:drawableStart="@mipmap/ic_account"
+                                android:gravity="center"
+                                android:text="@string/images"
+                                android:textStyle="bold" />
 
-            <!--</LinearLayout>-->
+                        </LinearLayout>
 
-            <!--<LinearLayout-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_gravity="center"-->
-            <!--android:layout_weight="0.2"-->
-            <!--android:gravity="end">-->
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_weight="0.2"
+                            android:gravity="end">
 
-            <!--<ImageView-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:contentDescription="@string/app_name"-->
-            <!--android:src="@drawable/ic_chevron_right" />-->
-            <!--</LinearLayout>-->
-            <!--</LinearLayout>-->
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:contentDescription="@string/app_name"
+                                android:src="@drawable/ic_chevron_right" />
+                        </LinearLayout>
+                    </LinearLayout>
 
             <!--<View-->
             <!--android:layout_width="match_parent"-->
@@ -735,8 +735,8 @@
             <!--android:src="@drawable/ic_chevron_right" />-->
             <!--</LinearLayout>-->
             <!--</LinearLayout>-->
-            <!--</LinearLayout>-->
-            <!--</LinearLayout>-->
+                </LinearLayout>
+            </LinearLayout>
         </RelativeLayout>
     </android.support.v4.widget.NestedScrollView>
 
