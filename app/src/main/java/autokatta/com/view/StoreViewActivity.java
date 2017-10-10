@@ -43,6 +43,7 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 
 import autokatta.com.R;
+import autokatta.com.StoreVideosActivity;
 import autokatta.com.adapter.AdminCallContactAdapter;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
@@ -95,7 +96,7 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
     String strDetailsShare = "";
     private ProgressDialog dialog;
     AdminCallContactAdapter adapter;
-    LinearLayout mLinear, mAbout, mProducts, mService, mVehicle, mNewVehicle;
+    LinearLayout mLinear, mAbout, mProducts, mService, mVehicle, mNewVehicle, mVideos, mImages;
     ImageView mBannerImage, mStoreImage;
     TextView mStoreName, mWebSite, mLocation, mLikeCount, mFollowCount, mStoreType;
     ImageView mCall;
@@ -152,6 +153,8 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
                     mService = (LinearLayout) findViewById(R.id.service);
                     mVehicle = (LinearLayout) findViewById(R.id.vehicle);
                     mNewVehicle = (LinearLayout) findViewById(R.id.new_vehicle);
+                    mVideos = (LinearLayout) findViewById(R.id.my_video);
+                    mImages = (LinearLayout) findViewById(R.id.images);
 
                     mBannerImage = (ImageView) findViewById(R.id.other_store_image);
                     mStoreImage = (ImageView) findViewById(R.id.other_store_images);
@@ -303,6 +306,8 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
         mService.setOnClickListener(this);
         mVehicle.setOnClickListener(this);
         mNewVehicle.setOnClickListener(this);
+        mVideos.setOnClickListener(this);
+        mImages.setOnClickListener(this);
     }
 
     public void hideFloatingButton() {
@@ -808,6 +813,20 @@ Call Intent...
                 Intent intentnewvehicle = new Intent(StoreViewActivity.this, StoreNewVehicleActiviy.class);
                 intentnewvehicle.putExtras(b);
                 startActivity(intentnewvehicle, options.toBundle());
+                break;
+
+            case R.id.images:
+                Intent intentImages = new Intent(StoreViewActivity.this, StoreImagesTabActivity.class);
+                startActivity(intentImages, options.toBundle());
+
+
+                break;
+
+
+            case R.id.my_video:
+                Intent intentVideos = new Intent(StoreViewActivity.this, StoreVideosActivity.class);
+                startActivity(intentVideos, options.toBundle());
+
                 break;
 
         }
