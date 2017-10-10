@@ -659,7 +659,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         Log.i("Wall", "Adapter-LayoutNo ->" + holder.getItemViewType());
         // SpannableStringBuilder sb = new SpannableStringBuilder();
         switch (holder.getItemViewType()) {
@@ -3386,6 +3386,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(mActivity, UploadToGroupStoreActivity.class);
+                        intent.putExtra("statusId", notificationList.get(position).getStatusID());
                         mActivity.startActivity(intent);
                     }
                 });

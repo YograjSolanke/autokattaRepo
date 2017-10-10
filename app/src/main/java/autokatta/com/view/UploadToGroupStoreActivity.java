@@ -48,6 +48,7 @@ public class UploadToGroupStoreActivity extends AppCompatActivity implements Req
     List<String> finalGroupList = new ArrayList<>();
     List<String> finalStoreList = new ArrayList<>();
     private ProgressDialog dialog;
+    int statusId = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +56,10 @@ public class UploadToGroupStoreActivity extends AppCompatActivity implements Req
         setContentView(R.layout.activity_upload_to_group_store);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setHomeButtonEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
         dialog = new ProgressDialog(this);
         dialog.setMessage("Loading data, please wait...");
@@ -63,7 +68,7 @@ public class UploadToGroupStoreActivity extends AppCompatActivity implements Req
 
             @Override
             public void run() {
-
+                statusId = getIntent().getExtras().getInt("statusId", 0);
                 storelistView = (ListView) findViewById(R.id.storelist);
                 grouplistView = (ListView) findViewById(R.id.grouplist);
                 groupLayout = (RelativeLayout) findViewById(R.id.relativegrouplist);
@@ -177,7 +182,11 @@ public class UploadToGroupStoreActivity extends AppCompatActivity implements Req
 
     @Override
     public void notifyString(String str) {
+        if (str != null) {
+            if (str.equalsIgnoreCase("uploadToGroupStore")) {
 
+            }
+        }
     }
 
     @Override
@@ -210,10 +219,10 @@ public class UploadToGroupStoreActivity extends AppCompatActivity implements Req
                     }
                 }
 
-                if (!GroupIds.equals("") && !StoreIds.equals(""))
-                    uploadToGroupStore(GroupIds, StoreIds);
+                if (GroupIds.equals("") && StoreIds.equals(""))
+                    CustomToast.customToast(getApplicationContext(), "Please select atleast group or store to upload");
                 else
-                    CustomToast.customToast(getApplicationContext(), "Please select group or store to upload");
+                    uploadToGroupStore(GroupIds, StoreIds);
                 break;
 
             case R.id.cancel:
@@ -224,8 +233,10 @@ public class UploadToGroupStoreActivity extends AppCompatActivity implements Req
 
     private void uploadToGroupStore(String groupIds, String storeIds) {
         ApiCall mApiCall = new ApiCall(this, this);
+        // mApiCall.uploadToGroupStore(statusId, groupIds, storeIds);
         Log.i("Groups", groupIds);
         Log.i("Stores", storeIds);
+        Log.i("Status", String.valueOf(statusId));
     }
 
     @Override

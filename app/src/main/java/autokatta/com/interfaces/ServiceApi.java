@@ -1372,26 +1372,28 @@ public interface ServiceApi {
     //Upload vehicle exchange type
     @POST("VehicleExchangeType")
     Call<String> _autokattaVehicleExchangeType(@Query("CustomerName") String CustomerName, @Query("CustomerContact") String CustomerContact,
-                                           @Query("Address") String Address, @Query("FullAddress") String FullAddress,
-                                           @Query("Description") String Description, @Query("IDs") String IDs, @Query("VehicleID") int VehicleID);
+                                               @Query("Address") String Address, @Query("FullAddress") String FullAddress,
+                                               @Query("Description") String Description, @Query("IDs") String IDs, @Query("VehicleID") int VehicleID);
 
 
     //upload vehicle RepoInsurance
     @POST("VehicleRepoInsurance")
     Call<String> _autokattaVehicleRepoInsurance(@Query("AccountNumber") String AccountNumber, @Query("BorrowerName") String BorrowerName,
-                                           @Query("BorrowerContact") String BorrowerContact, @Query("BranchCityName") String BranchCityName,
-                                           @Query("BrachMangerName") String BrachMangerName, @Query("BranchContact") String BranchContact,
+                                                @Query("BorrowerContact") String BorrowerContact, @Query("BranchCityName") String BranchCityName,
+                                                @Query("BrachMangerName") String BrachMangerName, @Query("BranchContact") String BranchContact,
                                                 @Query("DealerName") String DealerName,
-                                                @Query("StockYardName") String StockYardName, @Query("StockYardAddress") String StockYardAddress ,
+                                                @Query("StockYardName") String StockYardName, @Query("StockYardAddress") String StockYardAddress,
                                                 @Query("InwardDate") String InwardDate, @Query("VehicleID") int VehicleID);
 
 
     //uploadvehicle
     @POST("VehicleInventorySrcap")
     Call<String> _autokattaVehicleInventorySrcap(@Query("CustomerName") String CustomerName, @Query("MyContact") String custcontact,
-                                           @Query("Address") String Address, @Query("FullAddress") String FullAddress,
-                                           @Query("PurchasePrice") int PurchasePrice, @Query("PurchaseDate") String PurchaseDate,
+                                                 @Query("Address") String Address, @Query("FullAddress") String FullAddress,
+                                                 @Query("PurchasePrice") int PurchasePrice, @Query("PurchaseDate") String PurchaseDate,
                                                  @Query("VehicleID") int VehicleID);
 
 
+    @POST("VehicleInventorySrcap")
+    Call<String> _autokattauploadToGroupStore(int statusId, String groupIds, String storeIds);
 }
