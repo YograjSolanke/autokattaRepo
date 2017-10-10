@@ -748,4 +748,10 @@
     <string name="title_activity_store_images_tab">StoreImagesTabActivity</string>
     <string name="title_activity_upload_to_group_store">UploadToGroupStoreActivity</string>
     <string name="getNewVehicle">Get New Vehicles Data</string>
+
+    <!--New Vehicle details-->
+    <string name="PointLinkage">3PointLinkage</string>
+    <string name="ABS">ABS</string>
+
+
 </resources>

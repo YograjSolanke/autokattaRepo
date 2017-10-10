@@ -841,6 +841,8 @@
             android:label="@string/title_activity_upload_to_group_store"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".other.EnquiryActivity" />
+        <activity android:name=".view.NewVehicleDetails">
+        </activity>
     </application>
 
 </manifest>
