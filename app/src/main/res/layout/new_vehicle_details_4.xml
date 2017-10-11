@@ -1,0 +1,662 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <TextView
+            android:id="@+id/SeatBelt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Seat Belt : "
+            android:textColor="#2C3343"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/SeatBelt1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"
+            android:textColor="#2C3343"
+            android:visibility="gone" />
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/vcolor"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="5dp"
+        android:background="#cccccc" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="2">
+        <TextView
+            android:id="@+id/SeatBeltWarning"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Seat Belt Warning : "
+            android:textColor="#2C3343"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:id="@+id/SeatBeltWarning1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/DisplacementCC1"
+            android:layout_alignTop="@+id/Drive"
+            android:layout_below="@+id/DisplacementCC1"
+            android:text="@string/app_name"
+            android:textColor="#2C3343"
+            android:layout_weight="1"/>
+
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/vcolor"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="5dp"
+        android:background="#cccccc" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="2">
+        <TextView
+            android:id="@+id/SeatingCapacity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Seating Capacity : "
+            android:textColor="#2C3343"
+            android:layout_weight="1"/>
+
+
+        <TextView
+            android:id="@+id/SeatingCapacity1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"
+            android:textColor="#2C3343"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/vcolor"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="5dp"
+        android:background="#cccccc" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <TextView
+            android:id="@+id/SeatType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Seat Type : "
+            android:textColor="#2C3343"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:id="@+id/SeatType1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"
+            android:textColor="#2C3343"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/vcolor"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="5dp"
+        android:background="#cccccc" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="2">
+        <TextView
+            android:id="@+id/SeatUpholstery"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Seat Upholstery : "
+            android:textColor="#2C3343"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:id="@+id/SeatUpholstery1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"
+            android:textColor="#2C3343"
+            android:layout_weight="1"/>
+
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/vcolor"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="5dp"
+        android:background="#cccccc" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <TextView
+            android:id="@+id/Speed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Speed : "
+            android:textColor="#2C3343"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:id="@+id/Speed1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"
+            android:textColor="#2C3343"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/vcolor"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="5dp"
+        android:background="#cccccc" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <TextView
+            android:id="@+id/SportMode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sport Mode : "
+            android:textColor="#2C3343"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:id="@+id/SportMode1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"
+            android:textColor="#2C3343"
+            android:layout_weight="1"/>
+
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/vcolor"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="5dp"
+        android:background="#cccccc" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <TextView
+            android:id="@+id/Steering"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Steering "
+            android:textColor="#2C3343"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:id="@+id/Steering1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"
+            android:textColor="#2C3343"
+            android:layout_weight="1"/>
+
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/vcolor"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="5dp"
+        android:background="#cccccc" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="2">
+        <TextView
+            android:id="@+id/SteeringMountedControl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Steering Mounted Control : "
+            android:textColor="#2C3343"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:id="@+id/SteeringMountedControl1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"
+            android:textColor="#2C3343"
+            android:layout_weight="1"/>
+
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/vcolor"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="5dp"
+        android:background="#cccccc" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <TextView
+            android:id="@+id/IntegratedMusicSystem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" Integrated Music System : "
+            android:textColor="#2C3343"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:id="@+id/IntegratedMusicSystem1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"
+            android:textColor="#2C3343"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/vcolor"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="5dp"
+        android:background="#cccccc" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <TextView
+            android:id="@+id/SteeringType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" Steering Type: "
+            android:textColor="#2C3343"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:id="@+id/SteeringType1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"
+            android:textColor="#2C3343"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/vcolor"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="5dp"
+        android:background="#cccccc" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <TextView
+            android:id="@+id/StrokeInMM"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="StrokeIn(MM) : "
+            android:textColor="#2C3343"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:id="@+id/StrokeInMM1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"
+            android:textColor="#2C3343"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/vcolor"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="5dp"
+        android:background="#cccccc" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <TextView
+            android:id="@+id/SunRoofMoonRoof"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="SunRoof/MoonRoof : "
+            android:textColor="#2C3343"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:id="@+id/SunRoofMoonRoof1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"
+            android:textColor="#2C3343"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/vcolor"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="5dp"
+        android:background="#cccccc" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <TextView
+            android:id="@+id/TMPS"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TMPS : "
+            android:textColor="#2C3343"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:id="@+id/TMPS1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"
+            android:textColor="#2C3343"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/vcolor"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="5dp"
+        android:background="#cccccc" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <TextView
+            android:id="@+id/Torque"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" Torque: "
+            android:textColor="#2C3343"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:id="@+id/Torque1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"
+            android:textColor="#2C3343"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/vcolor"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="5dp"
+        android:background="#cccccc" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <TextView
+            android:id="@+id/TotalWeight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Total Weight : "
+            android:textColor="#2C3343"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:id="@+id/TotalWeight1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"
+            android:textColor="#2C3343"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/vcolor"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="5dp"
+        android:background="#cccccc" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <TextView
+            android:id="@+id/TransmissionType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" Transmission Type : "
+            android:textColor="#2C3343"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:id="@+id/TransmissionType1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"
+            android:textColor="#2C3343"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/vcolor"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="5dp"
+        android:background="#cccccc" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <TextView
+            android:id="@+id/TuboChargeNutralAspirated"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TurboCharge Nutral Aspirated : "
+            android:textColor="#2C3343"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:id="@+id/TuboChargeNutralAspirated1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"
+            android:textColor="#2C3343"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/vcolor"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="5dp"
+        android:background="#cccccc" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <TextView
+            android:id="@+id/TurningRadius"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" Turning Radius : "
+            android:textColor="#2C3343"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:id="@+id/TurningRadius1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"
+            android:textColor="#2C3343"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/vcolor"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="5dp"
+        android:background="#cccccc" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <TextView
+            android:id="@+id/TurningRadiusOfBrakes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" Turning Radius Of Brakes : "
+            android:textColor="#2C3343"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:id="@+id/TurningRadiusOfBrakes1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"
+            android:textColor="#2C3343"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/vcolor"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="5dp"
+        android:background="#cccccc" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <TextView
+            android:id="@+id/TypeOfClutchAndBrakePedal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Type Of Clutch And Brake Pedal : "
+            android:textColor="#2C3343"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:id="@+id/TypeOfClutchAndBrakePedal1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"
+            android:textColor="#2C3343"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/vcolor"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="5dp"
+        android:background="#cccccc" />
+
+</LinearLayout>
