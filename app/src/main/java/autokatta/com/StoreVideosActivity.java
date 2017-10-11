@@ -6,11 +6,12 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+
+import com.allattentionhere.autoplayvideos.AAH_CustomRecyclerView;
 
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
@@ -31,9 +32,10 @@ public class StoreVideosActivity extends AppCompatActivity implements RequestNot
     String myContact;
     VideoAdapter adapter;
     SwipeRefreshLayout mSwipeRefreshLayout;
-    RecyclerView recyclerView;
+    AAH_CustomRecyclerView recyclerView;
     LinearLayoutManager mLinearLayoutManager;
     List<String> videosList = new ArrayList<>();
+    //Picasso picasso;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,15 +45,9 @@ public class StoreVideosActivity extends AppCompatActivity implements RequestNot
         setSupportActionBar(toolbar);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        recyclerView = (RecyclerView) findViewById(R.id.videoRecycler);
+        recyclerView = (AAH_CustomRecyclerView) findViewById(R.id.rv_home);
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.refreshLayout);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
+
         mApiCall = new ApiCall(StoreVideosActivity.this, this);
         myContact = getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", null);
         recyclerView.setHasFixedSize(true);
@@ -60,7 +56,8 @@ public class StoreVideosActivity extends AppCompatActivity implements RequestNot
         mLinearLayoutManager.setStackFromEnd(true);
         recyclerView.setLayoutManager(mLinearLayoutManager);
         for (int i = 0; i < 5; i++) {
-            videosList.add("http://www.androidbegin.com/tutorial/AndroidCommercial.3gp");
+            //videosList.add("http://www.androidbegin.com/tutorial/AndroidCommercial.3gp");
+            videosList.add(getString(R.string.base_image_url) + "VID_20171005_185639.mp4");
         }
         mSwipeRefreshLayout.setRefreshing(false);
 
@@ -75,9 +72,14 @@ public class StoreVideosActivity extends AppCompatActivity implements RequestNot
                 }
 
 
-                adapter = new VideoAdapter(StoreVideosActivity.this, videosList);
+                adapter = new VideoAdapter(videosList);
+                recyclerView.setActivity(StoreVideosActivity.this); //todo before setAdapter
                 recyclerView.setAdapter(adapter);
                 adapter.notifyDataSetChanged();
+                recyclerView.smoothScrollBy(0, 1);
+                recyclerView.smoothScrollBy(0, -1);
+                recyclerView.setCheckForMp4(false); // true by default
+                recyclerView.setPlayOnlyFirstVideo(true); // false by default
 
 
             }
@@ -86,6 +88,17 @@ public class StoreVideosActivity extends AppCompatActivity implements RequestNot
 
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        recyclerView.stopVideos();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        recyclerView.playAvailableVideos(0);
+    }
     @Override
     public void onClick(View view) {
 

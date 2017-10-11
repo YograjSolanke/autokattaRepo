@@ -102,6 +102,7 @@ dependencies {
     compile 'com.github.paolorotolo:appintro:3.3.0'
     compile 'com.github.iammert:MaterialIntroView:1.6.0'
     compile 'com.mcxiaoke.photoview:library:1.2.3'
+    compile 'com.allattentionhere:autoplayvideos:0.1.6'
     testCompile 'junit:junit:4.12'
 }
 apply plugin: 'com.google.gms.google-services'

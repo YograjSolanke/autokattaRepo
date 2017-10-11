@@ -1,19 +1,14 @@
 package autokatta.com.adapter;
 
-import android.app.Activity;
-import android.app.ProgressDialog;
-import android.content.Context;
-import android.net.Uri;
-import android.support.v7.widget.CardView;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.MediaController;
-import android.widget.VideoView;
+import android.widget.ImageView;
+import android.widget.TextView;
 
-import java.util.ArrayList;
+import com.allattentionhere.autoplayvideos.AAH_CustomViewHolder;
+import com.allattentionhere.autoplayvideos.AAH_VideosAdapter;
+
 import java.util.List;
 
 import autokatta.com.R;
@@ -22,130 +17,72 @@ import autokatta.com.R;
  * Created by ak-004 on 10/10/17.
  */
 
-public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.MyVideoHolder> {
-    private Activity mActivity;
-    private Context mContext;
-    List<String> videosList = new ArrayList<>();
-    private MyVideoHolder view;
-    ProgressDialog pDialog;
+public class VideoAdapter extends AAH_VideosAdapter {
+    private List<String> list;
+    //Picasso picasso;
 
+    public class MyViewHolder extends AAH_CustomViewHolder {
+        final TextView tv;
+        final ImageView img_vol, img_playback;
+        boolean isMuted; //to mute/un-mute video (optional)
 
-    static class MyVideoHolder extends RecyclerView.ViewHolder {
-        CardView mCardView;
-        VideoView videoview;
-
-        MyVideoHolder(View itemView) {
-            super(itemView);
-            mCardView = (CardView) itemView.findViewById(R.id.card_view);
-            videoview = (VideoView) itemView.findViewById(R.id.VideoView);
-
+        public MyViewHolder(View x) {
+            super(x);
+            tv = (TextView) x.findViewById(R.id.tv);
+            img_vol = (ImageView) x.findViewById(R.id.img_vol);
+            img_playback = (ImageView) x.findViewById(R.id.img_playback);
         }
     }
 
-    public VideoAdapter(Activity mActivity, List<String> videosList) {
-        try {
-            this.mActivity = mActivity;
-            this.videosList = videosList;
-            this.mContext = mActivity;
-
-
-            // Create a progressbar
-            pDialog = new ProgressDialog(this.mActivity);
-            // Set progressbar title
-            pDialog.setTitle("Android Video Streaming Tutorial");
-            // Set progressbar message
-            pDialog.setMessage("Buffering...");
-            pDialog.setIndeterminate(false);
-            pDialog.setCancelable(false);
-            // Show progressbar
-            pDialog.show();
-
-        } catch (ClassCastException c) {
-            c.printStackTrace();
-        }
+    public VideoAdapter(List<String> list_urls) {
+        this.list = list_urls;
+        //this.picasso = p;
     }
 
     @Override
-    public MyVideoHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.layout_video_adapter, parent, false);
-        return new MyVideoHolder(v);
+    public AAH_CustomViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View itemView = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.single_card, parent, false);
+        return new MyViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(final MyVideoHolder holder, int position) {
-        final int safePosition = holder.getAdapterPosition();
-        view = holder;
+    public void onBindViewHolder(AAH_CustomViewHolder holder, int position) {
+        final MyViewHolder myViewHolder = (MyViewHolder) holder;
+        myViewHolder.tv.setText("Raj");
 
+        //todo
+        //holder.setImageUrl(list.get(position).getImage_url());
+        holder.setVideoUrl(list.get(position));
+        //load image/thumbnail into imageview
+        /*if (list.get(position).getImage_url() != null && !list.get(position).getImage_url().isEmpty())
+            picasso.load(holder.getImageUrl()).config(Bitmap.Config.RGB_565).into(holder.getAAH_ImageView());*/
 
-        try {
-            // Start the MediaController
-            MediaController mediacontroller = new MediaController(
-                    mActivity);
-            mediacontroller.setAnchorView(holder.videoview);
-            // Get the URL from String VideoURL
-            Uri video = Uri.parse(videosList.get(safePosition));
-            holder.videoview.setMediaController(mediacontroller);
-            holder.videoview.setVideoURI(video);
-
-        } catch (Exception e) {
-            Log.e("Error", e.getMessage());
-            e.printStackTrace();
-        }
-
-        holder.videoview.setOnClickListener(new View.OnClickListener() {
+        myViewHolder.img_playback.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                holder.videoview.start();
+            public void onClick(View v) {
+                if (myViewHolder.isPlaying()) {
+                    myViewHolder.pauseVideo();
+                    myViewHolder.setPaused(true);
+                } else {
+                    myViewHolder.playVideo();
+                    myViewHolder.setPaused(false);
+                }
             }
         });
 
-//       // holder.videoview.requestFocus();
-//        holder.videoview.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-//            // Close the progress bar and play the video
-//            public void onPrepared(MediaPlayer mp) {
-//
-//                holder.videoview.start();
-//            }
-//        });
-
-        pDialog.dismiss();
-
-//        /***Card Click Listener***/
-//        holder.mCardView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//
-//            }
-//        });
-
-    }
-
-    public int getCount() {
-        return videosList.size();
-    }
-
-//
-
-    public Object getItem(int position) {
-        return position;
-    }
-
-    public long getItemId(int position) {
-        return position;
-    }
-
-    @Override
-    public int getItemViewType(int position) {
-
-        return position;
+        myViewHolder.setLooping(true); //optional - true by default
     }
 
     @Override
     public int getItemCount() {
-        return videosList.size();
+        return list.size();
     }
 
+    @Override
+    public int getItemViewType(int position) {
+        return 0;
+    }
 
 }
 
