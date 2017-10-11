@@ -67,6 +67,7 @@ dependencies {
 
     //for device installation error
     //Material Showcase View
+
     compile 'com.kaopiz:kprogresshud:1.0.5'
     compile 'com.android.support:appcompat-v7:25.3.0'
     compile 'com.android.support.constraint:constraint-layout:1.0.1'

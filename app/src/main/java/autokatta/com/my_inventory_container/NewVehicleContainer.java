@@ -1,6 +1,7 @@
 package autokatta.com.my_inventory_container;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -25,6 +26,7 @@ import autokatta.com.response.GetVehicleBrandResponse;
 import autokatta.com.response.GetVehicleListResponse;
 import autokatta.com.response.GetVehicleModelResponse;
 import autokatta.com.response.GetVehicleSubTypeResponse;
+import autokatta.com.view.NewVehicleListActivity;
 import retrofit2.Response;
 
 public class NewVehicleContainer extends AppCompatActivity implements RequestNotifier {
@@ -81,18 +83,21 @@ public class NewVehicleContainer extends AppCompatActivity implements RequestNot
                 } else if (position_model_id == 0) {
                     CustomToast.customToast(getApplicationContext(), "Please Select Model");
                 } else {
-                    getNewVehicleList(vehicle_id, position_sub_cat_id, position_brand_id, position_model_id);
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("categoryId", vehicle_id);
+                    bundle.putInt("subCategoryId", position_sub_cat_id);
+                    bundle.putInt("brandId", position_brand_id);
+                    bundle.putInt("modelId", position_model_id);
+
+                    Intent intent = new Intent(NewVehicleContainer.this, NewVehicleListActivity.class);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
                 }
             }
 
         });
     }
 
-    private void getNewVehicleList(int categoryId, int subCategoryId, int brandId,
-                                   int modelId) {
-        ApiCall mApiCall = new ApiCall(this, this);
-        mApiCall.getNewVehicleList(categoryId, subCategoryId, brandId, modelId);
-    }
 
     private void getVehicleCategory() {
         mApiCall.getVehicleList();
@@ -351,8 +356,6 @@ public class NewVehicleContainer extends AppCompatActivity implements RequestNot
                         }
                     });
                 }*/
-
-
             } else
                 CustomToast.customToast(getApplicationContext(), getString(R.string._404));
 
@@ -380,11 +383,6 @@ public class NewVehicleContainer extends AppCompatActivity implements RequestNot
     @Override
     public void notifyString(String str) {
         if (str != null) {
-
-            if (str.startsWith("success")) {
-                finish();
-            }
-
         }
     }
 
