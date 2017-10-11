@@ -2,7 +2,6 @@ package autokatta.com.adapter;
 
 import android.app.Activity;
 import android.app.ActivityOptions;
-import android.app.Dialog;
 import android.app.DownloadManager;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -14,29 +13,22 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.PopupMenu;
-import android.support.v7.widget.PopupMenu.OnMenuItemClickListener;
 import android.support.v7.widget.RecyclerView;
-import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.webkit.MimeTypeMap;
 import android.webkit.URLUtil;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import java.io.File;
 import java.net.ConnectException;
@@ -48,22 +40,15 @@ import java.util.concurrent.TimeUnit;
 
 import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
-import autokatta.com.generic.SetMyDateAndTime;
 import autokatta.com.interfaces.RequestNotifier;
-import autokatta.com.interfaces.ServiceApi;
 import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.GetGroupVehiclesResponse;
-import autokatta.com.view.ChatActivity;
 import autokatta.com.view.ShareWithinAppActivity;
 import autokatta.com.view.VehicleDetails;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
-import retrofit2.Call;
-import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -89,7 +74,7 @@ public class GroupVehicleRefreshAdapter extends RecyclerView.Adapter<GroupVehicl
         TextView mRegistrationNo, mTitle, mPrice, mModel, mBrand, mUpdatedBy, mLocation, mRtoCity, mYearOfMfg, mKmsHrs;
         ImageView mLike, mCall, mUnlike;
         ImageView mCardImage;
-        LinearLayout mRlike, mRunlike, mShareOther,mOfferLayout;
+        LinearLayout mRlike, mRunlike, mShareOther, mOfferLayout;
         Button mMore;
 
 
@@ -120,11 +105,11 @@ public class GroupVehicleRefreshAdapter extends RecyclerView.Adapter<GroupVehicl
         }
     }
 
-    public GroupVehicleRefreshAdapter(Activity mActivity1, List<GetGroupVehiclesResponse.Success> mItemList,int groupid) {
+    public GroupVehicleRefreshAdapter(Activity mActivity1, List<GetGroupVehiclesResponse.Success> mItemList, int groupid) {
         this.mActivity = mActivity1;
         this.mItemList = mItemList;
         mApiCall = new ApiCall(mActivity, this);
-        this.mGroupId=groupid;
+        this.mGroupId = groupid;
         mConnectionDetector = new ConnectionDetector(mActivity);
 
     }
@@ -139,7 +124,7 @@ public class GroupVehicleRefreshAdapter extends RecyclerView.Adapter<GroupVehicl
     @Override
     public void onBindViewHolder(final GroupVehicleRefreshAdapter.MyViewHolder holder, final int position) {
         myContact = mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "");
-     //   getChatEnquiryStatus(myContact,mItemList.get(position).getContact(),mItemList.get(position).getVehicleId());
+        //   getChatEnquiryStatus(myContact,mItemList.get(position).getContact(),mItemList.get(position).getVehicleId());
         view = holder;
         /*String register = mItemList.get(position).getRegistrationNumber();
         SpannableString sp = new SpannableString(mActivity.getString(R.string.no_register) + register);
@@ -231,18 +216,16 @@ public class GroupVehicleRefreshAdapter extends RecyclerView.Adapter<GroupVehicl
         }
 
         /* More option*/
-        holder.mMore.setOnClickListener(new OnClickListener() {
+        /*holder.mMore.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                mPopup=new PopupMenu(mActivity,holder.mMore);
-                mPopup.getMenuInflater().inflate(R.menu.menu_group_vehicle,mPopup.getMenu());
-                if (!myContact.equalsIgnoreCase(mItemList.get(holder.getAdapterPosition()).getContact()))
-                {
+                mPopup = new PopupMenu(mActivity, holder.mMore);
+                mPopup.getMenuInflater().inflate(R.menu.menu_group_vehicle, mPopup.getMenu());
+                if (!myContact.equalsIgnoreCase(mItemList.get(holder.getAdapterPosition()).getContact())) {
                     mPopup.getMenu().findItem(R.id.quotation).setVisible(false);
-                   // holder.mChat.setVisibility(View.VISIBLE);
-                   // holder.mOfferLayout.setVisibility(View.VISIBLE);
-                }else
-                {
+                    // holder.mChat.setVisibility(View.VISIBLE);
+                    // holder.mOfferLayout.setVisibility(View.VISIBLE);
+                } else {
                     mPopup.getMenu().findItem(R.id.offer).setVisible(false);
                 }
 
@@ -260,23 +243,21 @@ public class GroupVehicleRefreshAdapter extends RecyclerView.Adapter<GroupVehicl
                                 .build();
 
                         ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                        Call<String> updateStore = serviceApi.getChatEnquiryStatus(myContact,mItemList.get(holder.getAdapterPosition()).getContact(),0,0,mItemList.get(position).getVehicleId());
+                        Call<String> updateStore = serviceApi.getChatEnquiryStatus(myContact, mItemList.get(holder.getAdapterPosition()).getContact(), 0, 0, mItemList.get(position).getVehicleId());
                         updateStore.enqueue(new Callback<String>() {
                             @Override
                             public void onResponse(Call<String> call, Response<String> response) {
-                            if (!response.body().isEmpty())
-                            {
-                                if (response.body().contains("yes")) {
-                                    mPopup.getMenu().findItem(R.id.offer).setTitle("Chat");
-                                    //view.mChat.setText("Chat");
-                                } else if (response.body().contains("no")) {
-                                    mPopup.getMenu().findItem(R.id.offer).setTitle("Send Offer");
-                                    // view.mChat.setText("Send Offer");
+                                if (!response.body().isEmpty()) {
+                                    if (response.body().contains("yes")) {
+                                        mPopup.getMenu().findItem(R.id.offer).setTitle("Chat");
+                                        //view.mChat.setText("Chat");
+                                    } else if (response.body().contains("no")) {
+                                        mPopup.getMenu().findItem(R.id.offer).setTitle("Send Offer");
+                                        // view.mChat.setText("Send Offer");
+                                    }
+                                } else {
+                                    CustomToast.customToast(mActivity, mActivity.getString(R.string.no_response));
                                 }
-                            }else
-                            {
-                                CustomToast.customToast(mActivity,mActivity.getString(R.string.no_response));
-                            }
                             }
 
                             @Override
@@ -292,12 +273,10 @@ public class GroupVehicleRefreshAdapter extends RecyclerView.Adapter<GroupVehicl
                 }
 
 
-
                 mPopup.setOnMenuItemClickListener(new OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem item) {
-                        switch (item.getItemId())
-                        {
+                        switch (item.getItemId()) {
                             case R.id.quotation:
 
                                 final Dialog openDialog = new Dialog(mActivity);
@@ -332,11 +311,11 @@ public class GroupVehicleRefreshAdapter extends RecyclerView.Adapter<GroupVehicl
                                         String strPrice = edtResPrice.getText().toString();
                                         String deadlineDate = edtDate.getText().toString();
 
-                                            mApiCall.SendQuotation(strTitle, strPrice, deadlineDate, String.valueOf(mGroupId),
-                                                    mItemList.get(holder.getAdapterPosition()).getVehicleId(), myContact,
-                                                    "UsedVehicle");
-                                            System.out.println(mItemList.get(holder.getAdapterPosition()).getVehicleId());
-                                            openDialog.dismiss();
+                                        mApiCall.SendQuotation(strTitle, strPrice, deadlineDate, String.valueOf(mGroupId),
+                                                mItemList.get(holder.getAdapterPosition()).getVehicleId(), myContact,
+                                                "UsedVehicle");
+                                        System.out.println(mItemList.get(holder.getAdapterPosition()).getVehicleId());
+                                        openDialog.dismiss();
 
                                     }
                                 });
@@ -346,7 +325,7 @@ public class GroupVehicleRefreshAdapter extends RecyclerView.Adapter<GroupVehicl
 
                             case R.id.offer:
 
-                                if ( mPopup.getMenu().findItem(R.id.offer).getTitle().toString().equalsIgnoreCase("send Offer")) {
+                                if (mPopup.getMenu().findItem(R.id.offer).getTitle().toString().equalsIgnoreCase("send Offer")) {
 
                                     final Dialog openDialog1 = new Dialog(mActivity);
                                     openDialog1.setContentView(R.layout.give_offer);
@@ -388,7 +367,7 @@ public class GroupVehicleRefreshAdapter extends RecyclerView.Adapter<GroupVehicl
                                     b.putString("sendername", mItemList.get(holder.getAdapterPosition()).getUsername());
                                     b.putInt("product_id", 0);
                                     b.putInt("service_id", 0);
-                                    b.putInt("vehicle_id",  mItemList.get(holder.getAdapterPosition()).getVehicleId());
+                                    b.putInt("vehicle_id", mItemList.get(holder.getAdapterPosition()).getVehicleId());
                                     Intent intent = new Intent(mActivity, ChatActivity.class);
                                     intent.putExtras(b);
                                     mActivity.startActivity(intent);
@@ -400,7 +379,7 @@ public class GroupVehicleRefreshAdapter extends RecyclerView.Adapter<GroupVehicl
                     }
                 });
             }
-        });
+        });*/
 
 
         //Share In App
@@ -775,7 +754,7 @@ public class GroupVehicleRefreshAdapter extends RecyclerView.Adapter<GroupVehicl
                 CustomToast.customToast(mActivity, "Liked");
             } else if (str.equals("success_unlike")) {
                 Log.e("Unlike", "->");
-            }else if (str.equals("success_message_saved")) {
+            } else if (str.equals("success_message_saved")) {
                 CustomToast.customToast(mActivity, "Offer Sent");
             } /*else if (str.contains("yes")) {
                 mPopup.getMenu().findItem(R.id.offer).setTitle("Chat");
