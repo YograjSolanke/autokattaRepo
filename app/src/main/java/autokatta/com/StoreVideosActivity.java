@@ -3,7 +3,6 @@ package autokatta.com;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
@@ -31,7 +30,7 @@ public class StoreVideosActivity extends AppCompatActivity implements RequestNot
     private ProgressDialog pDialog;
     String myContact;
     VideoAdapter adapter;
-    SwipeRefreshLayout mSwipeRefreshLayout;
+
     AAH_CustomRecyclerView recyclerView;
     LinearLayoutManager mLinearLayoutManager;
     List<String> videosList = new ArrayList<>();
@@ -46,7 +45,7 @@ public class StoreVideosActivity extends AppCompatActivity implements RequestNot
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         recyclerView = (AAH_CustomRecyclerView) findViewById(R.id.rv_home);
-        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.refreshLayout);
+
 
         mApiCall = new ApiCall(StoreVideosActivity.this, this);
         myContact = getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", null);
@@ -59,8 +58,6 @@ public class StoreVideosActivity extends AppCompatActivity implements RequestNot
             //videosList.add("http://www.androidbegin.com/tutorial/AndroidCommercial.3gp");
             videosList.add(getString(R.string.base_image_url) + "VID_20171005_185639.mp4");
         }
-        mSwipeRefreshLayout.setRefreshing(false);
-
 
         runOnUiThread(new Runnable() {
             @Override
@@ -79,7 +76,7 @@ public class StoreVideosActivity extends AppCompatActivity implements RequestNot
                 recyclerView.smoothScrollBy(0, 1);
                 recyclerView.smoothScrollBy(0, -1);
                 recyclerView.setCheckForMp4(false); // true by default
-                recyclerView.setPlayOnlyFirstVideo(true); // false by default
+                //recyclerView.setPlayOnlyFirstVideo(true); // false by default
 
 
             }

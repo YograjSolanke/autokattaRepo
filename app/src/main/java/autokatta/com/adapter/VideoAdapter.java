@@ -3,6 +3,7 @@ package autokatta.com.adapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -23,14 +24,15 @@ public class VideoAdapter extends AAH_VideosAdapter {
 
     public class MyViewHolder extends AAH_CustomViewHolder {
         final TextView tv;
-        final ImageView img_vol, img_playback;
+        final ImageView img_vol;
+        Button img_playback;
         boolean isMuted; //to mute/un-mute video (optional)
 
         public MyViewHolder(View x) {
             super(x);
             tv = (TextView) x.findViewById(R.id.tv);
             img_vol = (ImageView) x.findViewById(R.id.img_vol);
-            img_playback = (ImageView) x.findViewById(R.id.img_playback);
+            img_playback = (Button) x.findViewById(R.id.img_playback);
         }
     }
 
@@ -49,11 +51,11 @@ public class VideoAdapter extends AAH_VideosAdapter {
     @Override
     public void onBindViewHolder(AAH_CustomViewHolder holder, int position) {
         final MyViewHolder myViewHolder = (MyViewHolder) holder;
-        myViewHolder.tv.setText("Raj");
+        myViewHolder.tv.setText("Rajashree");
 
         //todo
         //holder.setImageUrl(list.get(position).getImage_url());
-        holder.setVideoUrl(list.get(position));
+        myViewHolder.setVideoUrl(list.get(position));
         //load image/thumbnail into imageview
         /*if (list.get(position).getImage_url() != null && !list.get(position).getImage_url().isEmpty())
             picasso.load(holder.getImageUrl()).config(Bitmap.Config.RGB_565).into(holder.getAAH_ImageView());*/
@@ -64,14 +66,33 @@ public class VideoAdapter extends AAH_VideosAdapter {
                 if (myViewHolder.isPlaying()) {
                     myViewHolder.pauseVideo();
                     myViewHolder.setPaused(true);
+                    myViewHolder.img_playback.setText("Play");
+                    myViewHolder.img_playback.setVisibility(View.VISIBLE);
                 } else {
                     myViewHolder.playVideo();
                     myViewHolder.setPaused(false);
+                    myViewHolder.img_playback.setText("Pause");
+                    myViewHolder.img_playback.setVisibility(View.VISIBLE);
                 }
             }
         });
 
-        myViewHolder.setLooping(true); //optional - true by default
+
+        myViewHolder.getAah_vi().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (myViewHolder.isMuted) {
+                    myViewHolder.unmuteVideo();
+                    myViewHolder.img_vol.setImageResource(R.mipmap.manual_enquiry);
+                } else {
+                    myViewHolder.muteVideo();
+                    myViewHolder.img_vol.setImageResource(R.drawable.store);
+                }
+                myViewHolder.isMuted = !myViewHolder.isMuted;
+            }
+        });
+
+        // myViewHolder.setLooping(true); //optional - true by default
     }
 
     @Override
