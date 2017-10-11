@@ -14,10 +14,13 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.PopupMenu;
+import android.support.v7.widget.PopupMenu.OnMenuItemClickListener;
 import android.support.v7.widget.RecyclerView;
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -27,10 +30,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.io.File;
 import java.net.ConnectException;
@@ -38,16 +44,28 @@ import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
+import autokatta.com.generic.SetMyDateAndTime;
 import autokatta.com.interfaces.RequestNotifier;
+import autokatta.com.interfaces.ServiceApi;
+import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.GetGroupVehiclesResponse;
 import autokatta.com.view.ChatActivity;
 import autokatta.com.view.ShareWithinAppActivity;
 import autokatta.com.view.VehicleDetails;
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Call;
+import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
+import static android.content.Context.MODE_PRIVATE;
 
 /**
  * Created by ak-001 on 25/3/17.
@@ -55,12 +73,16 @@ import retrofit2.Response;
 
 public class GroupVehicleRefreshAdapter extends RecyclerView.Adapter<GroupVehicleRefreshAdapter.MyViewHolder> implements RequestNotifier {
     Activity mActivity;
+    int mGroupId;
     private List<GetGroupVehiclesResponse.Success> mItemList = new ArrayList<>();
     private String allDetails;
     private String imgUrl;
     private String myContact;
     private ApiCall mApiCall;
     private MyViewHolder view;
+    PopupMenu mPopup;
+    private ConnectionDetector mConnectionDetector;
+
 
     static class MyViewHolder extends RecyclerView.ViewHolder {
         CardView mCardView;
@@ -68,7 +90,7 @@ public class GroupVehicleRefreshAdapter extends RecyclerView.Adapter<GroupVehicl
         ImageView mLike, mCall, mUnlike;
         ImageView mCardImage;
         LinearLayout mRlike, mRunlike, mShareOther,mOfferLayout;
-        Button mChat;
+        Button mMore;
 
 
         MyViewHolder(View itemView) {
@@ -84,7 +106,7 @@ public class GroupVehicleRefreshAdapter extends RecyclerView.Adapter<GroupVehicl
             mRtoCity = (TextView) itemView.findViewById(R.id.rto_city);
             mYearOfMfg = (TextView) itemView.findViewById(R.id.year_of_mfg);
             mKmsHrs = (TextView) itemView.findViewById(R.id.kms_hrs);
-            mChat = (Button) itemView.findViewById(R.id.chat_c);
+            mMore = (Button) itemView.findViewById(R.id.chat_c);
             mOfferLayout = (LinearLayout) itemView.findViewById(R.id.offer);
 
             mShareOther = (LinearLayout) itemView.findViewById(R.id.share);
@@ -98,10 +120,13 @@ public class GroupVehicleRefreshAdapter extends RecyclerView.Adapter<GroupVehicl
         }
     }
 
-    public GroupVehicleRefreshAdapter(Activity mActivity1, List<GetGroupVehiclesResponse.Success> mItemList) {
+    public GroupVehicleRefreshAdapter(Activity mActivity1, List<GetGroupVehiclesResponse.Success> mItemList,int groupid) {
         this.mActivity = mActivity1;
         this.mItemList = mItemList;
         mApiCall = new ApiCall(mActivity, this);
+        this.mGroupId=groupid;
+        mConnectionDetector = new ConnectionDetector(mActivity);
+
     }
 
     @Override
@@ -113,13 +138,8 @@ public class GroupVehicleRefreshAdapter extends RecyclerView.Adapter<GroupVehicl
 
     @Override
     public void onBindViewHolder(final GroupVehicleRefreshAdapter.MyViewHolder holder, final int position) {
-        myContact = mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).getString("loginContact", "");
-        getChatEnquiryStatus(myContact,mItemList.get(position).getContact(),mItemList.get(position).getVehicleId());
-        if (!myContact.equalsIgnoreCase(mItemList.get(position).getContact()))
-        {
-            holder.mChat.setVisibility(View.VISIBLE);
-            holder.mOfferLayout.setVisibility(View.VISIBLE);
-        }
+        myContact = mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "");
+     //   getChatEnquiryStatus(myContact,mItemList.get(position).getContact(),mItemList.get(position).getVehicleId());
         view = holder;
         /*String register = mItemList.get(position).getRegistrationNumber();
         SpannableString sp = new SpannableString(mActivity.getString(R.string.no_register) + register);
@@ -209,6 +229,180 @@ public class GroupVehicleRefreshAdapter extends RecyclerView.Adapter<GroupVehicl
             holder.mUnlike.setEnabled(false);*/
             holder.mCall.setVisibility(View.GONE);
         }
+
+        /* More option*/
+        holder.mMore.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mPopup=new PopupMenu(mActivity,holder.mMore);
+                mPopup.getMenuInflater().inflate(R.menu.menu_group_vehicle,mPopup.getMenu());
+                if (!myContact.equalsIgnoreCase(mItemList.get(holder.getAdapterPosition()).getContact()))
+                {
+                    mPopup.getMenu().findItem(R.id.quotation).setVisible(false);
+                   // holder.mChat.setVisibility(View.VISIBLE);
+                   // holder.mOfferLayout.setVisibility(View.VISIBLE);
+                }else
+                {
+                    mPopup.getMenu().findItem(R.id.offer).setVisible(false);
+                }
+
+                try {
+                    if (mConnectionDetector.isConnectedToInternet()) {
+                        //JSON to Gson conversion
+                        Gson gson = new GsonBuilder()
+                                .setLenient()
+                                .create();
+
+                        Retrofit retrofit = new Retrofit.Builder()
+                                .baseUrl(mActivity.getString(R.string.base_url))
+                                .addConverterFactory(GsonConverterFactory.create(gson))
+                                .client(initLog().build())
+                                .build();
+
+                        ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                        Call<String> updateStore = serviceApi.getChatEnquiryStatus(myContact,mItemList.get(holder.getAdapterPosition()).getContact(),0,0,mItemList.get(position).getVehicleId());
+                        updateStore.enqueue(new Callback<String>() {
+                            @Override
+                            public void onResponse(Call<String> call, Response<String> response) {
+                            if (!response.body().isEmpty())
+                            {
+                                if (response.body().contains("yes")) {
+                                    mPopup.getMenu().findItem(R.id.offer).setTitle("Chat");
+                                    //view.mChat.setText("Chat");
+                                } else if (response.body().contains("no")) {
+                                    mPopup.getMenu().findItem(R.id.offer).setTitle("Send Offer");
+                                    // view.mChat.setText("Send Offer");
+                                }
+                            }else
+                            {
+                                CustomToast.customToast(mActivity,mActivity.getString(R.string.no_response));
+                            }
+                            }
+
+                            @Override
+                            public void onFailure(Call<String> call, Throwable t) {
+                                t.printStackTrace();
+                            }
+                        });
+                    } else {
+                        CustomToast.customToast(mActivity, mActivity.getString(R.string.no_internet));
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+
+
+                mPopup.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        switch (item.getItemId())
+                        {
+                            case R.id.quotation:
+
+                                final Dialog openDialog = new Dialog(mActivity);
+                                openDialog.setContentView(R.layout.get_quotation);
+                                openDialog.setTitle("Fill Form For Quotation");
+                                final TextView titleText = (TextView) openDialog.findViewById(R.id.txtTitle);
+                                final EditText edtResPrice = (EditText) openDialog.findViewById(R.id.edtReservedPrice);
+                                final EditText edtDate = (EditText) openDialog.findViewById(R.id.edtDate);
+                                final Spinner mGroupsSpinner = (Spinner) openDialog.findViewById(R.id.spinnergroup);
+
+                                Button sendQuotation = (Button) openDialog.findViewById(R.id.btnSend);
+                                titleText.setText(mItemList.get(holder.getAdapterPosition()).getTitle() + " of Category "
+                                        + mItemList.get(holder.getAdapterPosition()).getCategory());
+
+                                edtDate.setOnTouchListener(new View.OnTouchListener() {
+                                    @Override
+                                    public boolean onTouch(View v, MotionEvent event) {
+                                        int action = event.getAction();
+                                        if (action == MotionEvent.ACTION_DOWN) {
+                                            edtDate.setInputType(InputType.TYPE_NULL);
+                                            edtDate.setError(null);
+                                            new SetMyDateAndTime("date", edtDate, mActivity);
+                                        }
+                                        return false;
+                                    }
+                                });
+                                sendQuotation.setOnClickListener(new OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        // TODO Auto-generated method stub
+                                        String strTitle = titleText.getText().toString();
+                                        String strPrice = edtResPrice.getText().toString();
+                                        String deadlineDate = edtDate.getText().toString();
+
+                                            mApiCall.SendQuotation(strTitle, strPrice, deadlineDate, String.valueOf(mGroupId),
+                                                    mItemList.get(holder.getAdapterPosition()).getVehicleId(), myContact,
+                                                    "UsedVehicle");
+                                            System.out.println(mItemList.get(holder.getAdapterPosition()).getVehicleId());
+                                            openDialog.dismiss();
+
+                                    }
+                                });
+                                openDialog.show();
+                                break;
+
+
+                            case R.id.offer:
+
+                                if ( mPopup.getMenu().findItem(R.id.offer).getTitle().toString().equalsIgnoreCase("send Offer")) {
+
+                                    final Dialog openDialog1 = new Dialog(mActivity);
+                                    openDialog1.setContentView(R.layout.give_offer);
+                                    openDialog1.setTitle("Fill Form For Offer");
+                                    final EditText offerprice = (EditText) openDialog1.findViewById(R.id.txtofferprice);
+                                    final EditText paymentmode = (EditText) openDialog1.findViewById(R.id.paymentmode);
+                                    final EditText description = (EditText) openDialog1.findViewById(R.id.description);
+
+                                    Button sendoffer = (Button) openDialog1.findViewById(R.id.btnSend);
+
+                                    sendoffer.setOnClickListener(new OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            // TODO Auto-generated method stub
+                                            String strprice = offerprice.getText().toString();
+                                            String strpaymentmode = paymentmode.getText().toString();
+                                            String strdescription = description.getText().toString();
+
+                                            if (strprice.equalsIgnoreCase("")) {
+                                                CustomToast.customToast(mActivity, "please enter give offer price");
+                                            } else if (strpaymentmode.equalsIgnoreCase("")) {
+                                                CustomToast.customToast(mActivity, "please enter Payment mode");
+                                            } else if (strdescription.equalsIgnoreCase("")) {
+                                                CustomToast.customToast(mActivity, "please enter Description");
+                                            } else {
+                                                // ApiCall mpApicall = new ApiCall(this, mActivity);
+                                                mApiCall.sendChatMessage(myContact, mItemList.get(holder.getAdapterPosition()).getContact(), "Offer Price-" + strprice + "\n" +
+                                                        "Payment Mode-" + strpaymentmode + "\n" +
+                                                        "Description-" + strdescription, "", 0, 0, mItemList.get(holder.getAdapterPosition()).getVehicleId());
+                                                openDialog1.dismiss();
+                                            }
+                                        }
+                                    });
+                                    openDialog1.show();
+
+                                } else {
+                                    Bundle b = new Bundle();
+                                    b.putString("sender", mItemList.get(holder.getAdapterPosition()).getContact());
+                                    b.putString("sendername", mItemList.get(holder.getAdapterPosition()).getUsername());
+                                    b.putInt("product_id", 0);
+                                    b.putInt("service_id", 0);
+                                    b.putInt("vehicle_id",  mItemList.get(holder.getAdapterPosition()).getVehicleId());
+                                    Intent intent = new Intent(mActivity, ChatActivity.class);
+                                    intent.putExtras(b);
+                                    mActivity.startActivity(intent);
+                                }
+                                break;
+                        }
+
+                        return false;
+                    }
+                });
+            }
+        });
+
+
         //Share In App
 
         holder.mShareOther.setOnClickListener(new OnClickListener() {
@@ -240,11 +434,11 @@ public class GroupVehicleRefreshAdapter extends RecyclerView.Adapter<GroupVehicl
                                                         "" + "=" +
                                                         myContact + "=" + "0";
 
-                                                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                                                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), MODE_PRIVATE).edit().
                                                         putString("Share_sharedata", allDetails).apply();
-                                                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                                                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), MODE_PRIVATE).edit().
                                                         putInt("Share_vehicle_id", mItemList.get(holder.getAdapterPosition()).getVehicleId()).apply();
-                                                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                                                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), MODE_PRIVATE).edit().
                                                         putString("Share_keyword", "vehicle").apply();
 
                                                 Intent i = new Intent(mActivity, ShareWithinAppActivity.class);
@@ -269,11 +463,11 @@ public class GroupVehicleRefreshAdapter extends RecyclerView.Adapter<GroupVehicl
                                                         mItemList.get(holder.getAdapterPosition()).getContact() +
                                                         "=" + "0";
 
-                                                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                                                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), MODE_PRIVATE).edit().
                                                         putString("Share_sharedata", allDetails).apply();
-                                                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                                                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), MODE_PRIVATE).edit().
                                                         putInt("Share_vehicle_id", mItemList.get(holder.getAdapterPosition()).getVehicleId()).apply();
-                                                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                                                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), MODE_PRIVATE).edit().
                                                         putString("Share_keyword", "vehicle").apply();
 
                                                 Intent i = new Intent(mActivity, ShareWithinAppActivity.class);
@@ -413,10 +607,15 @@ public class GroupVehicleRefreshAdapter extends RecyclerView.Adapter<GroupVehicl
             }
         });
 
+
+
+
+
+/*
         holder.mChat.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (holder.mChat.getText().toString().equalsIgnoreCase("send Offer")) {
+               if (holder.mChat.getText().toString().equalsIgnoreCase("send Offer")) {
 
                     final Dialog openDialog = new Dialog(mActivity);
                     openDialog.setContentView(R.layout.give_offer);
@@ -425,9 +624,9 @@ public class GroupVehicleRefreshAdapter extends RecyclerView.Adapter<GroupVehicl
                     final EditText paymentmode = (EditText) openDialog.findViewById(R.id.paymentmode);
                     final EditText description = (EditText) openDialog.findViewById(R.id.description);
 
-                    Button sendQuotation = (Button) openDialog.findViewById(R.id.btnSend);
+                    Button sendoffer = (Button) openDialog.findViewById(R.id.btnSend);
 
-                    sendQuotation.setOnClickListener(new OnClickListener() {
+                    sendoffer.setOnClickListener(new OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             // TODO Auto-generated method stub
@@ -465,6 +664,8 @@ public class GroupVehicleRefreshAdapter extends RecyclerView.Adapter<GroupVehicl
                 }
             }
         });
+        */
+
         holder.mCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -562,10 +763,10 @@ public class GroupVehicleRefreshAdapter extends RecyclerView.Adapter<GroupVehicl
             error.printStackTrace();
         }
     }
-    private void getChatEnquiryStatus(String prefcontact, String contact, int mVehicle_id) {
+  /*  private void getChatEnquiryStatus(String prefcontact, String contact, int mVehicle_id) {
         ApiCall mApicall = new ApiCall(mActivity, this);
         mApicall.getChatEnquiryStatus(prefcontact, contact, 0, 0, mVehicle_id);
-    }
+    }*/
 
     @Override
     public void notifyString(String str) {
@@ -576,11 +777,24 @@ public class GroupVehicleRefreshAdapter extends RecyclerView.Adapter<GroupVehicl
                 Log.e("Unlike", "->");
             }else if (str.equals("success_message_saved")) {
                 CustomToast.customToast(mActivity, "Offer Sent");
-            } else if (str.contains("yes")) {
-                view.mChat.setText("Chat");
+            } /*else if (str.contains("yes")) {
+                mPopup.getMenu().findItem(R.id.offer).setTitle("Chat");
+                //view.mChat.setText("Chat");
             } else if (str.contains("no")) {
-                view.mChat.setText("Send Offer");
-            }
+                mPopup.getMenu().findItem(R.id.offer).setTitle("Send Offer");
+                // view.mChat.setText("Send Offer");
+            }*/
         }
+    }
+
+    /***
+     * Retrofit Logs
+     ***/
+    private OkHttpClient.Builder initLog() {
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        httpClient.addInterceptor(logging).readTimeout(90, TimeUnit.SECONDS);
+        return httpClient;
     }
 }

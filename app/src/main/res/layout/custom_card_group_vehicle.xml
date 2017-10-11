@@ -379,8 +379,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:gravity="center"
-                android:visibility="gone">
+                android:gravity="center">
 
                 <Button
                     android:id="@+id/chat_c"
@@ -388,7 +387,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginStart="4dp"
-                    android:text="Send Offer"
+                    android:text="More"
                     android:textColor="@color/text_color"
                     android:textSize="14sp"
                     android:textStyle="bold" />

@@ -335,7 +335,7 @@ public class MemberVehicleListFragment extends Fragment implements SwipeRefreshL
                             }
                             mSuccesses.add(success);
                         }
-                        mGroupVehicleRefreshAdapter = new GroupVehicleRefreshAdapter(getActivity(), mSuccesses);
+                        mGroupVehicleRefreshAdapter = new GroupVehicleRefreshAdapter(getActivity(), mSuccesses,mGroupId);
                         if (mSuccesses.size() != 0) {
                             mRecyclerView.setAdapter(mGroupVehicleRefreshAdapter);
                             mGroupVehicleRefreshAdapter.notifyDataSetChanged();
