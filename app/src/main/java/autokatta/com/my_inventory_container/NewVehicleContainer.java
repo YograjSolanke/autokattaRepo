@@ -81,13 +81,17 @@ public class NewVehicleContainer extends AppCompatActivity implements RequestNot
                 } else if (position_model_id == 0) {
                     CustomToast.customToast(getApplicationContext(), "Please Select Model");
                 } else {
-
-                    CustomToast.customToast(getApplicationContext(), "call service");
-
+                    getNewVehicleList(vehicle_id, position_sub_cat_id, position_brand_id, position_model_id);
                 }
             }
 
         });
+    }
+
+    private void getNewVehicleList(int categoryId, int subCategoryId, int brandId,
+                                   int modelId) {
+        ApiCall mApiCall = new ApiCall(this, this);
+        mApiCall.getNewVehicleList(categoryId, subCategoryId, brandId, modelId);
     }
 
     private void getVehicleCategory() {

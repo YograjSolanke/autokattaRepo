@@ -8892,6 +8892,37 @@ get ExchangeMela Analytics Data
         }
     }
 
+    /*get new vehicles list*/
+    public void getNewVehicleList(int categoryId, int subCategoryId, int brandId, int modelId) {
+
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<NewVehicleAllResponse> mCompareResponseCall = serviceApi._autokattaGetNewVehicleList(categoryId, subCategoryId, brandId, modelId);
+                mCompareResponseCall.enqueue(new Callback<NewVehicleAllResponse>() {
+                    @Override
+                    public void onResponse(Call<NewVehicleAllResponse> call, Response<NewVehicleAllResponse> response) {
+                        mNotifier.notifySuccess(response);
+                    }
+
+                    @Override
+                    public void onFailure(Call<NewVehicleAllResponse> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+            } else
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     /***
      * Retrofit Logs
      ***/
@@ -8920,6 +8951,4 @@ get ExchangeMela Analytics Data
         httpClient.addInterceptor(logging).build();
         return httpClient;
     }
-
-
 }

@@ -1396,4 +1396,10 @@ public interface ServiceApi {
 
     @POST("VehicleInventorySrcap")
     Call<String> _autokattauploadToGroupStore(int statusId, String groupIds, String storeIds);
+
+    @GET("GetNewVehicleDetails")
+    Call<NewVehicleAllResponse> _autokattaGetNewVehicleList(@Query("CategoryID") int categoryId,
+                                                            @Query("SubCategoryID") int subCategoryId,
+                                                            @Query("BrandID") int brandId,
+                                                            @Query("ModelID") int modelId);
 }
