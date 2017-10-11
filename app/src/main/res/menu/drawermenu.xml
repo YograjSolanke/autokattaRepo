@@ -132,7 +132,7 @@
 
             <item
                 android:id="@+id/enquiries"
-                android:icon="@mipmap/manual_enquiry_one"
+                android:icon="@mipmap/manual_enquiry"
                 android:title="@string/enquiries"
                 app:actionViewClass="android.widget.TextView" />
             <item

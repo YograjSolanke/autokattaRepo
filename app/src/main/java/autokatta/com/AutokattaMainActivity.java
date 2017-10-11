@@ -303,10 +303,10 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
         tabLayout.getTabAt(0).setIcon(R.mipmap.ic_web);
         tabLayout.getTabAt(1).setIcon(R.mipmap.ic_bell);
         /*tabLayout.getTabAt(2).setIcon(R.mipmap.ic_launcher);*/
-        tabLayout.getTabAt(2).setIcon(R.mipmap.ic_calendar_check);
-        tabLayout.getTabAt(3).setIcon(R.mipmap.ic_cart);
-        tabLayout.getTabAt(4).setIcon(R.mipmap.ic_account_multiple);
-        tabLayout.getTabAt(5).setIcon(R.mipmap.ic_heart);
+        //tabLayout.getTabAt(2).setIcon(R.mipmap.ic_calendar_check);
+        tabLayout.getTabAt(2).setIcon(R.mipmap.ic_cart);
+        tabLayout.getTabAt(3).setIcon(R.mipmap.ic_account_multiple);
+        tabLayout.getTabAt(4).setIcon(R.mipmap.ic_heart);
 
 
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -337,7 +337,7 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
             tabLayout.getTabAt(2).getIcon().setAlpha(128);
             tabLayout.getTabAt(3).getIcon().setAlpha(128);
             tabLayout.getTabAt(4).getIcon().setAlpha(128);
-            tabLayout.getTabAt(5).getIcon().setAlpha(128);
+            //tabLayout.getTabAt(5).getIcon().setAlpha(128);
 
             viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
                 @Override
@@ -354,7 +354,7 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
                             tabLayout.getTabAt(2).getIcon().setAlpha(128);
                             tabLayout.getTabAt(3).getIcon().setAlpha(128);
                             tabLayout.getTabAt(4).getIcon().setAlpha(128);
-                            tabLayout.getTabAt(5).getIcon().setAlpha(128);
+                            //tabLayout.getTabAt(5).getIcon().setAlpha(128);
                             break;
                         case 1:
                             tabLayout.getTabAt(0).getIcon().setAlpha(128);
@@ -362,7 +362,7 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
                             tabLayout.getTabAt(2).getIcon().setAlpha(128);
                             tabLayout.getTabAt(3).getIcon().setAlpha(128);
                             tabLayout.getTabAt(4).getIcon().setAlpha(128);
-                            tabLayout.getTabAt(5).getIcon().setAlpha(128);
+                            //tabLayout.getTabAt(5).getIcon().setAlpha(128);
                             break;
                         case 2:
                             tabLayout.getTabAt(0).getIcon().setAlpha(128);
@@ -370,7 +370,7 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
                             tabLayout.getTabAt(2).getIcon().setAlpha(255);
                             tabLayout.getTabAt(3).getIcon().setAlpha(128);
                             tabLayout.getTabAt(4).getIcon().setAlpha(128);
-                            tabLayout.getTabAt(5).getIcon().setAlpha(128);
+                            //tabLayout.getTabAt(5).getIcon().setAlpha(128);
                             break;
                         case 3:
                             tabLayout.getTabAt(0).getIcon().setAlpha(128);
@@ -378,7 +378,7 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
                             tabLayout.getTabAt(2).getIcon().setAlpha(128);
                             tabLayout.getTabAt(3).getIcon().setAlpha(255);
                             tabLayout.getTabAt(4).getIcon().setAlpha(128);
-                            tabLayout.getTabAt(5).getIcon().setAlpha(128);
+                            //tabLayout.getTabAt(5).getIcon().setAlpha(128);
                             break;
                         case 4:
                             tabLayout.getTabAt(0).getIcon().setAlpha(128);
@@ -386,7 +386,7 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
                             tabLayout.getTabAt(2).getIcon().setAlpha(128);
                             tabLayout.getTabAt(3).getIcon().setAlpha(128);
                             tabLayout.getTabAt(4).getIcon().setAlpha(255);
-                            tabLayout.getTabAt(5).getIcon().setAlpha(128);
+                            //tabLayout.getTabAt(5).getIcon().setAlpha(128);
                             break;
                         case 5:
                             tabLayout.getTabAt(0).getIcon().setAlpha(128);
@@ -394,7 +394,7 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
                             tabLayout.getTabAt(2).getIcon().setAlpha(128);
                             tabLayout.getTabAt(3).getIcon().setAlpha(128);
                             tabLayout.getTabAt(4).getIcon().setAlpha(128);
-                            tabLayout.getTabAt(5).getIcon().setAlpha(255);
+                            //tabLayout.getTabAt(5).getIcon().setAlpha(255);
                             break;
                     }
                 }
