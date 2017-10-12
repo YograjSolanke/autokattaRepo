@@ -754,6 +754,7 @@
     <string name="ABS">ABS</string>
     <string name="title_activity_new_vehicle_list">NewVehicleListActivity</string>
     <string name="newVehicleList">New Vehicle List</string>
+    <string name="selectStore">Select Stores</string>
 
 
 </resources>

@@ -98,7 +98,7 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/dash3"
+                    android:id="@+id/dash1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
@@ -115,7 +115,47 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="10dp"
-                    android:layout_toEndOf="@+id/dash3"
+                    android:layout_toEndOf="@+id/dash1"
+                    android:textColor="#808080" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/relativesubcategory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/relativecategory"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp">
+
+                <TextView
+                    android:id="@+id/subcategory"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:gravity="center"
+                    android:text="@string/sub_category"
+                    android:textColor="#808080"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/dash2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@+id/subcategory"
+                    android:gravity="center"
+                    android:text="-"
+                    android:textColor="#808080"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/editsubcategory"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@+id/dash2"
                     android:textColor="#808080" />
             </RelativeLayout>
 
@@ -123,7 +163,7 @@
                 android:id="@+id/relativebrand"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/relativecategory"
+                android:layout_below="@+id/relativesubcategory"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="5dp">
 
@@ -139,7 +179,7 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/dash4"
+                    android:id="@+id/dash3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
@@ -156,7 +196,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="10dp"
-                    android:layout_toEndOf="@+id/dash4"
+                    android:layout_toEndOf="@+id/dash3"
                     android:textColor="#808080" />
             </RelativeLayout>
 
@@ -179,7 +219,7 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/dash5"
+                    android:id="@+id/dash4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
@@ -196,12 +236,12 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="10dp"
-                    android:layout_toEndOf="@+id/dash5"
+                    android:layout_toEndOf="@+id/dash4"
                     android:textColor="#808080" />
             </RelativeLayout>
 
             <RelativeLayout
-                android:id="@+id/relativeprice"
+                android:id="@+id/relativeversion"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/relativemodel"
@@ -209,256 +249,43 @@
                 android:layout_marginTop="5dp">
 
                 <TextView
-                    android:id="@+id/price"
+                    android:id="@+id/version"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:gravity="center"
-                    android:text="@string/price"
+                    android:text="@string/version"
                     android:textColor="#808080"
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/dash2"
+                    android:id="@+id/dash5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="10dp"
-                    android:layout_toEndOf="@+id/price"
-                    android:gravity="center"
-                    android:text="-"
-                    android:textColor="#808080"
-                    android:textStyle="bold" />
-
-
-                <TextView
-                    android:id="@+id/editprice"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="10dp"
-                    android:layout_toEndOf="@+id/dash2"
-                    android:hint="@string/not_mentioned"
-                    android:textColor="#808080" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/relativeleads"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/relativeprice"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="5dp">
-
-                <TextView
-                    android:id="@+id/leads"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:gravity="center"
-                    android:text="@string/no_of_leads"
-                    android:textColor="#808080"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/dash"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="10dp"
-                    android:layout_toEndOf="@+id/leads"
+                    android:layout_toEndOf="@+id/version"
                     android:gravity="center"
                     android:text="-"
                     android:textColor="#808080"
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/editleads"
+                    android:id="@+id/editversion"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="10dp"
-                    android:layout_toEndOf="@+id/dash"
+                    android:layout_toEndOf="@+id/dash5"
                     android:textColor="#808080" />
             </RelativeLayout>
 
-            <RelativeLayout
-                android:id="@+id/relativeuploadedon"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/relativeleads"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="10dp">
-
-
-                <TextView
-                    android:id="@+id/uploadedon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:gravity="center"
-                    android:text="@string/uploaded_on"
-                    android:textColor="#808080"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/dash6"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="10dp"
-                    android:layout_toEndOf="@+id/uploadedon"
-                    android:gravity="center"
-                    android:text="-"
-                    android:textColor="#808080"
-                    android:textStyle="bold" />
-
-
-                <TextView
-                    android:id="@+id/edituploadedon"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="10dp"
-                    android:layout_toEndOf="@+id/dash6"
-                    android:textColor="#808080" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/yearrel"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/relativeuploadedon"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="5dp">
-
-                <TextView
-                    android:id="@+id/yeartxt"
-                    android:layout_width="80dp"
-                    android:layout_height="wrap_content"
-                    android:text="@string/year_dash"
-                    android:textColor="#808080"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/year"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_toEndOf="@+id/yeartxt"
-                    android:hint="@string/not_mentioned"
-                    android:textColor="#808080" />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/kmrel"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/yearrel"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="5dp">
-
-                <TextView
-                    android:id="@+id/kmtxt"
-                    android:layout_width="80dp"
-                    android:layout_height="wrap_content"
-                    android:text="@string/kms_hrss"
-                    android:textColor="#808080"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/km_hrs"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_toEndOf="@+id/kmtxt"
-                    android:hint="@string/not_mentioned"
-                    android:textColor="#808080" />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/RTOrel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/kmrel"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="5dp">
-
-                <TextView
-                    android:id="@+id/RTOtxt"
-                    android:layout_width="80dp"
-                    android:layout_height="wrap_content"
-                    android:text="@string/rto_citys"
-                    android:textColor="#808080"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/RTO"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_toEndOf="@+id/RTOtxt"
-                    android:hint="@string/not_mentioned"
-                    android:textColor="#808080" />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/locationrel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/RTOrel"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="5dp">
-
-                <TextView
-                    android:id="@+id/locationtxt"
-                    android:layout_width="80dp"
-                    android:layout_height="wrap_content"
-                    android:text="@string/location"
-                    android:textColor="#808080"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/location"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_toEndOf="@+id/locationtxt"
-                    android:hint="@string/not_mentioned"
-                    android:textColor="#808080" />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/regrel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/locationrel"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="5dp">
-
-                <TextView
-                    android:id="@+id/regtxt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/registration_no"
-                    android:textColor="#808080"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/registrationNo"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_toEndOf="@+id/regtxt"
-                    android:hint="@string/not_mentioned"
-                    android:textColor="#808080" />
-
-            </RelativeLayout>
 
             <LinearLayout
                 android:id="@+id/linearbtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/regrel"
+                android:layout_below="@+id/relativeversion"
                 android:orientation="horizontal"
                 android:visibility="visible">
 

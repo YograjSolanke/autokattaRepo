@@ -1402,4 +1402,8 @@ public interface ServiceApi {
                                                             @Query("SubCategoryID") int subCategoryId,
                                                             @Query("BrandID") int brandId,
                                                             @Query("ModelID") int modelId);
+
+    @POST("StoreNewVehicleAssociationData")
+    Call<String> _autokattaNewVehicleStoreAssoc(@Query("StoreIDs") String storeIds,
+                                                @Query("NewVehicleIDs") String vehicleIds);
 }
