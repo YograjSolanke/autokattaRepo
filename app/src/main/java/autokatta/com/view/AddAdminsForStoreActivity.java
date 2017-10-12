@@ -27,7 +27,6 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 
 import autokatta.com.R;
-import autokatta.com.Registration.CompanyBasedInvitation;
 import autokatta.com.adapter.StoreAdminAdapter;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.database.DbConstants;
@@ -287,7 +286,7 @@ public class AddAdminsForStoreActivity extends AppCompatActivity implements Requ
 
                 } else {
                     ActivityOptions options = ActivityOptions.makeCustomAnimation(this, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
-                    Intent i = new Intent(this, CompanyBasedInvitation.class);
+                    Intent i = new Intent(this, InvitationCompanyBased.class);
                     startActivity(i, options.toBundle());
                     finish();
 
