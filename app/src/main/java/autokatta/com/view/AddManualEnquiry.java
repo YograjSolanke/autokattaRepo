@@ -16,7 +16,6 @@ import android.telephony.gsm.SmsManager;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -111,7 +110,7 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
                     @Override
                     public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
                         if (checkedId == R.id.exchangeYes) {
-                            View view = getLayoutInflater().inflate(R.layout.custom_enquiry_exchange_info, null);
+                            /*View view = getLayoutInflater().inflate(R.layout.custom_enquiry_exchange_info, null);
                             ImageView mClose = (ImageView) view.findViewById(R.id.close);
                             Button mAdd = (Button) view.findViewById(R.id.submit);
 
@@ -134,7 +133,7 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
                                 public void onClick(View v) {
 
                                 }
-                            });
+                            });*/
                         }
                     }
                 });
