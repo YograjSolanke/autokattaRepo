@@ -52,7 +52,7 @@ public class AuctionConfirmAdapter extends BaseAdapter implements RequestNotifie
         this.finalVehiclesData = finalVehiclesData;
         auctionId = bundleAuctionId;
         this.editvehicle = editvehicle;
-        this.noOfVehicles = noOfVehicles;
+        this.noOfVehicles = 0;
 
         positionArray = new ArrayList<>(finalVehiclesData.size());
         checkedVehicleData = new ArrayList<>(finalVehiclesData.size());

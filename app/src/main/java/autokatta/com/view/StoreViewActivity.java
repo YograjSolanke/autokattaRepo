@@ -850,6 +850,7 @@ Call Intent...
         arrayAdapter.add("Add Product");
         arrayAdapter.add("Add Service");
         arrayAdapter.add("Add Vehicle");
+        arrayAdapter.add("Add New Vehicle");
 
         builderSingle.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
             @Override
@@ -878,15 +879,18 @@ Call Intent...
                         startActivity(intent);
                         //finish();
 
-                    } else if (strName.equals("Add Vehicle")) {
+                    } else if (strName.equals("Add Used Vehicle")) {
                         if (isDealing.equalsIgnoreCase("false")) {
                             Intent intent = new Intent(StoreViewActivity.this, VehicleUpload.class);
                             startActivity(intent);
                             finish();
                         } else {
                             //Toast.makeText(getApplicationContext(), "new vehicle", Toast.LENGTH_SHORT).show();
-                            alertVehicle();
+                            //alertVehicle();
                         }
+                    } else if (strName.equals("Add New Vehicle")) {
+                        //call to new Vehicle Upload
+
                     }
                 }
 

@@ -31,6 +31,7 @@ import java.io.Serializable;
 import java.net.SocketTimeoutException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -280,10 +281,21 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
             case R.id.btnspecial_clauses:
                 String[] getIdsArray = new String[getClauses.size()];
                 getIdsArray = getClauses.toArray(getIdsArray);
-                specialClausesIDUpdate = "";
-                specialClausesUpdate = "";
+
                 final List<Integer> seletedItems = new ArrayList<>();
                 final List<String> selectedIds = new ArrayList<>();
+                seletedItems.clear();
+                selectedIds.clear();
+                String[] prearra = specialClausesIDUpdate.split(",");
+                for (int i = 0; i < getIds.size(); i++) {
+                    if (Arrays.asList(prearra).contains(getIds.get(i))) {
+                        newArray[i] = true;
+                        selectedIds.add(getIds.get(i));
+                    } else
+                        newArray[i] = false;
+                }
+
+
                 AlertDialog dialog = new AlertDialog.Builder(getActivity())
                         .setTitle("Select Special clauses")
                         .setCancelable(true)
@@ -294,7 +306,7 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
                                     selectedIds.add(getIds.get(indexSelected));
                                     seletedItems.add(indexSelected);
                                     newArray[indexSelected] = true;
-                                } else if (seletedItems.contains(indexSelected)) {
+                                } else if (selectedIds.contains(getIds.get(indexSelected))) {
                                     selectedIds.remove(getIds.get(indexSelected));
                                     seletedItems.remove(Integer.valueOf(indexSelected));
                                     newArray[indexSelected] = false;
@@ -303,17 +315,29 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
                         }).setPositiveButton("OK", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int id) {
-                                Toast.makeText(getActivity(), "Selected clauses" + selectedIds, Toast.LENGTH_LONG).show();
-                                for (int i = 0; i < newArray.length; i++) {
-                                    if (newArray[i]) {
-                                        if (specialClausesIDUpdate.equals("")) {
-                                            specialClausesIDUpdate = getIds.get(i);
-                                            specialClausesUpdate = getClauses.get(i);
-                                        } else {
-                                            specialClausesUpdate = specialClausesUpdate + "," + getClauses.get(i);
-                                            specialClausesIDUpdate = specialClausesIDUpdate + "," + getIds.get(i);
+                                Toast.makeText(getActivity(), "Selected clauses" + selectedIds, Toast.LENGTH_SHORT).show();
+
+                                specialClausesIDUpdate = "";
+                                specialClausesUpdate = "";
+                                for (int i = 0; i < selectedIds.size(); i++) {
+                                    for (int j = 0; j < getIds.size(); j++) {
+                                        if (selectedIds.get(i).equals(getIds.get(j))) {
+                                            if (specialClausesIDUpdate.equals("")) {
+                                                specialClausesIDUpdate = getIds.get(j);
+                                                specialClausesUpdate = getClauses.get(j);
+                                            } else {
+                                                specialClausesUpdate = specialClausesUpdate + "," + getClauses.get(j);
+                                                specialClausesIDUpdate = specialClausesIDUpdate + "," + getIds.get(j);
+                                            }
                                         }
                                     }
+                                }
+
+
+                                if (selectedIds.size() == 0) {
+                                    CustomToast.customToast(getActivity(), "No Clause Was Selected");
+                                    specialClausesIDUpdate = "";
+                                    specialClausesUpdate = "";
                                 }
                             }
                         }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {

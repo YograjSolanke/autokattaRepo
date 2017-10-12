@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.allattentionhere.autoplayvideos.AAH_CustomViewHolder;
@@ -26,6 +27,7 @@ public class VideoAdapter extends AAH_VideosAdapter {
         final TextView tv;
         final ImageView img_vol;
         Button img_playback;
+        ProgressBar progressBar = null;
         boolean isMuted; //to mute/un-mute video (optional)
 
         public MyViewHolder(View x) {
@@ -33,6 +35,7 @@ public class VideoAdapter extends AAH_VideosAdapter {
             tv = (TextView) x.findViewById(R.id.tv);
             img_vol = (ImageView) x.findViewById(R.id.img_vol);
             img_playback = (Button) x.findViewById(R.id.img_playback);
+            progressBar = (ProgressBar) x.findViewById(R.id.progressbar);
         }
     }
 
@@ -56,9 +59,15 @@ public class VideoAdapter extends AAH_VideosAdapter {
         //todo
         //holder.setImageUrl(list.get(position).getImage_url());
         myViewHolder.setVideoUrl(list.get(position));
+        // myViewHolder.playVideo();
+        myViewHolder.progressBar.setVisibility(View.VISIBLE);
+        myViewHolder.videoStarted();
+        myViewHolder.progressBar.setVisibility(View.GONE);
+
         //load image/thumbnail into imageview
         /*if (list.get(position).getImage_url() != null && !list.get(position).getImage_url().isEmpty())
             picasso.load(holder.getImageUrl()).config(Bitmap.Config.RGB_565).into(holder.getAAH_ImageView());*/
+
 
         myViewHolder.img_playback.setOnClickListener(new View.OnClickListener() {
             @Override

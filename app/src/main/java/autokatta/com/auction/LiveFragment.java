@@ -222,8 +222,8 @@ public class LiveFragment extends Fragment implements RequestNotifier {
      */
     private void getAuctionEvent() {
         ApiCall mApiCall = new ApiCall(getActivity(), this);
-      //  mApiCall.getLiveAuctionEvents(getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE)
-      //          .getString("loginContact", ""));
+        mApiCall.getLiveAuctionEvents(getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE)
+                .getString("loginContact", ""));
     }
 
     /*
