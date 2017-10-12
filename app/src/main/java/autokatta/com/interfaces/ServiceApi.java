@@ -668,27 +668,27 @@ public interface ServiceApi {
             , @Query("Keyword") String keyword, @Query("GroupID") int groupid);
 
     //Get Your Bid Response
-    @GET("UserYourBid")
-    Call<YourBidResponse> getYourBid(@Query("AuctionID") String id, @Query("UserContact") String contact);
+    @POST("UserYourBid")
+    Call<YourBidResponse> getYourBid(@Query("AuctionID") int id, @Query("UserContact") String contact);
 
     //Get Out Bid Response
-    @GET("UserOutBid")
-    Call<YourBidResponse> getOutBid(@Query("AuctionID") String id, @Query("UserContact") String contact);
+    @POST("UserOutBid")
+    Call<YourBidResponse> getOutBid(@Query("AuctionID") int id, @Query("UserContact") String contact);
 
     //Get Highest Bid Response
-    @GET("UserHighestBid")
-    Call<YourBidResponse> getHighestBid(@Query("AuctionID") String id, @Query("UserContact") String contact);
+    @POST("UserHighestBid")
+    Call<YourBidResponse> getHighestBid(@Query("AuctionID") int id, @Query("UserContact") String contact);
 
     //Get UserWatchedItems  Response
-    @GET("UserWatchedItems")
-    Call<YourBidResponse> userWatchedItems(@Query("AuctionID") String id, @Query("UserContact") String contact);
+    @POST("UserWatchedItems")
+    Call<YourBidResponse> userWatchedItems(@Query("AuctionID") int id, @Query("UserContact") String contact);
 
     //send broadcast message
     @POST("SendBroadCastMessage")
     Call<String> broadCastGroupMessage(@Query("GroupID") String groupid, @Query("MsgText") String msgText, @Query("MsgImage") String lastword);
 
     @POST("AddMyBids")
-    Call<String> addMyBid(@Query("AuctionID") String auctionId, @Query("VehicleID") String vehicleID,
+    Call<String> addMyBid(@Query("AuctionID") int auctionId, @Query("VehicleID") String vehicleID,
                           @Query("BidAmount") String bidAmount, @Query("TabNo") String tabNo, @Query("MyContact") String contact);
 
 

@@ -4615,7 +4615,7 @@ params.put("auction_id", bundleAuctionId);
     /*
     Get Your Bid data
      */
-    public void getYourBid(String id, String contact) {
+    public void getYourBid(int id, String contact) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 Retrofit retrofit = new Retrofit.Builder()
@@ -4647,7 +4647,7 @@ params.put("auction_id", bundleAuctionId);
     /*
     Get Out Bid data
      */
-    public void getOutBid(String id, String contact) {
+    public void getOutBid(int id, String contact) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 Retrofit retrofit = new Retrofit.Builder()
@@ -4679,7 +4679,7 @@ params.put("auction_id", bundleAuctionId);
     /*
     Get Highest Bid data
      */
-    public void getHighestBid(String id, String contact) {
+    public void getHighestBid(int id, String contact) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 Retrofit retrofit = new Retrofit.Builder()
@@ -4711,7 +4711,7 @@ params.put("auction_id", bundleAuctionId);
     /*
     Get userWatchedItems Bid data
      */
-    public void userWatchedItems(String id, String contact) {
+    public void userWatchedItems(int id, String contact) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 Retrofit retrofit = new Retrofit.Builder()

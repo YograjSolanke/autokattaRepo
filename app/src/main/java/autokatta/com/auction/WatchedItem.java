@@ -32,13 +32,14 @@ import retrofit2.Response;
 
 public class WatchedItem extends Fragment implements RequestNotifier {
     View mWatchedItem;
-    String auctionId, showPrice, openClose;
+    String showPrice, openClose;
     RecyclerView mRecyclerView;
     List<YourBidResponse.Success> successes = new ArrayList<>();
     TextView mLimitBid;
     boolean hasViewCreated = false;
     TextView mNoData;
     ConnectionDetector mTestConnection;
+    int auctionId = 0;
 
     @Nullable
     @Override
@@ -52,7 +53,7 @@ public class WatchedItem extends Fragment implements RequestNotifier {
         super.onViewCreated(view, savedInstanceState);
 
         Bundle b = getArguments();
-        auctionId = b.getString("auction_id");
+        auctionId = b.getInt("auction_id");
         openClose = b.getString("openClose");
         showPrice = b.getString("showPrice");
 
@@ -95,7 +96,7 @@ public class WatchedItem extends Fragment implements RequestNotifier {
             //mApiCall.userWatchedItems("1047", "9890950817");
         } else {
             if (isAdded())
-            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
+                CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         }
     }
 
@@ -146,7 +147,7 @@ public class WatchedItem extends Fragment implements RequestNotifier {
             }
         } else {
             if (isAdded())
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+                CustomToast.customToast(getActivity(), getString(R.string.no_response));
         }
     }
 

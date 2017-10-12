@@ -64,8 +64,6 @@ public class NewVehicleListActivity extends AppCompatActivity implements Request
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        mSwipeRefreshLayout.setOnRefreshListener(this);
-        mConnectionDetector = new ConnectionDetector(this);
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -73,7 +71,7 @@ public class NewVehicleListActivity extends AppCompatActivity implements Request
                 mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);
                 mRecyclerView = (RecyclerView) findViewById(R.id.newVehicleResultRecycler);
                 mSelectStore = (Button) findViewById(R.id.selectStore);
-                mNoData = (Button) findViewById(R.id.no_category);
+                mNoData = (TextView) findViewById(R.id.no_category);
                 mNoData.setVisibility(View.GONE);
 
                 if (getIntent().getExtras() != null) {
@@ -108,8 +106,12 @@ public class NewVehicleListActivity extends AppCompatActivity implements Request
                         getNewVehicleList(categoryId, subCategoryId, brandId, modelId);
                     }
                 });
+
             }
         });
+        mSwipeRefreshLayout.setOnRefreshListener(this);
+        mConnectionDetector = new ConnectionDetector(this);
+
 
         mSelectStore.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -333,6 +335,11 @@ public class NewVehicleListActivity extends AppCompatActivity implements Request
                         success.setBrandID(success.getBrandID());
                         success.setModelID(success.getModelID());
                         success.setVersionID(success.getVersionID());
+                        success.setCategoryName(success.getCategoryName());
+                        success.setSubCategoryName(success.getSubCategoryName());
+                        success.setBrandName(success.getBrandName());
+                        success.setModelName(success.getModelName());
+                        success.setVersionName(success.getVersionName());
 
                         success.setThreePointLinkage((success.getThreePointLinkage() == null ||
                                 success.getThreePointLinkage().equalsIgnoreCase("null") ||

@@ -21,11 +21,26 @@
             android:padding="1dp">
 
             <RelativeLayout
+                android:id="@+id/relativebroadcast"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentEnd="true">
+
+                <ImageView
+                    android:id="@+id/more_items"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/app_name"
+                    android:src="@drawable/ic_more_grey" />
+            </RelativeLayout>
+
+            <RelativeLayout
                 android:id="@+id/relativecategory"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:layout_marginTop="5dp">
+                android:layout_marginTop="5dp"
+                android:layout_toStartOf="@+id/relativebroadcast">
 
                 <TextView
                     android:id="@+id/category"
@@ -59,13 +74,15 @@
                     android:textColor="#808080" />
             </RelativeLayout>
 
+
             <RelativeLayout
                 android:id="@+id/relativesubcategory"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/relativecategory"
                 android:layout_marginStart="10dp"
-                android:layout_marginTop="5dp">
+                android:layout_marginTop="5dp"
+                android:layout_toStartOf="@+id/relativebroadcast">
 
                 <TextView
                     android:id="@+id/subcategory"
@@ -105,7 +122,8 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/relativesubcategory"
                 android:layout_marginStart="10dp"
-                android:layout_marginTop="5dp">
+                android:layout_marginTop="5dp"
+                android:layout_toStartOf="@+id/relativebroadcast">
 
 
                 <TextView

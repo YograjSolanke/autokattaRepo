@@ -12,7 +12,6 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
 import java.net.SocketTimeoutException;
@@ -47,9 +46,6 @@ public class NewVehicleContainer extends AppCompatActivity implements RequestNot
         setSupportActionBar(toolbar);
 
         setTitle("New Vehicle List");
-
-        mSwipeRefreshLayout.setOnRefreshListener(this);
-        mConnectionDetector = new ConnectionDetector(this);
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -58,7 +54,7 @@ public class NewVehicleContainer extends AppCompatActivity implements RequestNot
                 mAddVehicle = (FloatingActionButton) findViewById(R.id.fab);
                 mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);
                 mRecyclerView = (RecyclerView) findViewById(R.id.newVehicleListRecycler);
-                mNoData = (Button) findViewById(R.id.no_category);
+                mNoData = (TextView) findViewById(R.id.no_category);
                 mNoData.setVisibility(View.GONE);
 
                 if (getSupportActionBar() != null) {
@@ -88,6 +84,8 @@ public class NewVehicleContainer extends AppCompatActivity implements RequestNot
 
             }
         });
+        mSwipeRefreshLayout.setOnRefreshListener(this);
+        mConnectionDetector = new ConnectionDetector(this);
 
         mAddVehicle.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -134,6 +132,11 @@ public class NewVehicleContainer extends AppCompatActivity implements RequestNot
                         success.setBrandID(success.getBrandID());
                         success.setModelID(success.getModelID());
                         success.setVersionID(success.getVersionID());
+                        success.setCategoryName(success.getCategoryName());
+                        success.setSubCategoryName(success.getSubCategoryName());
+                        success.setBrandName(success.getBrandName());
+                        success.setModelName(success.getModelName());
+                        success.setVersionName(success.getVersionName());
 
                         success.setThreePointLinkage((success.getThreePointLinkage() == null ||
                                 success.getThreePointLinkage().equalsIgnoreCase("null") ||
@@ -159,7 +162,7 @@ public class NewVehicleContainer extends AppCompatActivity implements RequestNot
 
                     }
 
-                    mAdapter = new NewVehicleContainerAdapter(this, newVehicleList);
+                    mAdapter = new NewVehicleContainerAdapter(this, newVehicleList, myContact);
                     mRecyclerView.setAdapter(mAdapter);
                     mAdapter.notifyDataSetChanged();
                 } else {

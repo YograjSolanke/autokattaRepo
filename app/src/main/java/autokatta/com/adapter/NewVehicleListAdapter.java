@@ -53,11 +53,11 @@ public class NewVehicleListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
         final YoHolder mVehicleHolder = (YoHolder) holder;
 
-        mVehicleHolder.mCategory.setText("mCategory");
-        mVehicleHolder.mSubCategory.setText("subcategory");
-        mVehicleHolder.mBrand.setText("brand");
-        mVehicleHolder.mModel.setText("model");
-        mVehicleHolder.mVersion.setText("version");
+        mVehicleHolder.mCategory.setText(mVehicleList.get(position).getCategoryName());
+        mVehicleHolder.mSubCategory.setText(mVehicleList.get(position).getSubCategoryName());
+        mVehicleHolder.mBrand.setText(mVehicleList.get(position).getBrandName());
+        mVehicleHolder.mModel.setText(mVehicleList.get(position).getModelName());
+        mVehicleHolder.mVersion.setText(mVehicleList.get(position).getVersionName());
 
         mVehicleHolder.mCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -76,6 +76,13 @@ public class NewVehicleListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                     mSelectStore.setVisibility(View.VISIBLE);
                 else
                     mSelectStore.setVisibility(View.GONE);
+            }
+        });
+
+        mVehicleHolder.mDetails.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
             }
         });
     }

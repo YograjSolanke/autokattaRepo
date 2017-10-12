@@ -50,13 +50,14 @@ class BidRecyclerAdapter extends RecyclerView.Adapter<BidRecyclerAdapter.MyViewH
 
     private Activity mActivity;
     private List<YourBidResponse.Success> mItemList = new ArrayList<>();
-    private String auctionId, openClose, showPrice;
+    private String openClose, showPrice;
+    private int auctionId;
     private ConnectionDetector mConnectionDetector;
     private String result;
     private String tabNo;
     private TextView mLimitForBid;
 
-    BidRecyclerAdapter(Activity mActivity, List<YourBidResponse.Success> mItemList, String auctionId, String openClose,
+    BidRecyclerAdapter(Activity mActivity, List<YourBidResponse.Success> mItemList, int auctionId, String openClose,
                        String showPrice, String tabNo, TextView limitForBid) {
         this.mActivity = mActivity;
         this.mItemList = mItemList;
@@ -447,7 +448,7 @@ class BidRecyclerAdapter extends RecyclerView.Adapter<BidRecyclerAdapter.MyViewH
     private void callToLiveAuctionBidding(String tabNo) {
         LiveAuctionEventBiding strContext = (LiveAuctionEventBiding) mActivity;
         Bundle b1 = new Bundle();
-        b1.putString("auction_id", auctionId);
+        b1.putInt("auction_id", auctionId);
         b1.putString("auctioneer", strContext.auctioneername);
         b1.putString("action_title", strContext.action_title);
         b1.putString("auction_startdate", strContext.auction_startdate);

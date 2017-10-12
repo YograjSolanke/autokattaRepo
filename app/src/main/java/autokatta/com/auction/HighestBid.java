@@ -32,13 +32,14 @@ import retrofit2.Response;
 
 public class HighestBid extends Fragment implements RequestNotifier {
     View mHighestBid;
-    String auctionId, showPrice, openClose;
+    String showPrice, openClose;
     RecyclerView mRecyclerView;
     List<YourBidResponse.Success> successes = new ArrayList<>();
     TextView mHighTotal, mLimitBid;
     boolean hasViewCreated = false;
     TextView mNoData;
     ConnectionDetector mTestConnection;
+    int auctionId = 0;
 
     @Nullable
     @Override
@@ -52,7 +53,7 @@ public class HighestBid extends Fragment implements RequestNotifier {
         super.onViewCreated(view, savedInstanceState);
 
         Bundle b = getArguments();
-        auctionId = b.getString("auction_id");
+        auctionId = b.getInt("auction_id");
         openClose = b.getString("openClose");
         showPrice = b.getString("showPrice");
 
@@ -99,7 +100,7 @@ public class HighestBid extends Fragment implements RequestNotifier {
             //mApiCall.getHighestBid("1047", "7841023392");
         } else {
             if (isAdded())
-            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
+                CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         }
     }
 
@@ -153,7 +154,7 @@ public class HighestBid extends Fragment implements RequestNotifier {
             }
         } else {
             if (isAdded())
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+                CustomToast.customToast(getActivity(), getString(R.string.no_response));
         }
     }
 
@@ -161,7 +162,7 @@ public class HighestBid extends Fragment implements RequestNotifier {
     public void notifyError(Throwable error) {
         if (error instanceof SocketTimeoutException) {
             if (isAdded())
-            CustomToast.customToast(getActivity(), getString(R.string._404));
+                CustomToast.customToast(getActivity(), getString(R.string._404));
         } else if (error instanceof NullPointerException) {
             // CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {

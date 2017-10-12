@@ -101,9 +101,15 @@ public class NewVehicleAllResponse {
             @SerializedName("BrandID")
             @Expose
             private Integer brandID;
+            @SerializedName("BrandName")
+            @Expose
+            private String brandName;
             @SerializedName("CategoryID")
             @Expose
             private Integer categoryID;
+            @SerializedName("CategoryName")
+            @Expose
+            private String categoryName;
             @SerializedName("CentralLoking")
             @Expose
             private String centralLoking;
@@ -175,7 +181,7 @@ public class NewVehicleAllResponse {
             private String frontTyre;
             @SerializedName("FuelTank")
             @Expose
-            private Object fuelTank;
+            private String fuelTank;
             @SerializedName("FuelTankCapacityLtr")
             @Expose
             private String fuelTankCapacityLtr;
@@ -251,12 +257,15 @@ public class NewVehicleAllResponse {
             @SerializedName("ModelID")
             @Expose
             private Integer modelID;
+            @SerializedName("ModelName")
+            @Expose
+            private String modelName;
             @SerializedName("NoOfCylinder")
             @Expose
             private String noOfCylinder;
             @SerializedName("NoOfgears")
             @Expose
-            private Object noOfgears;
+            private String noOfgears;
             @SerializedName("NoOfGearsForword")
             @Expose
             private String noOfGearsForword;
@@ -328,7 +337,7 @@ public class NewVehicleAllResponse {
             private String seatBeltWarning;
             @SerializedName("SeatingCapacity")
             @Expose
-            private Integer seatingCapacity;
+            private String seatingCapacity;
             @SerializedName("SeatType")
             @Expose
             private String seatType;
@@ -356,6 +365,9 @@ public class NewVehicleAllResponse {
             @SerializedName("SubCategoryID")
             @Expose
             private Integer subCategoryID;
+            @SerializedName("SubCategoryName")
+            @Expose
+            private String subCategoryName;
             @SerializedName("SunRoofMoonRoof")
             @Expose
             private String sunRoofMoonRoof;
@@ -401,12 +413,15 @@ public class NewVehicleAllResponse {
             @SerializedName("VersionID")
             @Expose
             private Integer versionID;
+            @SerializedName("VersionName")
+            @Expose
+            private String versionName;
             @SerializedName("WarrantyKilometer")
             @Expose
-            private Object warrantyKilometer;
+            private String warrantyKilometer;
             @SerializedName("WarrantyYear")
             @Expose
-            private Object warrantyYear;
+            private String warrantyYear;
             @SerializedName("WebSite")
             @Expose
             private String webSite;
@@ -416,6 +431,9 @@ public class NewVehicleAllResponse {
             @SerializedName("WheelBaseMM")
             @Expose
             private String wheelBaseMM;
+            @SerializedName("Image")
+            @Expose
+            private String image;
 
             public Integer getNewVehicleID() {
                 return newVehicleID;
@@ -553,12 +571,28 @@ public class NewVehicleAllResponse {
                 this.brandID = brandID;
             }
 
+            public String getBrandName() {
+                return brandName;
+            }
+
+            public void setBrandName(String brandName) {
+                this.brandName = brandName;
+            }
+
             public Integer getCategoryID() {
                 return categoryID;
             }
 
             public void setCategoryID(Integer categoryID) {
                 this.categoryID = categoryID;
+            }
+
+            public String getCategoryName() {
+                return categoryName;
+            }
+
+            public void setCategoryName(String categoryName) {
+                this.categoryName = categoryName;
             }
 
             public String getCentralLoking() {
@@ -745,11 +779,11 @@ public class NewVehicleAllResponse {
                 this.frontTyre = frontTyre;
             }
 
-            public Object getFuelTank() {
+            public String getFuelTank() {
                 return fuelTank;
             }
 
-            public void setFuelTank(Object fuelTank) {
+            public void setFuelTank(String fuelTank) {
                 this.fuelTank = fuelTank;
             }
 
@@ -953,6 +987,14 @@ public class NewVehicleAllResponse {
                 this.modelID = modelID;
             }
 
+            public String getModelName() {
+                return modelName;
+            }
+
+            public void setModelName(String modelName) {
+                this.modelName = modelName;
+            }
+
             public String getNoOfCylinder() {
                 return noOfCylinder;
             }
@@ -961,11 +1003,11 @@ public class NewVehicleAllResponse {
                 this.noOfCylinder = noOfCylinder;
             }
 
-            public Object getNoOfgears() {
+            public String getNoOfgears() {
                 return noOfgears;
             }
 
-            public void setNoOfgears(Object noOfgears) {
+            public void setNoOfgears(String noOfgears) {
                 this.noOfgears = noOfgears;
             }
 
@@ -1153,11 +1195,11 @@ public class NewVehicleAllResponse {
                 this.seatBeltWarning = seatBeltWarning;
             }
 
-            public Integer getSeatingCapacity() {
+            public String getSeatingCapacity() {
                 return seatingCapacity;
             }
 
-            public void setSeatingCapacity(Integer seatingCapacity) {
+            public void setSeatingCapacity(String seatingCapacity) {
                 this.seatingCapacity = seatingCapacity;
             }
 
@@ -1231,6 +1273,14 @@ public class NewVehicleAllResponse {
 
             public void setSubCategoryID(Integer subCategoryID) {
                 this.subCategoryID = subCategoryID;
+            }
+
+            public String getSubCategoryName() {
+                return subCategoryName;
+            }
+
+            public void setSubCategoryName(String subCategoryName) {
+                this.subCategoryName = subCategoryName;
             }
 
             public String getSunRoofMoonRoof() {
@@ -1353,19 +1403,27 @@ public class NewVehicleAllResponse {
                 this.versionID = versionID;
             }
 
-            public Object getWarrantyKilometer() {
+            public String getVersionName() {
+                return versionName;
+            }
+
+            public void setVersionName(String versionName) {
+                this.versionName = versionName;
+            }
+
+            public String getWarrantyKilometer() {
                 return warrantyKilometer;
             }
 
-            public void setWarrantyKilometer(Object warrantyKilometer) {
+            public void setWarrantyKilometer(String warrantyKilometer) {
                 this.warrantyKilometer = warrantyKilometer;
             }
 
-            public Object getWarrantyYear() {
+            public String getWarrantyYear() {
                 return warrantyYear;
             }
 
-            public void setWarrantyYear(Object warrantyYear) {
+            public void setWarrantyYear(String warrantyYear) {
                 this.warrantyYear = warrantyYear;
             }
 
@@ -1393,6 +1451,13 @@ public class NewVehicleAllResponse {
                 this.wheelBaseMM = wheelBaseMM;
             }
 
+            public String getImage() {
+                return image;
+            }
+
+            public void setImage(String image) {
+                this.image = image;
+            }
 
         }
     }
