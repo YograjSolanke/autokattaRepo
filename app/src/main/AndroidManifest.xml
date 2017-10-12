@@ -841,10 +841,14 @@
             android:label="@string/title_activity_upload_to_group_store"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".other.EnquiryActivity" />
-        <activity android:name=".view.NewVehicleDetails"></activity>
+        <activity android:name=".view.NewVehicleDetails" />
         <activity
             android:name=".view.NewVehicleListActivity"
             android:label="@string/title_activity_new_vehicle_list"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".view.AddNewVehicleActivity"
+            android:label="@string/title_activity_add_new_vehicle"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

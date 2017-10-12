@@ -43,8 +43,6 @@ public class NewVehicleListActivity extends AppCompatActivity implements Request
 
     SwipeRefreshLayout mSwipeRefreshLayout;
     RecyclerView mRecyclerView;
-    ConnectionDetector mTestConnection;
-    LinearLayoutManager mLinearLayoutManager;
     TextView mNoData;
     String myContact;
     List<NewVehicleAllResponse.Success.NewVehicle> newVehicleList = new ArrayList<>();
@@ -59,7 +57,6 @@ public class NewVehicleListActivity extends AppCompatActivity implements Request
     private KProgressHUD hud;
     private String stringstoreids = "", stringstorename = "";
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,16 +64,17 @@ public class NewVehicleListActivity extends AppCompatActivity implements Request
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);
-        mRecyclerView = (RecyclerView) findViewById(R.id.newVehicleResultRecycler);
-        mSelectStore = (Button) findViewById(R.id.selectStore);
-
-        mTestConnection = new ConnectionDetector(this);
         mSwipeRefreshLayout.setOnRefreshListener(this);
         mConnectionDetector = new ConnectionDetector(this);
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
+
+                mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);
+                mRecyclerView = (RecyclerView) findViewById(R.id.newVehicleResultRecycler);
+                mSelectStore = (Button) findViewById(R.id.selectStore);
+                mNoData = (Button) findViewById(R.id.no_category);
+                mNoData.setVisibility(View.GONE);
 
                 if (getIntent().getExtras() != null) {
                     categoryId = getIntent().getExtras().getInt("categoryId");
@@ -88,7 +86,6 @@ public class NewVehicleListActivity extends AppCompatActivity implements Request
                 if (getSupportActionBar() != null) {
                     getSupportActionBar().setDisplayShowHomeEnabled(true);
                     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-                    //getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
                 }
 
                 myContact = getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", null);
@@ -370,10 +367,12 @@ public class NewVehicleListActivity extends AppCompatActivity implements Request
                 }
             } else {
                 mSwipeRefreshLayout.setRefreshing(false);
+                mNoData.setVisibility(View.VISIBLE);
                 CustomToast.customToast(getApplicationContext(), getApplicationContext().getString(R.string.no_response));
             }
         } else {
             mSwipeRefreshLayout.setRefreshing(false);
+            mNoData.setVisibility(View.VISIBLE);
             CustomToast.customToast(getApplicationContext(), getApplicationContext().getString(R.string.no_internet));
         }
     }
@@ -381,6 +380,7 @@ public class NewVehicleListActivity extends AppCompatActivity implements Request
     @Override
     public void notifyError(Throwable error) {
         mSwipeRefreshLayout.setRefreshing(false);
+        mNoData.setVisibility(View.VISIBLE);
         if (error instanceof SocketTimeoutException) {
             CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
         } else if (error instanceof NullPointerException) {
