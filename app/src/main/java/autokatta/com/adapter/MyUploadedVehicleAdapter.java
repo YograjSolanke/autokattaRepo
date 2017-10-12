@@ -365,29 +365,10 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
                     @Override
                     public void onClick(View v) {
                         mBottomSheetDialog.dismiss();
-                        /*View view = activity.getLayoutInflater().inflate(R.layout.custom_bottom_transfer_stock, null);
-                        EditText txtBackup = (EditText) view.findViewById(R.id.owner_name);
-                        EditText txtDetail = (EditText) view.findViewById(R.id.contact_no);
-                        EditText txtOpen = (EditText) view.findViewById(R.id.transfer_date);
-                        EditText txtUninstall = (EditText) view.findViewById(R.id.reason_for_transfer);
-                        EditText txtUninstall1 = (EditText) view.findViewById(R.id.description);
-                        ImageView mClose = (ImageView) view.findViewById(R.id.close);
-
-                        final Dialog mBottomSheetDialog = new Dialog(activity, R.style.MaterialDialogSheet);
-                        mBottomSheetDialog.setContentView(view);
-                        mBottomSheetDialog.setCancelable(true);
-                        mBottomSheetDialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-                        mBottomSheetDialog.getWindow().setGravity(Gravity.BOTTOM);
-                        mBottomSheetDialog.show();
-
-                        mClose.setOnClickListener(new OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                mBottomSheetDialog.dismiss();
-                            }
-                        });*/
+                        Bundle bundle = new Bundle();
+                        bundle.putInt("bundle_VehicleId", mMainList.get(holder.getAdapterPosition()).getVehicleId());
                         AddTransferVehicle vehicle = new AddTransferVehicle();
-
+                        vehicle.setArguments(bundle);
                         ((FragmentActivity) activity).getSupportFragmentManager().beginTransaction()
                                 .replace(R.id.myUsedVehicleFrame, vehicle, "addTransferVehicle")
                                 .addToBackStack("addTransferVehicle")

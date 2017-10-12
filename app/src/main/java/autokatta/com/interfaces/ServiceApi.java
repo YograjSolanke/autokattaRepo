@@ -1406,4 +1406,14 @@ public interface ServiceApi {
     @POST("StoreNewVehicleAssociationData")
     Call<String> _autokattaNewVehicleStoreAssoc(@Query("StoreIDs") String storeIds,
                                                 @Query("NewVehicleIDs") String vehicleIds);
+
+    @POST("RequestForTransferVehicle")
+    Call<String> _autokattaRequestForTransferVehicle(@Query("VehicleID") int VehicleID,
+                                                     @Query("OwnerName") String OwnerName,
+                                                     @Query("CustomerContact") String CustomerContact,
+                                                     @Query("TransferReason") String TransferReason,
+                                                     @Query("Address") String Address,
+                                                     @Query("FullAddress") String FullAddress,
+                                                     @Query("Description") String Description,
+                                                     @Query("MyContact") String MyContact);
 }

@@ -8,29 +8,57 @@ import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import autokatta.com.R;
+import autokatta.com.apicall.ApiCall;
+import autokatta.com.interfaces.RequestNotifier;
+import autokatta.com.other.CustomToast;
+import retrofit2.Response;
 
+import static android.content.Context.MODE_PRIVATE;
 import static com.google.zxing.integration.android.IntentIntegrator.REQUEST_CODE;
 
 /**
  * Created by ak-001 on 3/10/17.
  */
 
-public class AddTransferVehicle extends Fragment {
+public class AddTransferVehicle extends Fragment implements RequestNotifier, View.OnClickListener {
     View mTransferVehicle;
-    EditText mContact;
+    EditText mContact, owner_name, address, full_address, reason_for_transfer, description;
+    Button submit;
+    String myContact;
+    int vehicleId;
+    LinearLayout txtUser, txtInvite, linear_transfer;
+
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mTransferVehicle = inflater.inflate(R.layout.custom_bottom_transfer_stock, container, false);
-        mContact = (EditText) mTransferVehicle.findViewById(R.id.contact);
+        mContact = (EditText) mTransferVehicle.findViewById(R.id.contact_no);
+        owner_name = (EditText) mTransferVehicle.findViewById(R.id.owner_name);
+        address = (EditText) mTransferVehicle.findViewById(R.id.address);
+        full_address = (EditText) mTransferVehicle.findViewById(R.id.full_address);
+        reason_for_transfer = (EditText) mTransferVehicle.findViewById(R.id.reason_for_transfer);
+        description = (EditText) mTransferVehicle.findViewById(R.id.description);
+        submit = (Button) mTransferVehicle.findViewById(R.id.submit);
+        txtUser = (LinearLayout) mTransferVehicle.findViewById(R.id.txtUser);
+        txtInvite = (LinearLayout) mTransferVehicle.findViewById(R.id.txtInvite);
+        linear_transfer = (LinearLayout) mTransferVehicle.findViewById(R.id.linear_transfer);
+
+        Bundle bundle = getArguments();
+        vehicleId = bundle.getInt("bundle_VehicleId");
+        myContact = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "");
         ImageView mContactList = (ImageView) mTransferVehicle.findViewById(R.id.contact_list);
         mContactList.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -39,7 +67,61 @@ public class AddTransferVehicle extends Fragment {
                 startActivityForResult(intent, REQUEST_CODE);
             }
         });
+
+        mContact.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.length() == 10) {
+                    if (!myContact.equalsIgnoreCase(s.toString()))
+                        checkUser(s.toString());
+                    else {
+                        Toast.makeText(getActivity(), "Admin not allowed", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
         return mTransferVehicle;
+    }
+
+    private void checkUser(String contact) {
+        ApiCall mApiCall = new ApiCall(getActivity(), this);
+        mApiCall.registrationContactValidation(contact);
+    }
+
+    @Override
+    public void notifySuccess(Response<?> response) {
+
+    }
+
+    @Override
+    public void notifyError(Throwable error) {
+
+    }
+
+    @Override
+    public void notifyString(String str) {
+        if (str != null) {
+            if (str.equalsIgnoreCase("Success")) {
+                txtUser.setVisibility(View.VISIBLE);
+                linear_transfer.setVisibility(View.VISIBLE);
+                txtInvite.setVisibility(View.GONE);
+            } else {
+                txtInvite.setVisibility(View.VISIBLE);
+                txtUser.setVisibility(View.GONE);
+                linear_transfer.setVisibility(View.GONE);
+            }
+        } else
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
     }
 
     @Override
@@ -73,6 +155,18 @@ public class AddTransferVehicle extends Fragment {
                         e.printStackTrace();
                     }
                 }
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.submit:
+                ApiCall apiCall = new ApiCall(getActivity(), this);
+                apiCall._autokattaRequestForTransferVehicle(vehicleId, owner_name.getText().toString(), mContact.getText().toString(),
+                        reason_for_transfer.getText().toString(), address.getText().toString(), full_address.getText().toString(),
+                        description.getText().toString(), myContact);
+                break;
         }
     }
 }

@@ -6,14 +6,6 @@
     android:orientation="vertical"
     android:padding="10dp">
 
-    <EditText
-        android:id="@+id/owner_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Owner Name"
-        android:labelFor="@+id/owner_name"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -43,43 +35,119 @@
         </LinearLayout>
     </RelativeLayout>
 
-    <EditText
-        android:id="@+id/transfer_date"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Transfer Date"
-        android:inputType="datetime"
-        android:labelFor="@+id/transfer_date"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-    <EditText
-        android:id="@+id/reason_for_transfer"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Reason For Transfer"
-        android:labelFor="@+id/reason_for_transfer"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-    <EditText
-        android:id="@+id/description"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Description"
-        android:labelFor="@+id/description"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="end">
+        android:gravity="end"
+        android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/submit"
+        <LinearLayout
+            android:id="@+id/txtUser"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/button_default"
-            android:text="Send"
-            android:textColor="@color/white"
-            android:textStyle="bold" />
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/txtUser1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_check_black_24dp"
+                android:gravity="center"
+                android:text="@string/go_profile"
+                android:textColor="@color/zxing_custom_possible_result_points"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/txtInvite"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableStart="@android:drawable/ic_delete"
+                android:gravity="start"
+                android:text="Transfer vehicle is not possible because user is not in Autokatta"
+                android:textColor="@color/zxing_custom_possible_result_points"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txtInvite1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:drawableStart="@android:drawable/presence_invisible"
+                android:gravity="center"
+                android:text="Invite"
+                android:textColor="@color/zxing_custom_possible_result_points"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linear_transfer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <EditText
+            android:id="@+id/owner_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Owner Name"
+            android:labelFor="@+id/owner_name"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <AutoCompleteTextView
+            android:id="@+id/address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Address"
+            android:labelFor="@+id/transfer_date"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <EditText
+            android:id="@+id/full_address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Full Address"
+            android:labelFor="@+id/reason_for_transfer"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <EditText
+            android:id="@+id/reason_for_transfer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Reason For Transfer"
+            android:labelFor="@+id/reason_for_transfer"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <EditText
+            android:id="@+id/description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Description"
+            android:labelFor="@+id/description"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="end">
+
+            <Button
+                android:id="@+id/submit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/button_default"
+                android:text="Send"
+                android:textColor="@color/white"
+                android:textStyle="bold" />
+        </LinearLayout>
     </LinearLayout>
 </LinearLayout>
