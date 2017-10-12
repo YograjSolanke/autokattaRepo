@@ -193,16 +193,17 @@
     <string name="search_result_new">New Vehicle Search Result</string>
 
     <!--Custom Card Group Vehicle -->
-    <string name="no_register">Reg No :-</string>
-    <string name="price">Price :-</string>
-    <string name="model">Model :-</string>
-    <string name="brand_no">Brand :-</string>
-    <string name="updated_by">Uploaded By :-</string>
-    <string name="updated_date">Uploaded Date :-</string>
-    <string name="location">Location :-</string>
-    <string name="rto_city">RTO City :-</string>
-    <string name="year_of_mfg">Year Of Mfg :-</string>
-    <string name="kms_hrs">KMS/HRS :-</string>
+    <string name="no_register">Reg No</string>
+    <string name="price">Price</string>
+    <string name="model">Model</string>
+    <string name="stock_type">Stock Type</string>
+    <string name="brand_no">Brand</string>
+    <string name="updated_by">Uploaded By</string>
+    <string name="updated_date">Uploaded Date</string>
+    <string name="location">Location</string>
+    <string name="rto_city">RTO City</string>
+    <string name="year_of_mfg">Year Of Mfg</string>
+    <string name="kms_hrs">KMS/HRS</string>
     <string name="title_activity_my_ended_event">MyEndedEventActivity</string>
     <string name="title_activity_group_tabs">GroupTabs</string>
     <string name="title_activity_vehicle_details">Vehicle Details</string>

@@ -185,15 +185,16 @@
 
     <!--Custom Card Group Vehicle -->
     <string name="no_register">"रेजिस्ट्रेशन नंबर "</string>
-    <string name="price">"किंमत: -"</string>
-    <string name="model">"आदर्श: -"</string>
-    <string name="brand_no">"ब्रँड: -"</string>
-    <string name="updated_by">"यांनी अपलोड केलेले: -"</string>
-    <string name="updated_date">"अपलोड केलेली तारीख: -"</string>
+    <string name="price">"किंमत"</string>
+    <string name="model">"आदर्श"</string>
+    <string name="brand_no">"ब्रँड"</string>
+    <string name="stock_type">स्टॉक टाइप</string>
+    <string name="updated_by">"यांनी अपलोड केलेले"</string>
+    <string name="updated_date">"अपलोड केलेली तारीख"</string>
     <string name="location">"स्थळ"</string>
-    <string name="rto_city">"आरटीओ शहर: -"</string>
-    <string name="year_of_mfg">"एमएफजी वर्ष: -"</string>
-    <string name="kms_hrs">"केएमएस / एचआरएस: -"</string>
+    <string name="rto_city">"आरटीओ शहर"</string>
+    <string name="year_of_mfg">"एमएफजी वर्ष"</string>
+    <string name="kms_hrs">"केएमएस/एचआरएस"</string>
     <string name="title_activity_my_ended_event">"MyEndedEventActivity"</string>
     <string name="title_activity_group_tabs">"गटटॅब"</string>
     <string name="title_activity_vehicle_details">"वाहन तपशील"</string>

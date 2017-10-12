@@ -103,6 +103,10 @@ public class MyUploadedVehiclesResponse {
         @Expose
         private String storeIDs;
 
+        @SerializedName("StockType")
+        @Expose
+        private String StockType;
+
 
         public int getVehicleId() {
             return vehicleId;
@@ -294,6 +298,14 @@ public class MyUploadedVehiclesResponse {
 
         public void setStoreIDs(String storeIDs) {
             this.storeIDs = storeIDs;
+        }
+
+        public String getStockType() {
+            return StockType;
+        }
+
+        public void setStockType(String stockType) {
+            StockType = stockType;
         }
     }
 }

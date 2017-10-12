@@ -9,6 +9,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -38,6 +41,7 @@ public class MyUploadedVehiclesFragment extends Fragment implements RequestNotif
     SwipeRefreshLayout mSwipeRefreshLayout;
     RecyclerView mRecyclerView;
     List<MyUploadedVehiclesResponse.Success> myUploadedVehiclesResponseList = new ArrayList<>();
+    MyUploadedVehicleAdapter adapter;
     View myVehicles;
     String myContact;
     TextView mNoData;
@@ -54,7 +58,7 @@ public class MyUploadedVehiclesFragment extends Fragment implements RequestNotif
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        setHasOptionsMenu(true);
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -159,13 +163,14 @@ public class MyUploadedVehiclesFragment extends Fragment implements RequestNotif
 
                         myVehicleSuccess.setGroupIDs(myVehicleSuccess.getGroupIDs());
                         myVehicleSuccess.setStoreIDs(myVehicleSuccess.getStoreIDs());
+                        myVehicleSuccess.setStockType(myVehicleSuccess.getStockType());
 
 
                         myUploadedVehiclesResponseList.add(myVehicleSuccess);
                     }
                     Log.i("size", String.valueOf(myUploadedVehiclesResponseList.size()));
                     mSwipeRefreshLayout.setRefreshing(false);
-                    MyUploadedVehicleAdapter adapter = new MyUploadedVehicleAdapter(getActivity(), myUploadedVehiclesResponseList);
+                    adapter = new MyUploadedVehicleAdapter(getActivity(), myUploadedVehiclesResponseList);
                     mRecyclerView.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
                 } else {
@@ -213,5 +218,41 @@ public class MyUploadedVehiclesFragment extends Fragment implements RequestNotif
     @Override
     public void notifyString(String str) {
 
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.used_inv_filter, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.all:
+                onRefresh();
+                return true;
+
+            case R.id.finance_repo:
+                adapter.getFilter().filter("Finance/Repo");
+                return true;
+
+            case R.id.insurance:
+                adapter.getFilter().filter("Insurance");
+                return true;
+
+            case R.id.scrap:
+                adapter.getFilter().filter("Scrap");
+                return true;
+
+            case R.id.inventory:
+                adapter.getFilter().filter("Inventory");
+                return true;
+
+            case R.id.market_place:
+                adapter.getFilter().filter("Market Place");
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

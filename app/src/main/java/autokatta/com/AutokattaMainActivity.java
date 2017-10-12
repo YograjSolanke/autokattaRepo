@@ -301,7 +301,7 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.getTabAt(0).setIcon(R.mipmap.ic_web);
-        tabLayout.getTabAt(1).setIcon(R.mipmap.ic_bell);
+        tabLayout.getTabAt(1).setIcon(R.mipmap.ic_calendar_check);
         /*tabLayout.getTabAt(2).setIcon(R.mipmap.ic_launcher);*/
         //tabLayout.getTabAt(2).setIcon(R.mipmap.ic_calendar_check);
         tabLayout.getTabAt(2).setIcon(R.mipmap.ic_cart);

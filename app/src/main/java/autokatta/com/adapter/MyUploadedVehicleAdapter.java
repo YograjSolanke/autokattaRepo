@@ -24,6 +24,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
@@ -79,14 +81,15 @@ import static android.content.Context.MODE_PRIVATE;
  * Created by ak-004 on 1/4/17.
  */
 
-public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVehicleAdapter.VehicleHolder> implements RequestNotifier {
+public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVehicleAdapter.VehicleHolder> implements RequestNotifier, Filterable {
     Activity activity;
-    List<MyUploadedVehiclesResponse.Success> mMainList;
+    List<MyUploadedVehiclesResponse.Success> mMainList = new ArrayList<>();
+    private List<MyUploadedVehiclesResponse.Success> filteredData = new ArrayList<>();
     ApiCall apiCall;
     private String myContact;
     private int groupid;
     private String groupname;
-
+    private CustomFilter filter;
     private List<String> mGrouplist = new ArrayList<>();
     private List<String> groupIdList = new ArrayList<>();
     private List<String> groupTitleList = new ArrayList<>();
@@ -112,6 +115,7 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
     public MyUploadedVehicleAdapter(Activity activity1, List<MyUploadedVehiclesResponse.Success> successList) {
         this.activity = activity1;
         this.mMainList = successList;
+        this.filteredData = successList;
         mConnectionDetector = new ConnectionDetector(activity);
         apiCall = new ApiCall(this.activity, this);
     }
@@ -136,6 +140,7 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
         holder.editrto.setText(mMainList.get(position).getRtoCity());
         holder.editlocation.setText(mMainList.get(position).getLocationCity());
         holder.editregNo.setText(mMainList.get(position).getRegistrationNumber());
+        holder.stock_type.setText(mMainList.get(position).getStockType());
         myContact = activity.getSharedPreferences(activity.getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "");
 
         if (mMainList.get(position).getKmsRunning().equals(""))
@@ -1143,7 +1148,7 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
     static class VehicleHolder extends RecyclerView.ViewHolder {
         ImageView vehicleimage, mMoreItems;
         TextView edittitles, editprices, editcategorys, editbrands, editmodels, editleads, edituploadedon, editmfgyr,
-                editkms, editrto, editlocation, editregNo;
+                editkms, editrto, editlocation, editregNo, stock_type;
         Button vehidetails, btnnotify, mUploadGroup, mUploadStore;
         CardView mcardView;
         //RelativeLayout mBroadcast;
@@ -1170,6 +1175,7 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
             editrto = (TextView) itemView.findViewById(R.id.RTO);
             editlocation = (TextView) itemView.findViewById(R.id.location);
             editregNo = (TextView) itemView.findViewById(R.id.registrationNo);
+            stock_type = (TextView) itemView.findViewById(R.id.stock_type);
             mcardView = (CardView) itemView.findViewById(R.id.card_view);
             //mBroadcast = (RelativeLayout) itemView.findViewById(R.id.relativebroadcast);
             mLinear = (LinearLayout) itemView.findViewById(R.id.linearbtns);
@@ -1185,5 +1191,56 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
         httpClient.addInterceptor(logging).readTimeout(90, TimeUnit.SECONDS);
         return httpClient;
+    }
+
+    /*
+    Filter for stock type
+     */
+    @Override
+    public Filter getFilter() {
+        if (filter == null) {
+            filter = new CustomFilter();
+        }
+        return filter;
+    }
+
+    /***
+     * Filter Class
+     ***/
+    private class CustomFilter extends Filter {
+
+        @Override
+        protected FilterResults performFiltering(CharSequence charSequence) {
+            FilterResults results = new FilterResults();
+            try {
+                if (charSequence != null && charSequence.length() > 0) {
+                    List<MyUploadedVehiclesResponse.Success> filterResults = new ArrayList<>();
+                    for (MyUploadedVehiclesResponse.Success item : filteredData) {
+                        if (item.getStockType().toUpperCase().startsWith(charSequence.toString().toUpperCase())) {
+                            filterResults.add(item);
+                        }
+                    }
+                    results.count = filterResults.size();
+                    results.values = filterResults;
+                } else {
+                    results.values = mMainList;
+                    results.count = mMainList.size();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults filterResults) {
+            if (filterResults.count > 0) {
+                mMainList = (List<MyUploadedVehiclesResponse.Success>) filterResults.values;
+                MyUploadedVehicleAdapter.this.notifyDataSetChanged();
+            } else {
+                Toast.makeText(activity, "No record found", Toast.LENGTH_SHORT).show();
+                Log.i("Error", "->");
+            }
+        }
     }
 }

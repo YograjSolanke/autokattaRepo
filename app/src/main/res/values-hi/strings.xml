@@ -189,12 +189,13 @@
     <string name="price">"मूल्य"</string>
     <string name="model">"मॉडल"</string>
     <string name="brand_no">"ब्रांड"</string>
+    <string name="stock_type">स्टॉक टाइप</string>
     <string name="updated_by">"द्वारा अपलोड किया गया"</string>
     <string name="updated_date">"अपलोड की गई तिथि: -"</string>
     <string name="location">"स्थान"</string>
-    <string name="rto_city">"आरटीओ सिटी: -"</string>
-    <string name="year_of_mfg">"एमएफजी का वर्ष: -"</string>
-    <string name="kms_hrs">"केएमएस / एचआरएस: -"</string>
+    <string name="rto_city">"आरटीओ सिटी"</string>
+    <string name="year_of_mfg">"एमएफजी का वर्ष"</string>
+    <string name="kms_hrs">"केएमएस/एचआरएस"</string>
     <string name="title_activity_my_ended_event">"MyEndedEventActivity"</string>
     <string name="title_activity_group_tabs">"GroupTabs"</string>
     <string name="title_activity_vehicle_details">"वाहन का विवरण"</string>
