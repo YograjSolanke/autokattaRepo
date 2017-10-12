@@ -52,9 +52,9 @@ public class GetLiveEventsResponse {
         @Expose
         private String location;
 
-        @SerializedName("special_clauses")
+      /*  @SerializedName("special_clauses")
         @Expose
-        private String specialClauses;
+        private String specialClauses;*/
         @SerializedName("vehicle_ids")
         @Expose
         private String vehicleIds;
@@ -64,9 +64,7 @@ public class GetLiveEventsResponse {
         @SerializedName("vehicleEndDateTime")
         @Expose
         private String vehicleEndDateTime;
-        @SerializedName("status")
-        @Expose
-        private String status;
+
         @SerializedName("openClose")
         @Expose
         private String openClose;
@@ -217,6 +215,7 @@ public class GetLiveEventsResponse {
             this.location = location;
         }
 
+/*
 
         public String getSpecialClauses() {
             return specialClauses;
@@ -225,6 +224,7 @@ public class GetLiveEventsResponse {
         public void setSpecialClauses(String specialClauses) {
             this.specialClauses = specialClauses;
         }
+*/
 
         public String getVehicleIds() {
             return vehicleIds;
@@ -250,13 +250,6 @@ public class GetLiveEventsResponse {
             this.vehicleEndDateTime = vehicleEndDateTime;
         }
 
-        public String getStatus() {
-            return status;
-        }
-
-        public void setStatus(String status) {
-            this.status = status;
-        }
 
         public String getOpenClose() {
             return openClose;
