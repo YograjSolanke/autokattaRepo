@@ -343,7 +343,7 @@ public class NewVehicleListActivity extends AppCompatActivity implements Request
 
     private void newVehicleStoreAsso(String stringstoreids, String vehicleIds) {
         ApiCall mApiCall = new ApiCall(this, this);
-        mApiCall.newVehicleStoreAssoc(stringstoreids, vehicleIds);
+        mApiCall.newVehicleStoreAssoc(stringstoreids, vehicleIds, myContact);
     }
 
     @Override

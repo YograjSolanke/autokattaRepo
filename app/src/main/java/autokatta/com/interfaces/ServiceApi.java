@@ -1404,7 +1404,8 @@ public interface ServiceApi {
 
     @POST("StoreNewVehicleAssociationData")
     Call<String> _autokattaNewVehicleStoreAssoc(@Query("StoreIDs") String storeIds,
-                                                @Query("NewVehicleIDs") String vehicleIds);
+                                                @Query("NewVehicleIDs") String vehicleIds,
+                                                @Query("MyContact") String myContact);
 
     @POST("RequestForTransferVehicle")
     Call<String> _autokattaRequestForTransferVehicle(@Query("VehicleID") int VehicleID,
@@ -1418,4 +1419,10 @@ public interface ServiceApi {
 
     @POST("SendFCMNotificationWithContact")
     Call<String> _sendFcmNotification(@Query("Contact") String contact);
+
+    @GET("GetNewVehicleDetailsForContact")
+    Call<NewVehicleAllResponse> _autokattaGetNewVehicleDetailsForContact(@Query("MyContact") String myContact);
+
+    @GET("GetTransferVehicleNotification")
+    Call<TransferListResponse> GetTransferVehicleNotification(@Query("Contact") String myContact);
 }

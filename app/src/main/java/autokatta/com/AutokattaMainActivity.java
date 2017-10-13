@@ -49,12 +49,12 @@ import autokatta.com.adapter.TabAdapter;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.broadcastreceiver.BackgroundService;
 import autokatta.com.broadcastreceiver.Receiver;
-import autokatta.com.fragment.AuctionNotification;
 import autokatta.com.fragment.FavoriteNotificationFragment;
 import autokatta.com.fragment.GroupNotification;
 import autokatta.com.fragment.StoreNotification;
 import autokatta.com.fragment.WallNotificationFragment;
 import autokatta.com.interfaces.RequestNotifier;
+import autokatta.com.other.CustomToast;
 import autokatta.com.other.DemoDelAct;
 import autokatta.com.other.EnquiryActivity;
 import autokatta.com.other.Leads;
@@ -64,20 +64,14 @@ import autokatta.com.other.SessionManagement;
 import autokatta.com.other.ShowQrCode;
 import autokatta.com.register.RegistrationContinue;
 import autokatta.com.response.ModelFirebase;
-import autokatta.com.view.BlackListedMemberActivity;
 import autokatta.com.view.BroadcastMessageActivity;
 import autokatta.com.view.BrowseStoreActivity;
 import autokatta.com.view.BussinessChatActivity;
-import autokatta.com.view.Create_Event;
 import autokatta.com.view.GroupTabs;
-import autokatta.com.view.MyActiveEventsTabActivity;
 import autokatta.com.view.MyAutokattaContactsActivity;
 import autokatta.com.view.MyBroadcastGroupsActivity;
-import autokatta.com.view.MyEndedEventTabActivity;
-import autokatta.com.view.MySavedAuctionEventActivity;
 import autokatta.com.view.MySearchActivity;
 import autokatta.com.view.MyStoreListActivity;
-import autokatta.com.view.MyUpcomingEventsTabActivity;
 import autokatta.com.view.OtherProfile;
 import autokatta.com.view.ProductViewActivity;
 import autokatta.com.view.SearchNewVehicleActivity;
@@ -301,12 +295,12 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.getTabAt(0).setIcon(R.mipmap.ic_web);
-        tabLayout.getTabAt(1).setIcon(R.mipmap.ic_calendar_check);
+        //tabLayout.getTabAt(1).setIcon(R.mipmap.ic_calendar_check);
         /*tabLayout.getTabAt(2).setIcon(R.mipmap.ic_launcher);*/
         //tabLayout.getTabAt(2).setIcon(R.mipmap.ic_calendar_check);
-        tabLayout.getTabAt(2).setIcon(R.mipmap.ic_cart);
-        tabLayout.getTabAt(3).setIcon(R.mipmap.ic_account_multiple);
-        tabLayout.getTabAt(4).setIcon(R.mipmap.ic_heart);
+        tabLayout.getTabAt(1).setIcon(R.mipmap.ic_cart);
+        tabLayout.getTabAt(2).setIcon(R.mipmap.ic_account_multiple);
+        tabLayout.getTabAt(3).setIcon(R.mipmap.ic_heart);
 
 
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -336,7 +330,7 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
             tabLayout.getTabAt(1).getIcon().setAlpha(128);
             tabLayout.getTabAt(2).getIcon().setAlpha(128);
             tabLayout.getTabAt(3).getIcon().setAlpha(128);
-            tabLayout.getTabAt(4).getIcon().setAlpha(128);
+            //tabLayout.getTabAt(4).getIcon().setAlpha(128);
             //tabLayout.getTabAt(5).getIcon().setAlpha(128);
 
             viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -353,7 +347,7 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
                             tabLayout.getTabAt(1).getIcon().setAlpha(128);
                             tabLayout.getTabAt(2).getIcon().setAlpha(128);
                             tabLayout.getTabAt(3).getIcon().setAlpha(128);
-                            tabLayout.getTabAt(4).getIcon().setAlpha(128);
+                            //tabLayout.getTabAt(4).getIcon().setAlpha(128);
                             //tabLayout.getTabAt(5).getIcon().setAlpha(128);
                             break;
                         case 1:
@@ -361,7 +355,7 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
                             tabLayout.getTabAt(1).getIcon().setAlpha(255);
                             tabLayout.getTabAt(2).getIcon().setAlpha(128);
                             tabLayout.getTabAt(3).getIcon().setAlpha(128);
-                            tabLayout.getTabAt(4).getIcon().setAlpha(128);
+                            //tabLayout.getTabAt(4).getIcon().setAlpha(128);
                             //tabLayout.getTabAt(5).getIcon().setAlpha(128);
                             break;
                         case 2:
@@ -369,7 +363,7 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
                             tabLayout.getTabAt(1).getIcon().setAlpha(128);
                             tabLayout.getTabAt(2).getIcon().setAlpha(255);
                             tabLayout.getTabAt(3).getIcon().setAlpha(128);
-                            tabLayout.getTabAt(4).getIcon().setAlpha(128);
+                            //tabLayout.getTabAt(4).getIcon().setAlpha(128);
                             //tabLayout.getTabAt(5).getIcon().setAlpha(128);
                             break;
                         case 3:
@@ -377,7 +371,7 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
                             tabLayout.getTabAt(1).getIcon().setAlpha(128);
                             tabLayout.getTabAt(2).getIcon().setAlpha(128);
                             tabLayout.getTabAt(3).getIcon().setAlpha(255);
-                            tabLayout.getTabAt(4).getIcon().setAlpha(128);
+                            //tabLayout.getTabAt(4).getIcon().setAlpha(128);
                             //tabLayout.getTabAt(5).getIcon().setAlpha(128);
                             break;
                         case 4:
@@ -385,7 +379,7 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
                             tabLayout.getTabAt(1).getIcon().setAlpha(128);
                             tabLayout.getTabAt(2).getIcon().setAlpha(128);
                             tabLayout.getTabAt(3).getIcon().setAlpha(128);
-                            tabLayout.getTabAt(4).getIcon().setAlpha(255);
+                            //tabLayout.getTabAt(4).getIcon().setAlpha(255);
                             //tabLayout.getTabAt(5).getIcon().setAlpha(128);
                             break;
                         case 5:
@@ -393,7 +387,7 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
                             tabLayout.getTabAt(1).getIcon().setAlpha(128);
                             tabLayout.getTabAt(2).getIcon().setAlpha(128);
                             tabLayout.getTabAt(3).getIcon().setAlpha(128);
-                            tabLayout.getTabAt(4).getIcon().setAlpha(128);
+                            //tabLayout.getTabAt(4).getIcon().setAlpha(128);
                             //tabLayout.getTabAt(5).getIcon().setAlpha(255);
                             break;
                     }
@@ -480,7 +474,7 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
         adapter.addFragment(new WallNotificationFragment());
         //adapter.addFragment(new SocialFragment());
         /*adapter.addFragment(new UpdatesFragment());*/
-        adapter.addFragment(new AuctionNotification());
+        /*adapter.addFragment(new AuctionNotification());*/
         adapter.addFragment(new StoreNotification());
         adapter.addFragment(new GroupNotification());
         adapter.addFragment(new FavoriteNotificationFragment());
@@ -524,17 +518,23 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
                         } else if (menuItem.getItemId() == R.id.my_vehicle) {
                             startActivity(new Intent(AutokattaMainActivity.this, DemoDelAct.class));
                         } else if (menuItem.getItemId() == R.id.create_event) {
-                            startActivity(new Intent(AutokattaMainActivity.this, Create_Event.class));
+                            CustomToast.customToast(getApplicationContext(), "Coming soon... be connected for update");
+                            //startActivity(new Intent(AutokattaMainActivity.this, Create_Event.class));
                         } else if (menuItem.getItemId() == R.id.active_event) {
-                            startActivity(new Intent(AutokattaMainActivity.this, MyActiveEventsTabActivity.class));
+                            CustomToast.customToast(getApplicationContext(), "Coming soon... be connected for update");
+                            //startActivity(new Intent(AutokattaMainActivity.this, MyActiveEventsTabActivity.class));
                         } else if (menuItem.getItemId() == R.id.upcoming_event) {
-                            startActivity(new Intent(AutokattaMainActivity.this, MyUpcomingEventsTabActivity.class));
+                            CustomToast.customToast(getApplicationContext(), "Coming soon... be connected for update");
+                            //startActivity(new Intent(AutokattaMainActivity.this, MyUpcomingEventsTabActivity.class));
                         } else if (menuItem.getItemId() == R.id.saved_event) {
-                            startActivity(new Intent(AutokattaMainActivity.this, MySavedAuctionEventActivity.class));
+                            CustomToast.customToast(getApplicationContext(), "Coming soon... be connected for update");
+                            //startActivity(new Intent(AutokattaMainActivity.this, MySavedAuctionEventActivity.class));
                         } else if (menuItem.getItemId() == R.id.ended_event) {
-                            startActivity(new Intent(AutokattaMainActivity.this, MyEndedEventTabActivity.class));
+                            CustomToast.customToast(getApplicationContext(), "Coming soon... be connected for update");
+                            //startActivity(new Intent(AutokattaMainActivity.this, MyEndedEventTabActivity.class));
                         } else if (menuItem.getItemId() == R.id.black_list_contact) {
-                            startActivity(new Intent(AutokattaMainActivity.this, BlackListedMemberActivity.class));
+                            CustomToast.customToast(getApplicationContext(), "Coming soon... be connected for update");
+                            //startActivity(new Intent(AutokattaMainActivity.this, BlackListedMemberActivity.class));
                         } else if (menuItem.getItemId() == R.id.broadcast_groups) {
                             startActivity(new Intent(AutokattaMainActivity.this, MyBroadcastGroupsActivity.class));
                         } else if (menuItem.getItemId() == R.id.my_broadcast_message) {

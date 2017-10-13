@@ -183,7 +183,7 @@ public class UploadToGroupStoreActivity extends AppCompatActivity implements Req
     @Override
     public void notifyString(String str) {
         if (str != null) {
-            if (str.equalsIgnoreCase("uploadToGroupStore")) {
+            if (str.equalsIgnoreCase("uploadPostToGroupStore")) {
                 finish();
             }
         }

@@ -8924,7 +8924,7 @@ get ExchangeMela Analytics Data
     }
 
     /* new vehicle with store association*/
-    public void newVehicleStoreAssoc(String storeIds, String vehicleIds) {
+    public void newVehicleStoreAssoc(String storeIds, String vehicleIds, String myContact) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 //JSON to Gson conversion
@@ -8939,7 +8939,7 @@ get ExchangeMela Analytics Data
                         .build();
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<String> mSoldVehicle = serviceApi._autokattaNewVehicleStoreAssoc(storeIds, vehicleIds);
+                Call<String> mSoldVehicle = serviceApi._autokattaNewVehicleStoreAssoc(storeIds, vehicleIds, myContact);
                 mSoldVehicle.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
@@ -8985,6 +8985,66 @@ get ExchangeMela Analytics Data
 
                     @Override
                     public void onFailure(Call<String> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+            } else
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /*get new vehicle details by contact*/
+
+    public void GetNewVehicleDetailsForContact(String myContact) {
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<NewVehicleAllResponse> mCompareResponseCall = serviceApi._autokattaGetNewVehicleDetailsForContact(myContact);
+                mCompareResponseCall.enqueue(new Callback<NewVehicleAllResponse>() {
+                    @Override
+                    public void onResponse(Call<NewVehicleAllResponse> call, Response<NewVehicleAllResponse> response) {
+                        mNotifier.notifySuccess(response);
+                    }
+
+                    @Override
+                    public void onFailure(Call<NewVehicleAllResponse> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+            } else
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void GetTransferVehicleNotification(String myContact) {
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<TransferListResponse> mCompareResponseCall = serviceApi.GetTransferVehicleNotification(myContact);
+                mCompareResponseCall.enqueue(new Callback<TransferListResponse>() {
+                    @Override
+                    public void onResponse(Call<TransferListResponse> call, Response<TransferListResponse> response) {
+                        mNotifier.notifySuccess(response);
+                    }
+
+                    @Override
+                    public void onFailure(Call<TransferListResponse> call, Throwable t) {
                         mNotifier.notifyError(t);
                     }
                 });

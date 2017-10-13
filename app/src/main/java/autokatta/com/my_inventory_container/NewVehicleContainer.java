@@ -20,6 +20,7 @@ import java.util.List;
 
 import autokatta.com.R;
 import autokatta.com.adapter.NewVehicleContainerAdapter;
+import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.other.CustomToast;
@@ -97,6 +98,8 @@ public class NewVehicleContainer extends AppCompatActivity implements RequestNot
     }
 
     private void getNewVehicleList(String myContact) {
+        ApiCall mApiCall = new ApiCall(this, this);
+        mApiCall.GetNewVehicleDetailsForContact(myContact);
     }
 
     @Override
