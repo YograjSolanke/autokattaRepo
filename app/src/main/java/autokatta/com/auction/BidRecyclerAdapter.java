@@ -112,7 +112,7 @@ class BidRecyclerAdapter extends RecyclerView.Adapter<BidRecyclerAdapter.MyViewH
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, final int position) {
+    public void onBindViewHolder(final MyViewHolder holder, int position) {
         holder.mRegistrationNo.setText(mItemList.get(position).getRegNo());
         holder.mLotNo.setText(mItemList.get(position).getLotNo());
         holder.mTitle.setText(mItemList.get(position).getTitle());
@@ -206,7 +206,7 @@ class BidRecyclerAdapter extends RecyclerView.Adapter<BidRecyclerAdapter.MyViewH
                                             Toast.makeText(mActivity, "Price should not be empty", Toast.LENGTH_LONG).show();
                                         } else if (tabNo.equals("0")) {
                                             Long IntBidAmount = Long.parseLong(BidAmount);
-                                            Long IntCurrentBidPrice = Long.parseLong(mItemList.get(position).getCurrentBidPrice());
+                                            Long IntCurrentBidPrice = Long.parseLong(mItemList.get(holder.getAdapterPosition()).getCurrentBidPrice());
                                             if (IntBidAmount >= IntCurrentBidPrice) {
                                                 try {
                                                     if (mConnectionDetector.isConnectedToInternet()) {
@@ -221,7 +221,7 @@ class BidRecyclerAdapter extends RecyclerView.Adapter<BidRecyclerAdapter.MyViewH
                                                                 .build();
 
                                                         ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                                                        Call<String> addBid = serviceApi.addMyBid(auctionId, mItemList.get(position).getVehicleid(),
+                                                        Call<String> addBid = serviceApi.addMyBid(auctionId, mItemList.get(holder.getAdapterPosition()).getVehicleid(),
                                                                 BidAmount, "0", mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference),
                                                                         Context.MODE_PRIVATE).getString("loginContact", ""));
                                                         addBid.enqueue(new Callback<String>() {
@@ -260,7 +260,7 @@ class BidRecyclerAdapter extends RecyclerView.Adapter<BidRecyclerAdapter.MyViewH
                                             }
                                         } else if (tabNo.equals("1")) {
                                             Long IntBidAmount = Long.parseLong(BidAmount);
-                                            Long IntCurrentBidPrice = Long.parseLong(mItemList.get(position).getCurrentBidPrice());
+                                            Long IntCurrentBidPrice = Long.parseLong(mItemList.get(holder.getAdapterPosition()).getCurrentBidPrice());
                                             if (IntBidAmount >= IntCurrentBidPrice) {
                                                 try {
                                                     if (mConnectionDetector.isConnectedToInternet()) {
@@ -274,7 +274,7 @@ class BidRecyclerAdapter extends RecyclerView.Adapter<BidRecyclerAdapter.MyViewH
                                                                 .client(initLog().build())
                                                                 .build();
                                                         ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                                                        Call<String> addBid = serviceApi.addMyBid(auctionId, mItemList.get(position).getVehicleid(),
+                                                        Call<String> addBid = serviceApi.addMyBid(auctionId, mItemList.get(holder.getAdapterPosition()).getVehicleid(),
                                                                 BidAmount, "1", mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference),
                                                                         Context.MODE_PRIVATE).getString("loginContact", ""));
                                                         addBid.enqueue(new Callback<String>() {
@@ -310,7 +310,7 @@ class BidRecyclerAdapter extends RecyclerView.Adapter<BidRecyclerAdapter.MyViewH
                                             }
                                         } else if (tabNo.equals("2")) {
                                             Long IntBidAmount = Long.parseLong(BidAmount);
-                                            Long IntCurrentBidPrice = Long.parseLong(mItemList.get(position).getCurrentBidPrice());
+                                            Long IntCurrentBidPrice = Long.parseLong(mItemList.get(holder.getAdapterPosition()).getCurrentBidPrice());
                                             if (IntBidAmount >= IntCurrentBidPrice) {
                                                 try {
                                                     if (mConnectionDetector.isConnectedToInternet()) {
@@ -324,7 +324,7 @@ class BidRecyclerAdapter extends RecyclerView.Adapter<BidRecyclerAdapter.MyViewH
                                                                 .client(initLog().build())
                                                                 .build();
                                                         ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                                                        Call<String> addBid = serviceApi.addMyBid(auctionId, mItemList.get(position).getVehicleid(),
+                                                        Call<String> addBid = serviceApi.addMyBid(auctionId, mItemList.get(holder.getAdapterPosition()).getVehicleid(),
                                                                 BidAmount, "2", mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference),
                                                                         Context.MODE_PRIVATE).getString("loginContact", ""));
                                                         addBid.enqueue(new Callback<String>() {
@@ -380,7 +380,7 @@ class BidRecyclerAdapter extends RecyclerView.Adapter<BidRecyclerAdapter.MyViewH
                                                                 .client(initLog().build())
                                                                 .build();
                                                         ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                                                        Call<String> addBid = serviceApi.addMyBid(auctionId, mItemList.get(position).getVehicleid(),
+                                                        Call<String> addBid = serviceApi.addMyBid(auctionId, mItemList.get(holder.getAdapterPosition()).getVehicleid(),
                                                                 BidAmount, "0", mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference),
                                                                         Context.MODE_PRIVATE).getString("loginContact", ""));
                                                         addBid.enqueue(new Callback<String>() {

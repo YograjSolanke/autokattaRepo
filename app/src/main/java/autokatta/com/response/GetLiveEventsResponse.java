@@ -50,11 +50,12 @@ public class GetLiveEventsResponse {
         private String auctionType;
         @SerializedName("location")
         @Expose
-        private String location;
+        private String location;//auction
+        //locationcity-
 
-      /*  @SerializedName("special_clauses")
-        @Expose
-        private String specialClauses;*/
+        /*  @SerializedName("special_clauses")
+          @Expose
+          private String specialClauses;*/
         @SerializedName("vehicle_ids")
         @Expose
         private String vehicleIds;
@@ -101,7 +102,7 @@ public class GetLiveEventsResponse {
         @SerializedName("username")
         @Expose
         private String username;
-        @SerializedName("ClausesNames")
+        @SerializedName("clausesNames")
         @Expose
         private String clausesNames;
         @SerializedName("auctioneer")
@@ -117,13 +118,85 @@ public class GetLiveEventsResponse {
         @Expose
         private String mycontact;
 
-        @SerializedName("auction_category")
+        @SerializedName("AuctionCategory")
         @Expose
         private String auctionCategory;
 
         @SerializedName("stockLocation")
         @Expose
         private String stockLocation;
+
+        @SerializedName("City")
+        @Expose
+        private String auctioneerCity;
+
+        @SerializedName("pLatitude")
+        @Expose
+        private String auctioneerCityLatitude;
+
+        @SerializedName("pLongitude")
+        @Expose
+        private String auctioneerCityLongitude;
+
+        @SerializedName("LocationCity")
+        @Expose
+        private String vehicleCity;
+
+        @SerializedName("uvLatitude")
+        @Expose
+        private String vehicleCityLatitude;
+
+        @SerializedName("uvLongitude")
+        @Expose
+        private String vehicleCityLongitude;
+
+        public String getAuctioneerCity() {
+            return auctioneerCity;
+        }
+
+        public void setAuctioneerCity(String auctioneerCity) {
+            this.auctioneerCity = auctioneerCity;
+        }
+
+        public String getAuctioneerCityLatitude() {
+            return auctioneerCityLatitude;
+        }
+
+        public void setAuctioneerCityLatitude(String auctioneerCityLatitude) {
+            this.auctioneerCityLatitude = auctioneerCityLatitude;
+        }
+
+        public String getAuctioneerCityLongitude() {
+            return auctioneerCityLongitude;
+        }
+
+        public void setAuctioneerCityLongitude(String auctioneerCityLongitude) {
+            this.auctioneerCityLongitude = auctioneerCityLongitude;
+        }
+
+        public String getVehicleCity() {
+            return vehicleCity;
+        }
+
+        public void setVehicleCity(String vehicleCity) {
+            this.vehicleCity = vehicleCity;
+        }
+
+        public String getVehicleCityLatitude() {
+            return vehicleCityLatitude;
+        }
+
+        public void setVehicleCityLatitude(String vehicleCityLatitude) {
+            this.vehicleCityLatitude = vehicleCityLatitude;
+        }
+
+        public String getVehicleCityLongitude() {
+            return vehicleCityLongitude;
+        }
+
+        public void setVehicleCityLongitude(String vehicleCityLongitude) {
+            this.vehicleCityLongitude = vehicleCityLongitude;
+        }
 
         public String getStockLocation() {
             return stockLocation;

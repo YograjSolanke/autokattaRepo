@@ -78,6 +78,31 @@ public class GetLiveLoanEventsResponse {
         @Expose
         private String ignoreGoingStatus;
 
+        @SerializedName("city")
+        @Expose
+        private String loanOwnerCity;
+
+        @SerializedName("pLatitude")
+        @Expose
+        private String loanOwnerCityLatitude;
+
+        @SerializedName("pLongitude")
+        @Expose
+        private String loanOwnerCityLongitude;
+
+        /*@SerializedName("LocationCity")
+        @Expose
+        private String vehicleCity;*/
+
+        @SerializedName("lmLatitude")
+        @Expose
+        private String eventCityLatitude;
+
+        @SerializedName("lmLongitude")
+        @Expose
+        private String eventCityLongitude;
+
+
         private String keyWord;
 
         public String getKeyWord() {
@@ -224,5 +249,44 @@ public class GetLiveLoanEventsResponse {
             this.ignoreGoingStatus = ignoreGoingStatus;
         }
 
+        public String getLoanOwnerCity() {
+            return loanOwnerCity;
+        }
+
+        public void setLoanOwnerCity(String loanOwnerCity) {
+            this.loanOwnerCity = loanOwnerCity;
+        }
+
+        public String getLoanOwnerCityLatitude() {
+            return loanOwnerCityLatitude;
+        }
+
+        public void setLoanOwnerCityLatitude(String loanOwnerCityLatitude) {
+            this.loanOwnerCityLatitude = loanOwnerCityLatitude;
+        }
+
+        public String getLoanOwnerCityLongitude() {
+            return loanOwnerCityLongitude;
+        }
+
+        public void setLoanOwnerCityLongitude(String loanOwnerCityLongitude) {
+            this.loanOwnerCityLongitude = loanOwnerCityLongitude;
+        }
+
+        public String getEventCityLatitude() {
+            return eventCityLatitude;
+        }
+
+        public void setEventCityLatitude(String eventCityLatitude) {
+            this.eventCityLatitude = eventCityLatitude;
+        }
+
+        public String getEventCityLongitude() {
+            return eventCityLongitude;
+        }
+
+        public void setEventCityLongitude(String eventCityLongitude) {
+            this.eventCityLongitude = eventCityLongitude;
+        }
     }
 }

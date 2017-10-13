@@ -29,7 +29,7 @@ import autokatta.com.response.GetAuctionEventResponse;
 public class PreviewAuctionAdapter extends RecyclerView.Adapter<PreviewAuctionAdapter.MyViewHolder> {
     private Activity mActivity;
     private List<GetAuctionEventResponse.Vehicle> mItemList = new ArrayList<>();
-    private String  showPrice, contact;
+    private String showPrice, contact;
     private int auctionId = 0;
 
     public PreviewAuctionAdapter(Activity mActivity, List<GetAuctionEventResponse.Vehicle> mItemList, int auctionId
@@ -81,8 +81,8 @@ public class PreviewAuctionAdapter extends RecyclerView.Adapter<PreviewAuctionAd
     @Override
     public void onBindViewHolder(final PreviewAuctionAdapter.MyViewHolder holder, int position) {
         if (mItemList.get(position).getImage() == null || mItemList.get(position).getImage().equals("")
-                || mItemList.get(position).getImage().isEmpty()||mItemList.get(position).getImage().equals(null)){
-        holder.mAuctionVehicleImage.setBackgroundResource(R.drawable.vehiimg);
+                || mItemList.get(position).getImage().isEmpty() || mItemList.get(position).getImage().equals(null)) {
+            holder.mAuctionVehicleImage.setBackgroundResource(R.drawable.vehiimg);
 
         } else {
             String images[] = mItemList.get(position).getImage().split(",");
@@ -131,13 +131,13 @@ public class PreviewAuctionAdapter extends RecyclerView.Adapter<PreviewAuctionAd
             @Override
             public void onClick(View v) {
                /* if (!mItemList.get(holder.getAdapterPosition()).getVehicleId().startsWith("A ")) {*/
-                    Bundle b = new Bundle();
+                Bundle b = new Bundle();
                 b.putInt("vehicle_id", mItemList.get(holder.getAdapterPosition()).getVehicleId());
-                    b.putInt("auction_id", auctionId);
+                b.putInt("auction_id", auctionId);
 
-                    Intent intent = new Intent(mActivity, MyAuctionVehicleDetails.class);
-                    intent.putExtras(b);
-                    mActivity.startActivity(intent);
+                Intent intent = new Intent(mActivity, MyAuctionVehicleDetails.class);
+                intent.putExtras(b);
+                mActivity.startActivity(intent);
 
                 /*} else {
                     Bundle b = new Bundle();

@@ -39,7 +39,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -151,7 +150,7 @@ public class AuctionNotificationAdapter extends RecyclerView.Adapter<AuctionNoti
         holder.mEndTime.setText(mItemList.get(position).getEndTime());
         holder.mAuction_category.setText(mItemList.get(position).getAuctionCategory());
         holder.mStockLocation.setText(mItemList.get(position).getLocation());
-        holder.closeopentxt.setText(mItemList.get(position).getOpenClose() + " type auction");
+        holder.closeopentxt.setText("" + mItemList.get(position).getOpenClose() + " type auction");
 
         final TextView tv = holder.mTimer;
         CountDownTimer cdt = counters.get(tv);
@@ -423,10 +422,9 @@ public class AuctionNotificationAdapter extends RecyclerView.Adapter<AuctionNoti
 
     public void cancelAllTimers() {
         Set<Map.Entry<TextView, CountDownTimer>> s = counters.entrySet();
-        Iterator it = s.iterator();
-        while (it.hasNext()) {
+        for (Object value : s) {
             try {
-                Map.Entry pairs = (Map.Entry) it.next();
+                Map.Entry pairs = (Map.Entry) value;
                 CountDownTimer cdt = (CountDownTimer) pairs.getValue();
 
                 cdt.cancel();

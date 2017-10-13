@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -124,11 +125,11 @@ public class LiveFragment extends Fragment implements RequestNotifier {
                                 if (!isFirstViewClick) {
                                     isFirstViewClick = true;
                                     mAuctionEventLinear.setVisibility(View.VISIBLE);
-                                    mAuctionEvent.setBackgroundColor(getResources().getColor(R.color.button_pressed));
+                                    mAuctionEvent.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.button_pressed));
                                 } else {
                                     isFirstViewClick = false;
                                     mAuctionEventLinear.setVisibility(View.GONE);
-                                    mAuctionEvent.setBackgroundColor(getResources().getColor(R.color.white));
+                                    mAuctionEvent.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.white));
                                 }
                             }
                         }
@@ -143,11 +144,11 @@ public class LiveFragment extends Fragment implements RequestNotifier {
                                 if (!isFirstViewClick) {
                                     isFirstViewClick = true;
                                     mLoanMelaLinear.setVisibility(View.VISIBLE);
-                                    mLoanMela.setBackgroundColor(getResources().getColor(R.color.button_pressed));
+                                    mLoanMela.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.button_pressed));
                                 } else {
                                     isFirstViewClick = false;
                                     mLoanMelaLinear.setVisibility(View.GONE);
-                                    mLoanMela.setBackgroundColor(getResources().getColor(R.color.white));
+                                    mLoanMela.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.white));
                                 }
                             }
                         }
@@ -162,11 +163,11 @@ public class LiveFragment extends Fragment implements RequestNotifier {
                                 if (!isFirstViewClick) {
                                     isFirstViewClick = true;
                                     mExchangeEventLinear.setVisibility(View.VISIBLE);
-                                    mExchangeEvent.setBackgroundColor(getResources().getColor(R.color.button_pressed));
+                                    mExchangeEvent.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.button_pressed));
                                 } else {
                                     isFirstViewClick = false;
                                     mExchangeEventLinear.setVisibility(View.GONE);
-                                    mExchangeEvent.setBackgroundColor(getResources().getColor(R.color.white));
+                                    mExchangeEvent.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.white));
                                 }
                             }
                         }
@@ -181,11 +182,11 @@ public class LiveFragment extends Fragment implements RequestNotifier {
                                 if (!isFirstViewClick) {
                                     isFirstViewClick = true;
                                     mServiceEventLinear.setVisibility(View.VISIBLE);
-                                    mServiceEvent.setBackgroundColor(getResources().getColor(R.color.button_pressed));
+                                    mServiceEvent.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.button_pressed));
                                 } else {
                                     isFirstViewClick = false;
                                     mServiceEventLinear.setVisibility(View.GONE);
-                                    mServiceEvent.setBackgroundColor(getResources().getColor(R.color.white));
+                                    mServiceEvent.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.white));
                                 }
                             }
                         }
@@ -200,11 +201,11 @@ public class LiveFragment extends Fragment implements RequestNotifier {
                                 if (!isFirstViewClick) {
                                     isFirstViewClick = true;
                                     mSaleEventLinear.setVisibility(View.VISIBLE);
-                                    mSaleEvent.setBackgroundColor(getResources().getColor(R.color.button_pressed));
+                                    mSaleEvent.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.button_pressed));
                                 } else {
                                     isFirstViewClick = false;
                                     mSaleEventLinear.setVisibility(View.GONE);
-                                    mSaleEvent.setBackgroundColor(getResources().getColor(R.color.white));
+                                    mSaleEvent.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.white));
                                 }
                             }
                         }
@@ -471,7 +472,6 @@ public class LiveFragment extends Fragment implements RequestNotifier {
                             model.setUsername(success.getSaleOwnerName());
                             model.setSaleOwnerName(success.getSaleOwnerName());
                             model.setIgnoreGoingStatus(success.getIgnoreGoingStatus());
-
 
 
                             try {

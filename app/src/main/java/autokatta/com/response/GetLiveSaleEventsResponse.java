@@ -97,6 +97,30 @@ public class GetLiveSaleEventsResponse {
 
         private String keyWord;
 
+        @SerializedName("city")
+        @Expose
+        private String saleOwnerCity;
+
+        @SerializedName("pLatitude")
+        @Expose
+        private String saleOwnerCityLatitude;
+
+        @SerializedName("pLongitude")
+        @Expose
+        private String saleOwnerCityLongitude;
+
+        /*@SerializedName("LocationCity")
+        @Expose
+        private String vehicleCity;*/
+
+        @SerializedName("smLatitude")
+        @Expose
+        private String eventCityLatitude;
+
+        @SerializedName("smLongitude")
+        @Expose
+        private String eventCityLongitude;
+
         public String getKeyWord() {
             return keyWord;
         }
@@ -289,5 +313,44 @@ public class GetLiveSaleEventsResponse {
             this.ignoreGoingStatus = ignoreGoingStatus;
         }
 
+        public String getSaleOwnerCity() {
+            return saleOwnerCity;
+        }
+
+        public void setSaleOwnerCity(String saleOwnerCity) {
+            this.saleOwnerCity = saleOwnerCity;
+        }
+
+        public String getSaleOwnerCityLatitude() {
+            return saleOwnerCityLatitude;
+        }
+
+        public void setSaleOwnerCityLatitude(String saleOwnerCityLatitude) {
+            this.saleOwnerCityLatitude = saleOwnerCityLatitude;
+        }
+
+        public String getSaleOwnerCityLongitude() {
+            return saleOwnerCityLongitude;
+        }
+
+        public void setSaleOwnerCityLongitude(String saleOwnerCityLongitude) {
+            this.saleOwnerCityLongitude = saleOwnerCityLongitude;
+        }
+
+        public String getEventCityLatitude() {
+            return eventCityLatitude;
+        }
+
+        public void setEventCityLatitude(String eventCityLatitude) {
+            this.eventCityLatitude = eventCityLatitude;
+        }
+
+        public String getEventCityLongitude() {
+            return eventCityLongitude;
+        }
+
+        public void setEventCityLongitude(String eventCityLongitude) {
+            this.eventCityLongitude = eventCityLongitude;
+        }
     }
 }

@@ -36,6 +36,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 import autokatta.com.R;
@@ -66,7 +67,7 @@ public class PreviewLiveEvents extends AppCompatActivity implements RequestNotif
     TextView mLiveTimer, mStartDate, mStartTime, mEndDate, mEndTime, mAuctionText, mCloseOpenType, mCategory, mLocation;
     String allDetails = "", keyword;
 
-    String  whoseAuction = "";
+    String whoseAuction = "";
     int auction_id;
     String contact, auctioneername, auction_startdate, auction_starttime, auction_enddate, auction_endtime,
             no_of_vehicles, auctioncontact, action_title, ignoreGoingStatus, startDateTime, endDateTime, specialcluases,
@@ -177,8 +178,8 @@ public class PreviewLiveEvents extends AppCompatActivity implements RequestNotif
                 mEndTime.setText(auction_endtime);
                 mCloseOpenType.setText(openClose + " " + "Type Auction");
                 //mAuctionText.setText(getString(R.string.live_auction));
-                mAuctionText.setText("Title: " + action_title);
-                mCategory.setText("Category: " + strCategory);
+                mAuctionText.setText("" + "Title: " + action_title);
+                mCategory.setText("" + "Category: " + strCategory);
                 mLocation.setText(strLocation);
 
                 final TextView tv = mLiveTimer;
@@ -187,7 +188,7 @@ public class PreviewLiveEvents extends AppCompatActivity implements RequestNotif
                     cdt.cancel();
                     cdt = null;
                 }
-                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
                 try {
                     Date futureDate = dateFormat.parse(endDateTime);
                     Date currentDate = dateFormat.parse(endDateTime);
@@ -219,7 +220,10 @@ public class PreviewLiveEvents extends AppCompatActivity implements RequestNotif
                             if (millisUntilFinished > DateUtils.SECOND_IN_MILLIS) {
                                 seconds = (int) (millisUntilFinished / DateUtils.SECOND_IN_MILLIS);
                             }
-                            sDate += " " + String.format("%02d", hours) + ":" + String.format("%02d", minutes) + ":" + String.format("%02d", seconds);
+                            sDate += " " + String.format(Locale.getDefault(), "%02d", hours) + ":" +
+                                    String.format(Locale.getDefault(), "%02d", minutes) + ":" +
+                                    String.format(Locale.getDefault(), "%02d", seconds);
+
                             tv.setText(sDate.trim());
                         }
 
@@ -536,7 +540,7 @@ public class PreviewLiveEvents extends AppCompatActivity implements RequestNotif
                 try {
                     startActivity(in);
                 } catch (android.content.ActivityNotFoundException ex) {
-                    System.out.println("No Activity Found For Call in Preview Live events\n");
+                    ex.printStackTrace();
                 }
                 break;
 

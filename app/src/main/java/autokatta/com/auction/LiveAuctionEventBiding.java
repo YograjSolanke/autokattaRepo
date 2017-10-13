@@ -25,6 +25,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 
 import autokatta.com.R;
 import autokatta.com.adapter.TabAdapterName;
@@ -41,7 +42,7 @@ public class LiveAuctionEventBiding extends AppCompatActivity implements Request
     OutBid mOutBid;
     WatchedItem mWatchedItem;
     YourBid mYourBid;
-    String auctioneername,  action_title, auction_startdate, auction_starttime, auction_enddate, auction_endtime,
+    String auctioneername, action_title, auction_startdate, auction_starttime, auction_enddate, auction_endtime,
             no_of_vehicles, auctioncontact, specialcluases, endDateTime, openClose, auctiontype, showPrice, ignoreGoing,
             startDateTime, blackListStatus, keyWord, strCategory, strLocation;
     Boolean isEMDPaid;
@@ -142,24 +143,23 @@ public class LiveAuctionEventBiding extends AppCompatActivity implements Request
                     mTotalRemains.setText("rem");
 
                     ViewPager viewPager = (ViewPager) findViewById(R.id.bid_viewpager);
+                    TabLayout tabLayout = (TabLayout) findViewById(R.id.bid_tabs);
                     if (viewPager != null) {
                         setupViewPager(viewPager);
-                    }
+                        tabLayout.setupWithViewPager(viewPager);
 
-                    TabLayout tabLayout = (TabLayout) findViewById(R.id.bid_tabs);
-                    tabLayout.setupWithViewPager(viewPager);
-
-                    try {
-                        if (getIntent().getExtras().getString("tabNo") != null) {
-                            String tabNo = getIntent().getExtras().getString("tabNo");
-                            if (tabNo != null)
-                                Log.i("TabNo", "->" + tabNo);
-                            viewPager.setCurrentItem(Integer.parseInt(tabNo));
-                        } else {
-                            Log.e("Value", "is Null");
+                        try {
+                            if (getIntent().getExtras().getString("tabNo") != null) {
+                                String tabNo = getIntent().getExtras().getString("tabNo");
+                                if (tabNo != null)
+                                    Log.i("TabNo", "->" + tabNo);
+                                viewPager.setCurrentItem(Integer.parseInt(tabNo));
+                            } else {
+                                Log.e("Value", "is Null");
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
                         }
-                    } catch (Exception e) {
-                        e.printStackTrace();
                     }
                     final TextView tv = mLiveTimer;
                     cdt = counters.get(mLiveTimer);
@@ -169,7 +169,7 @@ public class LiveAuctionEventBiding extends AppCompatActivity implements Request
                     }
 
                     //SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
                     try {
                         Date futureDate = dateFormat.parse(endDateTime);
                         System.out.println("date============================================" + endDateTime);
@@ -216,7 +216,10 @@ public class LiveAuctionEventBiding extends AppCompatActivity implements Request
 
                                 }
 
-                                sDate += " " + String.format("%02d", hours) + ":" + String.format("%02d", minutes) + ":" + String.format("%02d", seconds);
+                                sDate += " " + String.format(Locale.getDefault(), "%02d", hours) + ":" +
+                                        String.format(Locale.getDefault(), "%02d", minutes) + ":" +
+                                        String.format(Locale.getDefault(), "%02d", seconds);
+
                                 tv.setText(sDate.trim());
                             }
 
@@ -348,7 +351,7 @@ public class LiveAuctionEventBiding extends AppCompatActivity implements Request
         try {
             startActivity(in);
         } catch (android.content.ActivityNotFoundException ex) {
-            System.out.println("No Activity Found For Call in Live Auction Event Bidding\n");
+            ex.printStackTrace();
         }
     }
 
