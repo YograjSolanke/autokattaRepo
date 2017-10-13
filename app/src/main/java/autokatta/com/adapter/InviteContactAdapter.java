@@ -118,20 +118,13 @@ public class InviteContactAdapter extends RecyclerView.Adapter<InviteContactAdap
     private class ItemFilter extends Filter {
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
-
             String filterString = constraint.toString().toLowerCase();
-
             FilterResults results = new FilterResults();
-
             final List<String> list = contactdata_copy;
-
             int count = list.size();
-
             if (filterString != null && filterString.length() > 0) {
 
-
                 final ArrayList<String> nlist = new ArrayList<String>(count);
-
                 String filterableString;
                 for (int i = 0; i < count; i++) {
                 filterableString = list.get(i);

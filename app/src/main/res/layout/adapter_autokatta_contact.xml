@@ -31,6 +31,7 @@
                 android:layout_marginStart="5dp"
                 android:layout_toEndOf="@+id/profileImg"
                 android:text="@string/names"
+                android:layout_toStartOf="@+id/callImg"
                 android:textColor="#2C3343"
                 android:textSize="16sp"
                 android:textStyle="bold" />
@@ -91,10 +92,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/txtcity"
-                android:layout_marginEnd="5dp"
                 android:layout_marginStart="5dp"
                 android:layout_toEndOf="@+id/profileImg"
-                android:layout_toStartOf="@+id/btnsendmsg"
+                android:layout_toStartOf="@+id/callImg"
                 android:text="@string/selectStatus"
                 android:textColor="#2C3343"
                 android:textSize="15sp"
@@ -106,7 +106,6 @@
                 android:layout_height="60dp"
                 android:layout_alignParentEnd="true"
                 android:layout_marginEnd="90dp"
-                android:layout_marginStart="5dp"
                 android:contentDescription="@string/app_name"
                 android:padding="5dp"
                 android:src="@mipmap/new_call"
@@ -166,10 +165,10 @@
         </RelativeLayout>
     </android.support.v7.widget.CardView>
 
-    <View
+    <!--<View
         android:id="@+id/vieww"
         android:layout_width="match_parent"
         android:layout_height="2dp"
         android:layout_below="@+id/adapter_autokatta_contactCard_view"
-        android:background="@color/grey" />
+        android:background="@color/grey" />-->
 </RelativeLayout>
