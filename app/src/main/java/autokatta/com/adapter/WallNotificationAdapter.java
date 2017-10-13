@@ -4544,11 +4544,11 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                 SpannableStringBuilder sb11 = new SpannableStringBuilder();
 
                 mShareolder.mCaptionData.setText(notificationList.get(position).getShareSubData());
-                int sublayout = Integer.parseInt(notificationList.get(position).getSubLayout());
-                Log.i("oooo", "subId" + String.valueOf(sublayout));
-                Log.i("oooo", "subData" + notificationList.get(position).getShareSubData());
+                if (!notificationList.get(position).getSubLayout().equals("")) {
+                    int sublayout = Integer.parseInt(notificationList.get(position).getSubLayout());
+                }
 
-                switch (sublayout) {
+                /*switch (sublayout) {
                     case 1:
                         break;
 
@@ -4574,7 +4574,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                         break;
 
                 }
-                break;
+                break;*/
         }
     }
 
