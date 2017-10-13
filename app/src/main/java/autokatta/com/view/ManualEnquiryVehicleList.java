@@ -129,6 +129,7 @@ public class ManualEnquiryVehicleList extends AppCompatActivity implements Reque
                                 Log.i("used", "->" + mInventoryType);
                                 mItemList.add(success);
                             } else if (success.getInventoryType().equals("New Vehicle")) {
+                                //
                             } else if (success.getInventoryType().equals("Products")) {
                                 success.setId(success.getId());
                                 success.setProductName(success.getProductName());

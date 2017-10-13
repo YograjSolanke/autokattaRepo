@@ -1416,4 +1416,7 @@ public interface ServiceApi {
                                                      @Query("FullAddress") String FullAddress,
                                                      @Query("Description") String Description,
                                                      @Query("MyContact") String MyContact);
+
+    @POST("SendFCMNotificationWithContact")
+    Call<String> _sendFcmNotification(@Query("Contact") String contact);
 }

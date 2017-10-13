@@ -62,7 +62,6 @@ public class BackgroundService extends Service {
     public void onCreate() {
         super.onCreate();
         try {
-
             Uri uri = ContactsContract.CommonDataKinds.Phone.CONTENT_URI;
             String[] projection = new String[]{ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME,
                     ContactsContract.CommonDataKinds.Phone.NUMBER};
@@ -140,6 +139,7 @@ public class BackgroundService extends Service {
                         try {
                             getAutokattaContacts();
                             getEnquiryCount();
+                            sendFcmNotification();
                             Log.i("Background", "call webservice");
                         } catch (Exception e) {
                             Log.e("background", e.getMessage());
@@ -161,6 +161,35 @@ public class BackgroundService extends Service {
             e.printStackTrace();
         }
         stopSelf();
+    }
+
+    /*
+    Send FCM Notification
+     */
+    private void sendFcmNotification() {
+        try {
+            Retrofit mRetrofit = new Retrofit.Builder()
+                    .baseUrl(getApplicationContext().getString(R.string.base_url))
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .client(initLog().build())
+                    .build();
+            ServiceApi mServiceApi = mRetrofit.create(ServiceApi.class);
+            Call<String> mSendFcm = mServiceApi._sendFcmNotification(getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
+                    .getString("loginContact", ""));
+            mSendFcm.enqueue(new Callback<String>() {
+                @Override
+                public void onResponse(Call<String> call, Response<String> response) {
+                    Log.i("FCM", "send->" + response.body());
+                }
+
+                @Override
+                public void onFailure(Call<String> call, Throwable t) {
+                    t.printStackTrace();
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /*
