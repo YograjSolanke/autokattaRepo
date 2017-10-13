@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.media.ExifInterface;
+import android.util.Log;
 
 import java.io.IOException;
 import java.sql.Time;
@@ -287,6 +288,8 @@ public class GenericFunctions {
                 } else if (Integer.parseInt(partc[2]) - Integer.parseInt(partu[2]) < 0) {
                     flag1 = false;
                     System.out.println("daty checked invalid date ");
+                } else if (Integer.parseInt(partc[2]) - Integer.parseInt(partu[2]) == 0) {
+                    Log.i("Date", "Equal");
                 }
             }
 

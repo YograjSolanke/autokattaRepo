@@ -458,7 +458,11 @@ public class AddVehiclesForAuctionFragment extends Fragment implements RequestNo
                     startTime.setError("Enter start time");
                     startTime.requestFocus();
 
-                } else if (startDateUpdate.equals(dateString) && !genericFunctions.startTimeEndTimeValidation(time, startTimeUpdate)) {
+                }/* else if (startDateUpdate.equals(dateString) && !genericFunctions.startTimeEndTimeValidation(time, startTimeUpdate)) {
+                    startTime.setError("Time is invalid");
+                    startTime.requestFocus();
+
+                }*/ else if (genericFunctions.startDateEndDateValidation(startDateUpdate, dateString) && !genericFunctions.startTimeEndTimeValidation(time, startTimeUpdate)) {
                     startTime.setError("Time is invalid");
                     startTime.requestFocus();
 

@@ -668,19 +668,19 @@ public interface ServiceApi {
             , @Query("Keyword") String keyword, @Query("GroupID") int groupid);
 
     //Get Your Bid Response
-    @POST("UserYourBid")
+    @GET("UserYourBid")
     Call<YourBidResponse> getYourBid(@Query("AuctionID") int id, @Query("UserContact") String contact);
 
     //Get Out Bid Response
-    @POST("UserOutBid")
+    @GET("UserOutBid")
     Call<YourBidResponse> getOutBid(@Query("AuctionID") int id, @Query("UserContact") String contact);
 
     //Get Highest Bid Response
-    @POST("UserHighestBid")
+    @GET("UserHighestBid")
     Call<YourBidResponse> getHighestBid(@Query("AuctionID") int id, @Query("UserContact") String contact);
 
     //Get UserWatchedItems  Response
-    @POST("UserWatchedItems")
+    @GET("UserWatchedItems")
     Call<YourBidResponse> userWatchedItems(@Query("AuctionID") int id, @Query("UserContact") String contact);
 
     //send broadcast message
