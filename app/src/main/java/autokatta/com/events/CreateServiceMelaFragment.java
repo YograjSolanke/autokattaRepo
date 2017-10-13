@@ -24,6 +24,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.kaopiz.kprogresshud.KProgressHUD;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.net.SocketTimeoutException;
@@ -77,6 +79,7 @@ public class CreateServiceMelaFragment extends Fragment implements RequestNotifi
     String mediaPath = "", startDateTime = "";
     Uri selectedImage = null;
     Bitmap bitmap, bitmapRotate;
+    KProgressHUD hud;
 
 
     @Nullable
@@ -205,6 +208,12 @@ public class CreateServiceMelaFragment extends Fragment implements RequestNotifi
                     eventaddress.setError("Enter address");
                     eventaddress.requestFocus();
                 } else {
+
+                    hud = KProgressHUD.create(getActivity())
+                            .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                            .setLabel("Please wait")
+                            .setMaxProgress(100)
+                            .show();
                     //startDateTime=stdate+" "+sttime;
                     apiCall.createServiceMela(name, location, address, stdate, sttime, eddate, edtime, lastWord, details, myContact);
                     //uploadImage(mediaPath);
@@ -226,6 +235,7 @@ public class CreateServiceMelaFragment extends Fragment implements RequestNotifi
                 if (createResponse.getSuccess() != null) {
                     String id = createResponse.getSuccess().getServiceID().toString();
                     Log.i("ServiceMelaId", "->" + id);
+                    hud.dismiss();
                     CustomToast.customToast(getActivity(), "Service Mela Created Successfully");
                     if (!lastWord.equals(""))
                     uploadImage(mediaPath);

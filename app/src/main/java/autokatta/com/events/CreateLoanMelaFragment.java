@@ -24,6 +24,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.kaopiz.kprogresshud.KProgressHUD;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.net.SocketTimeoutException;
@@ -76,6 +78,7 @@ public class CreateLoanMelaFragment extends Fragment implements RequestNotifier,
     String mediaPath;
     Uri selectedImage = null;
     Bitmap bitmap, bitmapRotate;
+    KProgressHUD hud;
 
     public CreateLoanMelaFragment() {
         //empty constructor
@@ -202,6 +205,13 @@ public class CreateLoanMelaFragment extends Fragment implements RequestNotifier,
                     eventaddress.setError("Enter address");
                     eventaddress.requestFocus();
                 } else {
+
+
+                    hud = KProgressHUD.create(getActivity())
+                            .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                            .setLabel("Please wait")
+                            .setMaxProgress(100)
+                            .show();
                     apiCall.createLoanMela(name, location, address, stdate, sttime, eddate, edtime, lastWord, details, myContact);
                     //uploadImage(mediaPath);
                 }
@@ -222,6 +232,7 @@ public class CreateLoanMelaFragment extends Fragment implements RequestNotifier,
                 if (createResponse.getSuccess() != null) {
                     String id = createResponse.getSuccess().getLoanID().toString();
                     Log.i("Loanid", "->" + id);
+                    hud.dismiss();
                     CustomToast.customToast(getActivity(), "Loan Event Created Successfully");
                     if (!lastWord.equals(""))
                     uploadImage(mediaPath);

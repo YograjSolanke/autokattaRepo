@@ -11,6 +11,8 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.kaopiz.kprogresshud.KProgressHUD;
@@ -46,7 +48,7 @@ public class NewVehicleListActivity extends AppCompatActivity implements Request
     TextView mNoData;
     String myContact;
     List<NewVehicleAllResponse.Success.NewVehicle> newVehicleList = new ArrayList<>();
-    int categoryId = 0, subCategoryId = 0, brandId = 0, modelId = 0;
+    int categoryId = 0, subCategoryId = 0, brandId = 0;
     Button mSelectStore;
     NewVehicleListAdapter mAdapter;
     ConnectionDetector mConnectionDetector;
@@ -56,6 +58,10 @@ public class NewVehicleListActivity extends AppCompatActivity implements Request
     private String[] storeIdArray = new String[0];
     private KProgressHUD hud;
     private String stringstoreids = "", stringstorename = "";
+    int store_id = 0;
+    String callFrom = "";
+    CheckBox selectAll;
+    // boolean flag=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +77,7 @@ public class NewVehicleListActivity extends AppCompatActivity implements Request
                 mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);
                 mRecyclerView = (RecyclerView) findViewById(R.id.newVehicleResultRecycler);
                 mSelectStore = (Button) findViewById(R.id.selectStore);
+                selectAll = (CheckBox) findViewById(R.id.selectAllCheck);
                 mNoData = (TextView) findViewById(R.id.no_category);
                 mNoData.setVisibility(View.GONE);
 
@@ -78,7 +85,9 @@ public class NewVehicleListActivity extends AppCompatActivity implements Request
                     categoryId = getIntent().getExtras().getInt("categoryId");
                     subCategoryId = getIntent().getExtras().getInt("subCategoryId");
                     brandId = getIntent().getExtras().getInt("brandId");
-                    modelId = getIntent().getExtras().getInt("modelId");
+                    store_id = getIntent().getExtras().getInt("store_id");
+                    callFrom = getIntent().getExtras().getString("callFrom");
+
                 }
 
                 if (getSupportActionBar() != null) {
@@ -103,7 +112,7 @@ public class NewVehicleListActivity extends AppCompatActivity implements Request
                     @Override
                     public void run() {
                         mSwipeRefreshLayout.setRefreshing(true);
-                        getNewVehicleList(categoryId, subCategoryId, brandId, modelId);
+                        getNewVehicleList(categoryId, subCategoryId, brandId);
                     }
                 });
 
@@ -113,11 +122,29 @@ public class NewVehicleListActivity extends AppCompatActivity implements Request
         mConnectionDetector = new ConnectionDetector(this);
 
 
+        selectAll.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b) {
+                    mAdapter = new NewVehicleListAdapter(NewVehicleListActivity.this, newVehicleList, mSelectStore, true, selectAll);
+                    mRecyclerView.setAdapter(mAdapter);
+                    mAdapter.notifyDataSetChanged();
+                } else {
+
+                    mAdapter = new NewVehicleListAdapter(NewVehicleListActivity.this, newVehicleList, mSelectStore, false, selectAll);
+                    mRecyclerView.setAdapter(mAdapter);
+                    mAdapter.notifyDataSetChanged();
+                }
+            }
+        });
+
+
+
         mSelectStore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 List<String> getVehicleIdList = mAdapter.getVehicleIds();
-
+                System.out.println("Sizeeeeeeeeee=" + getVehicleIdList.size());
                 String VehicleIds = "";
                 if (!(getVehicleIdList.size() == 0)) {
                     for (int i = 0; i < getVehicleIdList.size(); i++) {
@@ -133,24 +160,26 @@ public class NewVehicleListActivity extends AppCompatActivity implements Request
                 Log.i("vehicleIds", VehicleIds);
                 if (VehicleIds.equals("")) {
                     CustomToast.customToast(getApplicationContext(), "Please select vehicles");
+                } else if (callFrom.equals("StoreViewActivity")) {
+                    newVehicleStoreAsso(String.valueOf(store_id), VehicleIds);
                 } else {
                     getStores(VehicleIds);
                 }
+
             }
         });
 
     }
 
 
-    private void getNewVehicleList(int categoryId, int subCategoryId, int brandId,
-                                   int modelId) {
+    private void getNewVehicleList(int categoryId, int subCategoryId, int brandId) {
         ApiCall mApiCall = new ApiCall(this, this);
         mApiCall.getNewVehicleList(categoryId, subCategoryId, brandId);
     }
 
     @Override
     public void onRefresh() {
-        getNewVehicleList(categoryId, subCategoryId, brandId, modelId);
+        getNewVehicleList(categoryId, subCategoryId, brandId);
     }
 
     /*
@@ -365,21 +394,24 @@ public class NewVehicleListActivity extends AppCompatActivity implements Request
 
                     }
 
-                    mAdapter = new NewVehicleListAdapter(this, newVehicleList, mSelectStore);
+                    mAdapter = new NewVehicleListAdapter(this, newVehicleList, mSelectStore, false, selectAll);
                     mRecyclerView.setAdapter(mAdapter);
                     mAdapter.notifyDataSetChanged();
                 } else {
                     mSwipeRefreshLayout.setRefreshing(false);
                     mNoData.setVisibility(View.VISIBLE);
+                    selectAll.setVisibility(View.GONE);
                 }
             } else {
                 mSwipeRefreshLayout.setRefreshing(false);
                 mNoData.setVisibility(View.VISIBLE);
+                selectAll.setVisibility(View.GONE);
                 CustomToast.customToast(getApplicationContext(), getApplicationContext().getString(R.string.no_response));
             }
         } else {
             mSwipeRefreshLayout.setRefreshing(false);
             mNoData.setVisibility(View.VISIBLE);
+            selectAll.setVisibility(View.GONE);
             CustomToast.customToast(getApplicationContext(), getApplicationContext().getString(R.string.no_internet));
         }
     }
@@ -387,6 +419,7 @@ public class NewVehicleListActivity extends AppCompatActivity implements Request
     @Override
     public void notifyError(Throwable error) {
         mSwipeRefreshLayout.setRefreshing(false);
+        selectAll.setVisibility(View.GONE);
         mNoData.setVisibility(View.VISIBLE);
         if (error instanceof SocketTimeoutException) {
             CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));

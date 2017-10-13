@@ -24,7 +24,6 @@ import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.GetVehicleBrandResponse;
 import autokatta.com.response.GetVehicleListResponse;
-import autokatta.com.response.GetVehicleModelResponse;
 import autokatta.com.response.GetVehicleSubTypeResponse;
 import retrofit2.Response;
 
@@ -32,9 +31,11 @@ public class AddNewVehicleActivity extends AppCompatActivity implements RequestN
 
     String myContact = "", subCategory;
     ApiCall mApiCall;
-    Spinner brandSpinner, modelSpinner, categorySpinner, subcategorySpinner;
-    int vehicle_id = 0, position_sub_cat_id = 0, position_brand_id = 0, position_model_id;
+    Spinner brandSpinner, categorySpinner, subcategorySpinner;
+    int vehicle_id = 0, position_sub_cat_id = 0, position_brand_id = 0;
     Button btnSearch;
+    int store_id = 0;
+    String callFrom = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,11 +54,24 @@ public class AddNewVehicleActivity extends AppCompatActivity implements RequestN
         categorySpinner = (Spinner) findViewById(R.id.allCategory1);
         subcategorySpinner = (Spinner) findViewById(R.id.subCategory);
         brandSpinner = (Spinner) findViewById(R.id.BrandEdit1);
-        modelSpinner = (Spinner) findViewById(R.id.ModelEdit1);
+
 
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
+
+
+                try {
+                    if (getIntent().getExtras() != null) {
+
+                        store_id = getIntent().getExtras().getInt("store_id");
+                        callFrom = getIntent().getExtras().getString("callFrom");
+
+
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 
                 if (getSupportActionBar() != null) {
                     getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -79,18 +93,18 @@ public class AddNewVehicleActivity extends AppCompatActivity implements RequestN
                     CustomToast.customToast(getApplicationContext(), "Please Select Sub Category");
                 } else if (position_brand_id == 0) {
                     CustomToast.customToast(getApplicationContext(), "Please Select Brand");
-                } else if (position_model_id == 0) {
-                    CustomToast.customToast(getApplicationContext(), "Please Select Model");
                 } else {
                     Bundle bundle = new Bundle();
                     bundle.putInt("categoryId", vehicle_id);
                     bundle.putInt("subCategoryId", position_sub_cat_id);
                     bundle.putInt("brandId", position_brand_id);
-                    bundle.putInt("modelId", position_model_id);
+                    bundle.putInt("store_id", store_id);
+                    bundle.putString("callFrom", callFrom);
 
                     Intent intent = new Intent(AddNewVehicleActivity.this, NewVehicleListActivity.class);
                     intent.putExtras(bundle);
                     startActivity(intent);
+                    finish();
                 }
             }
 
@@ -252,7 +266,7 @@ public class AddNewVehicleActivity extends AppCompatActivity implements RequestN
                             new ArrayAdapter<>(getApplicationContext(), R.layout.registration_spinner, brandData);
                     //  adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     brandSpinner.setAdapter(adapter);
-                    modelSpinner.setAdapter(null);
+                    // modelSpinner.setAdapter(null);
                     brandSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -273,48 +287,48 @@ public class AddNewVehicleActivity extends AppCompatActivity implements RequestN
                         }
                     });
                 }
-                //Vehicle modelSpinner
-                else if (response.body() instanceof GetVehicleModelResponse) {
-                    Log.e("GetVehicleModel", "->");
-                    List<String> mModelList = new ArrayList<>();
-                    final List<String> modelData = new ArrayList<>();
-                    final HashMap<String, Integer> mModelMap = new HashMap<>();
-
-                    mModelList.add("Select Model");
-                    GetVehicleModelResponse getVehicleModelResponse = (GetVehicleModelResponse) response.body();
-                    for (GetVehicleModelResponse.Success modelResponse : getVehicleModelResponse.getSuccess()) {
-                        modelResponse.setModelId(modelResponse.getModelId());
-                        modelResponse.setModelTitle(modelResponse.getModelTitle());
-                        mModelList.add(modelResponse.getModelTitle());
-                        mModelMap.put(modelResponse.getModelTitle(), modelResponse.getModelId());
-                    }
-                    //mModelList.add("other");
-                    modelData.addAll(mModelList);
-                    Log.i("ListModel", "->" + mModelList);
-                    ArrayAdapter<String> adapter =
-                            new ArrayAdapter<>(getApplicationContext(), R.layout.registration_spinner, modelData);
-                    modelSpinner.setAdapter(adapter);
-                    //versionSpinner.setAdapter(null);
-                    modelSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                        @Override
-                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                            if (position != 0) {
-                                position_model_id = mModelMap.get(modelData.get(position));
-                                String modelName = modelData.get(position);
-
-                                System.out.println("modelSpinner id is::" + position_model_id);
-                                System.out.println("modelSpinner name::" + modelName);
-
-                                //getVersion(vehicle_id, position_sub_cat_id, position_brand_id, position_model_id);
-                            }
-                        }
-
-                        @Override
-                        public void onNothingSelected(AdapterView<?> parent) {
-
-                        }
-                    });
-                }
+//                //Vehicle modelSpinner
+//                else if (response.body() instanceof GetVehicleModelResponse) {
+//                    Log.e("GetVehicleModel", "->");
+//                    List<String> mModelList = new ArrayList<>();
+//                    final List<String> modelData = new ArrayList<>();
+//                    final HashMap<String, Integer> mModelMap = new HashMap<>();
+//
+//                    mModelList.add("Select Model");
+//                    GetVehicleModelResponse getVehicleModelResponse = (GetVehicleModelResponse) response.body();
+//                    for (GetVehicleModelResponse.Success modelResponse : getVehicleModelResponse.getSuccess()) {
+//                        modelResponse.setModelId(modelResponse.getModelId());
+//                        modelResponse.setModelTitle(modelResponse.getModelTitle());
+//                        mModelList.add(modelResponse.getModelTitle());
+//                        mModelMap.put(modelResponse.getModelTitle(), modelResponse.getModelId());
+//                    }
+//                    //mModelList.add("other");
+//                    modelData.addAll(mModelList);
+//                    Log.i("ListModel", "->" + mModelList);
+//                    ArrayAdapter<String> adapter =
+//                            new ArrayAdapter<>(getApplicationContext(), R.layout.registration_spinner, modelData);
+//                    modelSpinner.setAdapter(adapter);
+//                    //versionSpinner.setAdapter(null);
+//                    modelSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//                        @Override
+//                        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                            if (position != 0) {
+//                                position_model_id = mModelMap.get(modelData.get(position));
+//                                String modelName = modelData.get(position);
+//
+//                                System.out.println("modelSpinner id is::" + position_model_id);
+//                                System.out.println("modelSpinner name::" + modelName);
+//
+//                                //getVersion(vehicle_id, position_sub_cat_id, position_brand_id, position_model_id);
+//                            }
+//                        }
+//
+//                        @Override
+//                        public void onNothingSelected(AdapterView<?> parent) {
+//
+//                        }
+//                    });
+//                }
 
                 /*//Vehicle Version
                 else if (response.body() instanceof GetVehicleVersionResponse) {

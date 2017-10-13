@@ -24,6 +24,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.kaopiz.kprogresshud.KProgressHUD;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.net.SocketTimeoutException;
@@ -76,6 +78,7 @@ public class CreateSaleMelaFragment extends Fragment implements RequestNotifier,
     String myContact;
     String mediaPath = "", startDateTime;
     Uri selectedImage = null;
+    KProgressHUD hud;
     Bitmap bitmap, bitmapRotate;
 
 
@@ -206,6 +209,12 @@ public class CreateSaleMelaFragment extends Fragment implements RequestNotifier,
                     eventaddress.requestFocus();
                 } else {
                     //startDateTime=stdate+" "+sttime;
+
+                    hud = KProgressHUD.create(getActivity())
+                            .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                            .setLabel("Please wait")
+                            .setMaxProgress(100)
+                            .show();
                     apiCall.createSaleMela(name, location, address, stdate, sttime, eddate, edtime, lastWord, details, myContact);
                     //uploadImage(mediaPath);
                 }
@@ -226,6 +235,7 @@ public class CreateSaleMelaFragment extends Fragment implements RequestNotifier,
                 if (createResponse.getSuccess() != null) {
                     String id = createResponse.getSuccess().getSaleID().toString();
                     Log.i("SaleMelaId", "->" + id);
+                    hud.dismiss();
                     CustomToast.customToast(getActivity(), "Sale Mela Created Successfully");
                     if (!lastWord.equals(""))
                     uploadImage(mediaPath);

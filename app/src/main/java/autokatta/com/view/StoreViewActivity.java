@@ -890,6 +890,12 @@ Call Intent...
                         }
                     } else if (strName.equals("Add New Vehicle")) {
                         //call to new Vehicle Upload
+                        Intent intent = new Intent(StoreViewActivity.this, AddNewVehicleActivity.class);
+                        bundle.putInt("store_id", store_id);
+                        bundle.putString("callFrom", "StoreViewActivity");
+                        intent.putExtras(bundle);
+                        startActivity(intent);
+
 
                     }
                 }

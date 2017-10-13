@@ -25,20 +25,28 @@ public class NewVehicleListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     private Activity mActivity;
     private List<NewVehicleAllResponse.Success.NewVehicle> mVehicleList = new ArrayList<>();
     private Button mSelectStore;
+    private CheckBox mSelectAllCheckBox;
     private List<Boolean> posABoolean;
     private List<String> mFinalVehiclelist;
+    private boolean mSelectAll;
 
     public NewVehicleListAdapter(Activity activity, List<NewVehicleAllResponse.Success.NewVehicle> VehicleList,
-                                 Button mSelectStore) {
+                                 Button mSelectStore, boolean mSelectAll, CheckBox mSelectAllCheckBox) {
         mActivity = activity;
         mVehicleList = VehicleList;
         this.mSelectStore = mSelectStore;
-
+        this.mSelectAll = mSelectAll;
+        this.mSelectAllCheckBox = mSelectAllCheckBox;
         posABoolean = new ArrayList<>(mVehicleList.size());
         mFinalVehiclelist = new ArrayList<>(mVehicleList.size());
 
         for (int i = 0; i < mVehicleList.size(); i++) {
-            posABoolean.add(false);
+            posABoolean.add(mSelectAll);
+
+            if (mSelectAll == true) {
+                mFinalVehiclelist.add(String.valueOf(mVehicleList.get(i).getNewVehicleID()));
+                mSelectStore.setVisibility(View.VISIBLE);
+            } else
             mFinalVehiclelist.add("0");
         }
     }
@@ -58,6 +66,8 @@ public class NewVehicleListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         mVehicleHolder.mBrand.setText(mVehicleList.get(position).getBrandName());
         mVehicleHolder.mModel.setText(mVehicleList.get(position).getModelName());
         mVehicleHolder.mVersion.setText(mVehicleList.get(position).getVersionName());
+        mVehicleHolder.mCheckBox.setChecked(mSelectAll);
+
 
         mVehicleHolder.mCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -69,6 +79,9 @@ public class NewVehicleListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 } else {
                     posABoolean.set(holder.getAdapterPosition(), false);
                     mFinalVehiclelist.set(holder.getAdapterPosition(), "0");
+
+//                    if(mSelectAllCheckBox.isChecked())
+//                        mSelectAllCheckBox.setChecked(false);
                 }
 
                 //For Button visible/gone
@@ -109,6 +122,8 @@ public class NewVehicleListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             mCheckBox = (CheckBox) itemView.findViewById(R.id.checkbox);
             mDetails = (Button) itemView.findViewById(R.id.vehibtndetails);
         }
+
+
     }
 
     public List<String> getVehicleIds() {

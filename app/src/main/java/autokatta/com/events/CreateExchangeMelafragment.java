@@ -24,6 +24,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.kaopiz.kprogresshud.KProgressHUD;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.net.SocketTimeoutException;
@@ -74,7 +76,7 @@ public class CreateExchangeMelafragment extends Fragment implements View.OnClick
     String mediaPath = "";
     Uri selectedImage = null;
     Bitmap bitmap, bitmapRotate;
-
+    KProgressHUD hud;
     public CreateExchangeMelafragment() {
         //empty constructor
     }
@@ -202,6 +204,13 @@ public class CreateExchangeMelafragment extends Fragment implements View.OnClick
                     eventaddress.setError("Enter address");
                     eventaddress.requestFocus();
                 } else {
+
+                    hud = KProgressHUD.create(getActivity())
+                            .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                            .setLabel("Please wait")
+                            .setMaxProgress(100)
+                            .show();
+
                     apiCall.createExchangeMela(name, location, address, stdate, sttime, eddate, edtime, lastWord, details, myContact);
 
                 }
@@ -221,6 +230,7 @@ public class CreateExchangeMelafragment extends Fragment implements View.OnClick
                 if (createResponse.getSuccess() != null) {
                     String id = createResponse.getSuccess().getExchangeID().toString();
                     Log.i("Exid", "->" + id);
+                    hud.dismiss();
                     CustomToast.customToast(getActivity(), "Exchange Event Created Successfully");
                     if (!lastWord.equals(""))
                     uploadImage(mediaPath);
