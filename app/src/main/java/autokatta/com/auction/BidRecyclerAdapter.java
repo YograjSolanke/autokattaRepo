@@ -119,19 +119,19 @@ class BidRecyclerAdapter extends RecyclerView.Adapter<BidRecyclerAdapter.MyViewH
         holder.mBrand.setText(mItemList.get(position).getBrand());
         holder.mModel.setText(mItemList.get(position).getModel());
         holder.mYear.setText(mItemList.get(position).getYear());
-        holder.mKms.setText(mItemList.get(position).getKmsRunning());
+        holder.mKms.setText(String.valueOf(mItemList.get(position).getKmsRunning()));
         holder.mRc.setText(mItemList.get(position).getRcAvailable());
         holder.mLocation.setText(mItemList.get(position).getLocationCity());
         holder.mRtoCity.setText(mItemList.get(position).getRtoCity());
         holder.mBidPrice.setText(mItemList.get(position).getCurrentBidPrice());
-        holder.mBidReceive.setText(mItemList.get(position).getBidReceivedPrice());
+        holder.mBidReceive.setText(String.valueOf(mItemList.get(position).getBidReceivedPrice()));
         holder.mStartPrice.setText(mItemList.get(position).getStartPrice());
         holder.mBidIncrement.setText(mActivity.getString(R.string.bid_increment));
 
         holder.mBidStatus.setVisibility(View.VISIBLE);
         holder.mBidStatus.setText(mActivity.getString(R.string.bid_status));
 
-        if (mItemList.get(position).getKmsRunning() != null || !mItemList.get(position).getKmsRunning().equals("")) {
+        if (mItemList.get(position).getKmsRunning() != 0) {
             holder.mKms.setText(mItemList.get(position).getKmsRunning() + " " + "Kms");
         } else {
             holder.mKms.setText(mItemList.get(position).getKmsRunning() + " " + "Hrs");
@@ -139,10 +139,8 @@ class BidRecyclerAdapter extends RecyclerView.Adapter<BidRecyclerAdapter.MyViewH
 
         if (openClose.equalsIgnoreCase("Open")) {
             holder.mBidReceive.setVisibility(View.VISIBLE);
-            if (mItemList.get(position).getBidReceivedPrice() != null || !mItemList.get(position).getBidReceivedPrice().isEmpty()
-                    || !mItemList.get(position).getBidReceivedPrice().equals("0") || !mItemList.get(position).getBidReceivedPrice().equals("null"))
-                holder.mBidReceive.setText("Bid received" + mActivity.getString(R.string.Rs)
-                        + mItemList.get(position).getBidReceivedPrice());
+            if (mItemList.get(position).getBidReceivedPrice() != 0)
+                holder.mBidReceive.setText("Bid received" + mActivity.getString(R.string.Rs) + mItemList.get(position).getBidReceivedPrice());
             else
                 holder.mBidReceive.setText(mActivity.getString(R.string.bid_received));
         } else

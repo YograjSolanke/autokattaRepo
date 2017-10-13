@@ -688,7 +688,7 @@ public interface ServiceApi {
     Call<String> broadCastGroupMessage(@Query("GroupID") String groupid, @Query("MsgText") String msgText, @Query("MsgImage") String lastword);
 
     @POST("AddMyBids")
-    Call<String> addMyBid(@Query("AuctionID") int auctionId, @Query("VehicleID") String vehicleID,
+    Call<String> addMyBid(@Query("AuctionID") int auctionId, @Query("VehicleID") int vehicleID,
                           @Query("BidAmount") String bidAmount, @Query("TabNo") String tabNo, @Query("MyContact") String contact);
 
 

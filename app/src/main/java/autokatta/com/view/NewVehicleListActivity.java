@@ -145,7 +145,7 @@ public class NewVehicleListActivity extends AppCompatActivity implements Request
     private void getNewVehicleList(int categoryId, int subCategoryId, int brandId,
                                    int modelId) {
         ApiCall mApiCall = new ApiCall(this, this);
-        mApiCall.getNewVehicleList(categoryId, subCategoryId, brandId, modelId);
+        mApiCall.getNewVehicleList(categoryId, subCategoryId, brandId);
     }
 
     @Override

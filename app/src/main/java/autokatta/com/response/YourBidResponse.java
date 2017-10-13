@@ -24,22 +24,29 @@ public class YourBidResponse {
 
     public class Success {
 
+        /*contact_no, category, sub_category, Version, year_of_registration, color,
+        * insurance_valid, insuranceDate, insurance_idv, emissionVersion, financeStatus, exchangeStatus,
+        * tax_paid_upto, permit_yesno, fitness_yesno, fual_type, seating_capacity, permit, fiananceExchange,
+        * (int)no_of_owners, bodyManufacturer, seatManufacturer, hypothication, engine_no, chassis_no, price,
+        * drive, transmission, body_type, boat_type, rv_type, application, tyre_condition, bus_type, air_condition,
+        * implements, finance_req, privacy, hp_capacity, JIB, Boon, (int)viewcount, (int)callcount, status, brakes,
+        * pump, steering, */
         @SerializedName("title")
         @Expose
         private String title;
-        @SerializedName("brand")
+        @SerializedName("manufacturer")
         @Expose
         private String brand;
         @SerializedName("model")
         @Expose
         private String model;
-        @SerializedName("year")
+        @SerializedName("year_of_manufacture")
         @Expose
         private String year;
-        @SerializedName("vehicleid")
+        @SerializedName("vehicle_id")
         @Expose
-        private String vehicleid;
-        @SerializedName("auctionid")
+        private int vehicleid;
+        @SerializedName("auctionid") //remaining
         @Expose
         private String auctionid;
         @SerializedName("image")
@@ -56,37 +63,37 @@ public class YourBidResponse {
         private String rcAvailable;
         @SerializedName("kms_running")
         @Expose
-        private String kmsRunning;
+        private int kmsRunning;
         @SerializedName("Hrs_running")
         @Expose
         private String hrsRunning;
         @SerializedName("invoice")
         @Expose
         private String invoice;
-        @SerializedName("reg_no")
+        @SerializedName("registration_number")
         @Expose
         private String regNo;
-        @SerializedName("startPrice")
+        @SerializedName("StartPrice")
         @Expose
         private String startPrice;
-        @SerializedName("reserve_price")
+        @SerializedName("ReservePrice")
         @Expose
         private String reservePrice;
         @SerializedName("lotNo")
         @Expose
         private String lotNo;
-        @SerializedName("CurrentBid_price")
+        @SerializedName("CurrentBid_price") //remaining
         @Expose
         private String currentBidPrice;
-        @SerializedName("date")
+        @SerializedName("date")   //remaining
         @Expose
         private String date;
-        @SerializedName("auctionBidId")
+        @SerializedName("auctionBidId")  //remaining
         @Expose
         private String auctionBidId;
         @SerializedName("BidReceived_price")
         @Expose
-        private String bidReceivedPrice;
+        private int bidReceivedPrice;
 
         public String getTitle() {
             return title;
@@ -120,11 +127,11 @@ public class YourBidResponse {
             this.year = year;
         }
 
-        public String getVehicleid() {
+        public int getVehicleid() {
             return vehicleid;
         }
 
-        public void setVehicleid(String vehicleid) {
+        public void setVehicleid(int vehicleid) {
             this.vehicleid = vehicleid;
         }
 
@@ -168,11 +175,11 @@ public class YourBidResponse {
             this.rcAvailable = rcAvailable;
         }
 
-        public String getKmsRunning() {
+        public int getKmsRunning() {
             return kmsRunning;
         }
 
-        public void setKmsRunning(String kmsRunning) {
+        public void setKmsRunning(int kmsRunning) {
             this.kmsRunning = kmsRunning;
         }
 
@@ -248,11 +255,11 @@ public class YourBidResponse {
             this.auctionBidId = auctionBidId;
         }
 
-        public String getBidReceivedPrice() {
+        public int getBidReceivedPrice() {
             return bidReceivedPrice;
         }
 
-        public void setBidReceivedPrice(String bidReceivedPrice) {
+        public void setBidReceivedPrice(int bidReceivedPrice) {
             this.bidReceivedPrice = bidReceivedPrice;
         }
 
