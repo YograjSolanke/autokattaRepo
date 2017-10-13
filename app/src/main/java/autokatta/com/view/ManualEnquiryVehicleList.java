@@ -287,18 +287,18 @@ public class ManualEnquiryVehicleList extends AppCompatActivity implements Reque
                     }
                 }
 
-                if (!callfrom.equalsIgnoreCase("uploadvehicle")) {
+                /*if (!callfrom.equalsIgnoreCase("uploadvehicle")) {*/
                     if (!addArray.equals("")) {
                         AddEnquiryData(custName, custContact, custAddress, custFullAddress, custInventoryType, custEnquiryStatus,
                                 discussion, nextFollowupDate, addArray);
                     } else {
-                        CustomToast.customToast(this, "Please Select Atleat One...");
+                        CustomToast.customToast(this, "Please Select Atleast One...");
                     }
-                }else {
+               /* }else {
                     CustomToast.customToast(getApplicationContext(),"Enquiry For Exchange Will Be Added");
                     getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("Ids_for_manual_enquiry", addArray).apply();
                     finish();
-                }
+                }*/
                 break;
         }
     }

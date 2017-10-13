@@ -264,7 +264,7 @@ public class PriceFragment extends Fragment implements RequestNotifier, View.OnC
                 }
 
                 uploadVehicle();
-                //AddEnquiryData();
+                //   AddEnquiryData();
                 break;
         }
 
@@ -297,7 +297,7 @@ public class PriceFragment extends Fragment implements RequestNotifier, View.OnC
     private void AddEnquiryData() {
         apiCall.addManualEnquiryData(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "")
                 , strExCustName, strExCustContact, strExCustAddress, strExFullAddress, strExInventoryType,
-                strExEnquiryStatus, strExDescription, strExNextFollowUpdate, strEnquiryVehiIds);//check if vehicle id or ids
+                strExEnquiryStatus, strExDescription, strExNextFollowUpdate, String.valueOf(vehicle_id));//check if vehicle id or ids
     }
 
     private void addvehicleexchangedata() {
@@ -417,8 +417,8 @@ public class PriceFragment extends Fragment implements RequestNotifier, View.OnC
                         if (strExchange.equalsIgnoreCase("yes"))
                         {
                             addvehicleexchangedata();
-                         //   AddEnquiryData();
-                            getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().remove("exchange").commit();
+                            //AddEnquiryData();
+                            // getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().remove("exchange").commit();
                         }
                     } else {
                         if (isAdded())

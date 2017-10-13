@@ -228,8 +228,6 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                         public void onClick(View v) {
                             String custInventoryType = "", custEnquiryStatus = "";
                             Boolean flag = false;
-
-
                             if (strPos != 0)
                                 custEnquiryStatus = excuststatus.getSelectedItem().toString();
 

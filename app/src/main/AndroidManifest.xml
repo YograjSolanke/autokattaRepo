@@ -850,6 +850,7 @@
             android:name=".view.AddNewVehicleActivity"
             android:label="@string/title_activity_add_new_vehicle"
             android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".my_inventory_container.TransferStock" />
     </application>
 
 </manifest>
