@@ -182,7 +182,6 @@
 
         <Spinner
             android:id="@+id/spinnerindustry"
-            style="@style/Widget.AppCompat.Spinner.Underlined"
             android:layout_width="match_parent"
             android:layout_height="35dp"
             android:layout_marginTop="10dp"
@@ -211,7 +210,6 @@
 
         <Spinner
             android:id="@+id/spinnerCategory"
-            style="@style/Widget.AppCompat.Spinner.Underlined"
             android:layout_width="match_parent"
             android:layout_height="35dp"
             android:layout_marginTop="10dp"
@@ -240,7 +238,6 @@
 
         <Spinner
             android:id="@+id/spinnerbrand"
-            style="@style/Widget.AppCompat.Spinner.Underlined"
             android:layout_width="match_parent"
             android:layout_height="35dp"
             android:layout_marginTop="10dp"
