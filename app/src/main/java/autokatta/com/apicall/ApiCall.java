@@ -8893,7 +8893,7 @@ get ExchangeMela Analytics Data
     }
 
     /*get new vehicles list*/
-    public void getNewVehicleList(int categoryId, int subCategoryId, int brandId, int modelId) {
+    public void getNewVehicleList(int categoryId, int subCategoryId, int brandId) {
 
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
@@ -8904,7 +8904,7 @@ get ExchangeMela Analytics Data
                         .build();
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<NewVehicleAllResponse> mCompareResponseCall = serviceApi._autokattaGetNewVehicleList(categoryId, subCategoryId, brandId, modelId);
+                Call<NewVehicleAllResponse> mCompareResponseCall = serviceApi._autokattaGetNewVehicleList(categoryId, subCategoryId, brandId);
                 mCompareResponseCall.enqueue(new Callback<NewVehicleAllResponse>() {
                     @Override
                     public void onResponse(Call<NewVehicleAllResponse> call, Response<NewVehicleAllResponse> response) {

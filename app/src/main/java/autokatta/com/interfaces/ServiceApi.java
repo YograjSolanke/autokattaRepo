@@ -1400,8 +1400,7 @@ public interface ServiceApi {
     @GET("GetNewVehicleDetails")
     Call<NewVehicleAllResponse> _autokattaGetNewVehicleList(@Query("CategoryID") int categoryId,
                                                             @Query("SubCategoryID") int subCategoryId,
-                                                            @Query("BrandID") int brandId,
-                                                            @Query("ModelID") int modelId);
+                                                            @Query("BrandID") int brandId);
 
     @POST("StoreNewVehicleAssociationData")
     Call<String> _autokattaNewVehicleStoreAssoc(@Query("StoreIDs") String storeIds,
