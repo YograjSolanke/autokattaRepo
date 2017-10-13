@@ -80,7 +80,6 @@ public class BussinessMsgSenders extends Fragment implements SwipeRefreshLayout.
         mRecyclerView = (RecyclerView) root.findViewById(R.id.recycler_viewmsglist);
         mSwipeRefreshLayout = (SwipeRefreshLayout) root.findViewById(R.id.swipeRefreshLayoutBussinessChatmsglist);
 
-
         Keyword = (TextView) root.findViewById(R.id.keyword);
         Title = (TextView) root.findViewById(R.id.settitle);
         Category = (TextView) root.findViewById(R.id.setcategory);
@@ -94,13 +93,11 @@ public class BussinessMsgSenders extends Fragment implements SwipeRefreshLayout.
         relPrice = (RelativeLayout) root.findViewById(R.id.relative5);
         MainRel = (RelativeLayout) root.findViewById(R.id.MainRel);
 
-
         mRecyclerView.setHasFixedSize(true);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
-        mLayoutManager.setReverseLayout(true);
-        mLayoutManager.setStackFromEnd(true);
+        //mLayoutManager.setReverseLayout(true);
+        //mLayoutManager.setStackFromEnd(true);
         mRecyclerView.setLayoutManager(mLayoutManager);
-
 
         //Set animation attribute to each item
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -116,7 +113,6 @@ public class BussinessMsgSenders extends Fragment implements SwipeRefreshLayout.
             @Override
             public void run() {
                 mSwipeRefreshLayout.setRefreshing(true);
-
                 try {
                     Bundle b = getArguments();
                     product_id = b.getInt("product_id");
@@ -182,7 +178,6 @@ public class BussinessMsgSenders extends Fragment implements SwipeRefreshLayout.
                             Image.setImageResource(R.drawable.logo);
                         }
                     }
-
                     mApiCall.getBroadcastReceivers(mContact, product_id, service_id, vehicle_id);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -198,14 +193,11 @@ public class BussinessMsgSenders extends Fragment implements SwipeRefreshLayout.
                     Intent intent = new Intent(getActivity(), VehicleDetails.class);
                     intent.putExtra("vehicle_id", vehicle_id);
                     getActivity().startActivity(intent);
-                }else
-                    if (bundle_keyword.equalsIgnoreCase("Products"))
-                    {
+                }else if (bundle_keyword.equalsIgnoreCase("Products")) {
                         Intent intent = new Intent(getActivity(), ProductViewActivity.class);
                         intent.putExtra("product_id", product_id);
                         getActivity().startActivity(intent);
-                    }else
-                    {
+                } else {
                         Intent intent3 = new Intent(getActivity(), ServiceViewActivity.class);
                         intent3.putExtra("service_id", service_id);
                         getActivity().startActivity(intent3);
@@ -222,7 +214,6 @@ public class BussinessMsgSenders extends Fragment implements SwipeRefreshLayout.
             product_id = b.getInt("product_id");
             service_id = b.getInt("service_id");
             vehicle_id = b.getInt("vehicle_id");
-
             mApiCall.getBroadcastReceivers(mContact, product_id, service_id, vehicle_id);
         } catch (Exception e) {
             e.printStackTrace();
@@ -244,7 +235,6 @@ public class BussinessMsgSenders extends Fragment implements SwipeRefreshLayout.
                     msenders.setProfileImage(msenders.getProfileImage());
                     msenders.setLocation(msenders.getLocation());
 
-
                     try {
                         TimeZone utc = TimeZone.getTimeZone("etc/UTC");
                         //format of date coming from services
@@ -252,7 +242,6 @@ public class BussinessMsgSenders extends Fragment implements SwipeRefreshLayout.
                         /*DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",
                                 Locale.getDefault());*/
                         inputFormat.setTimeZone(utc);
-
                         //format of date which we want to show
                         DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy hh:mm a", Locale.getDefault());
                         /*DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy hh:mm aa",
@@ -267,7 +256,6 @@ public class BussinessMsgSenders extends Fragment implements SwipeRefreshLayout.
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-
                     mSuccesses.add(msenders);
                 }
                 mMsgReplyAdapter = new BussinessMsgSendersAdapter(getActivity(), mSuccesses, product_id, service_id, vehicle_id,bundle_keyword,bundle_title,bundle_price,bundle_category,bundle_brand,bundle_model,image);

@@ -37,8 +37,7 @@ public class BussinessChatTabs extends Fragment {
         tabLayout.setupWithViewPager(mviewPager);
 
         b1=getArguments();
-        if (b1 !=null && b1.containsKey("callfrom"))
-        {
+        if (b1 != null && b1.containsKey("callfrom")) {
             callfrom=b1.getString("callfrom");
             TabLayout.Tab tab = tabLayout.getTabAt(1);
             tab.select();
@@ -54,8 +53,8 @@ public class BussinessChatTabs extends Fragment {
 
     private void setupViewPager(ViewPager viewPager) {
         TabAdapterName tabAdapterName = new TabAdapterName(getChildFragmentManager());
-        tabAdapterName.addFragment(new BussinessChatFragment(), "Bussiness Chat");
-        tabAdapterName.addFragment(new VehicleOfferRecived(), "Offer Recived");
+        tabAdapterName.addFragment(new BussinessChatFragment(), "Business Chat");
+        tabAdapterName.addFragment(new VehicleOfferRecived(), "Offer Received");
         viewPager.setAdapter(tabAdapterName);
     }
 }

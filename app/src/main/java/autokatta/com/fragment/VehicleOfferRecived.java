@@ -52,7 +52,6 @@ public class VehicleOfferRecived extends Fragment implements RequestNotifier,Swi
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mMychat = inflater.inflate(R.layout.fragment_buissness_chat, container, false);
-
         return mMychat;
     }
 
@@ -60,16 +59,11 @@ public class VehicleOfferRecived extends Fragment implements RequestNotifier,Swi
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         mTestConnection = new ConnectionDetector(getActivity());
-
         mNoData = (TextView) mMychat.findViewById(R.id.no_category);
         //mNoData.setVisibility(View.GONE);
-
         mSwipeRefreshLayout = (SwipeRefreshLayout) mMychat.findViewById(R.id.swipeRefreshLayoutBussinessChat);
-
         mRecyclerView = (RecyclerView) mMychat.findViewById(R.id.recyclerBussinessChat);
-
         mRecyclerView.setHasFixedSize(true);
 
         LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(getActivity());
@@ -90,7 +84,6 @@ public class VehicleOfferRecived extends Fragment implements RequestNotifier,Swi
             @Override
             public void run() {
                 mSwipeRefreshLayout.setRefreshing(true);
-
                 getChatData(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""));
             }
         });
@@ -110,7 +103,6 @@ public class VehicleOfferRecived extends Fragment implements RequestNotifier,Swi
 
 
     private void getChatData(String loginContact) {
-
         if (mTestConnection.isConnectedToInternet()) {
             apiCall = new ApiCall(getActivity(), this);
             apiCall.getVehicleOfferRecived(loginContact);
@@ -125,7 +117,6 @@ public class VehicleOfferRecived extends Fragment implements RequestNotifier,Swi
             if (response.isSuccessful()) {
                 mSuccesses.clear();
                 mSwipeRefreshLayout.setRefreshing(false);
-
                 VehicleOfferRecivedResponse mVehicleOfferRecivedResponse = (VehicleOfferRecivedResponse) response.body();
                 if (mVehicleOfferRecivedResponse.getSuccess()!=null) {
                     mNoData.setVisibility(View.GONE);
@@ -138,7 +129,6 @@ public class VehicleOfferRecived extends Fragment implements RequestNotifier,Swi
                         success.setSubcategory(success.getSubcategory());
                         success.setManufacturer(success.getManufacturer());
                         success.setModel(success.getModel());
-
                         mSuccesses.add(success);
                     }
                     mVehicleOfferRecivedAdapter= new VehicleOfferRecivedAdapter(getActivity(), mSuccesses);
@@ -188,5 +178,4 @@ public class VehicleOfferRecived extends Fragment implements RequestNotifier,Swi
     public void onRefresh() {
         getChatData(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""));
     }
-
 }
