@@ -5,4 +5,8 @@
     android:layout_height="match_parent"
     tools:context="autokatta.com.my_inventory_container.TransferStock">
 
+    <ListView
+        android:id="@+id/transfer_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 </LinearLayout>
