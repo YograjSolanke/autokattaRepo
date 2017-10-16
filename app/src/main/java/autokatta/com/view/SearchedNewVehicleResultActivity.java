@@ -20,9 +20,11 @@ import android.widget.TextView;
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.util.List;
 
 import autokatta.com.R;
+import autokatta.com.adapter.SearchedNewVehicleResultAdapter;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.networkreceiver.ConnectionDetector;
@@ -35,13 +37,13 @@ public class SearchedNewVehicleResultActivity extends AppCompatActivity implemen
     SwipeRefreshLayout mSwipeRefreshLayout;
     RecyclerView mRecyclerView;
     ConnectionDetector mTestConnection;
-    LinearLayoutManager mLinearLayoutManager;
+    //LinearLayoutManager mLinearLayoutManager;
     TextView mNoData;
     ImageView filterData;
-    ApiCall apiCall;
     String myContact;
     int categoryId = 0, subCategoryId = 0, brandId = 0, modelId = 0, versionId = 0;
-    List<NewVehicleSearchResponse.Success> mSearchNewVehicleList;
+    List<NewVehicleSearchResponse.Success> mSearchNewVehicleList = new ArrayList<>();
+    SearchedNewVehicleResultAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,11 +56,16 @@ public class SearchedNewVehicleResultActivity extends AppCompatActivity implemen
         fab.setVisibility(View.GONE);
 
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);
+        mSwipeRefreshLayout.setOnRefreshListener(this);
         filterData = (ImageView) findViewById(R.id.filter);
+        filterData.setVisibility(View.GONE);
+
+        mNoData = (TextView) findViewById(R.id.no_category);
+        mNoData.setVisibility(View.GONE);
+
         mRecyclerView = (RecyclerView) findViewById(R.id.searchResultRecycler);
-        apiCall = new ApiCall(this, this);
         mTestConnection = new ConnectionDetector(this);
-        mLinearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        // mLinearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -78,7 +85,11 @@ public class SearchedNewVehicleResultActivity extends AppCompatActivity implemen
 
                 myContact = getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", null);
                 mRecyclerView.setHasFixedSize(true);
+                //mLinearLayoutManager.setStackFromEnd(true);
+                LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(SearchedNewVehicleResultActivity.this);
+                mLinearLayoutManager.setReverseLayout(true);
                 mLinearLayoutManager.setStackFromEnd(true);
+                mLinearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
                 mRecyclerView.setLayoutManager(mLinearLayoutManager);
                 mSwipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
                         android.R.color.holo_green_light,
@@ -154,6 +165,7 @@ public class SearchedNewVehicleResultActivity extends AppCompatActivity implemen
                 if (!vehicleSearchResponse.getSuccess().isEmpty()) {
                     mSearchNewVehicleList.clear();
                     mSwipeRefreshLayout.setRefreshing(false);
+                    mNoData.setVisibility(View.GONE);
 
                     for (NewVehicleSearchResponse.Success success : vehicleSearchResponse.getSuccess()) {
 
@@ -183,19 +195,24 @@ public class SearchedNewVehicleResultActivity extends AppCompatActivity implemen
 
                         mSearchNewVehicleList.add(success);
                     }
+                    mAdapter = new SearchedNewVehicleResultAdapter(this, mSearchNewVehicleList, myContact);
+                    mRecyclerView.setAdapter(mAdapter);
+                    mAdapter.notifyDataSetChanged();
                 } else {
                     mSwipeRefreshLayout.setRefreshing(false);
-                    //no data found
+                    mNoData.setVisibility(View.VISIBLE);
                 }
 
 
             } else {
                 mSwipeRefreshLayout.setRefreshing(false);
+                mNoData.setVisibility(View.VISIBLE);
                 CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
             }
 
         } else {
             mSwipeRefreshLayout.setRefreshing(false);
+            mNoData.setVisibility(View.VISIBLE);
             CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
         }
     }
@@ -203,6 +220,7 @@ public class SearchedNewVehicleResultActivity extends AppCompatActivity implemen
     @Override
     public void notifyError(Throwable error) {
         mSwipeRefreshLayout.setRefreshing(false);
+        mNoData.setVisibility(View.VISIBLE);
         if (error instanceof SocketTimeoutException) {
             CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
         } else if (error instanceof NullPointerException) {

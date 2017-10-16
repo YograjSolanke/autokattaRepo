@@ -1,0 +1,349 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/adapter_mystoreListCard_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="10dp"
+        card_view:cardCornerRadius="4dp"
+        card_view:contentPadding="5dp"
+        card_view:elevation="14dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:id="@+id/main_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:id="@+id/actionlinear"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/profile"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:contentDescription="@string/app_name" />
+
+                    <TextView
+                        android:id="@+id/rating_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/profile"
+                        android:background="@color/medium_sea_green"
+                        android:maxLength="4"
+                        android:text="4.0"
+                        android:textColor="@color/white"
+                        android:textStyle="bold"
+                        android:visibility="gone" />
+
+                    <RatingBar
+                        android:id="@+id/storerating"
+                        style="?android:attr/ratingBarStyleSmall"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/profile"
+                        android:layout_toEndOf="@+id/rating_count"
+                        android:numStars="5"
+                        android:stepSize="1.0"
+                        android:theme="@style/RatingBar" />
+
+                    <TextView
+                        android:id="@+id/textlike"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/storerating"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginEnd="5dp"
+                        android:gravity="center"
+                        android:text="@string/likes" />
+
+                    <TextView
+                        android:id="@+id/textfollow"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/textlike"
+                        android:layout_gravity="center_vertical"
+                        android:gravity="center"
+                        android:text="@string/follower"
+                        android:textColor="#808080" />
+
+                    <TextView
+                        android:id="@+id/unfollow"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginEnd="10dp"
+                        android:gravity="center"
+                        android:text="@string/unfollow"
+                        android:visibility="gone" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/item_padding"
+                    android:layout_toEndOf="@+id/actionlinear">
+
+                    <TextView
+                        android:id="@+id/editstname"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginStart="@dimen/layout_top"
+                        android:layout_toStartOf="@+id/storedelete"
+                        android:fontFamily="sans-serif"
+                        android:text="@string/store_name"
+                        android:textSize="@dimen/article_subheading"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/storetype"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/editstname"
+                        android:fontFamily="sans-serif"
+                        android:text="@string/store_type"
+                        android:visibility="gone" />
+
+                    <TextView
+                        android:id="@+id/autolocation"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_below="@+id/storetype"
+                        android:layout_toStartOf="@+id/storedelete"
+                        android:drawableStart="@mipmap/map"
+                        android:fontFamily="sans-serif"
+                        android:gravity="start"
+                        android:text="@string/location" />
+
+                    <TextView
+                        android:id="@+id/editwebsite"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/autolocation"
+                        android:layout_toStartOf="@+id/storeShare"
+                        android:drawableStart="@mipmap/web"
+                        android:fontFamily="sans-serif"
+                        android:gravity="start"
+                        android:text="@string/website" />
+
+                    <TextView
+                        android:id="@+id/edittiming"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/editwebsite"
+                        android:drawableStart="@mipmap/ic_timer"
+                        android:fontFamily="sans-serif"
+                        android:gravity="start"
+                        android:text="@string/timing" />
+
+                    <TextView
+                        android:id="@+id/storeservices"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/edittiming"
+                        android:drawableStart="@mipmap/ic_wrench"
+                        android:fontFamily="sans-serif"
+                        android:gravity="start"
+                        android:text="@string/store_services"
+                        android:visibility="gone" />
+
+                    <TextView
+                        android:id="@+id/editworkingdays"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/storeservices"
+                        android:drawableStart="@mipmap/ic_calendar_small"
+                        android:fontFamily="sans-serif"
+                        android:gravity="start"
+                        android:text="@string/working_day" />
+
+                    <TextView
+                        android:id="@+id/servicesOffered"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/editworkingdays"
+                        android:drawableStart="@mipmap/ic_wrench"
+                        android:text="@string/services_offered" />
+
+                    <ImageView
+                        android:id="@+id/storedelete"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginEnd="5dp"
+                        android:contentDescription="@string/app_name"
+                        android:src="@mipmap/ic_delete" />
+
+                    <ImageView
+                        android:id="@+id/storeShare"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_below="@+id/storedelete"
+                        android:layout_marginEnd="5dp"
+                        android:contentDescription="@string/app_name"
+                        android:src="@mipmap/new_share" />
+
+                </RelativeLayout>
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/action_buttons"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/main_view"
+                android:layout_marginTop="@dimen/margin_small"
+                android:baselineAligned="false"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:visibility="gone"
+                android:weightSum="4">
+
+                <LinearLayout
+                    android:id="@+id/linearlike"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:visibility="visible">
+
+                    <ImageView
+                        android:id="@+id/likeimg"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/ic_thumb_unlike" />
+
+                    <TextView
+                        android:id="@+id/liketxt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="@string/likes"
+                        android:textColor="#808080"
+                        android:textSize="17sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linearunlike"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:visibility="gone">
+
+                    <ImageView
+                        android:id="@+id/unlike"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/ic_thumb_like" />
+
+                    <TextView
+                        android:id="@+id/unlikeimg"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="@string/likes"
+                        android:textColor="@color/text_color"
+                        android:textSize="17sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linearshare"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:visibility="visible">
+
+                    <TextView
+                        android:id="@+id/share_clk"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawablePadding="1dp"
+                        android:drawableStart="@mipmap/ic_share"
+                        android:gravity="center"
+                        android:text="@string/share" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linearshare1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:visibility="visible">
+
+                    <TextView
+                        android:id="@+id/autokatta_share_clk"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawablePadding="1dp"
+                        android:drawableStart="@drawable/autoshare"
+                        android:gravity="center"
+                        android:text="@string/share" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linearfollow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:visibility="visible">
+
+                    <TextView
+                        android:id="@+id/follow_clk"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawablePadding="1dp"
+                        android:drawableStart="@drawable/followicon"
+                        android:gravity="center"
+                        android:text="@string/follow" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linearunfollow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:id="@+id/unfollow_clk"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawablePadding="1dp"
+                        android:drawableStart="@drawable/followicon"
+                        android:gravity="center"
+                        android:text="@string/follower"
+                        android:textColor="@color/text_color" />
+                </LinearLayout>
+            </LinearLayout>
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+</RelativeLayout>
