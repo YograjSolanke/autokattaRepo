@@ -1438,4 +1438,19 @@ public interface ServiceApi {
                                                                        @Query("VersionID") int versionId,
                                                                        @Query("MyContact") String myContact,
                                                                        @Query("Price") int i);
+    @GET("GetVehicleRepoInsurance")
+    Call<GetVehicleRepoInsuranceResponse> _autokattaGetVehiclesRepoInsurance(@Query("VehicleID") int VehicleID);
+
+    @GET("GetVehicleInventoryScrap")
+    Call<GetVehicleInventoryScrapResponse> _autokattaGetVehicleInventoryScrap(@Query("VehicleID") int VehicleID);
+
+    /*user category*/
+    @GET("GetUserCategory")
+    Call<GetUserCategoryResponse> _autokattausercategory();
+
+    /*add user category*/
+    @POST("AddUserCategory")
+    Call<String> addOtheruserCategory(@Query("Name") String Name);
+
+
 }

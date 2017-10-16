@@ -45,7 +45,7 @@ import autokatta.com.generic.GenericFunctions;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.BrandsTagResponse;
-import autokatta.com.response.CategoryResponse;
+import autokatta.com.response.GetUserCategoryResponse;
 import autokatta.com.response.IndustryResponse;
 import autokatta.com.view.LoginActivity;
 import retrofit2.Response;
@@ -144,7 +144,7 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
         dateOfBirth.setOnTouchListener(this);
         showDatePicker();
         address.setAdapter(new GooglePlacesAdapter(Registration.this, R.layout.simple));
-        apiCall.Categories("");
+        apiCall.getUserCategories();
         apiCall.Industries();
         apiCall.getBrandTags("both");
 
@@ -293,7 +293,7 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
                     confirmPassword.requestFocus();
                 } else if (sub_profession.equalsIgnoreCase("Other")) {
                     sub_profession = otherCategory.getText().toString().trim();
-                    apiCall.addOtherCategory(sub_profession);
+                    apiCall.addOtheruserCategory(sub_profession);
                 } else if (brand.equalsIgnoreCase("Other")) {
                     brand = otherbrand.getText().toString().trim();
                     apiCall.addOtherBrandTags(brand,"both");
@@ -454,13 +454,13 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
     public void notifySuccess(Response<?> response) {
         if (response != null) {
             if (response.isSuccessful()) {
-                if (response.body() instanceof CategoryResponse) {
-                    CategoryResponse moduleResponse = (CategoryResponse) response.body();
+                if (response.body() instanceof GetUserCategoryResponse) {
+                    GetUserCategoryResponse moduleResponse = (GetUserCategoryResponse) response.body();
                     final List<String> module = new ArrayList<>();
                     if (!moduleResponse.getSuccess().isEmpty()) {
                         module.add("Select Category");
-                        for (CategoryResponse.Success message : moduleResponse.getSuccess()) {
-                            module.add(message.getTitle());
+                        for (GetUserCategoryResponse.Success message : moduleResponse.getSuccess()) {
+                            module.add(message.getName());
                         }
                         module.add("Other");
                         MODULE = new String[module.size()];

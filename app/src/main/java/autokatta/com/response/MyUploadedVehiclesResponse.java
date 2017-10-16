@@ -107,6 +107,15 @@ public class MyUploadedVehiclesResponse {
         @Expose
         private String StockType;
 
+        @SerializedName("ChatCount")
+        @Expose
+
+        private String ChatCount;
+
+        @SerializedName("EnquiryCount")
+        @Expose
+        private String EnquiryCount;
+
 
         public int getVehicleId() {
             return vehicleId;
@@ -306,6 +315,22 @@ public class MyUploadedVehiclesResponse {
 
         public void setStockType(String stockType) {
             StockType = stockType;
+        }
+
+        public String getChatCount() {
+            return ChatCount;
+        }
+
+        public void setChatCount(String chatCount) {
+            ChatCount = chatCount;
+        }
+
+        public String getEnquiryCount() {
+            return EnquiryCount;
+        }
+
+        public void setEnquiryCount(String enquiryCount) {
+            EnquiryCount = enquiryCount;
         }
     }
 }

@@ -164,6 +164,8 @@ public class MyUploadedVehiclesFragment extends Fragment implements RequestNotif
                         myVehicleSuccess.setGroupIDs(myVehicleSuccess.getGroupIDs());
                         myVehicleSuccess.setStoreIDs(myVehicleSuccess.getStoreIDs());
                         myVehicleSuccess.setStockType(myVehicleSuccess.getStockType());
+                        myVehicleSuccess.setChatCount(myVehicleSuccess.getChatCount());
+                        myVehicleSuccess.setEnquiryCount(myVehicleSuccess.getEnquiryCount());
 
 
                         myUploadedVehiclesResponseList.add(myVehicleSuccess);

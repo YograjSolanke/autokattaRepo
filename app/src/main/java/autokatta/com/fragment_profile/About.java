@@ -44,10 +44,10 @@ import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.AddTags;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.BrandsTagResponse;
-import autokatta.com.response.CategoryResponse;
 import autokatta.com.response.GetCompaniesResponse;
 import autokatta.com.response.GetDesignationResponse;
 import autokatta.com.response.GetSkillsResponse;
+import autokatta.com.response.GetUserCategoryResponse;
 import autokatta.com.response.IndustryResponse;
 import autokatta.com.response.ProfileAboutResponse;
 import co.mobiwise.materialintro.animation.MaterialIntroListener;
@@ -332,13 +332,13 @@ public class About extends Fragment implements RequestNotifier, MaterialIntroLis
                         brandSpinner.setAdapter(dataadapter);
                     } else
                         CustomToast.customToast(getActivity(), getString(R.string.no_response));
-                } else if (response.body() instanceof CategoryResponse) {
-                    CategoryResponse moduleResponse = (CategoryResponse) response.body();
+                } else if (response.body() instanceof GetUserCategoryResponse) {
+                    GetUserCategoryResponse moduleResponse = (GetUserCategoryResponse) response.body();
                     final List<String> Category = new ArrayList<>();
                     if (!moduleResponse.getSuccess().isEmpty()) {
                         Category.add("Select Category");
-                        for (CategoryResponse.Success message : moduleResponse.getSuccess()) {
-                            Category.add(message.getTitle());
+                        for (GetUserCategoryResponse.Success message : moduleResponse.getSuccess()) {
+                            Category.add(message.getName());
                         }
                         Category.add("Other");
                         MODULE = new String[Category.size()];
@@ -420,7 +420,7 @@ public class About extends Fragment implements RequestNotifier, MaterialIntroLis
                 mApiCall.getSkills();
                 mApiCall.getDesignation();
                 mApiCall.getCompany();
-                mApiCall.Categories("");
+                mApiCall.getUserCategories();
                 _hasLoadedOnce = true;
             }
         }
@@ -496,7 +496,7 @@ public class About extends Fragment implements RequestNotifier, MaterialIntroLis
                 mApiCall.getSkills();
                 mApiCall.getDesignation();
                 mApiCall.getCompany();
-                mApiCall.Categories("");
+                mApiCall.getUserCategories();
                 mApiCall.Industries();
                 mApiCall.getBrandTags("both");
         /*Get Designation,Skills,Company From web service*/
@@ -769,7 +769,7 @@ public class About extends Fragment implements RequestNotifier, MaterialIntroLis
                                 otherbrand.setError("Enter  Valid Brand");
                             } else if (subProfession.equalsIgnoreCase("Other")) {
                                 subProfession = otherCategory.getText().toString().trim();
-                                mApiCall.addOtherCategory(subProfession);
+                                mApiCall.addOtheruserCategory(subProfession);
                             } else if (brand.equalsIgnoreCase("Other")) {
                                 brand = otherbrand.getText().toString().trim();
                                 mApiCall.addOtherBrandTags(brand,"both");
