@@ -1,6 +1,7 @@
 package autokatta.com.view;
 
 import android.app.ActivityOptions;
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -11,13 +12,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.DatePicker;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.io.IOException;
@@ -25,8 +29,10 @@ import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -51,8 +57,11 @@ public class ManualEnquiry extends AppCompatActivity implements SwipeRefreshLayo
     List<ManualEnquiryRequest> mMyGroupsList = new ArrayList<>();
     FrameLayout mFrameLayout;
     LinearLayout filterLayout;
+    RelativeLayout mRelStatus, mRelDate;
+    DatePickerDialog datePickerDialog;
     SharedPreferences sharedPreferences = null;
     SharedPreferences.Editor editor;
+    ManualEnquiryAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +72,7 @@ public class ManualEnquiry extends AppCompatActivity implements SwipeRefreshLayo
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
         setTitle("Enquiry's");
+        showDatePicker();
         startActivity(new Intent(getApplicationContext(), ManualAppIntro.class));
         sharedPreferences = getSharedPreferences(getString(R.string.firstRun), MODE_PRIVATE);
         runOnUiThread(new Runnable() {
@@ -73,11 +83,80 @@ public class ManualEnquiry extends AppCompatActivity implements SwipeRefreshLayo
                 //mPersonSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.person_swipeRefreshLayout);
 
                 mRecyclerView = (RecyclerView) findViewById(R.id.manual_recycler_view);
-
                 mFrameLayout = (FrameLayout) findViewById(R.id.manual_enquiry);
                 mRecyclerView.setHasFixedSize(true);
-
                 filterLayout = (LinearLayout) findViewById(R.id.below);
+                mRelStatus = (RelativeLayout) findViewById(R.id.rel_status);
+                mRelDate = (RelativeLayout) findViewById(R.id.rel_date);
+
+                mRelStatus.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        PopupMenu mPopupMenu = new PopupMenu(ManualEnquiry.this, v);
+                        mPopupMenu.getMenuInflater().inflate(R.menu.manual_status_filter, mPopupMenu.getMenu());
+                        mPopupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                            @Override
+                            public boolean onMenuItemClick(MenuItem item) {
+                                switch (item.getItemId()) {
+                                    case R.id.hot:
+                                        adapter.getFilter().filter("Hot");
+                                        break;
+                                    case R.id.cold:
+                                        adapter.getFilter().filter("Cold");
+                                        break;
+                                    case R.id.warm:
+                                        adapter.getFilter().filter("Warm");
+                                        break;
+                                    case R.id.dropped:
+                                        adapter.getFilter().filter("Dropped");
+                                        break;
+                                    case R.id.booked:
+                                        adapter.getFilter().filter("Booked");
+                                        break;
+                                    case R.id.delivered:
+                                        adapter.getFilter().filter("Delivered");
+                                        break;
+                                    case R.id.sold:
+                                        adapter.getFilter().filter("Sold");
+                                        break;
+                                    case R.id.lost_to_competition:
+                                        adapter.getFilter().filter("Lost to competition");
+                                        break;
+                                    case R.id.postponed:
+                                        adapter.getFilter().filter("Postponed");
+                                        break;
+                                    case R.id.fi:
+                                        adapter.getFilter().filter("FI");
+                                        break;
+                                    case R.id.file_login:
+                                        adapter.getFilter().filter("File Login");
+                                        break;
+                                    case R.id.approved:
+                                        adapter.getFilter().filter("Approved");
+                                        break;
+                                    case R.id.disbursed:
+                                        adapter.getFilter().filter("Disbursed");
+                                        break;
+                                    case R.id.file_rejected:
+                                        adapter.getFilter().filter("File rejected");
+                                        break;
+                                    case R.id.pending:
+                                        adapter.getFilter().filter("Pending");
+                                        break;
+                                }
+                                return false;
+                            }
+                        });
+                        mPopupMenu.show();
+                    }
+                });
+
+                mRelDate.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        datePickerDialog.show();
+                    }
+                });
 
                 LinearLayoutManager mLinearLayout = new LinearLayoutManager(getApplicationContext());
                 mLinearLayout.setReverseLayout(true);
@@ -357,7 +436,7 @@ public class ManualEnquiry extends AppCompatActivity implements SwipeRefreshLayo
                             request.setServiceImage(imageSplit[0].substring(0, imageSplit[0].length()));
                             mMyGroupsList.add(request);
                         }
-                        ManualEnquiryAdapter adapter = new ManualEnquiryAdapter(ManualEnquiry.this, mMyGroupsList);
+                        adapter = new ManualEnquiryAdapter(ManualEnquiry.this, mMyGroupsList);
                         mRecyclerView.setAdapter(adapter);
                         adapter.setClickListener(this);
                         adapter.notifyDataSetChanged();
@@ -465,6 +544,186 @@ public class ManualEnquiry extends AppCompatActivity implements SwipeRefreshLayo
 
         Log.i("dsfasd", "->" + request.getVehicleInventory());
         Log.i("dsfaascssd", "->" + request.getVehicleId());
+    }
+
+    /*
+    Date picker...
+     */
+    private void showDatePicker() {
+        Calendar newCalendar = Calendar.getInstance();
+        datePickerDialog = new DatePickerDialog(ManualEnquiry.this, new DatePickerDialog.OnDateSetListener() {
+
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                Calendar newDate = Calendar.getInstance();
+                newDate.set(year, monthOfYear, dayOfMonth);
+                if (dayOfMonth < 10) {
+                    if ((monthOfYear + 1) < 11) {
+                        if ((monthOfYear + 1) == 10) {
+                            String abc = "0" + dayOfMonth + "-" + (monthOfYear + 1) + "-" + year;
+
+                            TimeZone utc = TimeZone.getTimeZone("etc/UTC");
+                            //format of date coming from services
+                            DateFormat inputFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+                        /*DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",
+                                Locale.getDefault());*/
+                            inputFormat.setTimeZone(utc);
+
+                            //format of date which we want to show
+                            DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
+                        /*DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy hh:mm aa",
+                                Locale.getDefault());*/
+                            outputFormat.setTimeZone(utc);
+
+                            Date date = null;
+                            try {
+                                date = inputFormat.parse(abc);
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
+                            //System.out.println("jjj"+date);
+                            String output = outputFormat.format(date);
+                            //System.out.println(mainList.get(i).getDate()+" jjj " + output);
+                            adapter.getFilter().filter(output);
+                        } else if (monthOfYear < 10) {
+                            String abc = "0" + dayOfMonth + "-0" + (monthOfYear + 1) + "-" + year;
+
+                            TimeZone utc = TimeZone.getTimeZone("etc/UTC");
+                            //format of date coming from services
+                            DateFormat inputFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+                        /*DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",
+                                Locale.getDefault());*/
+                            inputFormat.setTimeZone(utc);
+
+                            //format of date which we want to show
+                            DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
+                        /*DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy hh:mm aa",
+                                Locale.getDefault());*/
+                            outputFormat.setTimeZone(utc);
+
+                            Date date = null;
+                            try {
+                                date = inputFormat.parse(abc);
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
+                            //System.out.println("jjj"+date);
+                            String output = outputFormat.format(date);
+                            //System.out.println(mainList.get(i).getDate()+" jjj " + output);
+                            adapter.getFilter().filter(output);
+                        }
+                    } else {
+                        String abc = "0" + dayOfMonth + "-" + (monthOfYear + 1) + "-" + year;
+
+                        TimeZone utc = TimeZone.getTimeZone("etc/UTC");
+                        //format of date coming from services
+                        DateFormat inputFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+                        /*DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",
+                                Locale.getDefault());*/
+                        inputFormat.setTimeZone(utc);
+
+                        //format of date which we want to show
+                        DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
+                        /*DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy hh:mm aa",
+                                Locale.getDefault());*/
+                        outputFormat.setTimeZone(utc);
+
+                        Date date = null;
+                        try {
+                            date = inputFormat.parse(abc);
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                        //System.out.println("jjj"+date);
+                        String output = outputFormat.format(date);
+                        //System.out.println(mainList.get(i).getDate()+" jjj " + output);
+                        adapter.getFilter().filter(output);
+                    }
+                } else if (dayOfMonth >= 10) {
+                    if ((monthOfYear + 1) < 11) {
+                        if ((monthOfYear + 1) == 10) {
+                            String abc = dayOfMonth + "-" + (monthOfYear + 1) + "-" + year;
+
+                            TimeZone utc = TimeZone.getTimeZone("etc/UTC");
+                            //format of date coming from services
+                            DateFormat inputFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+                        /*DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",
+                                Locale.getDefault());*/
+                            inputFormat.setTimeZone(utc);
+
+                            //format of date which we want to show
+                            DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
+                        /*DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy hh:mm aa",
+                                Locale.getDefault());*/
+                            outputFormat.setTimeZone(utc);
+
+                            Date date = null;
+                            try {
+                                date = inputFormat.parse(abc);
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
+                            //System.out.println("jjj"+date);
+                            String output = outputFormat.format(date);
+                            //System.out.println(mainList.get(i).getDate()+" jjj " + output);
+                            adapter.getFilter().filter(output);
+                        } else if (monthOfYear < 10) {
+                            String abc = dayOfMonth + "-0" + (monthOfYear + 1) + "-" + year;
+
+                            TimeZone utc = TimeZone.getTimeZone("etc/UTC");
+                            //format of date coming from services
+                            DateFormat inputFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+                        /*DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",
+                                Locale.getDefault());*/
+                            inputFormat.setTimeZone(utc);
+
+                            //format of date which we want to show
+                            DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
+                        /*DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy hh:mm aa",
+                                Locale.getDefault());*/
+                            outputFormat.setTimeZone(utc);
+
+                            Date date = null;
+                            try {
+                                date = inputFormat.parse(abc);
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
+                            //System.out.println("jjj"+date);
+                            String output = outputFormat.format(date);
+                            //System.out.println(mainList.get(i).getDate()+" jjj " + output);
+                            adapter.getFilter().filter(output);
+                        }
+                    } else {
+                        String abc = dayOfMonth + "-" + (monthOfYear + 1) + "-" + year;
+
+                        TimeZone utc = TimeZone.getTimeZone("etc/UTC");
+                        //format of date coming from services
+                        DateFormat inputFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+                        /*DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",
+                                Locale.getDefault());*/
+                        inputFormat.setTimeZone(utc);
+
+                        //format of date which we want to show
+                        DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
+                        /*DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy hh:mm aa",
+                                Locale.getDefault());*/
+                        outputFormat.setTimeZone(utc);
+
+                        Date date = null;
+                        try {
+                            date = inputFormat.parse(abc);
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                        //System.out.println("jjj"+date);
+                        String output = outputFormat.format(date);
+                        //System.out.println(mainList.get(i).getDate()+" jjj " + output);
+                        adapter.getFilter().filter(output);
+                    }
+                }
+            }
+
+        }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
     }
 
     /*@Override
