@@ -208,6 +208,12 @@ public class NewVehicleContainer extends AppCompatActivity implements RequestNot
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        getNewVehicleList(myContact);
+    }
+
+    @Override
     public void onBackPressed() {
         super.onBackPressed();
         finish();

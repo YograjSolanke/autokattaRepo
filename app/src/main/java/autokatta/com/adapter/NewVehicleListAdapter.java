@@ -1,6 +1,8 @@
 package autokatta.com.adapter;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +17,7 @@ import java.util.List;
 
 import autokatta.com.R;
 import autokatta.com.response.NewVehicleAllResponse;
+import autokatta.com.view.NewVehicleDetails;
 
 /**
  * Created by ak-003 on 11/10/17.
@@ -43,11 +46,11 @@ public class NewVehicleListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         for (int i = 0; i < mVehicleList.size(); i++) {
             posABoolean.add(mSelectAll);
 
-            if (mSelectAll == true) {
+            if (mSelectAll) {
                 mFinalVehiclelist.add(String.valueOf(mVehicleList.get(i).getNewVehicleID()));
                 mSelectStore.setVisibility(View.VISIBLE);
             } else
-            mFinalVehiclelist.add("0");
+                mFinalVehiclelist.add("0");
         }
     }
 
@@ -95,7 +98,11 @@ public class NewVehicleListAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         mVehicleHolder.mDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Bundle mBundle = new Bundle();
+                mBundle.putInt("newVehicleId", mVehicleList.get(mVehicleHolder.getAdapterPosition()).getNewVehicleID());
+                Intent mIntent = new Intent(mActivity, NewVehicleDetails.class);
+                mIntent.putExtras(mBundle);
+                mActivity.startActivity(mIntent);
             }
         });
     }

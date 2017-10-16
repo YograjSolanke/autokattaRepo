@@ -86,8 +86,10 @@ public class NewVehicleListActivity extends AppCompatActivity implements Request
                     subCategoryId = getIntent().getExtras().getInt("subCategoryId");
                     brandId = getIntent().getExtras().getInt("brandId");
                     store_id = getIntent().getExtras().getInt("store_id");
-                    callFrom = getIntent().getExtras().getString("callFrom");
-
+                    callFrom = getIntent().getExtras().getString("callFrom", "");
+                }
+                if (callFrom.equals("StoreViewActivity")) {
+                    mSelectStore.setText(getString(R.string.manual_add));
                 }
 
                 if (getSupportActionBar() != null) {
@@ -139,7 +141,6 @@ public class NewVehicleListActivity extends AppCompatActivity implements Request
         });
 
 
-
         mSelectStore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -159,7 +160,7 @@ public class NewVehicleListActivity extends AppCompatActivity implements Request
                 }
                 Log.i("vehicleIds", VehicleIds);
                 if (VehicleIds.equals("")) {
-                    CustomToast.customToast(getApplicationContext(), "Please select vehicles");
+                    CustomToast.customToast(getApplicationContext(), "Please select vehicles to add");
                 } else if (callFrom.equals("StoreViewActivity")) {
                     newVehicleStoreAsso(String.valueOf(store_id), VehicleIds);
                 } else {

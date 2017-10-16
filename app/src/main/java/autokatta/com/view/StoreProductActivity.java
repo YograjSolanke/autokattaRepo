@@ -124,10 +124,11 @@ public class StoreProductActivity extends AppCompatActivity implements SwipeRefr
     public void notifySuccess(Response<?> response) {
         if (response != null) {
             if (response.isSuccessful()) {
-                mSwipeRefreshLayout.setRefreshing(false);
-                productList = new ArrayList<>();
+
                 StoreInventoryResponse storeResponse = (StoreInventoryResponse) response.body();
                 if (!storeResponse.getSuccess().getProduct().isEmpty()) {
+                    mSwipeRefreshLayout.setRefreshing(false);
+                    productList = new ArrayList<>();
                     mNoData.setVisibility(View.GONE);
                     for (StoreInventoryResponse.Success.Product success : storeResponse.getSuccess().getProduct()) {
                         success.setProductId(success.getProductId());
@@ -159,9 +160,11 @@ public class StoreProductActivity extends AppCompatActivity implements SwipeRefr
             } else {
                 mSwipeRefreshLayout.setRefreshing(false);
                 //Toast.makeText(getActivity(), R.string._404, Toast.LENGTH_SHORT).show();
+                mNoData.setVisibility(View.VISIBLE);
             }
         } else {
             mSwipeRefreshLayout.setRefreshing(false);
+            mNoData.setVisibility(View.VISIBLE);
             Toast.makeText(getApplicationContext(), R.string.no_response, Toast.LENGTH_SHORT).show();
         }
     }
@@ -169,6 +172,7 @@ public class StoreProductActivity extends AppCompatActivity implements SwipeRefr
     @Override
     public void notifyError(Throwable error) {
         mSwipeRefreshLayout.setRefreshing(false);
+        mNoData.setVisibility(View.VISIBLE);
         if (error instanceof SocketTimeoutException) {
 
             CustomToast.customToast(getApplicationContext(), getString(R.string._404_));

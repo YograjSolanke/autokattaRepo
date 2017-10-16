@@ -21,11 +21,11 @@
         android:textStyle="bold" />
 
     <CheckBox
+        android:id="@+id/selectAllCheck"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Select All"
         android:layout_below="@+id/titleText"
-        android:id="@+id/selectAllCheck" />
+        android:text="Select All" />
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefreshLayout"
@@ -48,13 +48,13 @@
         android:id="@+id/selectStore"
         android:layout_width="wrap_content"
         android:layout_height="40dip"
-        android:layout_margin="5dp"
-        android:padding="5dp"
-        android:textAllCaps="false"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:text="@string/selectStore"
+        android:layout_margin="5dp"
         android:background="@drawable/buttonback"
+        android:padding="5dp"
+        android:text="@string/selectStore"
+        android:textAllCaps="false"
         android:textColor="#ffffff"
         android:visibility="gone" />
 

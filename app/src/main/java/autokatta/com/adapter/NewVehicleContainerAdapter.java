@@ -2,10 +2,14 @@ package autokatta.com.adapter;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.text.InputType;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -27,12 +31,14 @@ import java.util.concurrent.TimeUnit;
 
 import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
+import autokatta.com.generic.SetMyDateAndTime;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.interfaces.ServiceApi;
 import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.NewVehicleAllResponse;
 import autokatta.com.response.ProfileGroupResponse;
+import autokatta.com.view.NewVehicleDetails;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
@@ -211,6 +217,21 @@ public class NewVehicleContainerAdapter extends RecyclerView.Adapter<RecyclerVie
                             e.printStackTrace();
                         }
 
+                        titleText.setText("" + "Category " + mVehicleList.get(mVehicleHolder.getAdapterPosition()).getCategoryName());
+
+                        edtDate.setOnTouchListener(new View.OnTouchListener() {
+                            @Override
+                            public boolean onTouch(View v, MotionEvent event) {
+                                int action = event.getAction();
+                                if (action == MotionEvent.ACTION_DOWN) {
+                                    edtDate.setInputType(InputType.TYPE_NULL);
+                                    edtDate.setError(null);
+                                    new SetMyDateAndTime("date", edtDate, mActivity);
+                                }
+                                return false;
+                            }
+                        });
+
                         sendQuotation.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -240,6 +261,11 @@ public class NewVehicleContainerAdapter extends RecyclerView.Adapter<RecyclerVie
         mVehicleHolder.mDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Bundle mBundle = new Bundle();
+                mBundle.putInt("newVehicleId", mVehicleList.get(mVehicleHolder.getAdapterPosition()).getNewVehicleID());
+                Intent mIntent = new Intent(mActivity, NewVehicleDetails.class);
+                mIntent.putExtras(mBundle);
+                mActivity.startActivity(mIntent);
 
             }
         });
@@ -266,6 +292,7 @@ public class NewVehicleContainerAdapter extends RecyclerView.Adapter<RecyclerVie
             mVersion = (TextView) itemView.findViewById(R.id.editversion);
             mDetails = (Button) itemView.findViewById(R.id.vehibtndetails);
             mMoreItems = (ImageView) itemView.findViewById(R.id.more_items);
+            mMoreItems.setVisibility(View.GONE);
         }
     }
 
@@ -299,7 +326,7 @@ public class NewVehicleContainerAdapter extends RecyclerView.Adapter<RecyclerVie
             CustomToast.customToast(mActivity, mActivity.getString(R.string.no_internet));
         } else {
             Log.i("Check Class-"
-                    , "MyUploadedVehiclesAdapter");
+                    , "NewVehicleContainerAdapter");
             error.printStackTrace();
         }
 

@@ -9,8 +9,9 @@ import android.widget.TextView;
 import autokatta.com.R;
 
 public class NewVehicleDetails extends AppCompatActivity {
-TextView mPointLinkage,mAbs,mAirbags,mAirCleaner,mAirCondition,mAlternateFuelType,mAuxiliary,mBackUpTorque,mBodyOption;
-
+    TextView mPointLinkage, mAbs, mAirbags, mAirCleaner, mAirCondition, mAlternateFuelType, mAuxiliary,
+            mBackUpTorque, mBodyOption;
+    int newVehicleId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +23,7 @@ TextView mPointLinkage,mAbs,mAirbags,mAirCleaner,mAirCondition,mAlternateFuelTyp
             getSupportActionBar().setHomeButtonEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
+        newVehicleId = getIntent().getIntExtra("newVehicleId", 0);
        /* mPointLinkage = (TextView) findViewById(R.id.txtPointLinkage1);
         mAbs = (TextView) findViewById(R.id.ABS1);
         mAirbags = (TextView) findViewById(R.id.AirBags);
@@ -138,10 +140,7 @@ TextView mPointLinkage,mAbs,mAirbags,mAirCleaner,mAirCondition,mAlternateFuelTyp
         mEndDate = (TextView) findViewById(R.id.Description1);*/
 
 
-
-
     }
-
 
 
     @Override

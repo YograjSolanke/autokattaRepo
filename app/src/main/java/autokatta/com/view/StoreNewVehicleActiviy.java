@@ -1,7 +1,6 @@
 package autokatta.com.view;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,7 +9,6 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.net.ConnectException;
@@ -20,26 +18,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 import autokatta.com.R;
-import autokatta.com.adapter.StoreVehicleAdapter;
+import autokatta.com.adapter.StoreNewVehicleAdapter;
+import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.other.CustomToast;
-import autokatta.com.response.StoreInventoryResponse;
+import autokatta.com.response.NewVehicleAllResponse;
 import retrofit2.Response;
 
 public class StoreNewVehicleActiviy extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener, RequestNotifier {
 
-
-    String Sharedcontact, storeContact;
+    String myContact;
     SwipeRefreshLayout mSwipeRefreshLayout;
-    RelativeLayout filterToHide;
     RecyclerView mRecyclerView;
-    TextView titleText, mNoData;
-    List<StoreInventoryResponse.Success.Vehicle> vehicleList;
-    LinearLayoutManager mLayoutManager;
-    StoreVehicleAdapter adapter;
+    TextView mNoData;
+    List<NewVehicleAllResponse.Success.NewVehicle> newVehicleList = new ArrayList<>();
+    StoreNewVehicleAdapter adapter;
     int store_id;
-    boolean hasMoreView = false;
     ConnectionDetector mTestConnection;
 
 
@@ -50,18 +45,6 @@ public class StoreNewVehicleActiviy extends AppCompatActivity implements SwipeRe
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         mTestConnection = new ConnectionDetector(this);
-        mLayoutManager = new LinearLayoutManager(this);
-
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setVisibility(View.GONE);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
 
 
         if (getSupportActionBar() != null) {
@@ -72,23 +55,22 @@ public class StoreNewVehicleActiviy extends AppCompatActivity implements SwipeRe
             @Override
             public void run() {
 
-                Sharedcontact = getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "");
+                store_id = getIntent().getExtras().getInt("store_id", 0);
+                myContact = getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "");
                 mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);
                 mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-                filterToHide = (RelativeLayout) findViewById(R.id.rel);
-                filterToHide.setVisibility(View.GONE);
-                //titleText = (TextView) mVehicle.findViewById(R.id.titleText);
+
                 mNoData = (TextView) findViewById(R.id.no_category);
                 mNoData.setVisibility(View.GONE);
-                //titleText.setText("Vehicles");
+
                 mRecyclerView.setHasFixedSize(true);
-                mLayoutManager.setReverseLayout(true);
-                mLayoutManager.setStackFromEnd(true);
-                mRecyclerView.setLayoutManager(mLayoutManager);
-                if (getIntent().getExtras() != null) {
-                    store_id = getIntent().getExtras().getInt("store_id");
-                }
-                //getData();//Get Api...
+
+                LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(StoreNewVehicleActiviy.this);
+                mLinearLayoutManager.setReverseLayout(true);
+                mLinearLayoutManager.setStackFromEnd(true);
+                mLinearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+                mRecyclerView.setLayoutManager(mLinearLayoutManager);
+
                 mSwipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
                         android.R.color.holo_green_light,
                         android.R.color.holo_orange_light,
@@ -97,7 +79,7 @@ public class StoreNewVehicleActiviy extends AppCompatActivity implements SwipeRe
                     @Override
                     public void run() {
                         mSwipeRefreshLayout.setRefreshing(true);
-                        //getStoreVehicles(store_id, Sharedcontact);
+                        getStoreNewVehicles(store_id, myContact);
                     }
                 });
             }
@@ -108,8 +90,8 @@ public class StoreNewVehicleActiviy extends AppCompatActivity implements SwipeRe
 
     private void getStoreNewVehicles(int store_id, String sharedcontact) {
         if (mTestConnection.isConnectedToInternet()) {
-//            ApiCall apiCall = new ApiCall(this, this);
-//            apiCall.getStoreInventory(store_id, sharedcontact);
+            ApiCall apiCall = new ApiCall(this, this);
+            apiCall.getStoreNewVehiclesList(store_id);
         } else {
             mSwipeRefreshLayout.setRefreshing(false);
             mNoData.setVisibility(View.GONE);
@@ -119,8 +101,7 @@ public class StoreNewVehicleActiviy extends AppCompatActivity implements SwipeRe
 
     @Override
     public void onRefresh() {
-        vehicleList.clear();
-        getStoreNewVehicles(store_id, Sharedcontact);
+        getStoreNewVehicles(store_id, myContact);
     }
 
 
@@ -129,38 +110,50 @@ public class StoreNewVehicleActiviy extends AppCompatActivity implements SwipeRe
         if (response != null) {
             if (response.isSuccessful()) {
 
-                mSwipeRefreshLayout.setRefreshing(false);
-                vehicleList = new ArrayList<>();
-                mNoData.setVisibility(View.GONE);
-                StoreInventoryResponse storeResponse = (StoreInventoryResponse) response.body();
-                if (!storeResponse.getSuccess().getVehicle().isEmpty()) {
-                    for (StoreInventoryResponse.Success.Vehicle success : storeResponse.getSuccess().getVehicle()) {
-                        success.setVehicleId(success.getVehicleId());
-                        success.setTitle(success.getTitle());
-                        success.setPrice(success.getPrice());
-                        success.setCategory(success.getCategory());
-                        storeContact = success.getStorecontact();
-                        success.setModel(success.getModel());
-                        success.setManufacturer(success.getManufacturer());
-                        success.setBuyerLeads(success.getBuyerLeads());
+                NewVehicleAllResponse vehicleAllResponse = (NewVehicleAllResponse) response.body();
+                if (!vehicleAllResponse.getSuccess().getNewVehicle().isEmpty()) {
+                    mSwipeRefreshLayout.setRefreshing(false);
+                    newVehicleList.clear();
 
-                        if (success.getRegno().equals(""))
-                            success.setRegno("NA");
-                        else
-                            success.setRegno(success.getRegno());
-                        success.setYear(success.getYear());
-                        success.setLocation(success.getLocation());
-                        success.setRto(success.getRto());
-                        success.setKms(success.getKms());
-                        success.setImages(success.getImages());
-                        success.setDate(success.getDate().replaceAll("T", " "));
+                    for (NewVehicleAllResponse.Success.NewVehicle success : vehicleAllResponse.getSuccess().getNewVehicle()) {
 
-                        success.setGroupIDs(success.getGroupIDs());
-                        success.setStoreIDs(success.getStoreIDs());
+                        success.setNewVehicleID(success.getNewVehicleID());
+                        success.setCategoryID(success.getCategoryID());
+                        success.setSubCategoryID(success.getSubCategoryID());
+                        success.setBrandID(success.getBrandID());
+                        success.setModelID(success.getModelID());
+                        success.setVersionID(success.getVersionID());
+                        success.setCategoryName(success.getCategoryName());
+                        success.setSubCategoryName(success.getSubCategoryName());
+                        success.setBrandName(success.getBrandName());
+                        success.setModelName(success.getModelName());
+                        success.setVersionName(success.getVersionName());
 
-                        vehicleList.add(success);
+                        success.setThreePointLinkage((success.getThreePointLinkage() == null ||
+                                success.getThreePointLinkage().equalsIgnoreCase("null") ||
+                                success.getThreePointLinkage().equalsIgnoreCase("")) ? "NA" : success.getThreePointLinkage());
+
+                        success.setABS((success.getABS() == null ||
+                                success.getABS().equalsIgnoreCase("null") ||
+                                success.getABS().equalsIgnoreCase("")) ? "NA" : success.getABS());
+
+
+                        //success.setPrice((success.getPrice().equalsIgnoreCase("")) ? "NA" : success.getPrice());
+
+
+                            /*String vehicleImage = success.getImage();
+                            if (vehicleImage.contains(",")) {
+                                String[] items = vehicleImage.split(",");
+                                success.setImage(items[0]);
+                            } else {
+                                success.setImage(vehicleImage);
+                            }*/
+
+                        newVehicleList.add(success);
+
                     }
-                    adapter = new StoreVehicleAdapter(this, vehicleList, Sharedcontact, storeContact);
+
+                    adapter = new StoreNewVehicleAdapter(this, newVehicleList, myContact);
                     mRecyclerView.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
                 } else {
@@ -194,7 +187,7 @@ public class StoreNewVehicleActiviy extends AppCompatActivity implements SwipeRe
             CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
         } else {
             Log.i("Check Class-"
-                    , "StoreVehicles");
+                    , "StoreNewVehicleActivity");
             error.printStackTrace();
         }
     }

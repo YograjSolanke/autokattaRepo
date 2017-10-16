@@ -117,12 +117,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize"/>
-        <activity
-            android:name=".Registration.RegistrationActivity"
-            android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
-            android:label="@string/title_activity_registration"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize"/>
+
         <activity
             android:name=".view.BrowseStoreActivity"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
@@ -193,13 +188,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize"/>
-        <activity
-            android:name=".Registration.ContinueRegistration"
-            android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
-            android:label="@string/title_activity_continue_registration"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustResize"/>
+
         <activity
             android:name=".view.MyUpcomingEventsTabActivity"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
@@ -221,13 +210,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize"/>
-        <activity
-            android:name=".Registration.ContinueNextRegistration"
-            android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
-            android:label="Continue Next Registration"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustResize"/>
+
         <activity
             android:name=".view.MyEndedEventTabActivity"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
@@ -249,11 +232,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize"/>
-        <activity
-            android:name=".Registration.CompanyBasedRegistrationActivity"
-            android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize"/>
+
         <activity
             android:name=".view.OtherProfile"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
@@ -271,12 +250,7 @@
             android:name="io.fabric.ApiKey"
             android:value="0310abc2483857212f40bd7bad891e166bf94ec4"/>
 
-        <activity
-            android:name=".Registration.CompanyBasedInvitation"
-            android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
-            android:label="@string/company_based_invitation"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize"/>
+
         <activity
             android:name=".Registration.SkillsBasedInvitation"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
@@ -841,7 +815,9 @@
             android:label="@string/title_activity_upload_to_group_store"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".other.EnquiryActivity"/>
-        <activity android:name=".view.NewVehicleDetails"/>
+        <activity
+            android:name=".view.NewVehicleDetails"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".view.NewVehicleListActivity"
             android:label="@string/title_activity_new_vehicle_list"
