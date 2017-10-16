@@ -73,11 +73,11 @@ public class AllEnquiryTabFragment extends Fragment implements View.OnClickListe
                 break;
 
             case R.id.relTD:
-                Toast.makeText(getActivity(), "Comming Soon", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Coming Soon", Toast.LENGTH_SHORT).show();
                 break;
 
             case R.id.relND:
-                Toast.makeText(getActivity(), "Comming Soon", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Coming Soon", Toast.LENGTH_SHORT).show();
                 break;
 
             case R.id.relME:
@@ -85,9 +85,11 @@ public class AllEnquiryTabFragment extends Fragment implements View.OnClickListe
                 startActivity(new Intent(getActivity(), ManualEnquiry.class), options.toBundle());
                 break;
             case R.id.rel5:
-                Toast.makeText(getActivity(), "Comming Soon", Toast.LENGTH_SHORT).show();break;
+                Toast.makeText(getActivity(), "Coming Soon", Toast.LENGTH_SHORT).show();
+                break;
             case R.id.rel6:
-                Toast.makeText(getActivity(), "Comming Soon", Toast.LENGTH_SHORT).show(); break;
+                Toast.makeText(getActivity(), "Coming Soon", Toast.LENGTH_SHORT).show();
+                break;
         }
     }
 }

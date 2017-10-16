@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/hot"
+        android:title="Hot" />
+
+    <item
+        android:id="@+id/cold"
+        android:title="Cold" />
+
+    <item
+        android:id="@+id/warm"
+        android:title="Warm" />
+
+    <item
+        android:id="@+id/dropped"
+        android:title="Dropped" />
+
+    <item
+        android:id="@+id/booked"
+        android:title="Booked" />
+
+    <item
+        android:id="@+id/delivered"
+        android:title="Delivered" />
+
+    <item
+        android:id="@+id/sold"
+        android:title="Sold" />
+
+    <item
+        android:id="@+id/lost_to_competition"
+        android:title="Lost to competition" />
+
+    <item
+        android:id="@+id/postponed"
+        android:title="Postponed" />
+
+    <item
+        android:id="@+id/fi"
+        android:title="FI" />
+
+    <item
+        android:id="@+id/file_login"
+        android:title="File Login" />
+
+    <item
+        android:id="@+id/approved"
+        android:title="Approved" />
+
+    <item
+        android:id="@+id/disbursed"
+        android:title="Disbursed" />
+
+    <item
+        android:id="@+id/file_rejected"
+        android:title="File rejected" />
+
+    <item
+        android:id="@+id/pending"
+        android:title="Pending" />
+
+</menu>

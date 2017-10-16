@@ -18,7 +18,7 @@
             android:weightSum="2">
 
             <RelativeLayout
-                android:id="@+id/rel"
+                android:id="@+id/rel_status"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -39,13 +39,13 @@
                     android:layout_toEndOf="@+id/filterimg"
                     android:contentDescription="@string/app_name"
                     android:padding="5dp"
-                    android:text="Filter By Month"
+                    android:text="Filter By Status"
                     android:textStyle="bold" />
 
             </RelativeLayout>
 
             <RelativeLayout
-                android:id="@+id/rel1"
+                android:id="@+id/rel_date"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -66,7 +66,7 @@
                     android:layout_toEndOf="@+id/filterimgs"
                     android:contentDescription="@string/app_name"
                     android:padding="5dp"
-                    android:text="Filter By Name"
+                    android:text="Filter By Date"
                     android:textStyle="bold" />
 
             </RelativeLayout>
@@ -86,6 +86,20 @@
                 android:scrollbars="vertical" />
         </android.support.v4.widget.SwipeRefreshLayout>
 
-    </RelativeLayout>
+        <!--<LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+        <EditText
+            android:id="@+id/date_enter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:labelFor="@+id/date_enter"
+            android:visibility="visible"
+            android:inputType="date"/>
 
+        </LinearLayout>-->
+
+    </RelativeLayout>
 </FrameLayout>

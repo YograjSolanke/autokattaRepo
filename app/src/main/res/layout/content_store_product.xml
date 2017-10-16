@@ -10,10 +10,12 @@
 
     <RelativeLayout
         android:id="@+id/rel"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@color/white"
-        android:visibility="gone">
+        android:visibility="gone"
+        tools:layout_editor_absoluteY="0dp"
+        tools:layout_editor_absoluteX="8dp">
 
         <ImageView
             android:id="@+id/filterimg"
@@ -36,10 +38,11 @@
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefreshLayout"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/rel"
-        android:layout_marginTop="3dp">
+        tools:layout_editor_absoluteY="0dp"
+        tools:layout_editor_absoluteX="8dp">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler_view"
@@ -49,6 +52,11 @@
 
     </android.support.v4.widget.SwipeRefreshLayout>
 
-    <include layout="@layout/error_view" />
+    <include
+        layout="@layout/error_view"
+        android:layout_height="0dp"
+        android:layout_width="0dp"
+        tools:layout_editor_absoluteY="0dp"
+        tools:layout_editor_absoluteX="0dp" />
 
 </android.support.constraint.ConstraintLayout>

@@ -2,12 +2,16 @@ package autokatta.com.adapter;
 
 import android.app.Activity;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -23,15 +27,18 @@ import autokatta.com.request.ManualEnquiryRequest;
  * Created by ak-001 on 5/5/17.
  */
 
-public class ManualEnquiryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class ManualEnquiryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements Filterable {
 
     Activity mActivity;
     List<ManualEnquiryRequest> mItemList = new ArrayList<>();
+    private List<ManualEnquiryRequest> mFilterData = new ArrayList<>();
+    private CustomFilter filter;
     private ItemClickListener clickListener;
 
     public ManualEnquiryAdapter(Activity mActivity, List<ManualEnquiryRequest> mItemList) {
         this.mActivity = mActivity;
         this.mItemList = mItemList;
+        this.mFilterData = mItemList;
     }
 
     /*
@@ -174,6 +181,8 @@ public class ManualEnquiryAdapter extends RecyclerView.Adapter<RecyclerView.View
                 vehicleDetails.mFollowupdate.setText(mItemList.get(position).getFollowupDate());
                 vehicleDetails.mCreateDate.setText(mItemList.get(position).getCreatedDate());
 
+                Log.i("vehicle", "->" + mItemList.get(position).getFollowupDate());
+
                 if (mItemList.get(position).getEnquiryStatus().equalsIgnoreCase("Hot"))
                     vehicleDetails.mUsedRelative.setBackgroundResource(R.color.high_bid);
                 else if (mItemList.get(position).getEnquiryStatus().equalsIgnoreCase("Dropped"))
@@ -257,6 +266,56 @@ public class ManualEnquiryAdapter extends RecyclerView.Adapter<RecyclerView.View
                             .into(serviceDetails.mServicePic);
                 }
                 break;
+        }
+    }
+
+    @Override
+    public Filter getFilter() {
+        if (filter == null) {
+            filter = new CustomFilter();
+        }
+        return filter;
+    }
+
+    /***
+     * Filter Class
+     ***/
+    private class CustomFilter extends Filter {
+
+        @Override
+        protected FilterResults performFiltering(CharSequence charSequence) {
+            FilterResults results = new FilterResults();
+            try {
+                if (charSequence != null && charSequence.length() > 0) {
+                    List<ManualEnquiryRequest> filterResults = new ArrayList<>();
+                    for (ManualEnquiryRequest item : mFilterData) {
+                        if (item.getEnquiryStatus().toUpperCase().startsWith(charSequence.toString().toUpperCase())) {
+                            filterResults.add(item);
+                        } else if (item.getFollowupDate().toUpperCase().equals(charSequence.toString().toUpperCase())) {
+                            filterResults.add(item);
+                        }
+                    }
+                    results.count = filterResults.size();
+                    results.values = filterResults;
+                } else {
+                    results.values = mItemList;
+                    results.count = mItemList.size();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults filterResults) {
+            if (filterResults.count > 0) {
+                mItemList = (List<ManualEnquiryRequest>) filterResults.values;
+                ManualEnquiryAdapter.this.notifyDataSetChanged();
+            } else {
+                Toast.makeText(mActivity, "No record found", Toast.LENGTH_SHORT).show();
+                Log.i("Error", "->");
+            }
         }
     }
 
