@@ -9085,6 +9085,39 @@ get ExchangeMela Analytics Data
         }
     }
 
+    /*get new vehicle search result*/
+    public void getNewVehicleSearchResult(int categoryId, int subCategoryId, int brandId, int modelId,
+                                          int versionId, String myContact, int i) {
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<NewVehicleSearchResponse> mCompareResponseCall = serviceApi._autokattaGetNewVehicleSearchResult(categoryId,
+                        subCategoryId, brandId, modelId, versionId, myContact, i);
+
+                mCompareResponseCall.enqueue(new Callback<NewVehicleSearchResponse>() {
+                    @Override
+                    public void onResponse(Call<NewVehicleSearchResponse> call, Response<NewVehicleSearchResponse> response) {
+                        mNotifier.notifySuccess(response);
+                    }
+
+                    @Override
+                    public void onFailure(Call<NewVehicleSearchResponse> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+            } else
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     /***
      * Retrofit Logs
      ***/
@@ -9115,5 +9148,6 @@ get ExchangeMela Analytics Data
         httpClient.addInterceptor(logging).build();
         return httpClient;
     }
+
 
 }

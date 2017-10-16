@@ -1429,4 +1429,13 @@ public interface ServiceApi {
 
     @GET("GetNewVehicleDetailsForStore")
     Call<NewVehicleAllResponse> _autokattaGetStoreNewVehiclesList(@Query("StoreID") int store_id);
+
+    @POST("SearchNewVehicle")
+    Call<NewVehicleSearchResponse> _autokattaGetNewVehicleSearchResult(@Query("CategoryID") int categoryId,
+                                                                       @Query("SubCategoryID") int subCategoryId,
+                                                                       @Query("BrandID") int brandId,
+                                                                       @Query("ModelID") int modelId,
+                                                                       @Query("VersionID") int versionId,
+                                                                       @Query("MyContact") String myContact,
+                                                                       @Query("Price") int i);
 }

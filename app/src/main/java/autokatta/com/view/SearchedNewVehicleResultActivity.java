@@ -20,16 +20,17 @@ import android.widget.TextView;
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
+import java.util.List;
 
 import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.other.CustomToast;
+import autokatta.com.response.NewVehicleSearchResponse;
 import retrofit2.Response;
 
 public class SearchedNewVehicleResultActivity extends AppCompatActivity implements RequestNotifier, SwipeRefreshLayout.OnRefreshListener {
-
 
     SwipeRefreshLayout mSwipeRefreshLayout;
     RecyclerView mRecyclerView;
@@ -39,6 +40,8 @@ public class SearchedNewVehicleResultActivity extends AppCompatActivity implemen
     ImageView filterData;
     ApiCall apiCall;
     String myContact;
+    int categoryId = 0, subCategoryId = 0, brandId = 0, modelId = 0, versionId = 0;
+    List<NewVehicleSearchResponse.Success> mSearchNewVehicleList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +70,12 @@ public class SearchedNewVehicleResultActivity extends AppCompatActivity implemen
                     //getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
                 }
 
+                categoryId = getIntent().getIntExtra("categoryId", 0);
+                subCategoryId = getIntent().getIntExtra("subCategoryId", 0);
+                brandId = getIntent().getIntExtra("brandId", 0);
+                modelId = getIntent().getIntExtra("modelId", 0);
+                versionId = getIntent().getIntExtra("versionId", 0);
+
                 myContact = getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", null);
                 mRecyclerView.setHasFixedSize(true);
                 mLinearLayoutManager.setStackFromEnd(true);
@@ -79,7 +88,7 @@ public class SearchedNewVehicleResultActivity extends AppCompatActivity implemen
                     @Override
                     public void run() {
                         mSwipeRefreshLayout.setRefreshing(true);
-//                apiCall.MyStoreList(myContact);
+                        getNewVehicleSearchResult(categoryId, subCategoryId, brandId, modelId, versionId, myContact);
                     }
                 });
             }
@@ -125,17 +134,70 @@ public class SearchedNewVehicleResultActivity extends AppCompatActivity implemen
 
     }
 
+    private void getNewVehicleSearchResult(int categoryId, int subCategoryId, int brandId, int modelId,
+                                           int versionId, String myContact) {
+        ApiCall mApiCall = new ApiCall(this, this);
+        mApiCall.getNewVehicleSearchResult(categoryId, subCategoryId, brandId, modelId, versionId, myContact, 0);
+    }
+
     @Override
     public void onRefresh() {
-//        apiCall.MyStoreList(myContact);
-//        mRecyclerView.getRecycledViewPool().clear();
-//        adapter.notifyDataSetChanged();
+        getNewVehicleSearchResult(categoryId, subCategoryId, brandId, modelId, versionId, myContact);
     }
 
 
     @Override
     public void notifySuccess(Response<?> response) {
+        if (response != null) {
+            if (response.isSuccessful()) {
+                NewVehicleSearchResponse vehicleSearchResponse = (NewVehicleSearchResponse) response.body();
+                if (!vehicleSearchResponse.getSuccess().isEmpty()) {
+                    mSearchNewVehicleList.clear();
+                    mSwipeRefreshLayout.setRefreshing(false);
 
+                    for (NewVehicleSearchResponse.Success success : vehicleSearchResponse.getSuccess()) {
+
+                        success.setStoreID(success.getStoreID());
+                        success.setDescription(success.getDescription());
+                        success.setAddress(success.getAddress());
+                        success.setBrands(success.getBrands());
+                        success.setBrandTags(success.getBrandTags());
+                        success.setCategory(success.getCategory());
+                        success.setContactNo(success.getContactNo());
+                        success.setStoreImage(success.getStoreImage());
+                        success.setCoverImage(success.getCoverImage());
+                        success.setCreationDate(success.getCreationDate());
+                        success.setLocation(success.getLocation());
+                        success.setLatitude(success.getLatitude());
+                        success.setLongitude(success.getLongitude());
+                        success.setModifiedDate(success.getModifiedDate());
+                        success.setRating(success.getRating());
+                        success.setStatus(success.getStatus());
+                        success.setName(success.getName());
+                        success.setOpenTime(success.getOpenTime());
+                        success.setStoreType(success.getStoreType());
+                        success.setVehicleID(success.getVehicleID());
+                        success.setWebSite(success.getWebSite());
+                        success.setWorkingDays(success.getWorkingDays());
+                        success.setAverageRate(success.getAverageRate());
+
+                        mSearchNewVehicleList.add(success);
+                    }
+                } else {
+                    mSwipeRefreshLayout.setRefreshing(false);
+                    //no data found
+                }
+
+
+            } else {
+                mSwipeRefreshLayout.setRefreshing(false);
+                CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
+            }
+
+        } else {
+            mSwipeRefreshLayout.setRefreshing(false);
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
+        }
     }
 
     @Override

@@ -93,6 +93,12 @@ public class SearchNewVehicleActivity extends AppCompatActivity implements Reque
                 } else {
 
                     Bundle b = new Bundle();
+                    b.putInt("categoryId", vehicle_id);
+                    b.putInt("subCategoryId", sub_category_id);
+                    b.putInt("brandId", position_brand_id);
+                    b.putInt("modelId", position_model_id);
+                    b.putInt("versionId", position_version_id);
+
                     ActivityOptions options = ActivityOptions.makeCustomAnimation(SearchNewVehicleActivity.this, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
                     Intent intentnewvehicle = new Intent(SearchNewVehicleActivity.this, SearchedNewVehicleResultActivity.class);
                     intentnewvehicle.putExtras(b);
