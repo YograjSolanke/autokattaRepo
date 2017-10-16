@@ -145,7 +145,7 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
     @Override
     public View onCreateView(final LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable Bundle savedInstanceState) {
         mTitle = inflater.inflate(R.layout.fragment_upload_vehicle_title, container, false);
-        getActivity().setTitle("Upload Vehicle");
+        getActivity().setTitle("Category");
         scrollView1 = (ScrollView) mTitle.findViewById(R.id.scrollView1);
         title = (EditText) mTitle.findViewById(R.id.titleText1);
         mCategory = (TextView) mTitle.findViewById(R.id.categorytext1);
@@ -159,7 +159,7 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
         exchangeyes = (RadioButton) mTitle.findViewById(R.id.exchangeYes);
         exchangeno = (RadioButton) mTitle.findViewById(R.id.exchangeNo);
 
-        mExchangeradio= (RadioGroup) mTitle.findViewById(R.id.exchangeradio);
+        mExchangeradio = (RadioGroup) mTitle.findViewById(R.id.exchangeradio);
 
 /*Exchange vehicle customer info*/
         mExchangeradio.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -171,15 +171,15 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
 
                     final ImageView[] mClose = {(ImageView) view.findViewById(R.id.close)};
                     Button mAdd = (Button) view.findViewById(R.id.submit);
-                    final EditText excustomername= (EditText) view.findViewById(R.id.cust_name);
-                    final EditText excustcontact= (EditText) view.findViewById(R.id.cust_contact);
-                    final EditText excustdescription= (EditText) view.findViewById(R.id.exchange_description);
-                    final EditText excustdetailaddress= (EditText) view.findViewById(R.id.cust_detailaddress);
-                    final EditText excustfollowupdate= (EditText) view.findViewById(R.id.edtDate);
-                    final EditText excustfollowuptime= (EditText) view.findViewById(edtTime);
-                    final Spinner excuststatus= (Spinner) view.findViewById(R.id.status);
-                    final Spinner inventory= (Spinner) view.findViewById(R.id.inventory);
-                    final AutoCompleteTextView excustautoAddress= (AutoCompleteTextView) view.findViewById(R.id.cust_address);
+                    final EditText excustomername = (EditText) view.findViewById(R.id.cust_name);
+                    final EditText excustcontact = (EditText) view.findViewById(R.id.cust_contact);
+                    final EditText excustdescription = (EditText) view.findViewById(R.id.exchange_description);
+                    final EditText excustdetailaddress = (EditText) view.findViewById(R.id.cust_detailaddress);
+                    final EditText excustfollowupdate = (EditText) view.findViewById(R.id.edtDate);
+                    final EditText excustfollowuptime = (EditText) view.findViewById(edtTime);
+                    final Spinner excuststatus = (Spinner) view.findViewById(R.id.status);
+                    final Spinner inventory = (Spinner) view.findViewById(R.id.inventory);
+                    final AutoCompleteTextView excustautoAddress = (AutoCompleteTextView) view.findViewById(R.id.cust_address);
                     final int strPos = excuststatus.getSelectedItemPosition();
                     final int strPos1 = inventory.getSelectedItemPosition();
                     excustautoAddress.setAdapter(new GooglePlacesAdapter(getActivity(), R.layout.registration_spinner));
@@ -198,19 +198,19 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                         }
                     });
 
-                        excustfollowupdate.setOnTouchListener(new OnTouchListener() {
-                            @Override
-                            public boolean onTouch(View view, MotionEvent motionEvent) {
+                    excustfollowupdate.setOnTouchListener(new OnTouchListener() {
+                        @Override
+                        public boolean onTouch(View view, MotionEvent motionEvent) {
 
-                                if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-                                    excustfollowupdate.setInputType(InputType.TYPE_NULL);
-                                    excustfollowupdate.setError(null);
-                                    new SetMyDateAndTime("date", excustfollowupdate, getActivity());
+                            if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+                                excustfollowupdate.setInputType(InputType.TYPE_NULL);
+                                excustfollowupdate.setError(null);
+                                new SetMyDateAndTime("date", excustfollowupdate, getActivity());
 
-                                }
-                                return false;
                             }
-                        });
+                            return false;
+                        }
+                    });
 
                     excustfollowuptime.setOnTouchListener(new OnTouchListener() {
                         @Override
@@ -269,13 +269,13 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                             } else if (custFullAddress.equals("")) {
                                 excustdetailaddress.setError("Enter detailed address");
                                 excustdetailaddress.requestFocus();
-                            }  else if (discussion.equals("")) {
+                            } else if (discussion.equals("")) {
                                 excustdescription.setError("Enter discussion");
                                 excustdescription.requestFocus();
                             } else if (excuststatus.getSelectedItemPosition() == 0) {
                                 CustomToast.customToast(getActivity(), "Please provide status");
                                 excuststatus.requestFocus();
-                            }else if (inventory.getSelectedItemPosition() == 0) {
+                            } else if (inventory.getSelectedItemPosition() == 0) {
                                 CustomToast.customToast(getActivity(), "Please provide inventory Type");
                                 excuststatus.requestFocus();
                             } /*else if (discussion.equals("")) {

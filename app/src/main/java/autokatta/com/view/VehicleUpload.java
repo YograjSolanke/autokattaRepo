@@ -75,7 +75,6 @@ public class VehicleUpload extends AppCompatActivity implements RequestNotifier 
             if (getFragmentManager().getBackStackEntryCount() > 1) {
                 getFragmentManager().popBackStack();
             } else {
-                super.onBackPressed();
                 overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
             }
         }

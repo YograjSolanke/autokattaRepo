@@ -23,6 +23,7 @@ import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
+import autokatta.com.view.OtherProfile;
 import retrofit2.Response;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -65,6 +66,17 @@ public class AddTransferVehicle extends Fragment implements RequestNotifier, Vie
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
                 startActivityForResult(intent, REQUEST_CODE);
+            }
+        });
+
+        txtUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putString("contactOtherProfile", mContact.getText().toString());
+                Intent intent = new Intent(getActivity(), OtherProfile.class);
+                intent.putExtras(bundle);
+                startActivity(intent);
             }
         });
 

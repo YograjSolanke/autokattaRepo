@@ -1,20 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:id="@+id/popup_window"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:layout_gravity="bottom|center"
-              android:background="@android:color/white"
-              android:orientation="vertical"
-              android:padding="10dp">
-    <ImageView
+    android:id="@+id/popup_window"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <!--<ImageView
         android:id="@+id/close"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
         android:contentDescription="@string/app_name"
-        android:src="@android:drawable/ic_menu_close_clear_cancel"/>
-
+        android:src="@android:drawable/ic_menu_close_clear_cancel" />-->
 
     <EditText
         android:id="@+id/cust_name"
@@ -23,23 +21,62 @@
         android:hint="Customer Name"
         android:inputType="textPersonName"
         android:labelFor="@+id/transfer_date"
-        android:textAppearance="?android:attr/textAppearanceMedium"/>
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
-    <EditText
-        android:id="@+id/cust_contact"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="number"
-        android:hint="Customer contact"
-        android:maxLength="10"
-        android:textAppearance="?android:attr/textAppearanceMedium"/>
+        android:layout_marginTop="@dimen/layout_top"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/cust_contact"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Customer contact"
+            android:inputType="number"
+            android:maxLength="10"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true">
+
+            <ImageView
+                android:id="@+id/contact_list"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/app_name"
+                android:src="@drawable/ic_contact_phone_black_24dp"
+                android:visibility="visible" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/txtUser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/txtUser1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_check_black_24dp"
+            android:gravity="center"
+            android:text="@string/go_profile"
+            android:textColor="@color/zxing_custom_possible_result_points"
+            android:textStyle="bold" />
+    </LinearLayout>
 
     <AutoCompleteTextView
         android:id="@+id/cust_address"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Customer Address"
-        android:textAppearance="?android:attr/textAppearanceMedium"/>
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <EditText
         android:id="@+id/cust_detailaddress"
@@ -47,15 +84,15 @@
         android:layout_height="wrap_content"
         android:digits="abcdefghijklmnopqrstuvwxyz0123456789,"
         android:hint="Customer Detail Address"
-        android:textAppearance="?android:attr/textAppearanceMedium"/>
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <EditText
         android:id="@+id/purchaseprice"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="number"
         android:hint="purchase price"
-        android:textAppearance="?android:attr/textAppearanceMedium"/>
+        android:inputType="number"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
 
     <LinearLayout
@@ -70,7 +107,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Purchase Date"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/edtDate"
@@ -84,7 +121,7 @@
             android:inputType="datetime"
             android:paddingEnd="@dimen/card_margin"
             android:paddingStart="@dimen/card_margin"
-            android:textColor="#708090"/>
+            android:textColor="#708090" />
 
     </LinearLayout>
 
@@ -92,25 +129,30 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="end">
+        android:layout_marginTop="@dimen/activity_half_margin"
+        android:weightSum="2">
 
         <Button
             android:id="@+id/submit"
-            android:layout_width="wrap_content"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:background="@color/button_default"
             android:text="ADD"
             android:textColor="@color/white"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
         <Button
             android:id="@+id/skip"
-            android:layout_width="wrap_content"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
+            android:layout_weight="1"
             android:background="@color/button_default"
             android:text="skip"
             android:textColor="@color/white"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
     </LinearLayout>
 </LinearLayout>
