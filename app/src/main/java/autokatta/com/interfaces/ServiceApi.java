@@ -1452,5 +1452,8 @@ public interface ServiceApi {
     @POST("AddUserCategory")
     Call<String> addOtheruserCategory(@Query("Name") String Name);
 
+    /*get New Vehicle by id*/
+    @GET("GetNewVehicleByID")
+    Call<GetNewVehicleByIdResponse> getnewvehiclesbyid(@Query("NewVehicleID") int NewVehicleID);
 
 }

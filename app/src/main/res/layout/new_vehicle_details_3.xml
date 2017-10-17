@@ -41,7 +41,7 @@
         android:weightSum="2">
         <TextView
             android:id="@+id/GroundClearance"
-            android:layout_width="wrap_content"
+            android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:text="Ground Clearance : "
             android:textColor="#2C3343"
@@ -55,6 +55,7 @@
             android:layout_alignTop="@+id/Drive"
             android:layout_below="@+id/DisplacementCC1"
             android:text="@string/app_name"
+            android:textAlignment="center"
             android:textColor="#2C3343"
             android:layout_weight="1"/>
 
@@ -75,7 +76,7 @@
         android:weightSum="2">
         <TextView
             android:id="@+id/NoOfGearsForword"
-            android:layout_width="wrap_content"
+            android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:text="No Of Gears Forword : "
             android:textColor="#2C3343"
@@ -88,6 +89,7 @@
             android:layout_height="wrap_content"
             android:text="@string/app_name"
             android:textColor="#2C3343"
+            android:textAlignment="center"
             android:layout_weight="1"/>
 
     </LinearLayout>
@@ -107,7 +109,7 @@
 
         <TextView
             android:id="@+id/NoOfGearsReverse"
-            android:layout_width="wrap_content"
+            android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:text="No Of Gears Reverse : "
             android:textColor="#2C3343"
@@ -119,6 +121,7 @@
             android:layout_height="wrap_content"
             android:text="@string/app_name"
             android:textColor="#2C3343"
+            android:textAlignment="center"
             android:layout_weight="1"/>
 
     </LinearLayout>
@@ -137,7 +140,7 @@
         android:weightSum="2">
         <TextView
             android:id="@+id/OverAllLength"
-            android:layout_width="wrap_content"
+            android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:text="Over All Length : "
             android:textColor="#2C3343"
@@ -148,6 +151,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/app_name"
+            android:textAlignment="center"
             android:textColor="#2C3343"
             android:layout_weight="1"/>
 
@@ -169,7 +173,7 @@
 
         <TextView
             android:id="@+id/OverAllWidth"
-            android:layout_width="wrap_content"
+            android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:text="HP Cat : "
             android:textColor="#2C3343"
@@ -180,6 +184,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/app_name"
+            android:textAlignment="center"
             android:textColor="#2C3343"
             android:layout_weight="1"/>
 
@@ -200,7 +205,7 @@
 
         <TextView
             android:id="@+id/ParkingSensors"
-            android:layout_width="wrap_content"
+            android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:text="Parking Sensors : "
             android:textColor="#2C3343"
@@ -211,6 +216,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/app_name"
+            android:textAlignment="center"
             android:textColor="#2C3343"
             android:layout_weight="1"/>
 
@@ -232,7 +238,7 @@
 
         <TextView
             android:id="@+id/PayLoad"
-            android:layout_width="wrap_content"
+            android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:text=" PayLoad "
             android:textColor="#2C3343"
@@ -243,6 +249,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/app_name"
+            android:textAlignment="center"
             android:textColor="#2C3343"
             android:layout_weight="1"/>
 
@@ -263,7 +270,7 @@
         android:weightSum="2">
         <TextView
             android:id="@+id/PowerKW"
-            android:layout_width="wrap_content"
+            android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:text="Power(KW) : "
             android:textColor="#2C3343"
@@ -274,6 +281,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/app_name"
+            android:textAlignment="center"
             android:textColor="#2C3343"
             android:layout_weight="1"/>
 
@@ -295,7 +303,7 @@
 
         <TextView
             android:id="@+id/PowerWindow"
-            android:layout_width="wrap_content"
+            android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:text=" PowerWindow : "
             android:textColor="#2C3343"
@@ -307,6 +315,7 @@
             android:layout_height="wrap_content"
             android:text="@string/app_name"
             android:textColor="#2C3343"
+            android:textAlignment="center"
             android:layout_weight="1"/>
 
     </LinearLayout>
@@ -326,7 +335,7 @@
 
         <TextView
             android:id="@+id/PTOHP"
-            android:layout_width="wrap_content"
+            android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:text=" PTOHP: "
             android:textColor="#2C3343"
@@ -337,6 +346,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/app_name"
+            android:textAlignment="center"
             android:textColor="#2C3343"
             android:layout_weight="1"/>
 
@@ -357,7 +367,7 @@
 
         <TextView
             android:id="@+id/PTORPM"
-            android:layout_width="wrap_content"
+            android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:text="PTORPM : "
             android:textColor="#2C3343"
@@ -369,6 +379,7 @@
             android:layout_height="wrap_content"
             android:text="@string/app_name"
             android:textColor="#2C3343"
+            android:textAlignment="center"
             android:layout_weight="1"/>
 
     </LinearLayout>
@@ -388,7 +399,7 @@
 
         <TextView
             android:id="@+id/PTOSpeed"
-            android:layout_width="wrap_content"
+            android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:text="PTO Speed : "
             android:textColor="#2C3343"
@@ -399,6 +410,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/app_name"
+            android:textAlignment="center"
             android:textColor="#2C3343"
             android:layout_weight="1"/>
 
@@ -419,7 +431,7 @@
 
         <TextView
             android:id="@+id/PTOType"
-            android:layout_width="wrap_content"
+            android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:text="PTO Type : "
             android:textColor="#2C3343"
@@ -430,6 +442,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/app_name"
+            android:textAlignment="center"
             android:textColor="#2C3343"
             android:layout_weight="1"/>
 
@@ -450,7 +463,7 @@
 
         <TextView
             android:id="@+id/PumpType"
-            android:layout_width="wrap_content"
+            android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:text=" Pump Type: "
             android:textColor="#2C3343"
@@ -462,6 +475,7 @@
             android:layout_height="wrap_content"
             android:text="@string/app_name"
             android:textColor="#2C3343"
+            android:textAlignment="center"
             android:layout_weight="1"/>
 
     </LinearLayout>
@@ -481,7 +495,7 @@
 
         <TextView
             android:id="@+id/RainSensingWiper"
-            android:layout_width="wrap_content"
+            android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:text="  Rain Sensing Wiper : "
             android:textColor="#2C3343"
@@ -493,6 +507,7 @@
             android:layout_height="wrap_content"
             android:text="@string/app_name"
             android:textColor="#2C3343"
+            android:textAlignment="center"
             android:layout_weight="1"/>
 
     </LinearLayout>
@@ -512,7 +527,7 @@
 
         <TextView
             android:id="@+id/RatedRPM"
-            android:layout_width="wrap_content"
+            android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:text=" Rated RPM : "
             android:textColor="#2C3343"
@@ -523,6 +538,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/app_name"
+            android:textAlignment="center"
             android:textColor="#2C3343"
             android:layout_weight="1"/>
 
@@ -543,7 +559,7 @@
 
         <TextView
             android:id="@+id/RearAC"
-            android:layout_width="wrap_content"
+            android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:text="RearA/C : "
             android:textColor="#2C3343"
@@ -555,6 +571,7 @@
             android:layout_height="wrap_content"
             android:text="@string/app_name"
             android:textColor="#2C3343"
+            android:textAlignment="center"
             android:layout_weight="1"/>
 
     </LinearLayout>
@@ -574,7 +591,7 @@
 
         <TextView
             android:id="@+id/RearDefogger"
-            android:layout_width="wrap_content"
+            android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:text=" Rear Defogger : "
             android:textColor="#2C3343"
@@ -586,6 +603,7 @@
             android:layout_height="wrap_content"
             android:text="@string/app_name"
             android:textColor="#2C3343"
+            android:textAlignment="center"
             android:layout_weight="1"/>
 
     </LinearLayout>
@@ -605,7 +623,7 @@
 
         <TextView
             android:id="@+id/RearWiper"
-            android:layout_width="wrap_content"
+            android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:text=" Rear Wiper : "
             android:textColor="#2C3343"
@@ -617,6 +635,7 @@
             android:layout_height="wrap_content"
             android:text="@string/app_name"
             android:textColor="#2C3343"
+            android:textAlignment="center"
             android:layout_weight="1"/>
 
     </LinearLayout>
@@ -636,7 +655,7 @@
 
         <TextView
             android:id="@+id/RPTOGRPTO"
-            android:layout_width="wrap_content"
+            android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:text=" RPTOGRPTO : "
             android:textColor="#2C3343"
@@ -648,6 +667,7 @@
             android:layout_height="wrap_content"
             android:text="@string/app_name"
             android:textColor="#2C3343"
+            android:textAlignment="center"
             android:layout_weight="1"/>
 
     </LinearLayout>

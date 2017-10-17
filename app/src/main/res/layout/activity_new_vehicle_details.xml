@@ -1,617 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-                                            android:layout_width="match_parent"
-                                            android:layout_height="match_parent"
-                                            android:orientation="vertical">
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                                 xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                 xmlns:fab="http://schemas.android.com/apk/res-auto"
+                                                 xmlns:tools="http://schemas.android.com/tools"
+                                                 android:layout_width="match_parent"
+                                                 android:layout_height="match_parent"
+                                                 android:fitsSystemWindows="true"
+                                                 tools:context="autokatta.com.view.NewVehicleDetails">
 
-    <LinearLayout
-        android:id="@+id/relativedetails"
+    <android.support.design.widget.TabLayout
+        android:id="@+id/vehicle_details_tabs"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="@dimen/card_title_height"
+        android:layout_gravity="bottom"
+        android:background="@color/colorPrimary"
+        android:longClickable="true"
+        app:layout_anchor="@+id/appbar"
+        app:layout_anchorGravity="bottom"
+        app:tabGravity="fill"
+        app:tabIndicatorColor="@color/white"
+        app:tabMode="fixed"
+        app:tabSelectedTextColor="@color/white"
+        app:tabTextColor="#B0C4DE" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="2">
-
-            <TextView
-                android:id="@+id/PointLinkage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/PointLinkage"
-                android:layout_weight="1"
-                android:textColor="#2C3343" />
-
-            <TextView
-                android:id="@+id/txtPointLinkage1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="23dp"
-                android:text="@string/app_name"
-                android:textColor="#2C3343"
-                android:layout_weight="1"/>
-        </LinearLayout>
-
-        <View
-            android:id="@+id/vryear"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="5dp"
-            android:background="#cccccc" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="2">
-
-        <TextView
-            android:id="@+id/ABS"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/kms_running"
-            android:textColor="#2C3343"
-            android:layout_weight="1"/>
-
-
-            <TextView
-            android:id="@+id/ABS1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/app_name"
-            android:textColor="#2C3343"
-            android:layout_weight="1"/>
-
-        </LinearLayout>
-
-        <View
-            android:id="@+id/vkm"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="5dp"
-            android:background="#cccccc" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="3">
-
-        <TextView
-            android:id="@+id/AirBagstext"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="AirBags"
-            android:textColor="#2C3343"
-            android:layout_weight="1"/>
-
-        <TextView
-            android:id="@+id/AirBags"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/app_name"
-            android:textColor="#2C3343"
-            android:layout_weight="2"/>
-</LinearLayout>
-        <View
-            android:id="@+id/vrto"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="5dp"
-            android:background="#cccccc" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="2">
-
-        <TextView
-            android:id="@+id/AirCleaner"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="AirCleaner : "
-            android:textColor="#2C3343"
-            android:layout_weight="1"/>
-
-        <TextView
-            android:id="@+id/AirCleaner1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/app_name"
-            android:textColor="#2C3343"
-            android:layout_weight="1"/>
-</LinearLayout>
-        <View
-            android:id="@+id/vinsurence"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_below="@+id/insurencedetails"
-            android:layout_marginTop="5dp"
-            android:background="#cccccc" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="2">
-        <TextView
-            android:id="@+id/AirCondition"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="AirCondition : "
-            android:textColor="#2C3343"
-            android:layout_weight="1"/>
-
-        <TextView
-            android:id="@+id/AirCondition1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/app_name"
-            android:textColor="#2C3343"
-            android:layout_weight="1"/>
-        </LinearLayout>
-
-        <View
-            android:id="@+id/vowner"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="5dp"
-            android:background="#cccccc" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="2">
-        <TextView
-            android:id="@+id/AlternateFuelType"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="AlternateFuelType :"
-            android:textColor="#2C3343"
-            android:layout_weight="1"/>
-
-        <TextView
-            android:id="@+id/AlternateFuelType1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/app_name"
-            android:textColor="#2C3343"
-            android:layout_weight="1"/>
-</LinearLayout>
-        <View
-            android:id="@+id/vrc"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_below="@+id/AlternateFuelType1"
-            android:layout_marginTop="5dp"
-            android:background="#cccccc" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="2">
-
-        <TextView
-            android:id="@+id/AuxiliaryHydValve"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/vrc"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="5dp"
-            android:text="AuxiliaryHydValve :"
-            android:textColor="#2C3343"
-            android:layout_weight="1"/>
-
-        <TextView
-            android:id="@+id/AuxiliaryHydValve1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/app_name"
-            android:textColor="#2C3343"
-            android:layout_weight="1"/>
-        </LinearLayout>
-        <View
-        android:id="@+id/vinsval"
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="5dp"
-        android:background="#cccccc" />
+        android:layout_height="@dimen/detail_backdrop_height"
+        android:fitsSystemWindows="true"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
-        <LinearLayout
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:id="@+id/collapsing_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="2">
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true"
+            app:contentScrim="?attr/colorPrimary"
+            app:expandedTitleMarginEnd="64dp"
+            app:expandedTitleMarginStart="48dp"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
-        <TextView
-            android:id="@+id/BackUpTorque"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="BackUp Torque : "
-            android:textColor="#2C3343"
-            android:layout_weight="1"/>
+            <com.daimajia.slider.library.SliderLayout
+                android:id="@+id/slider"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/vehiimg"
+                android:fitsSystemWindows="true"
+                app:layout_collapseMode="parallax" />
+            <!--<ImageView
+                android:id="@+id/vehicle_image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="@string/app_name"
+                android:fitsSystemWindows="true"
+                android:scaleType="centerCrop"
+                app:layout_collapseMode="parallax" />-->
 
-        <TextView
-            android:id="@+id/BackUpTorque1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/app_name"
-            android:textColor="#2C3343"
-            android:layout_weight="1"/>
-        </LinearLayout>
-        <View
-            android:id="@+id/vtaxval"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="5dp"
-            android:background="#cccccc" />
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:layout_collapseMode="pin"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="2">
+        </android.support.design.widget.CollapsingToolbarLayout>
+    </android.support.design.widget.AppBarLayout>
 
-        <TextView
-            android:id="@+id/BodyOptions"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Body Options :"
-            android:textColor="#2C3343"
-            android:layout_weight="1"/>
-
-        <TextView
-            android:id="@+id/BodyOptions1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/app_name"
-            android:textColor="#2C3343"
-            android:layout_weight="1"/>
-        </LinearLayout>
-
-        <View
-            android:id="@+id/vfitval"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="5dp"
-            android:background="#cccccc" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="2">
-
-        <TextView
-            android:id="@+id/Boreinmm"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=" Bore in mm :"
-            android:textColor="#2C3343"
-            android:layout_weight="1"/>
-
-        <TextView
-            android:id="@+id/Boreinmm1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/app_name"
-            android:textColor="#2C3343"
-            android:layout_weight="1"/>
-        </LinearLayout>
-
-        <View
-            android:id="@+id/vperval"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="5dp"
-            android:background="#cccccc" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="2">
-
-        <TextView
-            android:id="@+id/BoreStroke"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Bore Stroke :"
-            android:textColor="#2C3343"
-            android:layout_weight="1"/>
+    <include layout="@layout/content_new_vehicle_details"/>
 
 
-        <TextView
-            android:id="@+id/BoreStroke1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/app_name"
-            android:textColor="#2C3343"
-            android:layout_weight="1"/>
-        </LinearLayout>
-
-
-        <View
-            android:id="@+id/vfuel"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="5dp"
-            android:background="#cccccc" />
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="2">
-
-
-        <TextView
-            android:id="@+id/Brakes"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=" Brakes :"
-            android:textColor="#2C3343"
-            android:layout_weight="1"/>
-
-        <TextView
-            android:id="@+id/Brakes1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/app_name"
-            android:textColor="#2C3343"
-            android:layout_weight="1"/>
-        </LinearLayout>
-
-        <View
-            android:id="@+id/vseat"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="5dp"
-            android:background="#cccccc" />
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="2">
-
-        <TextView
-            android:id="@+id/BrakeType"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Brake Type : "
-            android:textColor="#2C3343"
-            android:layout_weight="1"/>
-
-        <TextView
-            android:id="@+id/BrakeType1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/app_name"
-            android:textColor="#2C3343"
-            android:layout_weight="1"/>
-        </LinearLayout>
-
-        <View
-            android:id="@+id/vpermit"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="5dp"
-            android:background="#cccccc" />
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="2">
-
-        <TextView
-            android:id="@+id/CentralLoking"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="5dp"
-            android:text="Hypothetication : "
-            android:textColor="#2C3343"
-            android:layout_weight="1"/>
-
-        <TextView
-            android:id="@+id/CentralLoking1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/app_name"
-            android:textColor="#2C3343"
-            android:layout_weight="1"/>
-        </LinearLayout>
-        <View
-            android:id="@+id/vhypo"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="5dp"
-            android:background="#cccccc" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="2">
-
-        <TextView
-            android:id="@+id/ChildSeat"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Child Seat : "
-            android:textColor="#2C3343"
-            android:layout_weight="1"/>
-
-        <TextView
-            android:id="@+id/ChildSeat1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/app_name"
-            android:textColor="#2C3343"
-            android:layout_weight="1"/>
-        </LinearLayout>
-        <View
-            android:id="@+id/vdrive"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_below="@+id/ChildSeat1"
-            android:layout_marginTop="5dp"
-            android:background="#cccccc" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="2">
-
-
-        <TextView
-            android:id="@+id/Clutch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Clutch : "
-            android:textColor="#2C3343"
-            android:layout_weight="1"/>
-
-        <TextView
-            android:id="@+id/Clutch1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/app_name"
-            android:textColor="#2C3343"
-            android:layout_weight="1"/>
-        </LinearLayout>
-
-        <View
-            android:id="@+id/vtrans"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="5dp"
-            android:background="#cccccc" />
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="2">
-
-        <TextView
-            android:id="@+id/ClutchType"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Clutch Type : "
-            android:textColor="#2C3343"
-            android:layout_weight="1"/>
-
-        <TextView
-            android:id="@+id/ClutchType1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/app_name"
-            android:textColor="#2C3343"
-            android:layout_weight="1"/>
-        </LinearLayout>
-
-        <View
-            android:id="@+id/vbody"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="5dp"
-            android:background="#cccccc" />
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="2">
-
-        <TextView
-            android:id="@+id/CoolingSystem"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Cooling System : "
-            android:textColor="#2C3343"
-            android:layout_weight="1"/>
-
-        <TextView
-            android:id="@+id/CoolingSystem1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/app_name"
-            android:textColor="#2C3343"
-            android:layout_weight="1"/>
-        </LinearLayout>
-
-        <View
-            android:id="@+id/vboat"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_below="@+id/CoolingSystem1"
-            android:layout_marginTop="5dp"
-            android:background="#cccccc" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="2">
-
-
-        <TextView
-            android:id="@+id/CruiseControl"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Cruise Control : "
-            android:textColor="#2C3343"
-            android:layout_weight="1"/>
-
-        <TextView
-            android:id="@+id/CruiseControl1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/app_name"
-            android:textColor="#2C3343"
-            android:layout_weight="1"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="2">
-
-        <TextView
-            android:id="@+id/CylinderCapacityCC"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:text="Cylinder Capacity(CC) : "
-            android:textColor="#2C3343"
-            android:layout_weight="1"/>
-
-
-        <TextView
-            android:id="@+id/CylinderCapacityCC1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/app_name"
-            android:textColor="#2C3343"
-            android:layout_weight="1"/>
-        </LinearLayout>
-        <View
-            android:id="@+id/vrv"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="5dp"
-            android:background="#cccccc" />
-
-        <include layout="@layout/new_vehicle_details_1"/>
-        <include layout="@layout/new_vehicle_details_2"/>
-        <include layout="@layout/new_vehicle_details_3"/>
-        <include layout="@layout/new_vehicle_details_4"/>
-        <include layout="@layout/new_vehicle_details_5"/>
-    </LinearLayout>
-
-</android.support.v4.widget.NestedScrollView>
+</android.support.design.widget.CoordinatorLayout>

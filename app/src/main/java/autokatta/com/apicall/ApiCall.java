@@ -9152,6 +9152,39 @@ get ExchangeMela Analytics Data
         }
     }
 
+ /*get new vehicle by id*/
+
+    public void getnewvehiclebyid(int newvehicleid) {
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<GetNewVehicleByIdResponse> categoryResponseCall = serviceApi.getnewvehiclesbyid(newvehicleid);
+                categoryResponseCall.enqueue(new Callback<GetNewVehicleByIdResponse>() {
+                    @Override
+                    public void onResponse(Call<GetNewVehicleByIdResponse> call, Response<GetNewVehicleByIdResponse> response) {
+                        Log.i("loo", "" + response);
+                        mNotifier.notifySuccess(response);
+                    }
+
+                    @Override
+                    public void onFailure(Call<GetNewVehicleByIdResponse> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+            } else {
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
 
 
