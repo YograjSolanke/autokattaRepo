@@ -1,24 +1,19 @@
 package autokatta.com.adapter;
 
 import android.app.Activity;
+import android.app.ActivityOptions;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
-import android.text.InputType;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.net.ConnectException;
@@ -31,23 +26,15 @@ import java.util.concurrent.TimeUnit;
 
 import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
-import autokatta.com.generic.SetMyDateAndTime;
 import autokatta.com.interfaces.RequestNotifier;
-import autokatta.com.interfaces.ServiceApi;
 import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.NewVehicleAllResponse;
-import autokatta.com.response.ProfileGroupResponse;
+import autokatta.com.view.AddManualEnquiry;
 import autokatta.com.view.NewVehicleDetails;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
-import retrofit2.Call;
-import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-
-import static android.content.Context.MODE_PRIVATE;
 
 /**
  * Created by ak-003 on 12/10/17.
@@ -100,8 +87,8 @@ public class NewVehicleContainerAdapter extends RecyclerView.Adapter<RecyclerVie
                 View view = mActivity.getLayoutInflater().inflate(R.layout.custom_more_used_vehicle, null);
                 ImageView mClose = (ImageView) view.findViewById(R.id.close);
                 Button mEnquiry = (Button) view.findViewById(R.id.Enquiry);
-                mEnquiry.setVisibility(View.GONE);
                 Button mQuotation = (Button) view.findViewById(R.id.quotation);
+                mQuotation.setVisibility(View.GONE);
                 Button mTransferStock = (Button) view.findViewById(R.id.transfer_stock);
                 mTransferStock.setVisibility(View.GONE);
                 Button mSold = (Button) view.findViewById(R.id.delete);
@@ -126,133 +113,30 @@ public class NewVehicleContainerAdapter extends RecyclerView.Adapter<RecyclerVie
                     }
                 });
 
-                /*
-                Send Quotation...
+                 /*
+                Enquiry...
                  */
-                mQuotation.setOnClickListener(new View.OnClickListener() {
+                mEnquiry.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         mBottomSheetDialog.dismiss();
-                        final Dialog openDialog = new Dialog(mActivity);
-                        openDialog.setContentView(R.layout.get_quotation);
-                        openDialog.setTitle("Fill Form For Quotation");
-                        final TextView titleText = (TextView) openDialog.findViewById(R.id.txtTitle);
-                        final EditText edtResPrice = (EditText) openDialog.findViewById(R.id.edtReservedPrice);
-                        final EditText edtDate = (EditText) openDialog.findViewById(R.id.edtDate);
-                        final Spinner mGroupsSpinner = (Spinner) openDialog.findViewById(R.id.spinnergroup);
+                        ActivityOptions option = ActivityOptions.makeCustomAnimation(mActivity, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
+                        Bundle b = new Bundle();
+                        b.putString("sender", "");
+                        b.putString("sendername", "");
+                        b.putString("keyword", "New Vehicle");
+                        b.putString("category", mVehicleList.get(mVehicleHolder.getAdapterPosition()).getCategoryName());
+                        b.putString("title", "New Vehicle");
+                        b.putString("brand", mVehicleList.get(mVehicleHolder.getAdapterPosition()).getBrandName());
+                        b.putString("model", mVehicleList.get(mVehicleHolder.getAdapterPosition()).getModelName());
+                        b.putString("price", "NA");
+                        b.putString("image", mVehicleList.get(mVehicleHolder.getAdapterPosition()).getImage());
+                        b.putInt("id", mVehicleList.get(mVehicleHolder.getAdapterPosition()).getNewVehicleID());
+                        b.putString("classname", "NewVehicleContainerAdapter");
 
-                        Button sendQuotation = (Button) openDialog.findViewById(R.id.btnSend);
-                /*Spinner to get groups*/
-                        try {
-                            if (mConnectionDetector.isConnectedToInternet()) {
-                                Retrofit retrofit = new Retrofit.Builder()
-                                        .baseUrl(mActivity.getString(R.string.base_url))
-                                        .addConverterFactory(GsonConverterFactory.create())
-                                        .client(initLog().build())
-                                        .build();
-
-                                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                                Call<ProfileGroupResponse> add = serviceApi._autokattaProfileGroup(mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", null));
-                                add.enqueue(new Callback<ProfileGroupResponse>() {
-                                    @Override
-                                    public void onResponse(Call<ProfileGroupResponse> call, Response<ProfileGroupResponse> response) {
-                                        if (response.isSuccessful()) {
-                                            mGrouplist.clear();
-                                            mGrouplist1.clear();
-                                            parsedData.clear();
-                                            mGrouplist.add("Select Group");
-                                            ProfileGroupResponse mProfilegroup = (ProfileGroupResponse) response.body();
-                                            for (ProfileGroupResponse.MyGroup groupresponse : mProfilegroup.getSuccess().getMyGroups()) {
-                                                groupresponse.setId(groupresponse.getId());
-                                                groupresponse.setTitle(groupresponse.getTitle());
-                                                mGrouplist.add(groupresponse.getTitle());
-                                                mGrouplist1.put(groupresponse.getTitle(), groupresponse.getId());
-                                            }
-
-
-                                            for (ProfileGroupResponse.JoinedGroup groupresponse : mProfilegroup.getSuccess().getJoinedGroups()) {
-                                                groupresponse.setId(groupresponse.getId());
-                                                groupresponse.setTitle(groupresponse.getTitle());
-                                                mGrouplist.add(groupresponse.getTitle());
-                                                mGrouplist1.put(groupresponse.getTitle(), groupresponse.getId());
-                                            }
-
-                                            parsedData.addAll(mGrouplist);
-                                            if (mActivity != null) {
-                                                ArrayAdapter<String> adapter = new ArrayAdapter<>(mActivity, android.R.layout.simple_spinner_item, parsedData);
-                                                //  adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                                                mGroupsSpinner.setAdapter(adapter);
-                                            }
-                                            mGroupsSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                                                @Override
-                                                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                                                    if (position != 0) {
-                                                        groupid = mGrouplist1.get(parsedData.get(position));
-                                                        groupname = parsedData.get(position);
-                                                        System.out.println("group id::" + groupid);
-                                                        System.out.println("group name::" + groupname);
-                                                    }
-                                                }
-
-                                                @Override
-                                                public void onNothingSelected(AdapterView<?> adapterView) {
-
-                                                }
-                                            });
-
-                                        } else {
-                                            CustomToast.customToast(mActivity, mActivity.getString(R.string._404));
-                                        }
-                                    }
-
-                                    @Override
-                                    public void onFailure(Call<ProfileGroupResponse> call, Throwable t) {
-
-                                    }
-
-                                });
-                            } else
-                                CustomToast.customToast(mActivity.getApplicationContext(), mActivity.getString(R.string.no_internet));
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-
-                        titleText.setText("" + "Category " + mVehicleList.get(mVehicleHolder.getAdapterPosition()).getCategoryName());
-
-                        edtDate.setOnTouchListener(new View.OnTouchListener() {
-                            @Override
-                            public boolean onTouch(View v, MotionEvent event) {
-                                int action = event.getAction();
-                                if (action == MotionEvent.ACTION_DOWN) {
-                                    edtDate.setInputType(InputType.TYPE_NULL);
-                                    edtDate.setError(null);
-                                    new SetMyDateAndTime("date", edtDate, mActivity);
-                                }
-                                return false;
-                            }
-                        });
-
-                        sendQuotation.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                // TODO Auto-generated method stub
-                                String strTitle = titleText.getText().toString();
-                                String strPrice = edtResPrice.getText().toString();
-                                String deadlineDate = edtDate.getText().toString();
-
-                                Log.i("groupId", String.valueOf(groupid));
-                                if (groupid == 0)
-                                    CustomToast.customToast(mActivity, "please select Group to send quotation");
-                                else {
-                                    mApiCall.SendQuotation(strTitle, strPrice, deadlineDate, String.valueOf(groupid),
-                                            mVehicleList.get(mVehicleHolder.getAdapterPosition()).getNewVehicleID(), myContact,
-                                            "NewVehicle");
-                                    System.out.println(mVehicleList.get(mVehicleHolder.getAdapterPosition()).getNewVehicleID());
-                                    openDialog.dismiss();
-                                }
-                            }
-                        });
-                        openDialog.show();
+                        Intent intent = new Intent(mActivity, AddManualEnquiry.class);
+                        intent.putExtras(b);
+                        mActivity.startActivity(intent, option.toBundle());
                     }
                 });
             }
@@ -292,7 +176,6 @@ public class NewVehicleContainerAdapter extends RecyclerView.Adapter<RecyclerVie
             mVersion = (TextView) itemView.findViewById(R.id.editversion);
             mDetails = (Button) itemView.findViewById(R.id.vehibtndetails);
             mMoreItems = (ImageView) itemView.findViewById(R.id.more_items);
-            mMoreItems.setVisibility(View.GONE);
         }
     }
 

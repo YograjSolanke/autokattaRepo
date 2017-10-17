@@ -126,6 +126,7 @@ public class NewVehicleContainer extends AppCompatActivity implements RequestNot
                 if (!vehicleAllResponse.getSuccess().getNewVehicle().isEmpty()) {
                     mSwipeRefreshLayout.setRefreshing(false);
                     newVehicleList.clear();
+                    mNoData.setVisibility(View.GONE);
 
                     for (NewVehicleAllResponse.Success.NewVehicle success : vehicleAllResponse.getSuccess().getNewVehicle()) {
 
