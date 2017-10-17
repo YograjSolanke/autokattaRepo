@@ -607,7 +607,7 @@
                 android:layout_toEndOf="@+id/vehiprofile">
 
                 <TextView
-                    android:id="@+id/stock"
+                    android:id="@+id/enquiry"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
@@ -617,12 +617,12 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/dashstock"
+                    android:id="@+id/dashenquiry"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="5dp"
-                    android:layout_toEndOf="@+id/stock"
+                    android:layout_toEndOf="@+id/enquiry"
                     android:gravity="center"
                     android:text="-"
                     android:textColor="#808080"
@@ -634,7 +634,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="5dp"
-                    android:layout_toEndOf="@+id/dashstock"
+                    android:layout_toEndOf="@+id/dashenquiry"
                     android:textColor="#0f0ff0"  />
             </RelativeLayout>
 
@@ -648,7 +648,7 @@
                 android:layout_toEndOf="@+id/vehiprofile">
 
                 <TextView
-                    android:id="@+id/stock"
+                    android:id="@+id/chat"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
@@ -658,12 +658,12 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/dashstock"
+                    android:id="@+id/dashchat"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="5dp"
-                    android:layout_toEndOf="@+id/stock"
+                    android:layout_toEndOf="@+id/chat"
                     android:gravity="center"
                     android:text="-"
                     android:textColor="#808080"
@@ -675,7 +675,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="5dp"
-                    android:layout_toEndOf="@+id/dashstock"
+                    android:layout_toEndOf="@+id/dashchat"
                     android:textColor="#0f0ff0"  />
             </RelativeLayout>
 

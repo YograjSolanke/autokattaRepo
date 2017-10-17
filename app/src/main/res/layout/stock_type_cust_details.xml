@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/repo_linear"
@@ -15,132 +15,121 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:orientation="horizontal"
-            >
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Loan Account Number -"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/loanno"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Loan Account Number "
-                />
+                android:text="Loan Account Number " />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:orientation="horizontal"
-            >
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Borrower Name -"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/borrowername"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Borrower Name "
-                />
+                android:text="Borrower Name " />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:orientation="horizontal"
-            >
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Borrower Contact  -"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/borrowercontact"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Borrower Contact "
-                />
+                android:text="Borrower Contact " />
+
             <ImageView
                 android:id="@+id/borrowercontactauto"
                 android:layout_width="10dp"
                 android:layout_height="10dp"
                 android:background="@drawable/logo"
-                android:visibility="gone"/>
+                android:visibility="gone" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:orientation="horizontal"
-            >
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Branch city  -"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/branchcity"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Branch city"
-                />
+                android:text="Branch city" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:orientation="horizontal"
-            >
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Manager Name  -"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/managername"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Manager Name "
-                />
+                android:text="Manager Name " />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:orientation="horizontal"
-            >
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Manager Contact  -"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/managercnt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Manager Contact "
-                />
+                android:text="Manager Contact " />
 
             <ImageView
                 android:id="@+id/managercntauto"
@@ -148,28 +137,26 @@
                 android:layout_height="10dp"
                 android:background="@drawable/logo"
 
-                android:visibility="gone"/>
+                android:visibility="gone" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:orientation="horizontal"
-            >
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Dealer Name  -"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/dealername"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text=" Dealer Name"
-                />
+                android:text=" Dealer Name" />
 
         </LinearLayout>
 
@@ -177,63 +164,57 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:orientation="horizontal"
-            >
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="StockYard Name  -"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/stockyardname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="StockYard Name "
-                />
+                android:text="StockYard Name " />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:orientation="horizontal"
-            >
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="StockYard address  -"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/stockyardaddress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="StockYard Address "
-                />
+                android:text="StockYard Address " />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:orientation="horizontal"
-            >
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Invard Date  -"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/inwarddate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Invard Date  "
-                />
+                android:text="Invard Date  " />
         </LinearLayout>
     </LinearLayout>
 
@@ -242,150 +223,137 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-
         android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:orientation="horizontal"
-            >
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Customer Name -"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/custcontact"
+                android:id="@+id/custname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Customer Name "
-                />
+                android:text="Customer Name " />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:orientation="horizontal"
-            >
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Customer Contact -"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/custcontact"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Customer Contact "
-                />
+                android:text="Customer Contact " />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:orientation="horizontal"
-            >
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Customer Address-"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/custaddress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Customer Address "
-                />
+                android:text="Customer Address " />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:orientation="horizontal"
-            >
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Customer Detail Address -"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/Address"
+                android:id="@+id/address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Customer Detail Address "
-                />
+                android:text="Customer Detail Address " />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:orientation="horizontal"
-            >
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Purchase Price-"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/price"
+                android:id="@+id/purchaseprice"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Price"
-                />
+                android:text="Price" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:orientation="horizontal"
-            >
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Purchase Date  -"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/purchasedate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Purchase date"
-                />
+                android:text="Purchase date" />
         </LinearLayout>
     </LinearLayout>
-<!--
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|center_vertical"
-        android:layout_marginLeft="140dp"
-        android:layout_marginTop="10dp">
-
-        <Button
+    <!--
+        <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:id="@+id/cancl"
-            android:text="@string/cancel"
-            android:background="@color/background"
-            />
-    </RelativeLayout>-->
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center_vertical"
+            android:layout_marginLeft="140dp"
+            android:layout_marginTop="10dp">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:id="@+id/cancl"
+                android:text="@string/cancel"
+                android:background="@color/background"
+                />
+        </RelativeLayout>-->
 
 </LinearLayout>
