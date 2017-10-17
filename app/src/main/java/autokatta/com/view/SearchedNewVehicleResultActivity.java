@@ -45,6 +45,7 @@ public class SearchedNewVehicleResultActivity extends AppCompatActivity implemen
     List<NewVehicleSearchResponse.Success> mSearchNewVehicleList = new ArrayList<>();
     SearchedNewVehicleResultAdapter mAdapter;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

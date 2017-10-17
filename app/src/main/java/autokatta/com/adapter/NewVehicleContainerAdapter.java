@@ -6,7 +6,6 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,41 +15,24 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import java.net.ConnectException;
-import java.net.SocketTimeoutException;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import autokatta.com.R;
-import autokatta.com.apicall.ApiCall;
-import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.networkreceiver.ConnectionDetector;
-import autokatta.com.other.CustomToast;
 import autokatta.com.response.NewVehicleAllResponse;
 import autokatta.com.view.AddManualEnquiry;
 import autokatta.com.view.NewVehicleDetails;
-import okhttp3.OkHttpClient;
-import okhttp3.logging.HttpLoggingInterceptor;
-import retrofit2.Response;
 
 /**
  * Created by ak-003 on 12/10/17.
  */
 
-public class NewVehicleContainerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements RequestNotifier {
+public class NewVehicleContainerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private Activity mActivity;
     private List<NewVehicleAllResponse.Success.NewVehicle> mVehicleList = new ArrayList<>();
     private ConnectionDetector mConnectionDetector;
-    private List<String> mGrouplist = new ArrayList<>();
-    private HashMap<String, Integer> mGrouplist1 = new HashMap<>();
-    private List<String> parsedData = new ArrayList<>();
-    private int groupid = 0;
-    private String groupname;
-    ApiCall mApiCall;
     String myContact;
 
 
@@ -58,7 +40,6 @@ public class NewVehicleContainerAdapter extends RecyclerView.Adapter<RecyclerVie
         mActivity = activity;
         mVehicleList = VehicleList;
         mConnectionDetector = new ConnectionDetector(activity);
-        mApiCall = new ApiCall(activity, this);
         this.myContact = myContact;
     }
 
@@ -179,63 +160,5 @@ public class NewVehicleContainerAdapter extends RecyclerView.Adapter<RecyclerVie
         }
     }
 
-    /***
-     * Retrofit Logs
-     ***/
-    private OkHttpClient.Builder initLog() {
-        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
-        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
-        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
-        httpClient.addInterceptor(logging).readTimeout(90, TimeUnit.SECONDS);
-        return httpClient;
-    }
-
-    @Override
-    public void notifySuccess(Response<?> response) {
-
-    }
-
-    @Override
-    public void notifyError(Throwable error) {
-        if (error instanceof SocketTimeoutException) {
-            CustomToast.customToast(mActivity, mActivity.getString(R.string._404_));
-        } else if (error instanceof NullPointerException) {
-            CustomToast.customToast(mActivity, mActivity.getString(R.string.no_response));
-        } else if (error instanceof ClassCastException) {
-            CustomToast.customToast(mActivity, mActivity.getString(R.string.no_response));
-        } else if (error instanceof ConnectException) {
-            CustomToast.customToast(mActivity, mActivity.getString(R.string.no_internet));
-        } else if (error instanceof UnknownHostException) {
-            CustomToast.customToast(mActivity, mActivity.getString(R.string.no_internet));
-        } else {
-            Log.i("Check Class-"
-                    , "NewVehicleContainerAdapter");
-            error.printStackTrace();
-        }
-
-    }
-
-    @Override
-    public void notifyString(String str) {
-        if (str != null) {
-            switch (str) {
-                /*case "success":
-                    //CustomToast.customToast(activity, "vehicle deleted");
-                    break;
-                case "success_notification":
-                    CustomToast.customToast(mActivity, "notification sent");
-                    break;
-                case "success_added":
-                    CustomToast.customToast(mActivity, "data updated");
-                    break;*/
-                case "sent_quotation":
-                    CustomToast.customToast(mActivity, "quotation sent");
-                    break;
-               /* case "sold_success":
-                    CustomToast.customToast(mActivity, "vehicle sold");
-                    break;*/
-            }
-        }
-    }
 
 }

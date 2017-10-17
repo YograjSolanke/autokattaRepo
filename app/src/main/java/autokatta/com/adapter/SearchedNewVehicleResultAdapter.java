@@ -57,7 +57,7 @@ public class SearchedNewVehicleResultAdapter extends RecyclerView.Adapter<Recycl
 
         YoHolder(View itemView) {
             super(itemView);
-            mCardView = (CardView) itemView.findViewById(R.id.adapter_mystoreListCard_view);
+            mCardView = (CardView) itemView.findViewById(R.id.adapter_searhedNewVehicleCard_view);
             stname = (TextView) itemView.findViewById(R.id.editstname);
             stlocation = (TextView) itemView.findViewById(R.id.autolocation);
             stwebsite = (TextView) itemView.findViewById(R.id.editwebsite);
@@ -100,6 +100,7 @@ public class SearchedNewVehicleResultAdapter extends RecyclerView.Adapter<Recycl
         mStoreHolder.stlocation.setText(mSearchNewVehicleList.get(position).getLocation());
         mStoreHolder.stwebsite.setText(mSearchNewVehicleList.get(position).getWebSite());
         mStoreHolder.serviceOffered.setText(mSearchNewVehicleList.get(position).getCategory());
+
         //mStoreHolder.storetiming.setText(mSearchNewVehicleList.get(position).getOpenTime()+" TO "+(mSearchNewVehicleList.get(position).getc()));
         //mStoreHolder.stlike.setText("Like(" + mSearchNewVehicleList.get(position).getLikecount() + ")");
         //mStoreHolder.stfollow.setText("Follow(" + mSearchNewVehicleList.get(position).getFollowcount() + ")");

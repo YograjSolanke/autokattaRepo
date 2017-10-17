@@ -35,10 +35,9 @@ public class SearchNewVehicleActivity extends AppCompatActivity implements Reque
     String myContact = "";
     ApiCall mApiCall;
     Spinner brandSpinner, modelSpinner, allcategorySpinner, subcategorySpinner, versionSpinner;
-    String action = "", subCategory, Sbrand, Smodel, Scategory;
-    int vehicle_id = 0, sub_category_id = 0, position_brand_id = 0, position_model_id, position_version_id;
+    String action = "", subCategory;
+    int vehicle_id = 0, sub_category_id = 0, position_brand_id = 0, position_model_id = 0, position_version_id = 0;
     Button btnSearch;
-    String categoryString, subCateString, modelString, brandString, versionString;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,9 +87,9 @@ public class SearchNewVehicleActivity extends AppCompatActivity implements Reque
                     CustomToast.customToast(getApplicationContext(), "Please Select Brand");
                 } else if (position_model_id == 0) {
                     CustomToast.customToast(getApplicationContext(), "Please Select Model");
-                } else if (position_version_id == 0) {
+                } /*else if (position_version_id == 0) {
                     CustomToast.customToast(getApplicationContext(), "Please Select Version");
-                } else {
+                } */ else {
 
                     Bundle b = new Bundle();
                     b.putInt("categoryId", vehicle_id);
@@ -194,7 +193,11 @@ public class SearchNewVehicleActivity extends AppCompatActivity implements Reque
                         parsedData.addAll(mCategoryId);
                         ArrayAdapter<String> adapter = new ArrayAdapter<>(getApplicationContext(), R.layout.registration_spinner, parsedData);
                         allcategorySpinner.setAdapter(adapter);
+
                         subcategorySpinner.setAdapter(null);
+                        brandSpinner.setAdapter(null);
+                        modelSpinner.setAdapter(null);
+                        versionSpinner.setAdapter(null);
                         allcategorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                             @Override
                             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -234,7 +237,10 @@ public class SearchNewVehicleActivity extends AppCompatActivity implements Reque
                     ArrayAdapter<String> adapter =
                             new ArrayAdapter<>(getApplicationContext(), R.layout.registration_spinner, parsedData);
                     subcategorySpinner.setAdapter(adapter);
+
                     brandSpinner.setAdapter(null);
+                    modelSpinner.setAdapter(null);
+                    versionSpinner.setAdapter(null);
                     subcategorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -276,9 +282,11 @@ public class SearchNewVehicleActivity extends AppCompatActivity implements Reque
                     Log.i("ListBrand", "->" + mBrandList);
                     ArrayAdapter<String> adapter =
                             new ArrayAdapter<>(getApplicationContext(), R.layout.registration_spinner, brandData);
-                    //  adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
                     brandSpinner.setAdapter(adapter);
+
                     modelSpinner.setAdapter(null);
+                    versionSpinner.setAdapter(null);
                     brandSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -320,6 +328,7 @@ public class SearchNewVehicleActivity extends AppCompatActivity implements Reque
                     ArrayAdapter<String> adapter =
                             new ArrayAdapter<>(getApplicationContext(), R.layout.registration_spinner, modelData);
                     modelSpinner.setAdapter(adapter);
+
                     versionSpinner.setAdapter(null);
                     modelSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override

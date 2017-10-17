@@ -868,4 +868,10 @@
     <string name="EngineDetails">Engine Details</string>
     <string name="Description">Description</string>
 
+    <!--Search new vehicle-->
+    <string name="compulsory_category">Category: <font color='#FF0000'>\u002A</font></string>
+    <string name="compulsory_SubCategory">Sub Category: <font color='#FF0000'>\u002A</font></string>
+    <string name="compulsory_brand">Brand: <font color='#FF0000'>\u002A</font></string>
+    <string name="compulsory_model">Model: <font color='#FF0000'>\u002A</font></string>
+
 </resources>
