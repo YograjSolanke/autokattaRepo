@@ -5,7 +5,6 @@ import android.app.ActivityOptions;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -67,6 +66,7 @@ import autokatta.com.response.MyUploadedVehiclesResponse;
 import autokatta.com.response.ProfileGroupResponse;
 import autokatta.com.view.AddManualEnquiry;
 import autokatta.com.view.BussinessChatActivity;
+import autokatta.com.view.EnquiredPersonsActivity;
 import autokatta.com.view.MyVehicleQuotationListActivity;
 import autokatta.com.view.VehicleDetails;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
@@ -727,8 +727,7 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
                 final TextView mDetailAddr = (TextView) dialoglayout.findViewById(R.id.address);
                 final TextView mPurchasePrice = (TextView) dialoglayout.findViewById(R.id.purchaseprice);
                 final TextView mPurchaseDate = (TextView) dialoglayout.findViewById(R.id.purchasedate);
-              //  final Button mCancle = (Button) dialoglayout.findViewById(R.id.cancl);
-
+                //  final Button mCancle = (Button) dialoglayout.findViewById(R.id.cancl);
 
 
                 if (mMainList.get(position).getStockType().equalsIgnoreCase("Finance/Repo") || mMainList.get(position).getStockType().equalsIgnoreCase("Insurance")) {
@@ -845,13 +844,25 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-                } else {
-                    holder.stock_type.setEnabled(false);
-                    holder.stock_type.setTextColor(Color.BLACK);
                 }
             }
         });
 
+
+        holder.mEnquiryCount.setOnClickListener(new
+
+    OnClickListener() {
+        @Override
+        public void onClick (View view){
+            Bundle b = new Bundle();
+            Intent i = new Intent(activity, EnquiredPersonsActivity.class);
+            b.putString("id", String.valueOf(mMainList.get(holder.getAdapterPosition()).getVehicleId()));
+            b.putString("keyword", "Used Vehicle");
+            b.putString("name", mMainList.get(position).getTitle());
+            i.putExtras(b);
+            activity.startActivity(i);
+        }
+    });
         /*holder.mBroadcast.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -873,35 +884,39 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
             }
         });*/
 
-        holder.mUploadGroup.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try {
-                    prevGroupIds = mMainList.get(holder.getAdapterPosition()).getGroupIDs().replaceAll(" ", "");
-                    int position = holder.getAdapterPosition();
+        holder.mUploadGroup.setOnClickListener(new
 
-                    getGroups(position);
-                    mVehicleId = mMainList.get(holder.getAdapterPosition()).getVehicleId();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
+    OnClickListener() {
+        @Override
+        public void onClick (View v){
+            try {
+                prevGroupIds = mMainList.get(holder.getAdapterPosition()).getGroupIDs().replaceAll(" ", "");
+                int position = holder.getAdapterPosition();
 
-        holder.mUploadStore.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try {
-                    prevStoreIds = mMainList.get(holder.getAdapterPosition()).getStoreIDs().replaceAll(" ", "");
-                    int position = holder.getAdapterPosition();
-                    getStores(position);
-                    mVehicleId = mMainList.get(holder.getAdapterPosition()).getVehicleId();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                getGroups(position);
+                mVehicleId = mMainList.get(holder.getAdapterPosition()).getVehicleId();
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        });
-    }
+        }
+    });
+
+        holder.mUploadStore.setOnClickListener(new
+
+    OnClickListener() {
+        @Override
+        public void onClick (View v){
+            try {
+                prevStoreIds = mMainList.get(holder.getAdapterPosition()).getStoreIDs().replaceAll(" ", "");
+                int position = holder.getAdapterPosition();
+                getStores(position);
+                mVehicleId = mMainList.get(holder.getAdapterPosition()).getVehicleId();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    });
+}
 
     /*
     Get Groups...
