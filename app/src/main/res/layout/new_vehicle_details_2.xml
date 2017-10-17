@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -15,21 +16,22 @@
             android:layout_height="wrap_content"
             android:text="GradeAbility : "
             android:textColor="#2C3343"
-            android:visibility="gone" />
+            android:layout_weight="1"
+            android:visibility="visible" />
 
         <TextView
             android:id="@+id/GradeAbility1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/app_name"
-            android:textColor="#2C3343"
             android:textAlignment="center"
-            android:visibility="gone" />
+            android:layout_weight="1"
+            android:textColor="#2C3343"
+            android:visibility="visible" />
 
     </LinearLayout>
 
     <View
-        android:id="@+id/vcolor"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginTop="5dp"
@@ -40,31 +42,27 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:weightSum="2">
+
         <TextView
             android:id="@+id/GroundClearance"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="Ground Clearance : "
-            android:textColor="#2C3343"
-            android:layout_weight="1"/>
+            android:textColor="#2C3343" />
 
         <TextView
             android:id="@+id/GroundClearance1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/DisplacementCC1"
-            android:layout_alignTop="@+id/Drive"
-            android:layout_below="@+id/DisplacementCC1"
+            android:layout_weight="1"
             android:text="@string/app_name"
-            android:textColor="#2C3343"
             android:textAlignment="center"
-            android:layout_weight="1"/>
-
+            android:textColor="#2C3343" />
 
     </LinearLayout>
 
     <View
-        android:id="@+id/vcolor"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginTop="5dp"
@@ -75,28 +73,27 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:weightSum="2">
+
         <TextView
             android:id="@+id/GVWGCW"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="GVWGCW : "
-            android:textColor="#2C3343"
-            android:layout_weight="1"/>
-
+            android:textColor="#2C3343" />
 
         <TextView
             android:id="@+id/GVWGCW1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="@string/app_name"
-            android:textColor="#2C3343"
             android:textAlignment="center"
-            android:layout_weight="1"/>
+            android:textColor="#2C3343" />
 
     </LinearLayout>
 
     <View
-        android:id="@+id/vcolor"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginTop="5dp"
@@ -112,23 +109,22 @@
             android:id="@+id/HeadRest"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="Head Rest : "
-            android:textColor="#2C3343"
-            android:layout_weight="1"/>
+            android:textColor="#2C3343" />
 
         <TextView
             android:id="@+id/HeadRest1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="@string/app_name"
-            android:textColor="#2C3343"
             android:textAlignment="center"
-            android:layout_weight="1"/>
+            android:textColor="#2C3343" />
 
     </LinearLayout>
 
     <View
-        android:id="@+id/vcolor"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginTop="5dp"
@@ -139,28 +135,26 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:weightSum="2">
+
         <TextView
             android:id="@+id/HP"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="HP : "
-            android:textColor="#2C3343"
-            android:layout_weight="1"/>
+            android:textColor="#2C3343" />
 
         <TextView
             android:id="@+id/HP1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="@string/app_name"
-            android:textColor="#2C3343"
             android:textAlignment="center"
-            android:layout_weight="1"/>
-
-
+            android:textColor="#2C3343" />
     </LinearLayout>
 
     <View
-        android:id="@+id/vcolor"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginTop="5dp"
@@ -176,23 +170,22 @@
             android:id="@+id/HPCat"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="HP Cat : "
-            android:textColor="#2C3343"
-            android:layout_weight="1"/>
+            android:textColor="#2C3343" />
 
         <TextView
             android:id="@+id/HPCat1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="@string/app_name"
-            android:textColor="#2C3343"
             android:textAlignment="center"
-            android:layout_weight="1"/>
+            android:textColor="#2C3343" />
 
     </LinearLayout>
 
     <View
-        android:id="@+id/vcolor"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginTop="5dp"
@@ -208,24 +201,21 @@
             android:id="@+id/Hydraulic"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="Hydraulic : "
-            android:textColor="#2C3343"
-            android:layout_weight="1"/>
+            android:textColor="#2C3343" />
 
         <TextView
             android:id="@+id/Hydraulic1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="@string/app_name"
-            android:textColor="#2C3343"
             android:textAlignment="center"
-            android:layout_weight="1"/>
-
-
+            android:textColor="#2C3343" />
     </LinearLayout>
 
     <View
-        android:id="@+id/vcolor"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginTop="5dp"
@@ -241,24 +231,21 @@
             android:id="@+id/HydraulicLiftCapacityKg"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="Hydraulic Lift Capacity(Kg) "
-            android:textColor="#2C3343"
-            android:layout_weight="1"/>
+            android:textColor="#2C3343" />
 
         <TextView
             android:id="@+id/HydraulicLiftCapacityKg1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="@string/app_name"
-            android:textColor="#2C3343"
             android:textAlignment="center"
-            android:layout_weight="1"/>
-
-
+            android:textColor="#2C3343" />
     </LinearLayout>
 
     <View
-        android:id="@+id/vcolor"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginTop="5dp"
@@ -269,28 +256,26 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:weightSum="2">
+
         <TextView
             android:id="@+id/HydraulicType"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="Hydraulic Type : "
-            android:textColor="#2C3343"
-            android:layout_weight="1"/>
+            android:textColor="#2C3343" />
 
         <TextView
             android:id="@+id/HydraulicType1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="@string/app_name"
-            android:textColor="#2C3343"
             android:textAlignment="center"
-            android:layout_weight="1"/>
-
-
+            android:textColor="#2C3343" />
     </LinearLayout>
 
     <View
-        android:id="@+id/vcolor"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginTop="5dp"
@@ -306,23 +291,21 @@
             android:id="@+id/IntegratedMusicSystem"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text=" Integrated Music System : "
-            android:textColor="#2C3343"
-            android:layout_weight="1"/>
+            android:textColor="#2C3343" />
 
         <TextView
             android:id="@+id/IntegratedMusicSystem1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="@string/app_name"
-            android:textColor="#2C3343"
             android:textAlignment="center"
-            android:layout_weight="1"/>
-
+            android:textColor="#2C3343" />
     </LinearLayout>
 
     <View
-        android:id="@+id/vcolor"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginTop="5dp"
@@ -338,23 +321,22 @@
             android:id="@+id/KerbWeight"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text=" Kerb Weight: "
-            android:textColor="#2C3343"
-            android:layout_weight="1"/>
+            android:textColor="#2C3343" />
 
         <TextView
             android:id="@+id/KerbWeight1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="@string/app_name"
-            android:textColor="#2C3343"
             android:textAlignment="center"
-            android:layout_weight="1"/>
+            android:textColor="#2C3343" />
 
     </LinearLayout>
 
     <View
-        android:id="@+id/vcolor"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginTop="5dp"
@@ -370,23 +352,22 @@
             android:id="@+id/KeylessButtonStart"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="Keyless/ButtonStart : "
-            android:textColor="#2C3343"
-            android:layout_weight="1"/>
+            android:textColor="#2C3343" />
 
         <TextView
             android:id="@+id/KeylessButtonStart1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="@string/app_name"
-            android:textColor="#2C3343"
             android:textAlignment="center"
-            android:layout_weight="1"/>
+            android:textColor="#2C3343" />
 
     </LinearLayout>
 
     <View
-        android:id="@+id/vcolor"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginTop="5dp"
@@ -402,23 +383,22 @@
             android:id="@+id/LiftingCapacityAtStandardFrame"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="Lifting Capacity At Standard Frame : "
-            android:textColor="#2C3343"
-            android:layout_weight="1"/>
+            android:textColor="#2C3343" />
 
         <TextView
             android:id="@+id/LiftingCapacityAtStandardFrame1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="@string/app_name"
             android:textAlignment="center"
-            android:textColor="#2C3343"
-            android:layout_weight="1"/>
+            android:textColor="#2C3343" />
 
     </LinearLayout>
 
     <View
-        android:id="@+id/vcolor"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginTop="5dp"
@@ -434,23 +414,22 @@
             android:id="@+id/LoadBody"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="Load Body : "
-            android:textColor="#2C3343"
-            android:layout_weight="1"/>
+            android:textColor="#2C3343" />
 
         <TextView
             android:id="@+id/LoadBody1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="@string/app_name"
             android:textAlignment="center"
-            android:textColor="#2C3343"
-            android:layout_weight="1"/>
+            android:textColor="#2C3343" />
 
     </LinearLayout>
 
     <View
-        android:id="@+id/vcolor"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginTop="5dp"
@@ -466,23 +445,22 @@
             android:id="@+id/LoadBodyDimensions"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text=" Load Body Dimensions: "
-            android:textColor="#2C3343"
-            android:layout_weight="1"/>
+            android:textColor="#2C3343" />
 
         <TextView
             android:id="@+id/LoadBodyDimensions1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="@string/app_name"
             android:textAlignment="center"
-            android:textColor="#2C3343"
-            android:layout_weight="1"/>
+            android:textColor="#2C3343" />
 
     </LinearLayout>
 
     <View
-        android:id="@+id/vcolor"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginTop="5dp"
@@ -498,23 +476,22 @@
             android:id="@+id/MaxPower"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="  MaxPower : "
-            android:textColor="#2C3343"
-            android:layout_weight="1"/>
+            android:textColor="#2C3343" />
 
         <TextView
             android:id="@+id/MaxPower1"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="@string/app_name"
             android:textAlignment="center"
-            android:textColor="#2C3343"
-            android:layout_weight="1"/>
+            android:textColor="#2C3343" />
 
     </LinearLayout>
 
     <View
-        android:id="@+id/vcolor"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginTop="5dp"
@@ -530,23 +507,22 @@
             android:id="@+id/MaxReserveSpeed"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text=" MaxReserveSpeed : "
-            android:textColor="#2C3343"
-            android:layout_weight="1"/>
+            android:textColor="#2C3343" />
 
         <TextView
             android:id="@+id/MaxReserveSpeed1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="@string/app_name"
             android:textAlignment="center"
-            android:textColor="#2C3343"
-            android:layout_weight="1"/>
+            android:textColor="#2C3343" />
 
     </LinearLayout>
 
     <View
-        android:id="@+id/vcolor"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginTop="5dp"
@@ -562,23 +538,22 @@
             android:id="@+id/MaxSpeed"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="Max Speed : "
-            android:textColor="#2C3343"
-            android:layout_weight="1"/>
+            android:textColor="#2C3343" />
 
         <TextView
             android:id="@+id/MaxSpeed1"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="@string/app_name"
-            android:textColor="#2C3343"
             android:textAlignment="center"
-            android:layout_weight="1"/>
+            android:textColor="#2C3343" />
 
     </LinearLayout>
 
     <View
-        android:id="@+id/vcolor"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginTop="5dp"
@@ -594,23 +569,22 @@
             android:id="@+id/MaxTorqueKgm"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text=" Max Torque Kg : "
-            android:textColor="#2C3343"
-            android:layout_weight="1"/>
+            android:textColor="#2C3343" />
 
         <TextView
             android:id="@+id/MaxTorqueKgm1"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="@string/app_name"
             android:textAlignment="center"
-            android:textColor="#2C3343"
-            android:layout_weight="1"/>
+            android:textColor="#2C3343" />
 
     </LinearLayout>
 
     <View
-        android:id="@+id/vcolor"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginTop="5dp"
@@ -626,23 +600,22 @@
             android:id="@+id/Mileage"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text=" Mileage : "
-            android:textColor="#2C3343"
-            android:layout_weight="1"/>
+            android:textColor="#2C3343" />
 
         <TextView
             android:id="@+id/Mileage1"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="@string/app_name"
             android:textAlignment="center"
-            android:textColor="#2C3343"
-            android:layout_weight="1"/>
+            android:textColor="#2C3343" />
 
     </LinearLayout>
 
     <View
-        android:id="@+id/vcolor"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginTop="5dp"
@@ -658,23 +631,22 @@
             android:id="@+id/NoOfCylinder"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="  No Of Cylinder : "
-            android:textColor="#2C3343"
-            android:layout_weight="1"/>
+            android:textColor="#2C3343" />
 
         <TextView
             android:id="@+id/NoOfCylinder1"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="@string/app_name"
             android:textAlignment="center"
-            android:textColor="#2C3343"
-            android:layout_weight="1"/>
+            android:textColor="#2C3343" />
 
     </LinearLayout>
 
     <View
-        android:id="@+id/vcolor"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginTop="5dp"

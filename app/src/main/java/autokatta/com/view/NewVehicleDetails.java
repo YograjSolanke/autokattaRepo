@@ -19,7 +19,7 @@ public class NewVehicleDetails extends AppCompatActivity implements RequestNotif
             GearBox, GradeAbility, GroundClearance, GVWGCW, HeadRest, HP, HPCat, Hydraulic, HydraulicLiftCapacityKg, HydraulicType, IntegratedMusicSystem, KeylessButtonStart, LiftingCapacityAtStandardFrame, LoadBody, LoadBodyDimensions, MaxPower, MaxReserveSpeed, MaxSpeed, Mileage, NoOfCylinder, MaxTorqueKgm, NoOfgears, NoOfGearsForword, NoOfGearsReverse, OverAllLength, OverAllWidth, ParkingSensors, PayLoad, PowerKW, PowerWindow, PTOHP, PTORPM, PTOSpeed, PTOType, PumpType, RainSensingWiper, RatedRPM, RearAC, RearDefogger,
             RearWiper, SeatBelt, RPTOGRPTO, SeatBeltWarning, SeatingCapacity, SeatType, Speed, SportMode, Steering, SteeringMountedControl, SteeringType, StrokeInMM, SunRoofMoonRoof, TMPS, Torque, TotalWeight, TransmissionType, TuboChargeNutralAspirated, TurningRadius, TurningRadiusOfBrakes, TypeOfClutchAndBrakePedal, Tyres, TyreSize, TyreSizeFront, TyreSizeRear, WarrantyKilometer, WarrantyYear, WebSite, WeightKg, WheelBaseMM, EngineDetails, Description;
     int newVehicleId;
-    ApiCall apiCall;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -143,7 +143,14 @@ public class NewVehicleDetails extends AppCompatActivity implements RequestNotif
         EngineDetails = (TextView) findViewById(R.id.EngineDetails1);
         Description = (TextView) findViewById(R.id.Description1);
 
-apiCall=new ApiCall(getApplicationContext(),this);
+        getData();
+    }
+
+    /*
+    Get New Vehicle Data...
+     */
+    private void getData() {
+        ApiCall apiCall = new ApiCall(NewVehicleDetails.this, this);
         apiCall.getnewvehiclebyid(newVehicleId);
     }
 
@@ -286,14 +293,14 @@ apiCall=new ApiCall(getApplicationContext(),this);
                     }
 
                 } else {
-                    CustomToast.customToast(this,getString(R.string.no_response));
+                    CustomToast.customToast(this, getString(R.string.no_response));
                 }
             } else {
-                CustomToast.customToast(this,getString(R.string.no_response));
+                CustomToast.customToast(this, getString(R.string.no_response));
             }
         } else {
 
-                CustomToast.customToast(this,getString(R.string.no_response));
+            CustomToast.customToast(this, getString(R.string.no_response));
             //showMessage(activity, getString(R.string.no_response));
         }
     }

@@ -85,7 +85,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
-                .setSmallIcon(R.mipmap.ic_launcher)
+                .setSmallIcon(R.drawable.logo48x48)
                 .setContentTitle("Autokatta")
                 .setContentText(body)
                 .setAutoCancel(true)
@@ -94,7 +94,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 .setContentIntent(likeIntent)
                 .setContentIntent(callIntent)
                 .addAction(R.mipmap.new_like_white, "Like", likeIntent)
-                .addAction(R.mipmap.call, "Call", callIntent);
+                .addAction(R.mipmap.new_call_white, "Call", callIntent);
 
         NotificationManager notificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
@@ -144,15 +144,15 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
-                .setSmallIcon(R.mipmap.ic_launcher)
+                .setSmallIcon(R.drawable.logo48x48)
                 .setContentTitle("Autokatta")
                 .setContentText(body)
                 .setAutoCancel(true)
                 .setSound(defaultSoundUri)
                 .setContentIntent(callIntent)
                 .setContentIntent(likeIntent)
-                .addAction(R.mipmap.thumb_up, "Like", likeIntent)
-                .addAction(R.mipmap.call, "Call", callIntent);
+                .addAction(R.mipmap.new_like_white, "Like", likeIntent)
+                .addAction(R.mipmap.new_call_white, "Call", callIntent);
 
         NotificationManager notificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
