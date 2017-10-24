@@ -42,6 +42,7 @@ public class StoreVideosActivity extends AppCompatActivity implements RequestNot
         setContentView(R.layout.activity_store_videos);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        setTitle("Videos");
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         recyclerView = (AAH_CustomRecyclerView) findViewById(R.id.rv_home);
@@ -69,7 +70,7 @@ public class StoreVideosActivity extends AppCompatActivity implements RequestNot
                 }
 
 
-                adapter = new VideoAdapter(videosList);
+                adapter = new VideoAdapter(getApplicationContext(), videosList);
                 recyclerView.setActivity(StoreVideosActivity.this); //todo before setAdapter
                 recyclerView.setAdapter(adapter);
                 adapter.notifyDataSetChanged();

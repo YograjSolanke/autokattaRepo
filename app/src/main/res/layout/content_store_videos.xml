@@ -12,7 +12,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Posted Videos In This Store"
+        android:text="Posted Videos"
         android:textStyle="bold"
         android:id="@+id/titleText"
         android:textAlignment="center"
@@ -20,8 +20,9 @@
         android:textSize="20sp" />
 
     <com.allattentionhere.autoplayvideos.AAH_CustomRecyclerView
-            android:id="@+id/rv_home"
-            android:layout_width="wrap_content"
+        android:id="@+id/rv_home"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/titleText"
         android:layout_marginTop="5dp" />

@@ -873,5 +873,6 @@
     <string name="compulsory_SubCategory">Sub Category: <font color='#FF0000'>\u002A</font></string>
     <string name="compulsory_brand">Brand: <font color='#FF0000'>\u002A</font></string>
     <string name="compulsory_model">Model: <font color='#FF0000'>\u002A</font></string>
+    <string name="title_activity_single_video">SingleVideoActivity</string>
 
 </resources>

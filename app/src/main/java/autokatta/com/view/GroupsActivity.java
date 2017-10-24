@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import autokatta.com.R;
+import autokatta.com.StoreVideosActivity;
 import autokatta.com.groups_container.CommunicationContainer;
 import autokatta.com.groups_container.GroupProductContainer;
 import autokatta.com.groups_container.GroupServiceContainer;
@@ -86,6 +87,8 @@ public class GroupsActivity extends AppCompatActivity {
                     service.putExtras(b);
                     startActivity(service);
                 } else if (gridViewString[+i].equals("Video's")) {
+                    Intent videos = new Intent(getApplicationContext(), StoreVideosActivity.class);
+                    startActivity(videos);
                 } else if (gridViewString[+i].equals("Image's")) {
                 }
             }

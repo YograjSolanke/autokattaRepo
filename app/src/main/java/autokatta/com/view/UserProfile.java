@@ -52,6 +52,7 @@ import java.net.UnknownHostException;
 import java.util.Random;
 
 import autokatta.com.R;
+import autokatta.com.StoreVideosActivity;
 import autokatta.com.adapter.TabAdapterName;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.fragment_profile.About;
@@ -67,7 +68,6 @@ import autokatta.com.my_profile_container.GroupContainer;
 import autokatta.com.my_profile_container.MyBlogsContainer;
 import autokatta.com.my_profile_container.MyImagesContainer;
 import autokatta.com.my_profile_container.MyPostContainer;
-import autokatta.com.my_profile_container.MyVideoContainer;
 import autokatta.com.my_profile_container.StoreContainer;
 import autokatta.com.other.CustomToast;
 import autokatta.com.other.FullImageActivity;
@@ -710,7 +710,7 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
                 break;
 
             case R.id.my_video:
-                startActivity(new Intent(getApplicationContext(), MyVideoContainer.class));
+                startActivity(new Intent(getApplicationContext(), StoreVideosActivity.class));
                 break;
 
             case R.id.images:
