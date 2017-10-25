@@ -184,6 +184,7 @@ public class UploadToGroupStoreActivity extends AppCompatActivity implements Req
     public void notifyString(String str) {
         if (str != null) {
             if (str.equalsIgnoreCase("uploadPostToGroupStore")) {
+                CustomToast.customToast(getApplicationContext(), "Uploaded successfully");
                 finish();
             }
         }
@@ -233,7 +234,7 @@ public class UploadToGroupStoreActivity extends AppCompatActivity implements Req
 
     private void uploadToGroupStore(String groupIds, String storeIds) {
         ApiCall mApiCall = new ApiCall(this, this);
-        // mApiCall.uploadToGroupStore(statusId, groupIds, storeIds);
+        mApiCall.uploadToGroupStore(statusId, groupIds, storeIds);
         Log.i("Groups", groupIds);
         Log.i("Stores", storeIds);
         Log.i("Status", String.valueOf(statusId));

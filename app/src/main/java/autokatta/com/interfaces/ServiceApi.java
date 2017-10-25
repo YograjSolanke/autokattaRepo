@@ -1394,8 +1394,10 @@ public interface ServiceApi {
                                                  @Query("VehicleID") int VehicleID);
 
 
-    @POST("VehicleInventorySrcap")
-    Call<String> _autokattauploadToGroupStore(int statusId, String groupIds, String storeIds);
+    @POST("WallStatusNotificationAssociation")
+    Call<String> _autokattauploadToGroupStore(@Query("StatusID") int statusId,
+                                              @Query("GroupIDs") String groupIds,
+                                              @Query("StoreIDs") String storeIds);
 
     @GET("GetNewVehicleDetails")
     Call<NewVehicleAllResponse> _autokattaGetNewVehicleList(@Query("CategoryID") int categoryId,
@@ -1438,6 +1440,7 @@ public interface ServiceApi {
                                                                        @Query("VersionID") int versionId,
                                                                        @Query("MyContact") String myContact,
                                                                        @Query("Price") int i);
+
     @GET("GetVehicleRepoInsurance")
     Call<GetVehicleRepoInsuranceResponse> _autokattaGetVehiclesRepoInsurance(@Query("VehicleID") int VehicleID);
 
