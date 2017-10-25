@@ -190,7 +190,15 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> impl
         }
         if (mItemList.get(position).getImage().equals("") || mItemList.get(position).getImage().equals(null) ||
                 mItemList.get(position).getImage().equals("null")) {
-            holder.mGroupIcon.setBackgroundResource(R.mipmap.ic_launcher);
+            //holder.mGroupIcon.setBackgroundResource(R.mipmap.ic_launcher);
+            String path = mActivity.getString(R.string.base_image_url) + "logo48x48.png";
+            Glide.with(mActivity)
+                    .load(path)
+                    .bitmapTransform(new CropSquareTransformation(mActivity)) //To display image in Circular form.
+                    .diskCacheStrategy(DiskCacheStrategy.ALL) //For caching diff versions of image.
+                    //.placeholder(R.drawable.logo) //To show image before loading an original image.
+                    //.error(R.drawable.blocked) //To show error image if problem in loading.
+                    .into(holder.mGroupIcon);
         } else {
             String dppath = mActivity.getString(R.string.base_image_url) + mItemList.get(position).getImage();
             Glide.with(mActivity)

@@ -79,7 +79,7 @@ public class MemberListFragment extends Fragment implements SwipeRefreshLayout.O
             mApiCall.getGroupContacts(group_id);
         } else {
             if (isAdded())
-            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
+                CustomToast.customToast(getActivity(), getString(R.string.no_internet));
             //errorMessage(activity, getString(R.string.no_internet));
         }
     }
@@ -172,7 +172,7 @@ public class MemberListFragment extends Fragment implements SwipeRefreshLayout.O
         } else {
             mSwipeRefreshLayout.setRefreshing(false);
             if (isAdded())
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+                CustomToast.customToast(getActivity(), getString(R.string.no_response));
             //showMessage(activity, getString(R.string.no_response));
         }
     }
@@ -202,11 +202,11 @@ public class MemberListFragment extends Fragment implements SwipeRefreshLayout.O
             //   showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
             if (isAdded())
-            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
+                CustomToast.customToast(getActivity(), getString(R.string.no_internet));
             //   errorMessage(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
             if (isAdded())
-            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
+                CustomToast.customToast(getActivity(), getString(R.string.no_internet));
             //   errorMessage(getActivity(), getString(R.string.no_internet));
         } else {
             Log.i("Check Class-"
@@ -233,7 +233,7 @@ public class MemberListFragment extends Fragment implements SwipeRefreshLayout.O
         super.setUserVisibleHint(isVisibleToUser);
         if (this.isVisible()) {
             if (isVisibleToUser && !_hasLoadedOnce) {
-                getGroupContact(mGroupId);
+                //getGroupContact(mGroupId);
                 _hasLoadedOnce = true;
             }
         }

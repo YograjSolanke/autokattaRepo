@@ -96,7 +96,7 @@ public class GroupTabs extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        //super.onBackPressed();
+        super.onBackPressed();
         int fragment = getSupportFragmentManager().getBackStackEntryCount();
         if (fragment == 1) {
             finish();
@@ -104,7 +104,6 @@ public class GroupTabs extends AppCompatActivity {
             if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
                 getSupportFragmentManager().popBackStack();
             } else {
-                super.onBackPressed();
                 overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
             }
         }

@@ -23,7 +23,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
-                android:layout_centerInParent="true"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="2dp"
                 android:text="Group title"
@@ -55,7 +54,7 @@
                 android:layout_alignParentTop="true"
                 android:layout_centerVertical="true"
                 android:layout_marginBottom="5dp"
-                android:layout_marginStart="10dp"
+                android:layout_marginStart="5dp"
                 android:layout_marginTop="5dp"
                 android:contentDescription="@string/app_name" />
 
@@ -63,7 +62,7 @@
                 android:id="@+id/member_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
+                android:layout_marginStart="5dp"
                 android:layout_marginTop="5dp"
                 android:layout_toEndOf="@+id/group_icon"
                 android:text="@string/member_count"
@@ -76,8 +75,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignTop="@+id/member_count"
-                android:layout_marginStart="10dp"
+                android:layout_marginStart="5dp"
                 android:layout_toEndOf="@+id/member_count"
+                android:layout_toStartOf="@+id/group_delete"
                 android:text="@string/app_name"
                 android:textColor="#2C3343"
                 android:textSize="16sp"
@@ -88,7 +88,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/member_count"
-                android:layout_marginStart="20dp"
+                android:layout_marginStart="5dp"
                 android:layout_toEndOf="@+id/group_icon"
                 android:text="@string/vehicle_count"
                 android:textColor="#2C3343"
@@ -100,10 +100,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignTop="@+id/vehicle_count"
-                android:layout_marginStart="15dp"
+                android:layout_marginStart="10dp"
                 android:layout_toEndOf="@+id/vehicle_count"
                 android:text="@string/app_name"
                 android:textColor="#2C3343"
+                android:layout_toStartOf="@+id/group_delete"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
@@ -112,7 +113,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/vehicle_count"
-                android:layout_marginStart="20dp"
+                android:layout_marginStart="5dp"
                 android:layout_toEndOf="@+id/group_icon"
                 android:text="@string/product_count"
                 android:textColor="#2C3343"
@@ -124,9 +125,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignTop="@+id/Product_count"
-                android:layout_marginStart="12dp"
+                android:layout_marginStart="5dp"
                 android:layout_toEndOf="@+id/Product_count"
                 android:text="@string/app_name"
+                android:layout_toStartOf="@+id/group_delete"
                 android:textColor="#2C3343"
                 android:textSize="16sp"
                 android:textStyle="bold" />
@@ -136,7 +138,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/Product_count"
-                android:layout_marginStart="20dp"
+                android:layout_marginStart="5dp"
                 android:layout_toEndOf="@+id/group_icon"
                 android:text="@string/service_count"
                 android:textColor="#2C3343"
@@ -148,14 +150,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignTop="@+id/Service_count"
-                android:layout_marginStart="12dp"
+                android:layout_marginStart="5dp"
+                android:layout_toStartOf="@+id/group_delete"
                 android:layout_toEndOf="@+id/Service_count"
                 android:text="@string/app_name"
                 android:textColor="#2C3343"
                 android:textSize="16sp"
                 android:textStyle="bold" />
-
-
 
             <ImageView
                 android:id="@+id/group_delete"
@@ -169,10 +170,10 @@
         </RelativeLayout>
     </android.support.v7.widget.CardView>
 
-    <View
+    <!--<View
         android:id="@+id/vieww"
         android:layout_width="match_parent"
         android:layout_height="2dp"
         android:layout_below="@+id/card_view"
-        android:background="@color/grey" />
+        android:background="@color/grey" />-->
 </RelativeLayout>

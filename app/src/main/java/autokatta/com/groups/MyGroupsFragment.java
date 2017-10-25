@@ -71,7 +71,7 @@ public class MyGroupsFragment extends Fragment implements SwipeRefreshLayout.OnR
             mApiCall.Groups(loginContact);
         } else {
             if (isAdded())
-            CustomToast.customToast(getActivity(),getString(R.string.no_internet));
+                CustomToast.customToast(getActivity(), getString(R.string.no_internet));
             // errorMessage(activity, getString(R.string.no_internet));
         }
     }
@@ -114,7 +114,7 @@ public class MyGroupsFragment extends Fragment implements SwipeRefreshLayout.OnR
         } else {
             mSwipeRefreshLayout.setRefreshing(false);
             if (isAdded())
-            CustomToast.customToast(getActivity(),getString(R.string.no_response));
+                CustomToast.customToast(getActivity(), getString(R.string.no_response));
             //showMessage(activity, getString(R.string.no_response));
         }
     }

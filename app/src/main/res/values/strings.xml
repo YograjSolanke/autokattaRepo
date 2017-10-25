@@ -624,12 +624,12 @@
     <string name="last_enquiry">Last Enquiry:</string>
     <string name="vehicle_title">Vehicle title</string>
     <string name="number">Number</string>
-    <string name="vehicle_count">Vehicles Count:</string>
-    <string name="product_count">Product Count:</string>
-    <string name="service_count">Service Count:</string>
+    <string name="member_count">Member Count :</string>
+    <string name="vehicle_count">Vehicle Count :</string>
+    <string name="product_count">Product Count :</string>
+    <string name="service_count">Service Count :</string>
     <string name="options">Options</string>
     <string name="admin">Admin</string>
-    <string name="member_count">Member Count :</string>
     <string name="event_by">Event By:-</string>
 
     <string name="store_services">Store Services</string>
