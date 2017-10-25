@@ -9,7 +9,8 @@
     <RelativeLayout
         android:id="@+id/used_relative"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/text_margin_top">
 
         <ImageView
             android:id="@+id/vehicle_icon"
@@ -272,10 +273,10 @@
         </RelativeLayout>
     </RelativeLayout>
 
-    <View
+    <!--<View
         android:id="@+id/vieww"
         android:layout_width="match_parent"
         android:layout_height="2dp"
-        android:background="@color/grey" />
+        android:background="@color/grey" />-->
 
 </LinearLayout>
