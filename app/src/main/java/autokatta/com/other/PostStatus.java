@@ -141,16 +141,16 @@ public class PostStatus extends AppCompatActivity implements RequestNotifier {
             document_id = cursor.getString(0);
             document_id = document_id.substring(document_id.lastIndexOf(":") + 1);
             cursor.close();
-        }
 
 
-        cursor = getContentResolver().query(
-                android.provider.MediaStore.Video.Media.EXTERNAL_CONTENT_URI,
-                null, MediaStore.Images.Media._ID + " = ? ", new String[]{document_id}, null);
-        if (cursor != null) {
-            cursor.moveToFirst();
-            path = cursor.getString(cursor.getColumnIndex(MediaStore.Video.Media.DATA));
-            cursor.close();
+            cursor = getContentResolver().query(
+                    android.provider.MediaStore.Video.Media.EXTERNAL_CONTENT_URI,
+                    null, MediaStore.Images.Media._ID + " = ? ", new String[]{document_id}, null);
+            if (cursor != null) {
+                cursor.moveToFirst();
+                path = cursor.getString(cursor.getColumnIndex(MediaStore.Video.Media.DATA));
+                cursor.close();
+            }
         }
 
 
