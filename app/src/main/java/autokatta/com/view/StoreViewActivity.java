@@ -816,7 +816,7 @@ Call Intent...
                 break;
 
             case R.id.images:
-                Intent intentImages = new Intent(StoreViewActivity.this, StoreImagesTabActivity.class);
+                Intent intentImages = new Intent(StoreViewActivity.this, AndroidGridViewDisplayImages.class);
                 startActivity(intentImages, options.toBundle());
 
 

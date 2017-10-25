@@ -66,7 +66,6 @@ import autokatta.com.my_profile_container.AboutContainer;
 import autokatta.com.my_profile_container.FollowContainer;
 import autokatta.com.my_profile_container.GroupContainer;
 import autokatta.com.my_profile_container.MyBlogsContainer;
-import autokatta.com.my_profile_container.MyImagesContainer;
 import autokatta.com.my_profile_container.MyPostContainer;
 import autokatta.com.my_profile_container.StoreContainer;
 import autokatta.com.other.CustomToast;
@@ -714,7 +713,7 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
                 break;
 
             case R.id.images:
-                startActivity(new Intent(getApplicationContext(), MyImagesContainer.class));
+                startActivity(new Intent(getApplicationContext(), AndroidGridViewDisplayImages.class));
                 break;
 
             case R.id.post:

@@ -825,6 +825,10 @@
         <activity
             android:name=".view.SingleVideoActivity"
             android:label="@string/title_activity_single_video"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".view.AndroidGridViewDisplayImages"
+            android:label="@string/title_activity_android_grid_view_display_images"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

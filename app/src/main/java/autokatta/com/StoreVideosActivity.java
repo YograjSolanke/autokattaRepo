@@ -5,12 +5,11 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-
-import com.allattentionhere.autoplayvideos.AAH_CustomRecyclerView;
 
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
@@ -31,7 +30,7 @@ public class StoreVideosActivity extends AppCompatActivity implements RequestNot
     String myContact;
     VideoAdapter adapter;
 
-    AAH_CustomRecyclerView recyclerView;
+    RecyclerView recyclerView;
     LinearLayoutManager mLinearLayoutManager;
     List<String> videosList = new ArrayList<>();
     //Picasso picasso;
@@ -45,7 +44,7 @@ public class StoreVideosActivity extends AppCompatActivity implements RequestNot
         setTitle("Videos");
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        recyclerView = (AAH_CustomRecyclerView) findViewById(R.id.rv_home);
+        recyclerView = (RecyclerView) findViewById(R.id.rv_home);
 
 
         mApiCall = new ApiCall(StoreVideosActivity.this, this);
@@ -70,13 +69,12 @@ public class StoreVideosActivity extends AppCompatActivity implements RequestNot
                 }
 
 
-                adapter = new VideoAdapter(getApplicationContext(), videosList);
-                recyclerView.setActivity(StoreVideosActivity.this); //todo before setAdapter
+                adapter = new VideoAdapter(StoreVideosActivity.this, videosList);
                 recyclerView.setAdapter(adapter);
                 adapter.notifyDataSetChanged();
                 recyclerView.smoothScrollBy(0, 1);
                 recyclerView.smoothScrollBy(0, -1);
-                recyclerView.setCheckForMp4(false); // true by default
+//                recyclerView.setCheckForMp4(false); // true by default
                 //recyclerView.setPlayOnlyFirstVideo(true); // false by default
 
 
@@ -89,13 +87,13 @@ public class StoreVideosActivity extends AppCompatActivity implements RequestNot
     @Override
     protected void onStop() {
         super.onStop();
-        recyclerView.stopVideos();
+        //recyclerView.stopVideos();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        recyclerView.playAvailableVideos(0);
+        // recyclerView.playAvailableVideos(0);
     }
     @Override
     public void onClick(View view) {

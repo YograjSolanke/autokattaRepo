@@ -45,16 +45,18 @@ public class SingleVideoActivity extends AppCompatActivity {
                 }
 
                 videoview = (VideoView) findViewById(R.id.VideoView);
+
                 // Execute StreamVideo AsyncTask
 
                 // Create a progressbar
                 pDialog = new ProgressDialog(SingleVideoActivity.this);
+
                 // Set progressbar title
                 pDialog.setTitle("Please Wait");
                 // Set progressbar message
                 pDialog.setMessage("Buffering...");
                 pDialog.setIndeterminate(false);
-                pDialog.setCancelable(false);
+                pDialog.setCancelable(true);
                 // Show progressbar
                 pDialog.show();
 
@@ -67,6 +69,7 @@ public class SingleVideoActivity extends AppCompatActivity {
                     Uri video = Uri.parse(VideoURL);
                     videoview.setMediaController(mediacontroller);
                     videoview.setVideoURI(video);
+                    videoview.seekTo(100);
 
                 } catch (Exception e) {
                     Log.e("Error", e.getMessage());

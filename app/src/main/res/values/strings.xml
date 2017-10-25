@@ -874,5 +874,6 @@
     <string name="compulsory_brand">Brand: <font color='#FF0000'>\u002A</font></string>
     <string name="compulsory_model">Model: <font color='#FF0000'>\u002A</font></string>
     <string name="title_activity_single_video">SingleVideoActivity</string>
+    <string name="title_activity_android_grid_view_display_images">AndroidGridViewDisplayImages</string>
 
 </resources>

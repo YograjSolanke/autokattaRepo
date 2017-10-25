@@ -134,20 +134,29 @@ public class PostStatus extends AppCompatActivity implements RequestNotifier {
 
     public String getPath(Uri uri) {
         Cursor cursor = getContentResolver().query(uri, null, null, null, null);
-        cursor.moveToFirst();
-        String document_id = cursor.getString(0);
-        document_id = document_id.substring(document_id.lastIndexOf(":") + 1);
-        cursor.close();
+        String document_id = null, path = null;
+        if (cursor != null) {
+            cursor.moveToFirst();
+
+            document_id = cursor.getString(0);
+            document_id = document_id.substring(document_id.lastIndexOf(":") + 1);
+            cursor.close();
+        }
+
 
         cursor = getContentResolver().query(
                 android.provider.MediaStore.Video.Media.EXTERNAL_CONTENT_URI,
                 null, MediaStore.Images.Media._ID + " = ? ", new String[]{document_id}, null);
-        cursor.moveToFirst();
-        String path = cursor.getString(cursor.getColumnIndex(MediaStore.Video.Media.DATA));
-        cursor.close();
+        if (cursor != null) {
+            cursor.moveToFirst();
+            path = cursor.getString(cursor.getColumnIndex(MediaStore.Video.Media.DATA));
+            cursor.close();
+        }
+
 
         return path;
     }
+
 
     private void uploadVideo() {
         class UploadVideo extends AsyncTask<Void, Void, String> {
