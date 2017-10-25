@@ -12,7 +12,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +32,7 @@ public class ManualEnquiryVehicleList extends AppCompatActivity implements Reque
     String mInventoryType, addArray = "";
     ListView mListView;
     String custName, custContact, custAddress, custFullAddress, custInventoryType = "", custEnquiryStatus = "";
-    String discussion, nextFollowupDate,callfrom;
+    String discussion, nextFollowupDate, callfrom;
     Button mSubmit;
     List<String> arrayList = new ArrayList<>();
 
@@ -56,17 +55,17 @@ public class ManualEnquiryVehicleList extends AppCompatActivity implements Reque
 
         if (getIntent().getExtras() != null) {
             getMyInventoryData(getIntent().getExtras().getString("spinnerValue"));
-            setTitle("Select "+getIntent().getExtras().getString("spinnerValue"));
+            setTitle("Select " + getIntent().getExtras().getString("spinnerValue"));
             custName = getIntent().getExtras().getString("custName");
             custContact = getIntent().getExtras().getString("custContact");
             custAddress = getIntent().getExtras().getString("custAddress");
             custFullAddress = getIntent().getExtras().getString("custFullAddress");
             custInventoryType = getIntent().getExtras().getString("spinnerValue");
-          //  custInventoryType = getIntent().getExtras().getString("custInventoryType");
+            //  custInventoryType = getIntent().getExtras().getString("custInventoryType");
             custEnquiryStatus = getIntent().getExtras().getString("custEnquiryStatus");
             discussion = getIntent().getExtras().getString("discussion");
             nextFollowupDate = getIntent().getExtras().getString("nextFollowupDate");
-            callfrom = getIntent().getExtras().getString("callfrom","");
+            callfrom = getIntent().getExtras().getString("callfrom", "");
         }
     }
 
@@ -119,33 +118,45 @@ public class ManualEnquiryVehicleList extends AppCompatActivity implements Reque
                     if (!mInventoryResponse.getSuccess().isEmpty()) {
                         mItemList.clear();
                         for (GetInventoryResponse.Success success : mInventoryResponse.getSuccess()) {
-                            if (success.getInventoryType().equals("UsedVehicle")) {
-                                success.setVehicleId(success.getVehicleId());
-                                success.setTitle(success.getTitle());
-                                success.setCategory(success.getCategory());
-                                success.setSubCategory(success.getSubCategory());
-                                success.setModel(success.getModel());
-                                mInventoryType = success.getInventoryType();
-                                Log.i("used", "->" + mInventoryType);
-                                mItemList.add(success);
-                            } else if (success.getInventoryType().equals("New Vehicle")) {
-                                //
-                            } else if (success.getInventoryType().equals("Products")) {
-                                success.setId(success.getId());
-                                success.setProductName(success.getProductName());
-                                success.setProductType(success.getProductType());
-                                success.setCategory(success.getCategory());
-                                mInventoryType = success.getInventoryType();
-                                Log.i("product", "->" + mInventoryType);
-                                mItemList.add(success);
-                            } else if (success.getInventoryType().equals("Services")) {
-                                success.setId(success.getId());
-                                success.setName(success.getName());
-                                success.setType(success.getType());
-                                success.setCategory(success.getCategory());
-                                mInventoryType = success.getInventoryType();
-                                Log.i("service", "->" + mInventoryType);
-                                mItemList.add(success);
+                            switch (success.getInventoryType()) {
+                                case "UsedVehicle":
+                                    success.setVehicleId(success.getVehicleId());
+                                    success.setTitle(success.getTitle());
+                                    success.setCategory(success.getCategory());
+                                    success.setSubCategory(success.getSubCategory());
+                                    success.setModel(success.getModel());
+                                    mInventoryType = success.getInventoryType();
+                                    Log.i("used", "->" + mInventoryType);
+                                    mItemList.add(success);
+                                    break;
+                                case "New Vehicle":
+                                    success.setNewVehicleID(success.getNewVehicleID());
+                                    success.setTitle("new vehicle");
+                                    success.setCategory(success.getCategoryName());
+                                    success.setSubCategory(success.getSubCategoryName());
+                                    success.setModel(success.getModelName());
+                                    mInventoryType = success.getInventoryType();
+                                    Log.i("new", "->" + mInventoryType);
+                                    mItemList.add(success);
+                                    break;
+                                case "Products":
+                                    success.setId(success.getId());
+                                    success.setProductName(success.getProductName());
+                                    success.setProductType(success.getProductType());
+                                    success.setCategory(success.getCategory());
+                                    mInventoryType = success.getInventoryType();
+                                    Log.i("product", "->" + mInventoryType);
+                                    mItemList.add(success);
+                                    break;
+                                case "Services":
+                                    success.setId(success.getId());
+                                    success.setName(success.getName());
+                                    success.setType(success.getType());
+                                    success.setCategory(success.getCategory());
+                                    mInventoryType = success.getInventoryType();
+                                    Log.i("service", "->" + mInventoryType);
+                                    mItemList.add(success);
+                                    break;
                             }
                         }
                         Log.i("Inventory", "->" + mInventoryType);
@@ -165,14 +176,14 @@ public class ManualEnquiryVehicleList extends AppCompatActivity implements Reque
                         //Snackbar.make(mRelative, getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
                         try {
                             if (getIntent().getExtras().getString("spinnerValue") != null) {
-                                if (getIntent().getExtras().getString("spinnerValue").equals("New Vehicle")) {
+                                if (getIntent().getExtras().getString("spinnerValue", "").equals("New Vehicle")) {
                                     AlertDialog.Builder alertDialog = new AlertDialog.Builder(ManualEnquiryVehicleList.this);
                                     alertDialog.setTitle("No New Vehicle Found");
                                     alertDialog.setMessage("Do you want to add New Vehicle...?");
                                     alertDialog.setIcon(android.R.drawable.ic_dialog_alert);
                                     alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int which) {
-                                            startActivity(new Intent(ManualEnquiryVehicleList.this, NewVehicleCatalogActivity.class));
+                                            startActivity(new Intent(ManualEnquiryVehicleList.this, AddNewVehicleActivity.class));
                                         }
                                     });
                                     alertDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
@@ -182,14 +193,14 @@ public class ManualEnquiryVehicleList extends AppCompatActivity implements Reque
                                         }
                                     });
                                     alertDialog.show();
-                                } else if (getIntent().getExtras().getString("spinnerValue").equals("Used Vehicle")) {
+                                } else if (getIntent().getExtras().getString("spinnerValue", "").equals("Used Vehicle")) {
                                     AlertDialog.Builder alertDialog = new AlertDialog.Builder(ManualEnquiryVehicleList.this);
                                     alertDialog.setTitle("No Used Vehicle Found");
                                     alertDialog.setMessage("Do you want to add Used Vehicle...?");
                                     alertDialog.setIcon(android.R.drawable.ic_dialog_alert);
                                     alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int which) {
-                                            Toast.makeText(ManualEnquiryVehicleList.this, "used", Toast.LENGTH_SHORT).show();
+                                            startActivity(new Intent(ManualEnquiryVehicleList.this, VehicleUpload.class));
                                         }
                                     });
                                     alertDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
@@ -199,14 +210,14 @@ public class ManualEnquiryVehicleList extends AppCompatActivity implements Reque
                                         }
                                     });
                                     alertDialog.show();
-                                } else if (getIntent().getExtras().getString("spinnerValue").equals("Products")) {
+                                } else if (getIntent().getExtras().getString("spinnerValue", "").equals("Products")) {
                                     AlertDialog.Builder alertDialog = new AlertDialog.Builder(ManualEnquiryVehicleList.this);
                                     alertDialog.setTitle("No Products Found");
-                                    alertDialog.setMessage("Do you want to add Products...?");
+                                    alertDialog.setMessage("add Products in particular store...?");
                                     alertDialog.setIcon(android.R.drawable.ic_dialog_alert);
                                     alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int which) {
-                                            Toast.makeText(ManualEnquiryVehicleList.this, "products", Toast.LENGTH_SHORT).show();
+                                            startActivity(new Intent(ManualEnquiryVehicleList.this, MyStoreListActivity.class));
                                         }
                                     });
                                     alertDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
@@ -216,14 +227,14 @@ public class ManualEnquiryVehicleList extends AppCompatActivity implements Reque
                                         }
                                     });
                                     alertDialog.show();
-                                } else if (getIntent().getExtras().getString("spinnerValue").equals("Services")) {
+                                } else if (getIntent().getExtras().getString("spinnerValue", "").equals("Services")) {
                                     AlertDialog.Builder alertDialog = new AlertDialog.Builder(ManualEnquiryVehicleList.this);
                                     alertDialog.setTitle("No Services Found");
-                                    alertDialog.setMessage("Do you want to add Services...?");
+                                    alertDialog.setMessage("add Services in particular store...?");
                                     alertDialog.setIcon(android.R.drawable.ic_dialog_alert);
                                     alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int which) {
-                                            Toast.makeText(ManualEnquiryVehicleList.this, "services", Toast.LENGTH_SHORT).show();
+                                            startActivity(new Intent(ManualEnquiryVehicleList.this, MyStoreListActivity.class));
                                         }
                                     });
                                     alertDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
@@ -288,12 +299,12 @@ public class ManualEnquiryVehicleList extends AppCompatActivity implements Reque
                 }
 
                 /*if (!callfrom.equalsIgnoreCase("uploadvehicle")) {*/
-                    if (!addArray.equals("")) {
-                        AddEnquiryData(custName, custContact, custAddress, custFullAddress, custInventoryType, custEnquiryStatus,
-                                discussion, nextFollowupDate, addArray);
-                    } else {
-                        CustomToast.customToast(this, "Please Select Atleast One...");
-                    }
+                if (!addArray.equals("")) {
+                    AddEnquiryData(custName, custContact, custAddress, custFullAddress, custInventoryType, custEnquiryStatus,
+                            discussion, nextFollowupDate, addArray);
+                } else {
+                    CustomToast.customToast(this, "Please Select Atleast One...");
+                }
                /* }else {
                     CustomToast.customToast(getApplicationContext(),"Enquiry For Exchange Will Be Added");
                     getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("Ids_for_manual_enquiry", addArray).apply();

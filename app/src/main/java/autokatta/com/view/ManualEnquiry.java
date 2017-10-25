@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -436,6 +437,63 @@ public class ManualEnquiry extends AppCompatActivity implements SwipeRefreshLayo
                             request.setServiceImage(imageSplit[0].substring(0, imageSplit[0].length()));
                             mMyGroupsList.add(request);
                         }
+
+
+                        /*New Vehicle*/
+                        for (ManualEnquiryResponse.Success.NewVehicle success : manualEnquiry.getSuccess().getNewVehicle()) {
+                            ManualEnquiryRequest request = new ManualEnquiryRequest();
+                            request.setLayoutNo(4);
+                            request.setVehicleId(String.valueOf(success.getNewVehicleID()));
+                            request.setVehicleName("newVehicle");
+                            request.setVehicleCategory(success.getCategoryName());
+                            request.setVehicleSubCategory(success.getSubCategoryName());
+                            request.setVehicleModel(success.getModelName());
+
+                            request.setCustomerName("name");
+                            request.setCustomerContact("contact");
+                            //request.setCreatedDate(success.getCreatedDate());
+                            //  request.setFollowupDate(success.getNextFollowupDate());
+                            request.setEnquiryStatus(success.getCustEnquiryStatus());
+
+                            /*Date format*/
+                            try {
+                                TimeZone utc = TimeZone.getTimeZone("etc/UTC");
+                                //format of date coming from services
+                                DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+
+                                inputFormat.setTimeZone(utc);
+
+                                //format of date which we want to show
+                                DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
+
+                                outputFormat.setTimeZone(utc);
+
+                                Date date = inputFormat.parse(success.getNextFollowupDate());
+                                Date date1 = inputFormat.parse(success.getCreatedDate());
+
+                                String output = outputFormat.format(date);
+                                String output1 = outputFormat.format(date1);
+
+                                request.setFollowupDate(output);
+                                request.setCreatedDate(output1);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+
+
+                            /*if (success.getPrice().equals("") || success.getPrice().isEmpty())
+                                request.setVehiclePrice("NA");
+                            else*/
+                            request.setVehiclePrice("NA");
+
+                            request.setEnquiryCount(success.getEnquiryCount());
+                            request.setVehicleInventory(success.getCustInventoryType());
+
+                            String[] imageSplit = success.getImage().split(",");
+                            request.setVehicleImage(imageSplit[0].substring(0, imageSplit[0].length()));
+                            mMyGroupsList.add(request);
+                        }
+
                         adapter = new ManualEnquiryAdapter(ManualEnquiry.this, mMyGroupsList);
                         mRecyclerView.setAdapter(adapter);
                         adapter.setClickListener(this);
@@ -449,7 +507,7 @@ public class ManualEnquiry extends AppCompatActivity implements SwipeRefreshLayo
                                         getManualData();
                                     }
                                 })
-                                .setActionTextColor(getResources().getColor(R.color.text_color))
+                                .setActionTextColor(ContextCompat.getColor(getApplicationContext(), R.color.text_color))
                                 .setDuration(4000).show();
                     }
                 }
@@ -539,6 +597,10 @@ public class ManualEnquiry extends AppCompatActivity implements SwipeRefreshLayo
                 intent.putExtra("id", request.getVehicleId());
                 intent.putExtra("name", request.getVehicleName());
                 break;
+            case "New Vehicle":
+                intent.putExtra("id", request.getVehicleId());
+                intent.putExtra("name", request.getVehicleName());
+                break;
         }
         startActivity(intent);
 
@@ -564,14 +626,10 @@ public class ManualEnquiry extends AppCompatActivity implements SwipeRefreshLayo
                             TimeZone utc = TimeZone.getTimeZone("etc/UTC");
                             //format of date coming from services
                             DateFormat inputFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
-                        /*DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",
-                                Locale.getDefault());*/
                             inputFormat.setTimeZone(utc);
 
                             //format of date which we want to show
                             DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
-                        /*DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy hh:mm aa",
-                                Locale.getDefault());*/
                             outputFormat.setTimeZone(utc);
 
                             Date date = null;
@@ -580,9 +638,7 @@ public class ManualEnquiry extends AppCompatActivity implements SwipeRefreshLayo
                             } catch (ParseException e) {
                                 e.printStackTrace();
                             }
-                            //System.out.println("jjj"+date);
                             String output = outputFormat.format(date);
-                            //System.out.println(mainList.get(i).getDate()+" jjj " + output);
                             adapter.getFilter().filter(output);
                         } else if (monthOfYear < 10) {
                             String abc = "0" + dayOfMonth + "-0" + (monthOfYear + 1) + "-" + year;
@@ -590,14 +646,10 @@ public class ManualEnquiry extends AppCompatActivity implements SwipeRefreshLayo
                             TimeZone utc = TimeZone.getTimeZone("etc/UTC");
                             //format of date coming from services
                             DateFormat inputFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
-                        /*DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",
-                                Locale.getDefault());*/
                             inputFormat.setTimeZone(utc);
 
                             //format of date which we want to show
                             DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
-                        /*DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy hh:mm aa",
-                                Locale.getDefault());*/
                             outputFormat.setTimeZone(utc);
 
                             Date date = null;
@@ -606,9 +658,7 @@ public class ManualEnquiry extends AppCompatActivity implements SwipeRefreshLayo
                             } catch (ParseException e) {
                                 e.printStackTrace();
                             }
-                            //System.out.println("jjj"+date);
                             String output = outputFormat.format(date);
-                            //System.out.println(mainList.get(i).getDate()+" jjj " + output);
                             adapter.getFilter().filter(output);
                         }
                     } else {
@@ -617,14 +667,10 @@ public class ManualEnquiry extends AppCompatActivity implements SwipeRefreshLayo
                         TimeZone utc = TimeZone.getTimeZone("etc/UTC");
                         //format of date coming from services
                         DateFormat inputFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
-                        /*DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",
-                                Locale.getDefault());*/
                         inputFormat.setTimeZone(utc);
 
                         //format of date which we want to show
                         DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
-                        /*DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy hh:mm aa",
-                                Locale.getDefault());*/
                         outputFormat.setTimeZone(utc);
 
                         Date date = null;
@@ -633,9 +679,7 @@ public class ManualEnquiry extends AppCompatActivity implements SwipeRefreshLayo
                         } catch (ParseException e) {
                             e.printStackTrace();
                         }
-                        //System.out.println("jjj"+date);
                         String output = outputFormat.format(date);
-                        //System.out.println(mainList.get(i).getDate()+" jjj " + output);
                         adapter.getFilter().filter(output);
                     }
                 } else if (dayOfMonth >= 10) {
@@ -646,14 +690,10 @@ public class ManualEnquiry extends AppCompatActivity implements SwipeRefreshLayo
                             TimeZone utc = TimeZone.getTimeZone("etc/UTC");
                             //format of date coming from services
                             DateFormat inputFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
-                        /*DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",
-                                Locale.getDefault());*/
                             inputFormat.setTimeZone(utc);
 
                             //format of date which we want to show
                             DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
-                        /*DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy hh:mm aa",
-                                Locale.getDefault());*/
                             outputFormat.setTimeZone(utc);
 
                             Date date = null;
@@ -662,9 +702,7 @@ public class ManualEnquiry extends AppCompatActivity implements SwipeRefreshLayo
                             } catch (ParseException e) {
                                 e.printStackTrace();
                             }
-                            //System.out.println("jjj"+date);
                             String output = outputFormat.format(date);
-                            //System.out.println(mainList.get(i).getDate()+" jjj " + output);
                             adapter.getFilter().filter(output);
                         } else if (monthOfYear < 10) {
                             String abc = dayOfMonth + "-0" + (monthOfYear + 1) + "-" + year;
@@ -672,14 +710,10 @@ public class ManualEnquiry extends AppCompatActivity implements SwipeRefreshLayo
                             TimeZone utc = TimeZone.getTimeZone("etc/UTC");
                             //format of date coming from services
                             DateFormat inputFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
-                        /*DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",
-                                Locale.getDefault());*/
                             inputFormat.setTimeZone(utc);
 
                             //format of date which we want to show
                             DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
-                        /*DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy hh:mm aa",
-                                Locale.getDefault());*/
                             outputFormat.setTimeZone(utc);
 
                             Date date = null;
@@ -688,9 +722,7 @@ public class ManualEnquiry extends AppCompatActivity implements SwipeRefreshLayo
                             } catch (ParseException e) {
                                 e.printStackTrace();
                             }
-                            //System.out.println("jjj"+date);
                             String output = outputFormat.format(date);
-                            //System.out.println(mainList.get(i).getDate()+" jjj " + output);
                             adapter.getFilter().filter(output);
                         }
                     } else {
@@ -699,14 +731,10 @@ public class ManualEnquiry extends AppCompatActivity implements SwipeRefreshLayo
                         TimeZone utc = TimeZone.getTimeZone("etc/UTC");
                         //format of date coming from services
                         DateFormat inputFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
-                        /*DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",
-                                Locale.getDefault());*/
                         inputFormat.setTimeZone(utc);
 
                         //format of date which we want to show
                         DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
-                        /*DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy hh:mm aa",
-                                Locale.getDefault());*/
                         outputFormat.setTimeZone(utc);
 
                         Date date = null;
@@ -715,9 +743,7 @@ public class ManualEnquiry extends AppCompatActivity implements SwipeRefreshLayo
                         } catch (ParseException e) {
                             e.printStackTrace();
                         }
-                        //System.out.println("jjj"+date);
                         String output = outputFormat.format(date);
-                        //System.out.println(mainList.get(i).getDate()+" jjj " + output);
                         adapter.getFilter().filter(output);
                     }
                 }

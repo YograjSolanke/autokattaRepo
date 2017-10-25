@@ -49,7 +49,7 @@ public class TodaysFollowUp extends AppCompatActivity implements SwipeRefreshLay
             @Override
             public void run() {
                 Calendar c = Calendar.getInstance();
-                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
                 formattedDate = df.format(c.getTime());
                 getManualData();
                 mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.todays_swipeRefreshLayout);
@@ -295,6 +295,63 @@ public class TodaysFollowUp extends AppCompatActivity implements SwipeRefreshLay
                                 mMyGroupsList.add(request);
                             }
                         }
+
+                        /*New Vehicle*/
+                        for (ManualEnquiryResponse.Success.NewVehicle success : manualEnquiry.getSuccess().getNewVehicle()) {
+                            ManualEnquiryRequest request = new ManualEnquiryRequest();
+                            request.setLayoutNo(4);
+                            request.setVehicleId(String.valueOf(success.getNewVehicleID()));
+                            request.setVehicleName("newVehicle");
+                            request.setVehicleCategory(success.getCategoryName());
+                            request.setVehicleSubCategory(success.getSubCategoryName());
+                            request.setVehicleModel(success.getModelName());
+
+                            request.setCustomerName("name");
+                            request.setCustomerContact("contact");
+                            //request.setCreatedDate(success.getCreatedDate());
+                            //  request.setFollowupDate(success.getNextFollowupDate());
+                            request.setEnquiryStatus(success.getCustEnquiryStatus());
+
+                            /*Date format*/
+                            try {
+                                TimeZone utc = TimeZone.getTimeZone("etc/UTC");
+                                //format of date coming from services
+                                DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+
+                                inputFormat.setTimeZone(utc);
+
+                                //format of date which we want to show
+                                DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
+
+                                outputFormat.setTimeZone(utc);
+
+                                Date date = inputFormat.parse(success.getNextFollowupDate());
+                                Date date1 = inputFormat.parse(success.getCreatedDate());
+
+                                String output = outputFormat.format(date);
+                                String output1 = outputFormat.format(date1);
+
+                                request.setFollowupDate(output);
+                                request.setCreatedDate(output1);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+
+
+                            /*if (success.getPrice().equals("") || success.getPrice().isEmpty())
+                                request.setVehiclePrice("NA");
+                            else*/
+                            request.setVehiclePrice("NA");
+
+                            request.setEnquiryCount(success.getEnquiryCount());
+                            request.setVehicleInventory(success.getCustInventoryType());
+
+                            String[] imageSplit = success.getImage().split(",");
+                            request.setVehicleImage(imageSplit[0].substring(0, imageSplit[0].length()));
+                            mMyGroupsList.add(request);
+
+                        }
+
                         ManualEnquiryAdapter adapter = new ManualEnquiryAdapter(TodaysFollowUp.this, mMyGroupsList);
                         mRecyclerView.setAdapter(adapter);
                         adapter.setClickListener(this);
@@ -340,6 +397,10 @@ public class TodaysFollowUp extends AppCompatActivity implements SwipeRefreshLay
                 intent.putExtra("name", request.getServiceName());
                 break;
             case "Used Vehicle":
+                intent.putExtra("id", request.getVehicleId());
+                intent.putExtra("name", request.getVehicleName());
+                break;
+            case "New Vehicle":
                 intent.putExtra("id", request.getVehicleId());
                 intent.putExtra("name", request.getVehicleName());
                 break;

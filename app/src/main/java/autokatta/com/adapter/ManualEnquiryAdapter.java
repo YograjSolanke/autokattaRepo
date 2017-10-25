@@ -135,6 +135,38 @@ public class ManualEnquiryAdapter extends RecyclerView.Adapter<RecyclerView.View
         }
     }
 
+    /*
+  New Vehicle Details...
+   */
+    private class NewVehicleDetails extends RecyclerView.ViewHolder implements View.OnClickListener {
+        ImageView mVehiclePic;
+        TextView mVehicleName, mVehicleCategory, mVehicleSubCategory, mVehicleModel, mVehiclePrice, mVehicleCount,
+                mCustomerName, mCustomerContact, mCreateDate, mFollowupdate;
+        RelativeLayout mUsedRelative;
+
+        private NewVehicleDetails(View profileView) {
+            super(profileView);
+            mUsedRelative = (RelativeLayout) profileView.findViewById(R.id.used_relative);
+            mVehiclePic = (ImageView) profileView.findViewById(R.id.vehicle_icon);
+            mVehicleName = (TextView) profileView.findViewById(R.id.vehicle_title);
+            mVehicleCategory = (TextView) profileView.findViewById(R.id.category_str);
+            mVehicleCount = (TextView) profileView.findViewById(R.id.count);
+            mVehicleSubCategory = (TextView) profileView.findViewById(R.id.sub_category_str);
+            mVehicleModel = (TextView) profileView.findViewById(R.id.model_str);
+            mVehiclePrice = (TextView) profileView.findViewById(R.id.price_str);
+            /*mCustomerName = (TextView) profileView.findViewById(R.id.custname_str);
+            mCustomerContact = (TextView) profileView.findViewById(R.id.custcontact_str);*/
+            mCreateDate = (TextView) profileView.findViewById(R.id.createdate_str);
+            mFollowupdate = (TextView) profileView.findViewById(R.id.followupdate_str);
+            profileView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            if (clickListener != null) clickListener.onClick(view, getAdapterPosition());
+        }
+    }
+
     public void setClickListener(ItemClickListener itemClickListener) {
         this.clickListener = itemClickListener;
     }
@@ -161,6 +193,10 @@ public class ManualEnquiryAdapter extends RecyclerView.Adapter<RecyclerView.View
             case 3:
                 mView = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_list_service, parent, false);
                 return new ServiceDetails(mView);
+
+            case 4:
+                mView = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_manual_enquiry, parent, false);
+                return new NewVehicleDetails(mView);
         }
         return null;
     }
@@ -190,11 +226,12 @@ public class ManualEnquiryAdapter extends RecyclerView.Adapter<RecyclerView.View
                 else if (mItemList.get(position).getEnquiryStatus().equalsIgnoreCase("Warm"))
                     vehicleDetails.mUsedRelative.setBackgroundResource(R.color.approved);
 
-                if (mItemList.get(position).getVehicleImage().equals("") || mItemList.get(position).getVehicleImage().equals("null")
-                        || mItemList.get(position).getVehicleImage().equals(null)) {
+                if (mItemList.get(position).getVehicleImage() == null ||
+                        mItemList.get(position).getVehicleImage().equals("") ||
+                        mItemList.get(position).getVehicleImage().equals("null")) {
                     vehicleDetails.mVehiclePic.setBackgroundResource(R.drawable.hdlogo);
                 } else {
-                    String used_pic = mActivity.getString(R.string.base_image_url)+ mItemList.get(position).getVehicleImage();
+                    String used_pic = mActivity.getString(R.string.base_image_url) + mItemList.get(position).getVehicleImage();
                     Glide.with(mActivity)
                             .load(used_pic)
                             .centerCrop()
@@ -222,11 +259,12 @@ public class ManualEnquiryAdapter extends RecyclerView.Adapter<RecyclerView.View
                 else if (mItemList.get(position).getEnquiryStatus().equalsIgnoreCase("Warm"))
                     productDetails.mUsedRelative.setBackgroundResource(R.color.approved);
 
-                if (mItemList.get(position).getProductImage().equals("") || mItemList.get(position).getProductImage().equals("null")
-                        || mItemList.get(position).getProductImage().equals(null)) {
+                if (mItemList.get(position).getProductImage() == null ||
+                        mItemList.get(position).getProductImage().equals("") ||
+                        mItemList.get(position).getProductImage().equals("null")) {
                     productDetails.mProductPic.setBackgroundResource(R.drawable.hdlogo);
                 } else {
-                    String product_pic = mActivity.getString(R.string.base_image_url)+ mItemList.get(position).getProductImage();
+                    String product_pic = mActivity.getString(R.string.base_image_url) + mItemList.get(position).getProductImage();
                     Glide.with(mActivity)
                             .load(product_pic)
                             .centerCrop()
@@ -254,8 +292,9 @@ public class ManualEnquiryAdapter extends RecyclerView.Adapter<RecyclerView.View
                 else if (mItemList.get(position).getEnquiryStatus().equalsIgnoreCase("Warm"))
                     serviceDetails.mUsedRelative.setBackgroundResource(R.color.approved);
 
-                if (mItemList.get(position).getServiceImage().equals("") || mItemList.get(position).getServiceImage().equals("null")
-                        || mItemList.get(position).getServiceImage().equals(null)) {
+                if (mItemList.get(position).getProductImage() == null ||
+                        mItemList.get(position).getServiceImage().equals("") ||
+                        mItemList.get(position).getServiceImage().equals("null")) {
                     serviceDetails.mServicePic.setBackgroundResource(R.drawable.hdlogo);
                 } else {
                     String service_pic = mActivity.getString(R.string.base_image_url) + mItemList.get(position).getServiceImage();
@@ -264,6 +303,42 @@ public class ManualEnquiryAdapter extends RecyclerView.Adapter<RecyclerView.View
                             .centerCrop()
                             .diskCacheStrategy(DiskCacheStrategy.ALL)
                             .into(serviceDetails.mServicePic);
+                }
+                break;
+
+            case 4:
+                NewVehicleDetails newVehicleDetails = (NewVehicleDetails) holder;
+                newVehicleDetails.mVehicleName.setText(mItemList.get(position).getVehicleName());
+                newVehicleDetails.mVehicleCategory.setText(mItemList.get(position).getVehicleCategory());
+                newVehicleDetails.mVehicleSubCategory.setText(mItemList.get(position).getVehicleSubCategory());
+                newVehicleDetails.mVehicleModel.setText(mItemList.get(position).getVehicleModel());
+                newVehicleDetails.mVehiclePrice.setText(mItemList.get(position).getVehiclePrice());
+                newVehicleDetails.mVehicleCount.setText(mItemList.get(position).getEnquiryCount());
+                /*newVehicleDetails.mCustomerName.setText(mItemList.get(position).getCustomerName());
+                newVehicleDetails.mCustomerContact.setText(mItemList.get(position).getCustomerContact());*/
+                newVehicleDetails.mFollowupdate.setText(mItemList.get(position).getFollowupDate());
+                newVehicleDetails.mCreateDate.setText(mItemList.get(position).getCreatedDate());
+
+                Log.i("vehicle", "->" + mItemList.get(position).getFollowupDate());
+
+                if (mItemList.get(position).getEnquiryStatus().equalsIgnoreCase("Hot"))
+                    newVehicleDetails.mUsedRelative.setBackgroundResource(R.color.high_bid);
+                else if (mItemList.get(position).getEnquiryStatus().equalsIgnoreCase("Dropped"))
+                    newVehicleDetails.mUsedRelative.setBackgroundResource(R.color.above_bid);
+                else if (mItemList.get(position).getEnquiryStatus().equalsIgnoreCase("Warm"))
+                    newVehicleDetails.mUsedRelative.setBackgroundResource(R.color.approved);
+
+                if (mItemList.get(position).getVehicleImage() == null ||
+                        mItemList.get(position).getVehicleImage().equals("") ||
+                        mItemList.get(position).getVehicleImage().equals("null")) {
+                    newVehicleDetails.mVehiclePic.setBackgroundResource(R.drawable.hdlogo);
+                } else {
+                    String used_pic = mActivity.getString(R.string.base_image_url) + mItemList.get(position).getVehicleImage();
+                    Glide.with(mActivity)
+                            .load(used_pic)
+                            .centerCrop()
+                            .diskCacheStrategy(DiskCacheStrategy.ALL)
+                            .into(newVehicleDetails.mVehiclePic);
                 }
                 break;
         }

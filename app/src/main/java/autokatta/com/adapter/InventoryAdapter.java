@@ -31,7 +31,7 @@ public class InventoryAdapter extends BaseAdapter {
     Activity mActivity;
     List<GetInventoryResponse.Success> mItemList = new ArrayList<>();
     String name;
-    boolean positionArray[];
+    private boolean positionArray[];
     private ArrayList<String> checked_ids;
 
     public InventoryAdapter(Activity mActivity, List<GetInventoryResponse.Success> mItemList, String name) {
@@ -105,6 +105,13 @@ public class InventoryAdapter extends BaseAdapter {
                     break;
 
                 case "New Vehicle":
+                    convertView = inflater.inflate(R.layout.custom_list_used_vehicles, null);
+                    holder.mVehicleName = (TextView) convertView.findViewById(R.id.vehicle_title);
+                    holder.mCategory = (TextView) convertView.findViewById(R.id.category_str);
+                    holder.mSubCategory = (TextView) convertView.findViewById(R.id.sub_category_str);
+                    holder.mModel = (TextView) convertView.findViewById(R.id.model_str);
+                    holder.mVehicleImage = (ImageView) convertView.findViewById(R.id.vehicle_icon);
+                    holder.mCheckBox = (CheckBox) convertView.findViewById(R.id.check_box);
                     break;
                 default:
                     break;
@@ -124,7 +131,8 @@ public class InventoryAdapter extends BaseAdapter {
                 holder.mSubCategory.setText(list.getSubCategory());
                 holder.mModel.setText(list.getModel());
 
-                if (mItemList.get(position).getImage().equals("") || mItemList.get(position).getImage().equals(null) ||
+                if (mItemList.get(position).getImage() == null ||
+                        mItemList.get(position).getImage().equals("") ||
                         mItemList.get(position).getImage().equals("null")) {
                     holder.mVehicleImage.setBackgroundResource(R.mipmap.ic_launcher);
                 } else {
@@ -142,7 +150,7 @@ public class InventoryAdapter extends BaseAdapter {
                 holder.mCheckBox.setFocusable(false);
                 holder.mCheckBox.setChecked(positionArray[position]);
 
-               final ViewHolder finalHolder = holder;
+                final ViewHolder finalHolder = holder;
                 holder.mCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 
                     @Override
@@ -225,6 +233,54 @@ public class InventoryAdapter extends BaseAdapter {
 
                 });
                 break;
+
+            case "New Vehicle":
+                GetInventoryResponse.Success newVehicle = mItemList.get(position);
+                holder.mVehicleName.setText(newVehicle.getTitle());
+                holder.mCategory.setText(newVehicle.getCategoryName());
+                holder.mSubCategory.setText(newVehicle.getSubCategoryName());
+                holder.mModel.setText(newVehicle.getModelName());
+
+                if (mItemList.get(position).getImage() == null ||
+                        mItemList.get(position).getImage().equals("") ||
+                        mItemList.get(position).getImage().equals("null")) {
+                    holder.mVehicleImage.setBackgroundResource(R.mipmap.ic_launcher);
+                } else {
+                    //mItemList.get(position).getImage() = mItemList.get(position).getImage().replaceAll(" ", "%20");
+                    String dppath = mActivity + mItemList.get(position).getImage();
+                    Glide.with(mActivity)
+                            .load(dppath)
+                            .bitmapTransform(new CropCircleTransformation(mActivity)) //To display image in Circular form.
+                            .diskCacheStrategy(DiskCacheStrategy.ALL) //For caching diff versions of image.
+                            //.placeholder(R.drawable.logo) //To show image before loading an original image.
+                            //.error(R.drawable.blocked) //To show error image if problem in loading.
+                            .into(holder.mVehicleImage);
+                }
+
+                holder.mCheckBox.setFocusable(false);
+                holder.mCheckBox.setChecked(positionArray[position]);
+
+                final ViewHolder finalHolder3 = holder;
+                holder.mCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        if (finalHolder3.mCheckBox.isChecked()) {
+                            if (isChecked) {
+                                checked_ids.set(position, mItemList.get(position).getVehicleId());
+                                positionArray[position] = true;
+                            } else if (checked_ids.contains(mItemList.get(position).getVehicleId())) {
+                                checked_ids.set(position, "0");
+                                positionArray[position] = false;
+                            }
+                        } else {
+                            //Toast.makeText(mActivity, "checked", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                });
+                break;
+
         }
         return convertView;
     }

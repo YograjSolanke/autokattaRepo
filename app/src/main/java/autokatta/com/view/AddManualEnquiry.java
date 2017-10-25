@@ -254,7 +254,21 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
                         } else {
                             Image.setImageResource(R.drawable.logo);
                         }
+                    } else if (getIntent().getExtras().getString("keyword", "").equalsIgnoreCase("New Vehicle")) {
+                        if (!mImage.equals("") && !mImage.equals("null")) {
+                            fullpath = getString(R.string.base_image_url) + mImage;
+                            fullpath = fullpath.replaceAll(" ", "%20");
+                            Glide.with(AddManualEnquiry.this)
+                                    .load(fullpath)
+                                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                    .bitmapTransform(new CropCircleTransformation(AddManualEnquiry.this))
+                                    .placeholder(R.drawable.logo)
+                                    .into(Image);
+                        } else {
+                            Image.setImageResource(R.drawable.logo);
+                        }
                     }
+
                     mSubmit.setOnClickListener(new OnClickListener() {
                         @Override
                         public void onClick(View view) {
