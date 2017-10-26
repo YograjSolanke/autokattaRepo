@@ -2,19 +2,20 @@ package autokatta.com.adapter;
 
 import android.app.Activity;
 import android.app.ActivityOptions;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
-import android.media.ThumbnailUtils;
+import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.MediaController;
 import android.widget.VideoView;
 
@@ -37,11 +38,13 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.MyViewHolder
 
         VideoView videoView;
         CardView cardView;
+        ImageView imageView;
 
         public MyViewHolder(View x) {
             super(x);
             videoView = (VideoView) x.findViewById(R.id.VideoView);
             cardView = (CardView) x.findViewById(R.id.card_view);
+            imageView = (ImageView) x.findViewById(R.id.imageView);
 
         }
     }
@@ -72,8 +75,19 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.MyViewHolder
             // Get the URL from String VideoURL
             Uri video = Uri.parse(list.get(position));
 
-            Bitmap thumb = ThumbnailUtils.createVideoThumbnail(list.get(position),
-                    MediaStore.Images.Thumbnails.MINI_KIND);
+//                String dp_path = activity.getString(R.string.base_image_url) + storeImage;
+//                Glide.with(this)
+//                        .load(dp_path)
+//                        .centerCrop()
+//                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+//                        .placeholder(R.drawable.logo)
+//                        .into(mStoreImage);
+
+            //  view.imageView.setImageResource(R.drawable.logo);
+            view.imageView.setVisibility(View.GONE);
+
+//
+            Bitmap thumb = createVideoThumbnail(activity, video);
 
             BitmapDrawable bitmapDrawable = new BitmapDrawable(thumb);
             view.videoView.setBackground(bitmapDrawable);
@@ -181,6 +195,29 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.MyViewHolder
     @Override
     public int getItemViewType(int position) {
         return 0;
+    }
+
+
+    public static Bitmap createVideoThumbnail(Context context, Uri uri) {
+        MediaMetadataRetriever mediametadataretriever = new MediaMetadataRetriever();
+
+        try {
+            mediametadataretriever.setDataSource(context, uri);
+            //            if (null != bitmap) {
+//                int j = getThumbnailSize(context, i);
+//                return ThumbnailUtils.extractThumbnail(bitmap, j, j, 2);
+//            }
+            return mediametadataretriever.getFrameAtTime(-1L);
+        } catch (Throwable t) {
+            // TODO log
+            return null;
+        } finally {
+            try {
+                mediametadataretriever.release();
+            } catch (RuntimeException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
 }
