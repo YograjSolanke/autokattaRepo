@@ -55,6 +55,7 @@ import autokatta.com.generic.SetMyDateAndTime;
 import autokatta.com.initial_fragment.AddSoldVehicle;
 import autokatta.com.initial_fragment.AddTransferVehicle;
 import autokatta.com.initial_fragment.CreateGroupFragment;
+import autokatta.com.interfaces.OnLoadMoreListener;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.interfaces.ServiceApi;
 import autokatta.com.networkreceiver.ConnectionDetector;
@@ -84,7 +85,7 @@ import static android.content.Context.MODE_PRIVATE;
  * Created by ak-004 on 1/4/17.
  */
 
-public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVehicleAdapter.VehicleHolder> implements RequestNotifier, Filterable {
+public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements RequestNotifier, Filterable {
     Activity activity;
     List<MyUploadedVehiclesResponse.Success> mMainList = new ArrayList<>();
     private List<MyUploadedVehiclesResponse.Success> filteredData = new ArrayList<>();
@@ -105,6 +106,11 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
     private String stringgroupname = "";
     private int mVehicleId;
 
+    private OnLoadMoreListener loadMoreListener;
+    public final int TYPE_MOVIE = 0;
+    public final int TYPE_LOAD = 1;
+    boolean isLoading = false, isMoreDataAvailable = true;
+
     private List<String> storeIdList = new ArrayList<>();
     private List<String> storeTitleList = new ArrayList<>();
     private String[] storeTitleArray = new String[0];
@@ -124,280 +130,575 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
     }
 
     @Override
-    public MyUploadedVehicleAdapter.VehicleHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.my_uploaded_vehicle_adapter, parent, false);
-        return new VehicleHolder(view);
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        LayoutInflater inflater = LayoutInflater.from(activity);
+        if (viewType == TYPE_MOVIE) {
+            return new VehicleHolder(inflater.inflate(R.layout.my_uploaded_vehicle_adapter, parent, false));
+        } else {
+            return new LoadHolder(inflater.inflate(R.layout.row_load, parent, false));
+        }
+        /*View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.my_uploaded_vehicle_adapter, parent, false);
+        return new VehicleHolder(view);*/
     }
 
     @Override
-    public void onBindViewHolder(final MyUploadedVehicleAdapter.VehicleHolder holder, final int position) {
-        final List<String> vimages = new ArrayList<>();
-        holder.edittitles.setText(mMainList.get(position).getTitle());
-        holder.editprices.setText(mMainList.get(position).getPrice());
-        holder.editcategorys.setText(mMainList.get(position).getCategory());
-        holder.editbrands.setText(mMainList.get(position).getManufacturer());
-        holder.editmodels.setText(mMainList.get(position).getModel());
-        holder.editleads.setText(mMainList.get(position).getBuyerLeads());
-        holder.mLinear.setVisibility(View.VISIBLE);
-        holder.editmfgyr.setText(mMainList.get(position).getYearOfManufacture());
-        holder.editrto.setText(mMainList.get(position).getRtoCity());
-        holder.editlocation.setText(mMainList.get(position).getLocationCity());
-        holder.editregNo.setText(mMainList.get(position).getRegistrationNumber());
-        holder.stock_type.setText(mMainList.get(position).getStockType());
-        holder.mChatcount.setText(mMainList.get(position).getChatCount());
-        holder.mEnquiryCount.setText(mMainList.get(position).getEnquiryCount());
-        myContact = activity.getSharedPreferences(activity.getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "");
+    public void onBindViewHolder(RecyclerView.ViewHolder holder1, final int position) {
+        if (position >= getItemCount() - 1 && isMoreDataAvailable && !isLoading && loadMoreListener != null) {
+            isLoading = true;
+            loadMoreListener.onLoadMore();
+        }
 
-        if (mMainList.get(position).getKmsRunning().equals(""))
-            holder.editkms.setText(mMainList.get(position).getHrsRunning());
-        else
-            holder.editkms.setText(mMainList.get(position).getKmsRunning());
+        if (getItemViewType(position) == TYPE_MOVIE) {
+            final VehicleHolder holder = (VehicleHolder) holder1;
+
+            final List<String> vimages = new ArrayList<>();
+            holder.edittitles.setText(mMainList.get(position).getTitle());
+            holder.editprices.setText(mMainList.get(position).getPrice());
+            holder.editcategorys.setText(mMainList.get(position).getCategory());
+            holder.editbrands.setText(mMainList.get(position).getManufacturer());
+            holder.editmodels.setText(mMainList.get(position).getModel());
+            holder.editleads.setText(mMainList.get(position).getBuyerLeads());
+            holder.mLinear.setVisibility(View.VISIBLE);
+            holder.editmfgyr.setText(mMainList.get(position).getYearOfManufacture());
+            holder.editrto.setText(mMainList.get(position).getRtoCity());
+            holder.editlocation.setText(mMainList.get(position).getLocationCity());
+            holder.editregNo.setText(mMainList.get(position).getRegistrationNumber());
+            holder.stock_type.setText(mMainList.get(position).getStockType());
+            holder.mChatcount.setText(mMainList.get(position).getChatCount());
+            holder.mEnquiryCount.setText(mMainList.get(position).getEnquiryCount());
+            myContact = activity.getSharedPreferences(activity.getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "");
+
+            if (mMainList.get(position).getKmsRunning().equals(""))
+                holder.editkms.setText(mMainList.get(position).getHrsRunning());
+            else
+                holder.editkms.setText(mMainList.get(position).getKmsRunning());
 
 
-        //To set Date
-        try {
             //To set Date
-            DateFormat inputDate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-            DateFormat newDateFormat = new SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault());
-            holder.edituploadedon.setText(newDateFormat.format(inputDate.parse(mMainList.get(position).getDate())));
+            try {
+                //To set Date
+                DateFormat inputDate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                DateFormat newDateFormat = new SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault());
+                holder.edituploadedon.setText(newDateFormat.format(inputDate.parse(mMainList.get(position).getDate())));
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        if (mMainList.get(position).getNotificationstatus() == null || mMainList.get(position).getNotificationstatus().equalsIgnoreCase("stop")) {
-            holder.btnnotify.setText("Start Notification");
-            holder.btnnotify.setBackgroundResource(R.color.orange);
-        } else {
-            holder.btnnotify.setText("Stop Notification");
-            holder.btnnotify.setBackgroundResource(R.drawable.buttonback);
-        }
-
-        holder.edittitles.setEnabled(false);
-        holder.editprices.setEnabled(false);
-        holder.editcategorys.setEnabled(false);
-        holder.editbrands.setEnabled(false);
-        holder.editmodels.setEnabled(false);
-        holder.edituploadedon.setEnabled(false);
-        holder.editmfgyr.setEnabled(false);
-        holder.editkms.setEnabled(false);
-        holder.editrto.setEnabled(false);
-        holder.editlocation.setEnabled(false);
-        holder.editregNo.setEnabled(false);
-        holder.btnnotify.setVisibility(View.VISIBLE);
-
-        //  break;
-        try {
-            if (mMainList.get(position).getImages().equalsIgnoreCase("") || mMainList.get(position).getImages().equalsIgnoreCase(null) ||
-                    mMainList.get(position).getImages().equalsIgnoreCase("null")) {
-                holder.vehicleimage.setBackgroundResource(R.drawable.vehiimg);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-            if (!mMainList.get(position).getImages().equals("") || !mMainList.get(position).getImages().equalsIgnoreCase(null)
-                    || !mMainList.get(position).getImages().equalsIgnoreCase("null")) {
-                String[] parts = mMainList.get(position).getImages().split(",");
-                for (int l = 0; l < parts.length; l++) {
-                    vimages.add(parts[l]);
-                    System.out.println(parts[l]);
-                }
-                String vimagename = activity.getString(R.string.base_image_url) + vimages.get(0);
-                vimagename = vimagename.replaceAll(" ", "%20");
-                try {
-                    Glide.with(activity)
-                            .load(activity.getString(R.string.base_image_url) + vimages.get(0))
-                            .bitmapTransform(new CropCircleTransformation(activity))
-                            .diskCacheStrategy(DiskCacheStrategy.ALL)
-                            .placeholder(R.drawable.logo)
-                            .into(holder.vehicleimage);
-                } catch (Exception e) {
-                    System.out.println("Error in uploading images");
-                }
+
+            if (mMainList.get(position).getNotificationstatus() == null || mMainList.get(position).getNotificationstatus().equalsIgnoreCase("stop")) {
+                holder.btnnotify.setText("Start Notification");
+                holder.btnnotify.setBackgroundResource(R.color.orange);
+            } else {
+                holder.btnnotify.setText("Stop Notification");
+                holder.btnnotify.setBackgroundResource(R.drawable.buttonback);
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
+            holder.edittitles.setEnabled(false);
+            holder.editprices.setEnabled(false);
+            holder.editcategorys.setEnabled(false);
+            holder.editbrands.setEnabled(false);
+            holder.editmodels.setEnabled(false);
+            holder.edituploadedon.setEnabled(false);
+            holder.editmfgyr.setEnabled(false);
+            holder.editkms.setEnabled(false);
+            holder.editrto.setEnabled(false);
+            holder.editlocation.setEnabled(false);
+            holder.editregNo.setEnabled(false);
+            holder.btnnotify.setVisibility(View.VISIBLE);
+
+            //  break;
+            try {
+                if (mMainList.get(position).getImages().equalsIgnoreCase("") || mMainList.get(position).getImages().equalsIgnoreCase(null) ||
+                        mMainList.get(position).getImages().equalsIgnoreCase("null")) {
+                    holder.vehicleimage.setBackgroundResource(R.drawable.vehiimg);
+                }
+                if (!mMainList.get(position).getImages().equals("") || !mMainList.get(position).getImages().equalsIgnoreCase(null)
+                        || !mMainList.get(position).getImages().equalsIgnoreCase("null")) {
+                    String[] parts = mMainList.get(position).getImages().split(",");
+                    for (int l = 0; l < parts.length; l++) {
+                        vimages.add(parts[l]);
+                        System.out.println(parts[l]);
+                    }
+                    String vimagename = activity.getString(R.string.base_image_url) + vimages.get(0);
+                    vimagename = vimagename.replaceAll(" ", "%20");
+                    try {
+                        Glide.with(activity)
+                                .load(activity.getString(R.string.base_image_url) + vimages.get(0))
+                                .bitmapTransform(new CropCircleTransformation(activity))
+                                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                .placeholder(R.drawable.logo)
+                                .into(holder.vehicleimage);
+                    } catch (Exception e) {
+                        System.out.println("Error in uploading images");
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
         /*
         More Items click listener...
          */
-        holder.mMoreItems.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                View view = activity.getLayoutInflater().inflate(R.layout.custom_more_used_vehicle, null);
-                ImageView mClose = (ImageView) view.findViewById(R.id.close);
-                Button mEnquiry = (Button) view.findViewById(R.id.Enquiry);
-                Button mQuotation = (Button) view.findViewById(R.id.quotation);
-                Button mTransferStock = (Button) view.findViewById(R.id.transfer_stock);
-                Button mSold = (Button) view.findViewById(R.id.delete);
-                Button mViewQuote = (Button) view.findViewById(R.id.view_quotation);
-                Button mOfferRecived = (Button) view.findViewById(R.id.offerrecived);
+            holder.mMoreItems.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    View view = activity.getLayoutInflater().inflate(R.layout.custom_more_used_vehicle, null);
+                    ImageView mClose = (ImageView) view.findViewById(R.id.close);
+                    Button mEnquiry = (Button) view.findViewById(R.id.Enquiry);
+                    Button mQuotation = (Button) view.findViewById(R.id.quotation);
+                    Button mTransferStock = (Button) view.findViewById(R.id.transfer_stock);
+                    Button mSold = (Button) view.findViewById(R.id.delete);
+                    Button mViewQuote = (Button) view.findViewById(R.id.view_quotation);
+                    Button mOfferRecived = (Button) view.findViewById(R.id.offerrecived);
 
-                final Dialog mBottomSheetDialog = new Dialog(activity, R.style.MaterialDialogSheet);
-                mBottomSheetDialog.setContentView(view);
-                mBottomSheetDialog.setCancelable(true);
-                mBottomSheetDialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-                mBottomSheetDialog.getWindow().setGravity(Gravity.BOTTOM);
-                mBottomSheetDialog.show();
+                    final Dialog mBottomSheetDialog = new Dialog(activity, R.style.MaterialDialogSheet);
+                    mBottomSheetDialog.setContentView(view);
+                    mBottomSheetDialog.setCancelable(true);
+                    mBottomSheetDialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                    mBottomSheetDialog.getWindow().setGravity(Gravity.BOTTOM);
+                    mBottomSheetDialog.show();
 
-                mClose.setOnClickListener(new OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        mBottomSheetDialog.dismiss();
-                    }
-                });
+                    mClose.setOnClickListener(new OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            mBottomSheetDialog.dismiss();
+                        }
+                    });
 
                 /*
                 View Quotation Listener...
                  */
-                mViewQuote.setOnClickListener(new OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        mBottomSheetDialog.dismiss();
-                        final Dialog openDialog = new Dialog(activity);
-                        openDialog.setContentView(R.layout.view_quote_group_selection);
-                        openDialog.setTitle("view quotation");
-                        final Spinner mGroupsSpinner = (Spinner) openDialog.findViewById(R.id.spinnergroup);
+                    mViewQuote.setOnClickListener(new OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            mBottomSheetDialog.dismiss();
+                            final Dialog openDialog = new Dialog(activity);
+                            openDialog.setContentView(R.layout.view_quote_group_selection);
+                            openDialog.setTitle("view quotation");
+                            final Spinner mGroupsSpinner = (Spinner) openDialog.findViewById(R.id.spinnergroup);
 
-                        Button viewQuotation = (Button) openDialog.findViewById(R.id.btnSend);
+                            Button viewQuotation = (Button) openDialog.findViewById(R.id.btnSend);
                 /*Spinner to get groups*/
-                        try {
-                            if (mConnectionDetector.isConnectedToInternet()) {
-                                Retrofit retrofit = new Retrofit.Builder()
-                                        .baseUrl(activity.getString(R.string.base_url))
-                                        .addConverterFactory(GsonConverterFactory.create())
-                                        .client(initLog().build())
-                                        .build();
+                            try {
+                                if (mConnectionDetector.isConnectedToInternet()) {
+                                    Retrofit retrofit = new Retrofit.Builder()
+                                            .baseUrl(activity.getString(R.string.base_url))
+                                            .addConverterFactory(GsonConverterFactory.create())
+                                            .client(initLog().build())
+                                            .build();
 
-                                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                                Call<ProfileGroupResponse> add = serviceApi._autokattaProfileGroup(activity.getSharedPreferences(activity.getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", null));
-                                add.enqueue(new Callback<ProfileGroupResponse>() {
-                                    @Override
-                                    public void onResponse(Call<ProfileGroupResponse> call, Response<ProfileGroupResponse> response) {
-                                        if (response.isSuccessful()) {
-                                            mGrouplist.clear();
-                                            mGrouplist1.clear();
-                                            parsedData.clear();
-                                            mGrouplist.add("Select Group");
-                                            ProfileGroupResponse mProfilegroup = (ProfileGroupResponse) response.body();
-                                            for (ProfileGroupResponse.MyGroup groupresponse : mProfilegroup.getSuccess().getMyGroups()) {
-                                                groupresponse.setId(groupresponse.getId());
-                                                groupresponse.setTitle(groupresponse.getTitle());
-                                                mGrouplist.add(groupresponse.getTitle());
-                                                mGrouplist1.put(groupresponse.getTitle(), groupresponse.getId());
-                                            }
+                                    ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                                    Call<ProfileGroupResponse> add = serviceApi._autokattaProfileGroup(activity.getSharedPreferences(activity.getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", null));
+                                    add.enqueue(new Callback<ProfileGroupResponse>() {
+                                        @Override
+                                        public void onResponse(Call<ProfileGroupResponse> call, Response<ProfileGroupResponse> response) {
+                                            if (response.isSuccessful()) {
+                                                mGrouplist.clear();
+                                                mGrouplist1.clear();
+                                                parsedData.clear();
+                                                mGrouplist.add("Select Group");
+                                                ProfileGroupResponse mProfilegroup = (ProfileGroupResponse) response.body();
+                                                for (ProfileGroupResponse.MyGroup groupresponse : mProfilegroup.getSuccess().getMyGroups()) {
+                                                    groupresponse.setId(groupresponse.getId());
+                                                    groupresponse.setTitle(groupresponse.getTitle());
+                                                    mGrouplist.add(groupresponse.getTitle());
+                                                    mGrouplist1.put(groupresponse.getTitle(), groupresponse.getId());
+                                                }
 
 
-                                            for (ProfileGroupResponse.JoinedGroup groupresponse : mProfilegroup.getSuccess().getJoinedGroups()) {
-                                                groupresponse.setId(groupresponse.getId());
-                                                groupresponse.setTitle(groupresponse.getTitle());
-                                                mGrouplist.add(groupresponse.getTitle());
-                                                mGrouplist1.put(groupresponse.getTitle(), groupresponse.getId());
-                                            }
+                                                for (ProfileGroupResponse.JoinedGroup groupresponse : mProfilegroup.getSuccess().getJoinedGroups()) {
+                                                    groupresponse.setId(groupresponse.getId());
+                                                    groupresponse.setTitle(groupresponse.getTitle());
+                                                    mGrouplist.add(groupresponse.getTitle());
+                                                    mGrouplist1.put(groupresponse.getTitle(), groupresponse.getId());
+                                                }
 
-                                            parsedData.addAll(mGrouplist);
-                                            if (activity != null) {
-                                                ArrayAdapter<String> adapter = new ArrayAdapter<>(activity, android.R.layout.simple_spinner_item, parsedData);
-                                                //  adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                                                mGroupsSpinner.setAdapter(adapter);
-                                            }
-                                            mGroupsSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                                                @Override
-                                                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                                                    if (position != 0) {
-                                                        groupid = mGrouplist1.get(parsedData.get(position));
-                                                        groupname = parsedData.get(position);
-                                                        System.out.println("group id::" + groupid);
-                                                        System.out.println("group name::" + groupname);
+                                                parsedData.addAll(mGrouplist);
+                                                if (activity != null) {
+                                                    ArrayAdapter<String> adapter = new ArrayAdapter<>(activity, android.R.layout.simple_spinner_item, parsedData);
+                                                    //  adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                                                    mGroupsSpinner.setAdapter(adapter);
+                                                }
+                                                mGroupsSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                                    @Override
+                                                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                                                        if (position != 0) {
+                                                            groupid = mGrouplist1.get(parsedData.get(position));
+                                                            groupname = parsedData.get(position);
+                                                            System.out.println("group id::" + groupid);
+                                                            System.out.println("group name::" + groupname);
+                                                        }
                                                     }
-                                                }
 
-                                                @Override
-                                                public void onNothingSelected(AdapterView<?> adapterView) {
+                                                    @Override
+                                                    public void onNothingSelected(AdapterView<?> adapterView) {
 
-                                                }
-                                            });
+                                                    }
+                                                });
 
-                                        } else {
-                                            CustomToast.customToast(activity, activity.getString(R.string._404));
+                                            } else {
+                                                CustomToast.customToast(activity, activity.getString(R.string._404));
+                                            }
                                         }
-                                    }
 
-                                    @Override
-                                    public void onFailure(Call<ProfileGroupResponse> call, Throwable t) {
+                                        @Override
+                                        public void onFailure(Call<ProfileGroupResponse> call, Throwable t) {
 
-                                    }
+                                        }
 
-                                });
-                            } else
-                                CustomToast.customToast(activity.getApplicationContext(), activity.getString(R.string.no_internet));
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                        viewQuotation.setOnClickListener(new OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                // TODO Auto-generated method stub
-                                Log.i("groupId", String.valueOf(groupid));
-                                if (groupid == 0)
-                                    CustomToast.customToast(activity, "please select Group to view quotation");
-                                else {
-                                    Bundle bundle = new Bundle();
-                                    bundle.putString("Title", holder.edittitles.getText().toString());
-                                    bundle.putString("Category", holder.editcategorys.getText().toString());
-                                    bundle.putString("Brand", holder.editbrands.getText().toString());
-                                    bundle.putString("Model", holder.editmodels.getText().toString());
-                                    bundle.putString("Price", holder.editprices.getText().toString());
-                                    bundle.putString("Image", vimages.get(0));
-                                    bundle.putInt("bundle_GroupId", groupid);
-                                    bundle.putInt("bundle_VehicleId", mMainList.get(holder.getAdapterPosition()).getVehicleId());
-                                    bundle.putString("bundle_Type", "UsedVehicle");
-                                    bundle.putString("bundle_Contact", mMainList.get(holder.getAdapterPosition()).getContactVehicle());
-
-                                    Intent intent = new Intent(activity, MyVehicleQuotationListActivity.class);
-                                    intent.putExtras(bundle);
-                                    activity.startActivity(intent);
-                                    openDialog.dismiss();
-                                }
+                                    });
+                                } else
+                                    CustomToast.customToast(activity.getApplicationContext(), activity.getString(R.string.no_internet));
+                            } catch (Exception e) {
+                                e.printStackTrace();
                             }
-                        });
-                        openDialog.show();
-                    }
-                });
+                            viewQuotation.setOnClickListener(new OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    // TODO Auto-generated method stub
+                                    Log.i("groupId", String.valueOf(groupid));
+                                    if (groupid == 0)
+                                        CustomToast.customToast(activity, "please select Group to view quotation");
+                                    else {
+                                        Bundle bundle = new Bundle();
+                                        bundle.putString("Title", holder.edittitles.getText().toString());
+                                        bundle.putString("Category", holder.editcategorys.getText().toString());
+                                        bundle.putString("Brand", holder.editbrands.getText().toString());
+                                        bundle.putString("Model", holder.editmodels.getText().toString());
+                                        bundle.putString("Price", holder.editprices.getText().toString());
+                                        bundle.putString("Image", vimages.get(0));
+                                        bundle.putInt("bundle_GroupId", groupid);
+                                        bundle.putInt("bundle_VehicleId", mMainList.get(holder.getAdapterPosition()).getVehicleId());
+                                        bundle.putString("bundle_Type", "UsedVehicle");
+                                        bundle.putString("bundle_Contact", mMainList.get(holder.getAdapterPosition()).getContactVehicle());
+
+                                        Intent intent = new Intent(activity, MyVehicleQuotationListActivity.class);
+                                        intent.putExtras(bundle);
+                                        activity.startActivity(intent);
+                                        openDialog.dismiss();
+                                    }
+                                }
+                            });
+                            openDialog.show();
+                        }
+                    });
 
                 /*
                 Transfer Stock listener...
                  */
-                mTransferStock.setOnClickListener(new OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        mBottomSheetDialog.dismiss();
-                        Bundle bundle = new Bundle();
-                        bundle.putInt("bundle_VehicleId", mMainList.get(holder.getAdapterPosition()).getVehicleId());
-                        AddTransferVehicle vehicle = new AddTransferVehicle();
-                        vehicle.setArguments(bundle);
-                        ((FragmentActivity) activity).getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.myUsedVehicleFrame, vehicle, "addTransferVehicle")
-                                .addToBackStack("addTransferVehicle")
-                                .commit();
-                    }
-                });
+                    mTransferStock.setOnClickListener(new OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            mBottomSheetDialog.dismiss();
+                            Bundle bundle = new Bundle();
+                            bundle.putInt("bundle_VehicleId", mMainList.get(holder.getAdapterPosition()).getVehicleId());
+                            AddTransferVehicle vehicle = new AddTransferVehicle();
+                            vehicle.setArguments(bundle);
+                            ((FragmentActivity) activity).getSupportFragmentManager().beginTransaction()
+                                    .replace(R.id.myUsedVehicleFrame, vehicle, "addTransferVehicle")
+                                    .addToBackStack("addTransferVehicle")
+                                    .commit();
+                        }
+                    });
 
                 /*
                 Send Quotation...
                  */
-                mQuotation.setOnClickListener(new OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        mBottomSheetDialog.dismiss();
-                        final Dialog openDialog = new Dialog(activity);
-                        openDialog.setContentView(R.layout.get_quotation);
-                        openDialog.setTitle("Fill Form For Quotation");
-                        final TextView titleText = (TextView) openDialog.findViewById(R.id.txtTitle);
-                        final EditText edtResPrice = (EditText) openDialog.findViewById(R.id.edtReservedPrice);
-                        final EditText edtDate = (EditText) openDialog.findViewById(R.id.edtDate);
-                        final Spinner mGroupsSpinner = (Spinner) openDialog.findViewById(R.id.spinnergroup);
+                    mQuotation.setOnClickListener(new OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            mBottomSheetDialog.dismiss();
+                            final Dialog openDialog = new Dialog(activity);
+                            openDialog.setContentView(R.layout.get_quotation);
+                            openDialog.setTitle("Fill Form For Quotation");
+                            final TextView titleText = (TextView) openDialog.findViewById(R.id.txtTitle);
+                            final EditText edtResPrice = (EditText) openDialog.findViewById(R.id.edtReservedPrice);
+                            final EditText edtDate = (EditText) openDialog.findViewById(R.id.edtDate);
+                            final Spinner mGroupsSpinner = (Spinner) openDialog.findViewById(R.id.spinnergroup);
 
-                        Button sendQuotation = (Button) openDialog.findViewById(R.id.btnSend);
+                            Button sendQuotation = (Button) openDialog.findViewById(R.id.btnSend);
                 /*Spinner to get groups*/
+                            try {
+                                if (mConnectionDetector.isConnectedToInternet()) {
+                                    Retrofit retrofit = new Retrofit.Builder()
+                                            .baseUrl(activity.getString(R.string.base_url))
+                                            .addConverterFactory(GsonConverterFactory.create())
+                                            .client(initLog().build())
+                                            .build();
+
+                                    ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                                    Call<ProfileGroupResponse> add = serviceApi._autokattaProfileGroup(activity.getSharedPreferences(activity.getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", null));
+                                    add.enqueue(new Callback<ProfileGroupResponse>() {
+                                        @Override
+                                        public void onResponse(Call<ProfileGroupResponse> call, Response<ProfileGroupResponse> response) {
+                                            if (response.isSuccessful()) {
+                                                mGrouplist.clear();
+                                                mGrouplist1.clear();
+                                                parsedData.clear();
+                                                mGrouplist.add("Select Group");
+                                                ProfileGroupResponse mProfilegroup = (ProfileGroupResponse) response.body();
+                                                for (ProfileGroupResponse.MyGroup groupresponse : mProfilegroup.getSuccess().getMyGroups()) {
+                                                    groupresponse.setId(groupresponse.getId());
+                                                    groupresponse.setTitle(groupresponse.getTitle());
+                                                    mGrouplist.add(groupresponse.getTitle());
+                                                    mGrouplist1.put(groupresponse.getTitle(), groupresponse.getId());
+                                                }
+
+
+                                                for (ProfileGroupResponse.JoinedGroup groupresponse : mProfilegroup.getSuccess().getJoinedGroups()) {
+                                                    groupresponse.setId(groupresponse.getId());
+                                                    groupresponse.setTitle(groupresponse.getTitle());
+                                                    mGrouplist.add(groupresponse.getTitle());
+                                                    mGrouplist1.put(groupresponse.getTitle(), groupresponse.getId());
+                                                }
+
+                                                parsedData.addAll(mGrouplist);
+                                                if (activity != null) {
+                                                    ArrayAdapter<String> adapter = new ArrayAdapter<>(activity, android.R.layout.simple_spinner_item, parsedData);
+                                                    //  adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                                                    mGroupsSpinner.setAdapter(adapter);
+                                                }
+                                                mGroupsSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                                    @Override
+                                                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                                                        if (position != 0) {
+                                                            groupid = mGrouplist1.get(parsedData.get(position));
+                                                            groupname = parsedData.get(position);
+                                                            System.out.println("group id::" + groupid);
+                                                            System.out.println("group name::" + groupname);
+                                                        }
+                                                    }
+
+                                                    @Override
+                                                    public void onNothingSelected(AdapterView<?> adapterView) {
+
+                                                    }
+                                                });
+
+                                            } else {
+                                                CustomToast.customToast(activity, activity.getString(R.string._404));
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onFailure(Call<ProfileGroupResponse> call, Throwable t) {
+
+                                        }
+
+                                    });
+                                } else
+                                    CustomToast.customToast(activity.getApplicationContext(), activity.getString(R.string.no_internet));
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+
+                            titleText.setText(mMainList.get(holder.getAdapterPosition()).getTitle() + " of Category "
+                                    + mMainList.get(holder.getAdapterPosition()).getCategory());
+
+                            edtDate.setOnTouchListener(new View.OnTouchListener() {
+                                @Override
+                                public boolean onTouch(View v, MotionEvent event) {
+                                    int action = event.getAction();
+                                    if (action == MotionEvent.ACTION_DOWN) {
+                                        edtDate.setInputType(InputType.TYPE_NULL);
+                                        edtDate.setError(null);
+                                        new SetMyDateAndTime("date", edtDate, activity);
+                                    }
+                                    return false;
+                                }
+                            });
+                            sendQuotation.setOnClickListener(new OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    // TODO Auto-generated method stub
+                                    String strTitle = titleText.getText().toString();
+                                    String strPrice = edtResPrice.getText().toString();
+                                    String deadlineDate = edtDate.getText().toString();
+
+                                    Log.i("groupId", String.valueOf(groupid));
+                                    if (groupid == 0)
+                                        CustomToast.customToast(activity, "please select Group to send quotation");
+                                    else {
+                                        apiCall.SendQuotation(strTitle, strPrice, deadlineDate, String.valueOf(groupid),
+                                                mMainList.get(holder.getAdapterPosition()).getVehicleId(), myContact,
+                                                "UsedVehicle");
+                                        System.out.println(mMainList.get(holder.getAdapterPosition()).getVehicleId());
+                                        openDialog.dismiss();
+                                    }
+                                }
+                            });
+                            openDialog.show();
+                        }
+                    });
+
+                /*
+                Enquiry...
+                 */
+                    mEnquiry.setOnClickListener(new OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            mBottomSheetDialog.dismiss();
+                            ActivityOptions option = ActivityOptions.makeCustomAnimation(activity, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
+                            Bundle b = new Bundle();
+                            b.putString("sender", "");
+                            b.putString("sendername", "");
+                            b.putString("keyword", "Used Vehicle");
+                            b.putString("category", mMainList.get(holder.getAdapterPosition()).getCategory());
+                            b.putString("title", mMainList.get(holder.getAdapterPosition()).getTitle());
+                            b.putString("brand", mMainList.get(holder.getAdapterPosition()).getManufacturer());
+                            b.putString("model", mMainList.get(holder.getAdapterPosition()).getModel());
+                            b.putString("price", mMainList.get(holder.getAdapterPosition()).getPrice());
+                            b.putString("image", vimages.get(0));
+                            b.putInt("id", mMainList.get(holder.getAdapterPosition()).getVehicleId());
+                            b.putString("classname", "myuploadedvehicleadapter");
+
+                            Intent intent = new Intent(activity, AddManualEnquiry.class);
+                            intent.putExtras(b);
+                            activity.startActivity(intent, option.toBundle());
+                        }
+                    });
+
+                /*
+                Sold vehicle...
+                 */
+                    mSold.setOnClickListener(new OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            mBottomSheetDialog.dismiss();
+                            if ((!mConnectionDetector.isConnectedToInternet())) {
+                                Toast.makeText(activity, "No network....Please try later", Toast.LENGTH_SHORT).show();
+                            } else {
+                                new AlertDialog.Builder(activity)
+                                        .setTitle("Sale Vehicle?")
+                                        .setMessage("Are you sure you want to sale this vehicle?")
+                                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int which) {
+
+                                                AddSoldVehicle vehicle = new AddSoldVehicle();
+                                                Bundle bundle = new Bundle();
+                                                bundle.putInt("getVehicleId", mMainList.get(holder.getAdapterPosition()).getVehicleId());
+                                                vehicle.setArguments(bundle);
+
+                                                ((FragmentActivity) activity).getSupportFragmentManager().beginTransaction()
+                                                        .replace(R.id.myUsedVehicleFrame, vehicle, "addSoldVehicle")
+                                                        .addToBackStack("addSoldVehicle")
+                                                        .commit();
+
+                                                mMainList.remove(holder.getAdapterPosition());
+                                                notifyDataSetChanged();
+                                            }
+                                        })
+
+                                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int which) {
+
+                                            }
+                                        })
+                                        .setIcon(android.R.drawable.ic_dialog_alert)
+                                        .show();
+                            }
+                        }
+                    });
+
+                    mOfferRecived.setOnClickListener(new OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent i = new Intent(activity, BussinessChatActivity.class);
+                            i.putExtra("callfrom", "myuploadedvehicle");
+                            activity.startActivity(i);
+                        }
+                    });
+                }
+            });
+
+            holder.btnnotify.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (!mConnectionDetector.isConnectedToInternet()) {
+                        CustomToast.customToast(activity, activity.getString(R.string.no_internet));
+                    } else {
+                        String keyword;
+                        if (holder.btnnotify.getText().toString().equalsIgnoreCase("Stop Notification")) {
+                            keyword = "stop";
+                            holder.btnnotify.setText("Start Notification");
+                            holder.btnnotify.setBackgroundResource(R.color.orange);
+                        } else {
+                            keyword = "start";
+                            holder.btnnotify.setText("Stop Notification");
+                            holder.btnnotify.setBackgroundResource(R.drawable.buttonback);
+                        }
+                        apiCall.sendNotificationOfUploadedVehicle(mMainList.get(holder.getAdapterPosition()).getVehicleId(), keyword);
+                    }
+                }
+            });
+
+
+            holder.vehidetails.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Bundle bundle = new Bundle();
+                    ActivityOptions options = ActivityOptions.makeCustomAnimation(activity, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
+                    Intent i = new Intent(activity, VehicleDetails.class);
+                    bundle.putInt("vehicle_id", mMainList.get(holder.getAdapterPosition()).getVehicleId());
+                    i.putExtras(bundle);
+                    activity.startActivity(i, options.toBundle());
+                }
+            });
+            holder.editleads.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (holder.editleads.getText().toString().equalsIgnoreCase("0")) {
+                        Toast.makeText(activity, "No leads found", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Bundle b = new Bundle();
+                        b.putInt("vehicle_id", mMainList.get(holder.getAdapterPosition()).getVehicleId());
+                        b.putString("title", mMainList.get(holder.getAdapterPosition()).getTitle());
+                        b.putString("price", mMainList.get(holder.getAdapterPosition()).getPrice());
+                        b.putString("category", mMainList.get(holder.getAdapterPosition()).getCategory());
+                        b.putString("brand", mMainList.get(holder.getAdapterPosition()).getManufacturer());
+                        b.putString("model", mMainList.get(holder.getAdapterPosition()).getModel());
+                        b.putString("image", mMainList.get(holder.getAdapterPosition()).getImages());
+                        b.putString("uploaddate", mMainList.get(holder.getAdapterPosition()).getDate());
+                        b.putString("noofleads", mMainList.get(holder.getAdapterPosition()).getBuyerLeads());
+                        b.putString("rto_city", mMainList.get(holder.getAdapterPosition()).getRtoCity());
+                        b.putString("manufacture_year", mMainList.get(holder.getAdapterPosition()).getYearOfManufacture());
+
+                        UploadedVehicleBuyerList frag = new UploadedVehicleBuyerList();
+                        frag.setArguments(b);
+                        FragmentManager fragmentManager = ((FragmentActivity) activity).getSupportFragmentManager();
+                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                        fragmentTransaction.replace(R.id.myUsedVehicleFrame, frag);
+                        fragmentTransaction.addToBackStack("vehicle_buyer_list");
+                        fragmentTransaction.commit();
+                    }
+                }
+            });
+
+            holder.stock_type.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (mMainList.get(position).getStockType().equalsIgnoreCase("Finance/Repo")
+                            || mMainList.get(position).getStockType().equalsIgnoreCase("Insurance")) {
+                        final AlertDialog.Builder dialog = new AlertDialog.Builder(activity);
+                        LayoutInflater inflater = activity.getLayoutInflater();
+                        View dialoglayout = inflater.inflate(R.layout.stock_type_cust_details, null);
+                        dialog.setView(dialoglayout);
+                        dialog.setTitle("Customer details");
+                        dialog.show();
+
+                        final TextView mLoanNo = (TextView) dialoglayout.findViewById(R.id.loanno);
+                        final TextView mBorrowerName = (TextView) dialoglayout.findViewById(R.id.borrowername);
+                        final TextView mBorrowerContact = (TextView) dialoglayout.findViewById(R.id.borrowercontact);
+                        final TextView mBranchCity = (TextView) dialoglayout.findViewById(R.id.branchcity);
+                        final TextView mManagerName = (TextView) dialoglayout.findViewById(R.id.managername);
+                        final TextView ManagerContact = (TextView) dialoglayout.findViewById(R.id.managercnt);
+                        final TextView mDealerName = (TextView) dialoglayout.findViewById(R.id.dealername);
+                        final TextView mStockYardNAme = (TextView) dialoglayout.findViewById(R.id.stockyardname);
+                        final TextView mStockYardAddresss = (TextView) dialoglayout.findViewById(R.id.stockyardaddress);
+                        final TextView mInwardDate = (TextView) dialoglayout.findViewById(R.id.inwarddate);
+                        final LinearLayout scrap = (LinearLayout) dialoglayout.findViewById(R.id.scrap_linear);
+                        //  final Button mCancle = (Button) dialoglayout.findViewById(R.id.cancl);
+                        scrap.setVisibility(View.GONE);
                         try {
                             if (mConnectionDetector.isConnectedToInternet()) {
                                 Retrofit retrofit = new Retrofit.Builder()
@@ -407,53 +708,37 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
                                         .build();
 
                                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                                Call<ProfileGroupResponse> add = serviceApi._autokattaProfileGroup(activity.getSharedPreferences(activity.getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", null));
-                                add.enqueue(new Callback<ProfileGroupResponse>() {
+                                Call<GetVehicleRepoInsuranceResponse> add = serviceApi._autokattaGetVehiclesRepoInsurance(mMainList.get(position).getVehicleId());
+                                add.enqueue(new Callback<GetVehicleRepoInsuranceResponse>() {
                                     @Override
-                                    public void onResponse(Call<ProfileGroupResponse> call, Response<ProfileGroupResponse> response) {
+                                    public void onResponse(Call<GetVehicleRepoInsuranceResponse> call, Response<GetVehicleRepoInsuranceResponse> response) {
                                         if (response.isSuccessful()) {
-                                            mGrouplist.clear();
-                                            mGrouplist1.clear();
-                                            parsedData.clear();
-                                            mGrouplist.add("Select Group");
-                                            ProfileGroupResponse mProfilegroup = (ProfileGroupResponse) response.body();
-                                            for (ProfileGroupResponse.MyGroup groupresponse : mProfilegroup.getSuccess().getMyGroups()) {
-                                                groupresponse.setId(groupresponse.getId());
-                                                groupresponse.setTitle(groupresponse.getTitle());
-                                                mGrouplist.add(groupresponse.getTitle());
-                                                mGrouplist1.put(groupresponse.getTitle(), groupresponse.getId());
-                                            }
+                                            GetVehicleRepoInsuranceResponse mRepo = (GetVehicleRepoInsuranceResponse) response.body();
+                                            for (GetVehicleRepoInsuranceResponse.Success success : mRepo.getSuccess()) {
+                                                mLoanNo.setText(success.getAccountNumber());
+                                                mBorrowerName.setText(success.getBorrowerName());
+                                                mBorrowerContact.setText(success.getBorrowerContact());
+                                                mBranchCity.setText(success.getBranchCityName());
+                                                mManagerName.setText(success.getBrachMangerName());
+                                                ManagerContact.setText(success.getBranchContact());
+                                                mDealerName.setText(success.getDealerName());
+                                                mStockYardNAme.setText(success.getStockYardName());
+                                                mStockYardAddresss.setText(success.getStockYardAddress());
+                                                //  mInwardDate.setText(success.getInwardDate().replace("T00:00:00",""));
+                                                //To set Date
+                                                try {
+                                                    //To set Date
+                                                    DateFormat inputDate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                                                    DateFormat newDateFormat = new SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault());
+                                                    mInwardDate.setText(newDateFormat.format(inputDate.parse(success.getInwardDate().replace("T00:00:00", ""))));
 
-
-                                            for (ProfileGroupResponse.JoinedGroup groupresponse : mProfilegroup.getSuccess().getJoinedGroups()) {
-                                                groupresponse.setId(groupresponse.getId());
-                                                groupresponse.setTitle(groupresponse.getTitle());
-                                                mGrouplist.add(groupresponse.getTitle());
-                                                mGrouplist1.put(groupresponse.getTitle(), groupresponse.getId());
-                                            }
-
-                                            parsedData.addAll(mGrouplist);
-                                            if (activity != null) {
-                                                ArrayAdapter<String> adapter = new ArrayAdapter<>(activity, android.R.layout.simple_spinner_item, parsedData);
-                                                //  adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                                                mGroupsSpinner.setAdapter(adapter);
-                                            }
-                                            mGroupsSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                                                @Override
-                                                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                                                    if (position != 0) {
-                                                        groupid = mGrouplist1.get(parsedData.get(position));
-                                                        groupname = parsedData.get(position);
-                                                        System.out.println("group id::" + groupid);
-                                                        System.out.println("group name::" + groupname);
-                                                    }
+                                                } catch (Exception e) {
+                                                    e.printStackTrace();
                                                 }
+                                                success.setBranchMangerStatus(success.getBranchMangerStatus());
+                                                success.setBorrowerStatus(success.getBorrowerStatus());
 
-                                                @Override
-                                                public void onNothingSelected(AdapterView<?> adapterView) {
-
-                                                }
-                                            });
+                                            }
 
                                         } else {
                                             CustomToast.customToast(activity, activity.getString(R.string._404));
@@ -461,9 +746,77 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
                                     }
 
                                     @Override
-                                    public void onFailure(Call<ProfileGroupResponse> call, Throwable t) {
+                                    public void onFailure(Call<GetVehicleRepoInsuranceResponse> call, Throwable t) {
 
                                     }
+                                });
+                            } else
+                                CustomToast.customToast(activity.getApplicationContext(), activity.getString(R.string.no_internet));
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    } else if (mMainList.get(position).getStockType().equalsIgnoreCase("Scrap")
+                            || mMainList.get(position).getStockType().equalsIgnoreCase("Inventory")) {
+                        final AlertDialog.Builder dialog = new AlertDialog.Builder(activity);
+                        LayoutInflater inflater = activity.getLayoutInflater();
+                        View dialoglayout = inflater.inflate(R.layout.stock_type_cust_details, null);
+                        dialog.setView(dialoglayout);
+                        dialog.setTitle("Customer details");
+                        dialog.show();
+                        final LinearLayout repo = (LinearLayout) dialoglayout.findViewById(R.id.repo_linear);
+                        final TextView mCustName = (TextView) dialoglayout.findViewById(R.id.custname);
+                        final TextView mCustContact = (TextView) dialoglayout.findViewById(R.id.custcontact);
+                        final TextView mAddress = (TextView) dialoglayout.findViewById(R.id.custaddress);
+                        final TextView mDetailAddr = (TextView) dialoglayout.findViewById(R.id.address);
+                        final TextView mPurchasePrice = (TextView) dialoglayout.findViewById(R.id.purchaseprice);
+                        final TextView mPurchaseDate = (TextView) dialoglayout.findViewById(R.id.purchasedate);
+                        //  final Button mCancle = (Button) dialoglayout.findViewById(R.id.cancl);
+                        repo.setVisibility(View.GONE);
+                        try {
+                            if (mConnectionDetector.isConnectedToInternet()) {
+                                Retrofit retrofit = new Retrofit.Builder()
+                                        .baseUrl(activity.getString(R.string.base_url))
+                                        .addConverterFactory(GsonConverterFactory.create())
+                                        .client(initLog().build())
+                                        .build();
+
+                                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                                Call<GetVehicleInventoryScrapResponse> add = serviceApi._autokattaGetVehicleInventoryScrap(mMainList.get(position).getVehicleId());
+                                add.enqueue(new Callback<GetVehicleInventoryScrapResponse>() {
+                                    @Override
+                                    public void onResponse(Call<GetVehicleInventoryScrapResponse> call, Response<GetVehicleInventoryScrapResponse> response) {
+                                        if (response.isSuccessful()) {
+                                            GetVehicleInventoryScrapResponse mProfilegroup = (GetVehicleInventoryScrapResponse) response.body();
+                                            for (GetVehicleInventoryScrapResponse.Success success : mProfilegroup.getSuccess()) {
+                                                mCustName.setText(success.getCustomerName());
+                                                mCustContact.setText(success.getMyContact());
+                                                mAddress.setText(success.getAddress());
+                                                mDetailAddr.setText(success.getFulladdress());
+                                                //    mPurchaseDate.setText(success.getPurchaseDate().replace("T00:00:00",""));
+                                                mPurchasePrice.setText(success.getMyContact());
+
+                                                //To set Date
+                                                try {
+                                                    //To set Date
+                                                    DateFormat inputDate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                                                    DateFormat newDateFormat = new SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault());
+                                                    mPurchaseDate.setText(newDateFormat.format(inputDate.parse(success.getPurchaseDate().replace("T00:00:00", ""))));
+
+                                                } catch (Exception e) {
+                                                    e.printStackTrace();
+                                                }
+                                            }
+
+                                        } else {
+                                            CustomToast.customToast(activity, activity.getString(R.string._404));
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<GetVehicleInventoryScrapResponse> call, Throwable t) {
+
+                                    }
+
 
                                 });
                             } else
@@ -471,360 +824,27 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
-
-                        titleText.setText(mMainList.get(holder.getAdapterPosition()).getTitle() + " of Category "
-                                + mMainList.get(holder.getAdapterPosition()).getCategory());
-
-                        edtDate.setOnTouchListener(new View.OnTouchListener() {
-                            @Override
-                            public boolean onTouch(View v, MotionEvent event) {
-                                int action = event.getAction();
-                                if (action == MotionEvent.ACTION_DOWN) {
-                                    edtDate.setInputType(InputType.TYPE_NULL);
-                                    edtDate.setError(null);
-                                    new SetMyDateAndTime("date", edtDate, activity);
-                                }
-                                return false;
-                            }
-                        });
-                        sendQuotation.setOnClickListener(new OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                // TODO Auto-generated method stub
-                                String strTitle = titleText.getText().toString();
-                                String strPrice = edtResPrice.getText().toString();
-                                String deadlineDate = edtDate.getText().toString();
-
-                                Log.i("groupId", String.valueOf(groupid));
-                                if (groupid == 0)
-                                    CustomToast.customToast(activity, "please select Group to send quotation");
-                                else {
-                                    apiCall.SendQuotation(strTitle, strPrice, deadlineDate, String.valueOf(groupid),
-                                            mMainList.get(holder.getAdapterPosition()).getVehicleId(), myContact,
-                                            "UsedVehicle");
-                                    System.out.println(mMainList.get(holder.getAdapterPosition()).getVehicleId());
-                                    openDialog.dismiss();
-                                }
-                            }
-                        });
-                        openDialog.show();
+                    } else if (mMainList.get(position).getStockType().equalsIgnoreCase("Market Place")) {
+                        Log.e("Market Place", "->");
                     }
-                });
-
-                /*
-                Enquiry...
-                 */
-                mEnquiry.setOnClickListener(new OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        mBottomSheetDialog.dismiss();
-                        ActivityOptions option = ActivityOptions.makeCustomAnimation(activity, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
-                        Bundle b = new Bundle();
-                        b.putString("sender", "");
-                        b.putString("sendername", "");
-                        b.putString("keyword", "Used Vehicle");
-                        b.putString("category", mMainList.get(holder.getAdapterPosition()).getCategory());
-                        b.putString("title", mMainList.get(holder.getAdapterPosition()).getTitle());
-                        b.putString("brand", mMainList.get(holder.getAdapterPosition()).getManufacturer());
-                        b.putString("model", mMainList.get(holder.getAdapterPosition()).getModel());
-                        b.putString("price", mMainList.get(holder.getAdapterPosition()).getPrice());
-                        b.putString("image", vimages.get(0));
-                        b.putInt("id", mMainList.get(holder.getAdapterPosition()).getVehicleId());
-                        b.putString("classname", "myuploadedvehicleadapter");
-
-                        Intent intent = new Intent(activity, AddManualEnquiry.class);
-                        intent.putExtras(b);
-                        activity.startActivity(intent, option.toBundle());
-                    }
-                });
-
-                /*
-                Sold vehicle...
-                 */
-                mSold.setOnClickListener(new OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        mBottomSheetDialog.dismiss();
-                        if ((!mConnectionDetector.isConnectedToInternet())) {
-                            Toast.makeText(activity, "No network....Please try later", Toast.LENGTH_SHORT).show();
-                        } else {
-                            new AlertDialog.Builder(activity)
-                                    .setTitle("Sale Vehicle?")
-                                    .setMessage("Are you sure you want to sale this vehicle?")
-                                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int which) {
-
-                                            AddSoldVehicle vehicle = new AddSoldVehicle();
-                                            Bundle bundle = new Bundle();
-                                            bundle.putInt("getVehicleId", mMainList.get(holder.getAdapterPosition()).getVehicleId());
-                                            vehicle.setArguments(bundle);
-
-                                            ((FragmentActivity) activity).getSupportFragmentManager().beginTransaction()
-                                                    .replace(R.id.myUsedVehicleFrame, vehicle, "addSoldVehicle")
-                                                    .addToBackStack("addSoldVehicle")
-                                                    .commit();
-
-                                            mMainList.remove(holder.getAdapterPosition());
-                                            notifyDataSetChanged();
-                                        }
-                                    })
-
-                                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int which) {
-
-                                        }
-                                    })
-                                    .setIcon(android.R.drawable.ic_dialog_alert)
-                                    .show();
-                        }
-                    }
-                });
-
-                mOfferRecived.setOnClickListener(new OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Intent i = new Intent(activity, BussinessChatActivity.class);
-                        i.putExtra("callfrom", "myuploadedvehicle");
-                        activity.startActivity(i);
-                    }
-                });
-            }
-        });
-
-        holder.btnnotify.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (!mConnectionDetector.isConnectedToInternet()) {
-                    CustomToast.customToast(activity, activity.getString(R.string.no_internet));
-                } else {
-                    String keyword;
-                    if (holder.btnnotify.getText().toString().equalsIgnoreCase("Stop Notification")) {
-                        keyword = "stop";
-                        holder.btnnotify.setText("Start Notification");
-                        holder.btnnotify.setBackgroundResource(R.color.orange);
-                    } else {
-                        keyword = "start";
-                        holder.btnnotify.setText("Stop Notification");
-                        holder.btnnotify.setBackgroundResource(R.drawable.buttonback);
-                    }
-                    apiCall.sendNotificationOfUploadedVehicle(mMainList.get(holder.getAdapterPosition()).getVehicleId(), keyword);
                 }
-            }
-        });
+            });
 
 
-        holder.vehidetails.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Bundle bundle = new Bundle();
-                ActivityOptions options = ActivityOptions.makeCustomAnimation(activity, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
-                Intent i = new Intent(activity, VehicleDetails.class);
-                bundle.putInt("vehicle_id", mMainList.get(holder.getAdapterPosition()).getVehicleId());
-                i.putExtras(bundle);
-                activity.startActivity(i, options.toBundle());
-            }
-        });
-        holder.editleads.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (holder.editleads.getText().toString().equalsIgnoreCase("0")) {
-                    Toast.makeText(activity, "No leads found", Toast.LENGTH_SHORT).show();
-                } else {
-                    Bundle b = new Bundle();
-                    b.putInt("vehicle_id", mMainList.get(holder.getAdapterPosition()).getVehicleId());
-                    b.putString("title", mMainList.get(holder.getAdapterPosition()).getTitle());
-                    b.putString("price", mMainList.get(holder.getAdapterPosition()).getPrice());
-                    b.putString("category", mMainList.get(holder.getAdapterPosition()).getCategory());
-                    b.putString("brand", mMainList.get(holder.getAdapterPosition()).getManufacturer());
-                    b.putString("model", mMainList.get(holder.getAdapterPosition()).getModel());
-                    b.putString("image", mMainList.get(holder.getAdapterPosition()).getImages());
-                    b.putString("uploaddate", mMainList.get(holder.getAdapterPosition()).getDate());
-                    b.putString("noofleads", mMainList.get(holder.getAdapterPosition()).getBuyerLeads());
-                    b.putString("rto_city", mMainList.get(holder.getAdapterPosition()).getRtoCity());
-                    b.putString("manufacture_year", mMainList.get(holder.getAdapterPosition()).getYearOfManufacture());
+            holder.mEnquiryCount.setOnClickListener(new
 
-                    UploadedVehicleBuyerList frag = new UploadedVehicleBuyerList();
-                    frag.setArguments(b);
-                    FragmentManager fragmentManager = ((FragmentActivity) activity).getSupportFragmentManager();
-                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                    fragmentTransaction.replace(R.id.myUsedVehicleFrame, frag);
-                    fragmentTransaction.addToBackStack("vehicle_buyer_list");
-                    fragmentTransaction.commit();
-                }
-            }
-        });
-
-        holder.stock_type.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (mMainList.get(position).getStockType().equalsIgnoreCase("Finance/Repo")
-                        || mMainList.get(position).getStockType().equalsIgnoreCase("Insurance")) {
-                    final AlertDialog.Builder dialog = new AlertDialog.Builder(activity);
-                    LayoutInflater inflater = activity.getLayoutInflater();
-                    View dialoglayout = inflater.inflate(R.layout.stock_type_cust_details, null);
-                    dialog.setView(dialoglayout);
-                    dialog.setTitle("Customer details");
-                    dialog.show();
-
-                    final TextView mLoanNo = (TextView) dialoglayout.findViewById(R.id.loanno);
-                    final TextView mBorrowerName = (TextView) dialoglayout.findViewById(R.id.borrowername);
-                    final TextView mBorrowerContact = (TextView) dialoglayout.findViewById(R.id.borrowercontact);
-                    final TextView mBranchCity = (TextView) dialoglayout.findViewById(R.id.branchcity);
-                    final TextView mManagerName = (TextView) dialoglayout.findViewById(R.id.managername);
-                    final TextView ManagerContact = (TextView) dialoglayout.findViewById(R.id.managercnt);
-                    final TextView mDealerName = (TextView) dialoglayout.findViewById(R.id.dealername);
-                    final TextView mStockYardNAme = (TextView) dialoglayout.findViewById(R.id.stockyardname);
-                    final TextView mStockYardAddresss = (TextView) dialoglayout.findViewById(R.id.stockyardaddress);
-                    final TextView mInwardDate = (TextView) dialoglayout.findViewById(R.id.inwarddate);
-                    final LinearLayout scrap = (LinearLayout) dialoglayout.findViewById(R.id.scrap_linear);
-                    //  final Button mCancle = (Button) dialoglayout.findViewById(R.id.cancl);
-                    scrap.setVisibility(View.GONE);
-                    try {
-                        if (mConnectionDetector.isConnectedToInternet()) {
-                            Retrofit retrofit = new Retrofit.Builder()
-                                    .baseUrl(activity.getString(R.string.base_url))
-                                    .addConverterFactory(GsonConverterFactory.create())
-                                    .client(initLog().build())
-                                    .build();
-
-                            ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                            Call<GetVehicleRepoInsuranceResponse> add = serviceApi._autokattaGetVehiclesRepoInsurance(mMainList.get(position).getVehicleId());
-                            add.enqueue(new Callback<GetVehicleRepoInsuranceResponse>() {
-                                @Override
-                                public void onResponse(Call<GetVehicleRepoInsuranceResponse> call, Response<GetVehicleRepoInsuranceResponse> response) {
-                                    if (response.isSuccessful()) {
-                                        GetVehicleRepoInsuranceResponse mRepo = (GetVehicleRepoInsuranceResponse) response.body();
-                                        for (GetVehicleRepoInsuranceResponse.Success success : mRepo.getSuccess()) {
-                                            mLoanNo.setText(success.getAccountNumber());
-                                            mBorrowerName.setText(success.getBorrowerName());
-                                            mBorrowerContact.setText(success.getBorrowerContact());
-                                            mBranchCity.setText(success.getBranchCityName());
-                                            mManagerName.setText(success.getBrachMangerName());
-                                            ManagerContact.setText(success.getBranchContact());
-                                            mDealerName.setText(success.getDealerName());
-                                            mStockYardNAme.setText(success.getStockYardName());
-                                            mStockYardAddresss.setText(success.getStockYardAddress());
-                                            //  mInwardDate.setText(success.getInwardDate().replace("T00:00:00",""));
-                                            //To set Date
-                                            try {
-                                                //To set Date
-                                                DateFormat inputDate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-                                                DateFormat newDateFormat = new SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault());
-                                                mInwardDate.setText(newDateFormat.format(inputDate.parse(success.getInwardDate().replace("T00:00:00", ""))));
-
-                                            } catch (Exception e) {
-                                                e.printStackTrace();
-                                            }
-                                            success.setBranchMangerStatus(success.getBranchMangerStatus());
-                                            success.setBorrowerStatus(success.getBorrowerStatus());
-
-                                        }
-
-                                    } else {
-                                        CustomToast.customToast(activity, activity.getString(R.string._404));
-                                    }
-                                }
-
-                                @Override
-                                public void onFailure(Call<GetVehicleRepoInsuranceResponse> call, Throwable t) {
-
-                                }
-                            });
-                        } else
-                            CustomToast.customToast(activity.getApplicationContext(), activity.getString(R.string.no_internet));
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                } else if (mMainList.get(position).getStockType().equalsIgnoreCase("Scrap")
-                        || mMainList.get(position).getStockType().equalsIgnoreCase("Inventory")) {
-                    final AlertDialog.Builder dialog = new AlertDialog.Builder(activity);
-                    LayoutInflater inflater = activity.getLayoutInflater();
-                    View dialoglayout = inflater.inflate(R.layout.stock_type_cust_details, null);
-                    dialog.setView(dialoglayout);
-                    dialog.setTitle("Customer details");
-                    dialog.show();
-                    final LinearLayout repo = (LinearLayout) dialoglayout.findViewById(R.id.repo_linear);
-                    final TextView mCustName = (TextView) dialoglayout.findViewById(R.id.custname);
-                    final TextView mCustContact = (TextView) dialoglayout.findViewById(R.id.custcontact);
-                    final TextView mAddress = (TextView) dialoglayout.findViewById(R.id.custaddress);
-                    final TextView mDetailAddr = (TextView) dialoglayout.findViewById(R.id.address);
-                    final TextView mPurchasePrice = (TextView) dialoglayout.findViewById(R.id.purchaseprice);
-                    final TextView mPurchaseDate = (TextView) dialoglayout.findViewById(R.id.purchasedate);
-                    //  final Button mCancle = (Button) dialoglayout.findViewById(R.id.cancl);
-                    repo.setVisibility(View.GONE);
-                    try {
-                        if (mConnectionDetector.isConnectedToInternet()) {
-                            Retrofit retrofit = new Retrofit.Builder()
-                                    .baseUrl(activity.getString(R.string.base_url))
-                                    .addConverterFactory(GsonConverterFactory.create())
-                                    .client(initLog().build())
-                                    .build();
-
-                            ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                            Call<GetVehicleInventoryScrapResponse> add = serviceApi._autokattaGetVehicleInventoryScrap(mMainList.get(position).getVehicleId());
-                            add.enqueue(new Callback<GetVehicleInventoryScrapResponse>() {
-                                @Override
-                                public void onResponse(Call<GetVehicleInventoryScrapResponse> call, Response<GetVehicleInventoryScrapResponse> response) {
-                                    if (response.isSuccessful()) {
-                                        GetVehicleInventoryScrapResponse mProfilegroup = (GetVehicleInventoryScrapResponse) response.body();
-                                        for (GetVehicleInventoryScrapResponse.Success success : mProfilegroup.getSuccess()) {
-                                            mCustName.setText(success.getCustomerName());
-                                            mCustContact.setText(success.getMyContact());
-                                            mAddress.setText(success.getAddress());
-                                            mDetailAddr.setText(success.getFulladdress());
-                                            //    mPurchaseDate.setText(success.getPurchaseDate().replace("T00:00:00",""));
-                                            mPurchasePrice.setText(success.getMyContact());
-
-                                            //To set Date
-                                            try {
-                                                //To set Date
-                                                DateFormat inputDate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-                                                DateFormat newDateFormat = new SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault());
-                                                mPurchaseDate.setText(newDateFormat.format(inputDate.parse(success.getPurchaseDate().replace("T00:00:00", ""))));
-
-                                            } catch (Exception e) {
-                                                e.printStackTrace();
-                                            }
-                                        }
-
-                                    } else {
-                                        CustomToast.customToast(activity, activity.getString(R.string._404));
-                                    }
-                                }
-
-                                @Override
-                                public void onFailure(Call<GetVehicleInventoryScrapResponse> call, Throwable t) {
-
-                                }
-
-
-                            });
-                        } else
-                            CustomToast.customToast(activity.getApplicationContext(), activity.getString(R.string.no_internet));
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                } else if (mMainList.get(position).getStockType().equalsIgnoreCase("Market Place")) {
-                    Log.e("Market Place", "->");
-                }
-            }
-        });
-
-
-        holder.mEnquiryCount.setOnClickListener(new
-
-                                                        OnClickListener() {
-                                                            @Override
-                                                            public void onClick(View view) {
-                                                                Bundle b = new Bundle();
-                                                                Intent i = new Intent(activity, EnquiredPersonsActivity.class);
-                                                                b.putString("id", String.valueOf(mMainList.get(holder.getAdapterPosition()).getVehicleId()));
-                                                                b.putString("keyword", "Used Vehicle");
-                                                                b.putString("name", mMainList.get(position).getTitle());
-                                                                i.putExtras(b);
-                                                                activity.startActivity(i);
-                                                            }
-                                                        });
+                                                            OnClickListener() {
+                                                                @Override
+                                                                public void onClick(View view) {
+                                                                    Bundle b = new Bundle();
+                                                                    Intent i = new Intent(activity, EnquiredPersonsActivity.class);
+                                                                    b.putString("id", String.valueOf(mMainList.get(holder.getAdapterPosition()).getVehicleId()));
+                                                                    b.putString("keyword", "Used Vehicle");
+                                                                    b.putString("name", mMainList.get(position).getTitle());
+                                                                    i.putExtras(b);
+                                                                    activity.startActivity(i);
+                                                                }
+                                                            });
         /*holder.mBroadcast.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -846,38 +866,39 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
             }
         });*/
 
-        holder.mUploadGroup.setOnClickListener(new
+            holder.mUploadGroup.setOnClickListener(new
 
-                                                       OnClickListener() {
-                                                           @Override
-                                                           public void onClick(View v) {
-                                                               try {
-                                                                   prevGroupIds = mMainList.get(holder.getAdapterPosition()).getGroupIDs().replaceAll(" ", "");
-                                                                   int position = holder.getAdapterPosition();
+                                                           OnClickListener() {
+                                                               @Override
+                                                               public void onClick(View v) {
+                                                                   try {
+                                                                       prevGroupIds = mMainList.get(holder.getAdapterPosition()).getGroupIDs().replaceAll(" ", "");
+                                                                       int position = holder.getAdapterPosition();
 
-                                                                   getGroups(position);
-                                                                   mVehicleId = mMainList.get(holder.getAdapterPosition()).getVehicleId();
-                                                               } catch (Exception e) {
-                                                                   e.printStackTrace();
+                                                                       getGroups(position);
+                                                                       mVehicleId = mMainList.get(holder.getAdapterPosition()).getVehicleId();
+                                                                   } catch (Exception e) {
+                                                                       e.printStackTrace();
+                                                                   }
                                                                }
-                                                           }
-                                                       });
+                                                           });
 
-        holder.mUploadStore.setOnClickListener(new
+            holder.mUploadStore.setOnClickListener(new
 
-                                                       OnClickListener() {
-                                                           @Override
-                                                           public void onClick(View v) {
-                                                               try {
-                                                                   prevStoreIds = mMainList.get(holder.getAdapterPosition()).getStoreIDs().replaceAll(" ", "");
-                                                                   int position = holder.getAdapterPosition();
-                                                                   getStores(position);
-                                                                   mVehicleId = mMainList.get(holder.getAdapterPosition()).getVehicleId();
-                                                               } catch (Exception e) {
-                                                                   e.printStackTrace();
+                                                           OnClickListener() {
+                                                               @Override
+                                                               public void onClick(View v) {
+                                                                   try {
+                                                                       prevStoreIds = mMainList.get(holder.getAdapterPosition()).getStoreIDs().replaceAll(" ", "");
+                                                                       int position = holder.getAdapterPosition();
+                                                                       getStores(position);
+                                                                       mVehicleId = mMainList.get(holder.getAdapterPosition()).getVehicleId();
+                                                                   } catch (Exception e) {
+                                                                       e.printStackTrace();
+                                                                   }
                                                                }
-                                                           }
-                                                       });
+                                                           });
+        }
     }
 
     /*
@@ -1214,6 +1235,31 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
     }
 
     @Override
+    public int getItemViewType(int position) {
+        if (mMainList.get(position).getVehicleId() != 0) {
+            return TYPE_MOVIE;
+        } else {
+            return TYPE_LOAD;
+        }
+    }
+
+    public void setMoreDataAvailable(boolean moreDataAvailable) {
+        isMoreDataAvailable = moreDataAvailable;
+    }
+
+    /* notifyDataSetChanged is final method so we can't override it
+         call adapter.notifyDataChanged(); after update the list
+         */
+    public void notifyDataChanged() {
+        notifyDataSetChanged();
+        isLoading = false;
+    }
+
+    public void setLoadMoreListener(OnLoadMoreListener loadMoreListener) {
+        this.loadMoreListener = loadMoreListener;
+    }
+
+    @Override
     public void notifySuccess(Response<?> response) {
 
     }
@@ -1261,6 +1307,15 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
         }
     }
 
+    /*
+    For loading progress bar...
+     */
+    static class LoadHolder extends RecyclerView.ViewHolder {
+        LoadHolder(View itemView) {
+            super(itemView);
+        }
+    }
+
     static class VehicleHolder extends RecyclerView.ViewHolder {
         ImageView vehicleimage, mMoreItems;
         TextView edittitles, editprices, editcategorys, editbrands, editmodels, editleads, edituploadedon, editmfgyr,
@@ -1298,6 +1353,10 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<MyUploadedVeh
             //mBroadcast = (RelativeLayout) itemView.findViewById(R.id.relativebroadcast);
             mLinear = (LinearLayout) itemView.findViewById(R.id.linearbtns);
         }
+
+       /* void bindData(MyUploadedVehiclesResponse.Success movieModel){
+
+        }*/
     }
 
     /***

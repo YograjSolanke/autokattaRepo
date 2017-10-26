@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
@@ -25,9 +26,11 @@ import java.util.List;
 import autokatta.com.R;
 import autokatta.com.adapter.MyUploadedVehicleAdapter;
 import autokatta.com.apicall.ApiCall;
+import autokatta.com.interfaces.OnLoadMoreListener;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.other.CustomToast;
+import autokatta.com.other.VerticalLineDecorator;
 import autokatta.com.response.MyUploadedVehiclesResponse;
 import retrofit2.Response;
 
@@ -47,6 +50,7 @@ public class MyUploadedVehiclesFragment extends Fragment implements RequestNotif
     TextView mNoData;
     ConnectionDetector mTestConnection;
     boolean hasView = false;
+    int index = 1;
 
     @Nullable
     @Override
@@ -72,14 +76,33 @@ public class MyUploadedVehiclesFragment extends Fragment implements RequestNotif
                 mNoData = (TextView) myVehicles.findViewById(R.id.no_category);
                 mNoData.setVisibility(View.GONE);
 
+                adapter = new MyUploadedVehicleAdapter(getActivity(), myUploadedVehiclesResponseList);
+                adapter.setLoadMoreListener(new OnLoadMoreListener() {
+                    @Override
+                    public void onLoadMore() {
+                        mRecyclerView.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                //int index = myUploadedVehiclesResponseList.size() - 1;
+                                index++;
+                                Log.i("index", "->" + index);
+                                loadMore(index);
+                            }
+                        });
+                        //Calling loadMore function in Runnable to fix the
+                        // java.lang.IllegalStateException: Cannot call this method while RecyclerView is computing a layout or scrolling error
+                    }
+                });
+                //adapter.notifyDataSetChanged();
                 mRecyclerView.setHasFixedSize(true);
-
                 LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(getActivity());
                 //mLinearLayoutManager.setReverseLayout(true);
                 //mLinearLayoutManager.setStackFromEnd(true);
                 mLinearLayoutManager.setSmoothScrollbarEnabled(true);
                 mRecyclerView.setLayoutManager(mLinearLayoutManager);
+                mRecyclerView.addItemDecoration(new VerticalLineDecorator(2));
                 mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+                mRecyclerView.setAdapter(adapter);
 
                 mSwipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
                         android.R.color.holo_green_light,
@@ -89,7 +112,7 @@ public class MyUploadedVehiclesFragment extends Fragment implements RequestNotif
                     @Override
                     public void run() {
                         mSwipeRefreshLayout.setRefreshing(true);
-                        getMyUploadedVehicles(myContact);
+                        getMyUploadedVehicles(myContact, 1, 10);
                     }
                 });
             }
@@ -102,7 +125,7 @@ public class MyUploadedVehiclesFragment extends Fragment implements RequestNotif
         super.setUserVisibleHint(isVisibleToUser);
         if (this.isVisible()) {
             if (isVisibleToUser && !hasView) {
-                getMyUploadedVehicles(myContact);
+                getMyUploadedVehicles(myContact, 1, 10);
                 hasView = true;
             }
         }
@@ -110,13 +133,13 @@ public class MyUploadedVehiclesFragment extends Fragment implements RequestNotif
 
     @Override
     public void onRefresh() {
-        getMyUploadedVehicles(myContact);
+        getMyUploadedVehicles(myContact, 1, 10);
     }
 
-    private void getMyUploadedVehicles(String myContact) {
+    private void getMyUploadedVehicles(String myContact, int pageNo, int record) {
         if (mTestConnection.isConnectedToInternet()) {
             ApiCall apiCall = new ApiCall(getActivity(), this);
-            apiCall.MyUploadedVehicles(myContact);
+            apiCall.MyUploadedVehicles(myContact, pageNo, record);
         } else {
             mSwipeRefreshLayout.setRefreshing(false);
             mNoData.setVisibility(View.GONE);
@@ -130,55 +153,64 @@ public class MyUploadedVehiclesFragment extends Fragment implements RequestNotif
     public void notifySuccess(Response<?> response) {
         if (response != null) {
             if (response.isSuccessful()) {
+                /*if (index > 1) {
+                    myUploadedVehiclesResponseList.remove(myUploadedVehiclesResponseList.size() - 1);
+                }*/
                 mSwipeRefreshLayout.setRefreshing(false);
-                myUploadedVehiclesResponseList.clear();
+                //myUploadedVehiclesResponseList.clear();
                 MyUploadedVehiclesResponse myVehicleResponse = (MyUploadedVehiclesResponse) response.body();
-                if (!myVehicleResponse.getSuccess().isEmpty()) {
-                    mNoData.setVisibility(View.GONE);
-                    for (MyUploadedVehiclesResponse.Success myVehicleSuccess : myVehicleResponse.getSuccess()) {
-                        myVehicleSuccess.setVehicleId(myVehicleSuccess.getVehicleId());
-                        myVehicleSuccess.setTitle(myVehicleSuccess.getTitle());
-                        myVehicleSuccess.setPrice(myVehicleSuccess.getPrice());
-                        myVehicleSuccess.setCategory(myVehicleSuccess.getCategory());
-                        myVehicleSuccess.setModel(myVehicleSuccess.getModel());
-                        myVehicleSuccess.setManufacturer(myVehicleSuccess.getManufacturer());
-                        myVehicleSuccess.setBuyerLeads(myVehicleSuccess.getBuyerLeads());
-                        myVehicleSuccess.setNotificationstatus(myVehicleSuccess.getNotificationstatus());
-                        myVehicleSuccess.setImages(myVehicleSuccess.getImages());
-                        myVehicleSuccess.setDate(myVehicleSuccess.getDate());
-                        myVehicleSuccess.setYearOfManufacture(myVehicleSuccess.getYearOfManufacture());
-                        myVehicleSuccess.setKmsRunning(myVehicleSuccess.getKmsRunning());
-                        myVehicleSuccess.setHrsRunning(myVehicleSuccess.getHrsRunning());
-                        myVehicleSuccess.setRtoCity(myVehicleSuccess.getRtoCity());
-                        myVehicleSuccess.setLocationCity(myVehicleSuccess.getLocationCity());
-                        myVehicleSuccess.setRegistrationNumber(myVehicleSuccess.getRegistrationNumber());
-                        if (myVehicleSuccess.getRegistrationNumber().equals(""))
-                            myVehicleSuccess.setRegistrationNumber("NA");
-                        else
+                Log.i("myVehicleResponse", "->" + myVehicleResponse.getSuccess().size());
+                if (myVehicleResponse.getSuccess().size() > 0) {
+                    if (!myVehicleResponse.getSuccess().isEmpty()) {
+                        mNoData.setVisibility(View.GONE);
+                        for (MyUploadedVehiclesResponse.Success myVehicleSuccess : myVehicleResponse.getSuccess()) {
+                            myVehicleSuccess.setVehicleId(myVehicleSuccess.getVehicleId());
+                            myVehicleSuccess.setTitle(myVehicleSuccess.getTitle());
+                            myVehicleSuccess.setPrice(myVehicleSuccess.getPrice());
+                            myVehicleSuccess.setCategory(myVehicleSuccess.getCategory());
+                            myVehicleSuccess.setModel(myVehicleSuccess.getModel());
+                            myVehicleSuccess.setManufacturer(myVehicleSuccess.getManufacturer());
+                            myVehicleSuccess.setBuyerLeads(myVehicleSuccess.getBuyerLeads());
+                            myVehicleSuccess.setNotificationstatus(myVehicleSuccess.getNotificationstatus());
+                            myVehicleSuccess.setImages(myVehicleSuccess.getImages());
+                            myVehicleSuccess.setDate(myVehicleSuccess.getDate());
+                            myVehicleSuccess.setYearOfManufacture(myVehicleSuccess.getYearOfManufacture());
+                            myVehicleSuccess.setKmsRunning(myVehicleSuccess.getKmsRunning());
+                            myVehicleSuccess.setHrsRunning(myVehicleSuccess.getHrsRunning());
+                            myVehicleSuccess.setRtoCity(myVehicleSuccess.getRtoCity());
+                            myVehicleSuccess.setLocationCity(myVehicleSuccess.getLocationCity());
                             myVehicleSuccess.setRegistrationNumber(myVehicleSuccess.getRegistrationNumber());
+                            if (myVehicleSuccess.getRegistrationNumber().equals(""))
+                                myVehicleSuccess.setRegistrationNumber("NA");
+                            else
+                                myVehicleSuccess.setRegistrationNumber(myVehicleSuccess.getRegistrationNumber());
 
-                        myVehicleSuccess.setVersion(myVehicleSuccess.getVersion());
-                        myVehicleSuccess.setRcAvailable(myVehicleSuccess.getRcAvailable());
-                        myVehicleSuccess.setNoOfOwner(myVehicleSuccess.getNoOfOwner());
+                            myVehicleSuccess.setVersion(myVehicleSuccess.getVersion());
+                            myVehicleSuccess.setRcAvailable(myVehicleSuccess.getRcAvailable());
+                            myVehicleSuccess.setNoOfOwner(myVehicleSuccess.getNoOfOwner());
 
-                        myVehicleSuccess.setGroupIDs(myVehicleSuccess.getGroupIDs());
-                        myVehicleSuccess.setStoreIDs(myVehicleSuccess.getStoreIDs());
-                        myVehicleSuccess.setStockType(myVehicleSuccess.getStockType());
-                        myVehicleSuccess.setChatCount(myVehicleSuccess.getChatCount());
-                        myVehicleSuccess.setEnquiryCount(myVehicleSuccess.getEnquiryCount());
-
-
-                        myUploadedVehiclesResponseList.add(myVehicleSuccess);
+                            myVehicleSuccess.setGroupIDs(myVehicleSuccess.getGroupIDs());
+                            myVehicleSuccess.setStoreIDs(myVehicleSuccess.getStoreIDs());
+                            myVehicleSuccess.setStockType(myVehicleSuccess.getStockType());
+                            myVehicleSuccess.setChatCount(myVehicleSuccess.getChatCount());
+                            myVehicleSuccess.setEnquiryCount(myVehicleSuccess.getEnquiryCount());
+                            myUploadedVehiclesResponseList.add(myVehicleSuccess);
+                        }
+                        Log.i("size", String.valueOf(myUploadedVehiclesResponseList.size()));
+                        //adapter.notifyDataChanged();
+                    } else {
+                        //adapter.setMoreDataAvailable(false);
+                        //Toast.makeText(getActivity(),"No More Data Available",Toast.LENGTH_LONG).show();
+                        mSwipeRefreshLayout.setRefreshing(false);
+                        mNoData.setVisibility(View.VISIBLE);
                     }
-                    Log.i("size", String.valueOf(myUploadedVehiclesResponseList.size()));
-                    mSwipeRefreshLayout.setRefreshing(false);
-                    adapter = new MyUploadedVehicleAdapter(getActivity(), myUploadedVehiclesResponseList);
-                    mRecyclerView.setAdapter(adapter);
-                    adapter.notifyDataSetChanged();
-                } else {
-                    mSwipeRefreshLayout.setRefreshing(false);
-                    mNoData.setVisibility(View.VISIBLE);
+                } else {//result size 0 means there is no more data available at server
+                    adapter.setMoreDataAvailable(false);
+                    //telling adapter to stop calling load more as no more server data available
+                    Toast.makeText(getActivity(), "No More Data Available", Toast.LENGTH_LONG).show();
                 }
+                adapter.notifyDataSetChanged();
+                //adapter.notifyDataChanged();
             } else {
                 mSwipeRefreshLayout.setRefreshing(false);
                 if (isAdded())
@@ -190,6 +222,126 @@ public class MyUploadedVehiclesFragment extends Fragment implements RequestNotif
             if (isAdded())
                 CustomToast.customToast(getActivity(), getString(R.string.no_response));
         }
+    }
+
+
+    private void loadMore(int index) {
+        //add loading progress view
+        adapter.notifyItemInserted(myUploadedVehiclesResponseList.size());
+        getMyUploadedVehicles(myContact, index, 10);
+
+        /*try {
+            if (mTestConnection.isConnectedToInternet()) {
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(ApiCall.initLog().build())
+                        .build();
+
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<MyUploadedVehiclesResponse> myUploadedVehiclesResponseCall = serviceApi._autokattaGetMyUploadedVehicles(myContact, index, 10);
+                myUploadedVehiclesResponseCall.enqueue(new Callback<MyUploadedVehiclesResponse>() {
+                    @Override
+                    public void onResponse(Call<MyUploadedVehiclesResponse> call, Response<MyUploadedVehiclesResponse> response) {
+                        if (response.isSuccessful()) {
+                            myUploadedVehiclesResponseList.remove(myUploadedVehiclesResponseList.size()-1);
+                            mSwipeRefreshLayout.setRefreshing(false);
+                            //myUploadedVehiclesResponseList.clear();
+                            MyUploadedVehiclesResponse myVehicleResponse = (MyUploadedVehiclesResponse) response.body();
+                            if (!myVehicleResponse.getSuccess().isEmpty()) {
+                                mNoData.setVisibility(View.GONE);
+                                for (MyUploadedVehiclesResponse.Success myVehicleSuccess : myVehicleResponse.getSuccess()) {
+                                    myVehicleSuccess.setVehicleId(myVehicleSuccess.getVehicleId());
+                                    myVehicleSuccess.setTitle(myVehicleSuccess.getTitle());
+                                    myVehicleSuccess.setPrice(myVehicleSuccess.getPrice());
+                                    myVehicleSuccess.setCategory(myVehicleSuccess.getCategory());
+                                    myVehicleSuccess.setModel(myVehicleSuccess.getModel());
+                                    myVehicleSuccess.setManufacturer(myVehicleSuccess.getManufacturer());
+                                    myVehicleSuccess.setBuyerLeads(myVehicleSuccess.getBuyerLeads());
+                                    myVehicleSuccess.setNotificationstatus(myVehicleSuccess.getNotificationstatus());
+                                    myVehicleSuccess.setImages(myVehicleSuccess.getImages());
+                                    myVehicleSuccess.setDate(myVehicleSuccess.getDate());
+                                    myVehicleSuccess.setYearOfManufacture(myVehicleSuccess.getYearOfManufacture());
+                                    myVehicleSuccess.setKmsRunning(myVehicleSuccess.getKmsRunning());
+                                    myVehicleSuccess.setHrsRunning(myVehicleSuccess.getHrsRunning());
+                                    myVehicleSuccess.setRtoCity(myVehicleSuccess.getRtoCity());
+                                    myVehicleSuccess.setLocationCity(myVehicleSuccess.getLocationCity());
+                                    myVehicleSuccess.setRegistrationNumber(myVehicleSuccess.getRegistrationNumber());
+                                    if (myVehicleSuccess.getRegistrationNumber().equals(""))
+                                        myVehicleSuccess.setRegistrationNumber("NA");
+                                    else
+                                        myVehicleSuccess.setRegistrationNumber(myVehicleSuccess.getRegistrationNumber());
+
+                                    myVehicleSuccess.setVersion(myVehicleSuccess.getVersion());
+                                    myVehicleSuccess.setRcAvailable(myVehicleSuccess.getRcAvailable());
+                                    myVehicleSuccess.setNoOfOwner(myVehicleSuccess.getNoOfOwner());
+
+                                    myVehicleSuccess.setGroupIDs(myVehicleSuccess.getGroupIDs());
+                                    myVehicleSuccess.setStoreIDs(myVehicleSuccess.getStoreIDs());
+                                    myVehicleSuccess.setStockType(myVehicleSuccess.getStockType());
+                                    myVehicleSuccess.setChatCount(myVehicleSuccess.getChatCount());
+                                    myVehicleSuccess.setEnquiryCount(myVehicleSuccess.getEnquiryCount());
+
+
+                                    myUploadedVehiclesResponseList.add(myVehicleSuccess);
+                                }
+                                Log.i("size", String.valueOf(myUploadedVehiclesResponseList.size()));
+                                mSwipeRefreshLayout.setRefreshing(false);
+                            } else {
+                                adapter.setMoreDataAvailable(false);
+                                Toast.makeText(getActivity(),"No More Data Available",Toast.LENGTH_LONG).show();
+                                mSwipeRefreshLayout.setRefreshing(false);
+                                mNoData.setVisibility(View.VISIBLE);
+                            }
+                            adapter.notifyDataChanged();
+                        } else {
+                            mSwipeRefreshLayout.setRefreshing(false);
+                            if (isAdded())
+                                CustomToast.customToast(getActivity(), getString(R.string._404));
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<MyUploadedVehiclesResponse> call, Throwable t) {
+                        //mNotifier.notifyError(t);
+                    }
+                });
+            } else
+                CustomToast.customToast(getActivity(), getString(R.string.no_internet));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }*/
+
+        /*Call<List<MovieModel>> call = api.getMovies(index);
+        call.enqueue(new Callback<List<MovieModel>>() {
+            @Override
+            public void onResponse(Call<List<MovieModel>> call, Response<List<MovieModel>> response) {
+                if(response.isSuccessful()){
+
+                    //remove loading view
+                    movies.remove(movies.size()-1);
+
+                    List<MovieModel> result = response.body();
+                    if(result.size()>0){
+                        //add loaded data
+                        movies.addAll(result);
+                    }else{//result size 0 means there is no more data available at server
+                        adapter.setMoreDataAvailable(false);
+                        //telling adapter to stop calling load more as no more server data available
+                        Toast.makeText(context,"No More Data Available",Toast.LENGTH_LONG).show();
+                    }
+                    adapter.notifyDataChanged();
+                    //should call the custom method adapter.notifyDataChanged here to get the correct loading status
+                }else{
+                    Log.e(TAG," Load More Response Error "+String.valueOf(response.code()));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<MovieModel>> call, Throwable t) {
+                Log.e(TAG," Load More Response Error "+t.getMessage());
+            }
+        });*/
     }
 
     @Override

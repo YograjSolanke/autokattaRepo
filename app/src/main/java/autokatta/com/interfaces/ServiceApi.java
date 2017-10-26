@@ -115,7 +115,8 @@ public interface ServiceApi {
 
     //get My Uploaded vehicles
     @GET("GetUploadedvehicles")
-    Call<MyUploadedVehiclesResponse> _autokattaGetMyUploadedVehicles(@Query("Contact") String myContact);
+    Call<MyUploadedVehiclesResponse> _autokattaGetMyUploadedVehicles(@Query("Contact") String myContact,
+                                                                     @Query("pageNo") int pageNo, @Query("ViewRecords") int viewRecords);
 
     //get My Active Events
     @GET("GetAuctionEvents")

@@ -758,7 +758,7 @@ public class ApiCall {
         MyUploaded Vehicles
      */
 
-    public void MyUploadedVehicles(String myContact) {
+    public void MyUploadedVehicles(String myContact, int pageNo, int record) {
 
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
@@ -769,7 +769,7 @@ public class ApiCall {
                         .build();
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<MyUploadedVehiclesResponse> myUploadedVehiclesResponseCall = serviceApi._autokattaGetMyUploadedVehicles(myContact);
+                Call<MyUploadedVehiclesResponse> myUploadedVehiclesResponseCall = serviceApi._autokattaGetMyUploadedVehicles(myContact, pageNo, record);
                 myUploadedVehiclesResponseCall.enqueue(new Callback<MyUploadedVehiclesResponse>() {
                     @Override
                     public void onResponse(Call<MyUploadedVehiclesResponse> call, Response<MyUploadedVehiclesResponse> response) {
@@ -9230,7 +9230,7 @@ get ExchangeMela Analytics Data
     /***
      * Retrofit Logs
      ***/
-    private OkHttpClient.Builder initLog() {
+    public static OkHttpClient.Builder initLog() {
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
         // set your desired log level
         logging.setLevel(HttpLoggingInterceptor.Level.BODY);
