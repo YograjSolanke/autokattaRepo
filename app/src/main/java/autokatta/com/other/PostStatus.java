@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -21,11 +22,17 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.MediaController;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.VideoView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.android.flexbox.FlexboxLayout;
+import com.nguyenhoanglam.imagepicker.activity.ImagePicker;
+import com.nguyenhoanglam.imagepicker.activity.ImagePickerActivity;
+import com.nguyenhoanglam.imagepicker.model.Image;
 
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
@@ -56,6 +63,9 @@ public class PostStatus extends AppCompatActivity implements RequestNotifier {
     List<String> lst = new ArrayList<>();
     private static final int SELECT_VIDEO = 3;
     private String selectedPath;
+    int REQUEST_CODE_PICKER = 2000;
+    List<Image> mImages = new ArrayList<>();
+    String allimgpath = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,9 +107,7 @@ public class PostStatus extends AppCompatActivity implements RequestNotifier {
                     @Override
                     public void onClick(DialogInterface dialog, int item) {
                         if (options[item].equals("Images")) {
-                            Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                            intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-                            startActivityForResult(intent, 1);
+                            start();
                         } else if (options[item].equals("Videos")) {
                             /*Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Video.Media.EXTERNAL_CONTENT_URI);
                             intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
@@ -121,6 +129,21 @@ public class PostStatus extends AppCompatActivity implements RequestNotifier {
         });
     }
 
+    private void start() {
+        ImagePicker.create(this)
+                .folderMode(true) // set folder mode (false by default)
+                .folderTitle("Folder") // folder selection title
+                .imageTitle("Tap to select") // image selection title
+                .single() // single mode
+                .multi() // multi mode (default mode)
+                .limit(10) // max images can be selected (999 by default)
+                .showCamera(true) // show camera or not (true by default)
+                .imageDirectory("Camera")   // captured image directory name ("Camera" folder by default)
+                .origin((ArrayList<Image>) mImages) // original selected images, used in multi mode
+                .start(REQUEST_CODE_PICKER); // start image picker activity with request code
+    }
+
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
@@ -128,7 +151,118 @@ public class PostStatus extends AppCompatActivity implements RequestNotifier {
                 System.out.println("SELECT_VIDEO");
                 Uri selectedImageUri = data.getData();
                 selectedPath = getPath(selectedImageUri);
+                VideoImagePreview(selectedPath, "");
+            } else if (requestCode == REQUEST_CODE_PICKER && data != null) {
+                mImages = data.getParcelableArrayListExtra(ImagePickerActivity.INTENT_EXTRA_SELECTED_IMAGES);
+                List<String> mPath = new ArrayList<>();
+                mPath.clear();
+                for (int i = 0; i < mImages.size(); i++) {
+                    mPath.add(mImages.get(i).getPath());
+                }
+                List<String> mPath1 = new ArrayList<>();
+                String selectImages = "";
+                String selectedimg = "";
+                String allimg = "";
+                allimgpath = "";
+                mPath1.clear();
+                for (int i = 0; i < mPath.size(); i++) {
+
+                    selectImages = mPath.get(i);
+                    String lastWord = selectImages.substring(selectImages.lastIndexOf("/") + 1);
+                    mPath1.add(selectImages);
+                    //images with full path
+                    if (allimgpath.equalsIgnoreCase("")) {
+                        allimgpath = "" + selectImages;
+                    } else {
+                        allimgpath = allimgpath + "," + selectImages;
+                    }
+                    //only name of images
+                    if (selectedimg.equalsIgnoreCase("") && allimg.equalsIgnoreCase("")) {
+                        selectedimg = "" + selectImages;
+                        allimg = "" + lastWord.replace(" ", "");
+                    } else {
+                        selectedimg = selectedimg + "," + selectImages;
+                        allimg = allimg + "," + lastWord.replace(" ", "");
+                    }
+
+                }
+                VideoImagePreview("", allimgpath);
             }
+        }
+    }
+
+    private void VideoImagePreview(String videoPath, String imagesPath) {
+        try {
+            View view = getLayoutInflater().inflate(R.layout.image_video_view_card, null);
+            mBottomSheetDialog = new Dialog(PostStatus.this,
+                    R.style.MaterialDialogSheet);
+            mBottomSheetDialog.setContentView(view);
+            mBottomSheetDialog.setCancelable(true);
+            mBottomSheetDialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT,
+                    500);
+            mBottomSheetDialog.getWindow().setGravity(Gravity.BOTTOM);
+            mBottomSheetDialog.show();
+
+            //Button ok = (Button) view.findViewById(R.id.ok);
+            ImageView mClose = (ImageView) view.findViewById(R.id.close);
+            VideoView mVideoView = (VideoView) view.findViewById(R.id.VideoView);
+            RelativeLayout mVideoRel = (RelativeLayout) view.findViewById(R.id.relVideo);
+            RelativeLayout mImageRel = (RelativeLayout) view.findViewById(R.id.relImage);
+
+            mClose.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mBottomSheetDialog.dismiss();
+                }
+            });
+
+            //video code
+            if (!videoPath.equals("") && imagesPath.equals("")) {
+                mVideoRel.setVisibility(View.VISIBLE);
+                try {
+                    // Start the MediaController
+                    MediaController mediacontroller = new MediaController(
+                            PostStatus.this);
+                    mediacontroller.setAnchorView(mVideoView);
+                    // set media controller object for a video view
+                    mVideoView.setMediaController(mediacontroller);
+                    // Get the URL from String VideoURL
+               /* Uri video = Uri.parse(videoPath);
+                mVideoView.setVideoURI(video);*/
+                    mVideoView.setVideoPath(videoPath);
+                    mVideoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                        @Override
+                        public void onPrepared(MediaPlayer mp) {
+
+                        }
+                    });
+
+                    mVideoView.start();
+
+                } catch (Exception e) {
+                    Log.e("Error", e.getMessage());
+                }
+            }
+            //Imagecode
+            else {
+                mVideoRel.setVisibility(View.GONE);
+                mImageRel.setVisibility(View.VISIBLE);
+
+                //Rajjo please code like SelectedImagesFragment line 123,124 and from 154.
+            }
+
+
+
+
+            /*ok.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    PostData(statusText);
+                }
+            });*/
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -179,8 +313,7 @@ public class PostStatus extends AppCompatActivity implements RequestNotifier {
             @Override
             protected String doInBackground(Void... params) {
                 UploadVideos u = new UploadVideos();
-                String msg = u.uploadVideo(selectedPath);
-                return msg;
+                return u.uploadVideo(selectedPath);
             }
         }
         UploadVideo uv = new UploadVideo();
@@ -208,29 +341,9 @@ public class PostStatus extends AppCompatActivity implements RequestNotifier {
                     mStatusText.setError("Enter data");
                     mStatusText.requestFocus();
                 } else {
-                    /*AlertDialog.Builder alert = new AlertDialog.Builder(this);
-                    alert.setTitle(getString(R.string.add_interest));
-                    alert.setMessage(getString(R.string.confirm_interest));
-                    alert.setIconAttribute(android.R.attr.alertDialogIcon);
 
-                    alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();*/
                     openDialog();
-                    //PostData(statusText);
-                    /*    }
-                    });
 
-                    alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                        }
-
-                    });
-                    alert.create();
-                    alert.show();*/
                 }
                 break;
         }
