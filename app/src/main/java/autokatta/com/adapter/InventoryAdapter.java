@@ -11,7 +11,6 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -32,7 +31,7 @@ public class InventoryAdapter extends BaseAdapter {
     List<GetInventoryResponse.Success> mItemList = new ArrayList<>();
     String name;
     private boolean positionArray[];
-    private ArrayList<String> checked_ids;
+    private List<String> checked_ids;
 
     public InventoryAdapter(Activity mActivity, List<GetInventoryResponse.Success> mItemList, String name) {
         this.mActivity = mActivity;
@@ -150,22 +149,19 @@ public class InventoryAdapter extends BaseAdapter {
                 holder.mCheckBox.setFocusable(false);
                 holder.mCheckBox.setChecked(positionArray[position]);
 
-                final ViewHolder finalHolder = holder;
                 holder.mCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 
                     @Override
                     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                        if (finalHolder.mCheckBox.isChecked()) {
+
                             if (isChecked) {
                                 checked_ids.set(position, mItemList.get(position).getVehicleId());
                                 positionArray[position] = true;
-                            } else if (checked_ids.contains(mItemList.get(position).getVehicleId())) {
+                            } else {
                                 checked_ids.set(position, "0");
                                 positionArray[position] = false;
                             }
-                        } else {
-                            Toast.makeText(mActivity, "checked", Toast.LENGTH_SHORT).show();
-                        }
+
                     }
 
                 });
@@ -181,22 +177,19 @@ public class InventoryAdapter extends BaseAdapter {
                 holder.mProductCheck.setFocusable(false);
                 holder.mProductCheck.setChecked(positionArray[position]);
 
-                final ViewHolder finalHolder1 = holder;
                 holder.mProductCheck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 
                     @Override
                     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                        if (finalHolder1.mProductCheck.isChecked()) {
+
                             if (isChecked) {
                                 checked_ids.set(position, mItemList.get(position).getProductId());
                                 positionArray[position] = true;
-                            } else if (checked_ids.contains(mItemList.get(position).getProductId())) {
+                            } else {
                                 checked_ids.set(position, "0");
                                 positionArray[position] = false;
                             }
-                        } else {
-                            Toast.makeText(mActivity, "checked", Toast.LENGTH_SHORT).show();
-                        }
+
                     }
 
                 });
@@ -213,22 +206,19 @@ public class InventoryAdapter extends BaseAdapter {
                 holder.mServiceCheck.setFocusable(false);
                 holder.mServiceCheck.setChecked(positionArray[position]);
 
-                final ViewHolder finalHolder2 = holder;
                 holder.mServiceCheck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 
                     @Override
                     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                        if (finalHolder2.mServiceCheck.isChecked()) {
-                            if (isChecked) {
+
+                        if (isChecked) {
                                 checked_ids.set(position, mItemList.get(position).getId());
                                 positionArray[position] = true;
-                            } else if (checked_ids.contains(mItemList.get(position).getId())) {
+                        } else {
                                 checked_ids.set(position, "0");
                                 positionArray[position] = false;
                             }
-                        } else {
-                            Toast.makeText(mActivity, "checked", Toast.LENGTH_SHORT).show();
-                        }
+
                     }
 
                 });
@@ -260,22 +250,18 @@ public class InventoryAdapter extends BaseAdapter {
                 holder.mCheckBox.setFocusable(false);
                 holder.mCheckBox.setChecked(positionArray[position]);
 
-                final ViewHolder finalHolder3 = holder;
                 holder.mCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 
                     @Override
                     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                        if (finalHolder3.mCheckBox.isChecked()) {
-                            if (isChecked) {
-                                checked_ids.set(position, mItemList.get(position).getVehicleId());
+
+                        if (isChecked) {
+                            checked_ids.set(position, String.valueOf(mItemList.get(position).getNewVehicleID()));
                                 positionArray[position] = true;
-                            } else if (checked_ids.contains(mItemList.get(position).getVehicleId())) {
+                        } else {
                                 checked_ids.set(position, "0");
                                 positionArray[position] = false;
                             }
-                        } else {
-                            //Toast.makeText(mActivity, "checked", Toast.LENGTH_SHORT).show();
-                        }
                     }
 
                 });
