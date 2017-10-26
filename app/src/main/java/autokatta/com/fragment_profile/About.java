@@ -10,10 +10,8 @@ import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -37,7 +35,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import autokatta.com.R;
-import autokatta.com.adapter.GooglePlacesAdapter;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.generic.GenericFunctions;
 import autokatta.com.interfaces.RequestNotifier;
@@ -556,7 +553,7 @@ public class About extends Fragment implements RequestNotifier, MaterialIntroLis
 
                     @Override
                     public void onClick(View view) {
-                        mDone.setVisibility(View.VISIBLE);
+                   /*     mDone.setVisibility(View.VISIBLE);
                         mEdit.setVisibility(View.GONE);
                         mEditTags.setVisibility(View.VISIBLE);
                         usertypeSpinner.setVisibility(View.VISIBLE);
@@ -566,14 +563,14 @@ public class About extends Fragment implements RequestNotifier, MaterialIntroLis
                         mCategorylay.setVisibility(View.GONE);
                         mBrandlay.setVisibility(View.GONE);
 
-                      /*  if (student.isChecked()) {
+                      *//*  if (student.isChecked()) {
                             spinner.setVisibility(View.GONE);
                             msubprofession.setVisibility(View.GONE);
                         } else if (employee.isChecked()) {
                             spinner.setVisibility(View.VISIBLE);
                         } else if (selfemployee.isChecked()) {
                             spinner.setVisibility(View.VISIBLE);
-                        }*/
+                        }*//*
 
                         mCity.setFocusableInTouchMode(true);
                         mCity.setFocusable(true);
@@ -605,7 +602,9 @@ public class About extends Fragment implements RequestNotifier, MaterialIntroLis
                                 //showMessage(getActivity(), "You can't edit contact");
                                 return false;
                             }
-                        });
+                        });*/
+
+                        getActivity().startActivity(new Intent(getActivity(),EditAllAbout.class));
                     }
                 });
 
