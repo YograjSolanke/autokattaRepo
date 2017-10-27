@@ -205,9 +205,19 @@ public class PostStatus extends AppCompatActivity implements RequestNotifier {
 
             //Button ok = (Button) view.findViewById(R.id.ok);
             ImageView mClose = (ImageView) view.findViewById(R.id.close);
-            VideoView mVideoView = (VideoView) view.findViewById(R.id.VideoView);
+            final VideoView mVideoView = (VideoView) view.findViewById(R.id.VideoView);
             RelativeLayout mVideoRel = (RelativeLayout) view.findViewById(R.id.relVideo);
             RelativeLayout mImageRel = (RelativeLayout) view.findViewById(R.id.relImage);
+            final Button play = (Button) view.findViewById(R.id.play);
+
+
+            play.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mVideoView.start();
+                    play.setVisibility(View.GONE);
+                }
+            });
 
             mClose.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -237,7 +247,7 @@ public class PostStatus extends AppCompatActivity implements RequestNotifier {
                         }
                     });
 
-                    mVideoView.start();
+                    // mVideoView.start();
 
                 } catch (Exception e) {
                     Log.e("Error", e.getMessage());

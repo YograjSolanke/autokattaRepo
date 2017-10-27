@@ -26,6 +26,17 @@
             android:id="@+id/VideoView"
             android:layout_width="300dp"
             android:layout_height="150dp" />
+
+        <Button
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@color/red"
+            android:text="Play"
+            android:id="@+id/play"
+            android:textSize="12sp"
+            android:textAllCaps="false"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true" />
     </RelativeLayout>
 
     <RelativeLayout
