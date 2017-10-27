@@ -7,6 +7,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
@@ -28,6 +30,7 @@ public class EditDesignation extends AppCompatActivity implements SwipeRefreshLa
     final List<GetDesignationResponse.Success> mDesigList = new ArrayList<>();
     EditDesignationAdapter mAdapter;
     ApiCall mApiCall;
+    Menu menu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +63,15 @@ public class EditDesignation extends AppCompatActivity implements SwipeRefreshLa
                 mApiCall.getDesignation();
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.edit_address_menu, menu);
+        this.menu = menu;
+        MenuItem item = menu.findItem(R.id.edit_profile);
+
+        return true;
     }
 
     @Override

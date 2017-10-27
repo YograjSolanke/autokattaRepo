@@ -22,10 +22,13 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import autokatta.com.R;
 import autokatta.com.adapter.GooglePlacesAdapter;
 import autokatta.com.apicall.ApiCall;
+import autokatta.com.generic.GenericFunctions;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.AddTags;
 import autokatta.com.other.CustomToast;
@@ -40,21 +43,24 @@ import static autokatta.com.R.id.spinnerCategory;
 import static autokatta.com.R.id.spinnerUsertype;
 import static autokatta.com.R.id.spinnerbrand;
 import static autokatta.com.R.id.spinnerindustry;
+import static autokatta.com.adapter.GooglePlacesAdapter.resultList;
 
 public class EditAllAbout extends AppCompatActivity implements RequestNotifier, OnClickListener, AdapterView.OnItemSelectedListener {
 
     ApiCall mApiCall;
     String[] parts;
+    String   mUpdatedSkills1;
     String newcompanyname, newdesignation, newskills, strCompany, strDesignation, strskills;
     String email, contact, strprofession, company, designation, subProfession, websitestr, city, skills, interest, brand, strIndustry;
     int RegId;
+    GenericFunctions mGenericFunctions;
     EditText mEmail, mWebsite, mAbouttxt;
     AutoCompleteTextView mCity, mCompany, mDesignation;
-MultiAutoCompleteTextView mSkills;
+    MultiAutoCompleteTextView mSkills;
     LinearLayout mUsertypelay, mIndustrylay, mCategorylay, mBrandlay;
     TextView mUsertypetxt, mIndusttxt, mCattxt, mBrandtxt, mCount;
     ImageView mEdtWorkedat, mEdtAddress, mEdtCompany, mEdtDesignation, mEdtSkills,
-            mEdtAbout, mEdtEmail, mEdtWebsite, mEdtIntrest, mDoneAbout, mDoneMail, mDoneWebsite, mDoneSkills,mDoneworkat, mDoneAddress;
+            mEdtAbout, mEdtEmail, mEdtWebsite, mEdtIntrest, mDoneAbout, mDoneMail, mDoneWebsite, mDoneSkills, mDoneworkat, mDoneAddress;
 
     List<String> parsedDataSkills = new ArrayList<>();
     final List<String> mSkillList = new ArrayList<>();
@@ -68,16 +74,22 @@ MultiAutoCompleteTextView mSkills;
     String[] MODULE = null;
     String[] INDUSTRY = null;
     String[] BRAND = null;
-    TextInputLayout otherIndustryLayout, otherCategoryLayout,otherbrandlayout;
-
+    TextInputLayout otherIndustryLayout, otherCategoryLayout, otherbrandlayout;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_all_about);
-
+       /* Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setHomeButtonEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }*/
         mApiCall = new ApiCall(this, EditAllAbout.this);
+        mGenericFunctions = new GenericFunctions();
+
 
         mApiCall.profileAbout(getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""),
                 getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""));
@@ -123,13 +135,14 @@ MultiAutoCompleteTextView mSkills;
         otherCategoryLayout = (TextInputLayout) findViewById(R.id.otherCategoryLayout);
         otherbrandlayout = (TextInputLayout) findViewById(R.id.otherbrand);
 
-
-
         usertypeSpinner.setOnItemSelectedListener(EditAllAbout.this);
         industrySpinner.setOnItemSelectedListener(EditAllAbout.this);
         moduleSpinner.setOnItemSelectedListener(EditAllAbout.this);
         brandSpinner.setOnItemSelectedListener(EditAllAbout.this);
 
+        mApiCall.getUserCategories();
+        mApiCall.Industries();
+        mApiCall.getBrandTags("both");
 
         mEdtWorkedat.setOnClickListener(EditAllAbout.this);
         mEdtAddress.setOnClickListener(EditAllAbout.this);
@@ -146,21 +159,6 @@ MultiAutoCompleteTextView mSkills;
         mDoneAddress.setOnClickListener(EditAllAbout.this);
         mDoneworkat.setOnClickListener(EditAllAbout.this);
 
-
-        mSkills.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
-        mSkills.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View view, int i, KeyEvent keyEvent) {
-                if ((keyEvent.getAction() == KeyEvent.ACTION_DOWN) &&
-                        (i == KeyEvent.KEYCODE_ENTER)) {
-                    mSkills.setText("" + mSkills.getText().toString() + ",");
-                    mSkills.setSelection(mSkills.getText().toString().length());
-                    checkSkills();
-                    return true;
-                }
-                return false;
-            }
-        });
     }
 
     public void checkSkills() {
@@ -330,26 +328,47 @@ MultiAutoCompleteTextView mSkills;
                 mApiCall.profileAbout(getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""),
                         getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""));
 
-                usertypeSpinner.setVisibility(View.GONE);
-                industrySpinner.setVisibility(View.GONE);
-                moduleSpinner.setVisibility(View.GONE);
-                brandSpinner.setVisibility(View.GONE);
+
+            }else  if (str.equals("success_update_About")) {
+                CustomToast.customToast(getApplicationContext(), "About Updated");
+                mApiCall.profileAbout(getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""),
+                        getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""));
+            }else  if (str.equals("success_update_Email")) {
+                CustomToast.customToast(getApplicationContext(), "Email Updated");
+                mApiCall.profileAbout(getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""),
+                        getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""));
+            }else  if (str.equals("success_update_Website")) {
+                CustomToast.customToast(getApplicationContext(), "Website Updated");
+                mApiCall.profileAbout(getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""),
+                        getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""));
+            }else  if (str.equals("success_update_Skills")) {
+                CustomToast.customToast(getApplicationContext(), "Skills Updated");
+                mApiCall.profileAbout(getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""),
+                        getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""));
+            }else  if (str.equals("success_update_Address")) {
+                CustomToast.customToast(getApplicationContext(), "Address Updated");
+                mApiCall.profileAbout(getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""),
+                        getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""));
+            }else  if (str.equals("success_update_UserType")) {
+                CustomToast.customToast(getApplicationContext(), "User Type Updated");
+                mApiCall.profileAbout(getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""),
+                        getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""));
 
                 usertypeSpinner.setAdapter(null);
                 industrySpinner.setAdapter(null);
                 moduleSpinner.setAdapter(null);
                 brandSpinner.setAdapter(null);
-
             }
-        }
+            }
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.editworkedat:
-                CustomToast.customToast(EditAllAbout.this, "Working");
                 usertypeSpinner.setVisibility(View.VISIBLE);
+                mDoneworkat.setVisibility(View.VISIBLE);
+                mEdtWorkedat.setVisibility(View.GONE);
 
                 mUsertypelay.setVisibility(View.GONE);
                 mIndustrylay.setVisibility(View.GONE);
@@ -358,18 +377,35 @@ MultiAutoCompleteTextView mSkills;
                 break;
 
             case R.id.editaddress:
-                CustomToast.customToast(EditAllAbout.this, "Working");
                 mCity.setAdapter(new GooglePlacesAdapter(EditAllAbout.this, R.layout.simple));
                 mDoneAddress.setVisibility(View.VISIBLE);
                 mEdtAddress.setVisibility(View.GONE);
                 mCity.setEnabled(true);
+                mCity.setFocusableInTouchMode(true);
+                mCity.setFocusable(true);
                 break;
 
             case R.id.editskills:
-                CustomToast.customToast(EditAllAbout.this, "Working");
                 mDoneSkills.setVisibility(View.VISIBLE);
                 mEdtSkills.setVisibility(View.GONE);
                 mSkills.setEnabled(true);
+                mSkills.setFocusableInTouchMode(true);
+                mSkills.setFocusable(true);
+
+                mSkills.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
+                mSkills.setOnKeyListener(new View.OnKeyListener() {
+                    @Override
+                    public boolean onKey(View view, int i, KeyEvent keyEvent) {
+                        if ((keyEvent.getAction() == KeyEvent.ACTION_DOWN) &&
+                                (i == KeyEvent.KEYCODE_ENTER)) {
+                            mSkills.setText("" + mSkills.getText().toString() + ",");
+                            mSkills.setSelection(mSkills.getText().toString().length());
+                            checkSkills();
+                            return true;
+                        }
+                        return false;
+                    }
+                });
                 break;
 
             case R.id.editcompany:
@@ -386,6 +422,8 @@ MultiAutoCompleteTextView mSkills;
                 mDoneAbout.setVisibility(View.VISIBLE);
                 mEdtAbout.setVisibility(View.GONE);
                 mAbouttxt.setEnabled(true);
+                mAbouttxt.setFocusableInTouchMode(true);
+                mAbouttxt.setFocusable(true);
 
                 break;
 
@@ -393,13 +431,17 @@ MultiAutoCompleteTextView mSkills;
                 mDoneWebsite.setVisibility(View.VISIBLE);
                 mEdtWebsite.setVisibility(View.GONE);
                 mWebsite.setEnabled(true);
-                CustomToast.customToast(EditAllAbout.this, "Working");
+                mWebsite.setFocusableInTouchMode(true);
+                mWebsite.setFocusable(true);
+
                 break;
 
             case R.id.editmail:
                 mDoneMail.setVisibility(View.VISIBLE);
                 mEdtEmail.setVisibility(View.GONE);
                 mEmail.setEnabled(true);
+                mEmail.setFocusableInTouchMode(true);
+                mEmail.setFocusable(true);
                 break;
 
             case R.id.editintrest:
@@ -409,29 +451,53 @@ MultiAutoCompleteTextView mSkills;
                 break;
 
             case R.id.doneabout:
-                mDoneAbout.setVisibility(View.GONE);
-                mEdtAbout.setVisibility(View.VISIBLE);
-                mAbouttxt.setEnabled(false);
+
+                if (mAbouttxt.getText().toString().equalsIgnoreCase("") || mAbouttxt.getText().toString().equalsIgnoreCase(null)) {
+                    mAbouttxt.setError("Enter About ");
+                    mAbouttxt.requestFocus();
+                } else {
+                    mApiCall.updateProfile(RegId,"","","","","","","","","","", mAbouttxt.getText().toString(),"", "About");
+                    mDoneAbout.setVisibility(View.GONE);
+                    mEdtAbout.setVisibility(View.VISIBLE);
+                    mAbouttxt.setEnabled(false);
+                }
                 break;
 
             case R.id.donemail:
-                mDoneMail.setVisibility(View.GONE);
-                mEdtEmail.setVisibility(View.VISIBLE);
-                mEmail.setEnabled(false);
+
+                if (!mGenericFunctions.isValidEmail(mEmail.getText().toString())) {
+                    mEmail.setError("Invalid Email");
+                    mEmail.requestFocus();
+                } else if (mEmail.getText().toString().equalsIgnoreCase("") || mEmail.getText().toString().equalsIgnoreCase(null)) {
+                    mEmail.setError("Enter Email");
+                    mEmail.requestFocus();
+                } else {
+                    mApiCall.updateProfile(RegId, mEmail.getText().toString(),"","","","","","","","","","","","Email");
+                    mDoneMail.setVisibility(View.GONE);
+                    mEdtEmail.setVisibility(View.VISIBLE);
+                    mEmail.setEnabled(false);
+                }
                 break;
 
             case R.id.donewebsite:
-                mDoneWebsite.setVisibility(View.GONE);
-                mEdtWebsite.setVisibility(View.VISIBLE);
-                mWebsite.setEnabled(false);
+
+                if (!isValidUrl(mWebsite.getText().toString())) {
+                    mWebsite.setError("Invalid Website");
+                    mWebsite.requestFocus();
+                } else  if (mWebsite.getText().toString().equalsIgnoreCase("") || mWebsite.getText().toString().equalsIgnoreCase(null)) {
+                    mWebsite.setError("Enter Email");
+                    mWebsite.requestFocus();
+                } else {
+                    mApiCall.updateProfile(RegId,"","","","", mWebsite.getText().toString(),"","","","","","","", "Website");
+                    mDoneWebsite.setVisibility(View.GONE);
+                    mEdtWebsite.setVisibility(View.VISIBLE);
+                    mWebsite.setEnabled(false);
+
+                }
                 break;
 
             case R.id.doneskills:
-                mDoneSkills.setVisibility(View.GONE);
-                mEdtSkills.setVisibility(View.VISIBLE);
-                mSkills.setEnabled(false);
-
-              String  mUpdatedSkills = mSkills.getText().toString().trim();
+                String mUpdatedSkills = mSkills.getText().toString().trim();
 
                  /*Skills*/
                 mSkills.clearFocus();
@@ -452,28 +518,75 @@ MultiAutoCompleteTextView mSkills;
                 strskills = mSkills.getText().toString().trim();
 
                 //***************************************************************
-              String  splChrs = "-/@#$%^&_+=()";
+                String splChrs = "-/@#$%^&_+=()";
                 boolean found2 = strCompany.matches("["
                         + splChrs + "]+");
+
+
+                if (mUpdatedSkills.endsWith(",")) {
+                    mUpdatedSkills1 = mUpdatedSkills.substring(0, mUpdatedSkills.length() - 1);
+                } else {
+                    mUpdatedSkills1 = mUpdatedSkills;
+                }
+                if (strskills.equals("") || strskills.equals("null") || strskills.equals(null)) {
+                    mSkills.setError("Enter Skills Name");
+                    mSkills.requestFocus();
+                }else
+                {
+                    mApiCall.updateProfile(RegId,"","","","","","","", mUpdatedSkills1,"","","","","Skills");
+                    mDoneSkills.setVisibility(View.GONE);
+                    mEdtSkills.setVisibility(View.VISIBLE);
+                    mSkills.setEnabled(false);
+
+                }
 
                 break;
 
             case R.id.doneaddress:
-                mDoneAddress.setVisibility(View.GONE);
-                mEdtAddress.setVisibility(View.VISIBLE);
-                mCity.setEnabled(false);
+
+                Boolean flag = false;
+                try {
+                    for (int i = 0; i < resultList.size(); i++) {
+                        if (mCity.getText().toString().equalsIgnoreCase(resultList.get(i))) {
+                            flag = true;
+                            break;
+                        } else {
+                            flag = false;
+                        }
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                if (mCity.getText().toString().isEmpty()) {
+                    mCity.setError("Please Enter Address");
+                }else
+                    if (!flag) {
+                        mApiCall.updateProfile(RegId,"", mCity.getText().toString(),"","","","","","","","","","", "Address");
+                        mDoneAddress.setVisibility(View.VISIBLE);
+                        mEdtAddress.setVisibility(View.GONE);
+                        mCity.setEnabled(false);
+
+                    }else {
+                        mCity.setError("Please Select Address From Dropdown Only");
+                        mCity.requestFocus();
+                        }
+
+
                 break;
 
             case R.id.doneworkat:
-                mDoneworkat.setVisibility(View.GONE);
-                mEdtWorkedat.setVisibility(View.VISIBLE);
-                usertypeSpinner.setVisibility(View.GONE);
 
                 mUsertypelay.setVisibility(View.VISIBLE);
                 mIndustrylay.setVisibility(View.VISIBLE);
                 mCategorylay.setVisibility(View.VISIBLE);
                 mBrandlay.setVisibility(View.VISIBLE);
 
+
+       /*         usertypeSpinner.setAdapter(null);
+                industrySpinner.setAdapter(null);
+                moduleSpinner.setAdapter(null);
+                brandSpinner.setAdapter(null);*/
 
                 strprofession = usertypeSpinner.getSelectedItem().toString().trim();
 
@@ -525,12 +638,22 @@ MultiAutoCompleteTextView mSkills;
                 } else if (strIndustry.equalsIgnoreCase("Select Industry")) {
                     strIndustry = "";
                 } else {
-                    CustomToast.customToast(getApplicationContext(), "working");
+                    mApiCall.updateProfile(RegId,"","",strprofession,subProfession,"","","","",strIndustry,brand, "","","UserType");
+
+                    mDoneworkat.setVisibility(View.VISIBLE);
+                    mEdtWorkedat.setVisibility(View.GONE);
+
+                    usertypeSpinner.setVisibility(View.GONE);
+                    industrySpinner.setVisibility(View.GONE);
+                    moduleSpinner.setVisibility(View.GONE);
+                    brandSpinner.setVisibility(View.GONE);
                 }
                 break;
         }
     }
 
+
+/*For user typew spinner*/
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
         switch (adapterView.getId()) {
@@ -589,6 +712,12 @@ MultiAutoCompleteTextView mSkills;
                 }
                 break;
         }
+    }
+
+    public boolean isValidUrl(String txtWebsite) {
+        Pattern regex = Pattern.compile("^(WWW|www)\\.+[a-zA-Z0-9\\-\\.]+\\.(com|org|net|mil|edu|in|IN|COM|ORG|NET|MIL|EDU)$");
+        Matcher matcher = regex.matcher(txtWebsite);
+        return matcher.matches();
     }
 
     @Override

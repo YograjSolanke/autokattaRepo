@@ -7,6 +7,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
@@ -32,7 +34,7 @@ public class EditCompanyName extends AppCompatActivity implements SwipeRefreshLa
     List<String> parsedDataCompany = new ArrayList<>();
     EditCompanyNameAdapter mAdapter;
     ApiCall mApiCall;
-
+    Menu menu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,6 +123,15 @@ public class EditCompanyName extends AppCompatActivity implements SwipeRefreshLa
     @Override
     public void notifyString(String str) {
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.edit_address_menu, menu);
+        this.menu = menu;
+        MenuItem item = menu.findItem(R.id.edit_profile);
+
+        return true;
     }
 }
 

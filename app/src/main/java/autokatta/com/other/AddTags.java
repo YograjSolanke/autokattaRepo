@@ -55,6 +55,7 @@ public class AddTags extends AppCompatActivity implements RequestNotifier {
                     }
                 }
                 Log.i("numberString", "->" + numberString);
+                Addintresttoprofile(numberString);
                 getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit()
                         .putString("interest", numberString).apply();
                 finish();
@@ -136,6 +137,11 @@ public class AddTags extends AppCompatActivity implements RequestNotifier {
         apiCall.getInterest();
     }
 
+    private void Addintresttoprofile(String intrests) {
+        ApiCall apiCall = new ApiCall(this, this);
+        apiCall.updateProfile(getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getInt("loginregistrationid",0),"","","","","","","","","","","",intrests,"Interest");
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -205,6 +211,10 @@ public class AddTags extends AppCompatActivity implements RequestNotifier {
 
     @Override
     public void notifyString(String str) {
-
+        if (!str.equals("")) {
+            if (str.equals("success_update_Interest")) {
+CustomToast.customToast(getApplicationContext(),"Intrest Added");
+            }
+        }
     }
 }

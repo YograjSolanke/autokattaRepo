@@ -791,7 +791,7 @@ public class About extends Fragment implements RequestNotifier, MaterialIntroLis
 
                                 mApiCall.updateProfile(RegId, mUpdatedEmail, mUpdatedCity, strprofession, subProfession, mUpdatedWebsite, mUpdatedCompany,
                                         mUpdatedDesignation, mUpdatedSkills1,strIndustry,brand,mUpdateAbout, getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
-                                                .getString("interest", interest));
+                                                .getString("interest", interest),"");
 
                                 mDone.setVisibility(View.GONE);
                                 mEdit.setVisibility(View.VISIBLE);
