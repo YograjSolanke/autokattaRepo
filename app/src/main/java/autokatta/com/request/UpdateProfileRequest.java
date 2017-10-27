@@ -42,12 +42,23 @@ public class UpdateProfileRequest {
     @SerializedName("BrandName")
     @Expose
     private String brandname;
+
     @SerializedName("AboutUs")
     @Expose
     private String about;
     @SerializedName("InterestIDs")
     @Expose
     private String InterestIDs;
+    @SerializedName("ProfilePicture")
+    @Expose
+    private String profilePicture;
+    @SerializedName("UserName")
+    @Expose
+    private String userName;
+    @SerializedName("Keyword")
+    @Expose
+    private String Keyword;
+
 
     public UpdateProfileRequest(int regID, String profilePicture, String userName) {
         this.regID = regID;
@@ -56,7 +67,7 @@ public class UpdateProfileRequest {
     }
 
     public UpdateProfileRequest(int regID, String emialID, String city, String profession, String subProfession, String website, String companyName,
-                                String designation, String skills,String industry,String Brand, String About,String InterestIDs) {
+                                String designation, String skills,String industry,String Brand, String About,String InterestIDs,String keyword) {
         this.regID = regID;
         this.emialID = emialID;
         this.city = city;
@@ -72,6 +83,17 @@ public class UpdateProfileRequest {
         this.industry = industry;
         this.brandname = Brand;
         this.about = About;
+        this.Keyword = keyword;
+    }
+
+
+
+    public String getKeyword() {
+        return Keyword;
+    }
+
+    public void setKeyword(String keyword) {
+        Keyword = keyword;
     }
 
     public String getIndustry() {
@@ -90,12 +112,13 @@ public class UpdateProfileRequest {
         this.brandname = brandname;
     }
 
-    @SerializedName("ProfilePicture")
-    @Expose
-    private String profilePicture;
-    @SerializedName("UserName")
-    @Expose
-    private String userName;
+    public String getAbout() {
+        return about;
+    }
+
+    public void setAbout(String about) {
+        this.about = about;
+    }
 
     public Integer getRegID() {
         return regID;
