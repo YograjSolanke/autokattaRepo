@@ -343,7 +343,8 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
                     .build();
 
             ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-            Call<ProfileGroupResponse> add = serviceApi._autokattaProfileGroup(getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", null));
+            Call<ProfileGroupResponse> add = serviceApi._autokattaProfileGroup(getSharedPreferences(getString(R.string.my_preference),
+                    MODE_PRIVATE).getString("loginContact", null), 1, 10);
 
             hud = KProgressHUD.create(ServiceViewActivity.this)
                     .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)

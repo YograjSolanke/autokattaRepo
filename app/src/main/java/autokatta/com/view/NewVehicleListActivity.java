@@ -195,7 +195,7 @@ public class NewVehicleListActivity extends AppCompatActivity implements Request
                     .build();
 
             ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-            Call<MyStoreResponse> add = serviceApi._autokattaGetMyStoreList(myContact);
+            Call<MyStoreResponse> add = serviceApi._autokattaGetMyStoreList(myContact, 1, 10);
 
             hud = KProgressHUD.create(this)
                     .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)

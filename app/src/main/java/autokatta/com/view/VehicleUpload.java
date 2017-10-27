@@ -62,7 +62,8 @@ public class VehicleUpload extends AppCompatActivity implements RequestNotifier 
 
     private void getStore() {
         ApiCall mApiCall = new ApiCall(VehicleUpload.this, this);
-        mApiCall.MyStoreList(getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", null));
+        mApiCall.MyStoreList(getSharedPreferences(getString(R.string.my_preference),
+                MODE_PRIVATE).getString("loginContact", null), 1, 10);
     }
 
     @Override

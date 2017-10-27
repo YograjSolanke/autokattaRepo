@@ -108,7 +108,7 @@ public class StoreNotification extends Fragment implements SwipeRefreshLayout.On
 
     private void storeNotification() {
         ApiCall apiCall = new ApiCall(getActivity(), this);
-        apiCall.wallNotifications(mLoginContact, mLoginContact, "2");
+        //apiCall.wallNotifications(mLoginContact, mLoginContact, "2");
     }
 
     @Override
