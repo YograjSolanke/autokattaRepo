@@ -8363,7 +8363,8 @@ get ExchangeMela Analytics Data
        Post a status
      */
 
-    public void PostStatus(String myContact, String statusText, String statusImage, String statusVideo) {
+    public void PostStatus(String myContact, String statusText, String statusImage, String statusVideo,
+                           String Interest) {
 
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
@@ -8381,7 +8382,7 @@ get ExchangeMela Analytics Data
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
                 Call<String> mPostResponse = serviceApi._autokattaUploadStatus(myContact, statusText, statusImage,
-                        statusVideo);
+                        statusVideo, Interest);
                 mPostResponse.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {

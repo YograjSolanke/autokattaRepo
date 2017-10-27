@@ -2,14 +2,18 @@ package autokatta.com.other;
 
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.ContentUris;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
-import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -22,10 +26,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.MediaController;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.VideoView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -44,6 +45,7 @@ import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.response.ProfileAboutResponse;
+import autokatta.com.view.ImageVideoPreviewActivity;
 import fisk.chipcloud.ChipCloud;
 import fisk.chipcloud.ChipCloudConfig;
 import fisk.chipcloud.ChipListener;
@@ -60,7 +62,7 @@ public class PostStatus extends AppCompatActivity implements RequestNotifier {
     ImageView mProfile_image;
     TextView mProfile_name;
     String statusText;
-    List<String> lst = new ArrayList<>();
+    List<String> interestList = new ArrayList<>();
     private static final int SELECT_VIDEO = 3;
     private String selectedPath;
     int REQUEST_CODE_PICKER = 2000;
@@ -148,10 +150,13 @@ public class PostStatus extends AppCompatActivity implements RequestNotifier {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
             if (requestCode == SELECT_VIDEO) {
+                allimgpath = "";
                 System.out.println("SELECT_VIDEO");
                 Uri selectedImageUri = data.getData();
-                selectedPath = getPath(selectedImageUri);
-                VideoImagePreview(selectedPath, "");
+                selectedPath = getPath(this, selectedImageUri);
+                //selectedPath = getPath(selectedImageUri);
+                //VideoImagePreview(selectedPath, "");
+
             } else if (requestCode == REQUEST_CODE_PICKER && data != null) {
                 mImages = data.getParcelableArrayListExtra(ImagePickerActivity.INTENT_EXTRA_SELECTED_IMAGES);
                 List<String> mPath = new ArrayList<>();
@@ -164,6 +169,7 @@ public class PostStatus extends AppCompatActivity implements RequestNotifier {
                 String selectedimg = "";
                 String allimg = "";
                 allimgpath = "";
+                selectedPath = "";
                 mPath1.clear();
                 for (int i = 0; i < mPath.size(); i++) {
 
@@ -186,97 +192,21 @@ public class PostStatus extends AppCompatActivity implements RequestNotifier {
                     }
 
                 }
-                VideoImagePreview("", allimgpath);
-            }
-        }
-    }
-
-    private void VideoImagePreview(String videoPath, String imagesPath) {
-        try {
-            View view = getLayoutInflater().inflate(R.layout.image_video_view_card, null);
-            mBottomSheetDialog = new Dialog(PostStatus.this,
-                    R.style.MaterialDialogSheet);
-            mBottomSheetDialog.setContentView(view);
-            mBottomSheetDialog.setCancelable(true);
-            mBottomSheetDialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT,
-                    500);
-            mBottomSheetDialog.getWindow().setGravity(Gravity.BOTTOM);
-            mBottomSheetDialog.show();
-
-            //Button ok = (Button) view.findViewById(R.id.ok);
-            ImageView mClose = (ImageView) view.findViewById(R.id.close);
-            final VideoView mVideoView = (VideoView) view.findViewById(R.id.VideoView);
-            RelativeLayout mVideoRel = (RelativeLayout) view.findViewById(R.id.relVideo);
-            RelativeLayout mImageRel = (RelativeLayout) view.findViewById(R.id.relImage);
-            final Button play = (Button) view.findViewById(R.id.play);
-
-
-            play.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    mVideoView.start();
-                    play.setVisibility(View.GONE);
-                }
-            });
-
-            mClose.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mBottomSheetDialog.dismiss();
-                }
-            });
-
-            //video code
-            if (!videoPath.equals("") && imagesPath.equals("")) {
-                mVideoRel.setVisibility(View.VISIBLE);
-                try {
-                    // Start the MediaController
-                    MediaController mediacontroller = new MediaController(
-                            PostStatus.this);
-                    mediacontroller.setAnchorView(mVideoView);
-                    // set media controller object for a video view
-                    mVideoView.setMediaController(mediacontroller);
-                    // Get the URL from String VideoURL
-               /* Uri video = Uri.parse(videoPath);
-                mVideoView.setVideoURI(video);*/
-                    mVideoView.setVideoPath(videoPath);
-                    mVideoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-                        @Override
-                        public void onPrepared(MediaPlayer mp) {
-
-                        }
-                    });
-
-                    // mVideoView.start();
-
-                } catch (Exception e) {
-                    Log.e("Error", e.getMessage());
-                }
-            }
-            //Imagecode
-            else {
-                mVideoRel.setVisibility(View.GONE);
-                mImageRel.setVisibility(View.VISIBLE);
-
-                //Rajjo please code like SelectedImagesFragment line 123,124 and from 154.
+                //VideoImagePreview("", allimgpath);
             }
 
-
-
-
-            /*ok.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    PostData(statusText);
-                }
-            });*/
-
-        } catch (Exception e) {
-            e.printStackTrace();
+            Bundle bundle = new Bundle();
+            bundle.putString("videoPath", selectedPath);
+            bundle.putString("imagesPath", allimgpath);
+            bundle.putString("statusText", mStatusText.getText().toString());
+            Intent intent = new Intent(this, ImageVideoPreviewActivity.class);
+            intent.putExtras(bundle);
+            startActivity(intent);
         }
     }
 
     public String getPath(Uri uri) {
+
         Cursor cursor = getContentResolver().query(uri, null, null, null, null);
         String document_id = null, path = null;
         if (cursor != null) {
@@ -299,6 +229,21 @@ public class PostStatus extends AppCompatActivity implements RequestNotifier {
 
 
         return path;
+        /*
+         String path = "";
+         String[] projection = { MediaStore.Video.Media.DATA };
+        Cursor cursor = getContentResolver().query(uri, projection, null, null, null);
+        if (cursor != null) {
+            // HERE YOU WILL GET A NULLPOINTER IF CURSOR IS NULL
+            // THIS CAN BE, IF YOU USED OI FILE MANAGER FOR PICKING THE MEDIA
+            int column_index = cursor
+                    .getColumnIndexOrThrow(MediaStore.Video.Media.DATA);
+            cursor.moveToFirst();
+            path = cursor.getString(column_index);
+            cursor.close();
+            return path;
+        } else
+            return path;*/
     }
 
 
@@ -360,9 +305,9 @@ public class PostStatus extends AppCompatActivity implements RequestNotifier {
         return super.onOptionsItemSelected(item);
     }
 
-    private void PostData(String statusText) {
+    private void PostData(String finalInterests) {
         dialog.show();
-        mApiCall.PostStatus(mLoginContact, statusText, "", "");
+        mApiCall.PostStatus(mLoginContact, statusText, "", "", finalInterests);
     }
 
     /*
@@ -484,9 +429,9 @@ public class PostStatus extends AppCompatActivity implements RequestNotifier {
                 public void chipCheckedChange(int index, boolean checked, boolean userClick) {
                     if (userClick && index != 0) {
                         if (checked) {
-                            lst.add(String.valueOf(index));
+                            interestList.add(String.valueOf(index));
                         } else {
-                            lst.remove(String.valueOf(index));
+                            interestList.remove(String.valueOf(index));
                         }
                     }
                 }
@@ -495,7 +440,14 @@ public class PostStatus extends AppCompatActivity implements RequestNotifier {
             ok.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    PostData(statusText);
+                    String finalInterests = "";
+                    for (int k = 0; k < interestList.size(); k++) {
+                        if (finalInterests.equals(""))
+                            finalInterests = interestList.get(k);
+                        else
+                            finalInterests = finalInterests + "," + interestList.get(k);
+                    }
+                    PostData(finalInterests);
                 }
             });
 
@@ -511,5 +463,148 @@ public class PostStatus extends AppCompatActivity implements RequestNotifier {
             mBottomSheetDialog.dismiss();
             mBottomSheetDialog = null;
         }
+    }
+
+
+    /**
+     * Get a file path from a Uri. This will get the the path for Storage Access
+     * Framework Documents, as well as the _data field for the MediaStore and
+     * other file-based ContentProviders.
+     *
+     * @param context The context.
+     * @param uri     The Uri to query.
+     * @author paulburke
+     */
+    public static String getPath(final Context context, final Uri uri) {
+
+        final boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
+
+        // DocumentProvider
+        if (isKitKat && DocumentsContract.isDocumentUri(context, uri)) {
+            // ExternalStorageProvider
+            if (isExternalStorageDocument(uri)) {
+                final String docId = DocumentsContract.getDocumentId(uri);
+                final String[] split = docId.split(":");
+                final String type = split[0];
+
+                if ("primary".equalsIgnoreCase(type)) {
+                    return Environment.getExternalStorageDirectory() + "/" + split[1];
+                }
+
+                // TODO handle non-primary volumes
+            }
+            // DownloadsProvider
+            else if (isDownloadsDocument(uri)) {
+
+                final String id = DocumentsContract.getDocumentId(uri);
+                final Uri contentUri = ContentUris.withAppendedId(
+                        Uri.parse("content://downloads/public_downloads"), Long.valueOf(id));
+
+                return getDataColumn(context, contentUri, null, null);
+            }
+            // MediaProvider
+            else if (isMediaDocument(uri)) {
+                final String docId = DocumentsContract.getDocumentId(uri);
+                final String[] split = docId.split(":");
+                final String type = split[0];
+
+                Uri contentUri = null;
+                if ("image".equals(type)) {
+                    contentUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+                } else if ("video".equals(type)) {
+                    contentUri = MediaStore.Video.Media.EXTERNAL_CONTENT_URI;
+                } else if ("audio".equals(type)) {
+                    contentUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
+                }
+
+                final String selection = "_id=?";
+                final String[] selectionArgs = new String[]{
+                        split[1]
+                };
+
+                return getDataColumn(context, contentUri, selection, selectionArgs);
+            }
+        }
+        // MediaStore (and general)
+        else if ("content".equalsIgnoreCase(uri.getScheme())) {
+
+            // Return the remote address
+            if (isGooglePhotosUri(uri))
+                return uri.getLastPathSegment();
+
+            return getDataColumn(context, uri, null, null);
+        }
+        // File
+        else if ("file".equalsIgnoreCase(uri.getScheme())) {
+            return uri.getPath();
+        }
+
+        return null;
+    }
+
+    /**
+     * Get the value of the data column for this Uri. This is useful for
+     * MediaStore Uris, and other file-based ContentProviders.
+     *
+     * @param context       The context.
+     * @param uri           The Uri to query.
+     * @param selection     (Optional) Filter used in the query.
+     * @param selectionArgs (Optional) Selection arguments used in the query.
+     * @return The value of the _data column, which is typically a file path.
+     */
+    public static String getDataColumn(Context context, Uri uri, String selection,
+                                       String[] selectionArgs) {
+
+        Cursor cursor = null;
+        final String column = "_data";
+        final String[] projection = {
+                column
+        };
+
+        try {
+            cursor = context.getContentResolver().query(uri, projection, selection, selectionArgs,
+                    null);
+            if (cursor != null && cursor.moveToFirst()) {
+                final int index = cursor.getColumnIndexOrThrow(column);
+                return cursor.getString(index);
+            }
+        } finally {
+            if (cursor != null)
+                cursor.close();
+        }
+        return null;
+    }
+
+
+    /**
+     * @param uri The Uri to check.
+     * @return Whether the Uri authority is ExternalStorageProvider.
+     */
+    public static boolean isExternalStorageDocument(Uri uri) {
+        return "com.android.externalstorage.documents".equals(uri.getAuthority());
+    }
+
+    /**
+     * @param uri The Uri to check.
+     * @return Whether the Uri authority is DownloadsProvider.
+     */
+    public static boolean isDownloadsDocument(Uri uri) {
+        return "com.android.providers.downloads.documents".equals(uri.getAuthority());
+    }
+
+    /**
+     * @param uri The Uri to check.
+     * @return Whether the Uri authority is MediaProvider.
+     */
+    public static boolean isMediaDocument(Uri uri) {
+        return "com.android.providers.media.documents".equals(uri.getAuthority());
+    }
+
+    /**
+     * @param uri The Uri to check.
+     * @return Whether the Uri authority is Google Photos.
+     */
+    public static boolean isGooglePhotosUri(Uri uri) {
+        return "com.google.android.apps.photos.content".equals(uri.getAuthority());
     }
 }

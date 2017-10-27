@@ -1279,7 +1279,8 @@ public interface ServiceApi {
     //Post a status
     @POST("AddYourStatus")
     Call<String> _autokattaUploadStatus(@Query("SenderContact") String myContact, @Query("StatusText") String statusText,
-                                        @Query("StatusImage") String statusImage, @Query("StatusVideo") String statusVideo);
+                                        @Query("StatusImage") String statusImage, @Query("StatusVideo") String statusVideo,
+                                        @Query("Interest") String Interest);
 
     @POST("SendQuotation")
     Call<String> _autokattaSendQuotation(@Query("QuotationFor") String strTitle, @Query("ReservePrice") String strPrice,
