@@ -107,9 +107,9 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<RecyclerView.
     private int mVehicleId;
 
     private OnLoadMoreListener loadMoreListener;
-    public final int TYPE_MOVIE = 0;
-    public final int TYPE_LOAD = 1;
-    boolean isLoading = false, isMoreDataAvailable = true;
+    final int TYPE_DATA = 0;
+    private final int TYPE_LOAD = 1;
+    private boolean isLoading = false, isMoreDataAvailable = true;
 
     private List<String> storeIdList = new ArrayList<>();
     private List<String> storeTitleList = new ArrayList<>();
@@ -132,7 +132,7 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<RecyclerView.
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(activity);
-        if (viewType == TYPE_MOVIE) {
+        if (viewType == TYPE_DATA) {
             return new VehicleHolder(inflater.inflate(R.layout.my_uploaded_vehicle_adapter, parent, false));
         } else {
             return new LoadHolder(inflater.inflate(R.layout.row_load, parent, false));
@@ -148,7 +148,7 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<RecyclerView.
             loadMoreListener.onLoadMore();
         }
 
-        if (getItemViewType(position) == TYPE_MOVIE) {
+        if (getItemViewType(position) == TYPE_DATA) {
             final VehicleHolder holder = (VehicleHolder) holder1;
 
             final List<String> vimages = new ArrayList<>();
@@ -288,7 +288,8 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<RecyclerView.
                                             .build();
 
                                     ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                                    Call<ProfileGroupResponse> add = serviceApi._autokattaProfileGroup(activity.getSharedPreferences(activity.getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", null));
+                                    Call<ProfileGroupResponse> add = serviceApi._autokattaProfileGroup(activity.getSharedPreferences(activity.getString(R.string.my_preference),
+                                            MODE_PRIVATE).getString("loginContact", null), 1, 10);
                                     add.enqueue(new Callback<ProfileGroupResponse>() {
                                         @Override
                                         public void onResponse(Call<ProfileGroupResponse> call, Response<ProfileGroupResponse> response) {
@@ -427,7 +428,8 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<RecyclerView.
                                             .build();
 
                                     ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                                    Call<ProfileGroupResponse> add = serviceApi._autokattaProfileGroup(activity.getSharedPreferences(activity.getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", null));
+                                    Call<ProfileGroupResponse> add = serviceApi._autokattaProfileGroup(activity.getSharedPreferences(activity.getString(R.string.my_preference),
+                                            MODE_PRIVATE).getString("loginContact", null), 1, 10);
                                     add.enqueue(new Callback<ProfileGroupResponse>() {
                                         @Override
                                         public void onResponse(Call<ProfileGroupResponse> call, Response<ProfileGroupResponse> response) {
@@ -913,7 +915,8 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<RecyclerView.
                     .build();
 
             ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-            Call<ProfileGroupResponse> add = serviceApi._autokattaProfileGroup(activity.getSharedPreferences(activity.getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", null));
+            Call<ProfileGroupResponse> add = serviceApi._autokattaProfileGroup(activity.getSharedPreferences(activity.getString(R.string.my_preference),
+                    MODE_PRIVATE).getString("loginContact", null), 1, 10);
 
             hud = KProgressHUD.create(activity)
                     .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
@@ -1077,7 +1080,8 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<RecyclerView.
                     .build();
 
             ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-            Call<MyStoreResponse> add = serviceApi._autokattaGetMyStoreList(activity.getSharedPreferences(activity.getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", null));
+            Call<MyStoreResponse> add = serviceApi._autokattaGetMyStoreList(activity.getSharedPreferences(activity.getString(R.string.my_preference),
+                    MODE_PRIVATE).getString("loginContact", null), 1, 10);
 
             hud = KProgressHUD.create(activity)
                     .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
@@ -1237,7 +1241,7 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<RecyclerView.
     @Override
     public int getItemViewType(int position) {
         if (mMainList.get(position).getVehicleId() != 0) {
-            return TYPE_MOVIE;
+            return TYPE_DATA;
         } else {
             return TYPE_LOAD;
         }

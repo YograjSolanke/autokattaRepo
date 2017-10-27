@@ -75,7 +75,7 @@ public class ProductBasedStore extends Fragment implements RequestNotifier, Swip
 
     private void getStoreData(String contact) {
         ApiCall apiCall = new ApiCall(getActivity(), this);
-        apiCall.getBrowseStores(contact, "Product");
+        apiCall.getBrowseStores(contact, "Product", 1, 10);
     }
 
     @Override

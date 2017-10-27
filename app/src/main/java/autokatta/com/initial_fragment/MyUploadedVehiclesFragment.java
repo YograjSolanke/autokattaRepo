@@ -209,8 +209,8 @@ public class MyUploadedVehiclesFragment extends Fragment implements RequestNotif
                     //telling adapter to stop calling load more as no more server data available
                     Toast.makeText(getActivity(), "No More Data Available", Toast.LENGTH_LONG).show();
                 }
-                adapter.notifyDataSetChanged();
-                //adapter.notifyDataChanged();
+                //adapter.notifyDataSetChanged();
+                adapter.notifyDataChanged();
             } else {
                 mSwipeRefreshLayout.setRefreshing(false);
                 if (isAdded())

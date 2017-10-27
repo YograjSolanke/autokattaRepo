@@ -1,11 +1,13 @@
 package autokatta.com.fragment;
 
+import android.app.ProgressDialog;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
@@ -16,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
@@ -33,8 +36,10 @@ import autokatta.com.adapter.WallNotificationAdapter;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.OnLoadMoreListener;
 import autokatta.com.interfaces.RequestNotifier;
+import autokatta.com.model.WallResponseModel;
 import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.other.CustomToast;
+import autokatta.com.other.VerticalLineDecorator;
 import autokatta.com.response.WallResponse;
 import retrofit2.Response;
 
@@ -46,13 +51,13 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class WallNotificationFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, RequestNotifier {
 
-    public static RecyclerView mRecyclerView;
+    RecyclerView mRecyclerView;
     SwipeRefreshLayout mSwipeRefreshLayout;
     View mWallNotify;
     TextView mNoData;
     LinearLayout layout;
     boolean _hasLoadedOnce = false;
-    List<WallResponse.Success.WallNotification> notificationList = new ArrayList<>();
+    List<WallResponseModel> notificationList = new ArrayList<>();
     WallNotificationAdapter adapter;
     private String mLoginContact = "";
     ConnectionDetector mConnectionDetector;
@@ -60,6 +65,8 @@ public class WallNotificationFragment extends Fragment implements SwipeRefreshLa
     Locale myLocale;
     String mLanguage;
     String mMarathiStr, mEnglishStr;
+    int index = 1;
+    ProgressDialog dialog;
 
     public WallNotificationFragment() {
         //Empty Constructor...
@@ -74,7 +81,7 @@ public class WallNotificationFragment extends Fragment implements SwipeRefreshLa
 
     @Override
     public void onRefresh() {
-        getData();
+        getData(1, 10);
     }
 
     @Override
@@ -82,7 +89,7 @@ public class WallNotificationFragment extends Fragment implements SwipeRefreshLa
         super.setUserVisibleHint(isVisibleToUser);
         if (this.isVisible()) {
             if (isVisibleToUser && !_hasLoadedOnce) {
-                //getData();
+                getData(1, 10);
                 _hasLoadedOnce = true;
             }
         }
@@ -94,6 +101,8 @@ public class WallNotificationFragment extends Fragment implements SwipeRefreshLa
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                dialog = new ProgressDialog(getActivity());
+                dialog.setMessage("Loading...");
                 mLoginContact = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).
                         getString("loginContact", "");
                 mLanguage = getActivity().getSharedPreferences(getString(R.string.firstRun), MODE_PRIVATE).getString("Language", "");
@@ -104,11 +113,33 @@ public class WallNotificationFragment extends Fragment implements SwipeRefreshLa
                 mRetry = (Button) mWallNotify.findViewById(R.id.retry);
                 mRecyclerView = (RecyclerView) mWallNotify.findViewById(R.id.wall_recycler_view);
                 mSwipeRefreshLayout = (SwipeRefreshLayout) mWallNotify.findViewById(R.id.wall_swipe_refresh_layout);
+
+                adapter = new WallNotificationAdapter(getActivity(), notificationList, mLoginContact);
+                adapter.setLoadMoreListener(new OnLoadMoreListener() {
+                    @Override
+                    public void onLoadMore() {
+                        mRecyclerView.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                //int index = myUploadedVehiclesResponseList.size() - 1;
+                                index++;
+                                Log.i("index", "->" + index);
+                                loadMore(index);
+                            }
+                        });
+                        //Calling loadMore function in Runnable to fix the
+                        // java.lang.IllegalStateException: Cannot call this method while RecyclerView is computing a layout or scrolling error
+                    }
+                });
                 mRecyclerView.setHasFixedSize(true);
                 LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
-                mLayoutManager.setReverseLayout(true);
-                mLayoutManager.setStackFromEnd(true);
+                //mLayoutManager.setReverseLayout(true);
+                //mLayoutManager.setStackFromEnd(true);
                 mRecyclerView.setLayoutManager(mLayoutManager);
+                mRecyclerView.addItemDecoration(new VerticalLineDecorator(2));
+                mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+                mRecyclerView.setAdapter(adapter);
+
                 //getData();//Get Api...
                 mSwipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
                         android.R.color.holo_green_light,
@@ -118,34 +149,41 @@ public class WallNotificationFragment extends Fragment implements SwipeRefreshLa
                     @Override
                     public void run() {
                         mSwipeRefreshLayout.setRefreshing(true);
-                        getData();
+                        getData(1, 10);
                     }
                 });
                 mRetry.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         mSwipeRefreshLayout.setRefreshing(true);
-                        getData();
+                        getData(1, 10);
                     }
                 });
             }
         });
         mConnectionDetector = new ConnectionDetector(getActivity());
         mSwipeRefreshLayout.setOnRefreshListener(this);
-        adapter = new WallNotificationAdapter();
+        /*adapter = new WallNotificationAdapter();
         adapter.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
                 Log.i("Loaded", "->");
             }
-        });
+        });*/
     }
 
-    private void getData() {
+    private void loadMore(int index) {
+        //Toast.makeText(getActivity(), "Loading...", Toast.LENGTH_LONG).show();
+        dialog.show();
+        adapter.notifyItemInserted(notificationList.size());
+        getData(index, 10);
+    }
+
+    private void getData(int pageNo, int viewRecord) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 ApiCall apiCall = new ApiCall(getActivity(), this);
-                apiCall.wallNotifications(mLoginContact, mLoginContact, "");
+                apiCall.wallNotifications(mLoginContact, mLoginContact, "", pageNo, viewRecord);
             } else {
                 if (isAdded())
                     CustomToast.customToast(getActivity(), getString(R.string.no_internet));
@@ -180,211 +218,219 @@ public class WallNotificationFragment extends Fragment implements SwipeRefreshLa
     public void notifySuccess(Response<?> response) {
         if (response != null) {
             if (response.isSuccessful()) {
+                if (index > 1) {
+                    if (dialog.isShowing()) {
+                        dialog.dismiss();
+                    }
+                }
                 WallResponse wallResponse = (WallResponse) response.body();
-                if (!wallResponse.getSuccess().getWallNotifications().isEmpty()) {
-                    mSwipeRefreshLayout.setRefreshing(false);
-                    mNoData.setVisibility(View.GONE);
-                    layout.setVisibility(View.GONE);
-                    notificationList.clear();
-                    for (WallResponse.Success.WallNotification notification : wallResponse.getSuccess().getWallNotifications()) {
-                        notification.setActionID(notification.getActionID());
-                        notification.setLayout(notification.getLayout());
+                if (wallResponse.getSuccess().getWallNotifications().size() > 0) {
+                    if (!wallResponse.getSuccess().getWallNotifications().isEmpty()) {
+                        mSwipeRefreshLayout.setRefreshing(false);
+                        mNoData.setVisibility(View.GONE);
+                        layout.setVisibility(View.GONE);
+                        //notificationList.clear();
+                        for (WallResponse.Success.WallNotification notification : wallResponse.getSuccess().getWallNotifications()) {
+                            WallResponseModel responseModel = new WallResponseModel();
+                            responseModel.setActionID(notification.getActionID());
+                            responseModel.setLayout(notification.getLayout());
 
-                        notification.setSender(notification.getSender());
-                        notification.setAction(notification.getAction());
-                        notification.setReceiver(notification.getReceiver());
-                        String sublayout = notification.getSubLayout();
-                        if (sublayout.contains("=")) {
-                            String arr[] = sublayout.split("=", 2);
+                            responseModel.setSender(notification.getSender());
+                            responseModel.setAction(notification.getAction());
+                            responseModel.setReceiver(notification.getReceiver());
+                            String sublayout = notification.getSubLayout();
+                            if (sublayout.contains("=")) {
+                                String arr[] = sublayout.split("=", 2);
 
-                            notification.setSubLayout(arr[0]);
-                            if (!arr[1].equals(""))
-                                notification.setShareSubData(arr[1]);
-                            else
-                                notification.setShareSubData("No data");
+                                responseModel.setSubLayout(arr[0]);
+                                if (!arr[1].equals(""))
+                                    responseModel.setShareSubData(arr[1]);
+                                else
+                                    responseModel.setShareSubData("No data");
 
-                            //arr[1].equals("") ? notification.setShareSubData(arr[1]) : notification.setShareSubData("No data");
+                                //arr[1].equals("") ? notification.setShareSubData(arr[1]) : notification.setShareSubData("No data");
 
-                        } else {
+                            } else {
 
-                            notification.setSubLayout(sublayout);
-                            notification.setShareSubData(sublayout);
-                        }
-                        notification.setSenderName(notification.getSenderName());
-                        notification.setSenderPicture(notification.getSenderPicture());
-                        notification.setReceiverName(notification.getReceiverName());
-                        notification.setReceiverPicture(notification.getReceiverPicture());
-                        notification.setReceiverProfession(notification.getReceiverProfession());
-                        notification.setReceiverWebsite(notification.getReceiverWebsite());
-                        notification.setReceiverCity(notification.getReceiverCity());
-                        notification.setReceiverLikeCount(notification.getReceiverLikeCount());
-                        notification.setReceiverFollowCount(notification.getReceiverFollowCount());
-                        notification.setReceiverLikeStatus(notification.getReceiverLikeStatus());
-                        notification.setReceiverFollowStatus(notification.getReceiverFollowStatus());
+                                responseModel.setSubLayout(sublayout);
+                                responseModel.setShareSubData(sublayout);
+                            }
+                            responseModel.setSenderName(notification.getSenderName());
+                            responseModel.setSenderPicture(notification.getSenderPicture());
+                            responseModel.setReceiverName(notification.getReceiverName());
+                            responseModel.setReceiverPicture(notification.getReceiverPicture());
+                            responseModel.setReceiverProfession(notification.getReceiverProfession());
+                            responseModel.setReceiverWebsite(notification.getReceiverWebsite());
+                            responseModel.setReceiverCity(notification.getReceiverCity());
+                            responseModel.setReceiverLikeCount(notification.getReceiverLikeCount());
+                            responseModel.setReceiverFollowCount(notification.getReceiverFollowCount());
+                            responseModel.setReceiverLikeStatus(notification.getReceiverLikeStatus());
+                            responseModel.setReceiverFollowStatus(notification.getReceiverFollowStatus());
 
-                        notification.setStatusID(notification.getStatusID());
-                        notification.setStatusLikeStatus(notification.getStatusLikeStatus());
-                        notification.setStatus(notification.getStatus());
-                        notification.setMyFavStatus(notification.getMyFavStatus());
+                            responseModel.setStatusID(notification.getStatusID());
+                            responseModel.setStatusLikeStatus(notification.getStatusLikeStatus());
+                            responseModel.setStatus(notification.getStatus());
+                            responseModel.setMyFavStatus(notification.getMyFavStatus());
 
-                        notification.setUpVehicleLikeStatus(notification.getUpVehicleLikeStatus());
-                        notification.setUpVehicleFollowStatus(notification.getUpVehicleFollowStatus());
-                        notification.setUploadVehicleID(notification.getUploadVehicleID());
-                        notification.setUpVehicleLikeCount(notification.getUpVehicleLikeCount());
-                        notification.setUpVehicleFollowCount(notification.getUpVehicleFollowCount());
-                        notification.setUpVehicleContact(notification.getUpVehicleContact());
-                        notification.setUpVehicleTitle(notification.getUpVehicleTitle());
-                        notification.setUpVehicleShareCount(notification.getUpVehicleShareCount());
-                        notification.setUpVehiclePrice(notification.getUpVehiclePrice());
-                        notification.setUpVehicleModel(notification.getUpVehicleModel());
-                        notification.setUpVehicleBrand(notification.getUpVehicleBrand());
-                        notification.setUpVehicleManfYear(notification.getUpVehicleManfYear());
-                        notification.setUpVehicleRegNo(notification.getUpVehicleRegNo());
-                        notification.setUpVehicleKmsRun(notification.getUpVehicleKmsRun());
-                        notification.setUpVehicleHrsRun(notification.getUpVehicleHrsRun());
-                        notification.setUpVehicleRtoCity(notification.getUpVehicleRtoCity());
-                        notification.setUpVehicleLocationCity(notification.getUpVehicleLocationCity());
-                        String vehicleImage = notification.getUpVehicleImage();
-                        if (vehicleImage.contains(",")) {
-                            String[] items = vehicleImage.split(",");
-                            notification.setUpVehicleImage(items[0]);
+                            responseModel.setUpVehicleLikeStatus(notification.getUpVehicleLikeStatus());
+                            responseModel.setUpVehicleFollowStatus(notification.getUpVehicleFollowStatus());
+                            responseModel.setUploadVehicleID(notification.getUploadVehicleID());
+                            responseModel.setUpVehicleLikeCount(notification.getUpVehicleLikeCount());
+                            responseModel.setUpVehicleFollowCount(notification.getUpVehicleFollowCount());
+                            responseModel.setUpVehicleContact(notification.getUpVehicleContact());
+                            responseModel.setUpVehicleTitle(notification.getUpVehicleTitle());
+                            responseModel.setUpVehicleShareCount(notification.getUpVehicleShareCount());
+                            responseModel.setUpVehiclePrice(notification.getUpVehiclePrice());
+                            responseModel.setUpVehicleModel(notification.getUpVehicleModel());
+                            responseModel.setUpVehicleBrand(notification.getUpVehicleBrand());
+                            responseModel.setUpVehicleManfYear(notification.getUpVehicleManfYear());
+                            responseModel.setUpVehicleRegNo(notification.getUpVehicleRegNo());
+                            responseModel.setUpVehicleKmsRun(notification.getUpVehicleKmsRun());
+                            responseModel.setUpVehicleHrsRun(notification.getUpVehicleHrsRun());
+                            responseModel.setUpVehicleRtoCity(notification.getUpVehicleRtoCity());
+                            responseModel.setUpVehicleLocationCity(notification.getUpVehicleLocationCity());
+                            String vehicleImage = notification.getUpVehicleImage();
+                            if (vehicleImage.contains(",")) {
+                                String[] items = vehicleImage.split(",");
+                                responseModel.setUpVehicleImage(items[0]);
                             /*for (String item : items) {
                                 notification.setUpVehicleImage(item);
                             }*/
-                        } else {
-                            notification.setUpVehicleImage(vehicleImage);
-                        }
+                            } else {
+                                responseModel.setUpVehicleImage(vehicleImage);
+                            }
 
-                        notification.setSearchLikeStatus(notification.getSearchLikeStatus());
-                        notification.setSearchCategory(notification.getSearchCategory());
-                        notification.setSearchBrand(notification.getSearchBrand());
-                        notification.setSearchModel(notification.getSearchModel());
-                        notification.setSearchRtoCity(notification.getSearchRtoCity());
-                        notification.setSearchLocationCity(notification.getSearchLocationCity());
-                        notification.setSearchColor(notification.getSearchColor());
-                        notification.setSearchPrice(notification.getSearchPrice());
-                        notification.setSearchManfYear(notification.getSearchManfYear());
-                        notification.setSearchDate(notification.getSearchDate());
-                        notification.setSearchLeads(notification.getSearchLeads());
+                            responseModel.setSearchLikeStatus(notification.getSearchLikeStatus());
+                            responseModel.setSearchCategory(notification.getSearchCategory());
+                            responseModel.setSearchBrand(notification.getSearchBrand());
+                            responseModel.setSearchModel(notification.getSearchModel());
+                            responseModel.setSearchRtoCity(notification.getSearchRtoCity());
+                            responseModel.setSearchLocationCity(notification.getSearchLocationCity());
+                            responseModel.setSearchColor(notification.getSearchColor());
+                            responseModel.setSearchPrice(notification.getSearchPrice());
+                            responseModel.setSearchManfYear(notification.getSearchManfYear());
+                            responseModel.setSearchDate(notification.getSearchDate());
+                            responseModel.setSearchLeads(notification.getSearchLeads());
 
-                        notification.setSenderProfession(notification.getSenderProfession());
-                        notification.setSenderWebsite(notification.getSenderWebsite());
-                        notification.setSenderCity(notification.getSenderCity());
-                        notification.setSenderLikeCount(notification.getSenderLikeCount());
-                        notification.setSenderFollowCount(notification.getSenderFollowCount());
-                        notification.setSenderLikeStatus(notification.getSenderLikeStatus());
-                        notification.setSenderFollowStatus(notification.getSenderFollowStatus());
+                            responseModel.setSenderProfession(notification.getSenderProfession());
+                            responseModel.setSenderWebsite(notification.getSenderWebsite());
+                            responseModel.setSenderCity(notification.getSenderCity());
+                            responseModel.setSenderLikeCount(notification.getSenderLikeCount());
+                            responseModel.setSenderFollowCount(notification.getSenderFollowCount());
+                            responseModel.setSenderLikeStatus(notification.getSenderLikeStatus());
+                            responseModel.setSenderFollowStatus(notification.getSenderFollowStatus());
 
-                        notification.setStoreLikeStatus(notification.getStoreLikeStatus());
-                        notification.setStoreFollowStatus(notification.getStoreFollowStatus());
-                        notification.setStoreRating(notification.getStoreRating());
-                        notification.setStoreID(notification.getStoreID());
-                        notification.setStoreLikeCount(notification.getStoreLikeCount());
-                        notification.setStoreFollowCount(notification.getStoreFollowCount());
-                        notification.setStoreContact(notification.getStoreContact());
-                        notification.setStoreName(notification.getStoreName());
-                        notification.setStoreImage(notification.getStoreImage());
-                        notification.setStoreType(notification.getStoreType());
-                        notification.setStoreWebsite(notification.getStoreWebsite());
-                        notification.setWorkingDays(notification.getWorkingDays());
-                        notification.setStoreLocation(notification.getStoreLocation());
-                        notification.setStoreTiming(notification.getStoreTiming());
-                        notification.setStoreCategory(notification.getStoreCategory());
-                        notification.setStoreShareCount(notification.getStoreShareCount());
+                            responseModel.setStoreLikeStatus(notification.getStoreLikeStatus());
+                            responseModel.setStoreFollowStatus(notification.getStoreFollowStatus());
+                            responseModel.setStoreRating(notification.getStoreRating());
+                            responseModel.setStoreID(notification.getStoreID());
+                            responseModel.setStoreLikeCount(notification.getStoreLikeCount());
+                            responseModel.setStoreFollowCount(notification.getStoreFollowCount());
+                            responseModel.setStoreContact(notification.getStoreContact());
+                            responseModel.setStoreName(notification.getStoreName());
+                            responseModel.setStoreImage(notification.getStoreImage());
+                            responseModel.setStoreType(notification.getStoreType());
+                            responseModel.setStoreWebsite(notification.getStoreWebsite());
+                            responseModel.setWorkingDays(notification.getWorkingDays());
+                            responseModel.setStoreLocation(notification.getStoreLocation());
+                            responseModel.setStoreTiming(notification.getStoreTiming());
+                            responseModel.setStoreCategory(notification.getStoreCategory());
+                            responseModel.setStoreShareCount(notification.getStoreShareCount());
 
-                        notification.setGroupVehicles(notification.getGroupVehicles());
-                        notification.setGroupID(notification.getGroupID());
-                        notification.setGroupName(notification.getGroupName());
-                        notification.setGroupImage(notification.getGroupImage());
-                        notification.setGroupMembers(notification.getGroupMembers());
-                        notification.setGroupProductCount(notification.getGroupProductCount());
-                        notification.setGroupServiceCount(notification.getGroupServiceCount());
+                            responseModel.setGroupVehicles(notification.getGroupVehicles());
+                            responseModel.setGroupID(notification.getGroupID());
+                            responseModel.setGroupName(notification.getGroupName());
+                            responseModel.setGroupImage(notification.getGroupImage());
+                            responseModel.setGroupMembers(notification.getGroupMembers());
+                            responseModel.setGroupProductCount(notification.getGroupProductCount());
+                            responseModel.setGroupServiceCount(notification.getGroupServiceCount());
 
-                        notification.setProductLikeStatus(notification.getProductLikeStatus());
-                        notification.setProductFollowStatus(notification.getProductFollowStatus());
-                        notification.setProductID(notification.getProductID());
-                        notification.setProductLikeCount(notification.getProductLikeCount());
-                        notification.setProductFollowCount(notification.getProductFollowCount());
-                        notification.setProductName(notification.getProductName());
-                        notification.setProductType(notification.getProductType());
-                        notification.setProductRating(notification.getProductRating());
-                        notification.setProductShareCount(notification.getProductShareCount());
-                        String proImage = notification.getProductImage();
-                        if (proImage.contains(",")) {
-                            String[] items = proImage.split(",");
-                            notification.setProductImage(items[0]);
+                            responseModel.setProductLikeStatus(notification.getProductLikeStatus());
+                            responseModel.setProductFollowStatus(notification.getProductFollowStatus());
+                            responseModel.setProductID(notification.getProductID());
+                            responseModel.setProductLikeCount(notification.getProductLikeCount());
+                            responseModel.setProductFollowCount(notification.getProductFollowCount());
+                            responseModel.setProductName(notification.getProductName());
+                            responseModel.setProductType(notification.getProductType());
+                            responseModel.setProductRating(notification.getProductRating());
+                            responseModel.setProductShareCount(notification.getProductShareCount());
+                            String proImage = notification.getProductImage();
+                            if (proImage.contains(",")) {
+                                String[] items = proImage.split(",");
+                                responseModel.setProductImage(items[0]);
                             /*for (String item : items) {
                                 notification.setProductImage(item);
                             }*/
-                        } else {
-                            notification.setProductImage(proImage);
-                        }
+                            } else {
+                                responseModel.setProductImage(proImage);
+                            }
 
 
-                        notification.setServiceLikeStatus(notification.getServiceLikeStatus());
-                        notification.setServiceFollowStatus(notification.getServiceFollowStatus());
-                        notification.setServiceID(notification.getServiceID());
-                        notification.setServiceLikeCount(notification.getServiceLikeCount());
-                        notification.setServiceFollowCount(notification.getServiceFollowCount());
-                        notification.setServiceName(notification.getServiceName());
-                        notification.setServiceType(notification.getServiceType());
-                        notification.setServiceRating(notification.getServiceRating());
-                        notification.setServiceShareCount(notification.getServiceShareCount());
-                        String serviceImage = notification.getServiceImage();
-                        if (serviceImage.contains(",")) {
-                            String[] items = serviceImage.split(",");
-                            notification.setServiceImage(items[0]);
+                            responseModel.setServiceLikeStatus(notification.getServiceLikeStatus());
+                            responseModel.setServiceFollowStatus(notification.getServiceFollowStatus());
+                            responseModel.setServiceID(notification.getServiceID());
+                            responseModel.setServiceLikeCount(notification.getServiceLikeCount());
+                            responseModel.setServiceFollowCount(notification.getServiceFollowCount());
+                            responseModel.setServiceName(notification.getServiceName());
+                            responseModel.setServiceType(notification.getServiceType());
+                            responseModel.setServiceRating(notification.getServiceRating());
+                            responseModel.setServiceShareCount(notification.getServiceShareCount());
+                            String serviceImage = notification.getServiceImage();
+                            if (serviceImage.contains(",")) {
+                                String[] items = serviceImage.split(",");
+                                responseModel.setServiceImage(items[0]);
                             /*for (String item : items) {
                                 notification.setServiceImage(item);
                             }*/
-                        } else {
-                            notification.setServiceImage(serviceImage);
-                        }
+                            } else {
+                                responseModel.setServiceImage(serviceImage);
+                            }
 
-                        notification.setAuctionID(notification.getAuctionID());
-                        notification.setActionTitle(notification.getActionTitle());
-                        notification.setEndDate(notification.getEndDate());
-                        notification.setEndTime(notification.getEndTime());
-                        notification.setNoOfVehicles(notification.getNoOfVehicles());
-                        notification.setAuctionType(notification.getAuctionType());
-                        notification.setGoingCount(notification.getGoingCount());
-                        notification.setIgnoreCount(notification.getIgnoreCount());
+                            responseModel.setAuctionID(notification.getAuctionID());
+                            responseModel.setActionTitle(notification.getActionTitle());
+                            responseModel.setEndDate(notification.getEndDate());
+                            responseModel.setEndTime(notification.getEndTime());
+                            responseModel.setNoOfVehicles(notification.getNoOfVehicles());
+                            responseModel.setAuctionType(notification.getAuctionType());
+                            responseModel.setGoingCount(notification.getGoingCount());
+                            responseModel.setIgnoreCount(notification.getIgnoreCount());
 
-                        notification.setLayoutType(notification.getLayoutType());
-                        //notification.setDateTime(notification.getDateTime());
-                        try {
-                            TimeZone utc = TimeZone.getTimeZone("etc/UTC");
-                            //format of date coming from services
-                            DateFormat inputFormat = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss a", Locale.getDefault());
+                            responseModel.setLayoutType(notification.getLayoutType());
+                            //notification.setDateTime(notification.getDateTime());
+                            try {
+                                TimeZone utc = TimeZone.getTimeZone("etc/UTC");
+                                //format of date coming from services
+                                DateFormat inputFormat = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss a", Locale.getDefault());
                         /*DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",
                                 Locale.getDefault());*/
-                            inputFormat.setTimeZone(utc);
+                                inputFormat.setTimeZone(utc);
 
-                            //format of date which we want to show
-                            DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy hh:mm a", Locale.getDefault());
+                                //format of date which we want to show
+                                DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy hh:mm a", Locale.getDefault());
                         /*DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy hh:mm aa",
                                 Locale.getDefault());*/
-                            outputFormat.setTimeZone(utc);
+                                outputFormat.setTimeZone(utc);
 
-                            Date date = inputFormat.parse(notification.getDateTime());
-                            //System.out.println("jjj"+date);
-                            String output = outputFormat.format(date);
-                            //System.out.println(mainList.get(i).getDate()+" jjj " + output);
-                            notification.setDateTime(output);
-                        } catch (Exception e) {
-                            e.printStackTrace();
+                                Date date = inputFormat.parse(notification.getDateTime());
+                                //System.out.println("jjj"+date);
+                                String output = outputFormat.format(date);
+                                //System.out.println(mainList.get(i).getDate()+" jjj " + output);
+                                responseModel.setDateTime(output);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                            notificationList.add(responseModel);
                         }
-
-
-                        notificationList.add(notification);
+                    } else {
+                        mSwipeRefreshLayout.setRefreshing(false);
+                        mNoData.setVisibility(View.VISIBLE);
                     }
-                    adapter = new WallNotificationAdapter(getActivity(), notificationList, mLoginContact);
-                    mRecyclerView.setAdapter(adapter);
-                    adapter.notifyDataSetChanged();
                 } else {
-                    mSwipeRefreshLayout.setRefreshing(false);
-                    mNoData.setVisibility(View.VISIBLE);
+                    adapter.setMoreDataAvailable(false);
+                    //telling adapter to stop calling load more as no more server data available
+                    Toast.makeText(getActivity(), "No More Data Available", Toast.LENGTH_LONG).show();
                 }
+                adapter.notifyDataChanged();
             } else {
                 mSwipeRefreshLayout.setRefreshing(false);
             }

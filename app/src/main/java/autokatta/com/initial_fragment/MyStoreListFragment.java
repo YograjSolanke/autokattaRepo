@@ -181,7 +181,7 @@ public class MyStoreListFragment extends Fragment implements View.OnClickListene
 
     @Override
     public void onRefresh() {
-        apiCall.MyStoreList(myContact);
+        apiCall.MyStoreList(myContact, 1, 10);
         mRecyclerView.getRecycledViewPool().clear();
         adapter.notifyDataSetChanged();
     }
@@ -191,7 +191,7 @@ public class MyStoreListFragment extends Fragment implements View.OnClickListene
         super.setUserVisibleHint(isVisibleToUser);
         if (this.isVisible()) {
             if (isVisibleToUser && !hasViewCreated) {
-                apiCall.MyStoreList(myContact);
+                apiCall.MyStoreList(myContact, 1, 10);
                 hasViewCreated = true;
             }
         }
@@ -226,7 +226,7 @@ public class MyStoreListFragment extends Fragment implements View.OnClickListene
                     @Override
                     public void run() {
                         mSwipeRefreshLayout.setRefreshing(true);
-                        apiCall.MyStoreList(myContact);
+                        apiCall.MyStoreList(myContact, 1, 10);
                     }
                 });
             }
@@ -249,7 +249,6 @@ public class MyStoreListFragment extends Fragment implements View.OnClickListene
                 }
             }
         });
-
 
 
     }

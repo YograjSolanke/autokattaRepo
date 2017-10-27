@@ -72,7 +72,7 @@ public class ApiCall {
     Wall Notifications...
      */
 
-    public void wallNotifications(String contact, String userContact, String layout) {
+    public void wallNotifications(String contact, String userContact, String layout, int pageNo, int viewRecords) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 Retrofit mRetrofit = new Retrofit.Builder()
@@ -81,7 +81,7 @@ public class ApiCall {
                         .client(initLog().build())
                         .build();
                 ServiceApi mServiceApi = mRetrofit.create(ServiceApi.class);
-                Call<WallResponse> mLoginCall = mServiceApi._getWallNotifications(contact, userContact, layout);
+                Call<WallResponse> mLoginCall = mServiceApi._getWallNotifications(contact, userContact, layout, pageNo, viewRecords);
                 mLoginCall.enqueue(new Callback<WallResponse>() {
                     @Override
                     public void onResponse(Call<WallResponse> call, Response<WallResponse> response) {
@@ -171,7 +171,7 @@ public class ApiCall {
     Get Profile Data Group...
      */
 
-    public void profileGroup(String contact) {
+    public void profileGroup(String contact, int pageNo, int viewRecord) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 Retrofit mRetrofit = new Retrofit.Builder()
@@ -180,7 +180,7 @@ public class ApiCall {
                         .client(initLog().build())
                         .build();
                 ServiceApi mServiceApi = mRetrofit.create(ServiceApi.class);
-                Call<ProfileGroupResponse> mProfileGroupCall = mServiceApi._autokattaProfileGroup(contact);
+                Call<ProfileGroupResponse> mProfileGroupCall = mServiceApi._autokattaProfileGroup(contact, pageNo, viewRecord);
                 mProfileGroupCall.enqueue(new Callback<ProfileGroupResponse>() {
                     @Override
                     public void onResponse(Call<ProfileGroupResponse> call, Response<ProfileGroupResponse> response) {
@@ -275,7 +275,7 @@ public class ApiCall {
     getGroups
      */
 
-    public void Groups(String contact) {
+    public void Groups(String contact, int pageNo, int viewGroup) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 Retrofit retrofit = new Retrofit.Builder()
@@ -285,7 +285,7 @@ public class ApiCall {
                         .build();
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<ProfileGroupResponse> groupResponseCall = serviceApi._autokattaProfileGroup(contact);
+                Call<ProfileGroupResponse> groupResponseCall = serviceApi._autokattaProfileGroup(contact, pageNo, viewGroup);
                 groupResponseCall.enqueue(new Callback<ProfileGroupResponse>() {
                     @Override
                     public void onResponse(Call<ProfileGroupResponse> call, Response<ProfileGroupResponse> response) {
@@ -310,7 +310,7 @@ public class ApiCall {
         getMyStores
      */
 
-    public void MyStoreList(String contact) {
+    public void MyStoreList(String contact, int pageNo, int viewRecord) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 Retrofit retrofit = new Retrofit.Builder()
@@ -320,7 +320,7 @@ public class ApiCall {
                         .build();
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<MyStoreResponse> storeResponseCall = serviceApi._autokattaGetMyStoreList(contact);
+                Call<MyStoreResponse> storeResponseCall = serviceApi._autokattaGetMyStoreList(contact, pageNo, viewRecord);
                 storeResponseCall.enqueue(new Callback<MyStoreResponse>() {
                     @Override
                     public void onResponse(Call<MyStoreResponse> call, Response<MyStoreResponse> response) {
@@ -4510,7 +4510,7 @@ params.put("auction_id", bundleAuctionId);
 
     //Browse store
 
-    public void getBrowseStores(String contact, String keyword) {
+    public void getBrowseStores(String contact, String keyword, int pageNo, int viewRecords) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 Retrofit retrofit = new Retrofit.Builder()
@@ -4519,7 +4519,7 @@ params.put("auction_id", bundleAuctionId);
                         .client(initLog().build())
                         .build();
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<BrowseStoreResponse> mFollowResponse = serviceApi.getBrowseStores(contact, keyword);
+                Call<BrowseStoreResponse> mFollowResponse = serviceApi.getBrowseStores(contact, keyword, pageNo, viewRecords);
                 mFollowResponse.enqueue(new Callback<BrowseStoreResponse>() {
                     @Override
                     public void onResponse(Call<BrowseStoreResponse> call, Response<BrowseStoreResponse> response) {

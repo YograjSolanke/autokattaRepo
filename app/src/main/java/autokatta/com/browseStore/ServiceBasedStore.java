@@ -247,7 +247,7 @@ public class ServiceBasedStore extends Fragment implements RequestNotifier, Swip
 
     private void getStoreData(String contact) {
         ApiCall apiCall = new ApiCall(getActivity(), this);
-        apiCall.getBrowseStores(contact, "Service");
+        apiCall.getBrowseStores(contact, "Service", 1, 10);
     }
 
     public void filterResult(final String[] incomingCategory) {

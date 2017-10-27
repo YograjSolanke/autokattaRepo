@@ -35,7 +35,8 @@ public interface ServiceApi {
     //Wall Notifications...
     @GET("GetAllWallNotification")
     Call<WallResponse> _getWallNotifications(@Query("Contact") String contact, @Query("UserContact") String userContact,
-                                             @Query("Layout") String layout);
+                                             @Query("Layout") String layout, @Query("pageNo") int pageNo,
+                                             @Query("ViewRecords") int ViewRecords);
 
     // Login API...
     @POST("Login")
@@ -49,7 +50,8 @@ public interface ServiceApi {
 
     //Get Groups...
     @GET("GetGroups")
-    Call<ProfileGroupResponse> _autokattaProfileGroup(@Query("Contact") String contact);
+    Call<ProfileGroupResponse> _autokattaProfileGroup(@Query("Contact") String contact, @Query("pageNo") int pageNo,
+                                                      @Query("ViewRecords") int ViewRecords);
 
     //Get Upload Count...
     @GET("GetUploadCount")
@@ -57,7 +59,8 @@ public interface ServiceApi {
 
     //Get Own Store...
     @GET("GetOwnStoreList")
-    Call<MyStoreResponse> _autokattaGetMyStoreList(@Query("Contact") String contact);
+    Call<MyStoreResponse> _autokattaGetMyStoreList(@Query("Contact") String contact, @Query("pageNo") int pageNo,
+                                                   @Query("ViewRecords") int ViewRecords);
 
     //Get Vehicle List...
     @GET("GetVehicleType")
@@ -644,7 +647,8 @@ public interface ServiceApi {
 
     //get Browse store data
     @GET("GetBrowseStores")
-    Call<BrowseStoreResponse> getBrowseStores(@Query("YourContact") String yourcontact, @Query("Keyword") String keyword);
+    Call<BrowseStoreResponse> getBrowseStores(@Query("YourContact") String yourcontact, @Query("Keyword") String keyword,
+                                              @Query("pageNo") int pageNo, @Query("ViewRecords") int ViewRecords);
 
     //Get Auction Preview By Id...
     @GET("GetAuctionEventDetails")

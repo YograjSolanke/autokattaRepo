@@ -12,7 +12,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.widget.CardView;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.text.Spannable;
@@ -50,13 +49,12 @@ import java.util.concurrent.TimeUnit;
 
 import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
-import autokatta.com.fragment.WallNotificationFragment;
 import autokatta.com.interfaces.OnLoadMoreListener;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.interfaces.ServiceApi;
+import autokatta.com.model.WallResponseModel;
 import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.other.CustomToast;
-import autokatta.com.response.WallResponse;
 import autokatta.com.view.GroupsActivity;
 import autokatta.com.view.OtherProfile;
 import autokatta.com.view.ProductViewActivity;
@@ -81,18 +79,22 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements RequestNotifier {
     private Activity mActivity;
-    private List<WallResponse.Success.WallNotification> notificationList = new ArrayList<>();
+    private List<WallResponseModel> notificationList = new ArrayList<>();
     private int lastVisibleItem, totalItemCount;
-    private boolean isLoading;
     private int visibleThreshold = 5;
-    private OnLoadMoreListener mOnLoadMoreListener;
     private String mLoginContact, shareKey = "";
     private ApiCall mApiCall;
     private int mAuctionId, profile_likecountint, profile_followcountint, product_likecountint, service_likecountint, store_likecountint,
             store_followcountint, store_sharecountint, vehicle_likecountint, vehicle_followcountint, vehicle_sharecountint;
     private ConnectionDetector mConnectionDetector;
 
-    public WallNotificationAdapter(Activity mActivity1, List<WallResponse.Success.WallNotification> notificationList, String mLoginContact) {
+    private OnLoadMoreListener loadMoreListener;
+    final int TYPE_DATA = 0;
+    private final int TYPE_LOAD = 1;
+    private boolean isLoading = false, isMoreDataAvailable = true;
+    //WallResponseModel responseModel = new WallResponseModel();
+
+    public WallNotificationAdapter(Activity mActivity1, List<WallResponseModel> notificationList, String mLoginContact) {
         this.mActivity = mActivity1;
         this.notificationList = notificationList;
         this.mApiCall = new ApiCall(mActivity, this);
@@ -100,7 +102,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
         mConnectionDetector = new ConnectionDetector(mActivity);
     }
 
-    public WallNotificationAdapter() {
+    /*public WallNotificationAdapter() {
         final LinearLayoutManager linearLayoutManager = (LinearLayoutManager) WallNotificationFragment.mRecyclerView.getLayoutManager();
         WallNotificationFragment.mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -122,7 +124,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
 
     public void setOnLoadMoreListener(OnLoadMoreListener mOnLoadMoreListener) {
         this.mOnLoadMoreListener = mOnLoadMoreListener;
-    }
+    }*/
 
     /*
     Profile Notification Class...
@@ -600,6 +602,15 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
         }
     }
 
+    /*
+    For loading progress bar...
+     */
+    static class LoadHolder extends RecyclerView.ViewHolder {
+        LoadHolder(View itemView) {
+            super(itemView);
+        }
+    }
+
     @Override
     public int getItemViewType(int position) {
         // Just as an example, return 0 or 2 depending on position
@@ -609,6 +620,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        Log.i("viewType", "->" + viewType);
         View mView;
         switch (viewType) {
             case 1:
@@ -654,13 +666,37 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
             case 11:
                 mView = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_wall_adding_share_notifications, parent, false);
                 return new ShareNotifications(mView);
+
+            case 0:
+                mView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_load, parent, false);
+                return new LoadHolder(mView);
         }
         return null;
+    }
+
+    public void setMoreDataAvailable(boolean moreDataAvailable) {
+        isMoreDataAvailable = moreDataAvailable;
+    }
+
+    /* notifyDataSetChanged is final method so we can't override it
+         call adapter.notifyDataChanged(); after update the list
+         */
+    public void notifyDataChanged() {
+        notifyDataSetChanged();
+        isLoading = false;
+    }
+
+    public void setLoadMoreListener(OnLoadMoreListener loadMoreListener) {
+        this.loadMoreListener = loadMoreListener;
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         Log.i("Wall", "Adapter-LayoutNo ->" + holder.getItemViewType());
+        if (position >= getItemCount() - 1 && isMoreDataAvailable && !isLoading && loadMoreListener != null) {
+            isLoading = true;
+            loadMoreListener.onLoadMore();
+        }
         // SpannableStringBuilder sb = new SpannableStringBuilder();
         switch (holder.getItemViewType()) {
             case 1:

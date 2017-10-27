@@ -90,13 +90,15 @@ public class UploadToGroupStoreActivity extends AppCompatActivity implements Req
     /* Get group Data...*/
     private void getGroup() {
         ApiCall mApiCall = new ApiCall(this, this);
-        mApiCall.Groups(getApplicationContext().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""));
+        mApiCall.Groups(getApplicationContext().getSharedPreferences(getString(R.string.my_preference),
+                MODE_PRIVATE).getString("loginContact", ""), 1, 10);
     }
 
     /* Get store Data...*/
     private void getStore() {
         ApiCall mApiCall = new ApiCall(this, this);
-        mApiCall.MyStoreList(getApplicationContext().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""));
+        mApiCall.MyStoreList(getApplicationContext().getSharedPreferences(getString(R.string.my_preference),
+                MODE_PRIVATE).getString("loginContact", ""), 1, 10);
     }
 
     @Override

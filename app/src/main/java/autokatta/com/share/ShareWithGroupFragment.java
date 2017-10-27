@@ -134,7 +134,7 @@ public class ShareWithGroupFragment extends Fragment implements RequestNotifier 
     */
     private void getData(String loginContact) {
         ApiCall mApiCall = new ApiCall(getActivity(), this);
-        mApiCall.profileGroup(loginContact);
+        mApiCall.profileGroup(loginContact, 1, 10);
     }
 
     @Override
