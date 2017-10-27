@@ -97,7 +97,7 @@ public class ImageVideoPreviewActivity extends AppCompatActivity implements View
             mStatusText.setText(statusText);
         }
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.postStatus);
         fab.setOnClickListener(this);
         
         /*play.setOnClickListener(new View.OnClickListener() {
