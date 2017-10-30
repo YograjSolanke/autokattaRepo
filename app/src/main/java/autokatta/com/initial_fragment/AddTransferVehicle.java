@@ -19,10 +19,15 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import autokatta.com.R;
+import autokatta.com.adapter.GetTransferVehicleListAdapter;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
+import autokatta.com.response.GetTransferVehicleNotificationResponse;
 import autokatta.com.view.OtherProfile;
 import retrofit2.Response;
 
@@ -40,6 +45,7 @@ public class AddTransferVehicle extends Fragment implements RequestNotifier, Vie
     String myContact;
     int vehicleId;
     LinearLayout txtUser, txtInvite, linear_transfer;
+    List<GetTransferVehicleNotificationResponse.Success> mGetTransferVehicleList = new ArrayList<>();
 
 
     @Nullable
@@ -114,8 +120,41 @@ public class AddTransferVehicle extends Fragment implements RequestNotifier, Vie
 
     @Override
     public void notifySuccess(Response<?> response) {
+        if (response != null) {
+            if (response.isSuccessful()) {
+                GetTransferVehicleNotificationResponse getTransferVehicleNotificationResponse = (GetTransferVehicleNotificationResponse) response.body();
+                if (!getTransferVehicleNotificationResponse.getSuccess().isEmpty()) {
+                    mGetTransferVehicleList.clear();
+                    for (GetTransferVehicleNotificationResponse.Success vehicles : getTransferVehicleNotificationResponse.getSuccess()) {
+                        vehicles.setTransferID(vehicles.getTransferID());
+                        vehicles.setAddress(vehicles.getAddress());
+                        vehicles.setCustomerContact(vehicles.getCustomerContact());
+                        vehicles.setDescription(vehicles.getDescription());
+                        vehicles.setFullAddress(vehicles.getFullAddress());
+                        vehicles.setImage(vehicles.getImage());
+                        vehicles.setOldOwnerName(vehicles.getOldOwnerName());
+                        vehicles.setTransferReason(vehicles.getTransferReason());
+                        vehicles.setVehicleName(vehicles.getVehicleName());
+                        vehicles.setVehicleID(vehicles.getVehicleID());
+                        mGetTransferVehicleList.add(vehicles);
+                    }
+                    GetTransferVehicleListAdapter adapter = new GetTransferVehicleListAdapter(getActivity(), mGetTransferVehicleList);
+                    //setAdapter(adapter);
+                    adapter.notifyDataSetChanged();
+                }
 
+            } else {
+                if (isAdded())
+                    CustomToast.customToast(getActivity(), getActivity().getString(R.string.no_response));
+            }
+        } else {
+            // CustomToast.customToast(getActivity(), getActivity().getString(R.string._404));
+
+        }
     }
+
+
+
 
     @Override
     public void notifyError(Throwable error) {
@@ -130,14 +169,13 @@ public class AddTransferVehicle extends Fragment implements RequestNotifier, Vie
                 linear_transfer.setVisibility(View.VISIBLE);
                 txtInvite.setVisibility(View.GONE);
             } else if (str.equalsIgnoreCase("transfer_success")) {
-                CustomToast.customToast(getActivity(),"Transfered successfully");
+                CustomToast.customToast(getActivity(), "Transfered successfully");
 
-            }else
-                {
-                    txtInvite.setVisibility(View.VISIBLE);
-                    txtUser.setVisibility(View.GONE);
-                    linear_transfer.setVisibility(View.GONE);
-                }
+            } else {
+                txtInvite.setVisibility(View.VISIBLE);
+                txtUser.setVisibility(View.GONE);
+                linear_transfer.setVisibility(View.GONE);
+            }
         } else
             CustomToast.customToast(getActivity(), getString(R.string.no_response));
     }
