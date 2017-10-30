@@ -326,7 +326,8 @@ public interface ServiceApi {
 
     //Get Group Contacts...
     @GET("GetGroupContacts")
-    Call<GetGroupContactsResponse> _autokattaGetGroupContacts(@Query("GroupID") int groupId);
+    Call<GetGroupContactsResponse> _autokattaGetGroupContacts(@Query("GroupID") int groupId, @Query("pageNo") int pageNo,
+                                                              @Query("ViewRecords") int ViewRecords);
 
     //Get Group Products...
     @GET("GetGroupProducts")

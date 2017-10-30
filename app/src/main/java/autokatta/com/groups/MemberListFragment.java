@@ -76,7 +76,7 @@ public class MemberListFragment extends Fragment implements SwipeRefreshLayout.O
     private void getGroupContact(int group_id) {
         if (mTestConnection.isConnectedToInternet()) {
             ApiCall mApiCall = new ApiCall(getActivity(), this);
-            mApiCall.getGroupContacts(group_id);
+            mApiCall.getGroupContacts(group_id, 1, 10);
         } else {
             if (isAdded())
                 CustomToast.customToast(getActivity(), getString(R.string.no_internet));

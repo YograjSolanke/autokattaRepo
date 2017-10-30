@@ -2336,7 +2336,7 @@ Upload Vehicle
     Get Group Contacts
      */
 
-    public void getGroupContacts(int groupId) {
+    public void getGroupContacts(int groupId, int pageNo, int viewRecords) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 Retrofit mRetrofit = new Retrofit.Builder()
@@ -2345,7 +2345,8 @@ Upload Vehicle
                         .client(initLog().build())
                         .build();
                 ServiceApi mServiceApi = mRetrofit.create(ServiceApi.class);
-                Call<GetGroupContactsResponse> mGetGroupContactsResponseCall = mServiceApi._autokattaGetGroupContacts(groupId);
+                Call<GetGroupContactsResponse> mGetGroupContactsResponseCall = mServiceApi._autokattaGetGroupContacts(groupId, pageNo,
+                        viewRecords);
                 mGetGroupContactsResponseCall.enqueue(new Callback<GetGroupContactsResponse>() {
                     @Override
                     public void onResponse(Call<GetGroupContactsResponse> call, Response<GetGroupContactsResponse> response) {
