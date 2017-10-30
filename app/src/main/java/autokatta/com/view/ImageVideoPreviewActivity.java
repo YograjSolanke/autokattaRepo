@@ -336,7 +336,7 @@ public class ImageVideoPreviewActivity extends AppCompatActivity implements View
     private void PostData(String finalInterests) {
         dialog.show();
         ApiCall mApiCall = new ApiCall(this, this);
-        mApiCall.PostStatus(myContact, statusText, "", "", finalInterests);
+        mApiCall.PostStatus(myContact, mStatusText.getText().toString(), "", "", finalInterests);
     }
 
     private void uploadImage(String picturePath) {
