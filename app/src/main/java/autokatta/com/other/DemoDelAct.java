@@ -13,7 +13,6 @@ import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import autokatta.com.R;
 import autokatta.com.my_inventory_container.BuyerNotificationContainer;
@@ -22,6 +21,7 @@ import autokatta.com.my_inventory_container.NewVehicleContainer;
 import autokatta.com.my_inventory_container.ProductContainer;
 import autokatta.com.my_inventory_container.ServiceContainer;
 import autokatta.com.my_inventory_container.SoldVehicleContainer;
+import autokatta.com.my_inventory_container.TransferStock;
 import autokatta.com.my_inventory_container.UsedVehicleContainer;
 import autokatta.com.view.BussinessChatActivity;
 import autokatta.com.view.ManualEnquiry;
@@ -70,7 +70,7 @@ public class DemoDelAct extends AppCompatActivity {
                 } else if (gridViewString[+i].equals("My Vehicle")) {
                     startActivity(new Intent(getApplicationContext(), MyVehicleContainer.class));
                 } else if (gridViewString[+i].equals("Transfer Stock")) {
-                    Toast.makeText(DemoDelAct.this, gridViewString[+i], Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(getApplicationContext(), TransferStock.class));
                 } else if (gridViewString[+i].equals("Search Leads")) {
                     startActivity(new Intent(getApplicationContext(), BuyerNotificationContainer.class));
                 } else if (gridViewString[+i].equals("Manual Enquiry")) {
