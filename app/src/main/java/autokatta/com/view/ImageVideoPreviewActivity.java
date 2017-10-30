@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.media.MediaPlayer;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.PagerAdapter;
@@ -13,6 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,6 +45,7 @@ import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.interfaces.ServiceApi;
 import autokatta.com.other.CustomToast;
 import autokatta.com.other.ImageLoader;
+import autokatta.com.other.UploadVideos;
 import fisk.chipcloud.ChipCloud;
 import fisk.chipcloud.ChipCloudConfig;
 import fisk.chipcloud.ChipListener;
@@ -53,9 +56,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ImageVideoPreviewActivity extends AppCompatActivity implements View.OnClickListener, RequestNotifier {
+public class ImageVideoPreviewActivity extends AppCompatActivity implements RequestNotifier {
 
-    String videoPath, imagesPath, statusText;
+    String videoPath, videoWithoutPath = "", imagesPath, imagesWithoutPath, statusText;
     EditText mStatusText;
     Dialog mBottomSheetDialog;
     List<String> interestList = new ArrayList<>();
@@ -80,6 +83,7 @@ public class ImageVideoPreviewActivity extends AppCompatActivity implements View
             videoPath = getIntent().getExtras().getString("videoPath", "");
             imagesPath = getIntent().getExtras().getString("imagesPath", "");
             statusText = getIntent().getExtras().getString("statusText", "");
+            imagesWithoutPath = getIntent().getExtras().getString("images", "");
         }
 
         myContact = getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
@@ -90,7 +94,7 @@ public class ImageVideoPreviewActivity extends AppCompatActivity implements View
         RelativeLayout mVideoRel = (RelativeLayout) findViewById(R.id.relVideo);
         RelativeLayout mImageRel = (RelativeLayout) findViewById(R.id.relImage);
         ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
-        ;
+
         mStatusText = (EditText) findViewById(R.id.status);
         //final Button play = (Button) findViewById(R.id.play);
         if (!statusText.equals("")) {
@@ -98,7 +102,7 @@ public class ImageVideoPreviewActivity extends AppCompatActivity implements View
         }
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.postStatus);
-        fab.setOnClickListener(this);
+        fab.setVisibility(View.GONE);
         
         /*play.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -120,6 +124,8 @@ public class ImageVideoPreviewActivity extends AppCompatActivity implements View
             mVideoRel.setVisibility(View.VISIBLE);
             mImageRel.setVisibility(View.GONE);
             try {
+                String lastWord = videoPath.substring(videoPath.lastIndexOf("/") + 1);
+                videoWithoutPath = lastWord.replace(" ", "");
                 // Start the MediaController
                 final MediaController mediacontroller = new MediaController(
                         ImageVideoPreviewActivity.this);
@@ -144,15 +150,15 @@ public class ImageVideoPreviewActivity extends AppCompatActivity implements View
                 Log.e("Error", e.getMessage());
             }
         }
+
         //Imagecode
         else {
             mVideoRel.setVisibility(View.GONE);
             mImageRel.setVisibility(View.VISIBLE);
+            videoWithoutPath = "";
             List<String> ImgData2 = Arrays.asList(imagesPath.split(","));
             List<String> image = new ArrayList<>();
-            for (int i = 0; i < ImgData2.size(); i++) {
-                image.add(ImgData2.get(i));
-            }
+            image.addAll(ImgData2);
             for (int k = 0; k < image.size(); k++) {
                 if (updatedImages.equals(""))
                     updatedImages = image.get(k);
@@ -258,22 +264,6 @@ public class ImageVideoPreviewActivity extends AppCompatActivity implements View
 
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.postStatus:
-                if (mStatusText.getText().toString().equals("") ||
-                        (mStatusText.getText().toString().startsWith(" ") &&
-                                mStatusText.getText().toString().endsWith(" "))) {
-                    mStatusText.setError("Enter data");
-                    mStatusText.requestFocus();
-                } else {
-                    openDialog();
-                }
-                break;
-        }
-    }
-
     private void openDialog() {
         try {
             View view = getLayoutInflater().inflate(R.layout.activity_add_tags, null);
@@ -335,13 +325,15 @@ public class ImageVideoPreviewActivity extends AppCompatActivity implements View
 
     private void PostData(String finalInterests) {
         dialog.show();
+
         ApiCall mApiCall = new ApiCall(this, this);
-        mApiCall.PostStatus(myContact, mStatusText.getText().toString(), "", "", finalInterests);
+        mApiCall.PostStatus(myContact, mStatusText.getText().toString(), imagesWithoutPath, videoWithoutPath, finalInterests);
     }
 
     private void uploadImage(String picturePath) {
         Log.i("PAth", "->" + picturePath);
         List<String> imgList = Arrays.asList(picturePath.split(","));
+
         for (int i = 0; i < imgList.size(); i++) {
 
             File file = new File(imgList.get(i));
@@ -351,11 +343,11 @@ public class ImageVideoPreviewActivity extends AppCompatActivity implements View
             RequestBody filename = RequestBody.create(MediaType.parse("text/plain"), file.getName());
 
             ServiceApi getResponse = ApiCall.getRetrofit().create(ServiceApi.class);
-            Call<String> call = getResponse.uploadVehiclePic(fileToUpload, filename);
+            Call<String> call = getResponse.uploadServicePic(fileToUpload, filename);
             call.enqueue(new Callback<String>() {
                 @Override
                 public void onResponse(Call<String> call, Response<String> response) {
-                    Log.i("uploadVehicle", "imageResponse->" + response.body());
+                    Log.i("uploadStatusImage", "imageResponse->" + response.body());
                 }
 
                 @Override
@@ -364,6 +356,38 @@ public class ImageVideoPreviewActivity extends AppCompatActivity implements View
                 }
             });
         }
+    }
+
+    private void uploadVideo(final String selectedPath) {
+        class UploadVideo extends AsyncTask<Void, Void, String> {
+            private ProgressDialog uploading;
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                uploading = ProgressDialog.show(ImageVideoPreviewActivity.this, "Uploading File", "Please wait...", false, false);
+
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                uploading.dismiss();
+                CustomToast.customToast(getApplicationContext(), "Status posted successfully");
+                finish();
+                overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
+                //textViewResponse.setText(Html.fromHtml("<b>Uploaded at <a href='" + s + "'>" + s + "</a></b>"));
+                //textViewResponse.setMovementMethod(LinkMovementMethod.getInstance());
+            }
+
+            @Override
+            protected String doInBackground(Void... params) {
+                UploadVideos u = new UploadVideos();
+                return u.uploadVideo(selectedPath);
+            }
+        }
+        UploadVideo uv = new UploadVideo();
+        uv.execute();
     }
 
     @Override
@@ -400,9 +424,16 @@ public class ImageVideoPreviewActivity extends AppCompatActivity implements View
                 dialog.dismiss();
             }
             if (str.equals("success")) {
-                CustomToast.customToast(getApplicationContext(), "Status posted successfully");
-                finish();
-                overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
+
+                if (videoPath.equals("") && !imagesPath.equals("")) {
+                    uploadImage(updatedImages);
+                    CustomToast.customToast(getApplicationContext(), "Status posted successfully");
+                    finish();
+                    overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
+                } else
+                    uploadVideo(videoPath);
+
+
             } else
                 CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
 
@@ -411,10 +442,28 @@ public class ImageVideoPreviewActivity extends AppCompatActivity implements View
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_post_status, menu);
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
                 onBackPressed();
+                break;
+
+            case R.id.post_status:
+                if (mStatusText.getText().toString().equals("") ||
+                        (mStatusText.getText().toString().startsWith(" ") &&
+                                mStatusText.getText().toString().endsWith(" "))) {
+                    mStatusText.setError("Enter caption");
+                    mStatusText.requestFocus();
+                } else {
+                    openDialog();
+                }
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -437,6 +486,4 @@ public class ImageVideoPreviewActivity extends AppCompatActivity implements View
             mBottomSheetDialog = null;
         }
     }
-
-
 }

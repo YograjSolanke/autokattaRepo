@@ -9,7 +9,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -132,6 +131,7 @@ public class PostStatus extends AppCompatActivity implements RequestNotifier {
     }
 
     private void start() {
+        mImages.clear();
         ImagePicker.create(this)
                 .folderMode(true) // set folder mode (false by default)
                 .folderTitle("Folder") // folder selection title
@@ -149,6 +149,7 @@ public class PostStatus extends AppCompatActivity implements RequestNotifier {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
+            String allimg = "";
             if (requestCode == SELECT_VIDEO) {
                 allimgpath = "";
                 System.out.println("SELECT_VIDEO");
@@ -167,7 +168,7 @@ public class PostStatus extends AppCompatActivity implements RequestNotifier {
                 List<String> mPath1 = new ArrayList<>();
                 String selectImages = "";
                 String selectedimg = "";
-                String allimg = "";
+
                 allimgpath = "";
                 selectedPath = "";
                 mPath1.clear();
@@ -192,12 +193,12 @@ public class PostStatus extends AppCompatActivity implements RequestNotifier {
                     }
 
                 }
-                //VideoImagePreview("", allimgpath);
             }
 
             Bundle bundle = new Bundle();
             bundle.putString("videoPath", selectedPath);
             bundle.putString("imagesPath", allimgpath);
+            bundle.putString("images", allimg);
             bundle.putString("statusText", mStatusText.getText().toString());
             Intent intent = new Intent(this, ImageVideoPreviewActivity.class);
             intent.putExtras(bundle);
@@ -244,35 +245,6 @@ public class PostStatus extends AppCompatActivity implements RequestNotifier {
             return path;
         } else
             return path;*/
-    }
-
-
-    private void uploadVideo() {
-        class UploadVideo extends AsyncTask<Void, Void, String> {
-            ProgressDialog uploading;
-
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-                uploading = ProgressDialog.show(PostStatus.this, "Uploading File", "Please wait...", false, false);
-            }
-
-            @Override
-            protected void onPostExecute(String s) {
-                super.onPostExecute(s);
-                uploading.dismiss();
-                //textViewResponse.setText(Html.fromHtml("<b>Uploaded at <a href='" + s + "'>" + s + "</a></b>"));
-                //textViewResponse.setMovementMethod(LinkMovementMethod.getInstance());
-            }
-
-            @Override
-            protected String doInBackground(Void... params) {
-                UploadVideos u = new UploadVideos();
-                return u.uploadVideo(selectedPath);
-            }
-        }
-        UploadVideo uv = new UploadVideo();
-        uv.execute();
     }
 
     @Override

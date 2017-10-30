@@ -17,11 +17,10 @@ import java.net.URL;
  */
 
 public class UploadVideos {
-    public static final String UPLOAD_URL = "http://autokatta.acquiscent.com/api/AutoKattaWebService/UploadVideo";
+    private static final String UPLOAD_URL = "http://autokatta.acquiscent.com/api/AutoKattaWebService/UploadVideo";
     private int serverResponseCode;
 
     public String uploadVideo(String file) {
-        String fileName = file;
         HttpURLConnection conn = null;
         DataOutputStream dos = null;
         String lineEnd = "\r\n";
@@ -29,11 +28,11 @@ public class UploadVideos {
         String boundary = "*****";
         int bytesRead, bytesAvailable, bufferSize;
         byte[] buffer;
-        int maxBufferSize = 1 * 1024 * 1024;
+        int maxBufferSize = 1024 * 1024;
 
         File sourceFile = new File(file);
         if (!sourceFile.isFile()) {
-            Log.e("Huzza", "Source File Does not exist");
+            Log.e("UploadVideos", "Source File Does not exist");
             return null;
         }
 
@@ -49,11 +48,11 @@ public class UploadVideos {
             conn.setRequestProperty("Connection", "Keep-Alive");
             conn.setRequestProperty("ENCTYPE", "multipart/form-data");
             conn.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);
-            conn.setRequestProperty("myFile", fileName);
+            conn.setRequestProperty("myFile", file);
             dos = new DataOutputStream(conn.getOutputStream());
 
             dos.writeBytes(twoHyphens + boundary + lineEnd);
-            dos.writeBytes("Content-Disposition: form-data; name=\"myFile\";filename=\"" + fileName + "\"" + lineEnd);
+            dos.writeBytes("Content-Disposition: form-data; name=\"myFile\";filename=\"" + file + "\"" + lineEnd);
             dos.writeBytes(lineEnd);
 
             bytesAvailable = fileInputStream.available();
@@ -89,13 +88,15 @@ public class UploadVideos {
         if (serverResponseCode == 200) {
             StringBuilder sb = new StringBuilder();
             try {
-                BufferedReader rd = new BufferedReader(new InputStreamReader(conn
-                        .getInputStream()));
-                String line;
-                while ((line = rd.readLine()) != null) {
-                    sb.append(line);
+                if (conn != null) {
+                    BufferedReader rd = new BufferedReader(new InputStreamReader(conn
+                            .getInputStream()));
+                    String line;
+                    while ((line = rd.readLine()) != null) {
+                        sb.append(line);
+                    }
+                    rd.close();
                 }
-                rd.close();
             } catch (IOException ioex) {
                 ioex.printStackTrace();
             }
