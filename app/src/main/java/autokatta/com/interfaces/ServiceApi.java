@@ -1466,4 +1466,9 @@ public interface ServiceApi {
     @GET("GetNewVehicleByID")
     Call<GetNewVehicleByIdResponse> getnewvehiclesbyid(@Query("NewVehicleID") int NewVehicleID);
 
+    /*get Group Media*/
+    @GET("GetGroupMedia")
+    Call<GetMediaResponse> _autokattaGetGroupMedia(@Query("GroupID") int GroupId);
+
+
 }

@@ -5122,7 +5122,7 @@ Get uploaded Vehicle Buyer list
      */
 
     public void updateProfile(int regID, String emialID, String city, String profession, String subProfession, String website, String companyName,
-                              String designation, String skills, String industry, String Brand, String About, String Interest,String keyword) {
+                              String designation, String skills, String industry, String Brand, String About, String Interest, String keyword) {
 
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
@@ -5140,7 +5140,7 @@ Get uploaded Vehicle Buyer list
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
                 UpdateProfileRequest updateProfileRequest = new UpdateProfileRequest(regID, emialID, city, profession, subProfession, website, companyName,
-                        designation, skills, industry, Brand, About, Interest,keyword);
+                        designation, skills, industry, Brand, About, Interest, keyword);
                 Call<String> setVehiclePrivacy = serviceApi._autokattaUpdateProfile(updateProfileRequest);
                 setVehiclePrivacy.enqueue(new Callback<String>() {
                     @Override
@@ -9187,10 +9187,6 @@ get ExchangeMela Analytics Data
         }
     }
 
-
-
-
-
     //add other user Category in database
     public void addOtheruserCategory(String name) {
         try {
@@ -9217,6 +9213,36 @@ get ExchangeMela Analytics Data
 
                     @Override
                     public void onFailure(Call<String> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+            } else {
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void getGroupMedia(int groupId) {
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<GetMediaResponse> mediaResponseCall = serviceApi._autokattaGetGroupMedia(groupId);
+                mediaResponseCall.enqueue(new Callback<GetMediaResponse>() {
+                    @Override
+                    public void onResponse(Call<GetMediaResponse> call, Response<GetMediaResponse> response) {
+                        mNotifier.notifySuccess(response);
+                    }
+
+                    @Override
+                    public void onFailure(Call<GetMediaResponse> call, Throwable t) {
                         mNotifier.notifyError(t);
                     }
                 });
