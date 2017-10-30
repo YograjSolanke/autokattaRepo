@@ -7,7 +7,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +21,7 @@ import autokatta.com.fragment_profile.EditAllAbout;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.GetCompaniesResponse;
+import autokatta.com.response.GetCompaniesResponse.Success;
 import retrofit2.Response;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -26,11 +30,14 @@ import static android.content.Context.MODE_PRIVATE;
  * Created by ak-005 on 26/10/17.
  */
 
-public class EditCompanyNameAdapter extends RecyclerView.Adapter<EditCompanyNameAdapter.MyViewHolder> implements RequestNotifier {
+public class EditCompanyNameAdapter extends RecyclerView.Adapter<EditCompanyNameAdapter.MyViewHolder> implements RequestNotifier,Filterable {
 
     Activity mActivity;
     List<GetCompaniesResponse.Success>mList=new ArrayList<>();
-ApiCall mApiCall;
+    private List<GetCompaniesResponse.Success> filteredData = new ArrayList<>();
+    CustomFilter filter;
+
+    ApiCall mApiCall;
     public EditCompanyNameAdapter(Activity activity,List<GetCompaniesResponse.Success>list) {
         this.mActivity=activity;
         this.mList=list;
@@ -97,6 +104,102 @@ ApiCall mApiCall;
     @Override
     public int getItemCount() {
         return mList.size();
+    }
+
+
+   /* *//*
+  Filter for stock type
+   *//*
+    @Override
+    public Filter getFilter() {
+        if (filter == null) {
+            filter = new CustomFilter();
+        }
+        return filter;
+    }
+
+    *//***
+     * Filter Class
+     ***//*
+    private class CustomFilter extends Filter {
+
+        @Override
+        protected FilterResults performFiltering(CharSequence charSequence) {
+            FilterResults results = new FilterResults();
+            try {
+                if (charSequence != null && charSequence.length() > 0) {
+                    List<GetCompaniesResponse.Success> filterResults = new ArrayList<>();
+                    for (GetCompaniesResponse.Success item : filteredData) {
+                        if (item.getCompanyName().toUpperCase().startsWith(charSequence.toString().toUpperCase())) {
+                            filterResults.add(item);
+                        }
+                    }
+                    results.count = filterResults.size();
+                    results.values = filterResults;
+                } else {
+                    results.values = mList;
+                    results.count = mList.size();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults filterResults) {
+            if (filterResults.count > 0) {
+                mList = (List<GetCompaniesResponse.Success>) filterResults.values;
+                EditCompanyNameAdapter.this.notifyDataSetChanged();
+            } else {
+                Toast.makeText(mActivity, "No record found", Toast.LENGTH_SHORT).show();
+                Log.i("Error", "->");
+            }
+        }
+    }*/
+
+
+    @Override
+    public Filter getFilter() {
+        if (filter == null) {
+            filter = new CustomFilter();
+        }
+        return filter;
+    }
+
+    private class CustomFilter extends Filter{
+
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            FilterResults result = new FilterResults();
+            //List<GetCompaniesResponse.Success> allJournals = mList.get();
+            if(constraint == null || constraint.length() == 0){
+
+                result.values = mList;
+                result.count = mList.size();
+            }else{
+                ArrayList<GetCompaniesResponse.Success> filteredList = new ArrayList<Success>();
+                for(GetCompaniesResponse.Success j: filteredData){
+                    if(j.getCompanyName().toString().contains(constraint))
+                        filteredList.add(j);
+                }
+                result.values = filteredList;
+                result.count = filteredList.size();
+            }
+
+            return result;
+        }
+        @SuppressWarnings("unchecked")
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            if (results.count == 0) {
+                Toast.makeText(mActivity, "No record found", Toast.LENGTH_SHORT).show();
+            } else {
+                mList = (List<GetCompaniesResponse.Success>) results.values;
+                EditCompanyNameAdapter.this.notifyDataSetChanged();
+            }
+        }
+
     }
 
 }

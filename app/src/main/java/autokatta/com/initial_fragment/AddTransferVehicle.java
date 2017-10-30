@@ -57,6 +57,8 @@ public class AddTransferVehicle extends Fragment implements RequestNotifier, Vie
         txtInvite = (LinearLayout) mTransferVehicle.findViewById(R.id.txtInvite);
         linear_transfer = (LinearLayout) mTransferVehicle.findViewById(R.id.linear_transfer);
 
+        submit.setOnClickListener(this);
+
         Bundle bundle = getArguments();
         vehicleId = bundle.getInt("bundle_VehicleId");
         myContact = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "");
@@ -127,11 +129,15 @@ public class AddTransferVehicle extends Fragment implements RequestNotifier, Vie
                 txtUser.setVisibility(View.VISIBLE);
                 linear_transfer.setVisibility(View.VISIBLE);
                 txtInvite.setVisibility(View.GONE);
-            } else {
-                txtInvite.setVisibility(View.VISIBLE);
-                txtUser.setVisibility(View.GONE);
-                linear_transfer.setVisibility(View.GONE);
-            }
+            } else if (str.equalsIgnoreCase("transfer_success")) {
+                CustomToast.customToast(getActivity(),"Transfered successfully");
+
+            }else
+                {
+                    txtInvite.setVisibility(View.VISIBLE);
+                    txtUser.setVisibility(View.GONE);
+                    linear_transfer.setVisibility(View.GONE);
+                }
         } else
             CustomToast.customToast(getActivity(), getString(R.string.no_response));
     }
@@ -178,6 +184,7 @@ public class AddTransferVehicle extends Fragment implements RequestNotifier, Vie
                 apiCall._autokattaRequestForTransferVehicle(vehicleId, owner_name.getText().toString(), mContact.getText().toString(),
                         reason_for_transfer.getText().toString(), address.getText().toString(), full_address.getText().toString(),
                         description.getText().toString(), myContact);
+                //add status param
                 break;
         }
     }

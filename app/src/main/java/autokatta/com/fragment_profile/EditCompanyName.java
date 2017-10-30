@@ -6,9 +6,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
 
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
@@ -42,6 +45,11 @@ public class EditCompanyName extends AppCompatActivity implements SwipeRefreshLa
         setContentView(R.layout.activity_edit_company_name);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setHomeButtonEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
         mApiCall = new ApiCall(EditCompanyName.this, this);
 
@@ -126,10 +134,50 @@ public class EditCompanyName extends AppCompatActivity implements SwipeRefreshLa
     }
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.edit_address_menu, menu);
         this.menu = menu;
-        MenuItem item = menu.findItem(R.id.edit_profile);
+        MenuItem item = menu.findItem(R.id.edit_address);
+
+        final EditText editText = (EditText) item.getActionView().findViewById(R.id.search);
+        editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                //fillter(s.toString());
+                //getSearchResults(s.toString());
+                Log.i("Strings", "-->" + s.toString());
+                mAdapter.getFilter().filter(s.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                //fillter(s.toString());
+                Log.i("Strings", "-->" + s.toString());
+              //  getSearchAuction(s.toString());
+                mAdapter.getFilter().filter(s.toString());
+            }
+        });
+
 
         return true;
     }
