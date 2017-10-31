@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="autokatta.com.StoreVideosActivity"
-    tools:showIn="@layout/activity_store_videos">
+    tools:context="autokatta.com.view.VideosViewActivity"
+    tools:showIn="@layout/activity_videos_view">
 
 
     <TextView
@@ -27,5 +27,6 @@
         android:layout_below="@+id/titleText"
         android:layout_marginTop="5dp" />
 
+    <include layout="@layout/error_view" />
 
 </RelativeLayout>

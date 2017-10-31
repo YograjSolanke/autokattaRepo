@@ -1,14 +1,15 @@
-package autokatta.com;
+package autokatta.com.view;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
@@ -16,6 +17,7 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
+import autokatta.com.R;
 import autokatta.com.adapter.VideoAdapter;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
@@ -23,7 +25,7 @@ import autokatta.com.other.CustomToast;
 import autokatta.com.response.GetMediaResponse;
 import retrofit2.Response;
 
-public class StoreVideosActivity extends AppCompatActivity implements RequestNotifier {
+public class VideosViewActivity extends AppCompatActivity implements RequestNotifier {
 
     ApiCall mApiCall;
     private ProgressDialog pDialog;
@@ -34,22 +36,24 @@ public class StoreVideosActivity extends AppCompatActivity implements RequestNot
     List<GetMediaResponse.Success.Video> videosList = new ArrayList<GetMediaResponse.Success.Video>();
     int mGroupId, mStoreId;
     String mBundleContact;
+    TextView mNoData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_store_videos);
+        setContentView(R.layout.activity_videos_view);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         setTitle("Videos");
 
+        mNoData = (TextView) findViewById(R.id.no_category);
+
         pDialog = new ProgressDialog(this);
         pDialog.setMessage("Loading...");
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         recyclerView = (RecyclerView) findViewById(R.id.rv_home);
 
-        mApiCall = new ApiCall(StoreVideosActivity.this, this);
+        mApiCall = new ApiCall(VideosViewActivity.this, this);
         myContact = getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", null);
         recyclerView.setHasFixedSize(true);
         mLinearLayoutManager = new LinearLayoutManager(this);
@@ -83,7 +87,7 @@ public class StoreVideosActivity extends AppCompatActivity implements RequestNot
                 } else if (mStoreId != 0) {
                     getStoreVideos(mStoreId);
                 } else if (!mBundleContact.equals("")) {
-
+                    getMyVideos(mBundleContact);
                 }
             }
         });
@@ -97,6 +101,14 @@ public class StoreVideosActivity extends AppCompatActivity implements RequestNot
 
     /*API call to get Store Videos*/
     private void getStoreVideos(int mStoreId) {
+        pDialog.show();
+        mApiCall.getStoreMedia(mStoreId);
+    }
+
+    /*API call to get User Videos*/
+    private void getMyVideos(String mBundleContact) {
+        pDialog.show();
+        mApiCall.getContactMedia(mBundleContact);
     }
 
     @Override
@@ -106,6 +118,7 @@ public class StoreVideosActivity extends AppCompatActivity implements RequestNot
 
                 GetMediaResponse mediaResponse = (GetMediaResponse) response.body();
                 if (!mediaResponse.getSuccess().getVideo().isEmpty()) {
+                    mNoData.setVisibility(View.GONE);
                     if (pDialog.isShowing()) {
                         pDialog.dismiss();
                     }
@@ -123,7 +136,7 @@ public class StoreVideosActivity extends AppCompatActivity implements RequestNot
                         videosList.add(sVideo);
                     }
 
-                    adapter = new VideoAdapter(StoreVideosActivity.this, videosList);
+                    adapter = new VideoAdapter(VideosViewActivity.this, videosList);
                     recyclerView.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
                     recyclerView.smoothScrollBy(0, 1);
@@ -135,6 +148,7 @@ public class StoreVideosActivity extends AppCompatActivity implements RequestNot
                     if (pDialog.isShowing()) {
                         pDialog.dismiss();
                     }
+                    mNoData.setVisibility(View.VISIBLE);
                     CustomToast.customToast(getApplicationContext(), getString(R.string.no_data));
                 }
 
@@ -142,12 +156,14 @@ public class StoreVideosActivity extends AppCompatActivity implements RequestNot
                 if (pDialog.isShowing()) {
                     pDialog.dismiss();
                 }
+                mNoData.setVisibility(View.VISIBLE);
                 CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
             }
         } else {
             if (pDialog.isShowing()) {
                 pDialog.dismiss();
             }
+            mNoData.setVisibility(View.VISIBLE);
             CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
         }
     }
@@ -171,7 +187,7 @@ public class StoreVideosActivity extends AppCompatActivity implements RequestNot
             CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
         } else {
             Log.i("Check Class-"
-                    , "StoreVideosActivity");
+                    , "VideosViewActivity");
             error.printStackTrace();
         }
 

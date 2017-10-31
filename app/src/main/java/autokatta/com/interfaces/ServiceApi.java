@@ -1471,18 +1471,18 @@ public interface ServiceApi {
     @GET("GetGroupMedia")
     Call<GetMediaResponse> _autokattaGetGroupMedia(@Query("GroupID") int GroupId);
 
-  /*get Group Media*/
+    /*get Store Media*/
     @GET("GetStoreMedia")
     Call<GetMediaResponse> _autokattaGetStoreMedia(@Query("StoreID") int StoreID);
 
-  /*get Group Media*/
+    /*get Contact Media*/
     @GET("GetContactMedia")
     Call<GetMediaResponse> _autokattaGetContactMedia(@Query("MyContact") String MyContact);
 
 
-   /* TransferVehicle*/
+    /* TransferVehicle*/
     @POST("TransferVehicle")
-    Call<String> _autokattaTransferVehicle(@Query("TransferID") int Transferid,@Query("Status") String Status);
+    Call<String> _autokattaTransferVehicle(@Query("TransferID") int Transferid, @Query("Status") String Status);
 
 
 }

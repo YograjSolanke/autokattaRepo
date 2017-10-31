@@ -52,7 +52,6 @@ import java.net.UnknownHostException;
 import java.util.Random;
 
 import autokatta.com.R;
-import autokatta.com.StoreVideosActivity;
 import autokatta.com.adapter.TabAdapterName;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.fragment_profile.About;
@@ -709,11 +708,19 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
                 break;
 
             case R.id.my_video:
-                startActivity(new Intent(getApplicationContext(), StoreVideosActivity.class));
+                Bundle bundle = new Bundle();
+                bundle.putString("bundle_Contact", mLoginContact);
+                Intent intent = new Intent(getApplicationContext(), VideosViewActivity.class);
+                intent.putExtras(bundle);
+                startActivity(intent);
                 break;
 
             case R.id.images:
-                startActivity(new Intent(getApplicationContext(), AndroidGridViewDisplayImages.class));
+                Bundle bundl = new Bundle();
+                bundl.putString("bundle_Contact", mLoginContact);
+                Intent intent1 = new Intent(getApplicationContext(), ImagesViewActivity.class);
+                intent1.putExtras(bundl);
+                startActivity(intent1);
                 break;
 
             case R.id.post:

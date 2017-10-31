@@ -798,7 +798,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".other.Leads" />
         <activity
-            android:name=".StoreVideosActivity"
+            android:name=".view.VideosViewActivity"
             android:label="@string/title_activity_store_videos"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
@@ -827,7 +827,7 @@
             android:label="@string/title_activity_single_video"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".view.AndroidGridViewDisplayImages"
+            android:name=".view.ImagesViewActivity"
             android:label="@string/title_activity_android_grid_view_display_images"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".fragment_profile.EditAboutAddress"></activity>

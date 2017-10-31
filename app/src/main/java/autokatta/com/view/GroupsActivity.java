@@ -15,7 +15,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import autokatta.com.R;
-import autokatta.com.StoreVideosActivity;
 import autokatta.com.groups_container.CommunicationContainer;
 import autokatta.com.groups_container.GroupProductContainer;
 import autokatta.com.groups_container.GroupServiceContainer;
@@ -66,33 +65,42 @@ public class GroupsActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int i, long id) {
-                if (gridViewString[+i].equals("Communication")) {
-                    Intent communication = new Intent(getApplicationContext(), CommunicationContainer.class);
-                    communication.putExtras(b);
-                    startActivity(communication);
-                } else if (gridViewString[+i].equals("Members")) {
-                    Intent member = new Intent(getApplicationContext(), MemberContainer.class);
-                    member.putExtras(b);
-                    startActivity(member);
-                } else if (gridViewString[+i].equals("Vehicle")) {
-                    Intent vehicle = new Intent(getApplicationContext(), VehicleContainer.class);
-                    vehicle.putExtras(b);
-                    startActivity(vehicle);
-                } else if (gridViewString[+i].equals("Product")) {
-                    Intent product = new Intent(getApplicationContext(), GroupProductContainer.class);
-                    product.putExtras(b);
-                    startActivity(product);
-                } else if (gridViewString[+i].equals("Service")) {
-                    Intent service = new Intent(getApplicationContext(), GroupServiceContainer.class);
-                    service.putExtras(b);
-                    startActivity(service);
-                } else if (gridViewString[+i].equals("Video's")) {
-                    Intent videos = new Intent(getApplicationContext(), StoreVideosActivity.class);
-                    videos.putExtras(b);
-                    startActivity(videos);
-                } else if (gridViewString[+i].equals("Image's")) {
-                    Intent images = new Intent(getApplicationContext(), AndroidGridViewDisplayImages.class);
-                    startActivity(images);
+                switch (gridViewString[+i]) {
+                    case "Communication":
+                        Intent communication = new Intent(getApplicationContext(), CommunicationContainer.class);
+                        communication.putExtras(b);
+                        startActivity(communication);
+                        break;
+                    case "Members":
+                        Intent member = new Intent(getApplicationContext(), MemberContainer.class);
+                        member.putExtras(b);
+                        startActivity(member);
+                        break;
+                    case "Vehicle":
+                        Intent vehicle = new Intent(getApplicationContext(), VehicleContainer.class);
+                        vehicle.putExtras(b);
+                        startActivity(vehicle);
+                        break;
+                    case "Product":
+                        Intent product = new Intent(getApplicationContext(), GroupProductContainer.class);
+                        product.putExtras(b);
+                        startActivity(product);
+                        break;
+                    case "Service":
+                        Intent service = new Intent(getApplicationContext(), GroupServiceContainer.class);
+                        service.putExtras(b);
+                        startActivity(service);
+                        break;
+                    case "Video's":
+                        Intent videos = new Intent(getApplicationContext(), VideosViewActivity.class);
+                        videos.putExtras(b);
+                        startActivity(videos);
+                        break;
+                    case "Image's":
+                        Intent images = new Intent(getApplicationContext(), ImagesViewActivity.class);
+                        images.putExtras(b);
+                        startActivity(images);
+                        break;
                 }
             }
         });
@@ -175,7 +183,9 @@ public class GroupsActivity extends AppCompatActivity {
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             if (convertView == null) {
                 gridViewAndroid = new View(mContext);
-                gridViewAndroid = inflater.inflate(R.layout.gridview_layout, null);
+                if (inflater != null) {
+                    gridViewAndroid = inflater.inflate(R.layout.gridview_layout, null);
+                }
                 TextView textViewAndroid = (TextView) gridViewAndroid.findViewById(R.id.android_gridview_text);
                 ImageView imageViewAndroid = (ImageView) gridViewAndroid.findViewById(R.id.android_gridview_image);
                 textViewAndroid.setText(gridViewString[i]);

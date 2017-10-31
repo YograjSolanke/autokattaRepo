@@ -8962,7 +8962,7 @@ get ExchangeMela Analytics Data
 
     /* Transfer stock...*/
     public void _autokattaRequestForTransferVehicle(int VehicleID, String OwnerName, String CustomerContact, String TransferReason,
-                                                    String Address, String FullAddress, String Description, String MyContact,String Status) {
+                                                    String Address, String FullAddress, String Description, String MyContact, String Status) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 //JSON to Gson conversion
@@ -8978,7 +8978,7 @@ get ExchangeMela Analytics Data
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
                 Call<String> mSoldVehicle = serviceApi._autokattaRequestForTransferVehicle(VehicleID, OwnerName, CustomerContact,
-                        TransferReason, Address, FullAddress, Description, MyContact,Status);
+                        TransferReason, Address, FullAddress, Description, MyContact, Status);
                 mSoldVehicle.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
@@ -9224,6 +9224,7 @@ get ExchangeMela Analytics Data
         }
     }
 
+    /*Group Media*/
     public void getGroupMedia(int groupId) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
@@ -9254,7 +9255,8 @@ get ExchangeMela Analytics Data
         }
     }
 
-   public void getStoreMedia(int storeid) {
+    /*Store Media*/
+    public void getStoreMedia(int storeid) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 Retrofit retrofit = new Retrofit.Builder()
@@ -9284,7 +9286,8 @@ get ExchangeMela Analytics Data
         }
     }
 
-   public void getContactMedia(String Mycontact) {
+    /*User Media*/
+    public void getContactMedia(String Mycontact) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 Retrofit retrofit = new Retrofit.Builder()
@@ -9315,7 +9318,7 @@ get ExchangeMela Analytics Data
     }
 
     //Transfer Vehicle
-    public void TransferVehicle(String Status,int TransferId) {
+    public void TransferVehicle(String Status, int TransferId) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
 
@@ -9331,7 +9334,7 @@ get ExchangeMela Analytics Data
                         .build();
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<String> forgetPasswordResponseCall = serviceApi._autokattaTransferVehicle(TransferId,Status);
+                Call<String> forgetPasswordResponseCall = serviceApi._autokattaTransferVehicle(TransferId, Status);
                 forgetPasswordResponseCall.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
@@ -9350,7 +9353,6 @@ get ExchangeMela Analytics Data
             e.printStackTrace();
         }
     }
-
 
 
     /***

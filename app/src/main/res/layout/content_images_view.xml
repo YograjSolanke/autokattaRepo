@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="autokatta.com.view.AndroidGridViewDisplayImages"
-    tools:showIn="@layout/activity_android_grid_view_display_images">
+    tools:context="autokatta.com.view.ImagesViewActivity"
+    tools:showIn="@layout/activity_images_view">
 
 
     <GridView
@@ -19,5 +19,7 @@
         android:minHeight="90dp"
         android:numColumns="auto_fit"
         android:stretchMode="columnWidth" />
+
+    <include layout="@layout/error_view" />
 
 </RelativeLayout>

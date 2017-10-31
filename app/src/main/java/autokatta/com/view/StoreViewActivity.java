@@ -46,7 +46,6 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 
 import autokatta.com.R;
-import autokatta.com.StoreVideosActivity;
 import autokatta.com.adapter.AdminCallContactAdapter;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
@@ -827,7 +826,7 @@ Call Intent...
 
             case R.id.images:
                 b.putInt("store_id", store_id);
-                Intent intentImages = new Intent(StoreViewActivity.this, AndroidGridViewDisplayImages.class);
+                Intent intentImages = new Intent(StoreViewActivity.this, ImagesViewActivity.class);
                 intentImages.putExtras(b);
                 startActivity(intentImages, options.toBundle());
                 break;
@@ -835,7 +834,7 @@ Call Intent...
 
             case R.id.my_video:
                 b.putInt("store_id", store_id);
-                Intent intentVideos = new Intent(StoreViewActivity.this, StoreVideosActivity.class);
+                Intent intentVideos = new Intent(StoreViewActivity.this, VideosViewActivity.class);
                 intentVideos.putExtras(b);
                 startActivity(intentVideos, options.toBundle());
                 break;
