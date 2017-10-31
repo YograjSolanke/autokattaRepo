@@ -116,7 +116,7 @@ public class EditAllAbout extends AppCompatActivity implements RequestNotifier, 
         mEdtDesignation = (ImageView) findViewById(R.id.editdesignation);
         mEdtSkills = (ImageView) findViewById(R.id.editskills);
         mEdtAbout = (ImageView) findViewById(R.id.editabout);
-        mEdtEmail = (ImageView) findViewById(R.id.editEmail);
+        mEdtEmail = (ImageView) findViewById(R.id.editmail);
         mEdtWebsite = (ImageView) findViewById(R.id.editwebsite);
         mEdtIntrest = (ImageView) findViewById(R.id.editintrest);
         mDoneAbout = (ImageView) findViewById(R.id.doneabout);

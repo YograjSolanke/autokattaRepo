@@ -161,7 +161,26 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
         ab.setHomeAsUpIndicator(R.mipmap.ic_menu);
         ab.setDisplayHomeAsUpEnabled(true);*/
 
+        /*
+            for push notifications
+         */
 
+        if (getIntent().getExtras() != null) {
+            String status = getIntent().getExtras().getString("Like", "");
+            String contact = getIntent().getExtras().getString("contact", "");
+
+            switch (status) {
+                case "Profile": {
+                    Bundle mBundle = new Bundle();
+                    mBundle.putString("like", status);
+                    mBundle.putString("firebaseContact", contact);
+                    Intent intent = new Intent(getApplicationContext(), OtherProfile.class);
+                    intent.putExtras(mBundle);
+                    startActivity(intent);
+                }
+            }
+
+        }
         /*
         For share contents...
          */

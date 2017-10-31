@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-                                            xmlns:app="http://schemas.android.com/apk/res-auto"
-                                            android:layout_width="match_parent"
-                                            android:layout_height="match_parent"
-                                            android:orientation="vertical"
-                                            app:layout_behavior="com.evs.demo.layout.FixedScrollingViewBehavior">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    app:layout_behavior="com.evs.demo.layout.FixedScrollingViewBehavior">
 
     <LinearLayout
         android:id="@+id/profileAbout"
@@ -32,7 +32,7 @@
                     android:layout_toStartOf="@+id/editworkedat"
                     android:text="@string/worked_at"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/text_about"/>
+                    android:textSize="@dimen/text_about" />
 
                 <ImageView
                     android:id="@+id/editworkedat"
@@ -40,7 +40,7 @@
                     android:layout_height="30dp"
                     android:layout_alignParentEnd="true"
                     android:contentDescription="@string/app_name"
-                    android:src="@mipmap/ic_edit"/>
+                    android:src="@mipmap/ic_edit" />
 
                 <ImageView
                     android:id="@+id/doneworkat"
@@ -49,7 +49,7 @@
                     android:layout_alignParentEnd="true"
                     android:contentDescription="@string/app_name"
                     android:src="@drawable/check"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
 
             </RelativeLayout>
 
@@ -65,7 +65,7 @@
                     android:layout_height="wrap_content"
                     android:text="User Type- "
                     android:textColor="#708090"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/usertypetxt"
@@ -74,23 +74,21 @@
                     android:background="@android:color/transparent"
                     android:hint="@string/worked_at"
                     android:textColor="#708090"
-                    android:textStyle="bold"
-                    />
+                    android:textStyle="bold" />
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/llindustry"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                >
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Industry -"
                     android:textColor="#708090"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/industrytxt"
@@ -99,23 +97,21 @@
                     android:background="@android:color/transparent"
                     android:hint="Industry"
                     android:textColor="#708090"
-                    android:textStyle="bold"
-                    />
+                    android:textStyle="bold" />
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/llcategory"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                >
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Category -"
                     android:textColor="#708090"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/categorytxt"
@@ -124,23 +120,21 @@
                     android:background="@android:color/transparent"
                     android:hint="Category"
                     android:textColor="#708090"
-                    android:textStyle="bold"
-                    />
+                    android:textStyle="bold" />
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/llbrand"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                >
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Brand -"
                     android:textColor="#708090"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/brandtxt"
@@ -149,8 +143,7 @@
                     android:background="@android:color/transparent"
                     android:hint="Brand"
                     android:textColor="#708090"
-                    android:textStyle="bold"
-                    />
+                    android:textStyle="bold" />
             </LinearLayout>
 
         </LinearLayout>
@@ -162,14 +155,14 @@
             android:layout_height="35dp"
             android:layout_marginTop="10dp"
             android:entries="@array/userType"
-            android:visibility="gone"/>
+            android:visibility="gone" />
 
         <Spinner
             android:id="@+id/spinnerindustry"
             android:layout_width="match_parent"
             android:layout_height="35dp"
             android:layout_marginTop="10dp"
-            android:visibility="gone"/>
+            android:visibility="gone" />
 
         <android.support.design.widget.TextInputLayout
             android:id="@+id/otherIndustryLayout"
@@ -189,7 +182,7 @@
                 android:paddingStart="@dimen/margin_heading_top"
                 android:textColor="@color/textColor"
                 android:textColorHint="@color/hintColor"
-                android:textSize="15sp"/>
+                android:textSize="15sp" />
         </android.support.design.widget.TextInputLayout>
 
         <Spinner
@@ -197,7 +190,7 @@
             android:layout_width="match_parent"
             android:layout_height="35dp"
             android:layout_marginTop="10dp"
-            android:visibility="gone"/>
+            android:visibility="gone" />
 
         <android.support.design.widget.TextInputLayout
             android:id="@+id/otherCategoryLayout"
@@ -217,7 +210,7 @@
                 android:paddingStart="@dimen/margin_heading_top"
                 android:textColor="@color/textColor"
                 android:textColorHint="@color/hintColor"
-                android:textSize="15sp"/>
+                android:textSize="15sp" />
         </android.support.design.widget.TextInputLayout>
 
         <Spinner
@@ -225,8 +218,7 @@
             android:layout_width="match_parent"
             android:layout_height="35dp"
             android:layout_marginTop="10dp"
-            android:visibility="gone"
-            />
+            android:visibility="gone" />
 
         <android.support.design.widget.TextInputLayout
             android:id="@+id/otherbrand"
@@ -246,7 +238,7 @@
                 android:paddingStart="@dimen/margin_heading_top"
                 android:textColor="@color/textColor"
                 android:textColorHint="@color/hintColor"
-                android:textSize="15sp"/>
+                android:textSize="15sp" />
         </android.support.design.widget.TextInputLayout>
 
 
@@ -254,7 +246,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginTop="5dp"
-            android:background="#cccccc"/>
+            android:background="#cccccc" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -274,7 +266,7 @@
                     android:layout_alignParentStart="true"
                     android:text="@string/address"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/text_about"/>
+                    android:textSize="@dimen/text_about" />
 
                 <ImageView
                     android:id="@+id/editaddress"
@@ -282,7 +274,7 @@
                     android:layout_height="30dp"
                     android:layout_alignParentEnd="true"
                     android:contentDescription="@string/app_name"
-                    android:src="@mipmap/ic_edit"/>
+                    android:src="@mipmap/ic_edit" />
 
                 <ImageView
                     android:id="@+id/doneaddress"
@@ -291,7 +283,7 @@
                     android:layout_alignParentEnd="true"
                     android:contentDescription="@string/app_name"
                     android:src="@drawable/check"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
 
 
             </RelativeLayout>
@@ -307,7 +299,7 @@
                 android:text="@string/address"
                 android:textColor="#708090"
                 android:textSize="@dimen/text_about"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
         </LinearLayout>
 
@@ -315,7 +307,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginTop="5dp"
-            android:background="#cccccc"/>
+            android:background="#cccccc" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -336,7 +328,7 @@
                     android:layout_alignParentStart="true"
                     android:text="@string/company_name"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/text_about"/>
+                    android:textSize="@dimen/text_about" />
 
                 <ImageView
                     android:id="@+id/editcompany"
@@ -344,7 +336,7 @@
                     android:layout_height="30dp"
                     android:layout_alignParentEnd="true"
                     android:contentDescription="@string/app_name"
-                    android:src="@mipmap/ic_edit"/>
+                    android:src="@mipmap/ic_edit" />
 
             </RelativeLayout>
 
@@ -358,7 +350,7 @@
                 android:hint="@string/company_name"
                 android:textColor="#708090"
                 android:textSize="@dimen/text_about"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
         </LinearLayout>
 
@@ -366,7 +358,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginTop="5dp"
-            android:background="#cccccc"/>
+            android:background="#cccccc" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -387,7 +379,7 @@
                     android:layout_alignParentStart="true"
                     android:text="@string/designation"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/text_about"/>
+                    android:textSize="@dimen/text_about" />
 
                 <ImageView
                     android:id="@+id/editdesignation"
@@ -396,7 +388,7 @@
                     android:layout_alignParentEnd="true"
                     android:layout_marginLeft="250dp"
                     android:contentDescription="@string/app_name"
-                    android:src="@mipmap/ic_edit"/>
+                    android:src="@mipmap/ic_edit" />
 
             </RelativeLayout>
 
@@ -409,7 +401,7 @@
                 android:hint="@string/designation"
                 android:textColor="#708090"
                 android:textSize="@dimen/text_about"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
         </LinearLayout>
 
@@ -417,7 +409,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginTop="5dp"
-            android:background="#cccccc"/>
+            android:background="#cccccc" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -438,7 +430,7 @@
                     android:layout_alignParentStart="true"
                     android:text="@string/skills"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/text_about"/>
+                    android:textSize="@dimen/text_about" />
 
                 <ImageView
                     android:id="@+id/editskills"
@@ -446,7 +438,7 @@
                     android:layout_height="30dp"
                     android:layout_alignParentEnd="true"
                     android:contentDescription="@string/app_name"
-                    android:src="@mipmap/ic_edit"/>
+                    android:src="@mipmap/ic_edit" />
 
                 <ImageView
                     android:id="@+id/doneskills"
@@ -455,7 +447,7 @@
                     android:layout_alignParentEnd="true"
                     android:contentDescription="@string/app_name"
                     android:src="@drawable/check"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
 
             </RelativeLayout>
 
@@ -468,7 +460,7 @@
                 android:hint="@string/skills"
                 android:textColor="#708090"
                 android:textSize="@dimen/text_about"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
         </LinearLayout>
 
@@ -477,7 +469,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginTop="5dp"
-            android:background="#cccccc"/>
+            android:background="#cccccc" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -497,7 +489,7 @@
                     android:layout_alignParentStart="true"
                     android:text="About"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/text_about"/>
+                    android:textSize="@dimen/text_about" />
 
                 <ImageView
                     android:id="@+id/editabout"
@@ -505,7 +497,7 @@
                     android:layout_height="30dp"
                     android:layout_alignParentEnd="true"
                     android:contentDescription="@string/app_name"
-                    android:src="@mipmap/ic_edit"/>
+                    android:src="@mipmap/ic_edit" />
 
                 <ImageView
                     android:id="@+id/doneabout"
@@ -514,7 +506,7 @@
                     android:layout_alignParentEnd="true"
                     android:contentDescription="@string/app_name"
                     android:src="@drawable/check"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
 
             </RelativeLayout>
 
@@ -528,7 +520,7 @@
                 android:hint="About"
                 android:textColor="#708090"
                 android:textSize="@dimen/text_about"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
         </LinearLayout>
 
@@ -536,7 +528,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginTop="5dp"
-            android:background="#cccccc"/>
+            android:background="#cccccc" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -556,7 +548,7 @@
                     android:layout_alignParentStart="true"
                     android:text="@string/email"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/text_about"/>
+                    android:textSize="@dimen/text_about" />
 
                 <ImageView
                     android:id="@+id/editmail"
@@ -564,7 +556,7 @@
                     android:layout_height="30dp"
                     android:layout_alignParentEnd="true"
                     android:contentDescription="@string/app_name"
-                    android:src="@mipmap/ic_edit"/>
+                    android:src="@mipmap/ic_edit" />
 
                 <ImageView
                     android:id="@+id/donemail"
@@ -573,7 +565,7 @@
                     android:layout_alignParentEnd="true"
                     android:contentDescription="@string/app_name"
                     android:src="@drawable/check"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
 
 
             </RelativeLayout>
@@ -589,7 +581,7 @@
                 android:inputType="textEmailAddress"
                 android:textColor="#708090"
                 android:textSize="@dimen/text_about"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
         </LinearLayout>
 
@@ -597,7 +589,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginTop="5dp"
-            android:background="#cccccc"/>
+            android:background="#cccccc" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -617,7 +609,7 @@
                     android:layout_alignParentStart="true"
                     android:text="@string/website"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/text_about"/>
+                    android:textSize="@dimen/text_about" />
 
                 <ImageView
                     android:id="@+id/editwebsite"
@@ -626,7 +618,7 @@
                     android:layout_alignParentEnd="true"
                     android:layout_marginLeft="280dp"
                     android:contentDescription="@string/app_name"
-                    android:src="@mipmap/ic_edit"/>
+                    android:src="@mipmap/ic_edit" />
 
                 <ImageView
                     android:id="@+id/donewebsite"
@@ -635,7 +627,7 @@
                     android:layout_alignParentEnd="true"
                     android:contentDescription="@string/app_name"
                     android:src="@drawable/check"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
 
             </RelativeLayout>
 
@@ -648,7 +640,7 @@
                 android:hint="@string/website"
                 android:textColor="#708090"
                 android:textSize="@dimen/text_about"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
         </LinearLayout>
 
@@ -656,7 +648,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginTop="5dp"
-            android:background="#cccccc"/>
+            android:background="#cccccc" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -680,7 +672,7 @@
                         android:layout_alignParentStart="true"
                         android:text="@string/interest"
                         android:textColor="@color/black"
-                        android:textSize="@dimen/text_about"/>
+                        android:textSize="@dimen/text_about" />
 
                     <ImageView
                         android:id="@+id/editintrest"
@@ -688,7 +680,7 @@
                         android:layout_height="30dp"
                         android:layout_alignParentEnd="true"
                         android:contentDescription="@string/app_name"
-                        android:src="@mipmap/ic_edit"/>
+                        android:src="@mipmap/ic_edit" />
 
                 </RelativeLayout>
 
@@ -701,7 +693,7 @@
                     android:text="@string/edit"
                     android:textColor="@color/text_color"
                     android:textSize="@dimen/text_about"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
 
             </RelativeLayout>
 
@@ -712,7 +704,7 @@
                 android:layout_marginEnd="@dimen/activity_half_margin"
                 android:text="@string/app_name"
                 android:textColor="@color/text_color"
-                android:textSize="@dimen/text_about"/>
+                android:textSize="@dimen/text_about" />
 
         </LinearLayout>
 
@@ -720,7 +712,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginTop="5dp"
-            android:background="#cccccc"/>
+            android:background="#cccccc" />
 
         <Button
             android:id="@+id/done"
@@ -732,7 +724,7 @@
             android:text="Submit"
             android:textColor="@color/white"
             android:textStyle="bold"
-            android:visibility="gone"/>
+            android:visibility="gone" />
     </LinearLayout>
 
 </android.support.v4.widget.NestedScrollView>

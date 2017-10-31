@@ -107,7 +107,7 @@ public class OtherProfile extends AppCompatActivity implements RequestNotifier, 
                     if (getIntent().getExtras() != null) {
                         key = getIntent().getExtras().getString("like");
                         if (key != null) {
-                            if (key.equals("Like")) {
+                            if (key.equals("Profile")) {
                                 mOtherContact = getIntent().getExtras().getString("firebaseContact");
                             }
                         } else {
