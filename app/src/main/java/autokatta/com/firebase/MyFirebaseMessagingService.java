@@ -30,11 +30,13 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
         if (NotificationListener.isAppIsInBackground(getApplicationContext())) {
             Log.e("Background", "Back");
-            showNotificationMessages(remoteMessage.getData().entrySet());
-        } else {
-            sendNotification(remoteMessage.getData().entrySet());
             Log.i("From-", "->" + remoteMessage.getFrom());
             Log.i("Data", "->" + remoteMessage.getData());
+            showNotificationMessages(remoteMessage.getData().entrySet());
+        } else {
+            Log.i("From-", "->" + remoteMessage.getFrom());
+            Log.i("Data", "->" + remoteMessage.getData());
+            sendNotification(remoteMessage.getData().entrySet());
         }
     }
 

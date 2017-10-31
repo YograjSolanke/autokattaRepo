@@ -10,7 +10,11 @@ import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
+import android.text.Spannable;
+import android.text.Spanned;
 import android.text.TextUtils;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -28,6 +32,7 @@ import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.net.ConnectException;
@@ -53,16 +58,7 @@ import retrofit2.Response;
 public class Registration extends AppCompatActivity implements View.OnClickListener,
         AdapterView.OnItemSelectedListener, android.location.LocationListener, RequestNotifier, View.OnTouchListener {
 
-    EditText personName;
-    EditText mobileNo;
-    EditText email;
-    EditText dateOfBirth;
-    EditText pincode;
-    EditText otherIndustry;
-    EditText otherCategory;
-    EditText otherbrand;
-    EditText password;
-    EditText confirmPassword;
+    EditText personName, mobileNo, email, dateOfBirth, pincode, otherIndustry, otherCategory, otherbrand, password, confirmPassword;
     Spinner moduleSpinner, usertypeSpinner, industrySpinner,brandSpinner;
     Button btnSubmit, btnClear;
     AutoCompleteTextView address;
@@ -87,6 +83,7 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
     SharedPreferences sharedPreferences = null;
     SharedPreferences.Editor editor;
     private DatePickerDialog datePicker;
+    TextView termsOfAgreement;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,6 +96,19 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
         sharedPreferences = getSharedPreferences(getString(R.string.firstRun), MODE_PRIVATE);
+        termsOfAgreement = (TextView) findViewById(R.id.termsOfAgreement);
+
+        Spannable span = Spannable.Factory.getInstance().newSpannable("I agree to the Terms of Agreement.");
+        span.setSpan(new ClickableSpan() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(Registration.this, "Get in touch for terms and conditions", Toast.LENGTH_SHORT).show();
+            }
+        }, 15, 33, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        termsOfAgreement.setText(span);
+        termsOfAgreement.setMovementMethod(LinkMovementMethod.getInstance());
+
         personName = (EditText) findViewById(R.id.editPersonName);
         mobileNo = (EditText) findViewById(R.id.editMobileNo);
         email = (EditText) findViewById(R.id.editEmail);

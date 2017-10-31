@@ -46,7 +46,7 @@
             android:layout_marginEnd="@dimen/fab_margin"
             android:layout_marginStart="@dimen/fab_margin"
             android:background="@color/background"
-            android:text="Next"
+            android:text="@string/button.next"
             android:textColor="@color/white"
             android:textStyle="bold" />
 
@@ -373,6 +373,29 @@
                     android:textColorHint="@color/hintColor"
                     android:textSize="15sp" />
             </android.support.design.widget.TextInputLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="@dimen/activity_half_margin">
+
+                <CheckBox
+                    android:id="@+id/checkBox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:textColor="#CC000000" />
+
+                <TextView
+                    android:id="@+id/termsOfAgreement"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text=""
+                    android:textColor="#CC000000"
+                    android:textSize="16sp" />
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 
