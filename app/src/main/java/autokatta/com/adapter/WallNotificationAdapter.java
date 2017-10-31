@@ -525,7 +525,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                 mShareAuctionGoingCount, mShareAuctionIgnoreCount;
         TextView mShareStatus;
         RelativeLayout mProfileRelative, mStoreRelative, mProductRelative, mServiceRelative, mVehicleRelative,
-                mMySearchRelative, mAuctionRelative;
+                mMySearchRelative, mAuctionRelative, mpostrel;
 
         private ShareNotifications(View shareView) {
             super(shareView);
@@ -597,7 +597,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
             mShareAuctionIgnoreCount = (TextView) shareView.findViewById(R.id.share_ignore_cnt);
 
     /* status notification layout*/
-            mAuctionRelative = (RelativeLayout) shareView.findViewById(R.id.auctionrel);
+            mpostrel = (RelativeLayout) shareView.findViewById(R.id.postrel);
             mShareStatus = (TextView) shareView.findViewById(R.id.share_statustxt);
         }
     }
@@ -660,7 +660,8 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                 return new ActiveNotifications(mView);
 
             case 10:
-                mView = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_wall_vehicle_notifications, parent, false);
+                mView = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_wall_adding_share_notifications, parent, false);
+                mView = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_wall_adding_share_notifications, parent, false);
                 return new UploadVehicleNotifications(mView);
 
             case 11:
@@ -1712,10 +1713,10 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
 
             case 4:
 
-                SpannableStringBuilder sb4 = new SpannableStringBuilder();
+
                 final VehicleNotifications mVehicleHolder = (VehicleNotifications) holder;
                 Log.i("Wall", "Vehicle-LayType ->" + notificationList.get(position).getLayoutType());
-
+                SpannableStringBuilder sb4 = new SpannableStringBuilder();
                 if (notificationList.get(position).getLayoutType().equalsIgnoreCase("MyAction")) {
                     //mStoreHolder.mCall.setVisibility(View.GONE);
                     //mVehicleHolder.mRelativeLike.setVisibility(View.GONE);
@@ -4577,51 +4578,1109 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
 
             case 11:
                 final ShareNotifications mShareolder = (ShareNotifications) holder;
-                SpannableStringBuilder sb11 = new SpannableStringBuilder();
-
+                // SpannableStringBuilder sb11 = new SpannableStringBuilder();
+                int sublayout = 0;
                 mShareolder.mCaptionData.setText(notificationList.get(position).getShareSubData());
-                if (!notificationList.get(position).getSubLayout().equals("")) {
-                    int sublayout = Integer.parseInt(notificationList.get(position).getSubLayout());
-                }
+                if (!notificationList.get(position).getSubLayout().equals(""))
+                    sublayout = Integer.parseInt(notificationList.get(position).getSubLayout());
+                // mShareolder.mShareActionName.setText(notificationList.get(position).);
 
-                /*switch (sublayout) {
+                switch (sublayout) {
                     case 1:
+                        SpannableStringBuilder sb11 = new SpannableStringBuilder();
+                        if (notificationList.get(position).getLayoutType().equalsIgnoreCase("MyAction")) {
+                            //mProfileHolder.mCall.setVisibility(View.GONE);
+                            //mProfileHolder.mRelativeLike.setVisibility(View.GONE);
+
+                        } else {
+                            //mProfileHolder.mCall.setVisibility(View.VISIBLE);
+                            //mProfileHolder.mRelativeLike.setVisibility(View.VISIBLE);
+                        }
+
+                        sb11.append(notificationList.get(position).getSenderName());
+                        sb11.append(" ");
+                        sb11.append(notificationList.get(position).getAction());
+                        sb11.append(" ");
+                        sb11.append(notificationList.get(position).getReceiverName());
+                        sb11.append(" Profile");
+
+                /*sender name*/
+                        sb11.setSpan(new ClickableSpan() {
+                                         @Override
+                                         public void onClick(View widget) {
+                                             if (notificationList.get(mShareolder.getAdapterPosition()).getLayoutType().equalsIgnoreCase("MyAction")) {
+                                                 mActivity.startActivity(new Intent(mActivity, UserProfile.class));
+                                             } else {
+                                                 Intent intent = new Intent(mActivity, OtherProfile.class);
+                                                 Bundle bundle = new Bundle();
+                                                 bundle.putString("contactOtherProfile", notificationList.get(mShareolder.getAdapterPosition()).getSender());
+                                                 intent.putExtras(bundle);
+                                                 mActivity.startActivity(intent);
+                                             }
+                                         }
+
+                                         @Override
+                                         public void updateDrawState(TextPaint ds) {
+                                    /*ds.setUnderlineText(false);
+                                    ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
+                                    ds.setFakeBoldText(true);
+                                    ds.setTextSize((float) 31.0);
+                                    Log.i("TextSize", "->" + ds.getTextSize());*/
+                                         }
+                                     }, 0, notificationList.get(position).getSenderName().length(),
+                                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                        sb11.setSpan(new StyleSpan(Typeface.BOLD), 0,
+                                notificationList.get(position).getSenderName().length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                /*receiver name*/
+                        sb11.setSpan(new ClickableSpan() {
+                                         @Override
+                                         public void onClick(View widget) {
+                                             mActivity.startActivity(new Intent(mActivity, UserProfile.class));
+
+                                             if (notificationList.get(mShareolder.getAdapterPosition()).getLayoutType().equalsIgnoreCase("MyAction")) {
+                                                 mActivity.startActivity(new Intent(mActivity, UserProfile.class));
+                                             } else if (notificationList.get(mShareolder.getAdapterPosition()).getLayoutType().equalsIgnoreCase("MyNotification")) {
+                                                 mActivity.startActivity(new Intent(mActivity, UserProfile.class));
+                                             } else {
+                                                 Intent intent = new Intent(mActivity, OtherProfile.class);
+                                                 Bundle bundle = new Bundle();
+                                                 bundle.putString("contactOtherProfile", notificationList.get(mShareolder.getAdapterPosition()).getReceiver());
+                                                 intent.putExtras(bundle);
+                                                 mActivity.startActivity(intent);
+                                             }
+                                         }
+
+                                         @Override
+                                         public void updateDrawState(TextPaint ds) {
+                                    /*ds.setUnderlineText(false);
+                                    ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
+                                    ds.setFakeBoldText(true);
+                                    ds.setTextSize((float) 31.0);*/
+                                         }
+                                     }, notificationList.get(position).getSenderName().length() +
+                                        notificationList.get(position).getAction().length() +
+                                        2,
+
+                                notificationList.get(position).getSenderName().length() +
+                                        notificationList.get(position).getAction().length() +
+                                        2 +
+                                        notificationList.get(position).getReceiverName().length()
+                                , Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                /*
+                Set Bold Font
+                 */
+                        sb11.setSpan(new StyleSpan(Typeface.BOLD), notificationList.get(position).getSenderName().length() +
+                                        notificationList.get(position).getAction().length() + 2,
+                                notificationList.get(position).getSenderName().length() +
+                                        notificationList.get(position).getAction().length() + 2 +
+                                        notificationList.get(position).getReceiverName().length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                        mShareolder.mShareActionName.setSingleLine(false);
+                        mShareolder.mShareActionName.setText(sb11);
+                        mShareolder.mShareActionName.setMovementMethod(LinkMovementMethod.getInstance());
+                        mShareolder.mShareActionName.setHighlightColor(Color.TRANSPARENT);
+
+                        mShareolder.mProfileRelative.setVisibility(View.VISIBLE);
+                        mShareolder.mStoreRelative.setVisibility(View.GONE);
+                        mShareolder.mProductRelative.setVisibility(View.GONE);
+                        mShareolder.mServiceRelative.setVisibility(View.GONE);
+                        mShareolder.mVehicleRelative.setVisibility(View.GONE);
+                        mShareolder.mpostrel.setVisibility(View.GONE);
+                        mShareolder.mMySearchRelative.setVisibility(View.GONE);
+                        mShareolder.mAuctionRelative.setVisibility(View.GONE);
                         break;
 
                     case 2:
+
+
+                        SpannableStringBuilder sb22 = new SpannableStringBuilder();
+
+                        if (notificationList.get(position).getLayoutType().equalsIgnoreCase("MyAction")) {
+                            //mStoreHolder.mCall.setVisibility(View.GONE);
+                            // mStoreHolder.mRelativeLike.setVisibility(View.GONE);
+
+                        } else {
+                            //mStoreHolder.mCall.setVisibility(View.VISIBLE);
+                            //mStoreHolder.mRelativeLike.setVisibility(View.VISIBLE);
+                        }
+
+                /*mStoreHolder.mStoreActionName.setText(notificationList.get(position).getSenderName() + " "
+                        + notificationList.get(position).getAction() + "\n"
+                        + notificationList.get(position).getReceiverName() + " "
+                        + notificationList.get(position).getStoreName() + " " + "Store");*/
+
+                        sb22 = new SpannableStringBuilder();
+                        sb22.append(notificationList.get(position).getSenderName());
+                        sb22.append(" ");
+                        sb22.append(notificationList.get(position).getAction());
+                        sb22.append(" ");
+                        sb22.append(notificationList.get(position).getReceiverName());
+                        sb22.append(" ");
+                        sb22.append(notificationList.get(position).getStoreName());
+                        sb22.append(" Store");
+
+        /*sender name */
+                        sb22.setSpan(new ClickableSpan() {
+                            @Override
+                            public void onClick(View widget) {
+
+                                if (notificationList.get(mShareolder.getAdapterPosition()).getLayoutType().equalsIgnoreCase("MyAction")) {
+                                    mActivity.startActivity(new Intent(mActivity, UserProfile.class));
+                                } else {
+                                    Intent intent = new Intent(mActivity, OtherProfile.class);
+                                    Bundle bundle = new Bundle();
+                                    bundle.putString("contactOtherProfile", notificationList.get(mShareolder.getAdapterPosition()).getSender());
+                                    intent.putExtras(bundle);
+                                    mActivity.startActivity(intent);
+                                }
+                            }
+
+                            @Override
+                            public void updateDrawState(TextPaint ds) {
+                       /* ds.setUnderlineText(false);
+                        ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
+                        ds.setFakeBoldText(true);
+                        ds.setTextSize((float) 31.0);
+                        Log.i("TextSize", "->" + ds.getTextSize());*/
+                            }
+                        }, 0, notificationList.get(position).getSenderName().length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                        sb22.setSpan(new StyleSpan(Typeface.BOLD), 0, notificationList.get(position).getSenderName().length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                /*receiver name */
+                        sb22.setSpan(new ClickableSpan() {
+                                         @Override
+                                         public void onClick(View widget) {
+
+                                             if (notificationList.get(mShareolder.getAdapterPosition()).getLayoutType().equalsIgnoreCase("MyAction") ||
+                                                     notificationList.get(mShareolder.getAdapterPosition()).getLayoutType().equalsIgnoreCase("MyNotification")) {
+                                                 mActivity.startActivity(new Intent(mActivity, UserProfile.class));
+                                             } else {
+                                                 Intent intent = new Intent(mActivity, OtherProfile.class);
+                                                 Bundle bundle = new Bundle();
+                                                 bundle.putString("contactOtherProfile", notificationList.get(mShareolder.getAdapterPosition()).getReceiver());
+                                                 intent.putExtras(bundle);
+                                                 mActivity.startActivity(intent);
+                                             }
+                                         }
+
+                                         @Override
+                                         public void updateDrawState(TextPaint ds) {
+                                    /*ds.setUnderlineText(false);
+                                    ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
+                                    ds.setFakeBoldText(true);
+                                    ds.setTextSize((float) 31.0);*/
+                                         }
+                                     }, notificationList.get(position).getSenderName().length() +
+                                        notificationList.get(position).getAction().length() +
+                                        2,
+
+                                notificationList.get(position).getSenderName().length() +
+                                        notificationList.get(position).getAction().length() +
+                                        2 +
+                                        notificationList.get(position).getReceiverName().length()
+                                , Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                        sb22.setSpan(new StyleSpan(Typeface.BOLD), notificationList.get(position).getSenderName().length() +
+                                notificationList.get(position).getAction().length() +
+                                2, notificationList.get(position).getSenderName().length() +
+                                notificationList.get(position).getAction().length() +
+                                2 +
+                                notificationList.get(position).getReceiverName().length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            /* store name */
+                        sb22.setSpan(new ClickableSpan() {
+                                         @Override
+                                         public void onClick(View widget) {
+                                             Bundle b = new Bundle();
+                                             b.putInt("store_id", notificationList.get(mShareolder.getAdapterPosition()).getStoreID());
+                                             Intent intent = new Intent(mActivity, StoreViewActivity.class);
+                                             intent.putExtras(b);
+                                             mActivity.startActivity(intent);
+                                         }
+
+                                         @Override
+                                         public void updateDrawState(TextPaint ds) {
+                                    /*ds.setUnderlineText(false);
+                                    ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
+                                    ds.setFakeBoldText(true);
+                                    ds.setTextSize((float) 31.0);*/
+                                         }
+                                     }, notificationList.get(position).getSenderName().length() +
+                                        notificationList.get(position).getAction().length() +
+                                        notificationList.get(position).getReceiverName().length() +
+                                        3,
+
+                                notificationList.get(position).getSenderName().length() +
+                                        notificationList.get(position).getAction().length() +
+                                        notificationList.get(position).getReceiverName().length() +
+                                        3 +
+                                        notificationList.get(position).getStoreName().length() + 1
+                                , Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                /*
+                Font style bold
+                 */
+                        sb22.setSpan(new StyleSpan(Typeface.BOLD), notificationList.get(position).getSenderName().length() +
+                                notificationList.get(position).getAction().length() +
+                                notificationList.get(position).getReceiverName().length() +
+                                3, notificationList.get(position).getSenderName().length() +
+                                notificationList.get(position).getAction().length() +
+                                notificationList.get(position).getReceiverName().length() +
+                                3 +
+                                notificationList.get(position).getStoreName().length() + 1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                        mShareolder.mShareActionName.setSingleLine(false);
+                        mShareolder.mShareActionName.setText(sb22);
+                        mShareolder.mShareActionName.setMovementMethod(LinkMovementMethod.getInstance());
+                        mShareolder.mShareActionName.setHighlightColor(Color.TRANSPARENT);
+
+                        //mShareolder.sharingdataaction.setText(obj.sendernameld.toString() + " " + obj.actionld.toString() + " " + obj.store_nameld.toString() + " " + "store");
+                        mShareolder.mStoreRelative.setVisibility(View.VISIBLE);
+                        mShareolder.mProductRelative.setVisibility(View.GONE);
+                        mShareolder.mServiceRelative.setVisibility(View.GONE);
+                        mShareolder.mVehicleRelative.setVisibility(View.GONE);
+                        mShareolder.mpostrel.setVisibility(View.GONE);
+                        mShareolder.mMySearchRelative.setVisibility(View.GONE);
+                        mShareolder.mAuctionRelative.setVisibility(View.GONE);
+                        mShareolder.mProfileRelative.setVisibility(View.GONE);
+
+                        mShareolder.mShareStoreName.setText(notificationList.get(position).getStoreName());
+                        mShareolder.mShareType.setText(notificationList.get(position).getStoreType());
+                        mShareolder.mShareLocation.setText(notificationList.get(position).getStoreLocation());
+                        mShareolder.mShareWebSite.setText(notificationList.get(position).getStoreWebsite());
+                        mShareolder.mShareWorkingDay.setText(notificationList.get(position).getWorkingDays());
+                        mShareolder.mShareTiming.setText(notificationList.get(position).getStoreTiming());
                         break;
 
                     case 4:
+
+                        SpannableStringBuilder sb44 = new SpannableStringBuilder();
+                        if (notificationList.get(position).getLayoutType().equalsIgnoreCase("MyAction")) {
+                            //mStoreHolder.mCall.setVisibility(View.GONE);
+                            //mVehicleHolder.mRelativeLike.setVisibility(View.GONE);
+
+                        } else {
+                            //mStoreHolder.mCall.setVisibility(View.VISIBLE);
+                            //mVehicleHolder.mRelativeLike.setVisibility(View.VISIBLE);
+                        }
+
+                /*mVehicleHolder.mActionName.setText(notificationList.get(position).getSenderName()
+                        + " "
+                        + notificationList.get(position).getAction()
+                        + "\n"
+                        + notificationList.get(position).getReceiverName()
+                        + " "
+                        + notificationList.get(position).getUpVehicleTitle() + " " + "Vehicle");*/
+
+                        sb44 = new SpannableStringBuilder();
+                        sb44.append(notificationList.get(position).getSenderName());
+                        sb44.append(" ");
+                        sb44.append(notificationList.get(position).getAction());
+                        sb44.append(" ");
+                        sb44.append(notificationList.get(position).getReceiverName());
+                        sb44.append(" ");
+                        sb44.append(notificationList.get(position).getUpVehicleTitle());
+                        sb44.append(" Vehicle");
+
+        /* sender name */
+                        sb44.setSpan(new ClickableSpan() {
+                            @Override
+                            public void onClick(View widget) {
+
+                                if (notificationList.get(mShareolder.getAdapterPosition()).getLayoutType().equalsIgnoreCase("MyAction")) {
+                                    mActivity.startActivity(new Intent(mActivity, UserProfile.class));
+                                } else {
+                                    Intent intent = new Intent(mActivity, OtherProfile.class);
+                                    Bundle bundle = new Bundle();
+                                    bundle.putString("contactOtherProfile", notificationList.get(mShareolder.getAdapterPosition()).getSender());
+                                    intent.putExtras(bundle);
+                                    mActivity.startActivity(intent);
+                                }
+                            }
+
+                            @Override
+                            public void updateDrawState(TextPaint ds) {
+                        /*ds.setUnderlineText(false);
+                        ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
+                        ds.setFakeBoldText(true);
+                        ds.setTextSize((float) 31.0);
+                        Log.i("TextSize", "->" + ds.getTextSize());*/
+                            }
+                        }, 0, notificationList.get(position).getSenderName().length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                        sb44.setSpan(new StyleSpan(Typeface.BOLD), 0,
+                                notificationList.get(position).getSenderName().length(),
+                                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                /* receiver name */
+                        sb44.setSpan(new ClickableSpan() {
+                                         @Override
+                                         public void onClick(View widget) {
+                                             if (notificationList.get(mShareolder.getAdapterPosition()).getLayoutType().equalsIgnoreCase("MyAction") ||
+                                                     notificationList.get(mShareolder.getAdapterPosition()).getLayoutType().equalsIgnoreCase("MyNotification")) {
+                                                 mActivity.startActivity(new Intent(mActivity, UserProfile.class));
+                                             } else {
+                                                 Intent intent = new Intent(mActivity, OtherProfile.class);
+                                                 Bundle bundle = new Bundle();
+                                                 bundle.putString("contactOtherProfile", notificationList.get(mShareolder.getAdapterPosition()).getReceiver());
+                                                 intent.putExtras(bundle);
+                                                 mActivity.startActivity(intent);
+                                             }
+                                         }
+
+                                         @Override
+                                         public void updateDrawState(TextPaint ds) {
+                                    /*ds.setUnderlineText(false);
+                                    ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
+                                    ds.setFakeBoldText(true);
+                                    ds.setTextSize((float) 31.0);*/
+                                         }
+                                     }, notificationList.get(position).getSenderName().length() +
+                                        notificationList.get(position).getAction().length() + 2,
+
+                                notificationList.get(position).getSenderName().length() +
+                                        notificationList.get(position).getAction().length() + 2 +
+                                        notificationList.get(position).getReceiverName().length()
+                                , Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                /*
+                Set Bold font
+                 */
+                        sb44.setSpan(new StyleSpan(Typeface.BOLD), notificationList.get(position).getSenderName().length() +
+                                        notificationList.get(position).getAction().length() + 2,
+
+                                notificationList.get(position).getSenderName().length() +
+                                        notificationList.get(position).getAction().length() + 2 +
+                                        notificationList.get(position).getReceiverName().length(),
+                                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                /* vehicle name */
+                        sb44.setSpan(new ClickableSpan() {
+                                         @Override
+                                         public void onClick(View widget) {
+                                             Intent intent = new Intent(mActivity, VehicleDetails.class);
+                                             intent.putExtra("vehicle_id", notificationList.get(mShareolder.getAdapterPosition()).getUploadVehicleID());
+                                             mActivity.startActivity(intent);
+                                         }
+
+                                         @Override
+                                         public void updateDrawState(TextPaint ds) {
+                                    /*ds.setUnderlineText(false);
+                                    ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
+                                    ds.setFakeBoldText(true);
+                                    ds.setTextSize((float) 31.0);*/
+                                         }
+                                     }, notificationList.get(position).getSenderName().length() +
+                                        notificationList.get(position).getAction().length() +
+                                        notificationList.get(position).getReceiverName().length() + 3,
+
+                                notificationList.get(position).getSenderName().length() +
+                                        notificationList.get(position).getAction().length() +
+                                        notificationList.get(position).getReceiverName().length() + 3 +
+                                        notificationList.get(position).getUpVehicleTitle().length() + 1
+                                , Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                        sb44.setSpan(new StyleSpan(Typeface.BOLD), notificationList.get(position).getSenderName().length() +
+                                        notificationList.get(position).getAction().length() +
+                                        notificationList.get(position).getReceiverName().length() + 3,
+
+                                notificationList.get(position).getSenderName().length() +
+                                        notificationList.get(position).getAction().length() +
+                                        notificationList.get(position).getReceiverName().length() + 3 +
+                                        notificationList.get(position).getUpVehicleTitle().length() + 1,
+                                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                        mShareolder.mShareActionName.setSingleLine(false);
+                        mShareolder.mShareActionName.setText(sb44);
+                        mShareolder.mShareActionName.setMovementMethod(LinkMovementMethod.getInstance());
+                        mShareolder.mShareActionName.setHighlightColor(Color.TRANSPARENT);
+
+                        // holder.sharingdataaction.setText(obj.sendernameld.toString() + " " + obj.actionld.toString() + " " + obj.titleld.toString() + " " + "vehicle");
+
+                        mShareolder.mVehicleRelative.setVisibility(View.VISIBLE);
+                        mShareolder.mProductRelative.setVisibility(View.GONE);
+                        mShareolder.mServiceRelative.setVisibility(View.GONE);
+                        mShareolder.mStoreRelative.setVisibility(View.GONE);
+                        mShareolder.mpostrel.setVisibility(View.GONE);
+                        mShareolder.mMySearchRelative.setVisibility(View.GONE);
+                        mShareolder.mAuctionRelative.setVisibility(View.GONE);
+                        mShareolder.mProfileRelative.setVisibility(View.GONE);
+
+                        mShareolder.mShareTitle.setText(notificationList.get(position).getUpVehicleTitle());
+                        mShareolder.mSharePrice.setText(notificationList.get(position).getUpVehiclePrice());
+                        mShareolder.mShareBrand.setText(notificationList.get(position).getUpVehicleBrand());
+                        mShareolder.mShareModel.setText(notificationList.get(position).getUpVehicleModel());
+                        mShareolder.mShareYear.setText(notificationList.get(position).getUpVehicleManfYear());
+                        mShareolder.mShareRegistrationNo.setText(notificationList.get(position).getUpVehicleRegNo());
+                        mShareolder.mShareRto.setText(notificationList.get(position).getUpVehicleRtoCity());
+                        mShareolder.mShareVehicleLocation.setText(notificationList.get(position).getUpVehicleLocationCity());
+                        mShareolder.mShareKmsHrs.setText(notificationList.get(position).getUpVehicleKmsRun());
+
                         break;
 
                     case 5:
+
+
+                        SpannableStringBuilder sb55 = new SpannableStringBuilder();
+                        Log.i("Wall", "Product-LayType ->" + notificationList.get(position).getLayoutType());
+                        if (notificationList.get(position).getLayoutType().equalsIgnoreCase("MyAction")) {
+                            //mProductHolder.mProductCall.setVisibility(View.GONE);
+                            //mProductHolder.mProductLike.setVisibility(View.GONE);
+                            //mProductHolder.mProductUnlike.setVisibility(View.GONE);
+                            //mProductHolder.mRelativeLike.setVisibility(View.GONE);
+                        } else {
+                            //mProductHolder.mProductCall.setVisibility(View.VISIBLE);
+                            //mProductHolder.mProductLike.setVisibility(View.VISIBLE);
+                            // mProductHolder.mProductUnlike.setVisibility(View.VISIBLE);
+                            //mProductHolder.mRelativeLike.setVisibility(View.VISIBLE);
+                        }
+
+               /* mProductHolder.mProductActionName.setText(notificationList.get(position).getSenderName() + " " +
+                        notificationList.get(position).getAction() + "\n" +
+                        notificationList.get(position).getProductName()
+                        + " product");*/
+
+
+                        if (notificationList.get(position).getAction().equalsIgnoreCase("added")) {
+                            sb55.append(notificationList.get(position).getSenderName());
+                            sb55.append(" ");
+                            sb55.append(notificationList.get(position).getAction());
+                            sb55.append(" ");
+                            sb55.append(notificationList.get(position).getProductName());
+                            sb55.append(" Product");
+
+        /* sender name */
+                            sb55.setSpan(new ClickableSpan() {
+                                @Override
+                                public void onClick(View widget) {
+
+                                    if (notificationList.get(mShareolder.getAdapterPosition()).getLayoutType().equalsIgnoreCase("MyAction")) {
+                                        mActivity.startActivity(new Intent(mActivity, UserProfile.class));
+                                    } else {
+                                        Intent intent = new Intent(mActivity, OtherProfile.class);
+                                        Bundle bundle = new Bundle();
+                                        bundle.putString("contactOtherProfile", notificationList.get(mShareolder.getAdapterPosition()).getSender());
+                                        intent.putExtras(bundle);
+                                        mActivity.startActivity(intent);
+                                    }
+                                }
+
+                                @Override
+                                public void updateDrawState(TextPaint ds) {
+                            /*ds.setUnderlineText(false);
+                            ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
+                            ds.setFakeBoldText(true);
+                            ds.setTextSize((float) 31.0);
+                            Log.i("TextSize", "->" + ds.getTextSize());*/
+                                }
+                            }, 0, notificationList.get(position).getSenderName().length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                    /*
+                    set Bold Font...
+                     */
+                            sb55.setSpan(new StyleSpan(Typeface.BOLD), 0,
+                                    notificationList.get(position).getSenderName().length(),
+                                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                    /* product name */
+                            sb55.setSpan(new ClickableSpan() {
+                                             @Override
+                                             public void onClick(View widget) {
+                                                 Intent intent = new Intent(mActivity, ProductViewActivity.class);
+                                                 intent.putExtra("product_id", notificationList.get(mShareolder.getAdapterPosition()).getProductID());
+                                                 mActivity.startActivity(intent);
+                                             }
+
+                                             @Override
+                                             public void updateDrawState(TextPaint ds) {
+                                        /*ds.setUnderlineText(false);
+                                        ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
+                                        ds.setFakeBoldText(true);
+                                        ds.setTextSize((float) 31.0);*/
+                                             }
+                                         }, notificationList.get(position).getSenderName().length() +
+                                            notificationList.get(position).getAction().length() +
+                                            +2,
+
+                                    notificationList.get(position).getSenderName().length() +
+                                            notificationList.get(position).getAction().length() +
+                                            2 +
+                                            notificationList.get(position).getProductName().length() + 1
+                                    , Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                    /*
+                    Set Bold Font
+                     */
+                            sb55.setSpan(new StyleSpan(Typeface.BOLD), notificationList.get(position).getSenderName().length() +
+                                            notificationList.get(position).getAction().length() +
+                                            +2,
+
+                                    notificationList.get(position).getSenderName().length() +
+                                            notificationList.get(position).getAction().length() +
+                                            2 +
+                                            notificationList.get(position).getProductName().length() + 1,
+                                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                        } else {
+                            sb55.append(notificationList.get(position).getSenderName());
+                            sb55.append(" ");
+                            sb55.append(notificationList.get(position).getAction());
+                            sb55.append(" ");
+                            sb55.append(notificationList.get(position).getReceiverName());
+                            sb55.append(" ");
+                            sb55.append(notificationList.get(position).getProductName());
+                            sb55.append(" Product");
+
+        /* sender name */
+                            sb55.setSpan(new ClickableSpan() {
+                                @Override
+                                public void onClick(View widget) {
+
+                                    if (notificationList.get(mShareolder.getAdapterPosition()).getLayoutType().equalsIgnoreCase("MyAction")) {
+                                        mActivity.startActivity(new Intent(mActivity, UserProfile.class));
+                                    } else {
+                                        Intent intent = new Intent(mActivity, OtherProfile.class);
+                                        Bundle bundle = new Bundle();
+                                        bundle.putString("contactOtherProfile", notificationList.get(mShareolder.getAdapterPosition()).getSender());
+                                        intent.putExtras(bundle);
+                                        mActivity.startActivity(intent);
+                                    }
+                                }
+
+                                @Override
+                                public void updateDrawState(TextPaint ds) {
+                            /*ds.setUnderlineText(false);
+                            ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
+                            ds.setFakeBoldText(true);
+                            ds.setTextSize((float) 31.0);
+                            Log.i("TextSize", "->" + ds.getTextSize());*/
+                                }
+                            }, 0, notificationList.get(position).getSenderName().length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                    /*
+                    Set Bold Font
+                     */
+                            sb55.setSpan(new StyleSpan(Typeface.BOLD), 0,
+                                    notificationList.get(position).getSenderName().length(),
+                                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                    /* receiver name */
+                            sb55.setSpan(new ClickableSpan() {
+                                             @Override
+                                             public void onClick(View widget) {
+                                                 if (notificationList.get(mShareolder.getAdapterPosition()).getLayoutType().equalsIgnoreCase("MyAction") ||
+                                                         notificationList.get(mShareolder.getAdapterPosition()).getLayoutType().equalsIgnoreCase("MyNotification")) {
+                                                     mActivity.startActivity(new Intent(mActivity, UserProfile.class));
+                                                 } else {
+                                                     Intent intent = new Intent(mActivity, OtherProfile.class);
+                                                     Bundle bundle = new Bundle();
+                                                     bundle.putString("contactOtherProfile", notificationList.get(mShareolder.getAdapterPosition()).getReceiver());
+                                                     intent.putExtras(bundle);
+                                                     mActivity.startActivity(intent);
+                                                 }
+                                             }
+
+                                             @Override
+                                             public void updateDrawState(TextPaint ds) {
+                                        /*ds.setUnderlineText(false);
+                                        ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
+                                        ds.setFakeBoldText(true);
+                                        ds.setTextSize((float) 31.0);*/
+                                             }
+                                         }, notificationList.get(position).getSenderName().length() +
+                                            notificationList.get(position).getAction().length() + 2,
+
+                                    notificationList.get(position).getSenderName().length() +
+                                            notificationList.get(position).getAction().length() + 2 +
+                                            notificationList.get(position).getReceiverName().length()
+                                    , Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                    /*
+                    Set Bold Font
+                     */
+                            sb55.setSpan(new StyleSpan(Typeface.BOLD), notificationList.get(position).getSenderName().length() +
+                                            notificationList.get(position).getAction().length() + +2,
+
+                                    notificationList.get(position).getSenderName().length() +
+                                            notificationList.get(position).getAction().length() + 2 +
+                                            notificationList.get(position).getReceiverName().length(),
+                                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            /* product name */
+                            sb55.setSpan(new ClickableSpan() {
+                                             @Override
+                                             public void onClick(View widget) {
+                                                 Intent intent = new Intent(mActivity, ProductViewActivity.class);
+                                                 intent.putExtra("product_id", notificationList.get(mShareolder.getAdapterPosition()).getProductID());
+                                                 mActivity.startActivity(intent);
+                                             }
+
+                                             @Override
+                                             public void updateDrawState(TextPaint ds) {
+                                        /*ds.setUnderlineText(false);
+                                        ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
+                                        ds.setFakeBoldText(true);
+                                        ds.setTextSize((float) 31.0);*/
+                                             }
+                                         }, notificationList.get(position).getSenderName().length() + notificationList.get(position).getAction().length() +
+                                            notificationList.get(position).getReceiverName().length() + 3,
+
+                                    notificationList.get(position).getSenderName().length() +
+                                            notificationList.get(position).getAction().length() +
+                                            notificationList.get(position).getReceiverName().length() + 3 +
+                                            notificationList.get(position).getProductName().length() + 1
+                                    , Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                    /*
+                    Set Bold Font
+                     */
+                            sb55.setSpan(new StyleSpan(Typeface.BOLD), notificationList.get(position).getSenderName().length() + notificationList.get(position).getAction().length() +
+                                            notificationList.get(position).getReceiverName().length() + 3,
+
+                                    notificationList.get(position).getSenderName().length() +
+                                            notificationList.get(position).getAction().length() +
+                                            notificationList.get(position).getReceiverName().length() + 3 +
+                                            notificationList.get(position).getProductName().length() + 1,
+                                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                        }
+
+                        mShareolder.mShareActionName.setSingleLine(false);
+                        mShareolder.mShareActionName.setText(sb55);
+                        mShareolder.mShareActionName.setMovementMethod(LinkMovementMethod.getInstance());
+                        mShareolder.mShareActionName.setHighlightColor(Color.TRANSPARENT);
+
+
+                        // holder.sharingdataaction.setText(obj.sendernameld.toString() + " " + obj.actionld.toString() + " " + obj.product_nameld.toString() + " " + "product");
+                        mShareolder.mProductRelative.setVisibility(View.VISIBLE);
+                        mShareolder.mVehicleRelative.setVisibility(View.GONE);
+                        mShareolder.mServiceRelative.setVisibility(View.GONE);
+                        mShareolder.mStoreRelative.setVisibility(View.GONE);
+                        mShareolder.mpostrel.setVisibility(View.GONE);
+                        mShareolder.mMySearchRelative.setVisibility(View.GONE);
+                        mShareolder.mAuctionRelative.setVisibility(View.GONE);
+                        mShareolder.mProfileRelative.setVisibility(View.GONE);
+
+                        mShareolder.mShareProductName.setText(notificationList.get(position).getProductName());
+                        mShareolder.mShareProductType.setText(notificationList.get(position).getProductType());
                         break;
 
                     case 6:
+
+
+                        SpannableStringBuilder sb66 = new SpannableStringBuilder();
+                        Log.i("Wall", "Service-LayType ->" + notificationList.get(position).getLayoutType());
+                        if (notificationList.get(position).getLayoutType().equalsIgnoreCase("MyAction")) {
+                            //mServiceHolder.mRelativeLike.setVisibility(View.GONE);
+                        } else {
+                            // mServiceHolder.mRelativeLike.setVisibility(View.VISIBLE);
+                        }
+
+                /*mServiceHolder.mServiceActionName.setText(notificationList.get(position).getSenderName() + " " +
+                        notificationList.get(position).getAction() + "\n" +
+                        notificationList.get(position).getServiceName()
+                        + " service");*/
+
+                        if (notificationList.get(position).getAction().equalsIgnoreCase("added")) {
+                            sb66.append(notificationList.get(position).getSenderName());
+                            sb66.append(" ");
+                            sb66.append(notificationList.get(position).getAction());
+                            sb66.append("\n");
+                            sb66.append(notificationList.get(position).getServiceName());
+                            sb66.append(" Service");
+
+
+                    /* sender name*/
+                            sb66.setSpan(new ClickableSpan() {
+                                @Override
+                                public void onClick(View widget) {
+
+                                    if (notificationList.get(mShareolder.getAdapterPosition()).getLayoutType().equalsIgnoreCase("MyAction")) {
+                                        mActivity.startActivity(new Intent(mActivity, UserProfile.class));
+                                    } else {
+                                        Intent intent = new Intent(mActivity, OtherProfile.class);
+                                        Bundle bundle = new Bundle();
+                                        bundle.putString("contactOtherProfile", notificationList.get(mShareolder.getAdapterPosition()).getSender());
+                                        intent.putExtras(bundle);
+                                        mActivity.startActivity(intent);
+                                    }
+                                }
+
+                                @Override
+                                public void updateDrawState(TextPaint ds) {
+                            /*ds.setUnderlineText(false);
+                            ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
+                            ds.setFakeBoldText(true);
+                            ds.setTextSize((float) 31.0);
+                            Log.i("TextSize", "->" + ds.getTextSize());*/
+                                }
+                            }, 0, notificationList.get(position).getSenderName().length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                    /*
+                    Set Bold Font
+                     */
+                            sb66.setSpan(new StyleSpan(Typeface.BOLD), 0,
+                                    notificationList.get(position).getSenderName().length(),
+                                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                    /*service name*/
+                            sb66.setSpan(new ClickableSpan() {
+                                             @Override
+                                             public void onClick(View widget) {
+                                                 Intent intent = new Intent(mActivity, ServiceViewActivity.class);
+                                                 intent.putExtra("service_id", notificationList.get(mShareolder.getAdapterPosition()).getServiceID());
+                                                 mActivity.startActivity(intent);
+                                             }
+
+                                             @Override
+                                             public void updateDrawState(TextPaint ds) {
+                                        /*ds.setUnderlineText(false);
+                                        ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
+                                        ds.setFakeBoldText(true);
+                                        ds.setTextSize((float) 31.0);*/
+                                             }
+                                         }, notificationList.get(position).getSenderName().length() +
+                                            notificationList.get(position).getAction().length() + 2,
+
+                                    notificationList.get(position).getSenderName().length() +
+                                            notificationList.get(position).getAction().length() +
+                                            2 +
+                                            notificationList.get(position).getServiceName().length() + 1
+                                    , Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                     /*
+                    Set Bold Font
+                     */
+                            sb66.setSpan(new StyleSpan(Typeface.BOLD), notificationList.get(position).getSenderName().length() +
+                                            notificationList.get(position).getAction().length() + 2,
+
+                                    notificationList.get(position).getSenderName().length() +
+                                            notificationList.get(position).getAction().length() +
+                                            2 +
+                                            notificationList.get(position).getServiceName().length() + 1,
+                                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                        } else {
+                            sb66.append(notificationList.get(position).getSenderName());
+                            sb66.append(" ");
+                            sb66.append(notificationList.get(position).getAction());
+                            sb66.append("\n");
+                            sb66.append(notificationList.get(position).getReceiverName());
+                            sb66.append(" ");
+                            sb66.append(notificationList.get(position).getServiceName());
+                            sb66.append(" Service");
+
+            /* sender name */
+                            sb66.setSpan(new ClickableSpan() {
+                                @Override
+                                public void onClick(View widget) {
+
+                                    if (notificationList.get(mShareolder.getAdapterPosition()).getLayoutType().equalsIgnoreCase("MyAction")) {
+                                        mActivity.startActivity(new Intent(mActivity, UserProfile.class));
+                                    } else {
+                                        Intent intent = new Intent(mActivity, OtherProfile.class);
+                                        Bundle bundle = new Bundle();
+                                        bundle.putString("contactOtherProfile", notificationList.get(mShareolder.getAdapterPosition()).getSender());
+                                        intent.putExtras(bundle);
+                                        mActivity.startActivity(intent);
+                                    }
+                                }
+
+                                @Override
+                                public void updateDrawState(TextPaint ds) {
+                           /* ds.setUnderlineText(false);
+                            ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
+                            ds.setFakeBoldText(true);
+                            ds.setTextSize((float) 31.0);
+                            Log.i("TextSize", "->" + ds.getTextSize());*/
+                                }
+                            }, 0, notificationList.get(position).getSenderName().length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                    /*
+                    Set Bold Font
+                     */
+                            sb66.setSpan(new StyleSpan(Typeface.BOLD), 0,
+                                    notificationList.get(position).getSenderName().length(),
+                                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                    /* receiver name */
+                            sb66.setSpan(new ClickableSpan() {
+                                             @Override
+                                             public void onClick(View widget) {
+
+                                                 if (notificationList.get(mShareolder.getAdapterPosition()).getLayoutType().equalsIgnoreCase("MyAction") ||
+                                                         notificationList.get(mShareolder.getAdapterPosition()).getLayoutType().equalsIgnoreCase("MyNotification")) {
+                                                     mActivity.startActivity(new Intent(mActivity, UserProfile.class));
+                                                 } else {
+                                                     Intent intent = new Intent(mActivity, OtherProfile.class);
+                                                     Bundle bundle = new Bundle();
+                                                     bundle.putString("contactOtherProfile", notificationList.get(mShareolder.getAdapterPosition()).getReceiver());
+                                                     intent.putExtras(bundle);
+                                                     mActivity.startActivity(intent);
+                                                 }
+                                             }
+
+                                             @Override
+                                             public void updateDrawState(TextPaint ds) {
+                                        /*ds.setUnderlineText(false);
+                                        ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
+                                        ds.setFakeBoldText(true);
+                                        ds.setTextSize((float) 31.0);*/
+                                             }
+                                         }, notificationList.get(position).getSenderName().length() + notificationList.get(position).getAction().length() + 2,
+                                    notificationList.get(position).getSenderName().length() +
+                                            notificationList.get(position).getAction().length() + 2 + notificationList.get(position).getReceiverName().length()
+                                    , Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                    /*
+                    Set Bold Font
+                     */
+                            sb66.setSpan(new StyleSpan(Typeface.BOLD), notificationList.get(position).getSenderName().length() +
+                                            notificationList.get(position).getAction().length() + 2,
+                                    notificationList.get(position).getSenderName().length() +
+                                            notificationList.get(position).getAction().length() + 2 +
+                                            notificationList.get(position).getReceiverName().length(),
+                                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                    /* service name */
+                            sb66.setSpan(new ClickableSpan() {
+                                             @Override
+                                             public void onClick(View widget) {
+                                                 Intent intent = new Intent(mActivity, ServiceViewActivity.class);
+                                                 intent.putExtra("service_id", notificationList.get(mShareolder.getAdapterPosition()).getServiceID());
+                                                 mActivity.startActivity(intent);
+                                             }
+
+                                             @Override
+                                             public void updateDrawState(TextPaint ds) {
+                                        /*ds.setUnderlineText(false);
+                                        ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
+                                        ds.setFakeBoldText(true);
+                                        ds.setTextSize((float) 31.0);*/
+                                             }
+                                         }, notificationList.get(position).getSenderName().length() + notificationList.get(position).getAction().length() +
+                                            notificationList.get(position).getReceiverName().length() + 3,
+
+                                    notificationList.get(position).getSenderName().length() +
+                                            notificationList.get(position).getAction().length() +
+                                            notificationList.get(position).getReceiverName().length() + 3 +
+                                            notificationList.get(position).getServiceName().length() + 1
+                                    , Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                    /*
+                    Set Bold Font
+                     */
+                            sb66.setSpan(new StyleSpan(Typeface.BOLD), notificationList.get(position).getSenderName().length() +
+                                            notificationList.get(position).getAction().length() +
+                                            notificationList.get(position).getReceiverName().length() + 3,
+                                    notificationList.get(position).getSenderName().length() +
+                                            notificationList.get(position).getAction().length() +
+                                            notificationList.get(position).getReceiverName().length() + 3 +
+                                            notificationList.get(position).getServiceName().length() + 1,
+                                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                        }
+
+                        mShareolder.mShareActionName.setSingleLine(false);
+                        mShareolder.mShareActionName.setText(sb66);
+                        mShareolder.mShareActionName.setMovementMethod(LinkMovementMethod.getInstance());
+                        mShareolder.mShareActionName.setHighlightColor(Color.TRANSPARENT);
+
+                        // holder.sharingdataaction.setText(obj.sendernameld.toString() + " " + obj.actionld.toString() + " " + obj.serive_nameld.toString() + " " + "service");
+
+
+                        mShareolder.mServiceRelative.setVisibility(View.VISIBLE);
+                        mShareolder.mVehicleRelative.setVisibility(View.GONE);
+                        mShareolder.mProductRelative.setVisibility(View.GONE);
+                        mShareolder.mStoreRelative.setVisibility(View.GONE);
+                        mShareolder.mpostrel.setVisibility(View.GONE);
+                        mShareolder.mMySearchRelative.setVisibility(View.GONE);
+                        mShareolder.mAuctionRelative.setVisibility(View.GONE);
+                        mShareolder.mProfileRelative.setVisibility(View.GONE);
+
+                        mShareolder.mShareServiceName.setText(notificationList.get(position).getServiceName());
+                        mShareolder.mShareServiceType.setText(notificationList.get(position).getServiceType());
                         break;
 
                     case 7:
+
+                        SpannableStringBuilder sb77 = new SpannableStringBuilder();
+
+                        if (notificationList.get(position).getLayoutType().equalsIgnoreCase("MyAction")) {
+                            //mPostHolder.mRelativeLike.setVisibility(View.GONE);
+                        } else {
+                            //mPostHolder.mRelativeLike.setVisibility(View.VISIBLE);
+                        }
+//
+//                mPostHolder.mAction.setText(notificationList.get(position).getSenderName() + " "
+//                        + notificationList.get(position).getAction() + " " + "status");
+
+                        sb77.append(notificationList.get(position).getSenderName());
+                        sb77.append(" ");
+                        sb77.append(notificationList.get(position).getAction());
+                        sb77.append(" Status");
+
+        /* sender name */
+                        sb77.setSpan(new ClickableSpan() {
+                            @Override
+                            public void onClick(View widget) {
+
+                                if (notificationList.get(mShareolder.getAdapterPosition()).getLayoutType().equalsIgnoreCase("MyAction")) {
+                                    mActivity.startActivity(new Intent(mActivity, UserProfile.class));
+                                } else {
+                                    Intent intent = new Intent(mActivity, OtherProfile.class);
+                                    Bundle bundle = new Bundle();
+                                    bundle.putString("contactOtherProfile", notificationList.get(mShareolder.getAdapterPosition()).getSender());
+                                    intent.putExtras(bundle);
+                                    mActivity.startActivity(intent);
+                                }
+                            }
+
+                            @Override
+                            public void updateDrawState(TextPaint ds) {
+                        /*ds.setUnderlineText(false);
+                        ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
+                        ds.setFakeBoldText(true);
+                        ds.setTextSize((float) 31.0);
+                        Log.i("TextSize", "->" + ds.getTextSize());*/
+                            }
+                        }, 0, notificationList.get(position).getSenderName().length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                 /*
+                    Set Bold Font
+                     */
+                        sb77.setSpan(new StyleSpan(Typeface.BOLD), 0,
+                                notificationList.get(position).getSenderName().length(),
+                                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                        mShareolder.mShareActionName.setSingleLine(false);
+                        mShareolder.mShareActionName.setText(sb77);
+                        mShareolder.mShareActionName.setMovementMethod(LinkMovementMethod.getInstance());
+                        mShareolder.mShareActionName.setHighlightColor(Color.TRANSPARENT);
+
+                        // holder.sharingdataaction.setText(obj.sendernameld.toString() + " " + obj.actionld.toString() + " " + "status");
+
+                        mShareolder.mpostrel.setVisibility(View.VISIBLE);
+                        mShareolder.mVehicleRelative.setVisibility(View.GONE);
+                        mShareolder.mProductRelative.setVisibility(View.GONE);
+                        mShareolder.mStoreRelative.setVisibility(View.GONE);
+                        mShareolder.mMySearchRelative.setVisibility(View.GONE);
+                        mShareolder.mServiceRelative.setVisibility(View.GONE);
+                        mShareolder.mAuctionRelative.setVisibility(View.GONE);
+                        mShareolder.mProfileRelative.setVisibility(View.GONE);
+
                         break;
 
                     case 8:
+
+                        SpannableStringBuilder sb88 = new SpannableStringBuilder();
+
+                        Log.i("Wall", "Search-LayType ->" + notificationList.get(position).getLayoutType());
+
+                        if (notificationList.get(position).getLayoutType().equalsIgnoreCase("MyAction")) {
+                            //mSearchHolder.mRelativeLike.setVisibility(View.GONE);
+
+                        } else {
+                            //mSearchHolder.mRelativeLike.setVisibility(View.VISIBLE);
+                        }
+
+                        sb88.append(notificationList.get(position).getSenderName());
+                        sb88.append(" ");
+                        sb88.append(notificationList.get(position).getAction());
+                        sb88.append(" search");
+
+        /* sender name */
+                        sb88.setSpan(new ClickableSpan() {
+                            @Override
+                            public void onClick(View widget) {
+
+                                if (notificationList.get(mShareolder.getAdapterPosition()).getLayoutType().equalsIgnoreCase("MyAction")) {
+                                    mActivity.startActivity(new Intent(mActivity, UserProfile.class));
+                                } else {
+                                    Intent intent = new Intent(mActivity, OtherProfile.class);
+                                    Bundle bundle = new Bundle();
+                                    bundle.putString("contactOtherProfile", notificationList.get(mShareolder.getAdapterPosition()).getSender());
+                                    intent.putExtras(bundle);
+                                    mActivity.startActivity(intent);
+                                }
+                            }
+
+                            @Override
+                            public void updateDrawState(TextPaint ds) {
+                       /* ds.setUnderlineText(false);
+                        ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
+                        ds.setFakeBoldText(true);
+                        ds.setTextSize((float) 31.0);
+                        Log.i("TextSize", "->" + ds.getTextSize());*/
+                            }
+                        }, 0, notificationList.get(position).getSenderName().length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                 /*
+                    Set Bold Font
+                     */
+                        sb88.setSpan(new StyleSpan(Typeface.BOLD), 0,
+                                notificationList.get(position).getSenderName().length(),
+                                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                        mShareolder.mShareActionName.setSingleLine(false);
+                        mShareolder.mShareActionName.setText(sb88);
+                        mShareolder.mShareActionName.setMovementMethod(LinkMovementMethod.getInstance());
+                        mShareolder.mShareActionName.setHighlightColor(Color.TRANSPARENT);
+
+                        // holder.sharingdataaction.setText(obj.sendernameld.toString() + " " + obj.actionld.toString() + " " + "search");
+
+                        mShareolder.mMySearchRelative.setVisibility(View.VISIBLE);
+                        mShareolder.mVehicleRelative.setVisibility(View.GONE);
+                        mShareolder.mProductRelative.setVisibility(View.GONE);
+                        mShareolder.mStoreRelative.setVisibility(View.GONE);
+                        mShareolder.mpostrel.setVisibility(View.GONE);
+                        mShareolder.mServiceRelative.setVisibility(View.GONE);
+                        mShareolder.mAuctionRelative.setVisibility(View.GONE);
+                        mShareolder.mProfileRelative.setVisibility(View.GONE);
+
+                        mShareolder.mShareMySearchCategory.setText(notificationList.get(position).getSearchCategory());
+                        mShareolder.mShareBrand.setText(notificationList.get(position).getSearchBrand());
+                        mShareolder.mShareModel.setText(notificationList.get(position).getSearchModel());
+                        mShareolder.mSharePrice.setText(notificationList.get(position).getSearchPrice());
+                        mShareolder.mShareYear.setText(notificationList.get(position).getSearchManfYear());
+                        mShareolder.mShareDateOfSearch.setText(notificationList.get(position).getSearchDate());
+                        mShareolder.mShareMySearchLeads.setText(notificationList.get(position).getSearchLeads());
+
                         break;
 
                     case 9:
+
+                        // holder.sharingdataaction.setText(obj.sendernameld.toString() + " " + obj.actionld.toString() + " auction");
+
+                        mShareolder.mAuctionRelative.setVisibility(View.VISIBLE);
+                        mShareolder.mVehicleRelative.setVisibility(View.GONE);
+                        mShareolder.mProductRelative.setVisibility(View.GONE);
+                        mShareolder.mStoreRelative.setVisibility(View.GONE);
+                        mShareolder.mMySearchRelative.setVisibility(View.GONE);
+                        mShareolder.mServiceRelative.setVisibility(View.GONE);
+                        mShareolder.mpostrel.setVisibility(View.GONE);
+                        mShareolder.mProfileRelative.setVisibility(View.GONE);
+
+                        mShareolder.mShareAuctionName.setText(notificationList.get(position).getActionTitle());
+                        mShareolder.mShareAuctionNoOfVehicles.setText(notificationList.get(position).getNoOfVehicles());
+                        mShareolder.mShareAuctionEndDate.setText(notificationList.get(position).getEndDate());
+                        mShareolder.mShareAuctionEndTime.setText(notificationList.get(position).getEndTime());
+                        mShareolder.mShareAuctionGoingCount.setText(notificationList.get(position).getGoingCount());
+                        mShareolder.mShareAuctionIgnoreCount.setText(notificationList.get(position).getIgnoreCount());
+                        mShareolder.mShareAuctionType.setText(notificationList.get(position).getAuctionType());
+
                         break;
 
                 }
-                break;*/
+                break;
         }
     }
 
-    private void call(String otherContact) {
-        Intent in = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + otherContact));
-        try {
-            mActivity.startActivity(in);
-        } catch (android.content.ActivityNotFoundException ex) {
-            System.out.println("No Activity Found For Call in Car Details Fragment\n");
-        }
-    }
+//    private void call(String otherContact) {
+//        Intent in = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + otherContact));
+//        try {
+//            mActivity.startActivity(in);
+//        } catch (android.content.ActivityNotFoundException ex) {
+//            System.out.println("No Activity Found For Call in Car Details Fragment\n");
+//        }
+//    }
 
     @Override
     public void notifySuccess(Response<?> response) {

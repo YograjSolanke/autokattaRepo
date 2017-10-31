@@ -101,6 +101,8 @@ public class ShareWithinAppTabFragment extends Fragment {
 
             getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).edit()
                     .putString("Share_keyword", "").apply();
+            getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).edit()
+                    .putString("profile_contact", "").apply();
 
             switch (position) {
                 case 0:
