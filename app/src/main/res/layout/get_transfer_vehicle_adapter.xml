@@ -166,7 +166,9 @@
         android:layout_width="match_parent"
         android:layout_height="2dp"
         android:layout_below="@+id/relative"
-        android:background="@color/grey" />
+        android:background="@color/grey"
+        android:layout_marginTop="5dp"
+        />
 
     <LinearLayout
         android:id="@+id/rel"
@@ -178,18 +180,20 @@
         >
         <Button
             android:layout_width="150dp"
-            android:layout_height="50dp"
+            android:layout_height="20dp"
             android:text="Accept"
             android:background="@color/background"
             android:id="@+id/accept"
+            android:layout_marginLeft="5dp"
             android:layout_weight="1"/>
         <Button
             android:layout_width="150dp"
-            android:layout_height="50dp"
+            android:layout_height="20dp"
             android:text="Reject"
             android:id="@+id/reject"
             android:layout_marginStart="3dp"
             android:background="@color/background"
+            android:layout_marginRight="5dp"
             android:layout_weight="1"/>
 
     </LinearLayout>
@@ -198,5 +202,6 @@
         android:layout_width="match_parent"
         android:layout_height="2dp"
         android:layout_below="@+id/rel"
+        android:layout_marginBottom="5dp"
         android:background="@color/grey" />
 </RelativeLayout>

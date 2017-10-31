@@ -25,38 +25,45 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import java.util.List;
 
 import autokatta.com.R;
+import autokatta.com.apicall.ApiCall;
+import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.GetTransferVehicleNotificationResponse;
 import autokatta.com.response.GetTransferVehicleNotificationResponse.Success;
 import autokatta.com.view.VehicleDetails;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
+import retrofit2.Response;
 
 /**
  * Created by ak-005 on 30/10/17.
  */
 
-public class GetTransferVehicleListAdapter extends BaseAdapter {
+public class GetTransferVehicleListAdapter extends BaseAdapter implements RequestNotifier {
     Activity mActivity;
+    ApiCall mApiCall;
     List<GetTransferVehicleNotificationResponse.Success> mList;
+
 
 
     public GetTransferVehicleListAdapter(Activity activity, List<Success> mGetTransferVehicleList) {
         this.mActivity = activity;
         this.mList = mGetTransferVehicleList;
+        mApiCall = new ApiCall(mActivity, this);
 
     }
 
+
     static class ViewHolder {
         TextView mOwnerName, mAddress, mReason, mDescription, mVehicleTitle;
-        Button mAccept, mReject, mCall;
-        ImageView mImage;
+        Button mAccept, mReject;
+        ImageView mImage, mCall;
         RelativeLayout mVehicleDetails;
     }
 
     @Override
     public View getView(final int position, View view, ViewGroup viewGroup) {
-        ViewHolder holder = null;
 
+        ViewHolder holder = null;
         if (view == null) {
             LayoutInflater inflater = (LayoutInflater) mActivity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = inflater.inflate(R.layout.get_transfer_vehicle_adapter, null);
@@ -66,11 +73,12 @@ public class GetTransferVehicleListAdapter extends BaseAdapter {
             holder.mAddress = (TextView) view.findViewById(R.id.address);
             holder.mReason = (TextView) view.findViewById(R.id.reason);
             holder.mDescription = (TextView) view.findViewById(R.id.description);
-            holder.mVehicleTitle = (TextView) view.findViewById(R.id.vehicletitle);
+            holder.mVehicleTitle = (TextView) view.findViewById(R.id.txtadmin);
             holder.mAccept = (Button) view.findViewById(R.id.accept);
             holder.mReject = (Button) view.findViewById(R.id.reject);
-            holder.mCall = (Button) view.findViewById(R.id.call);
+            holder.mCall = (ImageView) view.findViewById(R.id.call);
             holder.mImage = (ImageView) view.findViewById(R.id.pro_pic);
+            holder.mVehicleDetails = (RelativeLayout) view.findViewById(R.id.relative);
 
             view.setTag(holder);
         } else {
@@ -119,19 +127,48 @@ public class GetTransferVehicleListAdapter extends BaseAdapter {
         holder.mAccept.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                CustomToast.customToast(mActivity, "Working");
+                mApiCall.TransferVehicle("accept", mList.get(position).getTransferID());
+                mList.remove(mList.get(position));
+                notifyDataSetChanged();
             }
         });
 
         holder.mReject.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                CustomToast.customToast(mActivity, "Working");
+                mApiCall.TransferVehicle("reject", mList.get(position).getTransferID());
+                mList.remove(mList.get(position));
+                notifyDataSetChanged();
             }
         });
 
         return view;
     }
+
+
+    @Override
+    public void notifySuccess(Response<?> response) {
+
+    }
+
+    @Override
+    public void notifyError(Throwable error) {
+
+    }
+
+    @Override
+    public void notifyString(String str) {
+        if (str != null) {
+            if (str.equalsIgnoreCase("transfer_accept_success")) {
+                CustomToast.customToast(mActivity, "Vehicle Transfered successfully");
+            }else
+                if (str.equalsIgnoreCase("transfer_reject_success"))
+            {
+                CustomToast.customToast(mActivity, "Vehicle Transfered Rejected");
+            }
+        }
+    }
+
 
     //Calling Functionality
     private void call(String contact) {

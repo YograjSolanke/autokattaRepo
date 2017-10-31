@@ -13,21 +13,20 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import autokatta.com.R;
-import autokatta.com.adapter.GetTransferVehicleListAdapter;
+import autokatta.com.adapter.GooglePlacesAdapter;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
-import autokatta.com.response.GetTransferVehicleNotificationResponse;
 import autokatta.com.view.OtherProfile;
 import retrofit2.Response;
 
@@ -40,12 +39,12 @@ import static com.google.zxing.integration.android.IntentIntegrator.REQUEST_CODE
 
 public class AddTransferVehicle extends Fragment implements RequestNotifier, View.OnClickListener {
     View mTransferVehicle;
-    EditText mContact, owner_name, address, full_address, reason_for_transfer, description;
+    EditText mContact, owner_name, full_address, reason_for_transfer, description;
     Button submit;
+    AutoCompleteTextView address;
     String myContact;
     int vehicleId;
     LinearLayout txtUser, txtInvite, linear_transfer;
-    List<GetTransferVehicleNotificationResponse.Success> mGetTransferVehicleList = new ArrayList<>();
 
 
     @Nullable
@@ -54,7 +53,7 @@ public class AddTransferVehicle extends Fragment implements RequestNotifier, Vie
         mTransferVehicle = inflater.inflate(R.layout.custom_bottom_transfer_stock, container, false);
         mContact = (EditText) mTransferVehicle.findViewById(R.id.contact_no);
         owner_name = (EditText) mTransferVehicle.findViewById(R.id.owner_name);
-        address = (EditText) mTransferVehicle.findViewById(R.id.address);
+        address = (AutoCompleteTextView) mTransferVehicle.findViewById(R.id.address);
         full_address = (EditText) mTransferVehicle.findViewById(R.id.full_address);
         reason_for_transfer = (EditText) mTransferVehicle.findViewById(R.id.reason_for_transfer);
         description = (EditText) mTransferVehicle.findViewById(R.id.description);
@@ -76,7 +75,6 @@ public class AddTransferVehicle extends Fragment implements RequestNotifier, Vie
                 startActivityForResult(intent, REQUEST_CODE);
             }
         });
-
         txtUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -88,6 +86,7 @@ public class AddTransferVehicle extends Fragment implements RequestNotifier, Vie
             }
         });
 
+        address.setAdapter(new GooglePlacesAdapter(getActivity(), R.layout.simple));
         mContact.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -120,40 +119,8 @@ public class AddTransferVehicle extends Fragment implements RequestNotifier, Vie
 
     @Override
     public void notifySuccess(Response<?> response) {
-        if (response != null) {
-            if (response.isSuccessful()) {
-                GetTransferVehicleNotificationResponse getTransferVehicleNotificationResponse = (GetTransferVehicleNotificationResponse) response.body();
-                if (!getTransferVehicleNotificationResponse.getSuccess().isEmpty()) {
-                    mGetTransferVehicleList.clear();
-                    for (GetTransferVehicleNotificationResponse.Success vehicles : getTransferVehicleNotificationResponse.getSuccess()) {
-                        vehicles.setTransferID(vehicles.getTransferID());
-                        vehicles.setAddress(vehicles.getAddress());
-                        vehicles.setCustomerContact(vehicles.getCustomerContact());
-                        vehicles.setDescription(vehicles.getDescription());
-                        vehicles.setFullAddress(vehicles.getFullAddress());
-                        vehicles.setImage(vehicles.getImage());
-                        vehicles.setOldOwnerName(vehicles.getOldOwnerName());
-                        vehicles.setTransferReason(vehicles.getTransferReason());
-                        vehicles.setVehicleName(vehicles.getVehicleName());
-                        vehicles.setVehicleID(vehicles.getVehicleID());
-                        mGetTransferVehicleList.add(vehicles);
-                    }
-                    GetTransferVehicleListAdapter adapter = new GetTransferVehicleListAdapter(getActivity(), mGetTransferVehicleList);
-                    //setAdapter(adapter);
-                    adapter.notifyDataSetChanged();
-                }
 
-            } else {
-                if (isAdded())
-                    CustomToast.customToast(getActivity(), getActivity().getString(R.string.no_response));
-            }
-        } else {
-            // CustomToast.customToast(getActivity(), getActivity().getString(R.string._404));
-
-        }
     }
-
-
 
 
     @Override
@@ -170,6 +137,7 @@ public class AddTransferVehicle extends Fragment implements RequestNotifier, Vie
                 txtInvite.setVisibility(View.GONE);
             } else if (str.equalsIgnoreCase("transfer_success")) {
                 CustomToast.customToast(getActivity(), "Transfered successfully");
+                getActivity().finish();
 
             } else {
                 txtInvite.setVisibility(View.VISIBLE);
@@ -218,10 +186,50 @@ public class AddTransferVehicle extends Fragment implements RequestNotifier, Vie
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.submit:
-                ApiCall apiCall = new ApiCall(getActivity(), this);
-                apiCall._autokattaRequestForTransferVehicle(vehicleId, owner_name.getText().toString(), mContact.getText().toString(),
-                        reason_for_transfer.getText().toString(), address.getText().toString(), full_address.getText().toString(),
-                        description.getText().toString(), myContact);
+                Boolean flag = false;
+                if (!address.getText().toString().equalsIgnoreCase("")) {
+
+                    List<String> resultList = GooglePlacesAdapter.getResultList();
+                    for (int i = 0; i < resultList.size(); i++) {
+
+                        if (address.getText().toString().equalsIgnoreCase(resultList.get(i))) {
+                            flag = true;
+                            break;
+
+                        } else {
+
+                            flag = false;
+                        }
+                    }
+                }
+                if (owner_name.getText().toString().equalsIgnoreCase("")) {
+                    owner_name.setFocusable(true);
+                    owner_name.setError("Please Provide Name");
+                } else if (address.getText().toString().equalsIgnoreCase("")) {
+                    address.setFocusable(true);
+                    address.setError("Please Provide Name");
+                } else if (full_address.getText().toString().equalsIgnoreCase("")) {
+                    full_address.setFocusable(true);
+                    full_address.setError("Please Provide Name");
+                } else if (reason_for_transfer.getText().toString().equalsIgnoreCase("")) {
+                    reason_for_transfer.setFocusable(true);
+                    reason_for_transfer.setError("Please Provide Name");
+                } else if (description.getText().toString().equalsIgnoreCase("")) {
+                    description.setFocusable(true);
+                    description.setError("Please Provide Name");
+                } else if (address.getText().toString().equalsIgnoreCase("")) {
+                    address.setError("Enter Location");
+                    address.requestFocus();
+
+                } else if (!address.getText().toString().equalsIgnoreCase("") && !flag) {
+                    address.setError("Please Select Location From Dropdown Only");
+                    address.requestFocus();
+                } else {
+                    ApiCall apiCall = new ApiCall(getActivity(), this);
+                    apiCall._autokattaRequestForTransferVehicle(vehicleId, owner_name.getText().toString(), mContact.getText().toString(),
+                            reason_for_transfer.getText().toString(), address.getText().toString(), full_address.getText().toString(),
+                            description.getText().toString(), myContact, "");
+                }
                 //add status param
                 break;
         }

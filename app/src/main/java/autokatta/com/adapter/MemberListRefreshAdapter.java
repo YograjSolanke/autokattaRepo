@@ -1,11 +1,14 @@
 package autokatta.com.adapter;
 
+import android.Manifest.permission;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
@@ -49,7 +52,7 @@ import retrofit2.Response;
 public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRefreshAdapter.MyViewHolder> implements RequestNotifier {
     private Activity mActivity;
     private List<GetGroupContactsResponse.Success> mItemList = new ArrayList<>();
-    private  List<Boolean> mCheckList=new ArrayList<>();
+    private List<Boolean> mCheckList = new ArrayList<>();
     private String mCallFrom;
     private String bundle_GroupName;
     private String myContact;
@@ -81,7 +84,7 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
     }
 
     public MemberListRefreshAdapter(Activity mActivity1, int GroupId,
-                                    List<GetGroupContactsResponse.Success> mItemList, String mCallfrom, String bundle_GroupName,com.github.clans.fab.FloatingActionButton btnRequestedcontacts) {
+                                    List<GetGroupContactsResponse.Success> mItemList, String mCallfrom, String bundle_GroupName, com.github.clans.fab.FloatingActionButton btnRequestedcontacts) {
         this.mActivity = mActivity1;
         mGroupId = GroupId;
         this.mItemList = mItemList;
@@ -89,7 +92,7 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
         this.bundle_GroupName = bundle_GroupName;
         mApiCall = new ApiCall(mActivity, this);
         mTestConnection = new ConnectionDetector(mActivity);
-        this.mRequestedCntacts= btnRequestedcontacts;
+        this.mRequestedCntacts = btnRequestedcontacts;
         mCheckList.clear();
     }
 
@@ -209,25 +212,21 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
             }
         }
         /*Requested Member check if admin*/
-        if (mItemList.get(position).getContact().equalsIgnoreCase(myContact) && mItemList.get(position).getMember().equalsIgnoreCase("Admin"))
-        {
+        if (mItemList.get(position).getContact().equalsIgnoreCase(myContact) && mItemList.get(position).getMember().equalsIgnoreCase("Admin")) {
             mCheckList.add(true);
-        }else
-        {
+        } else {
             mCheckList.add(false);
         }
 
-        if (mCheckList.contains(true))
-        {
+        if (mCheckList.contains(true)) {
             mRequestedCntacts.setVisibility(View.VISIBLE);
-        }else
-        {
+        } else {
             mRequestedCntacts.setVisibility(View.GONE);
         }
         mRequestedCntacts.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                Bundle b=new Bundle();
+                Bundle b = new Bundle();
                 b.putInt("bundle_GroupId", mGroupId);
                 RequestedMembersList mRequestedMembersList = new RequestedMembersList();
                 mRequestedMembersList.setArguments(b);
@@ -397,6 +396,16 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
     private void call(String contact) {
         Intent in = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + contact));
         try {
+            if (ActivityCompat.checkSelfPermission(mActivity, permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
+                return;
+            }
             mActivity.startActivity(in);
         } catch (android.content.ActivityNotFoundException ex) {
             ex.printStackTrace();

@@ -8962,7 +8962,7 @@ get ExchangeMela Analytics Data
 
     /* Transfer stock...*/
     public void _autokattaRequestForTransferVehicle(int VehicleID, String OwnerName, String CustomerContact, String TransferReason,
-                                                    String Address, String FullAddress, String Description, String MyContact) {
+                                                    String Address, String FullAddress, String Description, String MyContact,String Status) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 //JSON to Gson conversion
@@ -8978,7 +8978,7 @@ get ExchangeMela Analytics Data
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
                 Call<String> mSoldVehicle = serviceApi._autokattaRequestForTransferVehicle(VehicleID, OwnerName, CustomerContact,
-                        TransferReason, Address, FullAddress, Description, MyContact);
+                        TransferReason, Address, FullAddress, Description, MyContact,Status);
                 mSoldVehicle.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
@@ -9038,15 +9038,15 @@ get ExchangeMela Analytics Data
                         .build();
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<TransferListResponse> mCompareResponseCall = serviceApi.GetTransferVehicleNotification(myContact);
-                mCompareResponseCall.enqueue(new Callback<TransferListResponse>() {
+                Call<GetTransferVehicleNotificationResponse> mCompareResponseCall = serviceApi.GetTransferVehicleNotification(myContact);
+                mCompareResponseCall.enqueue(new Callback<GetTransferVehicleNotificationResponse>() {
                     @Override
-                    public void onResponse(Call<TransferListResponse> call, Response<TransferListResponse> response) {
+                    public void onResponse(Call<GetTransferVehicleNotificationResponse> call, Response<GetTransferVehicleNotificationResponse> response) {
                         mNotifier.notifySuccess(response);
                     }
 
                     @Override
-                    public void onFailure(Call<TransferListResponse> call, Throwable t) {
+                    public void onFailure(Call<GetTransferVehicleNotificationResponse> call, Throwable t) {
                         mNotifier.notifyError(t);
                     }
                 });
@@ -9253,6 +9253,104 @@ get ExchangeMela Analytics Data
             e.printStackTrace();
         }
     }
+
+   public void getStoreMedia(int storeid) {
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<GetMediaResponse> mediaResponseCall = serviceApi._autokattaGetStoreMedia(storeid);
+                mediaResponseCall.enqueue(new Callback<GetMediaResponse>() {
+                    @Override
+                    public void onResponse(Call<GetMediaResponse> call, Response<GetMediaResponse> response) {
+                        mNotifier.notifySuccess(response);
+                    }
+
+                    @Override
+                    public void onFailure(Call<GetMediaResponse> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+            } else {
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+   public void getContactMedia(String Mycontact) {
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<GetMediaResponse> mediaResponseCall = serviceApi._autokattaGetContactMedia(Mycontact);
+                mediaResponseCall.enqueue(new Callback<GetMediaResponse>() {
+                    @Override
+                    public void onResponse(Call<GetMediaResponse> call, Response<GetMediaResponse> response) {
+                        mNotifier.notifySuccess(response);
+                    }
+
+                    @Override
+                    public void onFailure(Call<GetMediaResponse> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+            } else {
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    //Transfer Vehicle
+    public void TransferVehicle(String Status,int TransferId) {
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+
+                //JSON to Gson conversion
+                Gson gson = new GsonBuilder()
+                        .setLenient()
+                        .create();
+
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create(gson))
+                        .client(initLog().build())
+                        .build();
+
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<String> forgetPasswordResponseCall = serviceApi._autokattaTransferVehicle(TransferId,Status);
+                forgetPasswordResponseCall.enqueue(new Callback<String>() {
+                    @Override
+                    public void onResponse(Call<String> call, Response<String> response) {
+                        mNotifier.notifyString(response.body());
+                    }
+
+                    @Override
+                    public void onFailure(Call<String> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+            } else {
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
 
     /***

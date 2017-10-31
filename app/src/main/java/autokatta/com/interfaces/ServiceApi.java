@@ -1424,7 +1424,8 @@ public interface ServiceApi {
                                                      @Query("Address") String Address,
                                                      @Query("FullAddress") String FullAddress,
                                                      @Query("Description") String Description,
-                                                     @Query("MyContact") String MyContact);
+                                                     @Query("MyContact") String MyContact,
+                                                     @Query("TransferStatus") String Status);
 
     @POST("SendFCMNotificationWithContact")
     Call<String> _sendFcmNotification(@Query("Contact") String contact);
@@ -1433,7 +1434,7 @@ public interface ServiceApi {
     Call<NewVehicleAllResponse> _autokattaGetNewVehicleDetailsForContact(@Query("MyContact") String myContact);
 
     @GET("GetTransferVehicleNotification")
-    Call<TransferListResponse> GetTransferVehicleNotification(@Query("Contact") String myContact);
+    Call<GetTransferVehicleNotificationResponse> GetTransferVehicleNotification(@Query("Contact") String myContact);
 
 
     @GET("GetNewVehicleDetailsForStore")
@@ -1469,6 +1470,19 @@ public interface ServiceApi {
     /*get Group Media*/
     @GET("GetGroupMedia")
     Call<GetMediaResponse> _autokattaGetGroupMedia(@Query("GroupID") int GroupId);
+
+  /*get Group Media*/
+    @GET("GetStoreMedia")
+    Call<GetMediaResponse> _autokattaGetStoreMedia(@Query("StoreID") int StoreID);
+
+  /*get Group Media*/
+    @GET("GetContactMedia")
+    Call<GetMediaResponse> _autokattaGetContactMedia(@Query("MyContact") String MyContact);
+
+
+   /* TransferVehicle*/
+    @POST("TransferVehicle")
+    Call<String> _autokattaTransferVehicle(@Query("TransferID") int Transferid,@Query("Status") String Status);
 
 
 }
