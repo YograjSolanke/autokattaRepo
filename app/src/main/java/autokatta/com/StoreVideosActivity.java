@@ -9,7 +9,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
 
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
@@ -21,19 +20,20 @@ import autokatta.com.adapter.VideoAdapter;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
+import autokatta.com.response.GetMediaResponse;
 import retrofit2.Response;
 
-public class StoreVideosActivity extends AppCompatActivity implements RequestNotifier, View.OnClickListener {
+public class StoreVideosActivity extends AppCompatActivity implements RequestNotifier {
 
     ApiCall mApiCall;
     private ProgressDialog pDialog;
     String myContact;
     VideoAdapter adapter;
-
     RecyclerView recyclerView;
     LinearLayoutManager mLinearLayoutManager;
-    List<String> videosList = new ArrayList<>();
-    //Picasso picasso;
+    List<GetMediaResponse.Success.Video> videosList = new ArrayList<GetMediaResponse.Success.Video>();
+    int mGroupId, mStoreId;
+    String mBundleContact;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,9 +43,11 @@ public class StoreVideosActivity extends AppCompatActivity implements RequestNot
         setSupportActionBar(toolbar);
         setTitle("Videos");
 
+        pDialog = new ProgressDialog(this);
+        pDialog.setMessage("Loading...");
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         recyclerView = (RecyclerView) findViewById(R.id.rv_home);
-
 
         mApiCall = new ApiCall(StoreVideosActivity.this, this);
         myContact = getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", null);
@@ -54,10 +56,10 @@ public class StoreVideosActivity extends AppCompatActivity implements RequestNot
         mLinearLayoutManager.setReverseLayout(true);
         mLinearLayoutManager.setStackFromEnd(true);
         recyclerView.setLayoutManager(mLinearLayoutManager);
-        for (int i = 0; i < 5; i++) {
+        /*for (int i = 0; i < 5; i++) {
             //videosList.add("http://www.androidbegin.com/tutorial/AndroidCommercial.3gp");
             videosList.add(getString(R.string.base_image_url) + "VID_20171005_185639.mp4");
-        }
+        }*/
 
         runOnUiThread(new Runnable() {
             @Override
@@ -68,41 +70,86 @@ public class StoreVideosActivity extends AppCompatActivity implements RequestNot
                     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
                 }
 
+                if (getIntent().getExtras() != null) {
+                    mGroupId = getIntent().getExtras().getInt("bundle_GroupId", 0);
+                    mStoreId = getIntent().getExtras().getInt("store_id", 0);
+                    mBundleContact = getIntent().getExtras().getString("bundle_Contact", "");
+                    Log.i("groupId", String.valueOf(mGroupId));
+                    Log.i("storeId", String.valueOf(mStoreId));
+                }
 
-                adapter = new VideoAdapter(StoreVideosActivity.this, videosList);
-                recyclerView.setAdapter(adapter);
-                adapter.notifyDataSetChanged();
-                recyclerView.smoothScrollBy(0, 1);
-                recyclerView.smoothScrollBy(0, -1);
-//                recyclerView.setCheckForMp4(false); // true by default
-                //recyclerView.setPlayOnlyFirstVideo(true); // false by default
+                if (mGroupId != 0) {
+                    getGroupVideos(mGroupId);
+                } else if (mStoreId != 0) {
+                    getStoreVideos(mStoreId);
+                } else if (!mBundleContact.equals("")) {
 
-
+                }
             }
         });
-
-
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-        //recyclerView.stopVideos();
+    /*API call to get Group Videos*/
+    private void getGroupVideos(int mGroupId) {
+        pDialog.show();
+        mApiCall.getGroupMedia(mGroupId);
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        // recyclerView.playAvailableVideos(0);
-    }
-    @Override
-    public void onClick(View view) {
-
+    /*API call to get Store Videos*/
+    private void getStoreVideos(int mStoreId) {
     }
 
     @Override
     public void notifySuccess(Response<?> response) {
+        if (response != null) {
+            if (response.isSuccessful()) {
 
+                GetMediaResponse mediaResponse = (GetMediaResponse) response.body();
+                if (!mediaResponse.getSuccess().getVideo().isEmpty()) {
+                    if (pDialog.isShowing()) {
+                        pDialog.dismiss();
+                    }
+                    videosList.clear();
+
+                    for (GetMediaResponse.Success.Video sVideo : mediaResponse.getSuccess().getVideo()) {
+                        sVideo.setLiveStatusID(sVideo.getLiveStatusID());
+                        sVideo.setStatus(sVideo.getStatus());
+                        sVideo.setUserContact(sVideo.getUserContact());
+                        sVideo.setInterest(sVideo.getInterest());
+                        sVideo.setType(sVideo.getType());
+                        sVideo.setImage(sVideo.getImage());
+                        sVideo.setVideo(sVideo.getVideo());
+                        sVideo.setDateTime(sVideo.getDateTime());
+                        videosList.add(sVideo);
+                    }
+
+                    adapter = new VideoAdapter(StoreVideosActivity.this, videosList);
+                    recyclerView.setAdapter(adapter);
+                    adapter.notifyDataSetChanged();
+                    recyclerView.smoothScrollBy(0, 1);
+                    recyclerView.smoothScrollBy(0, -1);
+//                recyclerView.setCheckForMp4(false); // true by default
+                    //recyclerView.setPlayOnlyFirstVideo(true); // false by default
+
+                } else {
+                    if (pDialog.isShowing()) {
+                        pDialog.dismiss();
+                    }
+                    CustomToast.customToast(getApplicationContext(), getString(R.string.no_data));
+                }
+
+            } else {
+                if (pDialog.isShowing()) {
+                    pDialog.dismiss();
+                }
+                CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
+            }
+        } else {
+            if (pDialog.isShowing()) {
+                pDialog.dismiss();
+            }
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
+        }
     }
 
     @Override
@@ -111,6 +158,7 @@ public class StoreVideosActivity extends AppCompatActivity implements RequestNot
         if (pDialog.isShowing()) {
             pDialog.dismiss();
         }
+
         if (error instanceof SocketTimeoutException) {
             CustomToast.customToast(getApplicationContext(), getString(R.string._404));
         } else if (error instanceof NullPointerException) {
@@ -123,7 +171,7 @@ public class StoreVideosActivity extends AppCompatActivity implements RequestNot
             CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
         } else {
             Log.i("Check Class-"
-                    , "StoreViewActivity");
+                    , "StoreVideosActivity");
             error.printStackTrace();
         }
 
@@ -134,7 +182,6 @@ public class StoreVideosActivity extends AppCompatActivity implements RequestNot
 
     }
 
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -144,7 +191,6 @@ public class StoreVideosActivity extends AppCompatActivity implements RequestNot
         }
         return super.onOptionsItemSelected(item);
     }
-
 
     @Override
     public void onBackPressed() {

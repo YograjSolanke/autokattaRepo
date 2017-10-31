@@ -88,6 +88,7 @@ public class GroupsActivity extends AppCompatActivity {
                     startActivity(service);
                 } else if (gridViewString[+i].equals("Video's")) {
                     Intent videos = new Intent(getApplicationContext(), StoreVideosActivity.class);
+                    videos.putExtras(b);
                     startActivity(videos);
                 } else if (gridViewString[+i].equals("Image's")) {
                     Intent images = new Intent(getApplicationContext(), AndroidGridViewDisplayImages.class);

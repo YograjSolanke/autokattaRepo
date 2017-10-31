@@ -1,10 +1,13 @@
 package autokatta.com.adapter;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.ActivityOptions;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -101,11 +104,20 @@ public class AdminCallContactAdapter extends RecyclerView.Adapter<AdminCallConta
   */
     private void call(String contact) {
         Intent in = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + contact));
-        System.out.println("calling started");
         try {
+            if (ActivityCompat.checkSelfPermission(mActivity, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
+                return;
+            }
             mActivity.startActivity(in);
         } catch (android.content.ActivityNotFoundException ex) {
-            System.out.println("No Activity Found For Call in Other Profile\n");
+            ex.printStackTrace();
         }
     }
 }

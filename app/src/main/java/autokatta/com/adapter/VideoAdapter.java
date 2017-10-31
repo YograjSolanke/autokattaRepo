@@ -19,9 +19,11 @@ import android.widget.ImageView;
 import android.widget.MediaController;
 import android.widget.VideoView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import autokatta.com.R;
+import autokatta.com.response.GetMediaResponse;
 import autokatta.com.view.SingleVideoActivity;
 
 /**
@@ -29,10 +31,8 @@ import autokatta.com.view.SingleVideoActivity;
  */
 
 public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.MyViewHolder> {
-    private List<String> list;
+    private List<GetMediaResponse.Success.Video> videosList = new ArrayList<GetMediaResponse.Success.Video>();
     Activity activity;
-    //Picasso picasso;
-    private MyViewHolder view;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
@@ -45,14 +45,12 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.MyViewHolder
             videoView = (VideoView) x.findViewById(R.id.VideoView);
             cardView = (CardView) x.findViewById(R.id.card_view);
             imageView = (ImageView) x.findViewById(R.id.imageView);
-
         }
     }
 
-    public VideoAdapter(Activity applicationContext, List<String> list_urls) {
-        this.list = list_urls;
+    public VideoAdapter(Activity applicationContext, List<GetMediaResponse.Success.Video> list_urls) {
+        this.videosList = list_urls;
         activity = applicationContext;
-        //this.picasso = p;
     }
 
     @Override
@@ -63,17 +61,15 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.MyViewHolder
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, final int position) {
-        final int safePosition = holder.getAdapterPosition();
-        view = holder;
+    public void onBindViewHolder(final MyViewHolder holder, int position) {
 
         try {
             // Start the MediaController
             MediaController mediacontroller = new MediaController(
                     activity);
-            mediacontroller.setAnchorView(view.videoView);
+            mediacontroller.setAnchorView(holder.videoView);
             // Get the URL from String VideoURL
-            Uri video = Uri.parse(list.get(position));
+            Uri video = Uri.parse(videosList.get(position).getVideo());
 
 //                String dp_path = activity.getString(R.string.base_image_url) + storeImage;
 //                Glide.with(this)
@@ -84,27 +80,24 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.MyViewHolder
 //                        .into(mStoreImage);
 
             //  view.imageView.setImageResource(R.drawable.logo);
-            view.imageView.setVisibility(View.GONE);
+            holder.imageView.setVisibility(View.GONE);
 
-//
             Bitmap thumb = createVideoThumbnail(activity, video);
 
             BitmapDrawable bitmapDrawable = new BitmapDrawable(thumb);
-            view.videoView.setBackground(bitmapDrawable);
-
+            holder.videoView.setBackground(bitmapDrawable);
 
         } catch (Exception e) {
             Log.e("Error", e.getMessage());
             e.printStackTrace();
         }
 
-
-        view.cardView.setOnClickListener(new View.OnClickListener() {
+        holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 ActivityOptions options = ActivityOptions.makeCustomAnimation(activity, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
                 Bundle b = new Bundle();
-                b.putString("url", list.get(position));
+                b.putString("url", videosList.get(holder.getAdapterPosition()).getVideo());
                 Intent intentnewvehicle = new Intent(activity, SingleVideoActivity.class);
                 intentnewvehicle.putExtras(b);
                 //intentnewvehicle.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -189,7 +182,7 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.MyViewHolder
 
     @Override
     public int getItemCount() {
-        return list.size();
+        return videosList.size();
     }
 
     @Override
@@ -198,7 +191,7 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.MyViewHolder
     }
 
 
-    public static Bitmap createVideoThumbnail(Context context, Uri uri) {
+    private static Bitmap createVideoThumbnail(Context context, Uri uri) {
         MediaMetadataRetriever mediametadataretriever = new MediaMetadataRetriever();
 
         try {
