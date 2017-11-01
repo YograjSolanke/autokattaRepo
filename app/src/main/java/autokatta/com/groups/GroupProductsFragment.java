@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -14,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
@@ -24,9 +26,11 @@ import java.util.List;
 import autokatta.com.R;
 import autokatta.com.adapter.GroupProductAdapter;
 import autokatta.com.apicall.ApiCall;
+import autokatta.com.interfaces.OnLoadMoreListener;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.other.CustomToast;
+import autokatta.com.other.VerticalLineDecorator;
 import autokatta.com.response.StoreInventoryResponse;
 import retrofit2.Response;
 
@@ -50,6 +54,8 @@ public class GroupProductsFragment extends Fragment implements SwipeRefreshLayou
     TextView mNoData;
     Activity activity;
     RelativeLayout filterToHide;
+    String storeContact;
+    int index = 1;
 
     public GroupProductsFragment() {
         //empty constructor...
@@ -62,20 +68,20 @@ public class GroupProductsFragment extends Fragment implements SwipeRefreshLayou
         return mProduct;
     }
 
-    private void getProducts(int GroupId) {
+    private void getProducts(int GroupId, int pageNo, int viewRecords) {
         if (mTestConnection.isConnectedToInternet()) {
             ApiCall apiCall = new ApiCall(getActivity(), this);
-            apiCall.getGroupProducts(GroupId, "");
+            apiCall.getGroupProducts(GroupId, "", pageNo, viewRecords);
         } else {
             if (isAdded())
-            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
+                CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         }
     }
 
     @Override
     public void onRefresh() {
         mSwipeRefreshLayout.setRefreshing(false);
-        getProducts(mGroupId);
+        getProducts(mGroupId, 1, 10);
     }
 
     @Override
@@ -83,38 +89,44 @@ public class GroupProductsFragment extends Fragment implements SwipeRefreshLayou
         if (response != null) {
             if (response.isSuccessful()) {
                 mSwipeRefreshLayout.setRefreshing(false);
-                productList.clear();
-                String storeContact = null;
+                //productList.clear();
                 StoreInventoryResponse storeResponse = (StoreInventoryResponse) response.body();
-                if (!storeResponse.getSuccess().getProduct().isEmpty()) {
-                    mNoData.setVisibility(View.GONE);
-                    for (StoreInventoryResponse.Success.Product success : storeResponse.getSuccess().getProduct()) {
-                        success.setProductId(success.getProductId());
-                        success.setName(success.getName());
-                        success.setBrandtags(success.getBrandtags());
-                        success.setPrice(success.getPrice());
-                        success.setProductType(success.getProductType());
-                        success.setProductDetails(success.getProductDetails());
-                        success.setProductTags(success.getProductTags());
-                        success.setProductImage(success.getProductImage());
-                        success.setCategory(success.getCategory());
-                        success.setProductlikestatus(success.getProductlikestatus());
-                        success.setProductlikecount(success.getProductlikecount());
-                        success.setProductrating(success.getProductrating());
-                        success.setPrate(success.getPrate());
-                        success.setPrate1(success.getPrate1());
-                        success.setPrate2(success.getPrate2());
-                        success.setPrate3(success.getPrate3());
-                        storeContact = success.getStorecontact();
-                        productList.add(success);
+                if (storeResponse.getSuccess().getProduct().size() > 0)
+                    if (!storeResponse.getSuccess().getProduct().isEmpty()) {
+                        mNoData.setVisibility(View.GONE);
+                        for (StoreInventoryResponse.Success.Product success : storeResponse.getSuccess().getProduct()) {
+                            success.setProductId(success.getProductId());
+                            success.setName(success.getName());
+                            success.setBrandtags(success.getBrandtags());
+                            success.setPrice(success.getPrice());
+                            success.setProductType(success.getProductType());
+                            success.setProductDetails(success.getProductDetails());
+                            success.setProductTags(success.getProductTags());
+                            success.setProductImage(success.getProductImage());
+                            success.setCategory(success.getCategory());
+                            success.setProductlikestatus(success.getProductlikestatus());
+                            success.setProductlikecount(success.getProductlikecount());
+                            success.setProductrating(success.getProductrating());
+                            success.setPrate(success.getPrate());
+                            success.setPrate1(success.getPrate1());
+                            success.setPrate2(success.getPrate2());
+                            success.setPrate3(success.getPrate3());
+                            storeContact = success.getStorecontact();
+                            productList.add(success);
+                        }
+                        //adapter.notifyDataSetChanged();
+                    } else {
+                        mNoData.setVisibility(View.VISIBLE);
+                        mSwipeRefreshLayout.setRefreshing(false);
                     }
-                    adapter = new GroupProductAdapter(getActivity(), productList, myContact, storeContact, mGroupType);
-                    mRecyclerView.setAdapter(adapter);
-                    adapter.notifyDataSetChanged();
-                } else {
-                    mNoData.setVisibility(View.VISIBLE);
-                    mSwipeRefreshLayout.setRefreshing(false);
+                else {//result size 0 means there is no more data available at server
+                    adapter.setMoreDataAvailable(false);
+                    //telling adapter to stop calling load more as no more server data available
+                    if (isAdded())
+                        Toast.makeText(getActivity(), "No More Data Available", Toast.LENGTH_LONG).show();
                 }
+                //adapter.notifyDataSetChanged();
+                adapter.notifyDataChanged();
             } else {
                 mSwipeRefreshLayout.setRefreshing(false);
 //                if(isAdded())
@@ -123,7 +135,7 @@ public class GroupProductsFragment extends Fragment implements SwipeRefreshLayou
         } else {
             mSwipeRefreshLayout.setRefreshing(false);
             if (isAdded())
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+                CustomToast.customToast(getActivity(), getString(R.string.no_response));
         }
     }
 
@@ -142,17 +154,17 @@ public class GroupProductsFragment extends Fragment implements SwipeRefreshLayou
         mSwipeRefreshLayout.setRefreshing(false);
         if (error instanceof SocketTimeoutException) {
             if (isAdded())
-            CustomToast.customToast(getActivity(), getString(R.string._404_));
+                CustomToast.customToast(getActivity(), getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
             // CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
             // CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
             if (isAdded())
-            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
+                CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
             if (isAdded())
-            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
+                CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         } else {
             Log.i("Check Class-"
                     , "groupproductfragent");
@@ -170,10 +182,16 @@ public class GroupProductsFragment extends Fragment implements SwipeRefreshLayou
         super.setUserVisibleHint(isVisibleToUser);
         if (this.isVisible()) {
             if (isVisibleToUser && !_hasLoadedOnce) {
-                getProducts(mGroupId);
+                getProducts(mGroupId, 1, 10);
                 _hasLoadedOnce = true;
             }
         }
+    }
+
+    private void loadMore(int index) {
+        //add loading progress view
+        adapter.notifyItemInserted(productList.size());
+        getProducts(mGroupId, index, 10);
     }
 
     @Override
@@ -190,11 +208,6 @@ public class GroupProductsFragment extends Fragment implements SwipeRefreshLayou
                 filterToHide = (RelativeLayout) mProduct.findViewById(R.id.rel);
                 filterToHide.setVisibility(View.GONE);
                 mRecyclerView = (RecyclerView) mProduct.findViewById(R.id.recycler_view);
-                mRecyclerView.setHasFixedSize(true);
-                mLayoutManager = new LinearLayoutManager(getActivity());
-                mLayoutManager.setReverseLayout(true);
-                mLayoutManager.setStackFromEnd(true);
-                mRecyclerView.setLayoutManager(mLayoutManager);
 
                 Bundle bundle = getArguments();
                 if (bundle != null) {
@@ -203,8 +216,34 @@ public class GroupProductsFragment extends Fragment implements SwipeRefreshLayou
                     if (bundle.getString("bundle_Contact") != null) {
                         myContact = bundle.getString("bundle_Contact");
                     }
-
                 }
+
+                adapter = new GroupProductAdapter(getActivity(), productList, myContact, storeContact, mGroupType);
+                adapter.setLoadMoreListener(new OnLoadMoreListener() {
+                    @Override
+                    public void onLoadMore() {
+                        mRecyclerView.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                //int index = myUploadedVehiclesResponseList.size() - 1;
+                                index++;
+                                Log.i("index", "->" + index);
+                                loadMore(index);
+                            }
+                        });
+                        //Calling loadMore function in Runnable to fix the
+                        // java.lang.IllegalStateException: Cannot call this method while RecyclerView is computing a layout or scrolling error
+                    }
+                });
+                mRecyclerView.setHasFixedSize(true);
+                mLayoutManager = new LinearLayoutManager(getActivity());
+                //mLayoutManager.setReverseLayout(true);
+                //mLayoutManager.setStackFromEnd(true);
+                mRecyclerView.setLayoutManager(mLayoutManager);
+                mRecyclerView.addItemDecoration(new VerticalLineDecorator(2));
+                mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+                mRecyclerView.setAdapter(adapter);
+
                 Log.i("Group", "ProductsContact->" + myContact);
                 Log.i("Group", "ProductsType->" + mGroupType);
                 mSwipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
@@ -215,7 +254,7 @@ public class GroupProductsFragment extends Fragment implements SwipeRefreshLayou
                     @Override
                     public void run() {
                         mSwipeRefreshLayout.setRefreshing(true);
-                        getProducts(mGroupId);
+                        getProducts(mGroupId, 1, 10);
                     }
                 });
             }

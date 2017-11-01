@@ -177,7 +177,21 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
                     Intent intent = new Intent(getApplicationContext(), OtherProfile.class);
                     intent.putExtras(mBundle);
                     startActivity(intent);
+                    break;
                 }
+                case "Group": {
+
+                }
+                case "Store": {
+
+                }
+                case "UploadVehicle": {
+
+                }
+                case "New": {
+
+                }
+
             }
 
         }

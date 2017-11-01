@@ -308,7 +308,8 @@ public interface ServiceApi {
                                                               @Query("City") String city, @Query("RTOcity") String rtoCity,
                                                               @Query("Price") String price, @Query("RegistrationYear") String regYear,
                                                               @Query("ManufactureYear") String mgfYear, @Query("Kms") String kms,
-                                                              @Query("Owners") int owners, @Query("Contact") String contact);
+                                                              @Query("Owners") int owners, @Query("Contact") String contact,
+                                                              @Query("pageNo") int pageNo, @Query("ViewRecords") int ViewRecords);
 
     //Get My Uploaded Vehicle...
     @GET("GetMyUploadedVehicles")
@@ -331,11 +332,13 @@ public interface ServiceApi {
 
     //Get Group Products...
     @GET("GetGroupProducts")
-    Call<StoreInventoryResponse> _autokattaGetGroupProducts(@Query("GroupID") int groupId, @Query("MyContact") String myContact);
+    Call<StoreInventoryResponse> _autokattaGetGroupProducts(@Query("GroupID") int groupId, @Query("MyContact") String myContact
+            , @Query("pageNo") int pageNo, @Query("ViewRecords") int ViewRecords);
 
     //Get Group Services...
     @GET("GetGroupServices")
-    Call<StoreInventoryResponse> _autokattaGetGroupServices(@Query("GroupID") int groupId, @Query("MyContact") String myContact);
+    Call<StoreInventoryResponse> _autokattaGetGroupServices(@Query("GroupID") int groupId, @Query("MyContact") String myContact
+            , @Query("pageNo") int pageNo, @Query("ViewRecords") int ViewRecords);
 
     //delete group members...
     @POST("DeleteMyGroupMembers")

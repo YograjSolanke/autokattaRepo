@@ -28,6 +28,7 @@ import java.util.List;
 
 import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
+import autokatta.com.interfaces.OnLoadMoreListener;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.other.CustomToast;
@@ -43,13 +44,18 @@ import retrofit2.Response;
  * Created by ak-004 on 17/4/17.
  */
 
-public class StoreProductAdapter extends RecyclerView.Adapter<StoreProductAdapter.ProductHolder> implements RequestNotifier {
+public class StoreProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements RequestNotifier {
     Activity activity;
     List<StoreInventoryResponse.Success.Product> mMainList = new ArrayList<>();
     private String myContact, storeContact;
     ApiCall apiCall;
     private ConnectionDetector connectionDetector;
     StoreProductAdapter.ProductHolder mView;
+
+    private OnLoadMoreListener loadMoreListener;
+    final int TYPE_DATA = 0;
+    private final int TYPE_LOAD = 1;
+    private boolean isLoading = false, isMoreDataAvailable = true;
 
     public StoreProductAdapter(Activity activity, List<StoreInventoryResponse.Success.Product> productList, String myContact,
                                String storeContact) {
@@ -62,162 +68,210 @@ public class StoreProductAdapter extends RecyclerView.Adapter<StoreProductAdapte
     }
 
     @Override
-    public StoreProductAdapter.ProductHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.store_product_adapter, parent, false);
-        return new ProductHolder(view);
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        LayoutInflater inflater = LayoutInflater.from(activity);
+        if (viewType == TYPE_DATA) {
+            return new ProductHolder(inflater.inflate(R.layout.store_product_adapter, parent, false));
+        } else {
+            return new LoadHolder(inflater.inflate(R.layout.row_load, parent, false));
+        }
+        /*View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.store_product_adapter, parent, false);
+        return new ProductHolder(view);*/
     }
 
     @Override
-    public void onBindViewHolder(final StoreProductAdapter.ProductHolder holder, final int position) {
-        mView = holder;
-        final List<String> images = new ArrayList<String>();
-        final StoreInventoryResponse.Success.Product product = mMainList.get(position);
-        holder.pname.setText(product.getName());
-        holder.pprice.setText(product.getPrice());
-        if (!product.getProductDetails().equals(""))
-        holder.pdetails.setText(product.getProductDetails());
-        else
-            holder.pdetails.setText("No Details");
-        holder.ptags.setText(product.getProductTags());
-        holder.ptype.setText(product.getProductType());
-        holder.pCategoey.setText(product.getCategory());
-        holder.productrating.setEnabled(false);
-
-
-        if (myContact.equals(product.getStorecontact())) {
-            holder.deleteproduct.setVisibility(View.VISIBLE);
-        } else {
-            holder.editdetails.setVisibility(View.GONE);
-            holder.mEnquiry.setVisibility(View.GONE);
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder1, final int position) {
+        if (position >= getItemCount() - 1 && isMoreDataAvailable && !isLoading && loadMoreListener != null) {
+            isLoading = true;
+            loadMoreListener.onLoadMore();
         }
 
-        holder.pname.setEnabled(false);
-        holder.pprice.setEnabled(false);
-        holder.pdetails.setEnabled(false);
-        holder.ptags.setEnabled(false);
-        holder.ptype.setEnabled(false);
-        holder.pCategoey.setEnabled(false);
+        if (getItemViewType(position) == TYPE_DATA) {
+            final ProductHolder holder = (ProductHolder) holder1;
+            mView = holder;
+            final List<String> images = new ArrayList<String>();
+            final StoreInventoryResponse.Success.Product product = mMainList.get(position);
+            holder.pname.setText(product.getName());
+            holder.pprice.setText(product.getPrice());
+            if (!product.getProductDetails().equals(""))
+                holder.pdetails.setText(product.getProductDetails());
+            else
+                holder.pdetails.setText("No Details");
+            holder.ptags.setText(product.getProductTags());
+            holder.ptype.setText(product.getProductType());
+            holder.pCategoey.setText(product.getCategory());
+            holder.productrating.setEnabled(false);
 
-        try {
-            if (product.getProductImage() == null) {
-                holder.image.setBackgroundResource(R.drawable.logo);
+
+            if (myContact.equals(product.getStorecontact())) {
+                holder.deleteproduct.setVisibility(View.VISIBLE);
             } else {
-                String[] parts = product.getProductImage().split(",");
-                for (int l = 0; l < parts.length; l++) {
-                    images.add(parts[l]);
-                    System.out.println(parts[l]);
-                }
-                System.out.println(activity.getString(R.string.base_image_url) + images.get(0));
-                String pimagename = activity.getString(R.string.base_image_url) + images.get(0);
-                pimagename = pimagename.replaceAll(" ", "%20");
-                try {
-                    Glide.with(activity)
-                            .load(pimagename)
-                            .bitmapTransform(new CropSquareTransformation(activity))
-                            .diskCacheStrategy(DiskCacheStrategy.ALL)
-                            .placeholder(R.drawable.logo)
-                            .into(holder.image);
-                } catch (Exception e) {
-                    System.out.println("Error in uploading images");
-                }
+                holder.editdetails.setVisibility(View.GONE);
+                holder.mEnquiry.setVisibility(View.GONE);
             }
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+            holder.pname.setEnabled(false);
+            holder.pprice.setEnabled(false);
+            holder.pdetails.setEnabled(false);
+            holder.ptags.setEnabled(false);
+            holder.ptype.setEnabled(false);
+            holder.pCategoey.setEnabled(false);
+
+            try {
+                if (product.getProductImage() == null) {
+                    holder.image.setBackgroundResource(R.drawable.logo);
+                } else {
+                    String[] parts = product.getProductImage().split(",");
+                    for (int l = 0; l < parts.length; l++) {
+                        images.add(parts[l]);
+                        System.out.println(parts[l]);
+                    }
+                    System.out.println(activity.getString(R.string.base_image_url) + images.get(0));
+                    String pimagename = activity.getString(R.string.base_image_url) + images.get(0);
+                    pimagename = pimagename.replaceAll(" ", "%20");
+                    try {
+                        Glide.with(activity)
+                                .load(pimagename)
+                                .bitmapTransform(new CropSquareTransformation(activity))
+                                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                .placeholder(R.drawable.logo)
+                                .into(holder.image);
+                    } catch (Exception e) {
+                        System.out.println("Error in uploading images");
+                    }
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
          /*Manual Enquiry */
-        holder.mEnquiry.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ActivityOptions option = ActivityOptions.makeCustomAnimation(activity, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
-                Bundle b = new Bundle();
-                //    b.putString("sender",storeContact);
-                b.putString("sender","");
-                b.putString("sendername","");
-                b.putString("keyword", "Products");
-                b.putString("category", mMainList.get(position).getCategory());
-                b.putString("title", mMainList.get(position).getName());
-                b.putString("brand", mMainList.get(position).getBrandtags());
-                b.putString("model", "");
-                b.putString("price", mMainList.get(position).getPrice());
-                b.putString("image", images.get(0));
-          //      b.putInt("vehicle_id", 0);
-                b.putInt("id", mMainList.get(position).getProductId());
-                b.putString("classname", "storeproductadapter");
+            holder.mEnquiry.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ActivityOptions option = ActivityOptions.makeCustomAnimation(activity, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
+                    Bundle b = new Bundle();
+                    //    b.putString("sender",storeContact);
+                    b.putString("sender", "");
+                    b.putString("sendername", "");
+                    b.putString("keyword", "Products");
+                    b.putString("category", mMainList.get(position).getCategory());
+                    b.putString("title", mMainList.get(position).getName());
+                    b.putString("brand", mMainList.get(position).getBrandtags());
+                    b.putString("model", "");
+                    b.putString("price", mMainList.get(position).getPrice());
+                    b.putString("image", images.get(0));
+                    //      b.putInt("vehicle_id", 0);
+                    b.putInt("id", mMainList.get(position).getProductId());
+                    b.putString("classname", "storeproductadapter");
 
-                Intent intent = new Intent(activity, AddManualEnquiry.class);
-                intent.putExtras(b);
-                activity.startActivity(intent, option.toBundle());
+                    Intent intent = new Intent(activity, AddManualEnquiry.class);
+                    intent.putExtras(b);
+                    activity.startActivity(intent, option.toBundle());
 
-            }
-        });
-
-
-        if (product.getProductrating() != null) {
-            holder.productrating.setRating(Float.parseFloat(product.getProductrating()));
-        } else {
-
-        }
-
-        holder.viewdetails.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ActivityOptions options = ActivityOptions.makeCustomAnimation(activity, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
-                int proId = product.getProductId();
-                Intent intent = new Intent(activity, ProductViewActivity.class);
-                intent.putExtra("product_id", proId);
-                activity.startActivity(intent, options.toBundle());
-            }
-        });
-
-        holder.editdetails.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ActivityOptions options = ActivityOptions.makeCustomAnimation(activity, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
-                int proId = product.getProductId();
-                Intent intent = new Intent(activity, ProductViewActivity.class);
-                intent.putExtra("product_id", proId);
-                intent.putExtra("editmode", "yes");
-                activity.startActivity(intent, options.toBundle());
-            }
-        });
-
-        holder.deleteproduct.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                final int product_id = product.getProductId();
-                if (!connectionDetector.isConnectedToInternet()) {
-                    CustomToast.customToast(activity, "Please try later");
-                    // Toast.makeText(activity, "Please try later", Toast.LENGTH_SHORT).show();
-                } else {
-                    new android.support.v7.app.AlertDialog.Builder(activity)
-                            .setTitle("Delete?")
-                            .setMessage("Are You Sure You Want To Delete This Product?")
-                            .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int which) {
-                                    apiCall.deleteProduct(product_id, "delete");
-                                    mMainList.remove(holder.getAdapterPosition());
-                                    notifyItemRemoved(holder.getAdapterPosition());
-                                    notifyItemRangeChanged(holder.getAdapterPosition(), mMainList.size());
-                                }
-                            })
-
-                            .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int which) {
-
-                                }
-                            })
-                            .setIcon(android.R.drawable.ic_dialog_alert)
-                            .show();
                 }
+            });
+
+
+            if (product.getProductrating() != null) {
+                holder.productrating.setRating(Float.parseFloat(product.getProductrating()));
+            } else {
+
             }
-        });
+
+            holder.viewdetails.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ActivityOptions options = ActivityOptions.makeCustomAnimation(activity, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
+                    int proId = product.getProductId();
+                    Intent intent = new Intent(activity, ProductViewActivity.class);
+                    intent.putExtra("product_id", proId);
+                    activity.startActivity(intent, options.toBundle());
+                }
+            });
+
+            holder.editdetails.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ActivityOptions options = ActivityOptions.makeCustomAnimation(activity, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
+                    int proId = product.getProductId();
+                    Intent intent = new Intent(activity, ProductViewActivity.class);
+                    intent.putExtra("product_id", proId);
+                    intent.putExtra("editmode", "yes");
+                    activity.startActivity(intent, options.toBundle());
+                }
+            });
+
+            holder.deleteproduct.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    final int product_id = product.getProductId();
+                    if (!connectionDetector.isConnectedToInternet()) {
+                        CustomToast.customToast(activity, "Please try later");
+                        // Toast.makeText(activity, "Please try later", Toast.LENGTH_SHORT).show();
+                    } else {
+                        new android.support.v7.app.AlertDialog.Builder(activity)
+                                .setTitle("Delete?")
+                                .setMessage("Are You Sure You Want To Delete This Product?")
+                                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        apiCall.deleteProduct(product_id, "delete");
+                                        mMainList.remove(holder.getAdapterPosition());
+                                        notifyItemRemoved(holder.getAdapterPosition());
+                                        notifyItemRangeChanged(holder.getAdapterPosition(), mMainList.size());
+                                    }
+                                })
+
+                                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+
+                                    }
+                                })
+                                .setIcon(android.R.drawable.ic_dialog_alert)
+                                .show();
+                    }
+                }
+            });
+        }
     }
 
     @Override
     public int getItemCount() {
         return mMainList.size();
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        if (mMainList.get(position).getProductId() != 0) {
+            return TYPE_DATA;
+        } else {
+            return TYPE_LOAD;
+        }
+    }
+
+    public void setMoreDataAvailable(boolean moreDataAvailable) {
+        isMoreDataAvailable = moreDataAvailable;
+    }
+
+    /* notifyDataSetChanged is final method so we can't override it
+         call adapter.notifyDataChanged(); after update the list
+         */
+    public void notifyDataChanged() {
+        notifyDataSetChanged();
+        isLoading = false;
+    }
+
+    public void setLoadMoreListener(OnLoadMoreListener loadMoreListener) {
+        this.loadMoreListener = loadMoreListener;
+    }
+
+    /*
+    For loading progress bar...
+     */
+    static class LoadHolder extends RecyclerView.ViewHolder {
+        LoadHolder(View itemView) {
+            super(itemView);
+        }
     }
 
     @Override

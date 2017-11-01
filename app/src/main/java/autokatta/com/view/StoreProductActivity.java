@@ -50,7 +50,7 @@ public class StoreProductActivity extends AppCompatActivity implements SwipeRefr
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         mTestConnection = new ConnectionDetector(this);
-
+        setTitle("Store Product's");
         if (getSupportActionBar() != null) {
             getSupportActionBar().setHomeButtonEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -58,7 +58,6 @@ public class StoreProductActivity extends AppCompatActivity implements SwipeRefr
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-
                 Sharedcontact = getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", null);
                 mNoData = (TextView) findViewById(R.id.no_category);
                 mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);
@@ -109,7 +108,6 @@ public class StoreProductActivity extends AppCompatActivity implements SwipeRefr
         } else {
             mSwipeRefreshLayout.setRefreshing(false);
             mNoData.setVisibility(View.GONE);
-
             CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
         }
     }
@@ -124,7 +122,6 @@ public class StoreProductActivity extends AppCompatActivity implements SwipeRefr
     public void notifySuccess(Response<?> response) {
         if (response != null) {
             if (response.isSuccessful()) {
-
                 StoreInventoryResponse storeResponse = (StoreInventoryResponse) response.body();
                 if (!storeResponse.getSuccess().getProduct().isEmpty()) {
                     mSwipeRefreshLayout.setRefreshing(false);

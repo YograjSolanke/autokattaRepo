@@ -2200,7 +2200,8 @@ Upload Vehicle
     Get Group Vehicles...
      */
     public void getGroupVehicles(int groupId, String brand, String model, String version, String city, String rtoCity,
-                                 String price, String regYear, String mgfYear, String kms, int owners, String contact) {
+                                 String price, String regYear, String mgfYear, String kms, int owners, String contact,
+                                 int pageNo, int viewRecords) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 Retrofit mRetrofit = new Retrofit.Builder()
@@ -2210,7 +2211,7 @@ Upload Vehicle
                         .build();
                 ServiceApi mServiceApi = mRetrofit.create(ServiceApi.class);
                 Call<GetGroupVehiclesResponse> mVehiclesResponse = mServiceApi._autokattaGetGroupVehicles(groupId, brand, model,
-                        version, city, rtoCity, price, regYear, mgfYear, kms, owners, contact);
+                        version, city, rtoCity, price, regYear, mgfYear, kms, owners, contact, pageNo, viewRecords);
                 mVehiclesResponse.enqueue(new Callback<GetGroupVehiclesResponse>() {
                     @Override
                     public void onResponse(Call<GetGroupVehiclesResponse> call, Response<GetGroupVehiclesResponse> response) {
@@ -2453,7 +2454,7 @@ Upload Vehicle
     Get Group Products
      */
 
-    public void getGroupProducts(int groupId, String myContact) {
+    public void getGroupProducts(int groupId, String myContact, int pageNo, int ViewRecords) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 Retrofit mRetrofit = new Retrofit.Builder()
@@ -2462,7 +2463,8 @@ Upload Vehicle
                         .client(initLog().build())
                         .build();
                 ServiceApi mServiceApi = mRetrofit.create(ServiceApi.class);
-                Call<StoreInventoryResponse> mGetGroupContactsResponseCall = mServiceApi._autokattaGetGroupProducts(groupId, myContact);
+                Call<StoreInventoryResponse> mGetGroupContactsResponseCall = mServiceApi._autokattaGetGroupProducts(groupId, myContact
+                        , pageNo, ViewRecords);
                 mGetGroupContactsResponseCall.enqueue(new Callback<StoreInventoryResponse>() {
                     @Override
                     public void onResponse(Call<StoreInventoryResponse> call, Response<StoreInventoryResponse> response) {
@@ -2486,7 +2488,7 @@ Upload Vehicle
     Get Group Services
      */
 
-    public void getGroupService(int groupId, String myContact) {
+    public void getGroupService(int groupId, String myContact, int pageNo, int viewRecords) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 Retrofit mRetrofit = new Retrofit.Builder()
@@ -2495,7 +2497,8 @@ Upload Vehicle
                         .client(initLog().build())
                         .build();
                 ServiceApi mServiceApi = mRetrofit.create(ServiceApi.class);
-                Call<StoreInventoryResponse> mGetGroupContactsResponseCall = mServiceApi._autokattaGetGroupServices(groupId, myContact);
+                Call<StoreInventoryResponse> mGetGroupContactsResponseCall = mServiceApi._autokattaGetGroupServices(groupId, myContact,
+                        pageNo, viewRecords);
                 mGetGroupContactsResponseCall.enqueue(new Callback<StoreInventoryResponse>() {
                     @Override
                     public void onResponse(Call<StoreInventoryResponse> call, Response<StoreInventoryResponse> response) {

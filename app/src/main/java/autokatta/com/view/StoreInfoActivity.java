@@ -54,6 +54,7 @@ public class StoreInfoActivity extends AppCompatActivity implements RequestNotif
         setContentView(R.layout.activity_store_info);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        setTitle("About Store");
         mTestConnection = new ConnectionDetector(this);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setHomeButtonEnabled(true);

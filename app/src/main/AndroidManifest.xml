@@ -830,24 +830,25 @@
             android:name=".view.ImagesViewActivity"
             android:label="@string/title_activity_android_grid_view_display_images"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".fragment_profile.EditAboutAddress"></activity>
-        <activity android:name=".fragment_profile.EditAllAbout"></activity>
+        <activity android:name=".fragment_profile.EditAboutAddress" />
+        <activity android:name=".fragment_profile.EditAllAbout" />
         <activity
             android:name=".fragment_profile.EditCompanyName"
             android:label="@string/title_activity_edit_company_name"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".fragment_profile.EditDesignation"
             android:label="@string/title_activity_edit_designation"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".fragment_profile.EditSkills"
             android:label="@string/title_activity_edit_skills"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".view.ImageVideoPreviewActivity"
             android:label="@string/title_activity_image_video_preview"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".register.TermsConditions"></activity>
     </application>
 
 </manifest>

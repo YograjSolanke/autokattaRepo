@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -13,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
@@ -23,9 +25,11 @@ import java.util.List;
 import autokatta.com.R;
 import autokatta.com.adapter.StoreServiceAdapter;
 import autokatta.com.apicall.ApiCall;
+import autokatta.com.interfaces.OnLoadMoreListener;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.other.CustomToast;
+import autokatta.com.other.VerticalLineDecorator;
 import autokatta.com.response.StoreInventoryResponse;
 import autokatta.com.response.StoreInventoryResponse.Success.Service;
 import retrofit2.Response;
@@ -50,6 +54,8 @@ public class MemberServicesFragment extends Fragment implements SwipeRefreshLayo
     ConnectionDetector mTestConnection;
     boolean _hasLoadedOnce = false;
     Activity activity;
+    int index = 1;
+    String storeContact;
 
     @Nullable
     @Override
@@ -58,20 +64,20 @@ public class MemberServicesFragment extends Fragment implements SwipeRefreshLayo
         return mService;
     }
 
-    private void getServices(int GroupId) {
+    private void getServices(int GroupId, int pageNo, int viewRecords) {
         if (mTestConnection.isConnectedToInternet()) {
             ApiCall mApiCall = new ApiCall(getActivity(), this);
-            mApiCall.getGroupService(GroupId, mBundleContact);
+            mApiCall.getGroupService(GroupId, mBundleContact, pageNo, viewRecords);
         } else {
             mSwipeRefreshLayout.setRefreshing(false);
             if (isAdded())
-            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
+                CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         }
     }
 
     @Override
     public void onRefresh() {
-        getServices(mGroupId);
+        getServices(mGroupId, 1, 10);
     }
 
     @Override
@@ -81,7 +87,7 @@ public class MemberServicesFragment extends Fragment implements SwipeRefreshLayo
         if (this.isVisible()) {
             // If we are becoming invisible, then...
             if (isVisibleToUser && !_hasLoadedOnce) {
-                getServices(mGroupId);
+                getServices(mGroupId, 1, 10);
                 _hasLoadedOnce = true;
             }
         }
@@ -92,39 +98,44 @@ public class MemberServicesFragment extends Fragment implements SwipeRefreshLayo
         if (response != null) {
             if (response.isSuccessful()) {
                 mSwipeRefreshLayout.setRefreshing(false);
-                serviceList.clear();
-                String storeContact = null;
+                //serviceList.clear();
                 StoreInventoryResponse storeResponse = (StoreInventoryResponse) response.body();
-                if (!storeResponse.getSuccess().getService().isEmpty()) {
-                    mNoData.setVisibility(View.GONE);
-                    for (StoreInventoryResponse.Success.Service success : storeResponse.getSuccess().getService()) {
-                        success.setServiceId(success.getServiceId());
-                        success.setServiceName(success.getServiceName());
-                        success.setBrandtags(success.getBrandtags());
-                        success.setServicePrice(success.getServicePrice());
-                        success.setServiceType(success.getServiceType());
-                        success.setServiceDetails(success.getServiceDetails());
-                        success.setServicetags(success.getServicetags());
-                        success.setServiceImages(success.getServiceImages());
-                        success.setServicecategory(success.getServicecategory());
-                        success.setServicelikestatus(success.getServicelikestatus());
-                        success.setServicelikecount(success.getServicelikecount());
-                        success.setServicerating(success.getServicerating());
-                        success.setSrate(success.getSrate());
-                        success.setSrate1(success.getSrate1());
-                        success.setSrate2(success.getSrate2());
-                        success.setSrate3(success.getSrate3());
-                        success.setStorecontact(success.getStorecontact());
-                        storeContact = success.getStorecontact();
-                        serviceList.add(success);
+                if (storeResponse.getSuccess().getService().size() > 0) {
+                    if (!storeResponse.getSuccess().getService().isEmpty()) {
+                        mNoData.setVisibility(View.GONE);
+                        for (StoreInventoryResponse.Success.Service success : storeResponse.getSuccess().getService()) {
+                            success.setServiceId(success.getServiceId());
+                            success.setServiceName(success.getServiceName());
+                            success.setBrandtags(success.getBrandtags());
+                            success.setServicePrice(success.getServicePrice());
+                            success.setServiceType(success.getServiceType());
+                            success.setServiceDetails(success.getServiceDetails());
+                            success.setServicetags(success.getServicetags());
+                            success.setServiceImages(success.getServiceImages());
+                            success.setServicecategory(success.getServicecategory());
+                            success.setServicelikestatus(success.getServicelikestatus());
+                            success.setServicelikecount(success.getServicelikecount());
+                            success.setServicerating(success.getServicerating());
+                            success.setSrate(success.getSrate());
+                            success.setSrate1(success.getSrate1());
+                            success.setSrate2(success.getSrate2());
+                            success.setSrate3(success.getSrate3());
+                            success.setStorecontact(success.getStorecontact());
+                            storeContact = success.getStorecontact();
+                            serviceList.add(success);
+                        }
+                        //adapter.notifyDataSetChanged();
+                    } else {
+                        mSwipeRefreshLayout.setRefreshing(false);
+                        mNoData.setVisibility(View.VISIBLE);
                     }
-                    adapter = new StoreServiceAdapter(getActivity(), serviceList, myContact, storeContact);
-                    mRecyclerView.setAdapter(adapter);
-                    adapter.notifyDataSetChanged();
-                } else {
-                    mSwipeRefreshLayout.setRefreshing(false);
-                    mNoData.setVisibility(View.VISIBLE);
+                } else {//result size 0 means there is no more data available at server
+                    adapter.setMoreDataAvailable(false);
+                    //telling adapter to stop calling load more as no more server data available
+                    if (isAdded())
+                        Toast.makeText(getActivity(), "No More Data Available", Toast.LENGTH_LONG).show();
                 }
+                adapter.notifyDataChanged();
             } else {
                 mSwipeRefreshLayout.setRefreshing(false);
                 // CustomToast.customToast(getActivity(), getString(R.string._404_));
@@ -132,7 +143,7 @@ public class MemberServicesFragment extends Fragment implements SwipeRefreshLayo
         } else {
             mSwipeRefreshLayout.setRefreshing(false);
             if (isAdded())
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+                CustomToast.customToast(getActivity(), getString(R.string.no_response));
         }
     }
 
@@ -141,17 +152,17 @@ public class MemberServicesFragment extends Fragment implements SwipeRefreshLayo
         mSwipeRefreshLayout.setRefreshing(false);
         if (error instanceof SocketTimeoutException) {
             if (isAdded())
-            CustomToast.customToast(getActivity(), getString(R.string._404_));
+                CustomToast.customToast(getActivity(), getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
             // CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
             //CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
             if (isAdded())
-            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
+                CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
             if (isAdded())
-            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
+                CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         } else {
             Log.i("Check Class-"
                     , "memberservicefragment");
@@ -172,6 +183,12 @@ public class MemberServicesFragment extends Fragment implements SwipeRefreshLayo
 
     }
 
+    private void loadMore(int index) {
+        //add loading progress view
+        adapter.notifyItemInserted(serviceList.size());
+        getServices(mGroupId, index, 10);
+    }
+
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -181,19 +198,40 @@ public class MemberServicesFragment extends Fragment implements SwipeRefreshLayo
                 mTestConnection = new ConnectionDetector(getActivity());
                 mNoData = (TextView) mService.findViewById(R.id.no_category);
                 mNoData.setVisibility(View.GONE);
-
                 mSwipeRefreshLayout = (SwipeRefreshLayout) mService.findViewById(R.id.swipeRefreshLayout);
                 mRecyclerView = (RecyclerView) mService.findViewById(R.id.recycler_view);
-                mRecyclerView.setHasFixedSize(true);
-                mLayoutManager = new LinearLayoutManager(getActivity());
-                mLayoutManager.setReverseLayout(true);
-                mLayoutManager.setStackFromEnd(true);
-                mRecyclerView.setLayoutManager(mLayoutManager);
 
                 Bundle getBundle = getArguments();
                 mGroupId = getBundle.getInt("bundle_GroupId");
                 mBundleContact = getBundle.getString("Rcontact");
                 myContact = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "");
+
+                adapter = new StoreServiceAdapter(getActivity(), serviceList, myContact, storeContact);
+                adapter.setLoadMoreListener(new OnLoadMoreListener() {
+                    @Override
+                    public void onLoadMore() {
+                        mRecyclerView.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                //int index = myUploadedVehiclesResponseList.size() - 1;
+                                index++;
+                                Log.i("index", "->" + index);
+                                loadMore(index);
+                            }
+                        });
+                        //Calling loadMore function in Runnable to fix the
+                        // java.lang.IllegalStateException: Cannot call this method while RecyclerView is computing a layout or scrolling error
+                    }
+                });
+
+                mRecyclerView.setHasFixedSize(true);
+                mLayoutManager = new LinearLayoutManager(getActivity());
+                //mLayoutManager.setReverseLayout(true);
+                //mLayoutManager.setStackFromEnd(true);
+                mRecyclerView.setLayoutManager(mLayoutManager);
+                mRecyclerView.addItemDecoration(new VerticalLineDecorator(2));
+                mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+                mRecyclerView.setAdapter(adapter);
 
                 mSwipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
                         android.R.color.holo_green_light,
@@ -203,7 +241,7 @@ public class MemberServicesFragment extends Fragment implements SwipeRefreshLayo
                     @Override
                     public void run() {
                         mSwipeRefreshLayout.setRefreshing(true);
-                        getServices(mGroupId);
+                        getServices(mGroupId, 1, 10);
                     }
                 });
             }

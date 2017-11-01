@@ -102,7 +102,7 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
         span.setSpan(new ClickableSpan() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(Registration.this, "Get in touch for terms and conditions", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(getApplicationContext(), TermsConditions.class));
             }
         }, 15, 33, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 

@@ -44,7 +44,7 @@ public class VideosViewActivity extends AppCompatActivity implements RequestNoti
         setContentView(R.layout.activity_videos_view);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        setTitle("Videos");
+        setTitle("Store Videos");
 
         mNoData = (TextView) findViewById(R.id.no_category);
 

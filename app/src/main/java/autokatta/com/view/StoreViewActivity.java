@@ -972,12 +972,12 @@ Call Intent...
     public void notifySuccess(Response<?> response) {
         if (response != null) {
             if (response.isSuccessful()) {
-
                 if (response.body() instanceof StoreResponse) {
                     dialog.dismiss();
                     StoreResponse storeResponse = (StoreResponse) response.body();
                     for (StoreResponse.Success success : storeResponse.getSuccess()) {
                         storeName = success.getName();
+                        setTitle(storeName);
                         storeImage = success.getStoreImage();
                         storeOtherContact = success.getContact();
                         storeCoverImage = success.getCoverImage();

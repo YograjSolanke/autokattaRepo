@@ -46,7 +46,7 @@ public class StoreNewVehicleActiviy extends AppCompatActivity implements SwipeRe
         setSupportActionBar(toolbar);
         mTestConnection = new ConnectionDetector(this);
 
-
+        setTitle("Store New Vehicle's");
         if (getSupportActionBar() != null) {
             getSupportActionBar().setHomeButtonEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
