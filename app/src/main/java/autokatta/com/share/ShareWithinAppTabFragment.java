@@ -102,7 +102,25 @@ public class ShareWithinAppTabFragment extends Fragment {
             getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).edit()
                     .putString("Share_keyword", "").apply();
             getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).edit()
-                    .putString("profile_contact", "").apply();
+                    .putString("Share_profile_contact", "").apply();
+            getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).edit()
+                    .putInt("Share_store_id", 0).apply();
+            getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).edit()
+                    .putInt("Share_vehicle_id", 0).apply();
+            getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).edit()
+                    .putInt("Share_product_id", 0).apply();
+            getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).edit()
+                    .putInt("Share_service_id", 0).apply();
+            getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).edit()
+                    .putInt("Share_search_id", 0).apply();
+            getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).edit()
+                    .putInt("Share_status_id", 0).apply();
+            getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).edit()
+                    .putInt("Share_auction_id", 0).apply();
+            getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).edit()
+                    .putInt("Share_loan_id", 0).apply();
+            getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).edit()
+                    .putInt("Share_exchange_id", 0).apply();
 
             switch (position) {
                 case 0:
