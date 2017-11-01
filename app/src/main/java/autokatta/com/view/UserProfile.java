@@ -373,7 +373,7 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
         */
     private void updateProfile() {
         ApiCall mApiCall = new ApiCall(UserProfile.this, this);
-        if (lastWord.equals("")) {
+        if (!lastWord.equals("")) {
             mApiCall.updateUsername(RegID, lastWord, updatedUsername);
         } else
             mApiCall.updateUsername(RegID, dp, updatedUsername);

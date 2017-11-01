@@ -3,10 +3,12 @@ package autokatta.com.adapter;
 import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
@@ -21,7 +23,6 @@ import autokatta.com.fragment_profile.EditAllAbout;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.GetCompaniesResponse;
-import autokatta.com.response.GetCompaniesResponse.Success;
 import retrofit2.Response;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -36,11 +37,15 @@ public class EditCompanyNameAdapter extends RecyclerView.Adapter<EditCompanyName
     List<GetCompaniesResponse.Success>mList=new ArrayList<>();
     private List<GetCompaniesResponse.Success> filteredData = new ArrayList<>();
     CustomFilter filter;
+    Button mAdd;
+    String mNewCompany;
 
     ApiCall mApiCall;
-    public EditCompanyNameAdapter(Activity activity,List<GetCompaniesResponse.Success>list) {
+    public EditCompanyNameAdapter(Activity activity,List<GetCompaniesResponse.Success>list,Button add) {
         this.mActivity=activity;
         this.mList=list;
+        this.filteredData=list;
+        this.mAdd=add;
         mApiCall=new ApiCall(mActivity,this);
     }
 
@@ -91,6 +96,10 @@ public class EditCompanyNameAdapter extends RecyclerView.Adapter<EditCompanyName
         if (!str.equals("")) {
             if (str.equals("success_update_Company")) {
                 CustomToast.customToast(mActivity,"Company Added");
+            }else
+            {
+                CustomToast.customToast(mActivity, "New Company Added");
+                mActivity.finish();
             }
         }
     }
@@ -107,9 +116,10 @@ public class EditCompanyNameAdapter extends RecyclerView.Adapter<EditCompanyName
     }
 
 
-   /* *//*
+
+    /*
   Filter for stock type
-   *//*
+   */
     @Override
     public Filter getFilter() {
         if (filter == null) {
@@ -118,14 +128,15 @@ public class EditCompanyNameAdapter extends RecyclerView.Adapter<EditCompanyName
         return filter;
     }
 
-    *//***
+  /* **
      * Filter Class
-     ***//*
+     **/
     private class CustomFilter extends Filter {
 
         @Override
         protected FilterResults performFiltering(CharSequence charSequence) {
             FilterResults results = new FilterResults();
+            mNewCompany=charSequence.toString();
             try {
                 if (charSequence != null && charSequence.length() > 0) {
                     List<GetCompaniesResponse.Success> filterResults = new ArrayList<>();
@@ -152,54 +163,17 @@ public class EditCompanyNameAdapter extends RecyclerView.Adapter<EditCompanyName
                 mList = (List<GetCompaniesResponse.Success>) filterResults.values;
                 EditCompanyNameAdapter.this.notifyDataSetChanged();
             } else {
-                Toast.makeText(mActivity, "No record found", Toast.LENGTH_SHORT).show();
-                Log.i("Error", "->");
+                Toast.makeText(mActivity, "No record found Want to Add ??", Toast.LENGTH_SHORT).show();
+                mAdd.setVisibility(View.VISIBLE);
+                mAdd.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        mApiCall.addNewCompany(mNewCompany);
+                    }
+                });
             }
         }
-    }*/
-
-
-    @Override
-    public Filter getFilter() {
-        if (filter == null) {
-            filter = new CustomFilter();
-        }
-        return filter;
     }
 
-    private class CustomFilter extends Filter{
-
-        @Override
-        protected FilterResults performFiltering(CharSequence constraint) {
-            FilterResults result = new FilterResults();
-            //List<GetCompaniesResponse.Success> allJournals = mList.get();
-            if(constraint == null || constraint.length() == 0){
-
-                result.values = mList;
-                result.count = mList.size();
-            }else{
-                ArrayList<GetCompaniesResponse.Success> filteredList = new ArrayList<Success>();
-                for(GetCompaniesResponse.Success j: filteredData){
-                    if(j.getCompanyName().toString().contains(constraint))
-                        filteredList.add(j);
-                }
-                result.values = filteredList;
-                result.count = filteredList.size();
-            }
-
-            return result;
-        }
-        @SuppressWarnings("unchecked")
-        @Override
-        protected void publishResults(CharSequence constraint, FilterResults results) {
-            if (results.count == 0) {
-                Toast.makeText(mActivity, "No record found", Toast.LENGTH_SHORT).show();
-            } else {
-                mList = (List<GetCompaniesResponse.Success>) results.values;
-                EditCompanyNameAdapter.this.notifyDataSetChanged();
-            }
-        }
-
-    }
 
 }

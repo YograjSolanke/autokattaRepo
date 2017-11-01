@@ -48,7 +48,7 @@
                     android:layout_height="30dp"
                     android:layout_alignParentEnd="true"
                     android:contentDescription="@string/app_name"
-                    android:src="@drawable/check"
+                    android:src="@mipmap/ic_check_icon"
                     android:visibility="gone" />
 
             </RelativeLayout>
@@ -282,7 +282,7 @@
                     android:layout_height="30dp"
                     android:layout_alignParentEnd="true"
                     android:contentDescription="@string/app_name"
-                    android:src="@drawable/check"
+                    android:src="@mipmap/ic_check_icon"
                     android:visibility="gone" />
 
 
@@ -341,7 +341,7 @@
             </RelativeLayout>
 
 
-            <AutoCompleteTextView
+            <TextView
                 android:id="@+id/company_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -392,7 +392,7 @@
 
             </RelativeLayout>
 
-            <AutoCompleteTextView
+            <TextView
                 android:id="@+id/designation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -446,7 +446,7 @@
                     android:layout_height="30dp"
                     android:layout_alignParentEnd="true"
                     android:contentDescription="@string/app_name"
-                    android:src="@drawable/check"
+                    android:src="@mipmap/ic_check_icon"
                     android:visibility="gone" />
 
             </RelativeLayout>
@@ -505,7 +505,7 @@
                     android:layout_height="30dp"
                     android:layout_alignParentEnd="true"
                     android:contentDescription="@string/app_name"
-                    android:src="@drawable/check"
+                    android:src="@mipmap/ic_check_icon"
                     android:visibility="gone" />
 
             </RelativeLayout>
@@ -564,7 +564,7 @@
                     android:layout_height="30dp"
                     android:layout_alignParentEnd="true"
                     android:contentDescription="@string/app_name"
-                    android:src="@drawable/check"
+                    android:src="@mipmap/ic_check_icon"
                     android:visibility="gone" />
 
 
@@ -613,8 +613,8 @@
 
                 <ImageView
                     android:id="@+id/editwebsite"
-                    android:layout_width="22dp"
-                    android:layout_height="22dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:layout_alignParentEnd="true"
                     android:layout_marginLeft="280dp"
                     android:contentDescription="@string/app_name"
@@ -622,11 +622,11 @@
 
                 <ImageView
                     android:id="@+id/donewebsite"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="40dp"
+                    android:layout_height="0dp"
                     android:layout_alignParentEnd="true"
                     android:contentDescription="@string/app_name"
-                    android:src="@drawable/check"
+                    android:src="@mipmap/ic_check_icon"
                     android:visibility="gone" />
 
             </RelativeLayout>

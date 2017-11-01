@@ -6,9 +6,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
+import android.widget.EditText;
 
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
@@ -31,6 +35,7 @@ public class EditDesignation extends AppCompatActivity implements SwipeRefreshLa
     EditDesignationAdapter mAdapter;
     ApiCall mApiCall;
     Menu menu;
+    Button mAdd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,11 +43,15 @@ public class EditDesignation extends AppCompatActivity implements SwipeRefreshLa
         setContentView(R.layout.activity_edit_designation);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setHomeButtonEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
         mApiCall = new ApiCall(EditDesignation.this, this);
         mApiCall.getDesignation();
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayoutBGroup);
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerBGroup);
+        mAdd = (Button) findViewById(R.id.add);
 
         mRecyclerView.setHasFixedSize(true);
         LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(this);
@@ -65,14 +74,6 @@ public class EditDesignation extends AppCompatActivity implements SwipeRefreshLa
         });
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.edit_address_menu, menu);
-        this.menu = menu;
-        MenuItem item = menu.findItem(R.id.edit_profile);
-
-        return true;
-    }
 
     @Override
     public void onRefresh() {
@@ -83,6 +84,8 @@ public class EditDesignation extends AppCompatActivity implements SwipeRefreshLa
     public void notifySuccess(Response<?> response) {
         if (response != null) {
             if (response.isSuccessful()) {
+                mDesigList.clear();
+                mSwipeRefreshLayout.setRefreshing(false);
                 GetDesignationResponse mGetCompanyList = (GetDesignationResponse) response.body();
                 if (!mGetCompanyList.getSuccess().isEmpty()) {
                     for (GetDesignationResponse.Success designationResponse : mGetCompanyList.getSuccess()) {
@@ -90,7 +93,7 @@ public class EditDesignation extends AppCompatActivity implements SwipeRefreshLa
                         designationResponse.setDesignationName(designationResponse.getDesignationName());
                         mDesigList.add(designationResponse);
                     }
-                    mAdapter = new EditDesignationAdapter(EditDesignation.this, mDesigList);
+                    mAdapter = new EditDesignationAdapter(EditDesignation.this, mDesigList,mAdd);
                     mRecyclerView.setAdapter(mAdapter);
                 }
             }
@@ -118,6 +121,57 @@ public class EditDesignation extends AppCompatActivity implements SwipeRefreshLa
     @Override
     public void notifyString(String str) {
 
+    }
+
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.edit_address_menu, menu);
+        this.menu = menu;
+        MenuItem item = menu.findItem(R.id.edit_address);
+
+        final EditText editText = (EditText) item.getActionView().findViewById(R.id.search);
+        editText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                //fillter(s.toString());
+                //getSearchResults(s.toString());
+                Log.i("Strings", "-->" + s.toString());
+                mAdapter.getFilter().filter(s.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                //fillter(s.toString());
+                Log.i("Strings", "-->" + s.toString());
+                //  getSearchAuction(s.toString());
+                mAdapter.getFilter().filter(s.toString());
+            }
+        });
+
+
+        return true;
     }
 }
 

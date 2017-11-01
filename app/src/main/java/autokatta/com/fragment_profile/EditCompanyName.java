@@ -11,13 +11,13 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.EditText;
 
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import autokatta.com.R;
@@ -33,10 +33,10 @@ public class EditCompanyName extends AppCompatActivity implements SwipeRefreshLa
     SwipeRefreshLayout mSwipeRefreshLayout;
     RecyclerView mRecyclerView;
     final List<GetCompaniesResponse.Success> mCompanyList = new ArrayList<>();
-    final HashMap<String, Integer> mCompanyList1 = new HashMap<>();
-    List<String> parsedDataCompany = new ArrayList<>();
+    Button mAddNewCompany;
     EditCompanyNameAdapter mAdapter;
     ApiCall mApiCall;
+
     Menu menu;
 
     @Override
@@ -50,6 +50,8 @@ public class EditCompanyName extends AppCompatActivity implements SwipeRefreshLa
             getSupportActionBar().setHomeButtonEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
+
+        mAddNewCompany= (Button) findViewById(R.id.add);
 
         mApiCall = new ApiCall(EditCompanyName.this, this);
 
@@ -92,6 +94,7 @@ public class EditCompanyName extends AppCompatActivity implements SwipeRefreshLa
         if (response != null) {
             if (response.isSuccessful()) {
                 mSwipeRefreshLayout.setRefreshing(false);
+                mCompanyList.clear();
                 GetCompaniesResponse mGetCompanyList = (GetCompaniesResponse) response.body();
                 if (!mGetCompanyList.getSuccess().isEmpty()) {
                     for (GetCompaniesResponse.Success companyResponse : mGetCompanyList.getSuccess()) {
@@ -102,7 +105,7 @@ public class EditCompanyName extends AppCompatActivity implements SwipeRefreshLa
                         //  mCompanyList1.put(companyResponse.getCompanyName(), companyResponse.getCompanyID());
                     }
                     //  parsedDataCompany.addAll(mCompanyList);
-                    mAdapter = new EditCompanyNameAdapter(EditCompanyName.this, mCompanyList);
+                    mAdapter = new EditCompanyNameAdapter(EditCompanyName.this, mCompanyList,mAddNewCompany);
                     mRecyclerView.setAdapter(mAdapter);
                 }
             }
@@ -174,7 +177,7 @@ public class EditCompanyName extends AppCompatActivity implements SwipeRefreshLa
                 //fillter(s.toString());
                 Log.i("Strings", "-->" + s.toString());
               //  getSearchAuction(s.toString());
-                mAdapter.getFilter().filter(s.toString());
+              //  mAdapter.getFilter().filter(s.toString());
             }
         });
 

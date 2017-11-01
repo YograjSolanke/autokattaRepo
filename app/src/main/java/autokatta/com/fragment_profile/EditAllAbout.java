@@ -6,6 +6,7 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -55,10 +56,10 @@ public class EditAllAbout extends AppCompatActivity implements RequestNotifier, 
     int RegId;
     GenericFunctions mGenericFunctions;
     EditText mEmail, mWebsite, mAbouttxt;
-    AutoCompleteTextView mCity, mCompany, mDesignation;
+    AutoCompleteTextView mCity ;
     MultiAutoCompleteTextView mSkills;
     LinearLayout mUsertypelay, mIndustrylay, mCategorylay, mBrandlay;
-    TextView mUsertypetxt, mIndusttxt, mCattxt, mBrandtxt, mCount;
+    TextView mUsertypetxt, mIndusttxt, mCattxt, mBrandtxt, mCount,mCompany,mDesignation;
     ImageView mEdtWorkedat, mEdtAddress, mEdtCompany, mEdtDesignation, mEdtSkills,
             mEdtAbout, mEdtEmail, mEdtWebsite, mEdtIntrest, mDoneAbout, mDoneMail, mDoneWebsite, mDoneSkills, mDoneworkat, mDoneAddress;
 
@@ -81,12 +82,10 @@ public class EditAllAbout extends AppCompatActivity implements RequestNotifier, 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_all_about);
-       /* Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setHomeButtonEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }*/
+        }
         mApiCall = new ApiCall(this, EditAllAbout.this);
         mGenericFunctions = new GenericFunctions();
 
@@ -97,8 +96,8 @@ public class EditAllAbout extends AppCompatActivity implements RequestNotifier, 
         mEmail = (EditText) findViewById(R.id.email);
         mWebsite = (EditText) findViewById(R.id.website);
         mCity = (AutoCompleteTextView) findViewById(R.id.address);
-        mCompany = (AutoCompleteTextView) findViewById(R.id.company_name);
-        mDesignation = (AutoCompleteTextView) findViewById(R.id.designation);
+        mCompany = (TextView) findViewById(R.id.company_name);
+        mDesignation = (TextView) findViewById(R.id.designation);
         mSkills = (MultiAutoCompleteTextView) findViewById(R.id.skills);
         mUsertypelay = (LinearLayout) findViewById(R.id.llusertype);
         mIndustrylay = (LinearLayout) findViewById(R.id.llindustry);
@@ -171,6 +170,21 @@ public class EditAllAbout extends AppCompatActivity implements RequestNotifier, 
         }
     }
 
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
 
     @Override
     public void notifySuccess(Response<?> response) {
@@ -640,8 +654,8 @@ public class EditAllAbout extends AppCompatActivity implements RequestNotifier, 
                 } else {
                     mApiCall.updateProfile(RegId,"","",strprofession,subProfession,"","","","",strIndustry,brand, "","","UserType");
 
-                    mDoneworkat.setVisibility(View.VISIBLE);
-                    mEdtWorkedat.setVisibility(View.GONE);
+                    mDoneworkat.setVisibility(View.GONE);
+                    mEdtWorkedat.setVisibility(View.VISIBLE);
 
                     usertypeSpinner.setVisibility(View.GONE);
                     industrySpinner.setVisibility(View.GONE);

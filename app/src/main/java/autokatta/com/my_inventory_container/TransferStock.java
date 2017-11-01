@@ -66,6 +66,15 @@ public class TransferStock extends AppCompatActivity implements RequestNotifier 
                         vehicles.setTransferReason(vehicles.getTransferReason());
                         vehicles.setVehicleName(vehicles.getVehicleName());
                         vehicles.setVehicleID(vehicles.getVehicleID());
+                        String vehicleImage = vehicles.getImage();
+                        if (vehicleImage.contains(",")) {
+                            String[] items = vehicleImage.split(",");
+                            vehicles.setImage(items[0]);
+                        } else {
+                            vehicles.setImage(vehicleImage);
+                        }
+
+
                         mGetTransferVehicleList.add(vehicles);
                     }
                     GetTransferVehicleListAdapter adapter = new GetTransferVehicleListAdapter(TransferStock.this, mGetTransferVehicleList);

@@ -23,12 +23,21 @@
 
     <include layout="@layout/content_edit_company_name"/>
 
-    <android.support.design.widget.FloatingActionButton
+    <Button
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_gravity="bottom|center"
+        android:background="@color/background"
+        android:text="Add"
+        android:id="@+id/add"
+        android:visibility="gone"/>
+
+  <!--  <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
         app:srcCompat="@android:drawable/ic_dialog_email"/>
-
+-->
 </android.support.design.widget.CoordinatorLayout>
