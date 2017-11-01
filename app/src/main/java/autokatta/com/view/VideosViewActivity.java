@@ -149,7 +149,7 @@ public class VideosViewActivity extends AppCompatActivity implements RequestNoti
                         pDialog.dismiss();
                     }
                     mNoData.setVisibility(View.VISIBLE);
-                    CustomToast.customToast(getApplicationContext(), getString(R.string.no_data));
+                    //CustomToast.customToast(getApplicationContext(), getString(R.string.no_data));
                 }
 
             } else {
@@ -157,13 +157,13 @@ public class VideosViewActivity extends AppCompatActivity implements RequestNoti
                     pDialog.dismiss();
                 }
                 mNoData.setVisibility(View.VISIBLE);
-                CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
+                //CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
             }
         } else {
             if (pDialog.isShowing()) {
                 pDialog.dismiss();
             }
-            mNoData.setVisibility(View.VISIBLE);
+            //mNoData.setVisibility(View.VISIBLE);
             CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
         }
     }

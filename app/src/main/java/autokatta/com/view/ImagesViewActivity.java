@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -152,7 +153,7 @@ public class ImagesViewActivity extends AppCompatActivity implements RequestNoti
                         pDialog.dismiss();
                     }
                     mNoData.setVisibility(View.VISIBLE);
-                    CustomToast.customToast(getApplicationContext(), getString(R.string.no_data));
+                    //CustomToast.customToast(getApplicationContext(), getString(R.string.no_data));
                 }
 
             } else {
@@ -160,13 +161,13 @@ public class ImagesViewActivity extends AppCompatActivity implements RequestNoti
                     pDialog.dismiss();
                 }
                 mNoData.setVisibility(View.VISIBLE);
-                CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
+                //CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
             }
         } else {
             if (pDialog.isShowing()) {
                 pDialog.dismiss();
             }
-            mNoData.setVisibility(View.VISIBLE);
+            //mNoData.setVisibility(View.VISIBLE);
             CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
         }
 
@@ -224,7 +225,7 @@ public class ImagesViewActivity extends AppCompatActivity implements RequestNoti
         }
 
         public View getView(int position, View convertView, ViewGroup parent) {
-            ImageView mImageView;
+            /*ImageView mImageView;
 
             if (convertView == null) {
                 mImageView = new ImageView(mContext);
@@ -241,24 +242,27 @@ public class ImagesViewActivity extends AppCompatActivity implements RequestNoti
                     .placeholder(R.drawable.logo48x48)
                     .into(mImageView);
 
-            return mImageView;
+            return mImageView;*/
 
-            /*View gridViewAndroid;
+            View gridViewAndroid;
             LayoutInflater inflater = (LayoutInflater) mContext
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             if (convertView == null) {
                 gridViewAndroid = new View(mContext);
                 if (inflater != null) {
-                    gridViewAndroid = inflater.inflate(R.layout.gridview_layout, null);
+                    gridViewAndroid = inflater.inflate(R.layout.gridview_image_layout, null);
+
+                    ImageView imageViewAndroid = (ImageView) gridViewAndroid.findViewById(R.id.android_gridview_image);
+                    Glide.with(mContext)
+                            .load(imagesList.get(position).getImage())
+                            .diskCacheStrategy(DiskCacheStrategy.ALL)
+                            .placeholder(R.drawable.logo48x48)
+                            .into(imageViewAndroid);
                 }
-                TextView textViewAndroid = (TextView) gridViewAndroid.findViewById(R.id.android_gridview_text);
-                ImageView imageViewAndroid = (ImageView) gridViewAndroid.findViewById(R.id.android_gridview_image);
-                textViewAndroid.setText(gridViewString[i]);
-                imageViewAndroid.setImageResource(gridViewImageId[i]);
             } else {
                 gridViewAndroid = (View) convertView;
             }
-            return gridViewAndroid;*/
+            return gridViewAndroid;
         }
     }
 
