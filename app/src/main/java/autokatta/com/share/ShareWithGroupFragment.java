@@ -49,7 +49,7 @@ public class ShareWithGroupFragment extends Fragment implements RequestNotifier 
         super.onCreateView(inflater, container, savedInstanceState);
 
         View root = inflater.inflate(R.layout.generic_list_view, container, false);
-        contactnumber = getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).getString("loginContact", "7841023392");
+        contactnumber = getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).getString("loginContact", "");
         grouplist = (ListView) root.findViewById(R.id.generic_list);
         btnSend = (Button) root.findViewById(R.id.send);
         btnSend.setVisibility(View.VISIBLE);

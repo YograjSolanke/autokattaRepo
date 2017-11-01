@@ -106,6 +106,7 @@ public class ShareWithGroupAdapter extends BaseAdapter {
         final ViewHolder holder;
         if (convertView == null) {
             holder = new ViewHolder();
+            assert mInflater != null;
             convertView = mInflater.inflate(R.layout.adapter_share_with_groups, null);
             holder.name = (TextView) convertView.findViewById(R.id.name);
             holder.profile_pic = (ImageView) convertView.findViewById(R.id.profile_image);
@@ -141,9 +142,6 @@ public class ShareWithGroupAdapter extends BaseAdapter {
                     finalGroupNames.set(position, "");
                     finalGroupIds.set(position, "0");
                 }
-
-                System.out.println("finalGroupIds=" + finalGroupIds.get(position));
-                System.out.println("finalGroupNames=" + finalGroupNames.get(position));
             }
         });
 

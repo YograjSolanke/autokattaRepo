@@ -50,7 +50,7 @@ public class ShareWithCaptionFragment extends Fragment implements RequestNotifie
         super.onCreateView(inflater, container, savedInstanceState);
 
         View root = inflater.inflate(R.layout.fragment_share_caption, container, false);
-        contactnumber = getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).getString("loginContact", "7841023392");
+        contactnumber = getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).getString("loginContact", "");
         sharebutton = (Button) root.findViewById(R.id.sharebutton);
         sharelist = (ListView) root.findViewById(R.id.listshare);
         editShare = (EditText) root.findViewById(R.id.editShare);
@@ -77,10 +77,6 @@ public class ShareWithCaptionFragment extends Fragment implements RequestNotifie
         broadcastGroupIds = b.getString("broadcastgroupid", "");
         groupname = b.getString("groupname");
 
-        System.out.println("Data in caption fragment" + "-" +
-                "Keyword =" + keyword + "-" +
-                "Loan id =" + loan_id + "-" +
-                "Exchange id =" + exchange_id);
 
         if (!profile_contact.equals(""))
             layoutNumber = 1;

@@ -15,6 +15,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import autokatta.com.R;
 import autokatta.com.response.Db_AutokattaContactResponse;
@@ -27,7 +28,7 @@ import jp.wasabeef.glide.transformations.CropCircleTransformation;
 public class ShareWithContactAdapter extends BaseAdapter {
 
     private Activity activity;
-    private ArrayList<Db_AutokattaContactResponse> contactdata = new ArrayList<>();
+    private List<Db_AutokattaContactResponse> contactdata = new ArrayList<>();
     private String sharedata, storecontact, name, number, profile_contact, contactnumber, keyword, contacttab;
     private int store_id, vehicle_id, product_id,
             service_id, search_id, status_id, auction_id, loan_id, exchange_id;
@@ -35,7 +36,7 @@ public class ShareWithContactAdapter extends BaseAdapter {
 
 
     ShareWithContactAdapter(Activity activity,
-                            ArrayList<Db_AutokattaContactResponse> data, String sharedata,
+                            List<Db_AutokattaContactResponse> data, String sharedata,
                             int store_id, String contactnumber, int vehicle_id, int product_id,
                             int service_id, String profile_contact, int search_id,
                             int status_id, int auction_id, int loan_id, int exchange_id, String keyword) {

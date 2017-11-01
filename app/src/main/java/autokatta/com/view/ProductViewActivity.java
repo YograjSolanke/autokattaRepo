@@ -1,15 +1,18 @@
 package autokatta.com.view;
 
 
+import android.Manifest;
 import android.app.ActivityOptions;
 import android.app.DownloadManager;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -137,7 +140,7 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
     String storecontact, storeowner;
     int store_id;
     AdminCallContactAdapter adapter;
-    ArrayList<String> storeAdmins = new ArrayList<>();
+    List<String> storeAdmins = new ArrayList<>();
     //product updating variables
     String uptype, upname, upprice, updetails, uptags, upimgs, upcat;
     LinearLayout linearbtns, lineartxts;
@@ -246,11 +249,10 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
         seellreview.setOnClickListener(this);
         mUploadGroup.setOnClickListener(this);
 
-        product_id = getIntent().getExtras().getInt("product_id");
-        editMode = getIntent().getExtras().getString("editmode", "");
-
-        System.out.println("hiiiiiii=" + product_id);
-
+        if (getIntent().getExtras() != null) {
+            product_id = getIntent().getExtras().getInt("product_id");
+            editMode = getIntent().getExtras().getString("editmode", "");
+        }
 
         runOnUiThread(new Runnable() {
             @Override
@@ -271,7 +273,6 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                 getCategory();
                 getProductData(product_id, contact);
                 getNoOfEnquiryCount(product_id, contact);
-
 
 
                 producttags.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
@@ -499,18 +500,13 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                 } else if (response.body() instanceof StoreOldAdminResponse) {
                     StoreOldAdminResponse adminResponse = (StoreOldAdminResponse) response.body();
                     if (!adminResponse.getSuccess().isEmpty()) {
-                        //8007855589-dealer-RUTU
                         storeAdmins.add(contact + "-" + "Owner" + "-" + "Owner");
                         for (StoreOldAdminResponse.Success success : adminResponse.getSuccess()) {
 
                             storeAdmins.add(success.getAdmin());
 
                         }
-
-                        System.out.println("alreadyadmin=" + storeAdmins.size());
-
                     }
-
 
                 } else if (response.body() instanceof OtherTagAddedResponse) {
                     CustomToast.customToast(ProductViewActivity.this, "Other Tag added successfully");
@@ -522,8 +518,6 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                         idlist = idlist + "," + tagid;
                     else
                         idlist = tagid;
-                    System.out.println("final idlist iddddddddddddddd=" + idlist);
-
 
                 } else if (response.body() instanceof ProductResponse) {
                     ProductResponse productresponse = (ProductResponse) response.body();
@@ -659,11 +653,7 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                                 multiautobrand.setEnabled(false);
                             }
 
-
-                            //like code
                             lcnt = plikecnt;
-
-
                         }
 
                         sliderLayout = (SliderLayout) findViewById(R.id.slider);
@@ -837,6 +827,16 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
     private void call(String storecontact) {
         Intent in = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + storecontact));
         try {
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
+                return;
+            }
             startActivity(in);
         } catch (android.content.ActivityNotFoundException ex) {
             ex.printStackTrace();
@@ -879,29 +879,24 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                 List<String> othertag = new ArrayList<String>();
                 text = text.trim();
                 text = text.replaceAll(",$", "");
-                System.out.println("txttttt=" + text);
 
 
                 String[] parts = text.split(",");
 
-                for (int l = 0; l < parts.length; l++) {
-                    System.out.println(parts[l]);
-                    tagpart = parts[l].trim();
+                for (String part : parts) {
+                    System.out.println(part);
+                    tagpart = part.trim();
                     if (!tagpart.equalsIgnoreCase("") && !tagpart.equalsIgnoreCase(" "))
                         images.add(tagpart);
                     if (!tagname.contains(tagpart) && !tagpart.equalsIgnoreCase("") && !tagpart.equalsIgnoreCase(" ")) {
                         othertag.add(tagpart);
-                        System.out.println("tag going to add=" + tagpart);
                         try {
                             addOtherTags();
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
                     }
-                    System.out.println("other categoryyyyyyyyyyyyyyyy=" + othertag);
-
                 }
-                System.out.println("tagname arrat before change***************" + tagname);
 
                 getTags();
 
@@ -917,9 +912,6 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
 
                 if (!producttags.getText().toString().equalsIgnoreCase("") && idlist.length() > 0) {
                     idlist = idlist.substring(1);
-                    System.out.println("substring idddddddddd=" + idlist);
-
-
                 }
                 List<String> tempbrands = new ArrayList<String>();
                 String textbrand = multiautobrand.getText().toString();
@@ -928,8 +920,8 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                 textbrand = textbrand.trim();
                 if (!textbrand.equals("")) {
                     String[] bparts = textbrand.split(",");
-                    for (int o = 0; o < bparts.length; o++) {
-                        brandtagpart = bparts[o].trim();
+                    for (String bpart : bparts) {
+                        brandtagpart = bpart.trim();
                         if (!brandtagpart.equals("") && !brandtagpart.equalsIgnoreCase(" "))
                             tempbrands.add(brandtagpart);
                         if (!brandTags.contains(brandtagpart) && !brandtagpart.equals("") && !brandtagpart.equalsIgnoreCase(" ")) {
@@ -1180,6 +1172,7 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
 
                                 Log.e("TAG", "img URL: " + imagename);
 
+                                assert manager != null;
                                 manager.enqueue(request);
 
                                 imageFilePath = "/storage/emulated/0/Download/" + filename;
@@ -1354,8 +1347,7 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
             if (Arrays.asList(prearra).contains(groupIdList.get(i))) {
                 itemsChecked[i] = true;
                 mSelectedItems.add(groupIdList.get(i));
-            }
-            else
+            } else
                 itemsChecked[i] = false;
         }
 
@@ -1382,7 +1374,6 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
 
-                        System.out.println("selected ids=" + mSelectedItems);
                         stringgroupids = "";
                         stringgroupname = "";
                         prevGroupIds = "";
