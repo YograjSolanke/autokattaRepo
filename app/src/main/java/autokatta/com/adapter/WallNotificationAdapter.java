@@ -660,8 +660,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                 return new ActiveNotifications(mView);
 
             case 10:
-                mView = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_wall_adding_share_notifications, parent, false);
-                mView = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_wall_adding_share_notifications, parent, false);
+                mView = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_wall_vehicle_notifications, parent, false);
                 return new UploadVehicleNotifications(mView);
 
             case 11:
@@ -4581,6 +4580,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                 // SpannableStringBuilder sb11 = new SpannableStringBuilder();
                 int sublayout = 0;
                 mShareolder.mCaptionData.setText(notificationList.get(position).getShareSubData());
+                mShareolder.mShareActionTime.setText(notificationList.get(position).getDateTime());
                 if (!notificationList.get(position).getSubLayout().equals(""))
                     sublayout = Integer.parseInt(notificationList.get(position).getSubLayout());
                 // mShareolder.mShareActionName.setText(notificationList.get(position).);

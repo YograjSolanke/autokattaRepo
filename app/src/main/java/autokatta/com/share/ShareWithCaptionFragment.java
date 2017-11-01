@@ -12,6 +12,8 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.kaopiz.kprogresshud.KProgressHUD;
+
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
@@ -37,6 +39,7 @@ public class ShareWithCaptionFragment extends Fragment implements RequestNotifie
             layoutNumber, search_id, status_id, auction_id, loan_id, exchange_id;
     Button sharebutton;
     ApiCall mApiCall;
+    KProgressHUD hud;
 
     public ShareWithCaptionFragment() {
         //Empty Constructor...
@@ -133,6 +136,12 @@ public class ShareWithCaptionFragment extends Fragment implements RequestNotifie
 
 
     private void shareTask(int layoutNumber, String editdata) {
+
+        hud = KProgressHUD.create(getActivity())
+                .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                .setLabel("Please wait")
+                .setMaxProgress(100)
+                .show();
         mApiCall.shareTaskInApp(contactnumber, number, groupIds, broadcastGroupIds, editdata, layoutNumber, profile_contact,
                 store_id, vehicle_id, product_id, service_id, status_id, search_id, auction_id, loan_id, exchange_id);
     }
@@ -167,6 +176,7 @@ public class ShareWithCaptionFragment extends Fragment implements RequestNotifie
     public void notifyString(String str) {
         if (str != null) {
             if (str.equalsIgnoreCase("success_share")) {
+                hud.dismiss();
                 if (isAdded())
                     CustomToast.customToast(getActivity(), "Shared successfully");
                 getActivity().finish();
