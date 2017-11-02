@@ -104,6 +104,7 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
 
     private boolean isBackgroundServiceRunning(Class<?> serviceClass) {
         ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        assert manager != null;
         for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
             if (serviceClass.getName().equals(service.service.getClassName())) {
                 System.out.println("class" + serviceClass.getName());
@@ -296,7 +297,7 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
                 mDrawerLayout.requestLayout();
             }
         };
-        mDrawerLayout.setDrawerListener(toggle);
+        mDrawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
         final NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
@@ -336,7 +337,7 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
         tabLayout.getTabAt(3).setIcon(R.mipmap.ic_heart);
 
 
-        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
@@ -439,31 +440,33 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
             @Override
             public void onDrawerSlide(View drawerView, float slideOffset) {
                 if (mLanguage.equals("mr")) {
-                    navigationView.getMenu().getItem(0).setTitle("मुख्यपृष्ठ");
-                    navigationView.getMenu().getItem(1).setTitle("माझे प्रोफाइल");
-                    navigationView.getMenu().getItem(2).setTitle("माझे ऑटोकट्टा संपर्क");
-                    navigationView.getMenu().getItem(3).setTitle("टोळी");
-                    navigationView.getMenu().getItem(4).setTitle("स्टोअर");
-                    navigationView.getMenu().getItem(4).getSubMenu().getItem(0).setTitle("माझे स्टोअर");
-                    navigationView.getMenu().getItem(4).getSubMenu().getItem(1).setTitle("ब्राउझ स्टोअर");
-                    navigationView.getMenu().getItem(4).getSubMenu().getItem(2).setTitle("शोध स्टोअर");
-                    navigationView.getMenu().getItem(5).setTitle("वाहन");
-                    navigationView.getMenu().getItem(5).getSubMenu().getItem(0).setTitle("वाहन अपलोड करा");
-                    navigationView.getMenu().getItem(5).getSubMenu().getItem(1).setTitle("वाहन शोधा");
-                    navigationView.getMenu().getItem(5).getSubMenu().getItem(2).setTitle("माझे शोध");
-                    navigationView.getMenu().getItem(5).getSubMenu().getItem(3).setTitle("माझे इन्व्हेंटरी / कॅटलॉग");
-                    navigationView.getMenu().getItem(6).setTitle("लिलाव");
-                    navigationView.getMenu().getItem(6).getSubMenu().getItem(0).setTitle("इव्हेंट तयार करा");
-                    navigationView.getMenu().getItem(6).getSubMenu().getItem(1).setTitle("माझे सक्रिय इव्हेंट");
-                    navigationView.getMenu().getItem(6).getSubMenu().getItem(2).setTitle("माझे आगामी कार्यक्रम");
-                    navigationView.getMenu().getItem(6).getSubMenu().getItem(3).setTitle("माझे जतन केलेले इव्हेंट");
-                    navigationView.getMenu().getItem(6).getSubMenu().getItem(4).setTitle("माझे शेवटचा कार्यक्रम");
-                    navigationView.getMenu().getItem(6).getSubMenu().getItem(5).setTitle("माझे ब्लॅकलिस्ट केलेले सदस्य");
-                    navigationView.getMenu().getItem(7).setTitle("इतर");
-                    navigationView.getMenu().getItem(7).getSubMenu().getItem(0).setTitle("ब्रॉडकास्ट गट");
-                    navigationView.getMenu().getItem(7).getSubMenu().getItem(1).setTitle("माझे प्रसारण संदेश");
-                    navigationView.getMenu().getItem(7).getSubMenu().getItem(2).setTitle("व्यवसाय चॅट");
-                    navigationView.getMenu().getItem(7).getSubMenu().getItem(3).setTitle("भाषा बदला");
+                    if (navigationView != null) {
+                        navigationView.getMenu().getItem(0).setTitle("मुख्यपृष्ठ");
+                        navigationView.getMenu().getItem(1).setTitle("माझे प्रोफाइल");
+                        navigationView.getMenu().getItem(2).setTitle("माझे ऑटोकट्टा संपर्क");
+                        navigationView.getMenu().getItem(3).setTitle("टोळी");
+                        navigationView.getMenu().getItem(4).setTitle("स्टोअर");
+                        navigationView.getMenu().getItem(4).getSubMenu().getItem(0).setTitle("माझे स्टोअर");
+                        navigationView.getMenu().getItem(4).getSubMenu().getItem(1).setTitle("ब्राउझ स्टोअर");
+                        navigationView.getMenu().getItem(4).getSubMenu().getItem(2).setTitle("शोध स्टोअर");
+                        navigationView.getMenu().getItem(5).setTitle("वाहन");
+                        navigationView.getMenu().getItem(5).getSubMenu().getItem(0).setTitle("वाहन अपलोड करा");
+                        navigationView.getMenu().getItem(5).getSubMenu().getItem(1).setTitle("वाहन शोधा");
+                        navigationView.getMenu().getItem(5).getSubMenu().getItem(2).setTitle("माझे शोध");
+                        navigationView.getMenu().getItem(5).getSubMenu().getItem(3).setTitle("माझे इन्व्हेंटरी / कॅटलॉग");
+                        navigationView.getMenu().getItem(6).setTitle("लिलाव");
+                        navigationView.getMenu().getItem(6).getSubMenu().getItem(0).setTitle("इव्हेंट तयार करा");
+                        navigationView.getMenu().getItem(6).getSubMenu().getItem(1).setTitle("माझे सक्रिय इव्हेंट");
+                        navigationView.getMenu().getItem(6).getSubMenu().getItem(2).setTitle("माझे आगामी कार्यक्रम");
+                        navigationView.getMenu().getItem(6).getSubMenu().getItem(3).setTitle("माझे जतन केलेले इव्हेंट");
+                        navigationView.getMenu().getItem(6).getSubMenu().getItem(4).setTitle("माझे शेवटचा कार्यक्रम");
+                        navigationView.getMenu().getItem(6).getSubMenu().getItem(5).setTitle("माझे ब्लॅकलिस्ट केलेले सदस्य");
+                        navigationView.getMenu().getItem(7).setTitle("इतर");
+                        navigationView.getMenu().getItem(7).getSubMenu().getItem(0).setTitle("ब्रॉडकास्ट गट");
+                        navigationView.getMenu().getItem(7).getSubMenu().getItem(1).setTitle("माझे प्रसारण संदेश");
+                        navigationView.getMenu().getItem(7).getSubMenu().getItem(2).setTitle("व्यवसाय चॅट");
+                        navigationView.getMenu().getItem(7).getSubMenu().getItem(3).setTitle("भाषा बदला");
+                    }
                 }/*else {
                     navigationView.getMenu().getItem(0).setTitle("Home");
                 }*/
