@@ -45,7 +45,6 @@ public class AddNewVehicleActivity extends AppCompatActivity implements RequestN
         setSupportActionBar(toolbar);
 
         btnSearch = (Button) findViewById(R.id.btnSearch);
-
         setTitle("Add New Vehicle");
 
         myContact = getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).getString("loginContact", "");
@@ -59,15 +58,10 @@ public class AddNewVehicleActivity extends AppCompatActivity implements RequestN
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-
-
                 try {
                     if (getIntent().getExtras() != null) {
-
                         store_id = getIntent().getExtras().getInt("store_id");
                         callFrom = getIntent().getExtras().getString("callFrom");
-
-
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -77,7 +71,6 @@ public class AddNewVehicleActivity extends AppCompatActivity implements RequestN
                     getSupportActionBar().setDisplayShowHomeEnabled(true);
                     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
                 }
-
                 getVehicleCategory();
             }
         });
@@ -86,7 +79,6 @@ public class AddNewVehicleActivity extends AppCompatActivity implements RequestN
         btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 if (vehicle_id == 0) {
                     CustomToast.customToast(getApplicationContext(), "Please Select Category");
                 } else if (position_sub_cat_id == 0) {

@@ -50,7 +50,7 @@
                     android:layout_height="10dp"
                     android:layout_weight="0.2"
                     android:contentDescription="@string/app_name"
-                    android:src="@drawable/hdlogo"
+                    android:src="@drawable/logo48x48"
                     android:visibility="gone" />
             </LinearLayout>
 

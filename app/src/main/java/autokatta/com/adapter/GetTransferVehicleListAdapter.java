@@ -94,7 +94,7 @@ public class GetTransferVehicleListAdapter extends BaseAdapter implements Reques
         //Set Profile Photo
         if (mList.get(position).getImage() == null || mList.get(position).getImage().equalsIgnoreCase("") || mList.get(position).getImage().equalsIgnoreCase(null)
                 || mList.get(position).getImage().equalsIgnoreCase("null")) {
-            holder.mImage.setBackgroundResource(R.drawable.hdlogo);
+            holder.mImage.setBackgroundResource(R.drawable.logo48x48);
         } else {
             Glide.with(mActivity)
                     .load(mActivity.getString(R.string.base_image_url) + mList.get(position).getImage())

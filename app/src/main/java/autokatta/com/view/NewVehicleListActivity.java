@@ -69,7 +69,7 @@ public class NewVehicleListActivity extends AppCompatActivity implements Request
         setContentView(R.layout.activity_new_vehicle_list);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        setTitle("New Vehicle");
         runOnUiThread(new Runnable() {
             @Override
             public void run() {

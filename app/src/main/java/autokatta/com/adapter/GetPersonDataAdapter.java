@@ -1,9 +1,12 @@
 package autokatta.com.adapter;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Typeface;
 import android.net.Uri;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.telephony.gsm.SmsManager;
@@ -86,7 +89,7 @@ public class GetPersonDataAdapter extends RecyclerView.Adapter<GetPersonDataAdap
 
         if (list.get(position).getProfilePic().equals("") || list.get(position).getProfilePic().equals("null")
                 || list.get(position).getProfilePic().equals(null)) {
-            holder.mProfilePic.setBackgroundResource(R.drawable.hdlogo);
+            holder.mProfilePic.setBackgroundResource(R.drawable.logo48x48);
         } else {
             String used_pic = mActivity.getString(R.string.base_image_url) + list.get(position).getProfilePic();
             Glide.with(mActivity)
@@ -152,6 +155,16 @@ public class GetPersonDataAdapter extends RecyclerView.Adapter<GetPersonDataAdap
     private void call(String rcontact) {
         Intent in = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + rcontact));
         try {
+            if (ActivityCompat.checkSelfPermission(mActivity, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
+                return;
+            }
             mActivity.startActivity(in);
         } catch (android.content.ActivityNotFoundException ex) {
             System.out.println("No Activity Found For Call in get person adapter\n");

@@ -86,6 +86,7 @@ public class AddServiceActivity extends AppCompatActivity implements RequestNoti
         setContentView(R.layout.add_service_layout);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        setTitle("Add Service");
         myContact = getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
                 .getString("loginContact", "");
         store_id = getIntent().getExtras().getInt("store_id");

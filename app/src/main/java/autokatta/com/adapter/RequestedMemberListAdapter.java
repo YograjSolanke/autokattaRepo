@@ -1,9 +1,12 @@
 package autokatta.com.adapter;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -43,8 +46,8 @@ import static android.content.Context.MODE_PRIVATE;
 public class RequestedMemberListAdapter extends RecyclerView.Adapter<RequestedMemberListAdapter.MyViewHolder> implements RequestNotifier {
     private Activity mActivity;
     private List<GetRequestedContactsResponse.Success> mItemList = new ArrayList<>();
-    private String mMyContact,mRequestedContact;
-    private int mGroupId,mRequestId;
+    private String mMyContact, mRequestedContact;
+    private int mGroupId, mRequestId;
     private ApiCall mApiCall;
     private MyViewHolder mView;
     private ConnectionDetector mTestConnection;
@@ -66,11 +69,11 @@ public class RequestedMemberListAdapter extends RecyclerView.Adapter<RequestedMe
         }
     }
 
-    public RequestedMemberListAdapter(Activity mActivity1,List<GetRequestedContactsResponse.Success> mItemList) {
+    public RequestedMemberListAdapter(Activity mActivity1, List<GetRequestedContactsResponse.Success> mItemList) {
         this.mActivity = mActivity1;
         this.mItemList = mItemList;
         mApiCall = new ApiCall(mActivity, this);
-        mMyContact=  mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), MODE_PRIVATE)
+        mMyContact = mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), MODE_PRIVATE)
                 .getString("loginContact", "");
 
         mTestConnection = new ConnectionDetector(mActivity);
@@ -88,9 +91,9 @@ public class RequestedMemberListAdapter extends RecyclerView.Adapter<RequestedMe
     @Override
     public void onBindViewHolder(final RequestedMemberListAdapter.MyViewHolder holder, final int position) {
         mView = holder;
-        mGroupId=mItemList.get(position).getGroupID();
-        mRequestedContact=mItemList.get(position).getRequestedContact();
-        mRequestId=mItemList.get(position).getRequestID();
+        mGroupId = mItemList.get(position).getGroupID();
+        mRequestedContact = mItemList.get(position).getRequestedContact();
+        mRequestId = mItemList.get(position).getRequestID();
 
         holder.mName.setText(mItemList.get(position).getUsername());
         holder.mContact.setText(mItemList.get(position).getContact());
@@ -98,7 +101,7 @@ public class RequestedMemberListAdapter extends RecyclerView.Adapter<RequestedMe
         //Set Profile Photo
         if (mItemList.get(position).getProfilePic() == null || mItemList.get(position).getProfilePic().equalsIgnoreCase("") || mItemList.get(position).getProfilePic().equalsIgnoreCase(null)
                 || mItemList.get(position).getProfilePic().equalsIgnoreCase("null")) {
-            holder.mProfilePic.setBackgroundResource(R.drawable.hdlogo);
+            holder.mProfilePic.setBackgroundResource(R.drawable.logo48x48);
         } else {
             Glide.with(mActivity)
                     .load(mActivity.getString(R.string.base_image_url) + mItemList.get(position).getProfilePic())
@@ -112,7 +115,7 @@ public class RequestedMemberListAdapter extends RecyclerView.Adapter<RequestedMe
         holder.mAddMember.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                mApiCall.addContactInGroup(mGroupId,mRequestedContact);
+                mApiCall.addContactInGroup(mGroupId, mRequestedContact);
                 mItemList.remove(holder.getAdapterPosition());
                 notifyDataSetChanged();
             }
@@ -126,17 +129,16 @@ public class RequestedMemberListAdapter extends RecyclerView.Adapter<RequestedMe
         });
 
 
-
         holder.mProfilePic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    Bundle bundle = new Bundle();
-                    bundle.putString("contactOtherProfile", holder.mContact.getText().toString());
-                    bundle.putString("action", "otherProfile");
-                    Log.i("Contact", "->" + holder.mContact.getText().toString());
-                    Intent mOtherProfile = new Intent(mActivity, OtherProfile.class);
-                    mOtherProfile.putExtras(bundle);
-                    mActivity.startActivity(mOtherProfile);
+                Bundle bundle = new Bundle();
+                bundle.putString("contactOtherProfile", holder.mContact.getText().toString());
+                bundle.putString("action", "otherProfile");
+                Log.i("Contact", "->" + holder.mContact.getText().toString());
+                Intent mOtherProfile = new Intent(mActivity, OtherProfile.class);
+                mOtherProfile.putExtras(bundle);
+                mActivity.startActivity(mOtherProfile);
             }
         });
 
@@ -148,6 +150,16 @@ public class RequestedMemberListAdapter extends RecyclerView.Adapter<RequestedMe
     private void call(String contact) {
         Intent in = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + contact));
         try {
+            if (ActivityCompat.checkSelfPermission(mActivity, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
+                return;
+            }
             mActivity.startActivity(in);
         } catch (android.content.ActivityNotFoundException ex) {
             ex.printStackTrace();

@@ -86,6 +86,7 @@ public class AddProductActivity extends AppCompatActivity implements RequestNoti
         setContentView(R.layout.add_product_layout);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        setTitle("Add Product");
         myContact = getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
                 .getString("loginContact", "");
 

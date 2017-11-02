@@ -740,11 +740,11 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
                 name.setText(names);
                 final AlertDialog.Builder builder1 = new AlertDialog.Builder(UserProfile.this);
                 builder1.setTitle("EDIT PROFILE");
-                builder1.setIcon(R.drawable.hdlogo);
+                builder1.setIcon(R.drawable.logo48x48);
                 builder1.setView(mViewDialogOtp);
 
                 if (dp == null || dp == "null") {
-                    img.setBackgroundResource(R.drawable.hdlogo);
+                    img.setBackgroundResource(R.drawable.logo48x48);
                 } else {
                     Glide.with(UserProfile.this)
                             .load(dp_path)

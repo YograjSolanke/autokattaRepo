@@ -229,7 +229,7 @@ public class ManualEnquiryAdapter extends RecyclerView.Adapter<RecyclerView.View
                 if (mItemList.get(position).getVehicleImage() == null ||
                         mItemList.get(position).getVehicleImage().equals("") ||
                         mItemList.get(position).getVehicleImage().equals("null")) {
-                    vehicleDetails.mVehiclePic.setBackgroundResource(R.drawable.hdlogo);
+                    vehicleDetails.mVehiclePic.setBackgroundResource(R.drawable.logo48x48);
                 } else {
                     String used_pic = mActivity.getString(R.string.base_image_url) + mItemList.get(position).getVehicleImage();
                     Glide.with(mActivity)
@@ -262,7 +262,7 @@ public class ManualEnquiryAdapter extends RecyclerView.Adapter<RecyclerView.View
                 if (mItemList.get(position).getProductImage() == null ||
                         mItemList.get(position).getProductImage().equals("") ||
                         mItemList.get(position).getProductImage().equals("null")) {
-                    productDetails.mProductPic.setBackgroundResource(R.drawable.hdlogo);
+                    productDetails.mProductPic.setBackgroundResource(R.drawable.logo48x48);
                 } else {
                     String product_pic = mActivity.getString(R.string.base_image_url) + mItemList.get(position).getProductImage();
                     Glide.with(mActivity)
@@ -295,7 +295,7 @@ public class ManualEnquiryAdapter extends RecyclerView.Adapter<RecyclerView.View
                 if (mItemList.get(position).getProductImage() == null ||
                         mItemList.get(position).getServiceImage().equals("") ||
                         mItemList.get(position).getServiceImage().equals("null")) {
-                    serviceDetails.mServicePic.setBackgroundResource(R.drawable.hdlogo);
+                    serviceDetails.mServicePic.setBackgroundResource(R.drawable.logo48x48);
                 } else {
                     String service_pic = mActivity.getString(R.string.base_image_url) + mItemList.get(position).getServiceImage();
                     Glide.with(mActivity)
@@ -331,7 +331,7 @@ public class ManualEnquiryAdapter extends RecyclerView.Adapter<RecyclerView.View
                 if (mItemList.get(position).getVehicleImage() == null ||
                         mItemList.get(position).getVehicleImage().equals("") ||
                         mItemList.get(position).getVehicleImage().equals("null")) {
-                    newVehicleDetails.mVehiclePic.setBackgroundResource(R.drawable.hdlogo);
+                    newVehicleDetails.mVehiclePic.setBackgroundResource(R.drawable.logo48x48);
                 } else {
                     String used_pic = mActivity.getString(R.string.base_image_url) + mItemList.get(position).getVehicleImage();
                     Glide.with(mActivity)

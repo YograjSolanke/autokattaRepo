@@ -87,7 +87,7 @@ public class ProfileMyStoreAdapter extends BaseAdapter {
                     .override(110, 100)
                     .into(mViewHolder.imageView);
         } else {
-            mViewHolder.imageView.setImageResource(R.drawable.hdlogo);
+            mViewHolder.imageView.setImageResource(R.drawable.logo48x48);
         }
 
         convertView.setOnClickListener(new View.OnClickListener() {

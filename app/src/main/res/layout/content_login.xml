@@ -9,7 +9,7 @@
     tools:context="autokatta.com.view.LoginActivity"
     tools:showIn="@layout/activity_login">
 
-    <ImageView
+    <!--<ImageView
         android:id="@+id/imageView1"
         android:layout_width="150dip"
         android:layout_height="150dip"
@@ -17,13 +17,12 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="25dp"
         android:contentDescription="@string/app_name"
-        android:src="@drawable/hdlogo" />
+        android:src="@drawable/hdlogo" />-->
 
     <TextView
         android:id="@+id/autokatta"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/imageView1"
         android:layout_marginTop="1dp"
         android:gravity="center"
         android:text="@string/app_name"

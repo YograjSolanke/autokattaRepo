@@ -120,7 +120,7 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
         //Set Profile Photo
         if (mItemList.get(position).getDp() == null || mItemList.get(position).getDp().equalsIgnoreCase("") || mItemList.get(position).getDp().equalsIgnoreCase(null)
                 || mItemList.get(position).getDp().equalsIgnoreCase("null")) {
-            holder.mProfilePic.setBackgroundResource(R.drawable.hdlogo);
+            holder.mProfilePic.setBackgroundResource(R.drawable.logo48x48);
         } else {
             Glide.with(mActivity)
                     .load(mActivity.getString(R.string.base_image_url) + mItemList.get(position).getDp())
