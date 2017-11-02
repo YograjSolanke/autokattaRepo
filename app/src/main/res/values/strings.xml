@@ -880,5 +880,6 @@
     <string name="title_activity_edit_designation">EditDesignation</string>
     <string name="title_activity_edit_skills">EditSkills</string>
     <string name="title_activity_image_video_preview">ImageVideoPreviewActivity</string>
+    <string name="title_activity_recycler_image_view">RecyclerImageView</string>
 
 </resources>

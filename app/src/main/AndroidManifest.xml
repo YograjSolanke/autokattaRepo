@@ -848,7 +848,11 @@
             android:name=".view.ImageVideoPreviewActivity"
             android:label="@string/title_activity_image_video_preview"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".register.TermsConditions"></activity>
+        <activity android:name=".register.TermsConditions" />
+        <activity
+            android:name=".view.RecyclerImageView"
+            android:label="@string/title_activity_recycler_image_view"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

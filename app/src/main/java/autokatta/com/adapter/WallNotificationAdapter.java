@@ -1,13 +1,17 @@
 package autokatta.com.adapter;
 
 import android.app.Activity;
+import android.app.ActivityOptions;
 import android.app.AlertDialog;
 import android.app.DownloadManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.drawable.BitmapDrawable;
+import android.media.MediaMetadataRetriever;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -30,9 +34,12 @@ import android.webkit.URLUtil;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.MediaController;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.VideoView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -60,6 +67,7 @@ import autokatta.com.view.OtherProfile;
 import autokatta.com.view.ProductViewActivity;
 import autokatta.com.view.ServiceViewActivity;
 import autokatta.com.view.ShareWithinAppActivity;
+import autokatta.com.view.SingleVideoActivity;
 import autokatta.com.view.StoreViewActivity;
 import autokatta.com.view.UploadToGroupStoreActivity;
 import autokatta.com.view.UserProfile;
@@ -390,6 +398,31 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
         }
     }
 
+    /* Image Grid Layout Class
+    */
+
+    private static class ImageNotification extends RecyclerView.ViewHolder {
+        CardView mImageCard;
+        ImageView image1, image2, image3, image4;
+        TextView moreImages, captionText;
+        LinearLayout linearImages;
+        VideoView videoView;
+
+
+        public ImageNotification(View imageView) {
+            super(imageView);
+            mImageCard = (CardView) imageView.findViewById(R.id.image_card_view);
+            image1 = (ImageView) imageView.findViewById(R.id.image1);
+            image2 = (ImageView) imageView.findViewById(R.id.image2);
+            image3 = (ImageView) imageView.findViewById(R.id.image3);
+            image4 = (ImageView) imageView.findViewById(R.id.image4);
+            moreImages = (TextView) imageView.findViewById(R.id.moreImages);
+            videoView = (VideoView) imageView.findViewById(R.id.VideoView);
+            captionText = (TextView) imageView.findViewById(R.id.captionText);
+            linearImages = (LinearLayout) imageView.findViewById(R.id.linearImages);
+        }
+    }
+
     /*
     Search Notification Class...
      */
@@ -533,6 +566,8 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
             mUserPic = (ImageView) shareView.findViewById(R.id.user_pro_pic);
             mShareFavourite = (ImageButton) shareView.findViewById(R.id.share_favourite);
             mShareUnfav = (ImageButton) shareView.findViewById(R.id.share_unfavourite);
+            mShareFavourite.setVisibility(View.GONE);
+            mShareUnfav.setVisibility(View.GONE);
 
             mShareActionName = (TextView) shareView.findViewById(R.id.share_action_names);
             mShareActionTime = (TextView) shareView.findViewById(R.id.share_action_time);
@@ -670,6 +705,10 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
             case 0:
                 mView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_load, parent, false);
                 return new LoadHolder(mView);
+
+            case 12:
+                mView = LayoutInflater.from(parent.getContext()).inflate(R.layout.wall_image_grid_layout, parent, false);
+                return new ImageNotification(mView);
         }
         return null;
     }
@@ -5670,6 +5709,101 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
 
                 }
                 break;
+
+
+            case 12:
+                final ImageNotification mImageHolder = (ImageNotification) holder;
+
+                final String keyword = "video";
+                if (keyword.equalsIgnoreCase("video")) {
+                    mImageHolder.videoView.setVisibility(View.VISIBLE);
+                    mImageHolder.linearImages.setVisibility(View.GONE);
+                    mImageHolder.moreImages.setVisibility(View.GONE);
+
+
+                    try {
+                        // Start the MediaController
+                        MediaController mediacontroller = new MediaController(
+                                mActivity);
+                        mediacontroller.setAnchorView(mImageHolder.videoView);
+//                        // Get the URL from String VideoURL
+                        Uri video = Uri.parse("http://autokatta.acquiscent.com/UploadedFiles/VID_20171005_185639.mp4");
+//                        mImageHolder.videoView.setMediaController(mediacontroller);
+//                        mImageHolder.videoView.setVideoURI(video);
+//                        mImageHolder.videoView.seekTo(100);
+
+                        Bitmap thumb = createVideoThumbnail(mActivity, video);
+
+                        BitmapDrawable bitmapDrawable = new BitmapDrawable(thumb);
+                        mImageHolder.videoView.setBackground(bitmapDrawable);
+
+                    } catch (Exception e) {
+                        Log.e("Error", e.getMessage());
+                        e.printStackTrace();
+                    }
+
+//                    mImageHolder.videoView.requestFocus();
+//                    mImageHolder.videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+//                        // Close the progress bar and play the video
+//                        public void onPrepared(MediaPlayer mp) {
+//                            pDialog.dismiss();
+//                            mImageHolder.videoView.start();
+//                        }
+//                    });
+
+                } else if (keyword.equalsIgnoreCase("Images")) {
+                    mImageHolder.linearImages.setVisibility(View.VISIBLE);
+                    mImageHolder.videoView.setVisibility(View.GONE);
+                    mImageHolder.moreImages.setVisibility(View.VISIBLE);
+
+
+                    Glide.with(mActivity)
+                            .load("http://autokatta.acquiscent.com/UploadedFiles/1503311495439.jpg")
+                            .centerCrop()
+                            .diskCacheStrategy(DiskCacheStrategy.ALL)
+                            .placeholder(R.drawable.logo)
+                            .into(mImageHolder.image1);
+
+                    Glide.with(mActivity)
+                            .load("http://autokatta.acquiscent.com/UploadedFiles/1502978280546.jpg")
+                            .centerCrop()
+                            .diskCacheStrategy(DiskCacheStrategy.ALL)
+                            .placeholder(R.drawable.logo)
+                            .into(mImageHolder.image2);
+
+                    Glide.with(mActivity)
+                            .load("http://autokatta.acquiscent.com/UploadedFiles/Avneet%20Singh%20FO%20Rahata%2020171009_140951.jpg")
+                            .centerCrop()
+                            .diskCacheStrategy(DiskCacheStrategy.ALL)
+                            .placeholder(R.drawable.logo)
+                            .into(mImageHolder.image3);
+
+                    Glide.with(mActivity)
+                            .load("http://autokatta.acquiscent.com/UploadedFiles/IMG-20170918-WA00045819.jpg")
+                            .centerCrop()
+                            .diskCacheStrategy(DiskCacheStrategy.ALL)
+                            .placeholder(R.drawable.logo)
+                            .into(mImageHolder.image4);
+
+                }
+
+                mImageHolder.mImageCard.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        if (keyword.equalsIgnoreCase("video")) {
+                            ActivityOptions options = ActivityOptions.makeCustomAnimation(mActivity, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
+                            Bundle b = new Bundle();
+                            //b.putString("url", videosList.get(mImageHolder.getAdapterPosition()).getVideo());
+                            b.putString("url", "http://autokatta.acquiscent.com/UploadedFiles/1503311495439.jpg");
+                            Intent intentnewvehicle = new Intent(mActivity, SingleVideoActivity.class);
+                            intentnewvehicle.putExtras(b);
+                            //intentnewvehicle.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            mActivity.startActivity(intentnewvehicle, options.toBundle());
+                        }
+                    }
+                });
+                break;
         }
     }
 
@@ -5755,5 +5889,27 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
         // add logging as last interceptor
         httpClient.addInterceptor(logging).readTimeout(90, TimeUnit.SECONDS);
         return httpClient;
+    }
+
+    private static Bitmap createVideoThumbnail(Context context, Uri uri) {
+        MediaMetadataRetriever mediametadataretriever = new MediaMetadataRetriever();
+
+        try {
+            mediametadataretriever.setDataSource(context, uri);
+            //            if (null != bitmap) {
+//                int j = getThumbnailSize(context, i);
+//                return ThumbnailUtils.extractThumbnail(bitmap, j, j, 2);
+//            }
+            return mediametadataretriever.getFrameAtTime(-1L);
+        } catch (Throwable t) {
+            // TODO log
+            return null;
+        } finally {
+            try {
+                mediametadataretriever.release();
+            } catch (RuntimeException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
