@@ -141,6 +141,7 @@ public class EditAllAbout extends AppCompatActivity implements RequestNotifier, 
 
         mApiCall.getUserCategories();
         mApiCall.Industries();
+        mApiCall.getSkills();
         mApiCall.getBrandTags("both");
 
         mEdtWorkedat.setOnClickListener(EditAllAbout.this);
@@ -158,6 +159,21 @@ public class EditAllAbout extends AppCompatActivity implements RequestNotifier, 
         mDoneAddress.setOnClickListener(EditAllAbout.this);
         mDoneworkat.setOnClickListener(EditAllAbout.this);
 
+        mSkills.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
+        mSkills.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View view, int i, KeyEvent keyEvent) {
+                if ((keyEvent.getAction() == KeyEvent.ACTION_DOWN) &&
+                        (i == KeyEvent.KEYCODE_ENTER)) {
+                    mSkills.setText("" + mSkills.getText().toString() + ",");
+                    mSkills.setSelection(mSkills.getText().toString().length());
+                    checkSkills();
+                    return true;
+                }
+                return false;
+            }
+        });
+
     }
 
     public void checkSkills() {
@@ -167,6 +183,7 @@ public class EditAllAbout extends AppCompatActivity implements RequestNotifier, 
         parts = text.split(",");
         if (parts.length > 5) {
             mSkills.setError("You can add maximum five skills");
+            mSkills.setFocusable(true);
         }
     }
 
@@ -263,6 +280,8 @@ public class EditAllAbout extends AppCompatActivity implements RequestNotifier, 
                 } else if (response.body() instanceof GetSkillsResponse) {
                     GetSkillsResponse mGetSkillsResponse = (GetSkillsResponse) response.body();
                     if (!mGetSkillsResponse.getSuccess().isEmpty()) {
+                        mSkillList.clear();
+                        mSkillList1.clear();
                         for (GetSkillsResponse.Success skillsResponse : mGetSkillsResponse.getSuccess()) {
                             skillsResponse.setSkillId(skillsResponse.getSkillId());
                             skillsResponse.setSkillNames(skillsResponse.getSkillNames());
@@ -405,7 +424,7 @@ public class EditAllAbout extends AppCompatActivity implements RequestNotifier, 
                 mSkills.setEnabled(true);
                 mSkills.setFocusableInTouchMode(true);
                 mSkills.setFocusable(true);
-
+/*
                 mSkills.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
                 mSkills.setOnKeyListener(new View.OnKeyListener() {
                     @Override
@@ -419,7 +438,7 @@ public class EditAllAbout extends AppCompatActivity implements RequestNotifier, 
                         }
                         return false;
                     }
-                });
+                });*/
                 break;
 
             case R.id.editcompany:
@@ -533,8 +552,8 @@ public class EditAllAbout extends AppCompatActivity implements RequestNotifier, 
 
                 //***************************************************************
                 String splChrs = "-/@#$%^&_+=()";
-                boolean found2 = strCompany.matches("["
-                        + splChrs + "]+");
+//                boolean found2 = strCompany.matches("["
+  //                   + splChrs + "]+");
 
 
                 if (mUpdatedSkills.endsWith(",")) {

@@ -59,8 +59,6 @@ public class VehicleBuyerListAdapter extends RecyclerView.Adapter<VehicleBuyerLi
         this.manufacture_year = manufacture_year;
         this.rto_city = rto_city;
         apicall = new ApiCall(activity, this);
-        myContact = activity.getSharedPreferences(activity.getString(R.string.my_preference), MODE_PRIVATE)
-                .getString("loginContact", "");
     }
 
     @Override
@@ -71,7 +69,8 @@ public class VehicleBuyerListAdapter extends RecyclerView.Adapter<VehicleBuyerLi
 
     @Override
     public void onBindViewHolder(final VehicleBuyerListAdapter.BuyerHolder holder, final int position) {
-
+        myContact = activity.getSharedPreferences(activity.getString(R.string.my_preference), MODE_PRIVATE)
+                .getString("loginContact", "");
         final BuyerResponse.Success.Found object = foundList.get(position);
 
         holder.buyerusername.setTextColor(Color.BLUE);
