@@ -15,7 +15,6 @@ public class MemberContainer extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_member_container);
-        setTitle("Member's");
         if (getSupportActionBar() != null) {
             getSupportActionBar().setHomeButtonEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -31,6 +30,7 @@ public class MemberContainer extends AppCompatActivity {
             b.putString("bundle_GroupName", b1.getString("bundle_GroupName"));
             b.putString("bundle_Contact", b1.getString("bundle_Contact"));
             fragment.setArguments(b);
+            setTitle(b1.getString("bundle_GroupName") + " " + "Member's");
         }
 
         runOnUiThread(new Runnable() {

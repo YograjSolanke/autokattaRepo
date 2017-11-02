@@ -39,7 +39,6 @@ public class GroupsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_groups);
-        setTitle("My Group");
         if (getSupportActionBar() != null) {
             getSupportActionBar().setHomeButtonEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -54,6 +53,7 @@ public class GroupsActivity extends AppCompatActivity {
             b.putString("bundle_GroupName", i.getStringExtra("bundle_GroupName"));
             b.putString("tabIndex", i.getStringExtra("tabIndex"));
             b.putString("bundle_Contact", i.getStringExtra("bundle_Contact"));
+            setTitle(i.getStringExtra("bundle_GroupName"));
         }
 
         GroupsActivity.CustomGridViewActivity adapterViewAndroid = new GroupsActivity.CustomGridViewActivity(GroupsActivity.this, gridViewString, gridViewImageId);
