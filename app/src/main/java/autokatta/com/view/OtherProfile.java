@@ -1,6 +1,8 @@
 package autokatta.com.view;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -8,6 +10,7 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -138,7 +141,7 @@ public class OtherProfile extends AppCompatActivity implements RequestNotifier, 
     GET Other Profile...
      */
     private void getOtherProfile(String contact) {
-        mApiCall.profileAbout(contact,mLoginContact);
+        mApiCall.profileAbout(contact, mLoginContact);
     }
 
     private void setupViewPager(ViewPager viewPager) {
@@ -275,9 +278,18 @@ public class OtherProfile extends AppCompatActivity implements RequestNotifier, 
     private void call() {
         Intent in = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + mOtherContact));
         try {
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
+                return;
+            }
             startActivity(in);
         } catch (android.content.ActivityNotFoundException ex) {
-            System.out.println("No Activity Found For Call in Other Profile\n");
             ex.printStackTrace();
         }
     }

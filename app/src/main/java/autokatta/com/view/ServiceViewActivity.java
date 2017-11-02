@@ -1,14 +1,18 @@
 package autokatta.com.view;
 
+import android.Manifest;
 import android.app.ActivityOptions;
 import android.app.DownloadManager;
 import android.app.ProgressDialog;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -83,7 +87,7 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
 
     String contact;
     AdminCallContactAdapter adapter;
-    ArrayList<String> storeAdmins = new ArrayList<>();
+    List<String> storeAdmins = new ArrayList<>();
     Bundle b = new Bundle();
     int id;
     String action;
@@ -125,10 +129,10 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
     int lcnt;
     Button post, btnchat;
     String reviewstring = "";
-    ArrayList<String> imageslist = new ArrayList<String>();
+    List<String> imageslist = new ArrayList<String>();
 
-    final ArrayList<String> spnid = new ArrayList<String>();
-    final ArrayList<String> tagname = new ArrayList<String>();
+    final List<String> spnid = new ArrayList<String>();
+    final List<String> tagname = new ArrayList<String>();
 
     Float pricerate = 0.0f;
     Float qualityrate = 0.0f;
@@ -144,7 +148,7 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
     Spinner spinCategory;
     String simagename = "";
     TextView photocount, no_of_enquiries;
-    final ArrayList<String> brandTags = new ArrayList<>();
+    final List<String> brandTags = new ArrayList<>();
     KProgressHUD hud;
     String tagpart = "", tagid = "";
     String idlist = "", editMode = "";
@@ -234,9 +238,10 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
         linearshare.setOnClickListener(this);
         mUploadGroup.setOnClickListener(this);
 
-
-        service_id = getIntent().getExtras().getInt("service_id");
-        editMode = getIntent().getExtras().getString("editmode", "");
+        if (getIntent().getExtras() != null) {
+            service_id = getIntent().getExtras().getInt("service_id");
+            editMode = getIntent().getExtras().getString("editmode", "");
+        }
 
 
         //service_id="115";
@@ -263,7 +268,6 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
                         getCategory();
                         getServiceData(service_id, contact);
                         getNoOfEnquiryCount(service_id, contact);
-
 
 
                         servicetags.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
@@ -375,8 +379,6 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
                             groupIdList.add(String.valueOf(success.getId()));
                             groupTitleList.add(success.getTitle());
                         }
-                        //Log.i("previousGrpIds--",groupIdList);
-                        System.out.println("previousGrpIds-- List" + groupIdList);
                         groupTitleArray = groupTitleList.toArray(new String[groupTitleList.size()]);
                         groupIdArray = groupIdList.toArray(new String[groupIdList.size()]);
 
@@ -437,8 +439,7 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
             if (Arrays.asList(prearra).contains(groupIdList.get(i))) {
                 itemsChecked[i] = true;
                 mSelectedItems.add(groupIdList.get(i));
-            }
-            else
+            } else
                 itemsChecked[i] = false;
         }
 
@@ -465,7 +466,6 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
 
-                        System.out.println("selected ids=" + mSelectedItems);
                         stringgroupids = "";
                         stringgroupname = "";
                         prevGroupIds = "";
@@ -502,6 +502,7 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
                 })
                 .show();
     }
+
     private void getNoOfEnquiryCount(int service_id, String contact) {
         ApiCall mApicall = new ApiCall(this, this);
         mApicall.getEnquiryCount(contact, 0, service_id, 0);
@@ -544,7 +545,7 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
      */
     private void reviewTask() {
         ApiCall mApiCall = new ApiCall(ServiceViewActivity.this, this);
-        mApiCall.postProductReview(contact, receiver_contact, 0, reviewstring,service_id);
+        mApiCall.postProductReview(contact, receiver_contact, 0, reviewstring, service_id);
     }
 
     /*
@@ -571,9 +572,19 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
     private void call(String storecontact) {
         Intent in = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + storecontact));
         try {
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
+                return;
+            }
             startActivity(in);
-        } catch (android.content.ActivityNotFoundException ex) {
-            System.out.println("No Activity Found For Call in Service View Fragment\n");
+        } catch (ActivityNotFoundException ex) {
+            ex.printStackTrace();
         }
     }
 
@@ -624,7 +635,7 @@ Get Admin data...
     */
     private void addOtherBrandTags(String brandtagpart) {
         ApiCall mApiCall = new ApiCall(ServiceViewActivity.this, this);
-    //    mApiCall.addOtherBrandTags(brandtagpart, "2");
+        //    mApiCall.addOtherBrandTags(brandtagpart, "2");
         mApiCall.addOtherBrandTags(brandtagpart, "service");
     }
 
@@ -699,9 +710,6 @@ Get Admin data...
                             storeAdmins.add(success.getAdmin());
 
                         }
-
-                        System.out.println("alreadyadmin=" + storeAdmins.size());
-
                     }
 
 
@@ -1003,12 +1011,10 @@ Get Admin data...
                 upcat = spinCategory.getSelectedItem().toString();
 
                 String text = servicetags.getText().toString();
-                ArrayList<String> images = new ArrayList<String>();
-                ArrayList<String> othertag = new ArrayList<String>();
+                List<String> images = new ArrayList<String>();
+                List<String> othertag = new ArrayList<String>();
                 text = text.trim();
                 text = text.replaceAll(",$", "");
-                System.out.println("txttttt=" + text);
-
 
                 String[] parts = text.split(",");
 
@@ -1019,17 +1025,13 @@ Get Admin data...
                         images.add(tagpart);
                     if (!tagname.contains(tagpart) && !tagpart.equalsIgnoreCase("") && !tagpart.equalsIgnoreCase(" ")) {
                         othertag.add(tagpart);
-                        System.out.println("tag going to add=" + tagpart);
                         try {
                             addOtherTags();
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
                     }
-                    System.out.println("other categoryyyyyyyyyyyyyyyy=" + othertag);
-
                 }
-                System.out.println("tagname arrat before change***************" + tagname);
 
                 getTags();
 
@@ -1039,29 +1041,24 @@ Get Admin data...
                         if (images.get(i).equalsIgnoreCase(tagname.get(j)))
                             idlist = idlist + "," + spnid.get(j);
                     }
-
                 }
-
 
                 if (!servicetags.getText().toString().equalsIgnoreCase("") && idlist.length() > 0) {
                     idlist = idlist.substring(1);
-                    System.out.println("substring idddddddddd=" + idlist);
-
-
                 }
-                ArrayList<String> tempbrands = new ArrayList<String>();
+
+                List<String> tempbrands = new ArrayList<String>();
                 String textbrand = multiautobrand.getText().toString();
                 if (textbrand.endsWith(","))
                     textbrand = textbrand.substring(0, textbrand.length() - 1);
                 textbrand = textbrand.trim();
                 if (!textbrand.equals("")) {
                     String[] bparts = textbrand.split(",");
-                    for (int o = 0; o < bparts.length; o++) {
-                        brandtagpart = bparts[o].trim();
+                    for (String bpart : bparts) {
+                        brandtagpart = bpart.trim();
                         if (!brandtagpart.equals("") && !brandtagpart.equalsIgnoreCase(" "))
                             tempbrands.add(brandtagpart);
                         if (!brandTags.contains(brandtagpart) && !brandtagpart.equals("") && !brandtagpart.equalsIgnoreCase(" ")) {
-                            System.out.println("brand tag going to add=" + brandtagpart);
                             try {
                                 addOtherBrandTags(brandtagpart);
                             } catch (Exception e) {
@@ -1280,6 +1277,7 @@ Get Admin data...
 
                                 Log.e("TAG", "img URL: " + imagename);
 
+                                assert manager != null;
                                 manager.enqueue(request);
 
                                 imageFilePath = "/storage/emulated/0/Download/" + filename;
