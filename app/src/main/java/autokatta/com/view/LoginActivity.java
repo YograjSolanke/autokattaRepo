@@ -1,5 +1,6 @@
 package autokatta.com.view;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -24,8 +25,6 @@ import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
-import com.kaopiz.kprogresshud.KProgressHUD;
-
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
@@ -49,10 +48,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     CoordinatorLayout mLogin;
     String userName;
     String password;
-    KProgressHUD hud;
     SharedPreferences mSharedPreferences = null;
     SharedPreferences.Editor mEditor;
-    String mMarathiStr, mEnglishStr;
+    private ProgressDialog dialog;
     Locale myLocale;
 
     @Override
@@ -67,6 +65,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             getSupportActionBar().setHomeButtonEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
+        dialog = new ProgressDialog(this);
+        dialog.setMessage("Please wait...");
 
         session = new SessionManagement(getApplicationContext());
         if (session.isLoggedIn()) {
@@ -94,7 +94,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             mEditor.putBoolean("mChooseLanguage", false);
             mEditor.apply();
         } else {
-            //Toast.makeText(getApplicationContext(), "Language Selected" + myLocale, Toast.LENGTH_SHORT).show();
             Log.i("Language", "->" + myLocale);
         }
     }
@@ -217,20 +216,18 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             mPassword.setError(getString(R.string.err_password));
         } else {
             ApiCall mApiCall = new ApiCall(LoginActivity.this, this);
-            hud = KProgressHUD.create(LoginActivity.this)
-                    .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
-                    .setLabel("Please wait")
-                    .setMaxProgress(100)
-                    .show();
+            dialog.show();
             mApiCall.userLogin(userName, password);
         }
     }
 
     @Override
     public void notifySuccess(Response<?> response) {
+        if (dialog.isShowing()) {
+            dialog.dismiss();
+        }
         if (response != null) {
             if (response.isSuccessful()) {
-                hud.dismiss();
                 LoginResponse mLoginResponse = (LoginResponse) response.body();
                 String myContact = mUserName.getText().toString();
                 if (!mLoginResponse.getSuccess().isEmpty()) {
@@ -250,18 +247,19 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     Snackbar.make(mLogin, "Invalid Username or Password", Snackbar.LENGTH_SHORT).show();
                 }
             } else {
-                hud.dismiss();
+
                 Snackbar.make(mLogin, getString(R.string._404_), Snackbar.LENGTH_SHORT).show();
             }
         } else {
-            hud.dismiss();
             Snackbar.make(mLogin, getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
         }
     }
 
     @Override
     public void notifyError(Throwable error) {
-        hud.dismiss();
+        if (dialog.isShowing()) {
+            dialog.dismiss();
+        }
         if (error instanceof SocketTimeoutException) {
             Snackbar.make(mLogin, getString(R.string._404_), Snackbar.LENGTH_SHORT).show();
         } else if (error instanceof NullPointerException) {
