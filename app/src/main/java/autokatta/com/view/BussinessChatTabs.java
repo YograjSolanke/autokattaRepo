@@ -22,7 +22,7 @@ public class BussinessChatTabs extends Fragment {
 
     View bussinesschattabs;
     Bundle b1;
-    String callfrom="";
+
 
     @Nullable
     @Override
@@ -35,12 +35,19 @@ public class BussinessChatTabs extends Fragment {
         }
         TabLayout tabLayout = (TabLayout) bussinesschattabs.findViewById(R.id.Bussiness_chat_details_tab);
         tabLayout.setupWithViewPager(mviewPager);
-
+        String callfrom="";
         b1=getArguments();
         if (b1 != null && b1.containsKey("callfrom")) {
             callfrom=b1.getString("callfrom");
-            TabLayout.Tab tab = tabLayout.getTabAt(1);
-            tab.select();
+            if (callfrom==null||!callfrom.equalsIgnoreCase("myuploadedvehicle"))
+            {
+                TabLayout.Tab tab = tabLayout.getTabAt(0);
+                tab.select();
+            }else
+            {
+                TabLayout.Tab tab = tabLayout.getTabAt(1);
+                tab.select();
+            }
         }
        /* if (callfrom.equalsIgnoreCase("myuploadedvehicle")) {
 

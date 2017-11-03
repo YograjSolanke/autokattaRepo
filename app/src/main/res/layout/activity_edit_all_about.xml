@@ -623,7 +623,7 @@
                 <ImageView
                     android:id="@+id/donewebsite"
                     android:layout_width="40dp"
-                    android:layout_height="0dp"
+                    android:layout_height="40dp"
                     android:layout_alignParentEnd="true"
                     android:contentDescription="@string/app_name"
                     android:src="@mipmap/ic_check_icon"

@@ -50,16 +50,16 @@ public class EditAllAbout extends AppCompatActivity implements RequestNotifier, 
 
     ApiCall mApiCall;
     String[] parts;
-    String   mUpdatedSkills1;
+    String mUpdatedSkills1;
     String newcompanyname, newdesignation, newskills, strCompany, strDesignation, strskills;
     String email, contact, strprofession, company, designation, subProfession, websitestr, city, skills, interest, brand, strIndustry;
     int RegId;
     GenericFunctions mGenericFunctions;
     EditText mEmail, mWebsite, mAbouttxt;
-    AutoCompleteTextView mCity ;
+    AutoCompleteTextView mCity;
     MultiAutoCompleteTextView mSkills;
     LinearLayout mUsertypelay, mIndustrylay, mCategorylay, mBrandlay;
-    TextView mUsertypetxt, mIndusttxt, mCattxt, mBrandtxt, mCount,mCompany,mDesignation;
+    TextView mUsertypetxt, mIndusttxt, mCattxt, mBrandtxt, mCount, mCompany, mDesignation;
     ImageView mEdtWorkedat, mEdtAddress, mEdtCompany, mEdtDesignation, mEdtSkills,
             mEdtAbout, mEdtEmail, mEdtWebsite, mEdtIntrest, mDoneAbout, mDoneMail, mDoneWebsite, mDoneSkills, mDoneworkat, mDoneAddress;
 
@@ -86,11 +86,10 @@ public class EditAllAbout extends AppCompatActivity implements RequestNotifier, 
             getSupportActionBar().setHomeButtonEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
-        setTitle("Edit Details");
         mApiCall = new ApiCall(this, EditAllAbout.this);
         mGenericFunctions = new GenericFunctions();
 
-
+        setTitle("Edit Details");
         mApiCall.profileAbout(getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""),
                 getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""));
 
@@ -144,6 +143,9 @@ public class EditAllAbout extends AppCompatActivity implements RequestNotifier, 
         mApiCall.Industries();
         mApiCall.getSkills();
         mApiCall.getBrandTags("both");
+
+        mCity.setEnabled(false);
+        mCity.setFocusable(false);
 
         mEdtWorkedat.setOnClickListener(EditAllAbout.this);
         mEdtAddress.setOnClickListener(EditAllAbout.this);
@@ -236,6 +238,7 @@ public class EditAllAbout extends AppCompatActivity implements RequestNotifier, 
                         mEmail.setEnabled(false);
                         mWebsite.setEnabled(false);
                         mCity.setEnabled(false);
+                        mCity.setFocusable(false);
                         mSkills.setEnabled(false);
                         mCompany.setText(company);
                         mDesignation.setText(designation);
@@ -363,27 +366,29 @@ public class EditAllAbout extends AppCompatActivity implements RequestNotifier, 
                         getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""));
 
 
-            }else  if (str.equals("success_update_About")) {
+            } else if (str.equals("success_update_About")) {
                 CustomToast.customToast(getApplicationContext(), "About Updated");
                 mApiCall.profileAbout(getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""),
                         getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""));
-            }else  if (str.equals("success_update_Email")) {
+            } else if (str.equals("success_update_Email")) {
                 CustomToast.customToast(getApplicationContext(), "Email Updated");
                 mApiCall.profileAbout(getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""),
                         getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""));
-            }else  if (str.equals("success_update_Website")) {
+            } else if (str.equals("success_update_Website")) {
                 CustomToast.customToast(getApplicationContext(), "Website Updated");
                 mApiCall.profileAbout(getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""),
                         getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""));
-            }else  if (str.equals("success_update_Skills")) {
+            } else if (str.equals("success_update_Skills")) {
                 CustomToast.customToast(getApplicationContext(), "Skills Updated");
                 mApiCall.profileAbout(getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""),
                         getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""));
-            }else  if (str.equals("success_update_Address")) {
+            } else if (str.equals("success_update_Address")) {
                 CustomToast.customToast(getApplicationContext(), "Address Updated");
+                mCity.setEnabled(false);
+                mCity.setFocusable(false);
                 mApiCall.profileAbout(getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""),
                         getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""));
-            }else  if (str.equals("success_update_UserType")) {
+            } else if (str.equals("success_update_UserType")) {
                 CustomToast.customToast(getApplicationContext(), "User Type Updated");
                 mApiCall.profileAbout(getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""),
                         getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""));
@@ -393,7 +398,10 @@ public class EditAllAbout extends AppCompatActivity implements RequestNotifier, 
                 moduleSpinner.setAdapter(null);
                 brandSpinner.setAdapter(null);
             }
-            }
+        }else {
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
+
+        }
     }
 
     @Override
@@ -490,7 +498,7 @@ public class EditAllAbout extends AppCompatActivity implements RequestNotifier, 
                     mAbouttxt.setError("Enter About ");
                     mAbouttxt.requestFocus();
                 } else {
-                    mApiCall.updateProfile(RegId,"","","","","","","","","","", mAbouttxt.getText().toString(),"", "About");
+                    mApiCall.updateProfile(RegId, "", "", "", "", "", "", "", "", "", "", mAbouttxt.getText().toString(), "", "About");
                     mDoneAbout.setVisibility(View.GONE);
                     mEdtAbout.setVisibility(View.VISIBLE);
                     mAbouttxt.setEnabled(false);
@@ -506,7 +514,7 @@ public class EditAllAbout extends AppCompatActivity implements RequestNotifier, 
                     mEmail.setError("Enter Email");
                     mEmail.requestFocus();
                 } else {
-                    mApiCall.updateProfile(RegId, mEmail.getText().toString(),"","","","","","","","","","","","Email");
+                    mApiCall.updateProfile(RegId, mEmail.getText().toString(), "", "", "", "", "", "", "", "", "", "", "", "Email");
                     mDoneMail.setVisibility(View.GONE);
                     mEdtEmail.setVisibility(View.VISIBLE);
                     mEmail.setEnabled(false);
@@ -518,11 +526,11 @@ public class EditAllAbout extends AppCompatActivity implements RequestNotifier, 
                 if (!isValidUrl(mWebsite.getText().toString())) {
                     mWebsite.setError("Invalid Website");
                     mWebsite.requestFocus();
-                } else  if (mWebsite.getText().toString().equalsIgnoreCase("") || mWebsite.getText().toString().equalsIgnoreCase(null)) {
+                } else if (mWebsite.getText().toString().equalsIgnoreCase("") || mWebsite.getText().toString().equalsIgnoreCase(null)) {
                     mWebsite.setError("Enter Email");
                     mWebsite.requestFocus();
                 } else {
-                    mApiCall.updateProfile(RegId,"","","","", mWebsite.getText().toString(),"","","","","","","", "Website");
+                    mApiCall.updateProfile(RegId, "", "", "", "", mWebsite.getText().toString(), "", "", "", "", "", "", "", "Website");
                     mDoneWebsite.setVisibility(View.GONE);
                     mEdtWebsite.setVisibility(View.VISIBLE);
                     mWebsite.setEnabled(false);
@@ -554,7 +562,7 @@ public class EditAllAbout extends AppCompatActivity implements RequestNotifier, 
                 //***************************************************************
                 String splChrs = "-/@#$%^&_+=()";
 //                boolean found2 = strCompany.matches("["
-  //                   + splChrs + "]+");
+                //                   + splChrs + "]+");
 
 
                 if (mUpdatedSkills.endsWith(",")) {
@@ -565,9 +573,8 @@ public class EditAllAbout extends AppCompatActivity implements RequestNotifier, 
                 if (strskills.equals("") || strskills.equals("null") || strskills.equals(null)) {
                     mSkills.setError("Enter Skills Name");
                     mSkills.requestFocus();
-                }else
-                {
-                    mApiCall.updateProfile(RegId,"","","","","","","", mUpdatedSkills1,"","","","","Skills");
+                } else {
+                    mApiCall.updateProfile(RegId, "", "", "", "", "", "", "", mUpdatedSkills1, "", "", "", "", "Skills");
                     mDoneSkills.setVisibility(View.GONE);
                     mEdtSkills.setVisibility(View.VISIBLE);
                     mSkills.setEnabled(false);
@@ -594,17 +601,17 @@ public class EditAllAbout extends AppCompatActivity implements RequestNotifier, 
 
                 if (mCity.getText().toString().isEmpty()) {
                     mCity.setError("Please Enter Address");
-                }else
-                    if (!flag) {
-                        mApiCall.updateProfile(RegId,"", mCity.getText().toString(),"","","","","","","","","","", "Address");
-                        mDoneAddress.setVisibility(View.VISIBLE);
-                        mEdtAddress.setVisibility(View.GONE);
-                        mCity.setEnabled(false);
+                } else if (flag) {
+                    mApiCall.updateProfile(RegId, "", mCity.getText().toString(), "", "", "", "", "", "", "", "", "", "", "Address");
+                    mDoneAddress.setVisibility(View.GONE);
+                    mEdtAddress.setVisibility(View.VISIBLE);
+                    mCity.setEnabled(false);
+                    mCity.setFocusable(false);
 
-                    }else {
-                        mCity.setError("Please Select Address From Dropdown Only");
-                        mCity.requestFocus();
-                        }
+                } else {
+                    mCity.setError("Please Select Address From Dropdown Only");
+                    mCity.requestFocus();
+                }
 
 
                 break;
@@ -672,7 +679,7 @@ public class EditAllAbout extends AppCompatActivity implements RequestNotifier, 
                 } else if (strIndustry.equalsIgnoreCase("Select Industry")) {
                     strIndustry = "";
                 } else {
-                    mApiCall.updateProfile(RegId,"","",strprofession,subProfession,"","","","",strIndustry,brand, "","","UserType");
+                    mApiCall.updateProfile(RegId, "", "", strprofession, subProfession, "", "", "", "", strIndustry, brand, "", "", "UserType");
 
                     mDoneworkat.setVisibility(View.GONE);
                     mEdtWorkedat.setVisibility(View.VISIBLE);
@@ -687,7 +694,7 @@ public class EditAllAbout extends AppCompatActivity implements RequestNotifier, 
     }
 
 
-/*For user typew spinner*/
+    /*For user typew spinner*/
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
         switch (adapterView.getId()) {

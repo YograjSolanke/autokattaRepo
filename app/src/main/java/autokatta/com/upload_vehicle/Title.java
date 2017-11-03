@@ -502,6 +502,8 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                         mPumpSpinner.setVisibility(View.GONE);
                         mBreakSpinner.setVisibility(View.GONE);
                         mStaringSpinner.setVisibility(View.GONE);
+                        linearPermit.setVisibility(View.GONE);
+
                     }
 
                     /*23-8-17*/
@@ -511,6 +513,7 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                         mPumpSpinner.setVisibility(View.GONE);
                         mBreakSpinner.setVisibility(View.GONE);
                         mStaringSpinner.setVisibility(View.GONE);
+                        linearPermit.setVisibility(View.GONE);
                         //note.setText("In Hrs");
                     } else if (category.equalsIgnoreCase("Tractor")) {
                         mKms.setVisibility(View.GONE);

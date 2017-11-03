@@ -50,6 +50,7 @@ import java.util.concurrent.TimeUnit;
 
 import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
+import autokatta.com.fragment.BussinessMsgSenders;
 import autokatta.com.fragment.UploadedVehicleBuyerList;
 import autokatta.com.generic.SetMyDateAndTime;
 import autokatta.com.initial_fragment.AddSoldVehicle;
@@ -610,6 +611,35 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<RecyclerView.
                             activity.startActivity(i);
                         }
                     });
+                }
+            });
+
+            holder.mChatcount.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Bundle b=new Bundle();
+
+                        b.putInt("product_id", 0);
+                        b.putInt("service_id", 0);
+                        b.putInt("vehicle_id", mMainList.get(holder.getAdapterPosition()).getVehicleId());
+                        b.putString("keyword", "Used Vehicle");
+                        b.putString("title", mMainList.get(holder.getAdapterPosition()).getTitle());
+                        b.putString("price", mMainList.get(holder.getAdapterPosition()).getPrice());
+                        b.putString("category", mMainList.get(holder.getAdapterPosition()).getCategory());
+                        b.putString("brand", mMainList.get(holder.getAdapterPosition()).getManufacturer());
+                        b.putString("model", mMainList.get(holder.getAdapterPosition()).getModel());
+                        b.putString("image", mMainList.get(holder.getAdapterPosition()).getImages());
+
+
+                    BussinessMsgSenders obj = new BussinessMsgSenders();
+                    obj.setArguments(b);
+
+                    ((FragmentActivity) activity).getSupportFragmentManager().beginTransaction()
+                            .setCustomAnimations(R.anim.ok_left_to_right, R.anim.ok_right_to_left)
+                            .replace(R.id.myUsedVehicleFrame, obj, "MyUploadedVehiclesFragment")
+                            .addToBackStack("MyUploadedVehiclesFragment")
+                            .commit();
+
                 }
             });
 

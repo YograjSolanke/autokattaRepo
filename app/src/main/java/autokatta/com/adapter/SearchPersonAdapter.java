@@ -1,11 +1,14 @@
 package autokatta.com.adapter;
 
+import android.Manifest.permission;
 import android.app.Activity;
 import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -58,7 +61,7 @@ public class SearchPersonAdapter extends RecyclerView.Adapter<SearchPersonAdapte
 
         CardView mCardView;
         ImageView imgProfile;
-        TextView mTextName, mTextNumber, mTextStatus,mCity,mCompany;
+        TextView mTextName, mTextNumber, mTextStatus, mCity, mCompany;
         Button btnFollow, btnUnfollow, btnsendmsg;
 
         private YoHolder(View itemView) {
@@ -97,6 +100,7 @@ public class SearchPersonAdapter extends RecyclerView.Adapter<SearchPersonAdapte
     @Override
     public void onBindViewHolder(final SearchPersonAdapter.YoHolder holder, final int position) {
         myContact = mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).getString("loginContact", "");
+        holder.setIsRecyclable(false);
         holder.mTextName.setText(contactdata.get(position).getUsername());
         holder.mTextNumber.setText(contactdata.get(position).getContact());
         holder.mCity.setVisibility(VISIBLE);
@@ -104,10 +108,10 @@ public class SearchPersonAdapter extends RecyclerView.Adapter<SearchPersonAdapte
         holder.mCity.setText(contactdata.get(position).getCity());
         holder.mCompany.setText(contactdata.get(position).getCompany());
 
-        if (contactdata.get(position).getMystatus()==null)
+        if (contactdata.get(position).getMystatus() == null)
             holder.mTextStatus.setText("No Status");
         else
-        holder.mTextStatus.setText(contactdata.get(position).getMystatus());
+            holder.mTextStatus.setText(contactdata.get(position).getMystatus());
 
         if (contactdata.get(position).getStatus().equals("yes")) {
             holder.btnUnfollow.setVisibility(VISIBLE);
@@ -118,8 +122,8 @@ public class SearchPersonAdapter extends RecyclerView.Adapter<SearchPersonAdapte
             holder.btnFollow.setVisibility(VISIBLE);
         }
 
-        if (contactdata.get(position).getProfilePhoto() == null || contactdata.get(position).getProfilePhoto().equals("") ||
-                contactdata.get(position).getProfilePhoto().equals("null"))
+        if (contactdata.get(holder.getAdapterPosition()).getProfilePhoto() == null || contactdata.get(holder.getAdapterPosition()).getProfilePhoto().equalsIgnoreCase("") ||
+                contactdata.get(holder.getAdapterPosition()).getProfilePhoto().equalsIgnoreCase("null"))
             holder.imgProfile.setBackgroundResource(R.drawable.profile);
         else {
             /*
@@ -127,7 +131,7 @@ public class SearchPersonAdapter extends RecyclerView.Adapter<SearchPersonAdapte
 
              */
             Glide.with(mActivity)
-                    .load(mActivity.getString(R.string.base_image_url) + contactdata.get(position).getProfilePhoto())
+                    .load(mActivity.getString(R.string.base_image_url) + contactdata.get(holder.getAdapterPosition()).getProfilePhoto())
                     .bitmapTransform(new CropCircleTransformation(mActivity)) //To display image in Circular form.
                     .diskCacheStrategy(DiskCacheStrategy.ALL) //For caching diff versions of image.
                     .placeholder(R.drawable.logo) //To show image before loading an original image.
@@ -261,6 +265,16 @@ public class SearchPersonAdapter extends RecyclerView.Adapter<SearchPersonAdapte
     private void call(String rcontact) {
         Intent in = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + rcontact));
         try {
+            if (ActivityCompat.checkSelfPermission(mActivity, permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
+                return;
+            }
             mActivity.startActivity(in);
         } catch (android.content.ActivityNotFoundException ex) {
             System.out.println("No Activity Found For Call in Car Details Fragment\n");
@@ -328,4 +342,5 @@ public class SearchPersonAdapter extends RecyclerView.Adapter<SearchPersonAdapte
         }
 
     }
+
 }
