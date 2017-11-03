@@ -171,6 +171,29 @@ public class VehicleList extends Fragment implements RequestNotifier {
                             }
                         });
                         alertDialog.show();
+                    } else {
+                        AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
+                        alertDialog.setCancelable(false);
+                        alertDialog.setTitle("Upload Vehicle");
+                        if (str.equals("0")) {
+                            alertDialog.setMessage("You don't have any vehicle do you want to upload?");
+                        } else {
+                            alertDialog.setMessage("You already uploaded " + str + " vehicles. you want to upload another vehicle?");
+                        }
+                        alertDialog.setIcon(android.R.drawable.ic_dialog_alert);
+                        alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                getVehicleList();
+                            }
+                        });
+                        alertDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                getActivity().finish();
+
+                                dialog.cancel();
+                            }
+                        });
+                        alertDialog.show();
                     }
                 } else {
                     AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());

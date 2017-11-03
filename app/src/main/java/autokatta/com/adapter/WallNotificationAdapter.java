@@ -16,6 +16,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.text.Spannable;
@@ -62,6 +64,8 @@ import autokatta.com.interfaces.ServiceApi;
 import autokatta.com.model.WallResponseModel;
 import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.other.CustomToast;
+import autokatta.com.other.VerticalLineDecorator;
+import autokatta.com.response.MyStoreResponse;
 import autokatta.com.view.GroupsActivity;
 import autokatta.com.view.OtherProfile;
 import autokatta.com.view.ProductViewActivity;
@@ -102,6 +106,8 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
     private final int TYPE_LOAD = 1;
     private boolean isLoading = false, isMoreDataAvailable = true;
     //WallResponseModel responseModel = new WallResponseModel();
+    private Suggestions mCustomView;
+    private List<MyStoreResponse.Success> storeResponseArrayList;
 
     public WallNotificationAdapter(Activity mActivity1, List<WallResponseModel> notificationList, String mLoginContact) {
         this.mActivity = mActivity1;
@@ -649,6 +655,20 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
         }
     }
 
+    /* Suggestions Layout Class
+    */
+
+    private static class Suggestions extends RecyclerView.ViewHolder {
+        TextView txtSuggestion;
+        RecyclerView mSuggestionRecycler;
+
+        Suggestions(View imageView) {
+            super(imageView);
+            txtSuggestion = (TextView) imageView.findViewById(R.id.moreImages);
+            mSuggestionRecycler = (RecyclerView) imageView.findViewById(R.id.profileRecyclerView);
+        }
+    }
+
     @Override
     public int getItemViewType(int position) {
         // Just as an example, return 0 or 2 depending on position
@@ -712,6 +732,10 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
             case 12:
                 mView = LayoutInflater.from(parent.getContext()).inflate(R.layout.wall_image_grid_layout, parent, false);
                 return new ImageNotification(mView);
+
+            case -2:
+                mView = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_wall_profile_suggestions, parent, false);
+                return new Suggestions(mView);
         }
         return null;
     }
@@ -5871,7 +5895,41 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                     }
                 });
                 break;
+
+            case -2:
+                final Suggestions mSuggestions = (Suggestions) holder;
+                mCustomView = (Suggestions) holder;
+                /*adapter = new WallNotificationAdapter(mActivity, notificationList, mLoginContact);
+                adapter.setLoadMoreListener(new OnLoadMoreListener() {
+                    @Override
+                    public void onLoadMore() {
+                        mSuggestions.mSuggestionRecycler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                //int index = myUploadedVehiclesResponseList.size() - 1;
+                                index++;
+                                Log.i("index", "->" + index);
+                                loadMore(index);
+                            }
+                        });
+                        //Calling loadMore function in Runnable to fix the
+                        // java.lang.IllegalStateException: Cannot call this method while RecyclerView is computing a layout or scrolling error
+                    }
+                });*/
+                mSuggestions.mSuggestionRecycler.setHasFixedSize(true);
+                mSuggestions.mSuggestionRecycler.setLayoutManager(new LinearLayoutManager(mActivity, LinearLayoutManager.HORIZONTAL, false));
+
+                mSuggestions.mSuggestionRecycler.addItemDecoration(new VerticalLineDecorator(2));
+                mSuggestions.mSuggestionRecycler.setItemAnimator(new DefaultItemAnimator());
+
+                getSuggestionData(mLoginContact);
+                //mSuggestions.mSuggestionRecycler.setAdapter(adapter);
+                break;
         }
+    }
+
+    private void getSuggestionData(String mLoginContact) {
+        mApiCall.MyStoreList(mLoginContact, 1, 10);
     }
 
 //    private void call(String otherContact) {
@@ -5885,6 +5943,38 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
 
     @Override
     public void notifySuccess(Response<?> response) {
+        if (response != null) {
+            if (response.isSuccessful()) {
+                storeResponseArrayList = new ArrayList<>();
+                storeResponseArrayList.clear();
+                MyStoreResponse myStoreResponse = (MyStoreResponse) response.body();
+                if (!myStoreResponse.getSuccess().isEmpty()) {
+                    //mNoData.setVisibility(View.GONE);
+                    for (MyStoreResponse.Success Sresponse : myStoreResponse.getSuccess()) {
+                        Sresponse.setId(Sresponse.getId());
+                        Sresponse.setName(Sresponse.getName());
+                        Sresponse.setLocation(Sresponse.getLocation());
+                        Sresponse.setWebsite(Sresponse.getWebsite());
+                        Sresponse.setStoreOpenTime(Sresponse.getStoreOpenTime());
+                        Sresponse.setStoreCloseTime(Sresponse.getStoreCloseTime());
+                        Sresponse.setStoreImage(Sresponse.getStoreImage());
+                        Sresponse.setCoverImage(Sresponse.getCoverImage());
+                        Sresponse.setWorkingDays(Sresponse.getWorkingDays());
+                        Sresponse.setRating(Sresponse.getRating());
+                        Sresponse.setLikecount(Sresponse.getLikecount());
+                        Sresponse.setFollowcount(Sresponse.getFollowcount());
+                        Sresponse.setStoreType(Sresponse.getStoreType());
+                        //getActivity().setTitle("My Store");
+                        storeResponseArrayList.add(Sresponse);
+                    }
+
+                    CustomSuggestionAdapter adapter = new CustomSuggestionAdapter(mActivity, storeResponseArrayList);
+                    mCustomView.mSuggestionRecycler.setAdapter(adapter);
+                    adapter.notifyDataSetChanged();
+
+                }
+            }
+        }
 
     }
 
