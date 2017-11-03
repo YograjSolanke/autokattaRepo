@@ -297,7 +297,7 @@ public class ReviewActivity extends AppCompatActivity implements RequestNotifier
 
                         if (!mainList.get(i).getProfilePic().equals("")) {
                             String dp_path = getString(R.string.base_image_url) + mainList.get(i).getProfilePic();
-                            Glide.with(this)
+                            Glide.with(getApplicationContext())
                                     .load(dp_path)
                                     .centerCrop()
                                     .diskCacheStrategy(DiskCacheStrategy.ALL)

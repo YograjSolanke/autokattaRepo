@@ -81,7 +81,7 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
     String storelongitude;
     RatingBar csbar, qwbar, frbar, prbar, tmbar, overallbar;
     Float csrate = 0.0f, qwrate = 0.0f, frrate = 0.0f, prrate = 0.0f, tmrate = 0.0f, total = 0.0f, count = 0.0f;
-    FloatingActionButton mGoogleMap, mAdd, mShare, mTeamProduct, mTeamServices, mTeamVehicle;
+    FloatingActionButton mGoogleMap, mAdd, mShare, mTeamProduct, mTeamServices, mTeamVehicle, mViewReview;
 
     ApiCall mApiCall;
     CoordinatorLayout mLayout;
@@ -140,6 +140,7 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
                     mGoogleMap = (FloatingActionButton) findViewById(R.id.gotoMap);
                     storerating = (RatingBar) findViewById(R.id.store_rating);
                     mShare = (FloatingActionButton) findViewById(R.id.share);
+                    mViewReview = (FloatingActionButton) findViewById(R.id.view_review);
 
                     mLinear = (LinearLayout) findViewById(R.id.my_home);
                     mLike = (ImageView) findViewById(R.id.like);
@@ -176,6 +177,7 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
                     mTeamVehicle.setLabelTextColor(Color.BLACK);
                     mGoogleMap.setLabelTextColor(Color.BLACK);
                     mAdd.setLabelTextColor(Color.BLACK);
+                    mViewReview.setLabelTextColor(Color.BLACK);
 
 
                     if (getIntent().getExtras() != null) {
@@ -308,6 +310,7 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
         mNewVehicle.setOnClickListener(this);
         mVideos.setOnClickListener(this);
         mImages.setOnClickListener(this);
+        mViewReview.setOnClickListener(this);
     }
 
     public void hideFloatingButton() {
@@ -581,6 +584,14 @@ Call Intent...
                 menuRed.setClosedOnTouchOutside(true);
                 break;
 
+            case R.id.view_review:
+                Intent intent2 = new Intent(getApplicationContext(), ReviewActivity.class);
+                intent2.putExtra("store_id", store_id);
+                intent2.putExtra("contact", storeOtherContact);
+                startActivity(intent2);
+
+                break;
+
             case R.id.add:
                 showAddAlert();
                 break;
@@ -733,10 +744,10 @@ Call Intent...
                 break;
 
             case R.id.add_review:
-                Intent intent2 = new Intent(getApplicationContext(), ReviewActivity.class);
-                intent2.putExtra("store_id", store_id);
-                intent2.putExtra("contact", storeOtherContact);
-                startActivity(intent2);
+                Intent addintent = new Intent(getApplicationContext(), ReviewActivity.class);
+                addintent.putExtra("store_id", store_id);
+                addintent.putExtra("contact", storeOtherContact);
+                startActivity(addintent);
                 break;
 
             case R.id.rating:
@@ -1014,6 +1025,7 @@ Call Intent...
                         mAdd.setVisibility(View.VISIBLE);
                         otherViewLayout.setVisibility(View.GONE);
                         mCall.setVisibility(View.GONE);
+                        mViewReview.setVisibility(View.VISIBLE);
                     }
 
                     storerating.setRating(storeRating);

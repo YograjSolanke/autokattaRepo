@@ -65,6 +65,7 @@ import autokatta.com.other.CustomToast;
 import autokatta.com.view.GroupsActivity;
 import autokatta.com.view.OtherProfile;
 import autokatta.com.view.ProductViewActivity;
+import autokatta.com.view.RecyclerImageView;
 import autokatta.com.view.ServiceViewActivity;
 import autokatta.com.view.ShareWithinAppActivity;
 import autokatta.com.view.SingleVideoActivity;
@@ -404,7 +405,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
     private static class ImageNotification extends RecyclerView.ViewHolder {
         CardView mImageCard;
         ImageView image1, image2, image3, image4;
-        TextView moreImages, captionText;
+        TextView moreImages, captionText, action_name, action_time;
         LinearLayout linearImages;
         VideoView videoView;
 
@@ -417,6 +418,8 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
             image3 = (ImageView) imageView.findViewById(R.id.image3);
             image4 = (ImageView) imageView.findViewById(R.id.image4);
             moreImages = (TextView) imageView.findViewById(R.id.moreImages);
+            action_name = (TextView) imageView.findViewById(R.id.action_name);
+            action_time = (TextView) imageView.findViewById(R.id.action_time);
             videoView = (VideoView) imageView.findViewById(R.id.VideoView);
             captionText = (TextView) imageView.findViewById(R.id.captionText);
             linearImages = (LinearLayout) imageView.findViewById(R.id.linearImages);
@@ -730,7 +733,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
         Log.i("Wall", "Adapter-LayoutNo ->" + holder.getItemViewType());
         if (position >= getItemCount() - 1 && isMoreDataAvailable && !isLoading && loadMoreListener != null) {
             isLoading = true;
@@ -5714,7 +5717,63 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
             case 12:
                 final ImageNotification mImageHolder = (ImageNotification) holder;
 
-                final String keyword = "video";
+
+                SpannableStringBuilder sb12 = new SpannableStringBuilder();
+                mImageHolder.action_time.setText(notificationList.get(position).getDateTime());
+
+                Log.i("Wall", "Search-LayType ->" + notificationList.get(position).getLayoutType());
+
+                if (notificationList.get(position).getLayoutType().equalsIgnoreCase("MyAction")) {
+                    //mSearchHolder.mRelativeLike.setVisibility(View.GONE);
+
+                } else {
+                    //mSearchHolder.mRelativeLike.setVisibility(View.VISIBLE);
+                }
+
+                sb12.append(notificationList.get(position).getSenderName());
+                sb12.append(" ");
+                sb12.append(notificationList.get(position).getAction());
+                sb12.append(" status");
+
+        /* sender name */
+                sb12.setSpan(new ClickableSpan() {
+                    @Override
+                    public void onClick(View widget) {
+
+                        if (notificationList.get(mImageHolder.getAdapterPosition()).getLayoutType().equalsIgnoreCase("MyAction")) {
+                            mActivity.startActivity(new Intent(mActivity, UserProfile.class));
+                        } else {
+                            Intent intent = new Intent(mActivity, OtherProfile.class);
+                            Bundle bundle = new Bundle();
+                            bundle.putString("contactOtherProfile", notificationList.get(mImageHolder.getAdapterPosition()).getSender());
+                            intent.putExtras(bundle);
+                            mActivity.startActivity(intent);
+                        }
+                    }
+
+                    @Override
+                    public void updateDrawState(TextPaint ds) {
+                       /* ds.setUnderlineText(false);
+                        ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
+                        ds.setFakeBoldText(true);
+                        ds.setTextSize((float) 31.0);
+                        Log.i("TextSize", "->" + ds.getTextSize());*/
+                    }
+                }, 0, notificationList.get(position).getSenderName().length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                 /*
+                    Set Bold Font
+                     */
+                sb12.setSpan(new StyleSpan(Typeface.BOLD), 0,
+                        notificationList.get(position).getSenderName().length(),
+                        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+                mImageHolder.action_name.setSingleLine(false);
+                mImageHolder.action_name.setText(sb12);
+                mImageHolder.action_name.setMovementMethod(LinkMovementMethod.getInstance());
+                mImageHolder.action_name.setHighlightColor(Color.TRANSPARENT);
+
+                final String keyword = "Images";
                 if (keyword.equalsIgnoreCase("video")) {
                     mImageHolder.videoView.setVisibility(View.VISIBLE);
                     mImageHolder.linearImages.setVisibility(View.GONE);
@@ -5727,7 +5786,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                                 mActivity);
                         mediacontroller.setAnchorView(mImageHolder.videoView);
 //                        // Get the URL from String VideoURL
-                        Uri video = Uri.parse("http://autokatta.acquiscent.com/UploadedFiles/VID_20171005_185639.mp4");
+                        Uri video = Uri.parse("http://autokatta.acquiscent.com/UploadedFiles/adba403e4bcc8847f9da0aa45a9f5b9c.mp4");
 //                        mImageHolder.videoView.setMediaController(mediacontroller);
 //                        mImageHolder.videoView.setVideoURI(video);
 //                        mImageHolder.videoView.seekTo(100);
@@ -5798,6 +5857,14 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                             b.putString("url", "http://autokatta.acquiscent.com/UploadedFiles/1503311495439.jpg");
                             Intent intentnewvehicle = new Intent(mActivity, SingleVideoActivity.class);
                             intentnewvehicle.putExtras(b);
+                            //intentnewvehicle.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            mActivity.startActivity(intentnewvehicle, options.toBundle());
+                        } else {
+                            ActivityOptions options = ActivityOptions.makeCustomAnimation(mActivity, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
+                            Bundle b = new Bundle();
+                            // b.putString("image", list_urls.get(holder.getAdapterPosition()));
+                            Intent intentnewvehicle = new Intent(mActivity, RecyclerImageView.class);
+                            // intentnewvehicle.putExtras(b);
                             //intentnewvehicle.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             mActivity.startActivity(intentnewvehicle, options.toBundle());
                         }

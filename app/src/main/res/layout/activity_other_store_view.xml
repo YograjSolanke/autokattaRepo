@@ -232,16 +232,17 @@
             fab:fab_colorRipple="#5176C9"
             fab:fab_size="mini" />
 
-        <!--<com.github.clans.fab.FloatingActionButton-->
-        <!--android:id="@+id/autokatta_share"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:src="@drawable/autoshare"-->
-        <!--fab:fab_colorNormal="#5176C9"-->
-        <!--fab:fab_colorPressed="#5176C9"-->
-        <!--fab:fab_colorRipple="#5176C9"-->
-        <!--fab:fab_label="Share"-->
-        <!--fab:fab_size="mini" />-->
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/view_review"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/review_white"
+            fab:fab_colorNormal="#5176C9"
+            fab:fab_colorPressed="#5176C9"
+            fab:fab_colorRipple="#5176C9"
+            fab:fab_label="Review"
+            android:visibility="gone"
+            fab:fab_size="mini" />
 
     </com.github.clans.fab.FloatingActionMenu>
 </android.support.design.widget.CoordinatorLayout>
