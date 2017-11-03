@@ -86,6 +86,7 @@ public class EditAllAbout extends AppCompatActivity implements RequestNotifier, 
             getSupportActionBar().setHomeButtonEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
+        setTitle("Edit Details");
         mApiCall = new ApiCall(this, EditAllAbout.this);
         mGenericFunctions = new GenericFunctions();
 
