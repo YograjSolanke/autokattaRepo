@@ -37,7 +37,6 @@ android {
 
     //for device installation error
     dexOptions {
-        incremental true
         javaMaxHeapSize "4g" //specify the heap size for the dex process
     }
 }
@@ -106,6 +105,7 @@ dependencies {
     compile 'com.github.iammert:MaterialIntroView:1.6.0'
     compile 'com.mcxiaoke.photoview:library:1.2.3'
     compile 'com.allattentionhere:autoplayvideos:0.1.6'
+    compile 'com.android.volley:volley:1.0.0'
     testCompile 'junit:junit:4.12'
 }
 apply plugin: 'com.google.gms.google-services'

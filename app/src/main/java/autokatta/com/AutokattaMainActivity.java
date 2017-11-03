@@ -121,6 +121,10 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
         setContentView(R.layout.activity_autokatta_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        /*Activity activity=this;
+        new GoogleChecker(activity, false);*/
+
         if (getSupportActionBar() != null) {
             getSupportActionBar().setElevation(0);
             getSupportActionBar().setHomeButtonEnabled(true);
