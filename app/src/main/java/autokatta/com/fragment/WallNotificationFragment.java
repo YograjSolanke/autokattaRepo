@@ -270,7 +270,13 @@ public class WallNotificationFragment extends Fragment implements SwipeRefreshLa
                             responseModel.setStatusID(notification.getStatusID());
                             responseModel.setStatusLikeStatus(notification.getStatusLikeStatus());
                             responseModel.setStatus(notification.getStatus());
+                            responseModel.setStatusType(notification.getStatusType());
+                            responseModel.setStatusImages(notification.getStatusImages());
+                            responseModel.setStatusVideos(notification.getStatusVideos());
+                            responseModel.setStatusInterest(notification.getStatusInterest());
+
                             responseModel.setMyFavStatus(notification.getMyFavStatus());
+
 
                             responseModel.setUpVehicleLikeStatus(notification.getUpVehicleLikeStatus());
                             responseModel.setUpVehicleFollowStatus(notification.getUpVehicleFollowStatus());

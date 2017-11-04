@@ -402,6 +402,59 @@ public class WallResponse {
             @Expose
             private int ignoreCount;
 
+
+            //post status related fields and its getter setter
+
+
+            @SerializedName("StatusInterest")
+            @Expose
+            private String StatusInterest;
+
+
+            @SerializedName("StatusType")
+            @Expose
+            private String StatusType;
+
+            @SerializedName("StatusImages")
+            @Expose
+            private String StatusImages;
+
+            @SerializedName("StatusVideos")
+            @Expose
+            private String StatusVideos;
+
+            public String getStatusInterest() {
+                return StatusInterest;
+            }
+
+            public void setStatusInterest(String statusInterest) {
+                StatusInterest = statusInterest;
+            }
+
+            public String getStatusType() {
+                return StatusType;
+            }
+
+            public void setStatusType(String statusType) {
+                StatusType = statusType;
+            }
+
+            public String getStatusImages() {
+                return StatusImages;
+            }
+
+            public void setStatusImages(String statusImages) {
+                StatusImages = statusImages;
+            }
+
+            public String getStatusVideos() {
+                return StatusVideos;
+            }
+
+            public void setStatusVideos(String statusVideos) {
+                StatusVideos = statusVideos;
+            }
+
             private String shareSubData;
 
             public String getShareSubData() {
