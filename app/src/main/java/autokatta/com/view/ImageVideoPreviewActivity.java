@@ -2,10 +2,10 @@ package autokatta.com.view;
 
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.media.MediaPlayer;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.PagerAdapter;
@@ -31,7 +31,6 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.android.flexbox.FlexboxLayout;
 
-import java.io.File;
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
@@ -42,18 +41,11 @@ import java.util.List;
 import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
-import autokatta.com.interfaces.ServiceApi;
 import autokatta.com.other.CustomToast;
 import autokatta.com.other.ImageLoader;
-import autokatta.com.other.UploadVideos;
 import fisk.chipcloud.ChipCloud;
 import fisk.chipcloud.ChipCloudConfig;
 import fisk.chipcloud.ChipListener;
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
-import retrofit2.Call;
-import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ImageVideoPreviewActivity extends AppCompatActivity implements RequestNotifier {
@@ -330,65 +322,65 @@ public class ImageVideoPreviewActivity extends AppCompatActivity implements Requ
         mApiCall.PostStatus(myContact, mStatusText.getText().toString(), imagesWithoutPath, videoWithoutPath, finalInterests);
     }
 
-    private void uploadImage(String picturePath) {
-        Log.i("PAth", "->" + picturePath);
-        List<String> imgList = Arrays.asList(picturePath.split(","));
-
-        for (int i = 0; i < imgList.size(); i++) {
-
-            File file = new File(imgList.get(i));
-            // Parsing any Media type file
-            RequestBody requestBody = RequestBody.create(MediaType.parse("*/*"), file);
-            MultipartBody.Part fileToUpload = MultipartBody.Part.createFormData("file", file.getName(), requestBody);
-            RequestBody filename = RequestBody.create(MediaType.parse("text/plain"), file.getName());
-
-            ServiceApi getResponse = ApiCall.getRetrofit().create(ServiceApi.class);
-            Call<String> call = getResponse.uploadServicePic(fileToUpload, filename);
-            call.enqueue(new Callback<String>() {
-                @Override
-                public void onResponse(Call<String> call, Response<String> response) {
-                    Log.i("uploadStatusImage", "imageResponse->" + response.body());
-                }
-
-                @Override
-                public void onFailure(Call<String> call, Throwable t) {
-                    Log.getStackTraceString(t);
-                }
-            });
-        }
-    }
-
-    private void uploadVideo(final String selectedPath) {
-        class UploadVideo extends AsyncTask<Void, Void, String> {
-            private ProgressDialog uploading;
-
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-                uploading = ProgressDialog.show(ImageVideoPreviewActivity.this, "Uploading File", "Please wait...", false, false);
-
-            }
-
-            @Override
-            protected void onPostExecute(String s) {
-                super.onPostExecute(s);
-                uploading.dismiss();
-                CustomToast.customToast(getApplicationContext(), "Status posted successfully");
-                finish();
-                overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
-                //textViewResponse.setText(Html.fromHtml("<b>Uploaded at <a href='" + s + "'>" + s + "</a></b>"));
-                //textViewResponse.setMovementMethod(LinkMovementMethod.getInstance());
-            }
-
-            @Override
-            protected String doInBackground(Void... params) {
-                UploadVideos u = new UploadVideos();
-                return u.uploadVideo(selectedPath);
-            }
-        }
-        UploadVideo uv = new UploadVideo();
-        uv.execute();
-    }
+//    private void uploadImage(String picturePath) {
+//        Log.i("PAth", "->" + picturePath);
+//        List<String> imgList = Arrays.asList(picturePath.split(","));
+//
+//        for (int i = 0; i < imgList.size(); i++) {
+//
+//            File file = new File(imgList.get(i));
+//            // Parsing any Media type file
+//            RequestBody requestBody = RequestBody.create(MediaType.parse("*/*"), file);
+//            MultipartBody.Part fileToUpload = MultipartBody.Part.createFormData("file", file.getName(), requestBody);
+//            RequestBody filename = RequestBody.create(MediaType.parse("text/plain"), file.getName());
+//
+//            ServiceApi getResponse = ApiCall.getRetrofit().create(ServiceApi.class);
+//            Call<String> call = getResponse.uploadServicePic(fileToUpload, filename);
+//            call.enqueue(new Callback<String>() {
+//                @Override
+//                public void onResponse(Call<String> call, Response<String> response) {
+//                    Log.i("uploadStatusImage", "imageResponse->" + response.body());
+//                }
+//
+//                @Override
+//                public void onFailure(Call<String> call, Throwable t) {
+//                    Log.getStackTraceString(t);
+//                }
+//            });
+//        }
+//    }
+//
+//    private void uploadVideo(final String selectedPath) {
+//        class UploadVideo extends AsyncTask<Void, Void, String> {
+//            private ProgressDialog uploading;
+//
+//            @Override
+//            protected void onPreExecute() {
+//                super.onPreExecute();
+//                uploading = ProgressDialog.show(ImageVideoPreviewActivity.this, "Uploading File", "Please wait...", false, false);
+//
+//            }
+//
+//            @Override
+//            protected void onPostExecute(String s) {
+//                super.onPostExecute(s);
+//                uploading.dismiss();
+//                CustomToast.customToast(getApplicationContext(), "Status posted successfully");
+//                finish();
+//                overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
+//                //textViewResponse.setText(Html.fromHtml("<b>Uploaded at <a href='" + s + "'>" + s + "</a></b>"));
+//                //textViewResponse.setMovementMethod(LinkMovementMethod.getInstance());
+//            }
+//
+//            @Override
+//            protected String doInBackground(Void... params) {
+//                UploadVideos u = new UploadVideos();
+//                return u.uploadVideo(selectedPath);
+//            }
+//        }
+//        UploadVideo uv = new UploadVideo();
+//        uv.execute();
+//    }
 
     @Override
     public void notifySuccess(Response<?> response) {
@@ -426,12 +418,13 @@ public class ImageVideoPreviewActivity extends AppCompatActivity implements Requ
             if (str.equals("success")) {
 
                 if (videoPath.equals("") && !imagesPath.equals("")) {
-                    uploadImage(updatedImages);
+                    //uploadImage(updatedImages);
                     CustomToast.customToast(getApplicationContext(), "Status posted successfully");
                     finish();
                     overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
-                } else
-                    uploadVideo(videoPath);
+                } else {
+                    // uploadVideo(videoPath);
+                }
 
 
             } else
@@ -459,10 +452,21 @@ public class ImageVideoPreviewActivity extends AppCompatActivity implements Requ
                 if (mStatusText.getText().toString().equals("") ||
                         (mStatusText.getText().toString().startsWith(" ") &&
                                 mStatusText.getText().toString().endsWith(" "))) {
-                    mStatusText.setError("Enter caption");
+                    mStatusText.setError("Enter status");
                     mStatusText.requestFocus();
                 } else {
-                    openDialog();
+                    //openDialog();
+
+                    Bundle bundle = new Bundle();
+                    bundle.putString("videoPath", videoPath);
+                    bundle.putString("imagesPath", imagesPath);
+                    bundle.putString("images", imagesWithoutPath);
+                    bundle.putString("videos", videoWithoutPath);
+                    bundle.putString("statusText", mStatusText.getText().toString());
+                    Intent intent = new Intent(this, AddInterestTagsActivity.class);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                    finish();
                 }
                 break;
         }

@@ -44,6 +44,7 @@ import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.response.ProfileAboutResponse;
+import autokatta.com.view.AddInterestTagsActivity;
 import autokatta.com.view.ImageVideoPreviewActivity;
 import fisk.chipcloud.ChipCloud;
 import fisk.chipcloud.ChipCloudConfig;
@@ -269,7 +270,16 @@ public class PostStatus extends AppCompatActivity implements RequestNotifier {
                     mStatusText.requestFocus();
                 } else {
 
-                    openDialog();
+                    //openDialog();
+
+                    Bundle bundle = new Bundle();
+                    bundle.putString("videoPath", "");
+                    bundle.putString("imagesPath", "");
+                    bundle.putString("images", "");
+                    bundle.putString("statusText", mStatusText.getText().toString());
+                    Intent intent = new Intent(this, AddInterestTagsActivity.class);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
 
                 }
                 break;

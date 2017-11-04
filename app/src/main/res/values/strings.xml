@@ -884,5 +884,6 @@
     <string name="title_activity_recycler_image_view">RecyclerImageView</string>
 
     <string name="update_available">A new version of the app is available. You need to update the current version.</string>
+    <string name="title_activity_add_interest_tags">AddInterestTagsActivity</string>
 
 </resources>

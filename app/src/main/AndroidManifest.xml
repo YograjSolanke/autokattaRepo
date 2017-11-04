@@ -852,6 +852,10 @@
         <activity
             android:name=".view.RecyclerImageView"
             android:label="@string/title_activity_recycler_image_view"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".view.AddInterestTagsActivity"
+            android:label="@string/title_activity_add_interest_tags"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

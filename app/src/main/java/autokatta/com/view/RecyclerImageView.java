@@ -63,8 +63,16 @@ public class RecyclerImageView extends AppCompatActivity {
                 }
 
                 if (getIntent().getExtras() != null) {
-                    mBundleImages = getIntent().getExtras().getString("bundle_GroupId", "");
-                    Log.i("groupId", mBundleImages);
+                    mBundleImages = getIntent().getExtras().getString("image", "");
+                    Log.i("image", mBundleImages);
+
+                    if (mBundleImages.contains(",")) {
+                        String[] array = mBundleImages.split(",");
+                        for (int i = 0; i < array.length; i++)
+                            urlsList.add(getString(R.string.base_image_url) + array[i]);
+                    } else
+                        urlsList.add(getString(R.string.base_image_url) + mBundleImages);
+
 
                 }
 
