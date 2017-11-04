@@ -102,7 +102,7 @@ public class PostStatus extends AppCompatActivity implements RequestNotifier {
         mPictureVideo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final CharSequence[] options = {"Images", "Videos", "Cancel"};
+                final CharSequence[] options = {"Images", "Cancel"};
                 AlertDialog.Builder builder = new AlertDialog.Builder(PostStatus.this);
                 builder.setTitle("Select From...");
                 builder.setItems(options, new DialogInterface.OnClickListener() {
@@ -110,15 +110,15 @@ public class PostStatus extends AppCompatActivity implements RequestNotifier {
                     public void onClick(DialogInterface dialog, int item) {
                         if (options[item].equals("Images")) {
                             start();
-                        } else if (options[item].equals("Videos")) {
-                            /*Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Video.Media.EXTERNAL_CONTENT_URI);
+                        } /*else if (options[item].equals("Videos")) {
+                            *//*Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Video.Media.EXTERNAL_CONTENT_URI);
                             intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-                            startActivityForResult(intent, 1);*/
+                            startActivityForResult(intent, 1);*//*
                             Intent intent = new Intent();
-                            intent.setType("video/*");
+                            intent.setType("video*//*");
                             intent.setAction(Intent.ACTION_GET_CONTENT);
                             startActivityForResult(Intent.createChooser(intent, "Select a Video "), SELECT_VIDEO);
-                        } else if (options[item].equals("Cancel")) {
+                        }*/ else if (options[item].equals("Cancel")) {
                             dialog.dismiss();
                         }
                         dialog.dismiss();

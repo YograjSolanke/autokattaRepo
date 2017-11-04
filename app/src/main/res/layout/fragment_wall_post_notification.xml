@@ -121,12 +121,12 @@
                     android:id="@+id/imageVideoCaptionText"
                     android:textColor="@color/black"
                     android:textStyle="bold"
-                    android:visibility="gone" />
+                    android:visibility="visible" />
 
 
                 <VideoView
                     android:id="@+id/VideoView"
-                    android:layout_below="@+id/captionText"
+                    android:layout_below="@+id/imageVideoCaptionText"
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
                     android:layout_marginTop="5dp"
@@ -139,7 +139,7 @@
                     android:weightSum="2"
                     android:id="@+id/linearImages"
                     android:layout_marginTop="5dp"
-                    android:layout_below="@+id/captionText"
+                    android:layout_below="@+id/imageVideoCaptionText"
                     android:visibility="gone">
 
                     <LinearLayout

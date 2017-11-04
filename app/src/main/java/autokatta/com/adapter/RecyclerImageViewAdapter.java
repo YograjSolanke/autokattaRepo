@@ -29,7 +29,7 @@ import autokatta.com.other.FullImageActivity;
 public class RecyclerImageViewAdapter extends RecyclerView.Adapter<RecyclerImageViewAdapter.MyViewHolder> {
 
     Activity activity;
-    List<String> list_urls = new ArrayList<>();
+    private List<String> list_urls = new ArrayList<>();
     int coount = 0;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
@@ -62,7 +62,7 @@ public class RecyclerImageViewAdapter extends RecyclerView.Adapter<RecyclerImage
     public void onBindViewHolder(final MyViewHolder holder, int position) {
 
         holder.setIsRecyclable(false);
-        holder.textView.setText("Iamge " + coount++);
+        //holder.textView.setText("Iamge " + coount++);
         try {
 
             Glide.with(activity)

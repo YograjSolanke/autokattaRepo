@@ -42,7 +42,7 @@ public class RecyclerImageView extends AppCompatActivity {
         mLinearLayoutManager.setStackFromEnd(true);
         recyclerView.setLayoutManager(mLinearLayoutManager);
 
-        urlsList.add(getString(R.string.base_image_url) + "14970083868751.jpg");
+        /*urlsList.add(getString(R.string.base_image_url) + "14970083868751.jpg");
         urlsList.add(getString(R.string.base_image_url) + "1502100947252.jpg");
         urlsList.add(getString(R.string.base_image_url) + "1503311495439.jpg");
         urlsList.add(getString(R.string.base_image_url) + "1505558860268.jpg");
@@ -50,7 +50,7 @@ public class RecyclerImageView extends AppCompatActivity {
         urlsList.add(getString(R.string.base_image_url) + "Avneet%20Singh%20FO%20Rahata%2020171009_140951.jpg");
         urlsList.add(getString(R.string.base_image_url) + "IMG-20170918-WA00045819.jpg");
         urlsList.add(getString(R.string.base_image_url) + "IMG-20170918-WA0025.jpg");
-        urlsList.add(getString(R.string.base_image_url) + "IMG-20170922-WA0007.jpg");
+        urlsList.add(getString(R.string.base_image_url) + "IMG-20170922-WA0007.jpg");*/
 
 
         runOnUiThread(new Runnable() {
@@ -68,8 +68,8 @@ public class RecyclerImageView extends AppCompatActivity {
 
                     if (mBundleImages.contains(",")) {
                         String[] array = mBundleImages.split(",");
-                        for (int i = 0; i < array.length; i++)
-                            urlsList.add(getString(R.string.base_image_url) + array[i]);
+                        for (String anArray : array)
+                            urlsList.add(getString(R.string.base_image_url) + anArray);
                     } else
                         urlsList.add(getString(R.string.base_image_url) + mBundleImages);
 

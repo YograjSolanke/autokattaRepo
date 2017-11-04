@@ -29,7 +29,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/textView"
                 android:layout_below="@+id/imageView"
-                android:text="Image Text here"
+                android:text="Image"
                 android:textSize="15sp"
                 android:layout_marginTop="10dp"
                 android:textStyle="bold"

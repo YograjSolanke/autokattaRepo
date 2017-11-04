@@ -43,17 +43,29 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.VideoView;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import autokatta.com.R;
@@ -64,8 +76,7 @@ import autokatta.com.interfaces.ServiceApi;
 import autokatta.com.model.WallResponseModel;
 import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.other.CustomToast;
-import autokatta.com.other.VerticalLineDecorator;
-import autokatta.com.response.MyStoreResponse;
+import autokatta.com.response.ModelSuggestionsResponse;
 import autokatta.com.view.GroupsActivity;
 import autokatta.com.view.OtherProfile;
 import autokatta.com.view.ProductViewActivity;
@@ -107,7 +118,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
     private boolean isLoading = false, isMoreDataAvailable = true;
     //WallResponseModel responseModel = new WallResponseModel();
     private Suggestions mCustomView;
-    private List<MyStoreResponse.Success> storeResponseArrayList;
+    private List<ModelSuggestionsResponse> suggestionResponseList = new ArrayList<>();
 
     public WallNotificationAdapter(Activity mActivity1, List<WallResponseModel> notificationList, String mLoginContact) {
         this.mActivity = mActivity1;
@@ -673,11 +684,13 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
     private static class Suggestions extends RecyclerView.ViewHolder {
         TextView txtSuggestion;
         RecyclerView mSuggestionRecycler;
+        LinearLayout mLinearLayout;
 
         Suggestions(View imageView) {
             super(imageView);
             txtSuggestion = (TextView) imageView.findViewById(R.id.moreImages);
             mSuggestionRecycler = (RecyclerView) imageView.findViewById(R.id.profileRecyclerView);
+            mLinearLayout = (LinearLayout) imageView.findViewById(R.id.mainLayout);
         }
     }
 
@@ -737,7 +750,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                 mView = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_wall_adding_share_notifications, parent, false);
                 return new ShareNotifications(mView);
 
-            case 0:
+            case -1:
                 mView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_load, parent, false);
                 return new LoadHolder(mView);
 
@@ -745,9 +758,10 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                 mView = LayoutInflater.from(parent.getContext()).inflate(R.layout.wall_image_grid_layout, parent, false);
                 return new ImageNotification(mView);
 
-            case -2:
+            case 0:
                 mView = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_wall_profile_suggestions, parent, false);
                 return new Suggestions(mView);
+
         }
         return null;
     }
@@ -3651,7 +3665,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                             ActivityOptions options = ActivityOptions.makeCustomAnimation(mActivity, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
                             Bundle b = new Bundle();
                             //b.putString("url", videosList.get(mImageHolder.getAdapterPosition()).getVideo());
-                            b.putString("url", "http://autokatta.acquiscent.com/UploadedFiles/1503311495439.jpg");
+                            b.putString("url", notificationList.get(mPostHolder.getAdapterPosition()).getStatusVideos());
                             Intent intentnewvehicle = new Intent(mActivity, SingleVideoActivity.class);
                             intentnewvehicle.putExtras(b);
                             //intentnewvehicle.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -3659,9 +3673,9 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                         } else if (keyword.equalsIgnoreCase("Image")) {
                             ActivityOptions options = ActivityOptions.makeCustomAnimation(mActivity, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
                             Bundle b = new Bundle();
-                            // b.putString("image", list_urls.get(holder.getAdapterPosition()));
+                            b.putString("image", notificationList.get(mPostHolder.getAdapterPosition()).getStatusImages());
                             Intent intentnewvehicle = new Intent(mActivity, RecyclerImageView.class);
-                            // intentnewvehicle.putExtras(b);
+                            intentnewvehicle.putExtras(b);
                             //intentnewvehicle.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             mActivity.startActivity(intentnewvehicle, options.toBundle());
                         }
@@ -6071,7 +6085,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                 });
                 break;
 
-            case -2:
+            case 0:
                 final Suggestions mSuggestions = (Suggestions) holder;
                 mCustomView = (Suggestions) holder;
                 /*adapter = new WallNotificationAdapter(mActivity, notificationList, mLoginContact);
@@ -6094,17 +6108,76 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                 mSuggestions.mSuggestionRecycler.setHasFixedSize(true);
                 mSuggestions.mSuggestionRecycler.setLayoutManager(new LinearLayoutManager(mActivity, LinearLayoutManager.HORIZONTAL, false));
 
-                mSuggestions.mSuggestionRecycler.addItemDecoration(new VerticalLineDecorator(2));
+                //mSuggestions.mSuggestionRecycler.addItemDecoration(new VerticalLineDecorator(2));
                 mSuggestions.mSuggestionRecycler.setItemAnimator(new DefaultItemAnimator());
 
-                getSuggestionData(mLoginContact);
+                try {
+                    getSuggestionData(notificationList.get(position).getSuggestionURL());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
                 //mSuggestions.mSuggestionRecycler.setAdapter(adapter);
                 break;
+
         }
     }
 
-    private void getSuggestionData(String mLoginContact) {
-        mApiCall.MyStoreList(mLoginContact, 1, 10);
+
+    private void getSuggestionData(String mUrl) throws JSONException {
+
+        RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
+        StringRequest request = new StringRequest(Request.Method.GET, mUrl,
+                new com.android.volley.Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        JSONObject parentObject = null;
+                        try {
+                            parentObject = new JSONObject(response);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        JSONArray new_array = null;
+                        try {
+                            assert parentObject != null;
+                            new_array = parentObject.getJSONArray("Success");
+                            suggestionResponseList.clear();
+                            for (int i = new_array.length() - 1; i >= 0; i--) {
+
+                                JSONObject jsonObject = new_array.getJSONObject(i);
+                                ModelSuggestionsResponse suggestionsResponse = new ModelSuggestionsResponse();
+                                suggestionsResponse.setName(jsonObject.getString("username"));
+                                suggestionsResponse.setImage(jsonObject.getString("profile_pic"));
+                                suggestionsResponse.setLayoutId(jsonObject.getInt("Layout"));
+                                suggestionsResponse.setUserContact(jsonObject.getString("contact"));
+
+                                suggestionResponseList.add(suggestionsResponse);
+                            }
+                            if (suggestionResponseList.size() != 0) {
+                                CustomSuggestionAdapter adapter = new CustomSuggestionAdapter(mActivity, suggestionResponseList, mCustomView.txtSuggestion, mLoginContact);
+                                mCustomView.mSuggestionRecycler.setAdapter(adapter);
+                            } else {
+                                mCustomView.mLinearLayout.setVisibility(View.GONE);
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new com.android.volley.Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                /*params.put("contact", contact);
+                params.put("timestamp", TimeStampConstants.storetimeId);
+                System.out.println("+++++++++going timestamp" + storetimeId);*/
+                return new HashMap<>();
+            }
+        };
+        requestQueue.add(request);
     }
 
 //    private void call(String otherContact) {
@@ -6118,10 +6191,10 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
 
     @Override
     public void notifySuccess(Response<?> response) {
-        if (response != null) {
+        /*if (response != null) {
             if (response.isSuccessful()) {
-                storeResponseArrayList = new ArrayList<>();
-                storeResponseArrayList.clear();
+                suggestionResponseList = new ArrayList<>();
+                suggestionResponseList.clear();
                 MyStoreResponse myStoreResponse = (MyStoreResponse) response.body();
                 if (!myStoreResponse.getSuccess().isEmpty()) {
                     //mNoData.setVisibility(View.GONE);
@@ -6140,16 +6213,16 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                         Sresponse.setFollowcount(Sresponse.getFollowcount());
                         Sresponse.setStoreType(Sresponse.getStoreType());
                         //getActivity().setTitle("My Store");
-                        storeResponseArrayList.add(Sresponse);
+                        suggestionResponseList.add(Sresponse);
                     }
 
-                    CustomSuggestionAdapter adapter = new CustomSuggestionAdapter(mActivity, storeResponseArrayList);
+                    CustomSuggestionAdapter adapter = new CustomSuggestionAdapter(mActivity, suggestionResponseList);
                     mCustomView.mSuggestionRecycler.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
 
                 }
             }
-        }
+        }*/
 
     }
 

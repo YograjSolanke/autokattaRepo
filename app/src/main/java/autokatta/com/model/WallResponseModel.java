@@ -20,6 +20,18 @@ public class WallResponseModel {
         this.layoutType = layoutType;
     }
 
+    @SerializedName("SuggestionURL")
+    @Expose
+    private String SuggestionURL;
+
+    public String getSuggestionURL() {
+        return SuggestionURL;
+    }
+
+    public void setSuggestionURL(String suggestionURL) {
+        SuggestionURL = suggestionURL;
+    }
+
     @SerializedName("ActionID")
     @Expose
     private int actionID;
