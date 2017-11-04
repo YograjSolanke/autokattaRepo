@@ -30,6 +30,7 @@ public class NewVehicleDetails extends AppCompatActivity implements RequestNotif
             getSupportActionBar().setHomeButtonEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
+        setTitle("New Vehicle Details");
         newVehicleId = getIntent().getIntExtra("newVehicleId", 0);
         mPointLinkage = (TextView) findViewById(R.id.txtPointLinkage1);
         mAbs = (TextView) findViewById(R.id.ABS1);

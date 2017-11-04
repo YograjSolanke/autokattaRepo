@@ -64,8 +64,6 @@ import autokatta.com.interfaces.ServiceApi;
 import autokatta.com.my_profile_container.AboutContainer;
 import autokatta.com.my_profile_container.FollowContainer;
 import autokatta.com.my_profile_container.GroupContainer;
-import autokatta.com.my_profile_container.MyBlogsContainer;
-import autokatta.com.my_profile_container.MyPostContainer;
 import autokatta.com.my_profile_container.StoreContainer;
 import autokatta.com.other.CustomToast;
 import autokatta.com.other.FullImageActivity;
@@ -167,6 +165,7 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
             mBlog.setOnClickListener(this);
             mPost.setOnClickListener(this);
             mEdit.setOnClickListener(this);
+            mModule.setOnClickListener(this);
             //viewPager = (ViewPager) findViewById(R.id.user_profile_viewpager);
             /*if (viewPager != null) {
                 setupViewPager(viewPager);
@@ -701,6 +700,7 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
                 break;
 
             case R.id.modules:
+                CustomToast.customToast(getApplicationContext(), "Coming soon... be connected for update");
                 break;
 
             case R.id.follow:
@@ -724,11 +724,13 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
                 break;
 
             case R.id.post:
-                startActivity(new Intent(getApplicationContext(), MyPostContainer.class));
+               // startActivity(new Intent(getApplicationContext(), MyPostContainer.class));
+                CustomToast.customToast(getApplicationContext(), "Coming soon... be connected for update");
                 break;
 
             case R.id.blog:
-                startActivity(new Intent(getApplicationContext(), MyBlogsContainer.class));
+                CustomToast.customToast(getApplicationContext(), "Coming soon... be connected for update");
+                // startActivity(new Intent(getApplicationContext(), MyBlogsContainer.class));
                 break;
 
             case R.id.edit:

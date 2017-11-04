@@ -671,6 +671,19 @@ public class StoreInventoryResponse {
             @Expose
             private String groupIDs;
 
+            @SerializedName("StockType")
+            @Expose
+            private String StockType;
+
+            @SerializedName("ChatCount")
+            @Expose
+
+            private String ChatCount;
+
+            @SerializedName("EnquiryCount")
+            @Expose
+            private String EnquiryCount;
+
             public Integer getVehicleId() {
                 return vehicleId;
             }
@@ -726,6 +739,23 @@ public class StoreInventoryResponse {
             public void setContactVehicle(String contactVehicle) {
                 this.contactVehicle = contactVehicle;
             }
+
+            public String getChatCount() {
+                return ChatCount;
+            }
+
+            public void setChatCount(String chatCount) {
+                ChatCount = chatCount;
+            }
+
+            public String getEnquiryCount() {
+                return EnquiryCount;
+            }
+
+            public void setEnquiryCount(String enquiryCount) {
+                EnquiryCount = enquiryCount;
+            }
+
 
             public String getImages() {
                 return images;
@@ -797,6 +827,14 @@ public class StoreInventoryResponse {
 
             public void setVehiclefollowstatus(String vehiclefollowstatus) {
                 this.vehiclefollowstatus = vehiclefollowstatus;
+            }
+
+            public String getStockType() {
+                return StockType;
+            }
+
+            public void setStockType(String stockType) {
+                StockType = stockType;
             }
 
             public String getBuyerLeads() {

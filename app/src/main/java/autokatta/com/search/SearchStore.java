@@ -154,7 +154,7 @@ public class SearchStore extends Fragment implements RequestNotifier {
         if (response != null) {
             if (response.isSuccessful()) {
                 BrowseStoreResponse searchData = (BrowseStoreResponse) response.body();
-                if (searchData != null) {
+                if (searchData.getSuccess() != null) {
                     if (!searchData.getSuccess().isEmpty()) {
                         mNoData.setVisibility(View.GONE);
                         allSearchDataArrayList.clear();

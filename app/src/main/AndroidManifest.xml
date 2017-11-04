@@ -857,6 +857,10 @@
             android:name=".view.AddInterestTagsActivity"
             android:label="@string/title_activity_add_interest_tags"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".other.ContainerForLoadingOffer"
+            android:label="@string/title_activity_recycler_image_view"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

@@ -162,7 +162,6 @@ public class EnquiredPersonsActivity extends AppCompatActivity implements Reques
                         if (!mPersonDataResponse.getSuccess().isEmpty()) {
 
                             mNoData.setVisibility(View.GONE);
-                            filterLayout.setVisibility(View.VISIBLE);
                             for (GetPersonDataResponse.Success success : mPersonDataResponse.getSuccess()) {
                                 //success.setUsername(success.getUsername());
 

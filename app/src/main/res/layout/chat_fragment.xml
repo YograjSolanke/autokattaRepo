@@ -30,7 +30,7 @@
             android:layout_toEndOf="@+id/profileview"
             android:text="@string/online"
             android:textColor="@color/red"
-            android:textSize="20sp"
+            android:textSize="15sp"
             android:textStyle="bold" />
 
 
@@ -43,7 +43,7 @@
             android:text="@string/location"
             android:layout_toLeftOf="@+id/replay"
             android:textColor="@color/black"
-            android:textSize="15sp" />
+            android:textSize="12sp" />
 
         <Button
             android:id="@+id/replay"
@@ -51,8 +51,13 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:text="Reply"
-            android:textAllCaps="false" />
+            android:textAllCaps="false"
+            android:background="@color/background"/>
     </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/grey"/>
 
     <RelativeLayout
         android:id="@+id/MainRel"

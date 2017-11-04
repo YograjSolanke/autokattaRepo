@@ -36,6 +36,13 @@
             android:textColor="@color/white" />
 
     </LinearLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rl"
+        android:text="*Invite message will be sent from your number"
+        android:id="@+id/t1"
+        android:textSize="10dp"/>
     <!--<EditText
         android:id="@+id/inputSearch"
         android:layout_width="fill_parent"
@@ -51,7 +58,7 @@
         android:id="@+id/rv_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/rl"
+        android:layout_below="@+id/t1"
         android:scrollbars="vertical" />
 
 </RelativeLayout>

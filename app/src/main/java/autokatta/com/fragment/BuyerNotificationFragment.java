@@ -1,12 +1,15 @@
 package autokatta.com.fragment;
 
+import android.Manifest.permission;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -81,6 +84,7 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
             public void run() {
                 dialog = new ProgressDialog(getActivity());
                 dialog.setMessage("Loading Buyer...");
+                dialog.show();
 
                 mLinearListView = (LinearLayout) mBuyerView.findViewById(R.id.linear_ListView);
                 myContact = getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).
@@ -88,7 +92,8 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
                 mNoData = (TextView) mBuyerView.findViewById(R.id.no_category);
                 mNoData.setVisibility(View.GONE);
 
-                //getUploadedVehicleBuyerlist(myContact);
+
+                getUploadedVehicleBuyerlist(myContact);
             }
         });
     }
@@ -119,6 +124,7 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
         if (response != null) {
 
             if (response.isSuccessful()) {
+                dialog.dismiss();
                 mNoData.setVisibility(View.GONE);
                 Log.i("buyer Response", "" + response);
                 BuyerResponse object = (BuyerResponse) response.body();
@@ -667,6 +673,16 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
     private void call(String recieverContact) {
         Intent in = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + recieverContact));
         try {
+            if (ActivityCompat.checkSelfPermission(getActivity(), permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
+                return;
+            }
             getActivity().startActivity(in);
         } catch (android.content.ActivityNotFoundException ex) {
             ex.printStackTrace();

@@ -5,10 +5,12 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -39,9 +41,13 @@ import autokatta.com.initial_fragment.CreateGroupFragment;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.interfaces.ServiceApi;
 import autokatta.com.networkreceiver.ConnectionDetector;
+import autokatta.com.other.ContainerForLoadingOffer;
 import autokatta.com.other.CustomToast;
+import autokatta.com.response.GetVehicleInventoryScrapResponse;
+import autokatta.com.response.GetVehicleRepoInsuranceResponse;
 import autokatta.com.response.ProfileGroupResponse;
 import autokatta.com.response.StoreInventoryResponse;
+import autokatta.com.view.EnquiredPersonsActivity;
 import autokatta.com.view.VehicleDetails;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import okhttp3.OkHttpClient;
@@ -92,7 +98,7 @@ public class StoreVehicleAdapter extends RecyclerView.Adapter<StoreVehicleAdapte
     }
 
     @Override
-    public void onBindViewHolder(final StoreVehicleAdapter.VehicleHolder holder, int position) {
+    public void onBindViewHolder(final StoreVehicleAdapter.VehicleHolder holder, final int position) {
         final StoreInventoryResponse.Success.Vehicle obj = vehicleList.get(position);
         List<String> vimages = new ArrayList<>();
         holder.edittitles.setText(obj.getTitle());
@@ -107,6 +113,10 @@ public class StoreVehicleAdapter extends RecyclerView.Adapter<StoreVehicleAdapte
         holder.Kms.setText(obj.getKms());
         holder.Rto.setText(obj.getRto());
         holder.Regno.setText(obj.getRegno());
+        holder.stock_type.setText(vehicleList.get(position).getStockType());
+        holder.mChatcount.setText(vehicleList.get(position).getChatCount());
+        holder.mEnquiryCount.setText(vehicleList.get(position).getEnquiryCount());
+
 
         prevGroupIds = obj.getGroupIDs().replaceAll(" ", "");
         prevStoreIds = obj.getStoreIDs().replaceAll(" ", "");
@@ -204,6 +214,208 @@ public class StoreVehicleAdapter extends RecyclerView.Adapter<StoreVehicleAdapte
                 }
             }
         });*/
+
+        holder.stock_type.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (vehicleList.get(position).getStockType().equalsIgnoreCase("Finance/Repo")
+                        || vehicleList.get(position).getStockType().equalsIgnoreCase("Insurance")) {
+                    final AlertDialog.Builder dialog = new AlertDialog.Builder(activity);
+                    LayoutInflater inflater = activity.getLayoutInflater();
+                    View dialoglayout = inflater.inflate(R.layout.stock_type_cust_details, null);
+                    dialog.setView(dialoglayout);
+                    dialog.setTitle("Customer details");
+                    dialog.show();
+
+                    final TextView mLoanNo = (TextView) dialoglayout.findViewById(R.id.loanno);
+                    final TextView mBorrowerName = (TextView) dialoglayout.findViewById(R.id.borrowername);
+                    final TextView mBorrowerContact = (TextView) dialoglayout.findViewById(R.id.borrowercontact);
+                    final TextView mBranchCity = (TextView) dialoglayout.findViewById(R.id.branchcity);
+                    final TextView mManagerName = (TextView) dialoglayout.findViewById(R.id.managername);
+                    final TextView ManagerContact = (TextView) dialoglayout.findViewById(R.id.managercnt);
+                    final TextView mDealerName = (TextView) dialoglayout.findViewById(R.id.dealername);
+                    final TextView mStockYardNAme = (TextView) dialoglayout.findViewById(R.id.stockyardname);
+                    final TextView mStockYardAddresss = (TextView) dialoglayout.findViewById(R.id.stockyardaddress);
+                    final TextView mInwardDate = (TextView) dialoglayout.findViewById(R.id.inwarddate);
+                    final LinearLayout scrap = (LinearLayout) dialoglayout.findViewById(R.id.scrap_linear);
+                    //  final Button mCancle = (Button) dialoglayout.findViewById(R.id.cancl);
+                    scrap.setVisibility(View.GONE);
+                    try {
+                        if (connectionDetector.isConnectedToInternet()) {
+                            Retrofit retrofit = new Retrofit.Builder()
+                                    .baseUrl(activity.getString(R.string.base_url))
+                                    .addConverterFactory(GsonConverterFactory.create())
+                                    .client(initLog().build())
+                                    .build();
+
+                            ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                            Call<GetVehicleRepoInsuranceResponse> add = serviceApi._autokattaGetVehiclesRepoInsurance(vehicleList.get(position).getVehicleId());
+                            add.enqueue(new Callback<GetVehicleRepoInsuranceResponse>() {
+                                @Override
+                                public void onResponse(Call<GetVehicleRepoInsuranceResponse> call, Response<GetVehicleRepoInsuranceResponse> response) {
+                                    if (response.isSuccessful()) {
+                                        GetVehicleRepoInsuranceResponse mRepo = (GetVehicleRepoInsuranceResponse) response.body();
+                                        for (GetVehicleRepoInsuranceResponse.Success success : mRepo.getSuccess()) {
+                                            mLoanNo.setText(success.getAccountNumber());
+                                            mBorrowerName.setText(success.getBorrowerName());
+                                            mBorrowerContact.setText(success.getBorrowerContact());
+                                            mBranchCity.setText(success.getBranchCityName());
+                                            mManagerName.setText(success.getBrachMangerName());
+                                            ManagerContact.setText(success.getBranchContact());
+                                            mDealerName.setText(success.getDealerName());
+                                            mStockYardNAme.setText(success.getStockYardName());
+                                            mStockYardAddresss.setText(success.getStockYardAddress());
+                                            //  mInwardDate.setText(success.getInwardDate().replace("T00:00:00",""));
+                                            //To set Date
+                                            try {
+                                                //To set Date
+                                                DateFormat inputDate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                                                DateFormat newDateFormat = new SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault());
+                                                mInwardDate.setText(newDateFormat.format(inputDate.parse(success.getInwardDate().replace("T00:00:00", ""))));
+
+                                            } catch (Exception e) {
+                                                e.printStackTrace();
+                                            }
+                                            success.setBranchMangerStatus(success.getBranchMangerStatus());
+                                            success.setBorrowerStatus(success.getBorrowerStatus());
+
+                                        }
+
+                                    } else {
+                                        CustomToast.customToast(activity, activity.getString(R.string._404));
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Call<GetVehicleRepoInsuranceResponse> call, Throwable t) {
+
+                                }
+                            });
+                        } else
+                            CustomToast.customToast(activity.getApplicationContext(), activity.getString(R.string.no_internet));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                } else if (vehicleList.get(position).getStockType().equalsIgnoreCase("Scrap")
+                        || vehicleList.get(position).getStockType().equalsIgnoreCase("Inventory")) {
+                    final AlertDialog.Builder dialog = new AlertDialog.Builder(activity);
+                    LayoutInflater inflater = activity.getLayoutInflater();
+                    View dialoglayout = inflater.inflate(R.layout.stock_type_cust_details, null);
+                    dialog.setView(dialoglayout);
+                    dialog.setTitle("Customer details");
+                    dialog.show();
+                    final LinearLayout repo = (LinearLayout) dialoglayout.findViewById(R.id.repo_linear);
+                    final TextView mCustName = (TextView) dialoglayout.findViewById(R.id.custname);
+                    final TextView mCustContact = (TextView) dialoglayout.findViewById(R.id.custcontact);
+                    final TextView mAddress = (TextView) dialoglayout.findViewById(R.id.custaddress);
+                    final TextView mDetailAddr = (TextView) dialoglayout.findViewById(R.id.address);
+                    final TextView mPurchasePrice = (TextView) dialoglayout.findViewById(R.id.purchaseprice);
+                    final TextView mPurchaseDate = (TextView) dialoglayout.findViewById(R.id.purchasedate);
+                    //  final Button mCancle = (Button) dialoglayout.findViewById(R.id.cancl);
+                    repo.setVisibility(View.GONE);
+                    try {
+                        if (connectionDetector.isConnectedToInternet()) {
+                            Retrofit retrofit = new Retrofit.Builder()
+                                    .baseUrl(activity.getString(R.string.base_url))
+                                    .addConverterFactory(GsonConverterFactory.create())
+                                    .client(initLog().build())
+                                    .build();
+
+                            ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                            Call<GetVehicleInventoryScrapResponse> add = serviceApi._autokattaGetVehicleInventoryScrap(vehicleList.get(position).getVehicleId());
+                            add.enqueue(new Callback<GetVehicleInventoryScrapResponse>() {
+                                @Override
+                                public void onResponse(Call<GetVehicleInventoryScrapResponse> call, Response<GetVehicleInventoryScrapResponse> response) {
+                                    if (response.isSuccessful()) {
+                                        GetVehicleInventoryScrapResponse mProfilegroup = (GetVehicleInventoryScrapResponse) response.body();
+                                        for (GetVehicleInventoryScrapResponse.Success success : mProfilegroup.getSuccess()) {
+                                            mCustName.setText(success.getCustomerName());
+                                            mCustContact.setText(success.getMyContact());
+                                            mAddress.setText(success.getAddress());
+                                            mDetailAddr.setText(success.getFulladdress());
+                                            //    mPurchaseDate.setText(success.getPurchaseDate().replace("T00:00:00",""));
+                                            mPurchasePrice.setText(success.getMyContact());
+
+                                            //To set Date
+                                            try {
+                                                //To set Date
+                                                DateFormat inputDate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                                                DateFormat newDateFormat = new SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault());
+                                                mPurchaseDate.setText(newDateFormat.format(inputDate.parse(success.getPurchaseDate().replace("T00:00:00", ""))));
+
+                                            } catch (Exception e) {
+                                                e.printStackTrace();
+                                            }
+                                        }
+
+                                    } else {
+                                        CustomToast.customToast(activity, activity.getString(R.string._404));
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Call<GetVehicleInventoryScrapResponse> call, Throwable t) {
+
+                                }
+
+
+                            });
+                        } else
+                            CustomToast.customToast(activity.getApplicationContext(), activity.getString(R.string.no_internet));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                } else if (vehicleList.get(position).getStockType().equalsIgnoreCase("Market Place")) {
+                    Log.e("Market Place", "->");
+                }
+            }
+        });
+
+
+        holder.mEnquiryCount.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Bundle b = new Bundle();
+                if (vehicleList.get(holder.getAdapterPosition()).getEnquiryCount().equalsIgnoreCase("") || vehicleList.get(holder.getAdapterPosition()).getEnquiryCount().equalsIgnoreCase("0")) {
+                    CustomToast.customToast(activity, "No Enquiry Available");
+                } else {
+                    Intent i = new Intent(activity, EnquiredPersonsActivity.class);
+                    b.putString("id", String.valueOf(vehicleList.get(holder.getAdapterPosition()).getVehicleId()));
+                    b.putString("keyword", "Used Vehicle");
+                    b.putString("name", vehicleList.get(position).getTitle());
+                    i.putExtras(b);
+                    activity.startActivity(i);
+                }
+            }
+        });
+
+        holder.mChatcount.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Bundle b = new Bundle();
+                if (vehicleList.get(holder.getAdapterPosition()).getChatCount().equalsIgnoreCase("0") ||
+                        vehicleList.get(holder.getAdapterPosition()).getChatCount().equalsIgnoreCase("")) {
+                    CustomToast.customToast(activity, "No Chat available");
+                } else {
+                    b.putInt("product_id", 0);
+                    b.putInt("service_id", 0);
+                    b.putInt("vehicle_id", vehicleList.get(holder.getAdapterPosition()).getVehicleId());
+                    b.putString("keyword", "Used Vehicle");
+                    b.putString("title", vehicleList.get(holder.getAdapterPosition()).getTitle());
+                    b.putString("price", vehicleList.get(holder.getAdapterPosition()).getPrice());
+                    b.putString("category", vehicleList.get(holder.getAdapterPosition()).getCategory());
+                    b.putString("brand", vehicleList.get(holder.getAdapterPosition()).getManufacturer());
+                    b.putString("model", vehicleList.get(holder.getAdapterPosition()).getModel());
+                    b.putString("image", vehicleList.get(holder.getAdapterPosition()).getImages());
+
+                    Intent i=new Intent(activity, ContainerForLoadingOffer.class);
+                    i.putExtras(b);
+                    activity.startActivity(i);
+
+                }
+            }
+        });
+
 
         holder.vehidetails.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -444,7 +656,7 @@ public class StoreVehicleAdapter extends RecyclerView.Adapter<StoreVehicleAdapte
     class VehicleHolder extends RecyclerView.ViewHolder {
         ImageView vehicleimage, mMoreItems;
         TextView edittitles, editprices, editcategorys, editbrands, editmodels, editleads, edituploadedon;
-        TextView Year, Location, Rto, Kms, Regno;
+        TextView Year, Location, Rto, Kms, Regno,stock_type,mChatcount,mEnquiryCount;
         Button vehidetails, delete, mUploadGroup, mUploadStore, mEnquiry, mQoutation, mViewQuote;
         LinearLayout mLinear;
         RelativeLayout relativeleads;
@@ -461,6 +673,9 @@ public class StoreVehicleAdapter extends RecyclerView.Adapter<StoreVehicleAdapte
             edituploadedon = (TextView) itemView.findViewById(R.id.edituploadedon);
             vehicleimage = (ImageView) itemView.findViewById(R.id.vehiprofile);
             mMoreItems = (ImageView) itemView.findViewById(R.id.more_items);
+            stock_type = (TextView) itemView.findViewById(R.id.stock_type);
+            mChatcount = (TextView) itemView.findViewById(R.id.chatcount);
+            mEnquiryCount = (TextView) itemView.findViewById(R.id.enquirycount);
             //delete = (Button) itemView.findViewById(R.id.delete);
             mLinear = (LinearLayout) itemView.findViewById(R.id.linearbtns);
             mUploadGroup = (Button) itemView.findViewById(R.id.upload_group);

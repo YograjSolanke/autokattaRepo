@@ -617,8 +617,11 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<RecyclerView.
             holder.mChatcount.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Bundle b=new Bundle();
-
+                    Bundle b = new Bundle();
+                    if (mMainList.get(holder.getAdapterPosition()).getChatCount().equalsIgnoreCase("0") ||
+                            mMainList.get(holder.getAdapterPosition()).getChatCount().equalsIgnoreCase("")) {
+                        CustomToast.customToast(activity, "No Chat available");
+                    } else {
                         b.putInt("product_id", 0);
                         b.putInt("service_id", 0);
                         b.putInt("vehicle_id", mMainList.get(holder.getAdapterPosition()).getVehicleId());
@@ -631,15 +634,15 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<RecyclerView.
                         b.putString("image", mMainList.get(holder.getAdapterPosition()).getImages());
 
 
-                    BussinessMsgSenders obj = new BussinessMsgSenders();
-                    obj.setArguments(b);
+                        BussinessMsgSenders obj = new BussinessMsgSenders();
+                        obj.setArguments(b);
 
-                    ((FragmentActivity) activity).getSupportFragmentManager().beginTransaction()
-                            .setCustomAnimations(R.anim.ok_left_to_right, R.anim.ok_right_to_left)
-                            .replace(R.id.myUsedVehicleFrame, obj, "MyUploadedVehiclesFragment")
-                            .addToBackStack("MyUploadedVehiclesFragment")
-                            .commit();
-
+                        ((FragmentActivity) activity).getSupportFragmentManager().beginTransaction()
+                                .setCustomAnimations(R.anim.ok_left_to_right, R.anim.ok_right_to_left)
+                                .replace(R.id.myUsedVehicleFrame, obj, "MyUploadedVehiclesFragment")
+                                .addToBackStack("MyUploadedVehiclesFragment")
+                                .commit();
+                    }
                 }
             });
 
@@ -863,20 +866,22 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<RecyclerView.
             });
 
 
-            holder.mEnquiryCount.setOnClickListener(new
-
-                                                            OnClickListener() {
-                                                                @Override
-                                                                public void onClick(View view) {
-                                                                    Bundle b = new Bundle();
-                                                                    Intent i = new Intent(activity, EnquiredPersonsActivity.class);
-                                                                    b.putString("id", String.valueOf(mMainList.get(holder.getAdapterPosition()).getVehicleId()));
-                                                                    b.putString("keyword", "Used Vehicle");
-                                                                    b.putString("name", mMainList.get(position).getTitle());
-                                                                    i.putExtras(b);
-                                                                    activity.startActivity(i);
-                                                                }
-                                                            });
+            holder.mEnquiryCount.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Bundle b = new Bundle();
+                    if (mMainList.get(holder.getAdapterPosition()).getEnquiryCount().equalsIgnoreCase("") || mMainList.get(holder.getAdapterPosition()).getEnquiryCount().equalsIgnoreCase("0")) {
+                        CustomToast.customToast(activity, "No Enquiry Available");
+                    } else {
+                        Intent i = new Intent(activity, EnquiredPersonsActivity.class);
+                        b.putString("id", String.valueOf(mMainList.get(holder.getAdapterPosition()).getVehicleId()));
+                        b.putString("keyword", "Used Vehicle");
+                        b.putString("name", mMainList.get(position).getTitle());
+                        i.putExtras(b);
+                        activity.startActivity(i);
+                    }
+                }
+            });
         /*holder.mBroadcast.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {

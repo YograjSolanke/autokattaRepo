@@ -316,7 +316,7 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
                             } else if (custAddress.equals("") || custAddress.startsWith(" ") && custAddress.startsWith(" ")) {
                                 autoAddress.setError("Enter Address");
                                 autoAddress.requestFocus();
-                            } else if (!flag) {
+                            } else if (flag) {
                                 autoAddress.setError("Please provide proper address");
                                 autoAddress.requestFocus();
                             } else if (custFullAddress.equals("")) {

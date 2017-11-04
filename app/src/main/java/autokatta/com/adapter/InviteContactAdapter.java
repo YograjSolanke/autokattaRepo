@@ -1,9 +1,12 @@
 package autokatta.com.adapter;
 
+import android.Manifest.permission;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.telephony.SmsManager;
@@ -84,7 +87,7 @@ public class InviteContactAdapter extends RecyclerView.Adapter<InviteContactAdap
         holder.imgCall.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-               call(con);
+                call(con);
             }
         });
     }
@@ -127,7 +130,7 @@ public class InviteContactAdapter extends RecyclerView.Adapter<InviteContactAdap
                 final ArrayList<String> nlist = new ArrayList<String>(count);
                 String filterableString;
                 for (int i = 0; i < count; i++) {
-                filterableString = list.get(i);
+                    filterableString = list.get(i);
                     if (filterableString.contains(" ")) {
                         String[] arr = filterableString.split(" ");
                         String fname = arr[0];
@@ -139,10 +142,10 @@ public class InviteContactAdapter extends RecyclerView.Adapter<InviteContactAdap
                     } else if (filterableString.toLowerCase().startsWith(filterString)) {
                         nlist.add(filterableString);
                     }
-            }
+                }
 
-            results.values = nlist;
-            results.count = nlist.size();
+                results.values = nlist;
+                results.count = nlist.size();
             } else {
                 results.values = list;
                 results.count = list.size();
@@ -160,22 +163,33 @@ public class InviteContactAdapter extends RecyclerView.Adapter<InviteContactAdap
 
     }
 
-    private void sendSMSMessage(String con, String msg) {
+    private void sendSMSMessage(String con, String name) {
         Log.i("Send SMS", "");
 
         try {
             SmsManager smsManager = SmsManager.getDefault();
-            smsManager.sendTextMessage(con, null, "hi..." + msg, null, null);
+            smsManager.sendTextMessage(con, null, "Hi I am using Autokatta\n Please click below link to download and connect with me for more" , null, null);
             CustomToast.customToast(mActivity, "SMS sent.");
         } catch (Exception e) {
             CustomToast.customToast(mActivity, "SMS faild, please try again.");
             e.printStackTrace();
         }
     }
+
     //Calling Functionality
     private void call(String contact) {
         Intent in = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + contact));
         try {
+            if (ActivityCompat.checkSelfPermission(mActivity, permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
+                return;
+            }
             mActivity.startActivity(in);
         } catch (android.content.ActivityNotFoundException ex) {
             System.out.println("No Activity Found For Call in Car Details Fragment\n");
