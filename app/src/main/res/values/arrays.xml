@@ -5,174 +5,174 @@
 
 
     <string-array name="userType">
-        <item>Select User Type</item>
-        <item>Civil Servant</item>
-        <item>Employee</item>
-        <item>Enterpreneur</item>
-        <item>Executive</item>
-        <item>Freelancer</item>
-        <item>Recruiter</item>
-        <item>Retired</item>
-        <item>Seeking Employment</item>
-        <item>Student</item>
+        <item>@string/usertype</item>
+        <item>@string/CivilServant</item>
+        <item>@string/Employee</item>
+        <item>@string/Entrepreneur</item>
+        <item>@string/Executive</item>
+        <item>@string/Freelancer</item>
+        <item>@string/Recruiter</item>
+        <item>@string/Retired</item>
+        <item>@string/SeekingEmployment</item>
+        <item>@string/Student</item>
     </string-array>
 
     <!--String Arrays...-->
     <string-array name="hypo">
-        <item>Select Hypothetication</item>
-        <item>Yes</item>
-        <item>No</item>
+        <item>@string/hypothetications</item>
+        <item>@string/Yes</item>
+        <item>@string/No</item>
     </string-array>
 
     <string-array name="RC_avl">
-        <item>-Select RC Available-</item>
-        <item>Yes</item>
-        <item>No</item>
+        <item>@string/SelectRCAvailable</item>
+        <item>@string/Yes</item>
+        <item>@string/No</item>
     </string-array>
 
     <string-array name="ins">
-        <item>-Select Insurance Valid-</item>
-        <item>Yes</item>
-        <item>No</item>
+        <item>@string/SelectInsuranceValid</item>
+        <item>@string/Yes</item>
+        <item>@string/No</item>
     </string-array>
 
     <string-array name="tax">
-        <item>-Select Tax Valid-</item>
-        <item>Yes</item>
-        <item>No</item>
+        <item>@string/SelectTaxValid</item>
+        <item>@string/Yes</item>
+        <item>@string/No</item>
     </string-array>
 
     <string-array name="permit">
-        <item>-Select Permit Validity-</item>
-        <item>Yes</item>
-        <item>No</item>
+        <item>@string/SelectPermitValidity</item>
+        <item>@string/Yes</item>
+        <item>@string/No</item>
     </string-array>
 
     <string-array name="fitness">
-        <item>-Select Fitness Valid-</item>
-        <item>Yes</item>
-        <item>No</item>
+        <item>@string/SelectFitnessValid</item>
+        <item>@string/Yes</item>
+        <item>@string/No</item>
     </string-array>
 
     <string-array name="owners">
-        <item>-Select Owners-</item>
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-        <item>More than 3</item>
+        <item>@string/SelectOwners</item>
+        <item>@string/one</item>
+        <item>@string/two</item>
+        <item>@string/three</item>
+        <item>@string/morethanthree</item>
     </string-array>
 
     <string-array name="drive">
-        <item>-Select DriveType-</item>
-        <item>2WD</item>
-        <item>4WD</item>
+        <item>@string/SelectDriveType</item>
+        <item>@string/twoWD</item>
+        <item>@string/fourWD</item>
     </string-array>
 
     <string-array name="trance">
-        <item>-Select transmission-</item>
-        <item>automatic</item>
-        <item>manual</item>
+        <item>@string/SelectTransmission</item>
+        <item>@string/Automatic</item>
+        <item>@string/Manual</item>
     </string-array>
 
     <string-array name="bustype">
-        <item>-Select BusType-</item>
-        <item>School Bus</item>
-        <item>Staff Bus</item>
-        <item>Luxary Bus</item>
-        <item>Sleeper Coach</item>
-        <item>Semi Sleeper</item>
-        <item>Other</item>
+        <item>@string/SelectBusType</item>
+        <item>@string/SchoolBus</item>
+        <item>@string/StaffBus</item>
+        <item>@string/LuxuryBus</item>
+        <item>@string/SleeperCoach</item>
+        <item>@string/SemiSleeper</item>
+        <item>@string/Other</item>
     </string-array>
 
     <string-array name="air">
-        <item>-Select Air Condition-</item>
-        <item>Yes</item>
-        <item>No</item>
+        <item>@string/SelectAirCondition</item>
+        <item>@string/Yes</item>
+        <item>@string/No</item>
     </string-array>
 
     <string-array name="invoice">
-        <item>-Select Invoice Available-</item>
-        <item>Yes</item>
-        <item>No</item>
+        <item>@string/SelectInvoiceAvailable</item>
+        <item>@string/Yes</item>
+        <item>@string/No</item>
     </string-array>
 
 
     <string-array name="emission">
-        <item>-Select Emmission Version-</item>
-        <item>Bharat stage I</item>
-        <item>Bharat stage II</item>
-        <item>Bharat stage III</item>
-        <item>Bharat stage IV</item>
-        <item>Bharat stage V</item>
-        <item>Bharat stage VI</item>
+        <item>@string/SelectEmissionVersion</item>
+        <item>@string/BharatStageI</item>
+        <item>@string/BharatStageII</item>
+        <item>@string/BharatStageIII</item>
+        <item>@string/BharatStageIV</item>
+        <item>@string/BharatStageV</item>
+        <item>@string/BharatStageVI</item>
     </string-array>
 
     <string-array name="items_array_expandable_level_one">
-        <item>Level 1.1</item>
-        <item>Level 1.2</item>
-        <item>Level 1.3</item>
+        <item>@string/levelone</item>
+        <item>@string/leveltwo</item>
+        <item>@string/levelthree</item>
     </string-array>
     <string-array name="items_array_expandable_level_one_one_child">
-        <item>NAME/city</item>
-        <item>NAME/city</item>
+        <item>@string/NameCity</item>
+        <item>@string/NameCity</item>
     </string-array>
     <string-array name="items_array_expandable_level_one_two_child">
-        <item>car requirements</item>
+        <item>@string/carrequirements</item>
     </string-array>
     <string-array name="items_array_expandable_other_child">
-        <item>Second Level 01</item>
-        <item>Second Level 02</item>
-        <item>Second Level 03</item>
+        <item>@string/SecondLevelOne</item>
+        <item>@string/SecondLevelTwo</item>
+        <item>@string/SecondLevelThree</item>
     </string-array>
     <string-array name="items_array_expandable_level_three">
-        <item>Child Level 01</item>
-        <item>Child Level 02</item>
+        <item>@string/ChildLevelOne</item>
+        <item>@string/ChildLevelTwo</item>
     </string-array>
 
     <string-array name="searchData">
-        <item>-List-</item>
-        <item>Brand</item>
-        <item>Model</item>
-        <item>Version</item>
-        <item>City</item>
-        <item>RTOCity</item>
-        <item>RegistrationYear</item>
-        <item>ManufactureYear</item>
-        <item>Price</item>
-        <item>KmsRunning</item>
-        <item>NoOfOwners</item>
+        <item>@string/List</item>
+        <item>@string/brand</item>
+        <item>@string/model</item>
+        <item>@string/version</item>
+        <item>@string/city</item>
+        <item>@string/RTOCity</item>
+        <item>@string/registration_year</item>
+        <item>@string/ManufactureYear</item>
+        <item>@string/price</item>
+        <item>@string/kms_running</item>
+        <item>@string/NoOfOwners</item>
     </string-array>
 
     <string-array name="areaOptions">
-        <item>Select Area Of Operations</item>
-        <item>By Kms</item>
-        <item>By District</item>
-        <item>By State</item>
+        <item>@string/SelectAreaOfOperations</item>
+        <item>@string/ByKms</item>
+        <item>@string/ByDistrict</item>
+        <item>@string/ByState</item>
     </string-array>
 
     <string-array name="kmsOptions">
-        <item>Select kms</item>
-        <item>5Kms</item>
-        <item>10Kms</item>
-        <item>15Kms</item>
-        <item>20Kms</item>
-        <item>25Kms</item>
+        <item>@string/Selectkms</item>
+        <item>@string/fiveKms</item>
+        <item>@string/tenKms</item>
+        <item>@string/fiftenKms</item>
+        <item>@string/twentyKms</item>
+        <item>@string/twentyfiveKms</item>
     </string-array>
 
     <string-array name="roletype">
-        <item>-Select Role-</item>
-        <item>Seller</item>
-        <item>Buyer</item>
-        <item>Dealer</item>
-        <item>Financer</item>
-        <item>Auction Organiser</item>
-        <item>User</item>
+        <item>@string/SelectRole</item>
+        <item>@string/Seller</item>
+        <item>@string/Buyer</item>
+        <item>@string/Dealer</item>
+        <item>@string/Financier</item>
+        <item>@string/AuctionOrganiser</item>
+        <item>@string/User</item>
     </string-array>
 
     <string-array name="finacial">
-        <item>-Select Finance-</item>
-        <item>Yes</item>
-        <item>No</item>
+        <item>@string/SelectFinance</item>
+        <item>@string/Yes</item>
+        <item>@string/No</item>
     </string-array>
 
    <!-- <string-array name="Auction_Category">
@@ -186,65 +186,65 @@
 
     <!--Manual Enquiry Status-->
     <string-array name="ManualEnquiryStatus">
-        <item>-Select Status-</item>
-        <item>Hot</item>
-        <item>Cold</item>
-        <item>Warm</item>
-        <item>Dropped</item>
-        <item>Booked</item>
-        <item>Delivered</item>
-        <item>Sold</item>
-        <item>Lost to competition</item>
-        <item>Postponed</item>
-        <item>FI</item>
-        <item>File login</item>
-        <item>Approved</item>
-        <item>Disbursed</item>
-        <item>File rejected</item>
-        <item>Pending</item>
+        <item>@string/SelectStatus</item>
+        <item>@string/Hot</item>
+        <item>@string/Cold</item>
+        <item>@string/Warm</item>
+        <item>@string/Dropped</item>
+        <item>@string/Booked</item>
+        <item>@string/Delivered</item>
+        <item>@string/Sold</item>
+        <item>@string/Losttocompetition</item>
+        <item>@string/Postponed</item>
+        <item>@string/FI</item>
+        <item>@string/Filelogin</item>
+        <item>@string/Approved</item>
+        <item>@string/Disbursed</item>
+        <item>@string/Filerejected</item>
+        <item>@string/Pending</item>
     </string-array>
 
     <!--demo-->
     <string-array name="demo">
-        <item>Under Working</item>
+        <item>@string/UnderWorking</item>
     </string-array>
 
     <string-array name="uploadvehicleInventory">
-        <item>-Select Inventory-</item>
-        <item>New Vehicle</item>
-        <item>Used Vehicle</item>
+        <item>@string/SelectInventory</item>
+        <item>@string/NewVehicle</item>
+        <item>@string/UsedVehicle</item>
     </string-array>
 
     <!--User Inventory
     new vehicle, used vehicle, product, services-->
     <string-array name="UserInventory">
-        <item>-Select Inventory-</item>
-        <item>New Vehicle</item>
-        <item>Used Vehicle</item>
-        <item>Products</item>
-        <item>Services</item>
+        <item>@string/SelectInventory</item>
+        <item>@string/NewVehicle</item>
+        <item>@string/UsedVehicle</item>
+        <item>@string/Products</item>
+        <item>@string/Services</item>
     </string-array>
 
     <!--vehicle Category for registration-->
     <string-array name="vehicategory">
-        <item>-Select Vehicle Type-</item>
-        <item>Bus</item>
-        <item>Car</item>
-        <item>Construction Equipment</item>
-        <item>Commercial Vehicle</item>
-        <item>Tractor</item>
-        <item>Two Wheeler</item>
-        <item>Three Wheeler</item>
+        <item>@string/SelectVehicleType</item>
+        <item>@string/Bus</item>
+        <item>@string/Car</item>
+        <item>@string/ConstructionEquipment</item>
+        <item>@string/CommercialVehicle</item>
+        <item>@string/Tractor</item>
+        <item>@string/TwoWheeler</item>
+        <item>@string/ThreeWheeler</item>
     </string-array>
 
     <!--vehicle Stock type-->
     <string-array name="stocktype">
-        <item>-Select Stock Type-</item>
-        <item>Finance/Repo</item>
-        <item>Insurance</item>
-        <item>Scrap</item>
-        <item>Inventory</item>
-        <item>Market Place</item>
+        <item>@string/SelectStockType</item>
+        <item>@string/FinanceRepo</item>
+        <item>@string/Insurance</item>
+        <item>@string/Scrap</item>
+        <item>@string/Inventory</item>
+        <item>@string/MarketPlace</item>
     </string-array>
 
 </resources>

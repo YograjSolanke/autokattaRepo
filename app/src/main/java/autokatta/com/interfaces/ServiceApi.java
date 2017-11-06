@@ -25,6 +25,7 @@ import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
 import retrofit2.http.Query;
+import retrofit2.http.Url;
 
 /**
  * Created by ak-001 on 18/3/17.
@@ -1495,5 +1496,7 @@ public interface ServiceApi {
                                                  @Query("ProductID") int ProductID, @Query("StoreID") int StoreID,
                                                  @Query("ProfileID") int ProfileID);
 
+    @GET
+    Call<SuggestionsResponse> getClientList(@Url String anEmptyString);
 
 }

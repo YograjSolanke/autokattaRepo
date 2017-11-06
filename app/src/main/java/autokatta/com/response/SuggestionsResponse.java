@@ -3,13 +3,85 @@ package autokatta.com.response;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 /**
  * Created by ak-003 on 4/11/17.
  */
 
 public class SuggestionsResponse {
 
+
     @SerializedName("Success")
+    @Expose
+    private List<Success> success = null;
+    @SerializedName("Error")
+    @Expose
+    private Object error;
+
+    public List<Success> getSuccess() {
+        return success;
+    }
+
+    public void setSuccess(List<Success> success) {
+        this.success = success;
+    }
+
+    public Object getError() {
+        return error;
+    }
+
+    public void setError(Object error) {
+        this.error = error;
+    }
+
+    public class Success {
+
+        @SerializedName("Layout")
+        @Expose
+        private Integer layout;
+        @SerializedName("contact")
+        @Expose
+        private String contact;
+        @SerializedName("profile_pic")
+        @Expose
+        private String profilePic;
+        @SerializedName("username")
+        @Expose
+        private String username;
+
+        public Integer getLayout() {
+            return layout;
+        }
+
+        public void setLayout(Integer layout) {
+            this.layout = layout;
+        }
+
+        public String getContact() {
+            return contact;
+        }
+
+        public void setContact(String contact) {
+            this.contact = contact;
+        }
+
+        public String getProfilePic() {
+            return profilePic;
+        }
+
+        public void setProfilePic(String profilePic) {
+            this.profilePic = profilePic;
+        }
+
+        public String getUsername() {
+            return username;
+        }
+
+        public void setUsername(String username) {
+            this.username = username;
+        }
+    /*@SerializedName("Success")
     @Expose
     private Success success;
     @SerializedName("Error")
@@ -35,7 +107,7 @@ public class SuggestionsResponse {
 
     public class Success {
 
-        /*@SerializedName("WallSuggestions")
+        *//*@SerializedName("WallSuggestions")
         @Expose
         private List<WallSuggestion> wallSuggestions = null;
 
@@ -48,7 +120,7 @@ public class SuggestionsResponse {
         }
 
 
-        public class WallSuggestion {*/
+        public class WallSuggestion {*//*
 
         @SerializedName("Layout")
         @Expose
@@ -991,7 +1063,7 @@ public class SuggestionsResponse {
             this.rVType = rVType;
         }
 
-        /*Company based data*/
+        *//*Company based data*//*
         @SerializedName("contact")
         @Expose
         private String contact;
@@ -1025,6 +1097,7 @@ public class SuggestionsResponse {
         public void setUsername(String username) {
             this.username = username;
         }
+    }*/
+        //}
     }
-    //}
 }

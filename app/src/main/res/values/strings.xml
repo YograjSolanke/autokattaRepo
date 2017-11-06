@@ -8,7 +8,7 @@
     <string name="permission">Autokatta allows your permissions to access your data</string>
     <string name="specification_note">Note:-Standard Specification As Per Manufacturer</string>
     <string name="not_mentioned">Not Mentioned</string>
-    <string name="Rs">\u20B9 :-</string>
+    <string name="Rs">₹:</string>
     <string name="bid_increment">000000Rs</string>
     <string name="bid_received">Bid not received yet</string>
     <string name="bid_status">You are not highest bidder for this vehicle</string>
@@ -88,13 +88,13 @@
     <string name="group_alert"><font color='#FF0000'>1. IGNITION package of price is 750/- per month gives you unlimited uploads, Unlimited groups, unlimited stores. Payment options will be monthly, quarterly, half yearly and annually.</font></string>
     <!--User Profile-->
     <string name="create_store">Create Store</string>
-    <string name="unfollow">Un-follow</string>
+    <string name="unfollow" translatable="false">Un-follow</string>
     <string name="title_activity_upload_vehicle">UploadVehicle</string>
 
     <!-- Shared Preferences -->
     <string name="my_preference">Autokatta</string>
     <string name="firstRun">FirstRun</string>
-    <string name="category">Category :-</string>
+    <string name="category">Category</string>
     <string name="alert_dialog_title">Please Select</string>
     <string name="positive_button_text">Select</string>
     <string name="negative_button_text">Cancel</string>
@@ -125,7 +125,7 @@
     <string name="followdate1">Follow-up Date<font color='#FF0000'>\u002A</font></string>
     <string name="date">Date</string>
     <string name="time">Time</string>
-    <string name="Query">Query</string>
+    <string name="Query" translatable="false">Query</string>
 
     <string name="select_option">Select Option</string>
     <string name="show_qr">Show QR Code</string>
@@ -133,7 +133,7 @@
     <string name="select_language">Select Language/आपली भाषा निवडा</string>
     <string name="marathi">मराठी</string>
     <string name="english">English</string>
-    <string name="hindi">हिंदी</string>
+    <string name="hindi" translatable="false">हिंदी</string>
 
     <!--Login Activity -->
     <string name="username">Mobile Number</string>
@@ -244,7 +244,7 @@
     <string name="title_activity_my_ended_loan_mela_preview">MyEndedLoanMelaPreviewActivity</string>
     <string name="title_activity_my_ended_service_mela">MyEndedServiceMelaActivity</string>
     <string name="title_activity_my_ended_service_mela_preview">MyEndedServiceMelaPreviewActivity</string>
-    <string name="title_activity_my_ended_sale_mela_preview">MyEndedSaleMelaPreviewActivity</string>
+    <string name="title_activity_my_ended_sale_mela_preview" translatable="false">MyEndedSaleMelaPreviewActivity</string>
     <string name="title_activity_new_vehicle_catalog">Add New Vehicle</string>
     <string name="title_activity_all_enquiry_tab">Enquiry</string>
 
@@ -322,10 +322,10 @@
     <string name="base_image_url">http://autokatta.acquiscent.com/UploadedFiles/</string>
 
     <!--Active Auction Adapter-->
-    <string name="no_of_vehicle">No.of vehicle :</string>
+    <string name="no_of_vehicle">No.of vehicle</string>
     <string name="currently_active">Currently active</string>
-    <string name="start">Start :</string>
-    <string name="end">End :\t\t</string>
+    <string name="start">Start</string>
+    <string name="end">End\t</string>
     <string name="dates">Date</string>
     <string name="times">Time</string>
     <string name="auction_category">Auction Category :</string>
@@ -338,8 +338,8 @@
 
     <!--active loan adapter-->
     <string name="loan_title">Loan Title :</string>
-    <string name="set_location">Set Location :</string>
-    <string name="set_address">Set Address :</string>
+    <string name="set_location">Set Location</string>
+    <string name="set_address">Set Address</string>
 
     <!-- content active exchange mela -->
     <string name="active_mela">Active Mela</string>
@@ -455,14 +455,14 @@
     <string name="enter_city">Enter city</string>
     <string name="un_registered">Un registered</string>
     <string name="enter_rto_city">Enter Rto city</string>
-    <string name="manufacture_year">Manufacture Year :</string>
-    <string name="kms_running">Kms Running:</string>
-    <string name="hrs_running">Hours Running:</string>
+    <string name="manufacture_year">Manufacture Year</string>
+    <string name="kms_running">Kms Running</string>
+    <string name="hrs_running">Hours Running</string>
     <string name="hp_capacitys">Hp or Capacity</string>
     <string name="more_options">More Options</string>
-    <string name="invoice_available">Invoice Available :</string>
-    <string name="bus_types">Bus Type :</string>
-    <string name="fuel_type">Fuel Type :</string>
+    <string name="invoice_available">Invoice Available</string>
+    <string name="bus_types">Bus Type</string>
+    <string name="fuel_type">Fuel Type</string>
     <string name="use_application">Use/Application</string>
     <string name="implementss">Implements</string>
     <string name="service_type">Service Type</string>
@@ -470,45 +470,45 @@
     <string name="service_details">Service Details</string>
     <string name="city">City</string>
 
-    <string name="total_reached">Total Reached :</string>
+    <string name="total_reached">Total Reached</string>
     <string name="type_of_user">Type of user(going)</string>
-    <string name="student_count">Student count :</string>
-    <string name="self_employee">Self employee :</string>
-    <string name="employee">Employee :</string>
-    <string name="auctioned_vehicles">Auctioned Vehicles :</string>
-    <string name="approved">Approved :</string>
-    <string name="approved_on">Approved On :</string>
-    <string name="above_reserved">Above Reserved  :</string>
-    <string name="highest">Highest  :</string>
-    <string name="no_bid">No Bid :</string>
-    <string name="no_of_bidders">No Of Bidders:</string>
-    <string name="success_bidder">Successful Bidders :</string>
-    <string name="total_bids">Total Bids:</string>
-    <string name="add_price">Add Price:</string>
+    <string name="student_count">Student count</string>
+    <string name="self_employee">Self employee</string>
+    <string name="employee">Employee</string>
+    <string name="auctioned_vehicles">Auctioned Vehicles</string>
+    <string name="approved">Approved</string>
+    <string name="approved_on">Approved On</string>
+    <string name="above_reserved">Above Reserved</string>
+    <string name="highest">Highest</string>
+    <string name="no_bid">No Bid</string>
+    <string name="no_of_bidders">No Of Bidders</string>
+    <string name="success_bidder">Successful Bidders</string>
+    <string name="total_bids">Total Bids</string>
+    <string name="add_price">Add Price</string>
     <string name="reserve_price">Reserve Price</string>
-    <string name="names">Name :</string>
-    <string name="limit_for_auction">Limit for auction:</string>
-    <string name="increase_limit">Increase limit:</string>
-    <string name="profession">Profession:</string>
+    <string name="names">Name</string>
+    <string name="limit_for_auction">Limit for auction</string>
+    <string name="increase_limit">Increase limit</string>
+    <string name="profession">Profession</string>
     <string name="reminder_for_limit">Reminder for limit</string>
     <string name="add_to_blacklist">Add to blacklist</string>
     <string name="remove_to_blacklist">Remove from blacklist</string>
 
-    <string name="store_category">Store Category :</string>
-    <string name="store_type">Store Type :</string>
-    <string name="timing">Timing :</string>
-    <string name="working_day">Working Day :</string>
+    <string name="store_category">Store Category</string>
+    <string name="store_type">Store Type</string>
+    <string name="timing">Timing</string>
+    <string name="working_day">Working Day</string>
     <string name="service_actions">Service Actions</string>
-    <string name="date_of_search">Date Of Search :</string>
-    <string name="search_leads">Search Leads :</string>
-    <string name="no_of_members">No of Members:</string>
-    <string name="no_of_products">No of Products:</string>
-    <string name="no_of_services">No of Services:</string>
-    <string name="end_date">End Date :</string>
-    <string name="end_time">End Time :</string>
-    <string name="type_of_auction">Type Of Auction :</string>
-    <string name="going_count">Going Count :</string>
-    <string name="ignore_count">Ignore Count :</string>
+    <string name="date_of_search">Date Of Search</string>
+    <string name="search_leads">Search Leads</string>
+    <string name="no_of_members">No of Members</string>
+    <string name="no_of_products">No of Products</string>
+    <string name="no_of_services">No of Services</string>
+    <string name="end_date">End Date</string>
+    <string name="end_time">End Time</string>
+    <string name="type_of_auction">Type Of Auction</string>
+    <string name="going_count">Going Count</string>
+    <string name="ignore_count">Ignore Count</string>
 
     <string name="groups_where_your_vehicles_belongs">Groups Where your vehicles belongs</string>
     <string name="store_where_your_vehicles_belongs">Stores Where your vehicles belongs</string>
@@ -549,7 +549,7 @@
     <string name="add_member">Add  Member</string>
     <string name="get_quot">Get Quote</string>
 
-    <string name="bid_price">Bid price:</string>
+    <string name="bid_price">Bid price</string>
     <string name="no_of_vehicle_bids">No.of vehicles bid:</string>
     <string name="approve">Approve</string>
     <string name="reject">Reject</string>
@@ -600,7 +600,7 @@
     <string name="tourist_passing">Tourist Passing</string>
     <string name="privates">Private</string>
     <string name="location_city">Location City</string>
-    <string name="hours_running">Hours Running:</string>
+    <string name="hours_running">Hours Running</string>
 
     <string name="auction_dialog">Do you want to Create Open Auction or Closed Auction?</string>
     <string name="open">Open</string>
@@ -619,19 +619,19 @@
     <string name="overall_ratings">Your Overall Rating Of This Store</string>
     <string name="recommend">Would You Like To Recommend This Store</string>
     <string name="select_filter_categories">Select Categories To Filter Results</string>
-    <string name="enquiry_date">Enquiry Date :</string>
-    <string name="enquiry_status">Enquiry Status:</string>
-    <string name="follow_up">FollowUp:</string>
-    <string name="last_enquiry">Last Enquiry:</string>
+    <string name="enquiry_date">Enquiry Date</string>
+    <string name="enquiry_status">Enquiry Status</string>
+    <string name="follow_up">FollowUp</string>
+    <string name="last_enquiry">Last Enquiry</string>
     <string name="vehicle_title">Vehicle title</string>
     <string name="number">Number</string>
-    <string name="member_count">Member Count :</string>
-    <string name="vehicle_count">Vehicle Count :</string>
-    <string name="product_count">Product Count :</string>
-    <string name="service_count">Service Count :</string>
+    <string name="member_count">Member Count</string>
+    <string name="vehicle_count">Vehicle Count</string>
+    <string name="product_count">Product Count</string>
+    <string name="service_count">Service Count</string>
     <string name="options">Options</string>
     <string name="admin">Admin</string>
-    <string name="event_by">Event By:-</string>
+    <string name="event_by">Event By</string>
 
     <string name="store_services">Store Services</string>
     <string name="uploaded_on">Uploaded On</string>
@@ -691,7 +691,7 @@
     <string name="hrs">Hrs</string>
     <string name="user">User</string>
     <string name="add_caption">Add Caption</string>
-    <string name="send_to">Send To :- </string>
+    <string name="send_to">"Send To "</string>
     <string name="kms_hrs_details">KMS/HRS Details</string>
     <string name="make_year">Make Year</string>
     <string name="month_year">      Month               Year</string>
@@ -724,8 +724,8 @@
 
     <string name="add_interest">Add Interest</string>
     <string name="confirm_interest">Do you want to post your status with interest???</string>
-    <string name="title_activity_my_vehicle_quotation_list">MyVehicleQuotationListActivity</string>
-    <string name="title_activity_compare_vehicle_list">CompareVehicleListActivity</string>
+    <string name="title_activity_my_vehicle_quotation_list" translatable="false">MyVehicleQuotationListActivity</string>
+    <string name="title_activity_compare_vehicle_list" translatable="false">CompareVehicleListActivity</string>
 
     <string name="info">INFO</string>
     <string name="actions">ACTIONS</string>
@@ -733,33 +733,33 @@
     <string name="my_video">My Video</string>
     <string name="images">Images</string>
     <string name="blog">Blog</string>
-    <string name="title_activity_review">ReviewActivity</string>
+    <string name="title_activity_review" translatable="false">ReviewActivity</string>
 
     <string name="transfer_stock">Transfer Stock</string>
     <string name="send_quot">Send Quot</string>
-    <string name="title_activity_store_info">StoreInfoActivity</string>
-    <string name="title_activity_store_product">StoreProductActivity</string>
-    <string name="title_activity_store_service">StoreServiceActivity</string>
-    <string name="title_activity_store_vehicle">StoreVehicleActivity</string>
-    <string name="title_activity_store_new_vehicle_activiy">StoreNewVehicleActiviy</string>
-    <string name="title_activity_create_store">CreateStoreActivity</string>
-    <string name="title_activity_add_admins_for_store">AddAdminsForStoreActivity</string>
-    <string name="title_activity_search_new_vehicle">SearchNewVehicleActivity</string>
-    <string name="title_activity_searched_new_vehicle_result">SearchedNewVehicleActivity</string>
-    <string name="title_activity_store_videos">StoreVideosActivity</string>
-    <string name="title_activity_store_images_tab">StoreImagesTabActivity</string>
-    <string name="title_activity_upload_to_group_store">UploadToGroupStoreActivity</string>
-    <string name="getNewVehicle">Get New Vehicles Data</string>
+    <string name="title_activity_store_info" translatable="false">StoreInfoActivity</string>
+    <string name="title_activity_store_product" translatable="false">StoreProductActivity</string>
+    <string name="title_activity_store_service" translatable="false">StoreServiceActivity</string>
+    <string name="title_activity_store_vehicle" translatable="false">StoreVehicleActivity</string>
+    <string name="title_activity_store_new_vehicle_activiy" translatable="false">StoreNewVehicleActiviy</string>
+    <string name="title_activity_create_store" translatable="false">CreateStoreActivity</string>
+    <string name="title_activity_add_admins_for_store" translatable="false">AddAdminsForStoreActivity</string>
+    <string name="title_activity_search_new_vehicle" translatable="false">SearchNewVehicleActivity</string>
+    <string name="title_activity_searched_new_vehicle_result" translatable="false">SearchedNewVehicleActivity</string>
+    <string name="title_activity_store_videos" translatable="false">StoreVideosActivity</string>
+    <string name="title_activity_store_images_tab" translatable="false">StoreImagesTabActivity</string>
+    <string name="title_activity_upload_to_group_store" translatable="false">UploadToGroupStoreActivity</string>
+    <string name="getNewVehicle" translatable="false">Get New Vehicles Data</string>
 
     <!--New Vehicle details-->
-    <string name="title_activity_add_new_vehicle">AddNewVehicleActivity</string>
-    <string name="title_activity_new_vehicle_detail">NewVehicleDetail</string>
+    <string name="title_activity_add_new_vehicle" translatable="false">AddNewVehicleActivity</string>
+    <string name="title_activity_new_vehicle_detail" translatable="false">NewVehicleDetail</string>
     <string name="selectStore">Select Stores</string>
 
     <string name="PointLinkage">3PointLinkage</string>
     <string name="ABS">ABS</string>
-    <string name="title_activity_new_vehicle_list">NewVehicleListActivity</string>
-    <string name="newVehicleList">New Vehicle List</string>
+    <string name="title_activity_new_vehicle_list" translatable="false">NewVehicleListActivity</string>
+    <string name="newVehicleList" translatable="false">New Vehicle List</string>
     <string name="AirCleaner">Air Cleaner</string>
     <string name="AirCondition">Air Condition</string>
     <string name="AlternateFuelType">Alternate Fuel Type</string>
@@ -847,7 +847,7 @@
     <string name="Steering">Steering</string>
     <string name="SteeringMountedControl">Steering Mounted Control</string>
     <string name="SteeringType">Steering Type</string>
-    <string name="StrokeInMM">StrokeIn(MM)</string>
+    <string name="StrokeInMM">StrokeIn(mm)</string>
     <string name="SunRoofMoonRoof">SunRoof/MoonRoof</string>
     <string name="TMPS">TMPS</string>
     <string name="Torque">Torque</string>
@@ -861,29 +861,152 @@
     <string name="TyreSize">Tyre Size</string>
     <string name="TyreSizeFront">Tyre Size Front</string>
     <string name="TyreSizeRear">Tyre Size Rear</string>
-    <string name="WarrantyKilometer">Warranty(Kilometer)</string>
-    <string name="WarrantyYear">Warranty Year</string>
+    <string name="WarrantyKilometer">Warranty(km)</string>
+    <string name="WarrantyYear">Warranty(yr)</string>
     <string name="WebSite">WebSite</string>
     <string name="WeightKg">Weight(Kg)</string>
     <string name="WheelBaseMM">WheelBase(MM)</string>
     <string name="EngineDetails">Engine Details</string>
     <string name="Description">Description</string>
+    <string name="AdditionInformation">Additional Information</string>
+    <string name="CruiseControl">Cruise Control</string>
+    <string name="kerbweight">Kerb Weight</string>
+    <string name="seatupholestery">Seat Upholestery</string>
+    <string name="typeofgearreduction">Type of Gear Reduction</string>
+    <string name="axelconfiguration">AxeConfiguration</string>
 
     <!--Search new vehicle-->
-    <string name="compulsory_category">Category: <font color='#FF0000'>\u002A</font></string>
+    <string name="compulsory_category">Category<font color="#FF0000">\\u002A</font></string>
     <string name="compulsory_SubCategory">Sub Category: <font color='#FF0000'>\u002A</font></string>
-    <string name="compulsory_brand">Brand: <font color='#FF0000'>\u002A</font></string>
-    <string name="compulsory_model">Model: <font color='#FF0000'>\u002A</font></string>
-    <string name="title_activity_single_video">SingleVideoActivity</string>
-    <string name="title_activity_android_grid_view_display_images">AndroidGridViewDisplayImages</string>
+    <string name="compulsory_brand">Brand<font color="#FF0000">\\u002A</font></string>
+    <string name="compulsory_model">Model<font color="#FF0000">\\u002A</font></string>
+    <string name="title_activity_single_video" translatable="false">SingleVideoActivity</string>
+    <string name="title_activity_android_grid_view_display_images" translatable="false">AndroidGridViewDisplayImages</string>
 
     <string name="title_activity_edit_company_name">EditCompanyName</string>
     <string name="title_activity_edit_designation">EditDesignation</string>
     <string name="title_activity_edit_skills">EditSkills</string>
-    <string name="title_activity_image_video_preview">ImageVideoPreviewActivity</string>
-    <string name="title_activity_recycler_image_view">RecyclerImageView</string>
+    <string name="title_activity_image_video_preview" translatable="false">ImageVideoPreviewActivity</string>
+    <string name="title_activity_recycler_image_view" translatable="false">RecyclerImageView</string>
 
     <string name="update_available">A new version of the app is available. You need to update the current version.</string>
-    <string name="title_activity_add_interest_tags">AddInterestTagsActivity</string>
+    <string name="title_activity_add_interest_tags" translatable="false">AddInterestTagsActivity</string>
+
+    <!-- Array Tags -->
+    <string name="hypothetications" translatable="false">Select Hypothetication</string>
+    <string name="Yes" translatable="false">Yes</string>
+    <string name="No" translatable="false">No</string>
+    <string name="usertype" translatable="false">Select User Type</string>
+    <string name="CivilServant" translatable="false">Civil Servant</string>
+    <string name="Employee" translatable="false">Employee</string>
+    <string name="Entrepreneur" translatable="false">Entrepreneur</string>
+    <string name="Executive" translatable="false">Executive</string>
+    <string name="Freelancer" translatable="false">Freelancer</string>
+    <string name="Recruiter" translatable="false">Recruiter</string>
+    <string name="Retired" translatable="false">Retired</string>
+    <string name="SeekingEmployment" translatable="false">Seeking Employment</string>
+    <string name="Student" translatable="false">Student</string>
+    <string name="SelectRCAvailable" translatable="false">-Select RC Available-</string>
+    <string name="SelectInsuranceValid" translatable="false">-Select Insurance Valid-</string>
+    <string name="SelectTaxValid" translatable="false">-Select Tax Valid-</string>
+    <string name="SelectPermitValidity" translatable="false">-Select Permit Validity-</string>
+    <string name="SelectFitnessValid" translatable="false">-Select Fitness Valid-</string>
+    <string name="SelectOwners" translatable="false">-Select Owners-</string>
+    <string name="one" translatable="false">1</string>
+    <string name="two" translatable="false">2</string>
+    <string name="three" translatable="false">3</string>
+    <string name="morethanthree" translatable="false">More than 3</string>
+    <string name="SelectDriveType" translatable="false">-Select DriveType-</string>
+    <string name="twoWD" translatable="false">2WD</string>
+    <string name="fourWD" translatable="false">4WD</string>
+    <string name="SelectTransmission" translatable="false">-Select Transmission-</string>
+    <string name="Automatic" translatable="false">Automatic</string>
+    <string name="Manual" translatable="false">Manual</string>
+    <string name="SelectBusType" translatable="false">-Select BusType-</string>
+    <string name="SchoolBus" translatable="false">School Bus</string>
+    <string name="StaffBus" translatable="false">Staff Bus</string>
+    <string name="LuxuryBus" translatable="false">Luxury Bus</string>
+    <string name="SleeperCoach" translatable="false">Sleeper Coach</string>
+    <string name="SemiSleeper" translatable="false">Semi Sleeper</string>
+    <string name="Other" translatable="false">Other</string>
+    <string name="SelectAirCondition" translatable="false">-Select Air Condition-</string>
+    <string name="SelectInvoiceAvailable" translatable="false">-Select Invoice Available-</string>
+    <string name="SelectEmissionVersion" translatable="false">-Select Emission Version-</string>
+    <string name="BharatStageI" translatable="false">Bharat Stage I</string>
+    <string name="BharatStageII" translatable="false">Bharat Stage II</string>
+    <string name="BharatStageIII" translatable="false">Bharat Stage III</string>
+    <string name="BharatStageIV" translatable="false">Bharat Stage IV</string>
+    <string name="BharatStageV" translatable="false">Bharat Stage V</string>
+    <string name="BharatStageVI" translatable="false">Bharat Stage VI</string>
+    <string name="levelone" translatable="false">Level 1.1</string>
+    <string name="leveltwo" translatable="false">Level 1.2</string>
+    <string name="levelthree" translatable="false">Level 1.3</string>
+    <string name="NameCity" translatable="false">Name/City</string>
+    <string name="SecondLevelOne" translatable="false">Second Level 01</string>
+    <string name="SecondLevelTwo" translatable="false">Second Level 02</string>
+    <string name="SecondLevelThree" translatable="false">Second Level 03</string>
+    <string name="ChildLevelOne" translatable="false">Child Level 01</string>
+    <string name="ChildLevelTwo" translatable="false">Child Level 02</string>
+    <string name="RTOCity" translatable="false">RTOCity</string>
+    <string name="registrationyear" translatable="false">RegistrationYear</string>
+    <string name="ManufactureYear" translatable="false">ManufactureYear</string>
+    <string name="kmsRunning" translatable="false">KmsRunning</string>
+    <string name="NoOfOwners" translatable="false">NoOfOwners</string>
+    <string name="SelectAreaOfOperations" translatable="false">Select Area Of Operations</string>
+    <string name="ByKms" translatable="false">By Kms</string>
+    <string name="ByDistrict" translatable="false">By District</string>
+    <string name="ByState" translatable="false">By State</string>
+    <string name="Selectkms" translatable="false">Select kms</string>
+    <string name="fiveKms" translatable="false">5Kms</string>
+    <string name="tenKms" translatable="false">10Kms</string>
+    <string name="fiftenKms" translatable="false">15Kms</string>
+    <string name="twentyKms" translatable="false">20Kms</string>
+    <string name="twentyfiveKms" translatable="false">25Kms</string>
+    <string name="SelectRole" translatable="false">-Select Role-</string>
+    <string name="Seller" translatable="false">Seller</string>
+    <string name="Buyer" translatable="false">Buyer</string>
+    <string name="Dealer" translatable="false">Dealer</string>
+    <string name="Financier" translatable="false">Financier</string>
+    <string name="AuctionOrganiser" translatable="false">Auction Organiser</string>
+    <string name="User" translatable="false">User</string>
+    <string name="SelectFinance" translatable="false">-Select Finance-</string>
+    <string name="SelectStatus" translatable="false">-Select Status-</string>
+    <string name="Hot" translatable="false">Hot</string>
+    <string name="Cold" translatable="false">Cold</string>
+    <string name="Warm" translatable="false">Warm</string>
+    <string name="Dropped" translatable="false">Dropped</string>
+    <string name="Booked" translatable="false">Booked</string>
+    <string name="Delivered" translatable="false">Delivered</string>
+    <string name="Sold" translatable="false">Sold</string>
+    <string name="Losttocompetition" translatable="false">Lost to competition</string>
+    <string name="Postponed" translatable="false">Postponed</string>
+    <string name="FI" translatable="false">FI</string>
+    <string name="Filelogin" translatable="false">File login</string>
+    <string name="Approved" translatable="false">Approved</string>
+    <string name="Disbursed" translatable="false">Disbursed</string>
+    <string name="Filerejected" translatable="false">File rejected</string>
+    <string name="Pending" translatable="false">Pending</string>
+    <string name="List" translatable="false">-List-</string>
+    <string name="UnderWorking" translatable="false">Under Working</string>
+    <string name="SelectInventory" translatable="false">-Select Inventory-</string>
+    <string name="NewVehicle" translatable="false">New Vehicle</string>
+    <string name="UsedVehicle" translatable="false">Used Vehicle</string>
+    <string name="Products" translatable="false">Products</string>
+    <string name="Services" translatable="false">Services</string>
+    <string name="SelectVehicleType" translatable="false">-Select Vehicle Type-</string>
+    <string name="Bus" translatable="false">Bus</string>
+    <string name="Car" translatable="false">Car</string>
+    <string name="ConstructionEquipment" translatable="false">Construction Equipment</string>
+    <string name="CommercialVehicle" translatable="false">Commercial Vehicle</string>
+    <string name="Tractor" translatable="false">Tractor</string>
+    <string name="TwoWheeler" translatable="false">Two Wheeler</string>
+    <string name="ThreeWheeler" translatable="false">Three Wheeler</string>
+    <string name="SelectStockType" translatable="false">-Select Stock Type-</string>
+    <string name="FinanceRepo" translatable="false">Finance/Repo</string>
+    <string name="Insurance" translatable="false">Insurance</string>
+    <string name="Scrap" translatable="false">Scrap</string>
+    <string name="Inventory" translatable="false">Inventory</string>
+    <string name="MarketPlace" translatable="false">Market Place</string>
+    <string name="carrequirements" translatable="false">car requirements</string>
 
 </resources>

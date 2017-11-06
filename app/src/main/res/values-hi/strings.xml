@@ -1,0 +1,809 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Autokatta</string>
+    <string name="search_hint">"सर्च"</string>
+    <string name="no_data">"कोई डेटा नहीं मिला"</string>
+    <string name="action_settings">"सेटिंग्स"</string>
+    <!-- <string name="base_url">http://autokatta.com/mobile/</string>-->
+    <string name="base_url">"http://autokatta.acquiscent.com/api/AutoKattaWebService/"</string>
+    <string name="permission">"ऑटोकट्टा आपकी अनुमतियों को आपके डेटा तक पहुंचने की अनुमति देता है"</string>
+    <string name="specification_note">नोट:मानक निर्माता के अनुसार विनिर्देशन</string>
+    <string name="not_mentioned">"उल्लेखित नहीं है"</string>
+    <string name="Rs">₹:</string>
+    <string name="bid_increment">000000₹</string>
+    <string name="bid_received">"बोली अभी तक प्राप्त नहीं हुई"</string>
+    <string name="bid_status">"आप इस वाहन के लिए सबसे ज्यादा बोली लगाने वाले नहीं हैं"</string>
+    <string name="text_search">"अपनी खोज दर्ज करें"</string>
+    <string name="navigation_drawer_open">"ओपन नेविगेशन दराज"</string>
+    <string name="navigation_drawer_close">"बंद नेविगेशन द्रवर"</string>
+    <!--simple Text -->
+    <string name="to"><b>TO</b></string>
+    <string name="post">"Post"</string>
+    <string name="select_picture">"चित्र का चयन"</string>
+    <!-- Enquires -->
+    <string name="test_drive">"टेस्ट ड्राइव"</string>
+    <string name="manual_enquiry">"मैनुअल जांच"</string>
+    <string name="new_dealer">"नया डीलर"</string>
+    <string name="manual_add">"जोड़ना"</string>
+    <string name="new_vehicle_done">"संपन्न"</string>
+    <string name="try_again">"दोबारा प्रयास करें"</string>
+    <!-- Navigation Drawer Items...-->
+    <string name="home">"निवास"</string>
+    <string name="my_profile">"मेरी प्रोफ़ाइल"</string>
+    <string name="autokatta_contacts">"मेरा ऑटोकट्टा संपर्क"</string>
+    <string name="groups">"समूह"</string>
+    <string name="store">"स्टोर"</string>
+    <string name="my_store">"मेरी दुकान"</string>
+    <string name="browse_store">"स्टोर ब्राउज़ करें"</string>
+    <string name="search_store">"खोज स्टोर"</string>
+    <string name="vehicle">"वाहन संख्या"</string>
+    <string name="upload_vehicle">"वाहन अपलोड करें"</string>
+    <string name="search_vehicle">"वाहन खोजें"</string>
+    <string name="my_search">"मेरा खोज"</string>
+    <string name="my_uploaded_vehicle">"मेरे अपलोड किए गए वाहन"</string>
+    <string name="my_inventory_catalog">"मेरी इन्वेंटरी / कैटलॉग"</string>
+    <string name="auction">"नीलामी"</string>
+    <string name="create_event">"कार्यक्रम बनाएँ"</string>
+    <string name="my_active_event">"मेरा सक्रिय ईवेंट"</string>
+    <string name="my_upcoming_event">"मेरा आगामी घटना"</string>
+    <string name="my_saved_event">"मेरी सहेजी गई घटना"</string>
+    <string name="ended_event">"मेरा समाप्त हुआ ईवेंट"</string>
+    <string name="black_listed_members">"मेरे ब्लैकलिस्टेड सदस्य"</string>
+    <string name="other">"अन्य"</string>
+    <string name="broadcast_groups">"प्रसारण समूह"</string>
+    <string name="broadcast_message">"मेरे प्रसारण संदेश"</string>
+    <string name="business_chat">"व्यापार चैट"</string>
+    <string name="locality">"इलाका"</string>
+    <string name="change_language">"भाषा बदलें"</string>
+    <string name="sign_out">"साइन आउट"</string>
+    <string name="title_activity_user_profile">"उपयोगकर्ता प्रोफ़ाइल"</string>
+    <string name="title_activity_my_autokatta_contacts">"MyAutokattaContacts"</string>
+    <!--Alert Dialog -->
+    <string name="alert_title">"पुष्टीकरण"</string>
+    <string name="alert_msg">"क्या आप एप्लिकेशन बंद करना चाहते हैं?"</string>
+    <string name="sign_out_message">"क्या आप साइन आउट करना चाहते हैं?"</string>
+    <!-- About US-->
+    <string name="about">"के बारे में"</string>
+    <string name="worked_at">"काम करा था"</string>
+    <string name="address">"पता"</string>
+    <string name="address_manual">"पता<font color='#FF0000'>\u002A</font>"</string>
+    <string name="exchange">"अदला-बदली"</string>
+    <string name="finance">"वित्त"</string>
+    <string name="company_name">"कंपनी का नाम"</string>
+    <string name="designation">"पद"</string>
+    <string name="skills">"कौशल"</string>
+    <string name="contact_no">"संपर्क"</string>
+    <string name="contact_enquiry">"संपर्क करें<font color='#FF0000'>\u002A</font>"</string>
+    <string name="email">"ईमेल"</string>
+    <string name="website">"वेबसाइट"</string>
+    <string name="interest">"ब्याज"</string>
+    <string name="edit">"संपादित करें"</string>
+    <string name="group_alert">"<font color='#FF0000'>1 कीमत का इग्निशन पैकेज 750 / - प्रति माह है, आपको असीमित अपलोड, असीमित समूह, असीमित स्टोर भुगतान विकल्प मासिक, तिमाही, छमाही और वार्षिक होंगे।</font>"</string>
+    <!--User Profile-->
+    <string name="create_store">"स्टोर बनाएं"</string>
+    <string name="title_activity_upload_vehicle">"UploadVehicle"</string>
+    <!-- Shared Preferences -->
+    <string name="my_preference">Autokatta</string>
+    <string name="firstRun">FirstRun</string>
+    <string name="category">"वर्ग"</string>
+    <string name="alert_dialog_title">"कृपया चुनें"</string>
+    <string name="positive_button_text">"चुनते हैं"</string>
+    <string name="negative_button_text">"रद्द करना"</string>
+    <!-- Other Stuff -->
+    <string name="search_contact">"संपर्क खोज"</string>
+    <string name="title_activity_groups_tab">"GroupsTab"</string>
+    <string name="title_activity_my_store_list">"MyStoreListActivity"</string>
+    <string name="title_activity_login">"लॉगिन गतिविधि"</string>
+    <string name="search_button">"सर्च"</string>
+    <string name="demo_min_label">"मिनट"</string>
+    <string name="demo_max_label">"अधिकतम"</string>
+    <!-- Manual enquiry-->
+    <string name="enquiry_form">"(3) Enquiry form"</string>
+    <string name="first_name">"पहला नाम"</string>
+    <string name="name">"नाम<font color='#FF0000'>\u002A</font>"</string>
+    <string name="last_name">"अंतिम नाम"</string>
+    <string name="surname">"उपनाम"</string>
+    <string name="go_profile">"प्रोफ़ाइल देखें"</string>
+    <string name="select">"चुनें<font color='#FF0000'>\u002A</font></string>
+    <string name="selectStatus">"स्थिति का चयन करें"</string>
+    <string name="completeAddress_manual">"पूरा पता<font color='#FF0000'>\u002A</font>"</string>
+    <string name="completeAddress">"पूरा पता"</string>
+    <string name="discussion">"चर्चा"</string>
+    <string name="discussion1">"चर्चा<font color='#FF0000'>\u002A</font>"</string>
+    <string name="followdate">"फोलो अप: तिथि"</string>
+    <string name="followdate1">"अनुवर्ती तिथि<font color='#FF0000'>\u002A</font>"</string>
+    <string name="date">"तारीख"</string>
+    <string name="time">"समय  "</string>
+    <string name="select_option">विकल्प चुनें</string>
+    <string name="select_language">"भाषा चुनें / अपनी भाषा चुनें"</string>
+    <string name="marathi">"मराठी"</string>
+    <string name="english">English</string>
+    <!--Login Activity -->
+    <string name="username">"मोबाइल नंबर"</string>
+    <string name="password">"पासवर्ड"</string>
+    <string name="confirm_password">"पासवर्ड की पुष्टि करें"</string>
+    <string name="login">"लॉग इन करें"</string>
+    <string name="sign_up">"साइन अप"</string>
+    <string name="forgot_password">"पासवर्ड भूल गए"</string>
+    <string name="title_activity_forget__password">"पासवर्ड भूल गए हैं"</string>
+    <string name="title_activity_continue_registration">"हमारे बारे में"</string>
+    <!--Error Results-->
+    <string name="no_internet">"कोई इंटरनेट कनेक्शन नहीं"</string>
+    <string name="_404">"हम नेटवर्क विलंब के कारण अनुरोध को संसाधित करने में असमर्थ हैं&#8230;"</string>
+    <string name="_404_">"नेटवर्क में देरी&#8230;"</string>
+    <string name="no_response">"सर्वर से कोई प्रतिक्रिया नहीं&#8230;पुनः प्रयास करें !!!"</string>
+    <string name="no_patient">"कोई मरीज जोड़ा नहीं है&#8230;कृपया रोगी जोड़ें !!!"</string>
+    <string name="err_username">"प्रयोक्ता नाम आवश्यक"</string>
+    <string name="err_password">"पासवर्ड आवश्यक"</string>
+    <string name="err_confirm_password">"आवश्यक पासवर्ड की पुष्टि करें"</string>
+    <string name="err_doctor">"नाम (आवश्यक)"</string>
+    <string name="err_address">"पता आवश्यक है"</string>
+    <string name="err_area">"क्षेत्र आवश्यक है"</string>
+    <string name="err_mobile">"आवश्यक मोबाइल"</string>
+    <string name="title_activity_registration">"RegistrationActivity"</string>
+    <string name="title_activity_browse_store">"BrowseStoreActivity"</string>
+    <string name="title_activity_vehicle_upload">"VehicleUpload"</string>
+    <string name="title_activity_search_store">"SearchStore"</string>
+    <string name="title_activity_my_search">"MySearchActivity"</string>
+    <string name="title_activity_my_uploaded_vehicles">"MyUploadedVehiclesActivity"</string>
+    <string name="title_activity_my_active_events_tab">"MyActiveEventsTabActivity"</string>
+    <string name="title_activity_my_saved_auction_event">"MySavedAuctionEventActivity"</string>
+    <string name="title_activity_black_listed_member">"BlackListedMemberActivity"</string>
+    <string name="title_activity_my_upcoming_events_tab">"MyUpcomingEventsTabActivity"</string>
+    <string name="title_activity_create_event">create_event</string>
+    <string name="title_activity_my_broadcast_groups">"MyBroadcastGroupsActivity"</string>
+    <string name="title_activity_otp">"ओटीपी गतिविधि"</string>
+    <string name="title_activity_new_password">"नया पासवर्ड गतिविधि"</string>
+    <!--Vehicle details-->
+    <string name="vehicle_no">"वाहन संख्या"</string>
+    <string name="vehicle_type">"वाहन का प्रकार"</string>
+    <string name="sub_category">"उपश्रेणी:"</string>
+    <string name="model_no">"मॉडल नंबर"</string>
+    <string name="brand">"ब्रांड"</string>
+    <string name="version">"संस्करण"</string>
+    <string name="purchase_date">"खरीद की तारीख"</string>
+    <string name="tax_validity">"कर वैधता"</string>
+    <string name="fitness_validity">"स्वास्थ्य वैधता"</string>
+    <string name="permit_validity">"अनुमति वैधता"</string>
+    <string name="permit">"परमिट"</string>
+    <string name="insurance_date">"बीमा तिथि"</string>
+    <string name="puc">"पीयूसी"</string>
+    <string name="last_service_date">"अंतिम सेवा तिथि"</string>
+    <string name="next_service_date">"अगली सेवा तिथि"</string>
+    <!--Custom Card Group Vehicle -->
+    <string name="no_register">"रेजिस्ट्रेशन नंबर"</string>
+    <string name="price">"मूल्य"</string>
+    <string name="model">"मॉडल"</string>
+    <string name="brand_no">"ब्रांड"</string>
+    <string name="stock_type">स्टॉक टाइप</string>
+    <string name="updated_by">"द्वारा अपलोड किया गया"</string>
+    <string name="updated_date">अपलोड की गई तिथि</string>
+    <string name="location">"स्थान"</string>
+    <string name="rto_city">"आरटीओ सिटी"</string>
+    <string name="year_of_mfg">"एमएफजी का वर्ष"</string>
+    <string name="kms_hrs">"केएमएस/एचआरएस"</string>
+    <string name="title_activity_my_ended_event">"MyEndedEventActivity"</string>
+    <string name="title_activity_group_tabs">"GroupTabs"</string>
+    <string name="title_activity_vehicle_details">Vehicle Details</string>
+    <string name="title_activity_other_profile">"OtherProfile"</string>
+    <!--Status -->
+    <string name="likes">Like</string>
+    <string name="share">Share</string>
+    <string name="cap_share">SHARE</string>
+    <string name="follower">Followers</string>
+    <string name="title_activity_auction_container">"AuctionContainer"</string>
+    <string name="title_activity_preview_live_events">"PreviewLiveEvents"</string>
+    <string name="title_activity_preview_going_events">"PreviewGoingEvents"</string>
+    <string name="title_activity_preview_upcoming_events">"PreviewUpcomingEvents"</string>
+    <string name="title_activity_my_auction_vehicle_details">"PreviewUpcomingEvents"</string>
+    <string name="title_activity_admin_vehicle_details">"PreviewUpcomingEvents"</string>
+    <!-- AuctionType -->
+    <string name="live_auction">"सजीव कार्यक्रम"</string>
+    <string name="going_auction">"जा रहे घटनाएं"</string>
+    <string name="upcoming_auction">"आगामी कार्यक्रम"</string>
+    <string name="title_activity_broadcast_message">"BroadcastMessageActivity"</string>
+    <string name="title_activity_bussiness_chat">"BussinessChatActivity"</string>
+    <string name="title_activity_search_vehicle">"SearchVehicleActivity"</string>
+    <string name="title_activity_other_store_view">"OtherStoreView"</string>
+    <string name="title_activity_share_within_app">"ShareWithinAppActivity"</string>
+    <string name="title_activity_locality">"LocalityActivity"</string>
+    <string name="title_activity_maps">"नक्शा "</string>
+    <string name="title_activity_active_exchange_mela_preview">"ActiveExchangeMelaPreviewActivity"</string>
+    <string name="title_activity_active_service_mela">"ActiveServiceMelaActivity"</string>
+    <string name="title_activity_active_sale_mela">"ActiveSaleMelaActivity"</string>
+    <string name="title_activity_active_sale_mela_preview">"ActiveSaleMelaPreviewActivity"</string>
+    <string name="title_activity_active_service_mela_preview">"ActiveServiceMelaPreviewActivity"</string>
+    <string name="title_activity_active_loanmela_preview">"ActiveLoanmelaPreviewActivity"</string>
+    <string name="title_activity_my_ended_exchange_preview">"MyEndedExchangePreviewActivity"</string>
+    <string name="title_activity_my_ended_loan_mela">"MyEndedLoanMelaActivity"</string>
+    <string name="title_activity_my_ended_loan_mela_preview">"MyEndedLoanMelaPreviewActivity"</string>
+    <string name="title_activity_my_ended_service_mela">"MyEndedServiceMelaActivity"</string>
+    <string name="title_activity_my_ended_service_mela_preview">"MyEndedServiceMelaPreviewActivity"</string>
+    <string name="title_activity_new_vehicle_catalog">"नई वाहन जोड़ें"</string>
+    <string name="title_activity_all_enquiry_tab">"जांच"</string>
+    <!-- Registration -->
+    <string name="next_registration_continue">"वाहन का विवरण"</string>
+    <string name="registration_company_based">"व्यावसायिक विवरण"</string>
+    <string name="company_based_invitation">"कंपनी आधारित निमंत्रण"</string>
+    <string name="skill_based_invitation">"कौशल आधारित निमंत्रण"</string>
+    <!-- for interest -->
+    <string name="standard_cloud">Standard cloud using FlexboxLayout with dividerDrawable:</string>
+    <string name="horizontalscrollview_example">HorizontalScrollView with useInsetPadding config:</string>
+    <string-array name="demo_array">
+        <item>सिलेक्ट इंटरेस्ट फ्रॉम गीवन टॅग्स ओन्ली</item>
+        <item>लाँच</item>
+        <item>रिव्हिव</item>
+        <item>डेमो</item>
+        <item>न्युज</item>
+        <item>बायिंग</item>
+        <item>सेल्लिंग</item>
+        <item>स्पेयर पार्टस</item>
+        <item>वेहिकल्स</item>
+        <item>ऍक्सेसीरीज</item>
+        <item>निव वेहिकल्स</item>
+        <item>यूज्ड वेहिकल्स</item>
+        <item>ओक्षण</item>
+        <item>ऑटो स्पोर्ट्स</item>
+        <item>इन्फॉर्मशन</item>
+        <item>जॉब्स</item>
+        <item>कार पूल</item>
+        <item>ओदर</item>
+        <item>2 व्हीलर</item>
+        <item>3 व्हीलर</item>
+        <item>कार्स</item>
+        <item>Trucks</item>
+        <item>ट्रान्सपोर्ट अँड कार्गो</item>
+        <item>सोबर्स ऑफ पराडाइज</item>
+        <item>कॉन्स्टक्षण Equipment</item>
+        <item>हेअल्थ अँड वेलनेस</item>
+        <item>ऑटो डेटाइलिंग स्र्तीलिंग</item>
+        <item>इलेक्ट्रिकल अँड इलेक्ट्रॉनिक्स</item>
+        <item>रौते मॅप्स अँड हॉलिडे दिसकॅशिअन्स</item>
+        <item>सुपर कार्स सेकशन</item>
+        <item>होम ऑडिओ/विडिओ</item>
+        <item>प्रॉडक्ट अन्नऊन्समेंट्स</item>
+        <item>ऑटोमोटिव्ह न्युज अँड जनरल दिसकॅशिअन्स</item>
+        <item>एफ ए क्यू</item>
+        <item>इंडियन कार्स सेल्स, रिपोर्ट्स अँड आनालीसीस</item>
+        <item>फोटोग्राफी</item>
+        <item>बॉडीवर्क अँड इंटेरिअर्स</item>
+        <item>ओदर</item>
+        <item>Technical दिसकॅशिअन्स</item>
+        <item>आर ती ओ, Law, लोण अँड इन्शुरन्स</item>
+        <item>हँडलिंग (ससपेनशन, स्टेरिंग, ब्रक्स etc)</item>
+        <item>ट्रॅव्हलॉगुएस</item>
+        <item>4x4s अँड ऑफ-रोड</item>
+        <item>इंजिन्स अँड ट्रान्समिस्सीन्स</item>
+        <item>ट्रॅफिक लाइट</item>
+        <item>इलेक्ट्रिकल अँड इलेक्ट्रॉनिक्स</item>
+        <item>ऑलोय्स अँड टायर्स</item>
+        <item>बाइक्स</item>
+        <item>ऑटोमोटिव्ह लाइटनिंग</item>
+        <item>रेसिंग</item>
+        <item>प्रॉडक्ट रेव्हिव</item>
+        <item>प्रॉडक्ट डेमो</item>
+        <item>विडिओ</item>
+    </string-array>
+    <string name="title_activity_location">"LocationActivity"</string>
+    <string name="title_activity_edit_profile">"प्रोफ़ाइल संपादित करें"</string>
+    <string name="title_activity_manual_enquiry_vehicle_list">"ManualEnquiryVehicleList"</string>
+    <string name="title_activity_edit_tags">"जोड़ संपादित करें"</string>
+    <string name="base_image_url">"http://autokatta.acquiscent.com/UploadedFiles/"</string>
+    <!--Active Auction Adapter-->
+    <string name="no_of_vehicle">"वाहन की संख्या:"</string>
+    <string name="currently_active">"वर्तमान में सक्रिय"</string>
+    <string name="start">"शुरू करें "</string>
+    <string name="end">"समाप्त: \ t \ t"</string>
+    <string name="dates">"तारीख"</string>
+    <string name="times">"समय  "</string>
+    <string name="auction_category">"नीलामी श्रेणी:"</string>
+    <string name="special_clauses">"2. विशेष क्लॉज"</string>
+    <string name="timer">"घड़ी"</string>
+    <string name="preview">"पहले देख लें"</string>
+    <!--Activated list with hori-->
+    <string name="auction_title">"नीलामी शीर्षक:"</string>
+    <!--active loan adapter-->
+    <string name="loan_title">"ऋण शीर्षक:"</string>
+    <string name="set_location">"स्थान तय करें :"</string>
+    <string name="set_address">"पता सेट करें:"</string>
+    <!-- content active exchange mela -->
+    <string name="active_mela">"सक्रिय मेला"</string>
+    <string name="active_loan_mela">"सक्रिय ऋण मेला"</string>
+    <string name="yes">" हां"</string>
+    <string name="no">" नही"</string>
+    <string name="submit">"Submit"</string>
+    <string name="title">" शीर्षक "</string>
+    <string name="models">"मॉडल"</string>
+    <string name="brand_nos">"ब्रांड"</string>
+    <string name="updated_bys">"द्वारा अपलोड किया गया"</string>
+    <string name="locations">"स्थान"</string>
+    <string name="rto_citys">"आरटीओ सिटी"</string>
+    <string name="year_of_mfgs">"एमएफजी का साल"</string>
+    <string name="kms_hrss">"किलोमीटर / HRS"</string>
+    <string name="years">"वर्ष"</string>
+    <string name="bid_increament">"बोली वृद्धि"</string>
+    <string name="rc_invoice">"आर सी / चालान"</string>
+    <string name="start_price">"प्रारंभ मूल्य"</string>
+    <string name="your_current_bid_price">"आपकी वर्तमान बोली मूल्य"</string>
+    <string name="more_details">"--अधिक जानकारी--"</string>
+    <string name="bid">"बोली"</string>
+    <string name="registration_year">"पंजीकरण वर्ष"</string>
+    <string name="insurance">"बीमा "</string>
+    <string name="owner">"Owner"</string>
+    <string name="rc_available">"आर सी उपलब्ध"</string>
+    <string name="insurance_validity">"बीमा वैधता"</string>
+    <string name="fuel">"ईंधन"</string>
+    <string name="seating_capacity">"बैठने की जगह की उपलब्धता:"</string>
+    <string name="hypothetication">"Hypothetication"</string>
+    <string name="drive_type">"ड्राइव के प्रकार"</string>
+    <string name="transmission">"प्रसार"</string>
+    <string name="body_type">"शरीर का प्रकार"</string>
+    <string name="boat_type">"नाव प्रकार"</string>
+    <string name="rv_type">"आर.वी. प्रकार"</string>
+    <string name="application">"आवेदन"</string>
+    <string name="color">"रंग"</string>
+    <string name="tyre_condition">"टायर कंडीशन"</string>
+    <string name="bus_type">"बस प्रकार"</string>
+    <string name="air_condition">"वातानुकूलन"</string>
+    <string name="registration_no">"पंजीकरण न:"</string>
+    <string name="engine_no">"3. इंजन संख्‍या"</string>
+    <string name="implimentation">"क्रियान्वयन"</string>
+    <string name="chassic_no">"चेसिक नहीं"</string>
+    <string name="hp_capacity">"अश्वशक्ति / क्षमता"</string>
+    <string name="jib">"पाल"</string>
+    <string name="jib_in_ft">"जेबी में फुट"</string>
+    <string name="boon">"बून"</string>
+    <string name="boon_in_ft">"फीट में बून"</string>
+    <string name="repodate">"RepoDate"</string>
+    <string name="yard_rent_per_day">"यार्ड किराया प्रति दिन"</string>
+    <string name="keyword">"कीवर्ड"</string>
+    <string name="message1">"कनेक्ट करें - कंपनी के आधार पर सुझाव"</string>
+    <string name="search_contacts">"संपर्क खोज"</string>
+    <string name="add_profession_details">"व्यवसाय विवरण जोड़ें"</string>
+    <string name="dealing_with">"साथ बर्ताव करना"</string>
+    <string name="about_us">" हमारे बारे में  "</string>
+    <string name="type">"प्रकार"</string>
+    <string name="enter_contact_no">"संपर्क नंबर दर्ज करें "</string>
+    <string name="quotation_list">"उद्धरण सूची"</string>
+    <string name="auction_type">"नीलामी के प्रकार:"</string>
+    <string name="limit_for_bid">"बोली के लिए सीमा"</string>
+    <string name="high_bid_total">"उच्च बोली कुल"</string>
+    <string name="total_remains">"कुल अवशेष"</string>
+    <string name="ended_auction">"समाप्त नीलामी"</string>
+    <string name="participants">"प्रतिभागी"</string>
+    <string name="ended_loan_mela">"समाप्त ऋण मेला"</string>
+    <string name="ended_sale_mela">"समाप्त बिक्री मेला"</string>
+    <string name="ended_service_mela">"समाप्त सेवा मेला"</string>
+    <string name="enter_vehicle_number">"वाहन संख्या"</string>
+    <string name="purchase_dates">"खरीद की तारीख"</string>
+    <string name="purchase_datess">"खरीदारी की तारीख दर्ज करें (वाई वाई / एमएम / डीडी)"</string>
+    <string name="enter_tax_val">"टैक्स वैधता दर्ज करें (वाई वाई / एमएम / डीडी)"</string>
+    <string name="enter_fit_val">"फिटनेस वैधता दर्ज करें (वाई वाई / एमएम / डीडी)"</string>
+    <string name="enter_permit_val">"परमिट वैधता दर्ज करें (वाई वाई / एमएम / डीडी)"</string>
+    <string name="enter_insurance_val">"बीमा तिथि दर्ज करें (वाई वाई / एमएम / डीडी)"</string>
+    <string name="enter_puc_date">"पीयूसी दर्ज करें (वाई वाई / एमएम / डीडी)"</string>
+    <string name="enter_last_service_date">"अंतिम सेवा तारीख दर्ज करें (YY / MM / डीडी)"</string>
+    <string name="enter_next_service_date">"अगली सेवा दिनांक दर्ज करें (वाई वाई / एमएम / डीडी)"</string>
+    <string name="puc_date">"पीयूसी तिथि"</string>
+    <string name="ignore">"अनदेखा करें"</string>
+    <string name="going">"जा रहे है"</string>
+    <string name="closed_type_auction">"बंद प्रकार की नीलामी"</string>
+    <string name="go_to_live">"जीने के लिए जाओ"</string>
+    <string name="active_auction">"सक्रिय नीलामी"</string>
+    <string name="store_name">"स्टोर नाम"</string>
+    <string name="modules">मॉड्यूल</string>
+    <string name="no_of_enquiries">"नहीं। पूछताछ की संख्या:"</string>
+    <string name="send_enquiry">"जांच भेजें"</string>
+    <string name="photos">"छवियाँ"</string>
+    <string name="product_type">"उत्पाद प्रकार"</string>
+    <string name="product_name">"प्रोडक्ट का नाम"</string>
+    <string name="tags">"टैग"</string>
+    <string name="brand_tags">"ब्रांड टैग"</string>
+    <string name="details">"पर्यावरण प्रबंधन की योजना का ब्योरा "</string>
+    <string name="company_names">"कंपनी का नाम (पूर्व। उदाहरण प्राइवेट लिमिटेड)"</string>
+    <string name="designations">"पदनाम (पूर्व सेलेस प्रबंधक)"</string>
+    <string name="skill">"कौशल जोड़ें (Ex.tax ऑडिट)"</string>
+    <string name="deal_with">"(पूर्व। / नई वाहन) के साथ लेनदेन"</string>
+    <string name="finance_required">"वित्त आवश्यक"</string>
+    <string name="permit_private">"परमिट / निजी "</string>
+    <string name="enter_city">"शहर दर्ज करें"</string>
+    <string name="un_registered">"अन पंजीकृत"</string>
+    <string name="enter_rto_city">"दर्ज करें Rto शहर"</string>
+    <string name="manufacture_year">"निर्माण वर्ष:"</string>
+    <string name="kms_running">"किमी रनिंग:"</string>
+    <string name="hrs_running">"चल रहे घंटे:"</string>
+    <string name="hp_capacitys">"एचपी या क्षमता"</string>
+    <string name="more_options">"अतिरिक्त विकल्प"</string>
+    <string name="invoice_available">"चालान उपलब्ध:"</string>
+    <string name="bus_types">"बस का प्रकार:"</string>
+    <string name="fuel_type">"ईंधन प्रकार :"</string>
+    <string name="use_application">"उपयोग / आवेदन"</string>
+    <string name="implementss">"कार्यान्वयन"</string>
+    <string name="service_type">"सेवा का प्रकार"</string>
+    <string name="service_name">"सेवा का नाम"</string>
+    <string name="service_details">"सेवा विवरण"</string>
+    <string name="city">"शहर "</string>
+    <string name="total_reached">"कुल पहुंच:"</string>
+    <string name="type_of_user">"उपयोगकर्ता का प्रकार (जा रहा है)"</string>
+    <string name="student_count">"छात्र संख्या:"</string>
+    <string name="self_employee">"स्वयं कर्मचारी :"</string>
+    <string name="employee">"- कर्मचारी"</string>
+    <string name="auctioned_vehicles">"नीलाम वाहन:"</string>
+    <string name="approved">"मंजूर की"</string>
+    <string name="approved_on">"पर स्वीकृत"</string>
+    <string name="above_reserved">"ऊपर से आरक्षित:"</string>
+    <string name="highest">"उच्चतम"</string>
+    <string name="no_bid">"कोई बोली नहीं :"</string>
+    <string name="no_of_bidders">"बोलीदाताओं की संख्या:"</string>
+    <string name="success_bidder">"सफल बोलीदाता:"</string>
+    <string name="total_bids">"कुल बोली:"</string>
+    <string name="add_price">"मूल्य जोड़ें:"</string>
+    <string name="reserve_price">"आरक्षित क़ीमत"</string>
+    <string name="names">"नाम"</string>
+    <string name="limit_for_auction">नीलामी की सीमा</string>
+    <string name="increase_limit">सीमा बढ़ाएं</string>
+    <string name="profession">"व्यवसाय"</string>
+    <string name="reminder_for_limit">"सीमा के लिए अनुस्मारक"</string>
+    <string name="add_to_blacklist">"काली सूची में जोड़ें"</string>
+    <string name="remove_to_blacklist">"काली सूची से हटाएँ"</string>
+    <string name="store_category">स्टोर श्रेणी</string>
+    <string name="store_type">स्टोर प्रकार</string>
+    <string name="timing">"समय*"</string>
+    <string name="working_day">"कार्य दिवस "</string>
+    <string name="service_actions">"सेवा कार्य"</string>
+    <string name="date_of_search">खोज की तिथि</string>
+    <string name="search_leads">खोज बिक्रीसूत्र</string>
+    <string name="no_of_members">सदस्यों की संख्या</string>
+    <string name="no_of_products">उत्पादों की संख्या</string>
+    <string name="no_of_services">सेवाओं की संख्या</string>
+    <string name="end_date">अंतिम तिथि</string>
+    <string name="end_time">"समापन समय"</string>
+    <string name="type_of_auction">नीलामी के प्रकार</string>
+    <string name="going_count">गिनती जा रही है</string>
+    <string name="ignore_count">ध्यान न दें</string>
+    <string name="groups_where_your_vehicles_belongs">"समूह जहां आपके वाहन संबंधित हैं"</string>
+    <string name="store_where_your_vehicles_belongs">"स्टोर जहां आपके वाहन का संबंध है"</string>
+    <string name="location_details">"स्थान के विवरण"</string>
+    <string name="parking_location">"पार्किंग स्थान"</string>
+    <string name="body_manufacurer">"शारीरिक निर्माता"</string>
+    <string name="seat_manufacurer">"सीट निर्माता"</string>
+    <string name="document">"दस्तावेज़"</string>
+    <string name="ins">"बीमा (yyyy-mm-dd)"</string>
+    <string name="enter_ins_type">"बीमा प्रकार दर्ज करें"</string>
+    <string name="insurance_idv">"बीमा आईडीवी"</string>
+    <string name="tax_paid">"कर भुगतान (yyyy-mm-dd)"</string>
+    <string name="permits">"परमिट (yyyy-mm-dd)"</string>
+    <string name="fitness">"स्वास्थ्य (yyyy-mm-dd)"</string>
+    <string name="implementation">"क्रियान्वयन"</string>
+    <string name="enter_implement">"कार्यान्वयन दर्ज करें"</string>
+    <string name="sub_profession">"उप व्यवसाय"</string>
+    <string name="price_details">"मूल्य विवरण"</string>
+    <string name="suggested_price">"सुझाव कीमत"</string>
+    <string name="min_price">"न्यूनतम मूल्य"</string>
+    <string name="max_price">"मैक्स प्राइस"</string>
+    <string name="upload">"अपलोड"</string>
+    <string name="send_message">"मेसेज भेजें"</string>
+    <string name="call">"कॉल भेजें"</string>
+    <string name="enquiry">"जांच"</string>
+    <string name="services_store">"इस स्टोर द्वारा ऑफ़र की गई सेवाएं"</string>
+    <string name="apply_filter_to_search">"खोज के लिए फ़िल्टर लागू करें"</string>
+    <string name="no_of_owners">"मालिकों की संख्या"</string>
+    <string name="filter_all">"सभी फ़िल्टर करें"</string>
+    <string name="group_name">"समूह का नाम"</string>
+    <string name="update">"अद्यतन"</string>
+    <string name="type_group_name">"अपना समूह नाम लिखें"</string>
+    <string name="provide_group_name">"कृपया समूह का नाम और वैकल्पिक समूह आइकन प्रदान करें"</string>
+    <string name="add_member">"सदस्य जोड़ें"</string>
+    <string name="get_quot">"प्रतिक्रिया प्राप्त करें"</string>
+    <string name="bid_price">दाम लगाना</string>
+    <string name="no_of_vehicle_bids">"वाहनों की संख्या:"</string>
+    <string name="approve">"स्वीकृत करें"</string>
+    <string name="reject">"अस्वीकृत कीजिये"</string>
+    <string name="add_photo">"तस्वीर जोड़ो"</string>
+    <string name="add_cover_photo">"कवर फोटो जोड़ें"</string>
+    <string name="product">"उत्पाद"</string>
+    <string name="service">"सेवा"</string>
+    <string name="vehicles">"वाहन संख्या"</string>
+    <string name="services_offered">"सेवा की पेशकश की (पूर्व। एटो वॉशिंग सेंटर)"</string>
+    <string name="store_description">"स्टोर विवरण"</string>
+    <string name="add_brand_tags">"ब्रांड टैग जोड़ें"</string>
+    <string name="create_loan_mela">"ऋण मेला कार्यक्रम बनाएँ"</string>
+    <string name="event_title">"कार्यक्रम शीर्षक"</string>
+    <string name="event_start">"इवेंट स्टार्ट"</string>
+    <string name="event_end">"इवेंट एंड"</string>
+    <string name="event_location">"घटना स्थान"</string>
+    <string name="event_address">"ईवेंट का पता"</string>
+    <string name="event_details">"आयोजन विवरण"</string>
+    <string name="create">"बनाएं"</string>
+    <string name="auction_event">"नीलामी कार्यक्रम"</string>
+    <string name="loan_mela">"ऋण मेला कार्यक्रम"</string>
+    <string name="service_mela">"सेवा मेला कार्यक्रम"</string>
+    <string name="service_event">"सेवा कार्यक्रम"</string>
+    <string name="exchange_mela">"एक्सचेंज मेला इवेंट"</string>
+    <string name="exchange_event">"विनिमय कार्यक्रम"</string>
+    <string name="sale_mela">"बिक्री मेला घटना"</string>
+    <string name="sale_event">"बिक्री घटना"</string>
+    <string name="event_click">"उस ईवेंट के प्रकार पर क्लिक करें जिसे आप बनाना चाहते हैं"</string>
+    <string name="confirm_vehicles">"वाहनों की पुष्टि करें"</string>
+    <string name="message2">"क्या आप शुरू करना मूल्य दिखाना चाहते हैं?"</string>
+    <string name="show">"दिखाएँ"</string>
+    <string name="hide">"छिपाना"</string>
+    <string name="confirm">"की पुष्टि करें"</string>
+    <string name="create_auction">"नीलामी ईवेंट बनाएं"</string>
+    <string name="auction_start">"नीलामी शुरू"</string>
+    <string name="auction_end">"नीलामी समाप्ति"</string>
+    <string name="physical">"फिजिकल"</string>
+    <string name="online">"ऑनलाइन"</string>
+    <string name="banquet">"भोज"</string>
+    <string name="by_team">"टीम द्वारा"</string>
+    <string name="by_self">"स्वयं के द्वारा"</string>
+    <string name="by_admin">"व्यवस्थापक द्वारा"</string>
+    <string name="reauction">"Reauction"</string>
+    <string name="select_contacts">"स्टोर के लिए व्यवस्थापक के रूप में संपर्क चुनें"</string>
+    <string name="skip">"छोड़ें"</string>
+    <string name="tourist_passing">"पर्यटक पासिंग"</string>
+    <string name="privates">"निजी"</string>
+    <string name="location_city">"स्थान शहर"</string>
+    <string name="hours_running">चल रहे घंटे</string>
+    <string name="auction_dialog">"क्या आप ओपन नीलामी या बंद नीलामी बनाना चाहते हैं?"</string>
+    <string name="open">"खुला"</string>
+    <string name="closed">"बंद"</string>
+    <string name="cancel">"रद्द करना"</string>
+    <string name="lot_no">"अधिक नहीं।"</string>
+    <string name="current_bid_received">"वर्तमान बोली प्राप्त हुई"</string>
+    <string name="current_bidder_status">"वर्तमान बेंडर स्थिति"</string>
+    <string name="bid_for_vehicle">" वाहन के लिए बोली "</string>
+    <string name="rc">"आरसी "</string>
+    <string name="customer_service">"ग्राहक सेवा"</string>
+    <string name="quality_of_work">"{0}{/0} {1}       {/1} {2}काम की गुणवत्ता {/2}"</string>
+    <string name="friendliness">"मित्रता"</string>
+    <string name="time_management">"समय प्रबंधन"</string>
+    <string name="overall_ratings">"इस स्टोर की आपकी संपूर्ण रेटिंग"</string>
+    <string name="recommend">"क्या आप इस स्टोर की सिफारिश करना चाहेंगे?"</string>
+    <string name="select_filter_categories">"परिणाम फ़िल्टर करने के लिए श्रेणियाँ चुनें"</string>
+    <string name="enquiry_date">पूछताछ की तारीख</string>
+    <string name="enquiry_status">जांच की स्थिति</string>
+    <string name="follow_up">"फॉलो-अप"</string>
+    <string name="last_enquiry">अंतिम जांच</string>
+    <string name="vehicle_title">"वाहन शीर्षक"</string>
+    <string name="number">"Number"</string>
+    <string name="vehicle_count">वाहन गणना</string>
+    <string name="product_count">उत्पाद गणना</string>
+    <string name="service_count">सेवा संख्या</string>
+    <string name="options">"विकल्प"</string>
+    <string name="admin">"व्यवस्थापक"</string>
+    <string name="member_count">सदस्य गणना</string>
+    <string name="event_by">घटना</string>
+    <string name="store_services">"स्टोर सेवाएं"</string>
+    <string name="uploaded_on">"को अपलोड किया गया"</string>
+    <string name="year_dash">"साल"</string>
+    <string name="no_of_leads">"सुराग का कोई नहीं"</string>
+    <string name="leads">लीड्स</string>
+    <string name="enquiries">Enquiries</string>
+    <string name="view_details">"विवरण देखिये।"</string>
+    <string name="stop_notifications">"सूचना बंद करो"</string>
+    <string name="edit_details">"विवरण संपादित करें"</string>
+    <string name="admin_contact">"व्यवस्थापक संपर्क"</string>
+    <string name="seller_leads">"विक्रेता बिक्रीसूत्र"</string>
+    <string name="compare">"तुलना करें"</string>
+    <string name="added_on">"पर जोड़ा"</string>
+    <string name="last_call">"आखिरी कॉल"</string>
+    <string name="search_req">"खोज की आवश्यकता"</string>
+    <string name="car_details">"कार का विवरण"</string>
+    <string name="category_of_store">"स्टोर की श्रेणी (एक्स। ऑटो सहायक उपकरण)"</string>
+    <string name="brand_tags_ex">"ब्रांड टैग (पूर्व टाटा)"</string>
+    <string name="phrase_to_search">"खोज करने के लिए वाक्यांश"</string>
+    <string name="or">"अथवा "</string>
+    <string name="go_to_activate">"सक्रिय करने के लिए जाएं"</string>
+    <string name="date_of_message">"संदेश की तिथि"</string>
+    <string name="sample">"नमूना"</string>
+    <string name="date_and_time">"तिथि और समय"</string>
+    <string name="enter_register">"रजिस्टर करने के लिए संपर्क दर्ज करें"</string>
+    <string name="full_name">"पूरा नाम"</string>
+    <string name="gender">"लिंग"</string>
+    <string name="female">"स्त्री"</string>
+    <string name="male">"पुरुष"</string>
+    <string name="date_of_birth">"जन्म तिथि"</string>
+    <string name="pin_code">"पिन कोड"</string>
+    <string name="enter_your_industry">"अपना उद्योग दर्ज करें"</string>
+    <string name="enter_your_profession">"अपना व्यवसाय दर्ज करें"</string>
+    <string name="clear">"साफ़ करें"</string>
+    <string name="message_senders">"संदेश प्रेषकों की सूची"</string>
+    <string name="broadcast">"प्रसारण"</string>
+    <string name="sold">"बेचा"</string>
+    <string name="view_quot">"कोटेशन देखें"</string>
+    <string name="upload_in">"में अपलोड करें -&gt; \ t \ t \ t \ t"</string>
+    <string name="message3">"सक्रिय नहीं होने पर, खोज को हटा दिया जाएगा "</string>
+    <string name="members">"सदस्य"</string>
+    <string name="message_from">"की तरफ से संदेश"</string>
+    <string name="quotation_form">"उद्धरण प्रपत्र"</string>
+    <string name="quotation_for">"के लिए कोटेशन"</string>
+    <string name="optional">"वैकल्पिक"</string>
+    <string name="deadline_date">"समय सीमा तारीख"</string>
+    <string name="buyer_leads">"क्रेता सुराग"</string>
+    <string name="name_city">"नाम / शहर"</string>
+    <string name="ins_aval">"बीमा उपलब्ध"</string>
+    <string name="type_of_store">"स्टोर का प्रकार"</string>
+    <string name="sub_type">"उप प्रकार"</string>
+    <string name="kms_run">"केएमएस भागो"</string>
+    <string name="hrs">"घंटे"</string>
+    <string name="user">"उपयोगकर्ता"</string>
+    <string name="add_caption">"शीर्षक दें"</string>
+    <string name="send_to">"को भेजें  "</string>
+    <string name="kms_hrs_details">"केएमएस / एचआरएस विवरण"</string>
+    <string name="make_year">"साल बनाओ"</string>
+    <string name="month_year">"महीना/वर्ष"</string>
+    <string name="message4">"अपने वाहन को समूहों में प्रदर्शित करने की अनुमति दें?"</string>
+    <string name="message5">"अपने वाहन को स्टोर में प्रदर्शित करने की अनुमति दें?"</string>
+    <string name="message6">"क्या आप वाहन एक्सचेंज की तलाश कर रहे हैं?"</string>
+    <string name="swipe_see_images">"ऐप छवियों को देखने के लिए स्वाइप करें"</string>
+    <string name="go">"जाएं"</string>
+    <string name="advance_search">"उन्नत खोज"</string>
+    <string name="back">"वापस"</string>
+    <string name="filter">"फिल्टर करें"</string>
+    <string name="view_more">"और देखो"</string>
+    <string name="reauction_vehicle">"पुनः नीलामी के लिए वाहन भेजा गया"</string>
+    <string name="add_to_reauction">"फिर से नीलामी में जोड़ें"</string>
+    <string name="bidder_list">"बोलीदाता सूची"</string>
+    <string name="enter_group_title">"समूह शीर्षक दर्ज करें"</string>
+    <string name="no_contact_found">"कोई संपर्क नहीं मिला"</string>
+    <string name="ended_exchange_mela">"एक्सचेंज मेला समाप्त हुआ"</string>
+    <string name="uploaded_date">"अपलोड की गई तिथि"</string>
+    <string name="message_count">"संदेश गणना"</string>
+    <string name="last_message">"अंतिम संदेश"</string>
+    <string name="last_message_time">"अंतिम संदेश का समय"</string>
+    <string name="type_of_service">"सेवा का प्रकार"</string>
+    <string name="type_of_products">"उत्पादों का प्रकार"</string>
+    <string name="service_cate">"सेवा श्रेणी (पूर्व। एटो डिजाइन)"</string>
+    <string name="product_cate">"उत्पाद श्रेणी (पूर्व। एटो भागों)"</string>
+    <string name="product_details">"उत्पाद विवरण"</string>
+    <string name="create_by">"निर्माता"</string>
+    <string name="add_interest">ऍड इंटरेस्ट</string>
+    <string name="confirm_interest">आप अपनी पोस्ट इंटरेस्ट के साथ ऍड करना चाहते हैं???</string>
+    <string name="info">इन्फो</string>
+    <string name="actions">आकशन्स</string>
+    <string name="uploads">उपलोडस</string>
+    <string name="my_video">माय विडिओ</string>
+    <string name="images">इमेजेस</string>
+    <string name="blog">ब्लॉग</string>
+    <string name="transfer_stock">ट्रान्सफर स्टॉक</string>
+    <string name="send_quot">सेंड कोटेशन</string>
+    <string name="update_available">ऐप का एक नया संस्करण उपलब्ध है। आपको वर्तमान संस्करण को अपडेट करना होगा</string>
+    <string name="title_activity_edit_skills">एडिट स्किल</string>
+    <string name="title_activity_edit_designation">एडिट डेसिग्नशन</string>
+    <string name="title_activity_edit_company_name">एडिट कंपनी नेम</string>
+    <string name="compulsory_category">कॅटेगरी</string>
+    <string name="compulsory_SubCategory">"सब कॅटेगरी "</string>
+    <string name="compulsory_brand">ब्रँड</string>
+    <string name="compulsory_model">मॉडेल</string>
+    <string name="Description">डिस्क्रिप्शन</string>
+    <string name="EngineDetails">इंजिन डिटेल्स</string>
+    <string name="WheelBaseMM">व्हील बेस(MM)</string>
+    <string name="WeightKg">वेट(kg)</string>
+    <string name="WebSite">वेबसाईट</string>
+    <string name="WarrantyYear">वारंटी(yr)</string>
+    <string name="WarrantyKilometer">वारंटी(km)</string>
+    <string name="TyreSizeRear">टायर साईझ(रिअर)</string>
+    <string name="TyreSizeFront">टायर साईझ(फ्रंट)</string>
+    <string name="TyreSize">टायर साईझ</string>
+    <string name="Tyres">टायर</string>
+    <string name="TypeOfClutchAndBrakePedal">टाइप ऑफ क्लच अँड ब्रेक</string>
+    <string name="TurningRadiusOfBrakes">टर्निंग रॅडिस ऑफ ब्रेक</string>
+    <string name="TurningRadius">टर्निंग रॅडिस</string>
+    <string name="TuboChargeNutralAspirated">टर्बो चार्जे ऍस्पिरेटेड</string>
+    <string name="TransmissionType">ट्रान्समिशन टाइप</string>
+    <string name="TotalWeight">टोटल वेट</string>
+    <string name="Torque">टॉरक्यू</string>
+    <string name="TMPS">टी एम पी एस</string>
+    <string name="SunRoofMoonRoof">सन रूफ/मुन रूफ</string>
+    <string name="StrokeInMM">स्ट्रोकेलन(mm)</string>
+    <string name="SteeringType">स्टेरिंग टाइप</string>
+    <string name="SteeringMountedControl">स्टेरिंग मौन्टेड कंट्रोल</string>
+    <string name="Steering">स्टेरिंग</string>
+    <string name="SportMode">स्पोर्ट मोड</string>
+    <string name="Speed">स्पीड</string>
+    <string name="SeatType">सीट टाइप</string>
+    <string name="SeatingCapacity">सीटिंग कॅपिसिटी</string>
+    <string name="SeatBeltWarning">सीट बेल्ट वॉर्निंग</string>
+    <string name="RPTOGRPTO">RPTOGRPTO</string>
+    <string name="SeatBelt">सीट बेल्ट</string>
+    <string name="RearWiper">रिअर वाईपर</string>
+    <string name="RearDefogger">रिअर डीफोगर</string>
+    <string name="RearAC">रिअर(AC)</string>
+    <string name="RatedRPM">रेटेड RPM</string>
+    <string name="RainSensingWiper">रेन सेन्सिंग वायपर</string>
+    <string name="PumpType">पंप टाइप</string>
+    <string name="PTOType">PTO टाइप</string>
+    <string name="PTOSpeed">PTO स्पीड</string>
+    <string name="PTORPM">PTORPM</string>
+    <string name="PTOHP">PTOHP</string>
+    <string name="PowerWindow">पॉवर विंडो</string>
+    <string name="PowerKW">पॉवर(KW)</string>
+    <string name="PayLoad">पे लोड</string>
+    <string name="ParkingSensors">पार्किंग सेन्सर</string>
+    <string name="OverAllWidth">ओव्हर ऑल विड्थ</string>
+    <string name="OverAllLength">ओव्हर ऑल लेन्थ</string>
+    <string name="NoOfGearsReverse">रिव्हर्स गेअर</string>
+    <string name="NoOfGearsForword">"फॉरवर्ड गेअर  "</string>
+    <string name="NoOfgears">गेअर</string>
+    <string name="MaxTorqueKgm">मॅक्स टॉरक</string>
+    <string name="NoOfCylinder">सिलेंडर</string>
+    <string name="Mileage">मायलेज</string>
+    <string name="MaxSpeed">मॅक्स स्पीड</string>
+    <string name="MaxReserveSpeed">मॅक्स रेसेर्व स्पीड</string>
+    <string name="MaxPower">मॅक्स पॉवर</string>
+    <string name="LoadBodyDimensions">लोड बॉडी डायमेंशन</string>
+    <string name="LoadBody">लोड बॉडी</string>
+    <string name="LiftingCapacityAtStandardFrame">लिफ्टिंग कॅपॅसिटी अँट स्टॅंडर्ड टाइम</string>
+    <string name="KeylessButtonStart">कीलेस बटण स्टार्ट</string>
+    <string name="IntegratedMusicSystem">एन्टीग्रेटेड म्युजिक सिस्टिम</string>
+    <string name="HydraulicType">हैड्रालीक टाइप</string>
+    <string name="HydraulicLiftCapacityKg">हैड्रालीक लिफ्ट कॅपॅसिटी(kg)</string>
+    <string name="Hydraulic">हैड्रालीक</string>
+    <string name="HPCat">HP कॅट</string>
+    <string name="HP">HP</string>
+    <string name="HeadRest">हेड रेस्ट</string>
+    <string name="GVWGCW">GVWGCW</string>
+    <string name="GroundClearance">ग्राउंड कलेअरन्स</string>
+    <string name="GradeAbility">ग्रेड ऍबिलिटी</string>
+    <string name="GearBox">गिअर बॉक्स</string>
+    <string name="FuelSystem">फ्युएल सिस्टिम</string>
+    <string name="FuelType">फ्युएल टाइप</string>
+    <string name="FuelTankCapacityLtr">फ्युएल टॅंक कॅपॅसिटी(Ltr)</string>
+    <string name="FuelTank">फ्युएल टॅंक</string>
+    <string name="RearTyre">रिअर टायर</string>
+    <string name="FrontTyre">फ्रंट टायर</string>
+    <string name="RearAxelSuspension">रिअर सस्पेन्शन</string>
+    <string name="FrontAxleSuspension1">"फ्रंट सस्पेन्शन "</string>
+    <string name="FoldingRearSeat">फोल्डिंग रिअर सीट</string>
+    <string name="FogLamps">फॉग लॅम्प्स</string>
+    <string name="FloorType">फ्लोर टाईप</string>
+    <string name="FIP">FIP</string>
+    <string name="EngineType">इंजिन टाइप</string>
+    <string name="EngineRatedRPM">इंजिन रेटेड RPM</string>
+    <string name="EngineLocation">इंजिन लोकेशन</string>
+    <string name="EngineCC">इंजिन(CC)</string>
+    <string name="EmissionNorms">एमिशन नॉर्म्स</string>
+    <string name="DualStageAirbags1">ड्युअल स्टेज ऐरबॅग्स</string>
+    <string name="DisplacementCC">डिस्प्लेसमेन्ट(cc)</string>
+    <string name="CylinderCapacityCC">सिलेंडर कॅपॅसिटी</string>
+    <string name="CoolingSystem">कूलिंग सिस्टिम</string>
+    <string name="ClutchType">क्लच टाइप</string>
+    <string name="Clutch">"क्लच "</string>
+    <string name="ChildSeat">चाईल्ड सीट</string>
+    <string name="CentralLoking">सेंट्रल लॉकिंग</string>
+    <string name="BrakeType">ब्रेक टाईप</string>
+    <string name="Brakes">ब्रेक</string>
+    <string name="BoreStroke">बोअर स्ट्रोक</string>
+    <string name="Boreinmm1">बोअर(mm)</string>
+    <string name="BodyOptions1">बॉडी ओप्शन</string>
+    <string name="BackUpTorque">बॅकउप टॉरक</string>
+    <string name="AuxiliaryHydValve1">"ऑक्झीलरी व्हालू "</string>
+    <string name="AirBags">एअर बॅग्स</string>
+    <string name="Abs">ABS</string>
+    <string name="AlternateFuelType">अल्टरनेट फ्युएल टाइप</string>
+    <string name="AirCondition">एअर कंडिशन</string>
+    <string name="AirCleaner">एअर क्लिनर</string>
+    <string name="ABS">ABS</string>
+    <string name="PointLinkage">3पॉईंट लिंकेज</string>
+    <string name="selectStore">सिलेक्ट स्टोर</string>
+    <string name="start_notifications">स्टार्ट नोटिफिकेशन</string>
+    <string name="createstore">क्रिएट स्टोर</string>
+    <string name="storeList">सिलेक्ट स्टोर फॉर अपलोड</string>
+    <string name="groupList">सिलेक्ट ग्रुप फॉर अपलोड</string>
+    <string name="follow">फॉलो</string>
+    <string name="search_result_new">न्यू वेहिकल सर्च रिजल्ट</string>
+    <string name="scan_qr">स्कॅन QR</string>
+    <string name="show_qr">शो QR</string>
+    <string name="search_new_vehicle">सर्च न्यू वेहिकल</string>
+    <string name="new_vehicle">न्यू वेहिकल</string>
+    <string name="used_vehicle">यूज्ड वेहिकल</string>
+    <string name="AdditionInformation">ऍडिशनल इन्फॉर्मशन</string>
+    <string name="CruiseControl">"करुईसे कंट्रोल "</string>
+    <string name="kerbweight">केरबा वेट</string>
+    <string name="seatupholestery">सीट उपहोलस्टरी</string>
+    <string name="typeofgearreduction">टाइप ऑफ गिअर रिड्युक्शन</string>
+    <string name="axelconfiguration">"क्सेकॉन्फीगुरटीओं "</string>
+
+    <!-- Array Tags -->
+</resources>
