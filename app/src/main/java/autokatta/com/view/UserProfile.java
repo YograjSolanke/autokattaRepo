@@ -501,6 +501,8 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
         if (!str.equals("")) {
             if (str.equals("success_update")) {
                 Snackbar.make(mUserParent, "Profile Updated Successfuly", Snackbar.LENGTH_SHORT).show();
+                if (!lastWord.equalsIgnoreCase(""))
+                    uploadImage(mediaPath);
                 getProfileData();
                 mProfilePicture.setEnabled(false);
                 //collapsingToolbar.setCollapsedTitleTextColor(Color.WHITE);
@@ -745,7 +747,7 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
                 builder1.setIcon(R.drawable.logo48x48);
                 builder1.setView(mViewDialogOtp);
 
-                if (dp == null || dp == "null") {
+                if (dp == null || dp == "null" || dp.equalsIgnoreCase("")) {
                     img.setBackgroundResource(R.drawable.logo48x48);
                 } else {
                     Glide.with(UserProfile.this)
@@ -770,7 +772,7 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
                                     CustomToast.customToast(getApplicationContext(), "Please Enter Your Name");
                                 } else {
                                     updateProfile();
-                                    uploadImage(mediaPath);
+                                    // uploadImage(mediaPath);
                                     dialogInterface.cancel();
                                 }
                             }
