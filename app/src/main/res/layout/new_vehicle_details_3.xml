@@ -8,6 +8,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:id="@+id/lNoOfgears"
+        android:visibility="gone"
         android:weightSum="2">
 
         <TextView
@@ -23,7 +25,7 @@
             android:id="@+id/NoOfgears1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/app_name"
+            android:text="@string/NoOfgears"
             android:layout_weight="1"
             android:textColor="#2C3343"
             android:visibility="visible" />
@@ -39,6 +41,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:id="@+id/lGroundClearance"
+        android:visibility="gone"
         android:weightSum="2">
 
         <TextView
@@ -54,7 +58,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/app_name"
+            android:text="@string/GroundClearance"
             android:textAlignment="textStart"
             android:textColor="#2C3343" />
     </LinearLayout>
@@ -69,6 +73,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:id="@+id/lNoOfGearsForword"
+        android:visibility="gone"
         android:weightSum="2">
 
         <TextView
@@ -84,7 +90,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/app_name"
+            android:text="@string/NoOfGearsForword"
             android:textAlignment="textStart"
             android:textColor="#2C3343" />
 
@@ -100,6 +106,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:id="@+id/lNoOfGearsReverse"
+        android:visibility="gone"
         android:weightSum="2">
 
         <TextView
@@ -115,7 +123,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/app_name"
+            android:text="@string/NoOfGearsReverse"
             android:textAlignment="textStart"
             android:textColor="#2C3343" />
 
@@ -131,6 +139,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:id="@+id/lOverAllLength"
+        android:visibility="gone"
         android:weightSum="2">
 
         <TextView
@@ -146,7 +156,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/app_name"
+            android:text="@string/OverAllLength"
             android:textAlignment="textStart"
             android:textColor="#2C3343" />
 
@@ -162,6 +172,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:id="@+id/lOverAllWidth"
+        android:visibility="gone"
         android:weightSum="2">
 
         <TextView
@@ -177,7 +189,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/app_name"
+            android:text="@string/OverAllWidth"
             android:textAlignment="textStart"
             android:textColor="#2C3343" />
 
@@ -193,6 +205,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:id="@+id/lParkingSensors"
+        android:visibility="gone"
         android:weightSum="2">
 
         <TextView
@@ -208,7 +222,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/app_name"
+            android:text="@string/ParkingSensors"
             android:textAlignment="textStart"
             android:textColor="#2C3343" />
     </LinearLayout>
@@ -223,6 +237,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:id="@+id/lPayLoad"
+        android:visibility="gone"
         android:weightSum="2">
 
         <TextView
@@ -238,7 +254,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/app_name"
+            android:text="@string/PayLoad"
             android:textAlignment="textStart"
             android:textColor="#2C3343" />
     </LinearLayout>
@@ -253,6 +269,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:id="@+id/lPowerKW"
+        android:visibility="gone"
         android:weightSum="2">
 
         <TextView
@@ -284,6 +302,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:id="@+id/lPowerWindow"
+        android:visibility="gone"
         android:weightSum="2">
 
         <TextView
@@ -314,6 +334,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:id="@+id/lPTOHP"
+        android:visibility="gone"
         android:weightSum="2">
 
         <TextView
@@ -329,7 +351,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/app_name"
+            android:text="@string/PTOHP"
             android:textAlignment="textStart"
             android:textColor="#2C3343" />
     </LinearLayout>
@@ -344,6 +366,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:id="@+id/lPTORPM"
+        android:visibility="gone"
         android:weightSum="2">
 
         <TextView
@@ -359,7 +383,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/app_name"
+            android:text="@string/PTORPM"
             android:textAlignment="textStart"
             android:textColor="#2C3343" />
 
@@ -375,6 +399,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:id="@+id/lPTOSpeed"
+        android:visibility="gone"
         android:weightSum="2">
 
         <TextView
@@ -390,7 +416,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/app_name"
+            android:text="@string/PTOSpeed"
             android:textAlignment="textStart"
             android:textColor="#2C3343" />
 
@@ -406,6 +432,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:id="@+id/lPTOType"
+        android:visibility="gone"
         android:weightSum="2">
 
         <TextView
@@ -421,7 +449,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/app_name"
+            android:text="@string/PTOType"
             android:textAlignment="textStart"
             android:textColor="#2C3343" />
 
@@ -437,6 +465,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:id="@+id/lPumpType"
+        android:visibility="gone"
         android:weightSum="2">
 
         <TextView
@@ -452,7 +482,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/app_name"
+            android:text="@string/PumpType"
             android:textAlignment="textStart"
             android:textColor="#2C3343" />
 
@@ -468,6 +498,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:id="@+id/lRainSensingWiper"
+        android:visibility="gone"
         android:weightSum="2">
 
         <TextView
@@ -483,7 +515,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/app_name"
+            android:text="@string/RainSensingWiper"
             android:textAlignment="textStart"
             android:textColor="#2C3343" />
 
@@ -499,6 +531,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:id="@+id/lRatedRPM"
+        android:visibility="gone"
         android:weightSum="2">
 
         <TextView
@@ -530,6 +564,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:id="@+id/lRearAC"
+        android:visibility="gone"
         android:weightSum="2">
 
         <TextView
@@ -545,7 +581,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/app_name"
+            android:text="@string/RearAC"
             android:textAlignment="textStart"
             android:textColor="#2C3343" />
 
@@ -561,6 +597,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:id="@+id/lRearDefogger"
+        android:visibility="gone"
         android:weightSum="2">
 
         <TextView
@@ -576,7 +614,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/app_name"
+            android:text="@string/RearDefogger"
             android:textAlignment="textStart"
             android:textColor="#2C3343" />
 
@@ -592,6 +630,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:id="@+id/lRearWiper"
+        android:visibility="gone"
         android:weightSum="2">
 
         <TextView
@@ -607,7 +647,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/app_name"
+            android:text="@string/RearWiper"
             android:textAlignment="textStart"
             android:textColor="#2C3343" />
 
@@ -623,6 +663,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:id="@+id/lRPTOGRPTO"
+        android:visibility="gone"
         android:weightSum="2">
 
         <TextView
@@ -638,7 +680,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/app_name"
+            android:text="@string/RPTOGRPTO"
             android:textAlignment="textStart"
             android:textColor="#2C3343" />
 

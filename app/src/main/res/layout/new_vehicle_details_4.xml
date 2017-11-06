@@ -8,6 +8,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:id="@+id/lSeatBelt"
+        android:visibility="gone"
         android:weightSum="2">
 
         <TextView
@@ -23,7 +25,7 @@
             android:id="@+id/SeatBelt1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/app_name"
+            android:text="@string/SeatBelt"
             android:layout_weight="1"
             android:textAlignment="textStart"
             android:textColor="#2C3343"
@@ -42,6 +44,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:id="@+id/lSeatBeltWarning"
+        android:visibility="gone"
         android:weightSum="2">
 
         <TextView
@@ -57,7 +61,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/app_name"
+            android:text="@string/SeatBeltWarning"
             android:textAlignment="textStart"
             android:textColor="#2C3343" />
 
@@ -73,6 +77,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:id="@+id/lSeatingCapacity"
+        android:visibility="gone"
         android:weightSum="2">
 
         <TextView
@@ -88,7 +94,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/app_name"
+            android:text="@string/seating_capacity"
             android:textAlignment="textStart"
             android:textColor="#2C3343" />
 
@@ -104,6 +110,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:id="@+id/lSeatType"
+        android:visibility="gone"
         android:weightSum="2">
 
         <TextView
@@ -119,7 +127,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/app_name"
+            android:text="@string/SeatType"
             android:textAlignment="textStart"
             android:textColor="#2C3343" />
 
@@ -135,6 +143,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:id="@+id/lSeatUpholstery"
+        android:visibility="gone"
         android:weightSum="2">
 
         <TextView
@@ -150,7 +160,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/app_name"
+            android:text="@string/seatupholestery"
             android:textAlignment="textStart"
             android:textColor="#2C3343" />
     </LinearLayout>
@@ -165,6 +175,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:id="@+id/lSpeed"
+        android:visibility="gone"
         android:weightSum="2">
 
         <TextView
@@ -180,7 +192,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/app_name"
+            android:text="@string/Speed"
             android:textAlignment="textStart"
             android:textColor="#2C3343" />
 
@@ -196,6 +208,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:id="@+id/lSportMode"
+        android:visibility="gone"
         android:weightSum="2">
 
         <TextView
@@ -211,7 +225,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/app_name"
+            android:text="@string/SportMode"
             android:textAlignment="textStart"
             android:textColor="#2C3343" />
     </LinearLayout>
@@ -226,6 +240,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:id="@+id/lSteering"
+        android:visibility="gone"
         android:weightSum="2">
 
         <TextView
@@ -241,7 +257,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/app_name"
+            android:text="@string/Steering"
             android:textAlignment="textStart"
             android:textColor="#2C3343" />
     </LinearLayout>
@@ -256,6 +272,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:id="@+id/lSteeringMountedControl"
+        android:visibility="gone"
         android:weightSum="2">
 
         <TextView
@@ -271,7 +289,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/app_name"
+            android:text="@string/SteeringMountedControl"
             android:textAlignment="textStart"
             android:textColor="#2C3343" />
     </LinearLayout>
@@ -286,6 +304,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:id="@+id/lIntegratedMusicSystem"
+        android:visibility="gone"
         android:weightSum="2">
 
         <TextView
@@ -301,7 +321,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/app_name"
+            android:text="@string/IntegratedMusicSystem"
             android:textAlignment="textStart"
             android:textColor="#2C3343" />
 
@@ -317,6 +337,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:id="@+id/lSteeringType"
+        android:visibility="gone"
         android:weightSum="2">
 
         <TextView
@@ -332,7 +354,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/app_name"
+            android:text="@string/SteeringType"
             android:textAlignment="textStart"
             android:textColor="#2C3343" />
 
@@ -348,6 +370,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:id="@+id/lStrokeInMM"
+        android:visibility="gone"
         android:weightSum="2">
 
         <TextView
@@ -363,7 +387,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/app_name"
+            android:text="@string/StrokeInMM"
             android:textAlignment="textStart"
             android:textColor="#2C3343" />
 
@@ -379,6 +403,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:id="@+id/lSunRoofMoonRoof"
+        android:visibility="gone"
         android:weightSum="2">
 
         <TextView
@@ -394,7 +420,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/app_name"
+            android:text="@string/SunRoofMoonRoof"
             android:textAlignment="textStart"
             android:textColor="#2C3343" />
 
@@ -410,6 +436,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:id="@+id/lTMPS"
+        android:visibility="gone"
         android:weightSum="2">
 
         <TextView
@@ -425,7 +453,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/app_name"
+            android:text="@string/TMPS"
             android:textAlignment="textStart"
             android:textColor="#2C3343" />
 
@@ -441,6 +469,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:id="@+id/lTorque"
+        android:visibility="gone"
         android:weightSum="2">
 
         <TextView
@@ -456,7 +486,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/app_name"
+            android:text="@string/Torque"
             android:textAlignment="textStart"
             android:textColor="#2C3343" />
 
@@ -472,6 +502,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:id="@+id/lTotalWeight"
+        android:visibility="gone"
         android:weightSum="2">
 
         <TextView
@@ -487,7 +519,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/app_name"
+            android:text="@string/TotalWeight"
             android:textAlignment="textStart"
             android:textColor="#2C3343" />
 
@@ -503,6 +535,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:id="@+id/lTransmissionType"
+        android:visibility="gone"
         android:weightSum="2">
 
         <TextView
@@ -518,7 +552,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/app_name"
+            android:text="@string/TransmissionType"
             android:textAlignment="textStart"
             android:textColor="#2C3343" />
 
@@ -534,6 +568,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:id="@+id/lTuboChargeNutralAspirated"
+        android:visibility="gone"
         android:weightSum="2">
 
         <TextView
@@ -549,7 +585,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/app_name"
+            android:text="@string/TuboChargeNutralAspirated"
             android:textAlignment="textStart"
             android:textColor="#2C3343" />
 
@@ -565,6 +601,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:id="@+id/lTurningRadius"
+        android:visibility="gone"
         android:weightSum="2">
 
         <TextView
@@ -580,7 +618,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/app_name"
+            android:text="@string/TurningRadius"
             android:textAlignment="textStart"
             android:textColor="#2C3343" />
 
@@ -596,6 +634,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:id="@+id/lTurningRadiusOfBrakes"
+        android:visibility="gone"
         android:weightSum="2">
 
         <TextView
@@ -611,7 +651,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/app_name"
+            android:text="@string/TurningRadiusOfBrakes"
             android:textAlignment="textStart"
             android:textColor="#2C3343" />
 
@@ -627,6 +667,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:id="@+id/lTypeOfClutchAndBrakePedal"
+        android:visibility="gone"
         android:weightSum="2">
 
         <TextView
@@ -642,7 +684,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/app_name"
+            android:text="@string/TypeOfClutchAndBrakePedal"
             android:textAlignment="textStart"
             android:textColor="#2C3343" />
 

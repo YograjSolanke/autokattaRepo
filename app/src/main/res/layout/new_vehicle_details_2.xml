@@ -8,6 +8,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:id="@+id/lGradeAbility"
+        android:visibility="gone"
         android:weightSum="2">
 
         <TextView
@@ -23,7 +25,7 @@
             android:id="@+id/GradeAbility1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/app_name"
+            android:text="@string/GradeAbility"
             android:textAlignment="center"
             android:layout_weight="1"
             android:textColor="#2C3343"
@@ -41,6 +43,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:id="@+id/lGroundClearance"
+        android:visibility="gone"
         android:weightSum="2">
 
         <TextView
@@ -56,7 +60,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/app_name"
+            android:text="@string/GroundClearance"
             android:textAlignment="center"
             android:textColor="#2C3343" />
 
@@ -72,6 +76,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:id="@+id/lGVWGCW"
+        android:visibility="gone"
         android:weightSum="2">
 
         <TextView
@@ -87,7 +93,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/app_name"
+            android:text="@string/GVWGCW"
             android:textAlignment="center"
             android:textColor="#2C3343" />
 
@@ -103,6 +109,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:id="@+id/lHeadRest"
+        android:visibility="gone"
         android:weightSum="2">
 
         <TextView
@@ -118,7 +126,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/app_name"
+            android:text="@string/HeadRest"
             android:textAlignment="center"
             android:textColor="#2C3343" />
 
@@ -134,6 +142,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:id="@+id/lHP"
+        android:visibility="gone"
         android:weightSum="2">
 
         <TextView
@@ -149,7 +159,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/app_name"
+            android:text="@string/HP"
             android:textAlignment="center"
             android:textColor="#2C3343" />
     </LinearLayout>
@@ -164,6 +174,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:id="@+id/lHPCat"
+        android:visibility="gone"
         android:weightSum="2">
 
         <TextView
@@ -179,7 +191,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/app_name"
+            android:text="@string/HPCat"
             android:textAlignment="center"
             android:textColor="#2C3343" />
 
@@ -195,6 +207,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:id="@+id/lHydraulic"
+        android:visibility="gone"
         android:weightSum="2">
 
         <TextView
@@ -210,7 +224,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/app_name"
+            android:text="@string/Hydraulic"
             android:textAlignment="center"
             android:textColor="#2C3343" />
     </LinearLayout>
@@ -225,6 +239,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:id="@+id/lHydraulicLiftCapacityKg"
+        android:visibility="gone"
         android:weightSum="2">
 
         <TextView
@@ -255,6 +271,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:id="@+id/lHydraulicType"
+        android:visibility="gone"
         android:weightSum="2">
 
         <TextView
@@ -270,7 +288,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/app_name"
+            android:text="@string/HydraulicType"
             android:textAlignment="center"
             android:textColor="#2C3343" />
     </LinearLayout>
@@ -285,6 +303,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:id="@+id/lIntegratedMusicSystem"
+        android:visibility="gone"
         android:weightSum="2">
 
         <TextView
@@ -315,6 +335,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:id="@+id/lKerbWeight"
+        android:visibility="gone"
         android:weightSum="2">
 
         <TextView
@@ -330,7 +352,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/app_name"
+            android:text="@string/kerbweight"
             android:textAlignment="center"
             android:textColor="#2C3343" />
 
@@ -346,6 +368,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:id="@+id/lKeylessButtonStart"
+        android:visibility="gone"
         android:weightSum="2">
 
         <TextView
@@ -361,7 +385,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/app_name"
+            android:text="@string/KeylessButtonStart"
             android:textAlignment="center"
             android:textColor="#2C3343" />
 
@@ -377,6 +401,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:id="@+id/lLiftingCapacityAtStandardFrame"
+        android:visibility="gone"
         android:weightSum="2">
 
         <TextView
@@ -392,7 +418,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/app_name"
+            android:text="@string/LiftingCapacityAtStandardFrame"
             android:textAlignment="center"
             android:textColor="#2C3343" />
 
@@ -408,6 +434,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:id="@+id/lLoadBody"
+        android:visibility="gone"
         android:weightSum="2">
 
         <TextView
@@ -423,7 +451,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/app_name"
+            android:text="@string/LoadBody"
             android:textAlignment="center"
             android:textColor="#2C3343" />
 
@@ -438,6 +466,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/lLoadBodyDimensions"
+        android:visibility="gone"
         android:orientation="horizontal"
         android:weightSum="2">
 
@@ -470,6 +500,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:id="@+id/lMaxPower"
+        android:visibility="gone"
         android:weightSum="2">
 
         <TextView
@@ -485,7 +517,7 @@
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/app_name"
+            android:text="@string/MaxPower"
             android:textAlignment="center"
             android:textColor="#2C3343" />
 
@@ -501,6 +533,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:id="@+id/lMaxReserveSpeed"
+        android:visibility="gone"
         android:weightSum="2">
 
         <TextView
@@ -516,7 +550,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/app_name"
+            android:text="@string/MaxReserveSpeed"
             android:textAlignment="center"
             android:textColor="#2C3343" />
 
@@ -532,6 +566,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:id="@+id/lMaxSpeed"
+        android:visibility="gone"
         android:weightSum="2">
 
         <TextView
@@ -547,7 +583,7 @@
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/app_name"
+            android:text="@string/MaxSpeed"
             android:textAlignment="center"
             android:textColor="#2C3343" />
 
@@ -563,6 +599,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:id="@+id/lMaxTorqueKgm"
+        android:visibility="gone"
         android:weightSum="2">
 
         <TextView
@@ -578,7 +616,7 @@
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/app_name"
+            android:text="@string/MaxTorqueKgm"
             android:textAlignment="center"
             android:textColor="#2C3343" />
 
@@ -594,6 +632,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:id="@+id/lMileage"
+        android:visibility="gone"
         android:weightSum="2">
 
         <TextView
@@ -609,7 +649,7 @@
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/app_name"
+            android:text="@string/Mileage"
             android:textAlignment="center"
             android:textColor="#2C3343" />
 
@@ -625,6 +665,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:id="@+id/lNoOfCylinder"
+        android:visibility="gone"
         android:weightSum="2">
 
         <TextView
@@ -640,7 +682,7 @@
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/app_name"
+            android:text="@string/NoOfCylinder"
             android:textAlignment="center"
             android:textColor="#2C3343" />
 

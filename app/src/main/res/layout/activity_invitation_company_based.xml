@@ -11,6 +11,7 @@
         android:text="@string/message1"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="@color/background"
+        android:paddingStart="5dp"
         android:textSize="14sp" />
 
     <LinearLayout

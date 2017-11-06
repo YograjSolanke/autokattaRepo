@@ -8,6 +8,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:id="@+id/lDisplacementCC"
+        android:visibility="gone"
         android:weightSum="2">
 
         <TextView
@@ -23,7 +25,7 @@
             android:id="@+id/DisplacementCC1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/app_name"
+            android:text="@string/DisplacementCC"
             android:textAlignment="center"
             android:layout_weight="1"
             android:textColor="#2C3343"
@@ -41,6 +43,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:id="@+id/lDrive"
+        android:visibility="gone"
         android:weightSum="2">
 
         <TextView
@@ -59,7 +63,7 @@
             android:layout_alignTop="@+id/Drive"
             android:layout_below="@+id/DisplacementCC1"
             android:layout_weight="1"
-            android:text="@string/app_name"
+            android:text="@string/drive_type"
             android:textAlignment="center"
             android:textColor="#2C3343" />
 
@@ -76,6 +80,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:id="@+id/lDualStageAirbags"
+        android:visibility="gone"
         android:weightSum="2">
 
         <TextView
@@ -92,7 +98,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/app_name"
+            android:text="@string/DualStageAirbags1"
             android:textAlignment="center"
             android:textColor="#2C3343" />
 
@@ -108,6 +114,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:id="@+id/lEmissionNorms"
+        android:visibility="gone"
         android:weightSum="2">
 
         <TextView
@@ -123,7 +131,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/app_name"
+            android:text="@string/EmissionNorms"
             android:textAlignment="center"
             android:textColor="#2C3343" />
 
@@ -139,6 +147,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:id="@+id/lEngineCC"
+        android:visibility="gone"
         android:weightSum="2">
 
         <TextView
@@ -154,7 +164,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/app_name"
+            android:text="@string/EngineCC"
             android:textAlignment="center"
             android:textColor="#2C3343" />
 
@@ -171,6 +181,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:id="@+id/lEngineLocation"
+        android:visibility="gone"
         android:weightSum="2">
 
         <TextView
@@ -186,7 +198,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/app_name"
+            android:text="@string/EngineLocation"
             android:textAlignment="center"
             android:textColor="#2C3343" />
 
@@ -202,6 +214,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:id="@+id/lEngineRatedRPM"
+        android:visibility="gone"
         android:weightSum="2">
 
         <TextView
@@ -217,7 +231,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/app_name"
+            android:text="@string/EngineRatedRPM"
             android:textAlignment="center"
             android:textColor="#2C3343" />
 
@@ -234,6 +248,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:id="@+id/lEngineType"
+        android:visibility="gone"
         android:weightSum="2">
 
         <TextView
@@ -249,7 +265,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/app_name"
+            android:text="@string/EngineType"
             android:textAlignment="center"
             android:textColor="#2C3343" />
 
@@ -266,6 +282,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:id="@+id/lFIP"
+        android:visibility="gone"
         android:weightSum="2">
 
         <TextView
@@ -281,7 +299,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/app_name"
+            android:text="@string/FIP"
             android:textAlignment="center"
             android:textColor="#2C3343" />
 
@@ -298,6 +316,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:id="@+id/lFloorType"
+        android:visibility="gone"
         android:weightSum="2">
 
         <TextView
@@ -329,6 +349,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:id="@+id/lFogLamps"
+        android:visibility="gone"
         android:weightSum="2">
 
         <TextView
@@ -344,7 +366,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/app_name"
+            android:text="@string/FogLamps"
             android:textAlignment="center"
             android:textColor="#2C3343" />
 
@@ -360,6 +382,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:id="@+id/lFoldingRearSeat"
+        android:visibility="gone"
         android:weightSum="2">
 
         <TextView
@@ -375,7 +399,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/app_name"
+            android:text="@string/FoldingRearSeat"
             android:textAlignment="center"
             android:textColor="#2C3343" />
 
@@ -391,6 +415,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:id="@+id/lFrontAxleSuspension"
+        android:visibility="gone"
         android:weightSum="2">
 
         <TextView
@@ -406,7 +432,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/app_name"
+            android:text="@string/FrontAxleSuspension1"
             android:textAlignment="center"
             android:textColor="#2C3343" />
 
@@ -422,6 +448,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:id="@+id/lRearAxelSuspension"
+        android:visibility="gone"
         android:weightSum="2">
 
         <TextView
@@ -453,6 +481,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:id="@+id/lFrontTyre"
+        android:visibility="gone"
         android:weightSum="2">
 
         <TextView
@@ -468,7 +498,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/app_name"
+            android:text="@string/FrontTyre"
             android:textAlignment="center"
             android:textColor="#2C3343" />
 
@@ -484,6 +514,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:id="@+id/lRearTyre"
+        android:visibility="gone"
         android:weightSum="2">
 
         <TextView
@@ -499,7 +531,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/app_name"
+            android:text="@string/RearTyre"
             android:textAlignment="center"
             android:textColor="#2C3343" />
 
@@ -515,6 +547,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:id="@+id/lFuelTank"
+        android:visibility="gone"
         android:weightSum="2">
 
         <TextView
@@ -530,7 +564,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/app_name"
+            android:text="@string/FuelTank"
             android:textAlignment="center"
             android:textColor="#2C3343" />
 
@@ -546,6 +580,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:id="@+id/lFuelTankCapacityLtr"
+        android:visibility="gone"
         android:weightSum="2">
 
         <TextView
@@ -561,7 +597,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/app_name"
+            android:text="@string/FuelTankCapacityLtr"
             android:textAlignment="center"
             android:textColor="#2C3343" />
 
@@ -577,6 +613,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:id="@+id/lFuelType"
+        android:visibility="gone"
         android:weightSum="2">
 
         <TextView
@@ -592,7 +630,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/app_name"
+            android:text="@string/fuel_type"
             android:textAlignment="center"
             android:textColor="#2C3343" />
 
@@ -608,6 +646,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:id="@+id/lFuelSystem"
+        android:visibility="gone"
         android:weightSum="2">
 
         <TextView
@@ -623,7 +663,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/app_name"
+            android:text="@string/FuelSystem"
             android:textAlignment="center"
             android:textColor="#2C3343" />
 
@@ -639,6 +679,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:id="@+id/lGearBox"
+        android:visibility="gone"
         android:weightSum="2">
 
         <TextView

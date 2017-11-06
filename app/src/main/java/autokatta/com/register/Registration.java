@@ -284,7 +284,7 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
                     otherCategory.setError("Enter Profession");
                 } else if (sub_profession.equalsIgnoreCase("other") && !otherCategory.getText().toString().matches("[a-zA-Z ]*")) {
                     otherCategory.setError("Enter  Valid Profession");
-                } else if (sub_profession.startsWith("New vehicle") ||sub_profession.startsWith("Used vehicle")&& brand.equalsIgnoreCase("-Select Brand-")) {
+                } else if ((sub_profession.startsWith("New vehicle") ||sub_profession.startsWith("Used vehicle"))&& brand.equalsIgnoreCase("-Select Brand-")) {
                     Toast.makeText(Registration.this, "Please select Brand", Toast.LENGTH_LONG).show();
                 }else if (brand.equalsIgnoreCase("other") && otherbrand.getText().toString().equalsIgnoreCase("")) {
                     otherbrand.setError("Enter Brand");
@@ -401,6 +401,9 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
                         && !usertypeSpinner.getSelectedItem().toString().equalsIgnoreCase("Select User Type")) {
                     // otherCategorylayout.setVisibility(View.VISIBLE);
                     industrySpinner.setVisibility(View.VISIBLE);
+                    industrySpinner.setAdapter(null);
+                    moduleSpinner.setAdapter(null);
+                    brandSpinner.setVisibility(View.GONE);
                 } else {
 //                        otherCategorylayout.setVisibility(View.GONE);
                     industrySpinner.setVisibility(View.GONE);
@@ -477,6 +480,7 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
                         MODULE = (String[]) module.toArray(MODULE);
                         ArrayAdapter<String> dataadapter = new ArrayAdapter<>(getApplicationContext(), R.layout.registration_spinner, MODULE);
                         moduleSpinner.setAdapter(dataadapter);
+
                     } else
                         CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
 

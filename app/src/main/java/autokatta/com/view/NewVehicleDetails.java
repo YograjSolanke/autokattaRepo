@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import autokatta.com.R;
@@ -17,8 +19,13 @@ public class NewVehicleDetails extends AppCompatActivity implements RequestNotif
     TextView mPointLinkage, mAbs, mAirbags, mAirCleaner, mAirCondition, mAlternateFuelType, mAuxiliary,
             mBackUpTorque, mBodyOption, Boreinmm, BoreStroke, Brakes, BrakeType, CentralLoking, ChildSeat, Clutch, ClutchType, CoolingSystem, CruiseControl, CylinderCapacityCC, DisplacementCC, Drive, DualStageAirbags, EmissionNorms, EngineCC, EngineLocation, EngineRatedRPM, EngineType, FIP, FloorType, FogLamps, FoldingRearSeat, FrontAxleSuspension, RearAxelSuspension, FrontTyre, RearTyre, FuelTank, FuelTankCapacityLtr, FuelType, FuelSystem,
             GearBox, GradeAbility, GroundClearance, GVWGCW, HeadRest, HP, HPCat, Hydraulic, HydraulicLiftCapacityKg, HydraulicType, IntegratedMusicSystem, KeylessButtonStart, LiftingCapacityAtStandardFrame, LoadBody, LoadBodyDimensions, MaxPower, MaxReserveSpeed, MaxSpeed, Mileage, NoOfCylinder, MaxTorqueKgm, NoOfgears, NoOfGearsForword, NoOfGearsReverse, OverAllLength, OverAllWidth, ParkingSensors, PayLoad, PowerKW, PowerWindow, PTOHP, PTORPM, PTOSpeed, PTOType, PumpType, RainSensingWiper, RatedRPM, RearAC, RearDefogger,
-            RearWiper, SeatBelt, RPTOGRPTO, SeatBeltWarning, SeatingCapacity, SeatType, Speed, SportMode, Steering, SteeringMountedControl, SteeringType, StrokeInMM, SunRoofMoonRoof, TMPS, Torque, TotalWeight, TransmissionType, TuboChargeNutralAspirated, TurningRadius, TurningRadiusOfBrakes, TypeOfClutchAndBrakePedal, Tyres, TyreSize, TyreSizeFront, TyreSizeRear, WarrantyKilometer, WarrantyYear, WebSite, WeightKg, WheelBaseMM, EngineDetails, Description;
+            RearWiper, SeatBelt,seatupholestry, kerbweight, RPTOGRPTO, Axelconfiguration, SeatBeltWarning, SeatingCapacity, AdditionalInfo, SeatType, Speed, SportMode, Steering, SteeringMountedControl, SteeringType, StrokeInMM, SunRoofMoonRoof, TMPS, Torque, TotalWeight, TransmissionType, TuboChargeNutralAspirated, TurningRadius, TurningRadiusOfBrakes, TypeOfClutchAndBrakePedal, Tyres, TyreSize, TyreSizeFront, TyreSizeRear, WarrantyKilometer, WarrantyYear, WebSite, WeightKg, WheelBaseMM, EngineDetails, Description;
     int newVehicleId;
+
+    LinearLayout lPointLinkage, lAbs, lAirbags, lAirCleaner, lAirCondition, lAlternateFuelType, lAuxiliary,
+            lBackUpTorque, lBodyOption, lBoreinmm, lBoreStroke, lBrakes, lBrakeType, lCentralLoking, lChildSeat, lClutch, lClutchType, lCoolingSystem, lCruiseControl, lCylinderCapacityCC, lDisplacementCC, lDrive, lDualStageAirbags, lEmissionNorms, lEngineCC, lEngineLocation, lEngineRatedRPM, lEngineType, lFIP, lFloorType, lFogLamps, lFoldingRearSeat, lFrontAxleSuspension, lRearAxelSuspension, lFrontTyre, lRearTyre, lFuelTank, lFuelTankCapacityLtr, lFuelType, lFuelSystem,
+            lGearBox, lGradeAbility, lGroundClearance, lGVWGCW, lHeadRest, lHP, lHPCat, lHydraulic, lHydraulicLiftCapacityKg, lHydraulicType, lIntegratedMusicSystem, lKeylessButtonStart, lLiftingCapacityAtStandardFrame, lLoadBody, lLoadBodyDimensions, lMaxPower, lMaxReserveSpeed, lMaxSpeed, lMileage, lNoOfCylinder, lMaxTorqueKgm, lNoOfgears, lNoOfGearsForword, lNoOfGearsReverse, lOverAllLength, lOverAllWidth, lParkingSensors, lPayLoad, lPowerKW, lPowerWindow, lPTOHP, lPTORPM, lPTOSpeed, lPTOType, lPumpType, lRainSensingWiper, lRatedRPM, lRearAC, lRearDefogger,
+            lRearWiper, lSeatBelt, lKerbweight, lRPTOGRPTO,lseatupholestry, lAxelconfiguration, lSeatBeltWarning, lSeatingCapacity, lSeatType, lAdditionalInfo, lSpeed, lSportMode, lSteering, lSteeringMountedControl, lSteeringType, lStrokeInMM, lSunRoofMoonRoof, lTMPS, lTorque, lTotalWeight, lTransmissionType, lTuboChargeNutralAspirated, lTurningRadius, lTurningRadiusOfBrakes, lTypeOfClutchAndBrakePedal, lTyres, lTyreSize, lTyreSizeFront, lTyreSizeRear, lWarrantyKilometer, lWarrantyYear, lWebSite, lWeightKg, lWheelBaseMM, lEngineDetails, lDescription;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -143,6 +150,128 @@ public class NewVehicleDetails extends AppCompatActivity implements RequestNotif
         WheelBaseMM = (TextView) findViewById(R.id.WheelBaseMM1);
         EngineDetails = (TextView) findViewById(R.id.EngineDetails1);
         Description = (TextView) findViewById(R.id.Description1);
+        AdditionalInfo = (TextView) findViewById(R.id.Additionalinfo1);
+        Axelconfiguration = (TextView) findViewById(R.id.axelconfiguration);
+        kerbweight = (TextView) findViewById(R.id.KerbWeight1);
+        seatupholestry = (TextView) findViewById(R.id.SeatUpholstery);
+
+
+        /*Linear layouts*/
+        lPointLinkage = (LinearLayout) findViewById(R.id.lPointLinkage);
+        lAbs = (LinearLayout) findViewById(R.id.lABS);
+        lAirbags = (LinearLayout) findViewById(R.id.lAirBags);
+        lAirCleaner = (LinearLayout) findViewById(R.id.lAirCleaner);
+        lAirCondition = (LinearLayout) findViewById(R.id.lAirCondition);
+        lAlternateFuelType = (LinearLayout) findViewById(R.id.lAlternateFuelType);
+        lAuxiliary = (LinearLayout) findViewById(R.id.lAuxiliaryHydValve);
+        lBackUpTorque = (LinearLayout) findViewById(R.id.lBackUpTorque);
+        lBodyOption = (LinearLayout) findViewById(R.id.lBodyOptions);
+        lBoreinmm = (LinearLayout) findViewById(R.id.lBoreinmm);
+        lBoreStroke = (LinearLayout) findViewById(R.id.lBoreStroke);
+        lBrakes = (LinearLayout) findViewById(R.id.lBrakes);
+        lBrakeType = (LinearLayout) findViewById(R.id.lBrakeType);
+        lCentralLoking = (LinearLayout) findViewById(R.id.lCentralLoking);
+        lChildSeat = (LinearLayout) findViewById(R.id.lChildSeat);
+        lClutch = (LinearLayout) findViewById(R.id.lClutch);
+        lClutchType = (LinearLayout) findViewById(R.id.lClutchType);
+        lCoolingSystem = (LinearLayout) findViewById(R.id.lCoolingSystem);
+        lCruiseControl = (LinearLayout) findViewById(R.id.lCruiseControl);
+        lCylinderCapacityCC = (LinearLayout) findViewById(R.id.lCylinderCapacityCC);
+        lDisplacementCC = (LinearLayout) findViewById(R.id.lDisplacementCC);
+        lDrive = (LinearLayout) findViewById(R.id.lDrive);
+        lDualStageAirbags = (LinearLayout) findViewById(R.id.lDualStageAirbags);
+        lEmissionNorms = (LinearLayout) findViewById(R.id.lEmissionNorms);
+        lEngineCC = (LinearLayout) findViewById(R.id.lEngineCC);
+        lEngineLocation = (LinearLayout) findViewById(R.id.lEngineLocation);
+        lEngineRatedRPM = (LinearLayout) findViewById(R.id.lEngineRatedRPM);
+        lEngineType = (LinearLayout) findViewById(R.id.lEngineType);
+        lFIP = (LinearLayout) findViewById(R.id.lFIP);
+        lFloorType = (LinearLayout) findViewById(R.id.lFloorType);
+        lFogLamps = (LinearLayout) findViewById(R.id.lFogLamps);
+        lFoldingRearSeat = (LinearLayout) findViewById(R.id.lFoldingRearSeat);
+        lFrontAxleSuspension = (LinearLayout) findViewById(R.id.lFrontAxleSuspension);
+        lRearAxelSuspension = (LinearLayout) findViewById(R.id.lRearAxelSuspension);
+        lFrontTyre = (LinearLayout) findViewById(R.id.lFrontTyre);
+        lRearTyre = (LinearLayout) findViewById(R.id.lRearTyre);
+        lFuelTank = (LinearLayout) findViewById(R.id.lFuelTank);
+        lFuelTankCapacityLtr = (LinearLayout) findViewById(R.id.lFuelTankCapacityLtr);
+        lFuelType = (LinearLayout) findViewById(R.id.lFuelType);
+        lFuelSystem = (LinearLayout) findViewById(R.id.lFuelSystem);
+        lGearBox = (LinearLayout) findViewById(R.id.lGearBox);
+        lGradeAbility = (LinearLayout) findViewById(R.id.lGradeAbility);
+        lGroundClearance = (LinearLayout) findViewById(R.id.lGroundClearance);
+        lGVWGCW = (LinearLayout) findViewById(R.id.lGVWGCW);
+        lHeadRest = (LinearLayout) findViewById(R.id.lHeadRest);
+        lHP = (LinearLayout) findViewById(R.id.lHP);
+        lHPCat = (LinearLayout) findViewById(R.id.lHPCat);
+        lHydraulic = (LinearLayout) findViewById(R.id.lHydraulic);
+        lHydraulicLiftCapacityKg = (LinearLayout) findViewById(R.id.lHydraulicLiftCapacityKg);
+        lHydraulicType = (LinearLayout) findViewById(R.id.lHydraulicType);
+        lIntegratedMusicSystem = (LinearLayout) findViewById(R.id.lIntegratedMusicSystem);
+        lKeylessButtonStart = (LinearLayout) findViewById(R.id.lKeylessButtonStart);
+        lLiftingCapacityAtStandardFrame = (LinearLayout) findViewById(R.id.lLiftingCapacityAtStandardFrame);
+        lLoadBody = (LinearLayout) findViewById(R.id.lLoadBody);
+        lLoadBodyDimensions = (LinearLayout) findViewById(R.id.lLoadBodyDimensions);
+        lMaxPower = (LinearLayout) findViewById(R.id.lMaxPower);
+        lMaxReserveSpeed = (LinearLayout) findViewById(R.id.lMaxReserveSpeed);
+        lMaxSpeed = (LinearLayout) findViewById(R.id.lMaxSpeed);
+        lMileage = (LinearLayout) findViewById(R.id.lMileage);
+        lNoOfCylinder = (LinearLayout) findViewById(R.id.lNoOfCylinder);
+        lMaxTorqueKgm = (LinearLayout) findViewById(R.id.lMaxTorqueKgm);
+        lNoOfgears = (LinearLayout) findViewById(R.id.lNoOfgears);
+        lNoOfGearsForword = (LinearLayout) findViewById(R.id.lNoOfGearsForword);
+        lNoOfGearsReverse = (LinearLayout) findViewById(R.id.lNoOfGearsReverse);
+        lOverAllLength = (LinearLayout) findViewById(R.id.lOverAllLength);
+        lOverAllWidth = (LinearLayout) findViewById(R.id.lOverAllWidth);
+        lParkingSensors = (LinearLayout) findViewById(R.id.lParkingSensors);
+        lPayLoad = (LinearLayout) findViewById(R.id.lPayLoad);
+        lPowerKW = (LinearLayout) findViewById(R.id.lPowerKW);
+        lPowerWindow = (LinearLayout) findViewById(R.id.lPowerWindow);
+        lPTOHP = (LinearLayout) findViewById(R.id.lPTOHP);
+        lPTORPM = (LinearLayout) findViewById(R.id.lPTORPM);
+        lPTOSpeed = (LinearLayout) findViewById(R.id.lPTOSpeed);
+        lPTOType = (LinearLayout) findViewById(R.id.lPTOType);
+        lPumpType = (LinearLayout) findViewById(R.id.lPumpType);
+        lRainSensingWiper = (LinearLayout) findViewById(R.id.lRainSensingWiper);
+        lRatedRPM = (LinearLayout) findViewById(R.id.lRatedRPM);
+        lRearAC = (LinearLayout) findViewById(R.id.lRearAC);
+        lRearDefogger = (LinearLayout) findViewById(R.id.lRearDefogger);
+        lRearWiper = (LinearLayout) findViewById(R.id.lRearWiper);
+        lSeatBelt = (LinearLayout) findViewById(R.id.lSeatBelt);
+        lRPTOGRPTO = (LinearLayout) findViewById(R.id.lRPTOGRPTO);
+        lSeatBeltWarning = (LinearLayout) findViewById(R.id.lSeatBeltWarning);
+        lSeatingCapacity = (LinearLayout) findViewById(R.id.lSeatingCapacity);
+        lSeatType = (LinearLayout) findViewById(R.id.lSeatType);
+        lSpeed = (LinearLayout) findViewById(R.id.lSpeed);
+        lSportMode = (LinearLayout) findViewById(R.id.lSportMode);
+        lSteering = (LinearLayout) findViewById(R.id.lSteering);
+        lSteeringMountedControl = (LinearLayout) findViewById(R.id.lSteeringMountedControl);
+        lSteeringType = (LinearLayout) findViewById(R.id.lSteeringType);
+        lStrokeInMM = (LinearLayout) findViewById(R.id.lStrokeInMM);
+        lSunRoofMoonRoof = (LinearLayout) findViewById(R.id.lSunRoofMoonRoof);
+        lTMPS = (LinearLayout) findViewById(R.id.lTMPS);
+        lTorque = (LinearLayout) findViewById(R.id.lTorque);
+        lTotalWeight = (LinearLayout) findViewById(R.id.lTotalWeight);
+        lTransmissionType = (LinearLayout) findViewById(R.id.lTransmissionType);
+        lTuboChargeNutralAspirated = (LinearLayout) findViewById(R.id.lTuboChargeNutralAspirated);
+        lTurningRadius = (LinearLayout) findViewById(R.id.lTurningRadius);
+        lTurningRadiusOfBrakes = (LinearLayout) findViewById(R.id.lTurningRadiusOfBrakes);
+        lTypeOfClutchAndBrakePedal = (LinearLayout) findViewById(R.id.lTypeOfClutchAndBrakePedal);
+        lTyres = (LinearLayout) findViewById(R.id.lTyres);
+        lTyreSize = (LinearLayout) findViewById(R.id.lTyreSize);
+        lTyreSizeFront = (LinearLayout) findViewById(R.id.lTyreSizeFront);
+        lTyreSizeRear = (LinearLayout) findViewById(R.id.lTyreSizeRear);
+        lWarrantyKilometer = (LinearLayout) findViewById(R.id.lWarrantyKilometer);
+        lWarrantyYear = (LinearLayout) findViewById(R.id.lWarrantyYear);
+        lWebSite = (LinearLayout) findViewById(R.id.lWebSite);
+        lWeightKg = (LinearLayout) findViewById(R.id.lWeightKg);
+        lWheelBaseMM = (LinearLayout) findViewById(R.id.lWheelBaseMM);
+        lEngineDetails = (LinearLayout) findViewById(R.id.lEngineDetails);
+        lDescription = (LinearLayout) findViewById(R.id.lDescription);
+        lAdditionalInfo = (LinearLayout) findViewById(R.id.lAdditionalinfo);
+        lAxelconfiguration = (LinearLayout) findViewById(R.id.laxelconfiguration);
+        lKerbweight = (LinearLayout) findViewById(R.id.lKerbWeight);
+        lseatupholestry = (LinearLayout) findViewById(R.id.lSeatUpholstery);
 
         getData();
     }
@@ -291,6 +420,130 @@ public class NewVehicleDetails extends AppCompatActivity implements RequestNotif
                         WeightKg.setText(success.getWeightKg());
                         WheelBaseMM.setText(success.getWheelBaseMM());
                         Description.setText(success.getDescription());
+                        AdditionalInfo.setText(success.getAdditionalInformation());
+                        Axelconfiguration.setText(success.getAxleConfiguration());
+                        kerbweight.setText(success.getKerbWeight());
+
+                        if (success.getCategoryName().equalsIgnoreCase("Bus")) {
+                            lDescription.setVisibility(View.VISIBLE);
+                            lEmissionNorms.setVisibility(View.VISIBLE);
+                            lDisplacementCC.setVisibility(View.VISIBLE);
+                            lMaxPower.setVisibility(View.VISIBLE);
+                            lMaxTorqueKgm.setVisibility(View.VISIBLE);
+                            lTransmissionType.setVisibility(View.VISIBLE);
+                            lClutch.setVisibility(View.VISIBLE);
+                            lGearBox.setVisibility(View.VISIBLE);
+                            lFuelType.setVisibility(View.VISIBLE);
+                            lFuelTank.setVisibility(View.VISIBLE);
+                            lTurningRadius.setVisibility(View.VISIBLE);
+                            lMaxSpeed.setVisibility(View.VISIBLE);
+                            lEngineLocation.setVisibility(View.VISIBLE);
+                            lFloorType.setVisibility(View.VISIBLE);
+                            lFrontAxleSuspension.setVisibility(View.VISIBLE);
+                            lRearAxelSuspension.setVisibility(View.VISIBLE);
+                            lTyres.setVisibility(View.VISIBLE);
+                            lWheelBaseMM.setVisibility(View.VISIBLE);
+                            lOverAllLength.setVisibility(View.VISIBLE);
+                            lGroundClearance.setVisibility(View.VISIBLE);
+                            lGVWGCW.setVisibility(View.VISIBLE);
+                            lBrakes.setVisibility(View.VISIBLE);
+                            lSeatingCapacity.setVisibility(View.VISIBLE);
+                            lSeatType.setVisibility(View.VISIBLE);
+                            lAdditionalInfo.setVisibility(View.VISIBLE);
+                        } else if (success.getCategoryName().equalsIgnoreCase("Car")) {
+                            lEngineCC.setVisibility(View.VISIBLE);
+                            lSeatingCapacity.setVisibility(View.VISIBLE);
+                            lDisplacementCC.setVisibility(View.VISIBLE);
+                            lFuelType.setVisibility(View.VISIBLE);
+                            lMaxPower.setVisibility(View.VISIBLE);
+                            lMaxTorqueKgm.setVisibility(View.VISIBLE);
+                            lMileage.setVisibility(View.VISIBLE);
+                            lAlternateFuelType.setVisibility(View.VISIBLE);
+                            lTransmissionType.setVisibility(View.VISIBLE);
+                            lNoOfgears.setVisibility(View.VISIBLE);
+                            lDrive.setVisibility(View.VISIBLE);
+                            lAirCondition.setVisibility(View.VISIBLE);
+                            lPowerWindow.setVisibility(View.VISIBLE);
+                            lCentralLoking.setVisibility(View.VISIBLE);
+                            lAbs.setVisibility(View.VISIBLE);
+                            lAirbags.setVisibility(View.VISIBLE);
+                            lseatupholestry.setVisibility(View.VISIBLE);
+                            lWheelBaseMM.setVisibility(View.VISIBLE);
+                            lKerbweight.setVisibility(View.VISIBLE);
+                            lGroundClearance.setVisibility(View.VISIBLE);
+                           // lnoofdoors.setVisibility(View.VISIBLE);
+                            //lGroundClearance.setVisibility(View.VISIBLE);
+
+                        } else if (success.getCategoryName().equalsIgnoreCase("Construction Equipment")) {
+
+                        } else if (success.getCategoryName().equalsIgnoreCase("Commercial Vehicle")) {
+                            lEngineCC.setVisibility(View.VISIBLE);
+                            lDisplacementCC.setVisibility(View.VISIBLE);
+                            lMaxPower.setVisibility(View.VISIBLE);
+                            lMaxTorqueKgm.setVisibility(View.VISIBLE);
+                            lTransmissionType.setVisibility(View.VISIBLE);
+                            lClutch.setVisibility(View.VISIBLE);
+                            lGearBox.setVisibility(View.VISIBLE);
+                            lFuelType.setVisibility(View.VISIBLE);
+                            lFuelTankCapacityLtr.setVisibility(View.VISIBLE);
+                            lGradeAbility.setVisibility(View.VISIBLE);
+                            lTurningRadius.setVisibility(View.VISIBLE);
+                            lMaxSpeed.setVisibility(View.VISIBLE);
+                            lAxelconfiguration.setVisibility(View.VISIBLE);
+                            lTyres.setVisibility(View.VISIBLE);
+                            lWheelBaseMM.setVisibility(View.VISIBLE);
+                            lGroundClearance.setVisibility(View.VISIBLE);
+                            lGVWGCW.setVisibility(View.VISIBLE);
+                            lKerbweight.setVisibility(View.VISIBLE);
+                            lFrontAxleSuspension.setVisibility(View.VISIBLE);
+                            lRearAxelSuspension.setVisibility(View.VISIBLE);
+                            lBodyOption.setVisibility(View.VISIBLE);
+                            lDescription.setVisibility(View.VISIBLE);
+                            lNoOfCylinder.setVisibility(View.VISIBLE);
+                            lPayLoad.setVisibility(View.VISIBLE);
+                            lBrakes.setVisibility(View.VISIBLE);
+                            lLoadBodyDimensions.setVisibility(View.VISIBLE);
+                            lAdditionalInfo.setVisibility(View.VISIBLE);
+                        } else if (success.getCategoryName().equalsIgnoreCase("Tractor")) {
+                            lEngineType.setVisibility(View.VISIBLE);
+                            lEngineCC.setVisibility(View.VISIBLE);
+                            lHP.setVisibility(View.VISIBLE);
+                            lPowerKW.setVisibility(View.VISIBLE);
+                            lDisplacementCC.setVisibility(View.VISIBLE);
+                            lBoreinmm.setVisibility(View.VISIBLE);
+                            lBoreStroke.setVisibility(View.VISIBLE);
+                            lCoolingSystem.setVisibility(View.VISIBLE);
+                            lFuelType.setVisibility(View.VISIBLE);
+                            lNoOfCylinder.setVisibility(View.VISIBLE);
+                            lTorque.setVisibility(View.VISIBLE);
+                            lAirCleaner.setVisibility(View.VISIBLE);
+                            lTransmissionType.setVisibility(View.VISIBLE);
+                            lDrive.setVisibility(View.VISIBLE);
+                            lMaxSpeed.setVisibility(View.VISIBLE);
+                            lMaxReserveSpeed.setVisibility(View.VISIBLE);
+                            lPTOType.setVisibility(View.VISIBLE);
+                            lPTORPM.setVisibility(View.VISIBLE);
+                            lNoOfGearsForword.setVisibility(View.VISIBLE);
+                            lNoOfGearsReverse.setVisibility(View.VISIBLE);
+                            lSteeringType.setVisibility(View.VISIBLE);
+                            lBrakeType.setVisibility(View.VISIBLE);
+                            lClutchType.setVisibility(View.VISIBLE);
+                            lTotalWeight.setVisibility(View.VISIBLE);
+                            lWheelBaseMM.setVisibility(View.VISIBLE);
+                            lOverAllWidth.setVisibility(View.VISIBLE);
+                            lOverAllLength.setVisibility(View.VISIBLE);
+                            lTurningRadius.setVisibility(View.VISIBLE);
+                            lTyreSizeFront.setVisibility(View.VISIBLE);
+                            lTyreSizeRear.setVisibility(View.VISIBLE);
+                            lHydraulicType.setVisibility(View.VISIBLE);
+                            lLiftingCapacityAtStandardFrame.setVisibility(View.VISIBLE);
+                            lPointLinkage.setVisibility(View.VISIBLE);
+                            lPumpType.setVisibility(View.VISIBLE);
+                        } else if (success.getCategoryName().equalsIgnoreCase("2 Wheeler")) {
+
+                        } else {
+
+                        }
                     }
 
                 } else {

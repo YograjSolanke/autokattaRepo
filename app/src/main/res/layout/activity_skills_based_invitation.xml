@@ -12,6 +12,7 @@
         android:text="Lets Connect - Suggestions based on Skills"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="@color/background"
+        android:paddingStart="5dp"
         android:textSize="14sp" />
 
     <LinearLayout
