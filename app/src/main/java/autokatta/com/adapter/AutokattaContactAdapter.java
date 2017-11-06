@@ -13,6 +13,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,6 +29,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
+import java.io.UnsupportedEncodingException;
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
@@ -113,8 +115,17 @@ public class AutokattaContactAdapter extends RecyclerView.Adapter<AutokattaConta
         holder.mTextName.setText(contactdata.get(position).getUsername());
         holder.mTextNumber.setText(contactdata.get(position).getContact());
         holder.imgCall.setVisibility(VISIBLE);
-        if (contactdata.get(position).getMystatus() != null && !contactdata.get(position).getMystatus().equals("null"))
-            holder.mTextStatus.setText(contactdata.get(position).getMystatus());
+        if (contactdata.get(position).getMystatus() != null && !contactdata.get(position).getMystatus().equals("null")) {
+             /*decode string code*/
+            String decodedString = null;
+            byte[] data = Base64.decode(contactdata.get(position).getMystatus(), Base64.DEFAULT);
+            try {
+                decodedString = new String(data, "UTF-8");
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+            holder.mTextStatus.setText(decodedString);
+        }
         else
             holder.mTextStatus.setText("No Status");
 

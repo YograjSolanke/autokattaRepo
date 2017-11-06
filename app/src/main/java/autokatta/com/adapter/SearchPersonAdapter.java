@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,6 +25,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
+import java.io.UnsupportedEncodingException;
 import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.List;
@@ -110,8 +112,18 @@ public class SearchPersonAdapter extends RecyclerView.Adapter<SearchPersonAdapte
 
         if (contactdata.get(position).getMystatus() == null)
             holder.mTextStatus.setText("No Status");
-        else
-            holder.mTextStatus.setText(contactdata.get(position).getMystatus());
+        else {
+            /*decode string code*/
+            String decodedString = null;
+            byte[] data = Base64.decode(contactdata.get(position).getMystatus(), Base64.DEFAULT);
+            try {
+                decodedString = new String(data, "UTF-8");
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+
+            holder.mTextStatus.setText(decodedString);
+        }
 
         if (contactdata.get(position).getStatus().equals("yes")) {
             holder.btnUnfollow.setVisibility(VISIBLE);
@@ -302,7 +314,7 @@ public class SearchPersonAdapter extends RecyclerView.Adapter<SearchPersonAdapte
             final List<SearchPersonResponse.Success> list = contactdata_copy;
             int count = list.size();
 
-            if (filterString != null && filterString.length() > 0) {
+            if (filterString.length() > 0) {
                 final List<SearchPersonResponse.Success> nlist = new ArrayList<>(count);
                 SearchPersonResponse.Success filterableString;
 

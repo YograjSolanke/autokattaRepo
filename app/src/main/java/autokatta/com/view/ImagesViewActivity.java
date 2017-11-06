@@ -15,7 +15,6 @@ import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -95,7 +94,7 @@ public class ImagesViewActivity extends AppCompatActivity implements RequestNoti
         androidGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent,
                                     View v, int position, long id) {
-                Toast.makeText(getBaseContext(), "Grid Item " + (position + 1) + " Selected", Toast.LENGTH_LONG).show();
+                //Toast.makeText(getBaseContext(), "Grid Item " + (position + 1) + " Selected", Toast.LENGTH_LONG).show();
             }
         });
 
@@ -253,11 +252,24 @@ public class ImagesViewActivity extends AppCompatActivity implements RequestNoti
                     gridViewAndroid = inflater.inflate(R.layout.gridview_image_layout, null);
 
                     ImageView imageViewAndroid = (ImageView) gridViewAndroid.findViewById(R.id.android_gridview_image);
-                    Glide.with(mContext)
-                            .load(imagesList.get(position).getImage())
-                            .diskCacheStrategy(DiskCacheStrategy.ALL)
-                            .placeholder(R.drawable.logo48x48)
-                            .into(imageViewAndroid);
+
+                    if (imagesList.get(position).getImage().contains(",")) {
+                        String[] imageArray = imagesList.get(position).getImage().split(",");
+
+                        for (String anImageArray : imageArray) {
+                            Glide.with(mContext)
+                                    .load("http://autokatta.acquiscent.com/UploadedFiles/" + anImageArray)
+                                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                    .placeholder(R.drawable.logo48x48)
+                                    .into(imageViewAndroid);
+                        }
+                    } else {
+                        Glide.with(mContext)
+                                .load("http://autokatta.acquiscent.com/UploadedFiles/" + imagesList.get(position).getImage())
+                                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                .placeholder(R.drawable.logo48x48)
+                                .into(imageViewAndroid);
+                    }
                 }
             } else {
                 gridViewAndroid = (View) convertView;

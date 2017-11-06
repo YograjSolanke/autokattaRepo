@@ -15,6 +15,9 @@ import android.widget.Button;
 import com.google.android.flexbox.FlexboxLayout;
 
 import java.io.File;
+import java.net.ConnectException;
+import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -147,6 +150,24 @@ public class AddInterestTagsActivity extends AppCompatActivity implements Reques
 
     @Override
     public void notifyError(Throwable error) {
+        if (dialog.isShowing()) {
+            dialog.dismiss();
+        }
+        if (error instanceof SocketTimeoutException) {
+            CustomToast.customToast(getApplicationContext(), getString(R.string._404));
+        } else if (error instanceof NullPointerException) {
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
+        } else if (error instanceof ClassCastException) {
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
+        } else if (error instanceof ConnectException) {
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
+        } else if (error instanceof UnknownHostException) {
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
+        } else {
+            Log.i("Check Class-"
+                    , "AddInterestTagsActivity");
+            error.printStackTrace();
+        }
 
     }
 
@@ -172,7 +193,7 @@ public class AddInterestTagsActivity extends AppCompatActivity implements Reques
                 CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
 
         } else
-            CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
     }
 
 
@@ -234,5 +255,10 @@ public class AddInterestTagsActivity extends AppCompatActivity implements Reques
         }
         UploadVideo uv = new UploadVideo();
         uv.execute();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 }

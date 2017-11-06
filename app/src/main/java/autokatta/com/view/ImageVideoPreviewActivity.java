@@ -1,7 +1,5 @@
 package autokatta.com.view;
 
-import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -12,13 +10,12 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Base64;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -29,32 +26,19 @@ import android.widget.VideoView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.google.android.flexbox.FlexboxLayout;
 
-import java.net.ConnectException;
-import java.net.SocketTimeoutException;
-import java.net.UnknownHostException;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import autokatta.com.R;
-import autokatta.com.apicall.ApiCall;
-import autokatta.com.interfaces.RequestNotifier;
-import autokatta.com.other.CustomToast;
 import autokatta.com.other.ImageLoader;
-import fisk.chipcloud.ChipCloud;
-import fisk.chipcloud.ChipCloudConfig;
-import fisk.chipcloud.ChipListener;
-import retrofit2.Response;
 
-public class ImageVideoPreviewActivity extends AppCompatActivity implements RequestNotifier {
+public class ImageVideoPreviewActivity extends AppCompatActivity {
 
     String videoPath, videoWithoutPath = "", imagesPath, imagesWithoutPath, statusText;
     EditText mStatusText;
-    Dialog mBottomSheetDialog;
-    List<String> interestList = new ArrayList<>();
-    private ProgressDialog dialog;
     String myContact, updatedImages = "";
 
     @Override
@@ -68,8 +52,6 @@ public class ImageVideoPreviewActivity extends AppCompatActivity implements Requ
             getSupportActionBar().setHomeButtonEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
-        dialog = new ProgressDialog(this);
-        dialog.setMessage("Loading...");
 
         if (getIntent().getExtras() != null) {
             videoPath = getIntent().getExtras().getString("videoPath", "");
@@ -167,10 +149,12 @@ public class ImageVideoPreviewActivity extends AppCompatActivity implements Requ
 
         String[] mStrings;
         ImageLoader imageLoader;
+        List<String> imageList;
 
         private MyPagerAdapter(ImageVideoPreviewActivity sliderActivity, List<String> image) {
             mStrings = new String[image.size()];
             mStrings = (String[]) image.toArray(mStrings);
+            imageList = image;
             imageLoader = new ImageLoader(ImageVideoPreviewActivity.this);
         }
 
@@ -197,7 +181,8 @@ public class ImageVideoPreviewActivity extends AppCompatActivity implements Requ
 
             try {
                 Glide.with(ImageVideoPreviewActivity.this)
-                        .load(mStrings[position]).override(320, 240)
+                        .load(mStrings[position])
+                        .override(320, 240)
                         .diskCacheStrategy(DiskCacheStrategy.ALL)
                         .into(imageView);
             } catch (Exception e) {
@@ -253,185 +238,6 @@ public class ImageVideoPreviewActivity extends AppCompatActivity implements Requ
         public void destroyItem(ViewGroup container, int position, Object object) {
             container.removeView((LinearLayout) object);
         }
-
-    }
-
-    private void openDialog() {
-        try {
-            View view = getLayoutInflater().inflate(R.layout.activity_add_tags, null);
-            mBottomSheetDialog = new Dialog(ImageVideoPreviewActivity.this,
-                    R.style.MaterialDialogSheet);
-            mBottomSheetDialog.setContentView(view);
-            mBottomSheetDialog.setCancelable(true);
-            mBottomSheetDialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT,
-                    500);
-            mBottomSheetDialog.getWindow().setGravity(Gravity.BOTTOM);
-            mBottomSheetDialog.show();
-
-            FlexboxLayout flexbox = (FlexboxLayout) view.findViewById(R.id.flexbox);
-            Button ok = (Button) view.findViewById(R.id.ok);
-
-            ChipCloudConfig config = new ChipCloudConfig()
-                    .selectMode(ChipCloud.SelectMode.multi)
-                    .checkedChipColor(Color.parseColor("#4169E1"))
-                    .checkedTextColor(Color.parseColor("#ffffff"))
-                    .uncheckedChipColor(Color.parseColor("#efefef"))
-                    .uncheckedTextColor(Color.parseColor("#666666"));
-
-            ChipCloud chipCloud = new ChipCloud(ImageVideoPreviewActivity.this, flexbox, config);
-            String[] demoArray = getResources().getStringArray(R.array.demo_array);
-            chipCloud.addChips(demoArray);
-            chipCloud.deselectIndex(0);
-
-            chipCloud.setListener(new ChipListener() {
-                @Override
-                public void chipCheckedChange(int index, boolean checked, boolean userClick) {
-                    if (userClick && index != 0) {
-                        if (checked) {
-                            interestList.add(String.valueOf(index));
-                        } else {
-                            interestList.remove(String.valueOf(index));
-                        }
-                    }
-                }
-            });
-
-            ok.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    String finalInterests = "";
-                    for (int k = 0; k < interestList.size(); k++) {
-                        if (finalInterests.equals(""))
-                            finalInterests = interestList.get(k);
-                        else
-                            finalInterests = finalInterests + "," + interestList.get(k);
-                    }
-                    PostData(finalInterests);
-                }
-            });
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void PostData(String finalInterests) {
-        dialog.show();
-
-        ApiCall mApiCall = new ApiCall(this, this);
-        mApiCall.PostStatus(myContact, mStatusText.getText().toString(), imagesWithoutPath, videoWithoutPath, finalInterests);
-    }
-
-//    private void uploadImage(String picturePath) {
-//        Log.i("PAth", "->" + picturePath);
-//        List<String> imgList = Arrays.asList(picturePath.split(","));
-//
-//        for (int i = 0; i < imgList.size(); i++) {
-//
-//            File file = new File(imgList.get(i));
-//            // Parsing any Media type file
-//            RequestBody requestBody = RequestBody.create(MediaType.parse("*/*"), file);
-//            MultipartBody.Part fileToUpload = MultipartBody.Part.createFormData("file", file.getName(), requestBody);
-//            RequestBody filename = RequestBody.create(MediaType.parse("text/plain"), file.getName());
-//
-//            ServiceApi getResponse = ApiCall.getRetrofit().create(ServiceApi.class);
-//            Call<String> call = getResponse.uploadServicePic(fileToUpload, filename);
-//            call.enqueue(new Callback<String>() {
-//                @Override
-//                public void onResponse(Call<String> call, Response<String> response) {
-//                    Log.i("uploadStatusImage", "imageResponse->" + response.body());
-//                }
-//
-//                @Override
-//                public void onFailure(Call<String> call, Throwable t) {
-//                    Log.getStackTraceString(t);
-//                }
-//            });
-//        }
-//    }
-//
-//    private void uploadVideo(final String selectedPath) {
-//        class UploadVideo extends AsyncTask<Void, Void, String> {
-//            private ProgressDialog uploading;
-//
-//            @Override
-//            protected void onPreExecute() {
-//                super.onPreExecute();
-//                uploading = ProgressDialog.show(ImageVideoPreviewActivity.this, "Uploading File", "Please wait...", false, false);
-//
-//            }
-//
-//            @Override
-//            protected void onPostExecute(String s) {
-//                super.onPostExecute(s);
-//                uploading.dismiss();
-//                CustomToast.customToast(getApplicationContext(), "Status posted successfully");
-//                finish();
-//                overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
-//                //textViewResponse.setText(Html.fromHtml("<b>Uploaded at <a href='" + s + "'>" + s + "</a></b>"));
-//                //textViewResponse.setMovementMethod(LinkMovementMethod.getInstance());
-//            }
-//
-//            @Override
-//            protected String doInBackground(Void... params) {
-//                UploadVideos u = new UploadVideos();
-//                return u.uploadVideo(selectedPath);
-//            }
-//        }
-//        UploadVideo uv = new UploadVideo();
-//        uv.execute();
-//    }
-
-    @Override
-    public void notifySuccess(Response<?> response) {
-
-    }
-
-    @Override
-    public void notifyError(Throwable error) {
-        if (dialog.isShowing()) {
-            dialog.dismiss();
-        }
-        if (error instanceof SocketTimeoutException) {
-            CustomToast.customToast(getApplicationContext(), getString(R.string._404));
-        } else if (error instanceof NullPointerException) {
-            CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
-        } else if (error instanceof ClassCastException) {
-            CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
-        } else if (error instanceof ConnectException) {
-            CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
-        } else if (error instanceof UnknownHostException) {
-            CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
-        } else {
-            Log.i("Check Class-"
-                    , "Post Status");
-            error.printStackTrace();
-        }
-    }
-
-    @Override
-    public void notifyString(String str) {
-        if (str != null) {
-            if (dialog.isShowing()) {
-                dialog.dismiss();
-            }
-            if (str.equals("success")) {
-
-                if (videoPath.equals("") && !imagesPath.equals("")) {
-                    //uploadImage(updatedImages);
-                    CustomToast.customToast(getApplicationContext(), "Status posted successfully");
-                    finish();
-                    overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
-                } else {
-                    // uploadVideo(videoPath);
-                }
-
-
-            } else
-                CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
-
-        } else
-            CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
     }
 
     @Override
@@ -455,14 +261,22 @@ public class ImageVideoPreviewActivity extends AppCompatActivity implements Requ
                     mStatusText.setError("Enter status");
                     mStatusText.requestFocus();
                 } else {
-                    //openDialog();
+
+                    /*code to encode the status string*/
+                    byte[] data = new byte[0];
+                    try {
+                        data = mStatusText.getText().toString().getBytes("UTF-8");
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
+                    String encodedString = Base64.encodeToString(data, Base64.DEFAULT);
 
                     Bundle bundle = new Bundle();
                     bundle.putString("videoPath", videoPath);
                     bundle.putString("imagesPath", imagesPath);
                     bundle.putString("images", imagesWithoutPath);
                     bundle.putString("videos", videoWithoutPath);
-                    bundle.putString("statusText", mStatusText.getText().toString());
+                    bundle.putString("statusText", encodedString);
                     Intent intent = new Intent(this, AddInterestTagsActivity.class);
                     intent.putExtras(bundle);
                     startActivity(intent);
@@ -485,9 +299,5 @@ public class ImageVideoPreviewActivity extends AppCompatActivity implements Requ
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (mBottomSheetDialog != null) {
-            mBottomSheetDialog.dismiss();
-            mBottomSheetDialog = null;
-        }
     }
 }

@@ -1,13 +1,11 @@
 package autokatta.com.other;
 
-import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -16,24 +14,22 @@ import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Base64;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.google.android.flexbox.FlexboxLayout;
 import com.nguyenhoanglam.imagepicker.activity.ImagePicker;
 import com.nguyenhoanglam.imagepicker.activity.ImagePickerActivity;
 import com.nguyenhoanglam.imagepicker.model.Image;
 
+import java.io.UnsupportedEncodingException;
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
@@ -46,9 +42,6 @@ import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.response.ProfileAboutResponse;
 import autokatta.com.view.AddInterestTagsActivity;
 import autokatta.com.view.ImageVideoPreviewActivity;
-import fisk.chipcloud.ChipCloud;
-import fisk.chipcloud.ChipCloudConfig;
-import fisk.chipcloud.ChipListener;
 import retrofit2.Response;
 
 public class PostStatus extends AppCompatActivity implements RequestNotifier {
@@ -58,7 +51,6 @@ public class PostStatus extends AppCompatActivity implements RequestNotifier {
     private ApiCall mApiCall;
     private String mLoginContact;
     private ProgressDialog dialog;
-    Dialog mBottomSheetDialog;
     ImageView mProfile_image;
     TextView mProfile_name;
     String statusText;
@@ -228,24 +220,7 @@ public class PostStatus extends AppCompatActivity implements RequestNotifier {
                 cursor.close();
             }
         }
-
-
         return path;
-        /*
-         String path = "";
-         String[] projection = { MediaStore.Video.Media.DATA };
-        Cursor cursor = getContentResolver().query(uri, projection, null, null, null);
-        if (cursor != null) {
-            // HERE YOU WILL GET A NULLPOINTER IF CURSOR IS NULL
-            // THIS CAN BE, IF YOU USED OI FILE MANAGER FOR PICKING THE MEDIA
-            int column_index = cursor
-                    .getColumnIndexOrThrow(MediaStore.Video.Media.DATA);
-            cursor.moveToFirst();
-            path = cursor.getString(column_index);
-            cursor.close();
-            return path;
-        } else
-            return path;*/
     }
 
     @Override
@@ -270,13 +245,20 @@ public class PostStatus extends AppCompatActivity implements RequestNotifier {
                     mStatusText.requestFocus();
                 } else {
 
-                    //openDialog();
+                    /*code to encode the status string*/
+                    byte[] data = new byte[0];
+                    try {
+                        data = mStatusText.getText().toString().getBytes("UTF-8");
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
+                    String encodedString = Base64.encodeToString(data, Base64.DEFAULT);
 
                     Bundle bundle = new Bundle();
                     bundle.putString("videoPath", "");
                     bundle.putString("imagesPath", "");
                     bundle.putString("images", "");
-                    bundle.putString("statusText", mStatusText.getText().toString());
+                    bundle.putString("statusText", encodedString);
                     Intent intent = new Intent(this, AddInterestTagsActivity.class);
                     intent.putExtras(bundle);
                     startActivity(intent);
@@ -379,72 +361,10 @@ public class PostStatus extends AppCompatActivity implements RequestNotifier {
             CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
     }
 
-    private void openDialog() {
-        try {
-            View view = getLayoutInflater().inflate(R.layout.activity_add_tags, null);
-            mBottomSheetDialog = new Dialog(PostStatus.this,
-                    R.style.MaterialDialogSheet);
-            mBottomSheetDialog.setContentView(view);
-            mBottomSheetDialog.setCancelable(true);
-            mBottomSheetDialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT,
-                    500);
-            mBottomSheetDialog.getWindow().setGravity(Gravity.BOTTOM);
-            mBottomSheetDialog.show();
-
-            FlexboxLayout flexbox = (FlexboxLayout) view.findViewById(R.id.flexbox);
-            Button ok = (Button) view.findViewById(R.id.ok);
-
-            ChipCloudConfig config = new ChipCloudConfig()
-                    .selectMode(ChipCloud.SelectMode.multi)
-                    .checkedChipColor(Color.parseColor("#4169E1"))
-                    .checkedTextColor(Color.parseColor("#ffffff"))
-                    .uncheckedChipColor(Color.parseColor("#efefef"))
-                    .uncheckedTextColor(Color.parseColor("#666666"));
-
-            ChipCloud chipCloud = new ChipCloud(PostStatus.this, flexbox, config);
-            String[] demoArray = getResources().getStringArray(R.array.demo_array);
-            chipCloud.addChips(demoArray);
-            chipCloud.deselectIndex(0);
-
-            chipCloud.setListener(new ChipListener() {
-                @Override
-                public void chipCheckedChange(int index, boolean checked, boolean userClick) {
-                    if (userClick && index != 0) {
-                        if (checked) {
-                            interestList.add(String.valueOf(index));
-                        } else {
-                            interestList.remove(String.valueOf(index));
-                        }
-                    }
-                }
-            });
-
-            ok.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    String finalInterests = "";
-                    for (int k = 0; k < interestList.size(); k++) {
-                        if (finalInterests.equals(""))
-                            finalInterests = interestList.get(k);
-                        else
-                            finalInterests = finalInterests + "," + interestList.get(k);
-                    }
-                    PostData(finalInterests);
-                }
-            });
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (mBottomSheetDialog != null) {
-            mBottomSheetDialog.dismiss();
-            mBottomSheetDialog = null;
-        }
     }
 
 
