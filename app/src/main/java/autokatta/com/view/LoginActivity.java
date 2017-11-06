@@ -89,7 +89,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     protected void onResume() {
         super.onResume();
         if (mSharedPreferences.getBoolean("mChooseLanguage", true)) {
-            openDialog();
+            //openDialog();
             mEditor = mSharedPreferences.edit();
             mEditor.putBoolean("mChooseLanguage", false);
             mEditor.apply();

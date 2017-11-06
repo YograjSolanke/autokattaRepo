@@ -1,8 +1,177 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="autokatta.com.register.TermsConditions">
 
-</android.support.constraint.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Privacy Policy"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="This section pertains to the Privacy Policy of Autokatta Apps and www.autokatta.com. We value the trust you place in us. Please read the following statement to learn about our information gathering and dissemination practices.
+The term “We”/ “Us” / “Our” used in this document refer to Autokatta Solutions Pvt. Ltd. and 'You' / 'Your' / 'Yourself' refer to the users, who visit or access or use or avail any service or product (collectively “usage”) on or through website/App/ (individually and collectively, “Website”)
+NOTE:
+THIS PRIVACY POLICY IS AN ELECTRONIC RECORD IN THE FORM OF ELECTRONIC CONTRACT IN TERMS OF INFORMATION TECHNOLOGY ACT, 2000 AND RULES MADE THEREUNDER (AS AMENDED FROM TIME TO TIME) AND DOES NOT REQUIRE ANY PHYSICAL SIGNATURE OR SEAL.
+Our privacy policy is subject to change at any time without notice. To make sure you are aware of any changes, please review this policy periodically.
+By visiting this Website you agree to be bound by the terms and conditions of this Privacy Policy. If You do not agree please do not download, use or access our Website/App.
+By mere use of the Website/App, You expressly consent to our use and disclosure of Your personal information in accordance with this Privacy Policy. This Privacy Policy is incorporated into and subject to the Terms and Conditions of Autokatta.
+1. COLLECTION OF PERSONALLY IDENTIFIABLE INFORMATION AND OTHER INFORMATION
+This Privacy Policy extends to Users who visit the Website but do not register on the Website/App and as well as Users who are Registered on the Website/App. When You use our Website/App, we collect and store Your personal information which is provided by You from time to time. Our primary goal in doing so is to provide You a safe, efficient, smooth and customized experience. This allows us to provide services and features that most likely meet Your needs, and to customize our Website/App to make Your experience safer and easier. More importantly, while doing so we collect personal information from You that we consider necessary for achieving this purpose.
+In general, You can browse the Website without telling us who You are or revealing any personal information about Yourself. Once You give us Your personal information, You are not anonymous to us. Where possible, we indicate which fields are required and which fields are optional. You always have the option to not provide information by choosing not to use a particular service or feature on the Website/App. We may automatically track certain information about You based upon Your behaviour on our Website/App. We use this information to do internal research on our Users' demographics, interests, and behaviour to better understand, protect and serve our Users. This information is compiled and analysed on an aggregated basis. This information may include the URL that You just came from (whether this URL is on our Website or not), which URL You next go to (whether this URL is on our Website or not), Your computer browser information, and Your IP address.
+A 'cookie' is a small piece of information stored by a Web server on a Web browser so it can be later read back from that browser. The acceptance of cookies is not a requirement for visiting the Site. However, we would like to point out that some functionality on the Site and ordering is only possible with the activation of cookies. Cookies are tiny text files which identify Your computer to our server as a unique User when You visit certain pages on the Site and they are stored by Your Internet browser on Your computer's hard drive. Usually, cookies contain two pieces of information: a site name and a unique User ID. Cookies cannot be used alone to identify You, although they may be used to identify Your IP address. We use data collection devices such as 'cookies' on certain pages of the Website/App to help analyse our web page flow, measure promotional effectiveness, and promote trust and safety.
+We also use cookies to allow You to enter Your password less frequently during a session. Cookies can also help us provide information that is targeted to Your interests. Most cookies are 'session cookies,' meaning that they are automatically deleted from Your hard drive at the end of a session. You are always free to decline our cookies if Your browser permits, although in that case You may not be able to use certain features on the Website/App and You may be required to re-enter Your password more frequently during a session.
+    Additionally, You may encounter 'cookies' or other similar devices on certain pages of the Website/App that are placed by third parties. We do not control the use of cookies by third parties.
+    If You choose to post messages on our message boards, chat rooms or other message areas or leave feedback, we will collect that information You provide to us. We retain this information as necessary to resolve disputes, provide customer support and troubleshoot problems as permitted by law.
+    If You send us personal correspondence, such as emails or letters, or if other Users or third parties send us correspondence about Your activities or postings on the Website/App, we may collect such information into a file specific to You.
+    We collect personally identifiable information (email address, name, phone number, etc.) from You when You set up a free account with us. While You can browse some sections of our Website without being a registered member, Using our App do require registration. We do use Your contact information to send You offers based on Your previous orders and Your interests.
+    Using certain features like send invite will result in using Your SMS package from your mobile service provider. By using the invite feature You agree to incur this charge on Yourself.
+    We will only keep Your information for as long as we are either required to by law or as is relevant for the purposes for which it was collected.
+    2. USE OF DEMOGRAPHIC / PROFILE DATA / YOUR INFORMATION
+    We use personal information to provide the services You request. To the extent we use Your personal information to market to You, using our website/App does not provide You the ability to opt-out of such uses. We use Your personal information to resolve disputes; troubleshoot problems; help promote a safe service; measure consumer interest in our products and services, inform You about online and offline offers, products, services, and updates; customize Your experience; detect and protect us against error, fraud and other criminal activity; enforce our terms and conditions; and as otherwise described to You at the time of collection.
+    In our efforts to continually improve our product and service offerings, we collect and analyse demographic and profile data about our Users' activity on our Website/App.
+    We identify and use Your IP address to help diagnose problems with our server, and to administer our Website/App. Your IP address is also used to help identify You and to gather broad demographic information.
+    We will occasionally ask You to complete optional online surveys. These surveys may ask You for contact information and demographic information (like zip code, age, or income level). We use this data to tailor Your experience at our Website/App, providing You with content that we think You might be interested in and to display content according to Your preferences.
+    3. SHARING OF PERSONAL INFORMATION
+    We may share personal information with our other corporate entities and affiliates to help detect and prevent identity theft, fraud and other potentially illegal acts; correlate related or multiple accounts to prevent abuse of our services; and to facilitate joint or co-branded services that You request where such services are provided by more than one corporate entity. Those entities and affiliates may not market to You as a result of such sharing unless You explicitly opt-in.
+    We may disclose personal information if required to do so by law or in the good faith belief that such disclosure is reasonably necessary to respond to subpoenas, court orders, or other legal process. We may disclose personal information to law enforcement offices, third party rights owners, or others in the good faith belief that such disclosure is reasonably necessary to: enforce our Terms or Privacy Policy; respond to claims that an advertisement, posting or other content violates the rights of a third party; or protect the rights, property or personal safety of our Users or the general public.
+    We and our affiliates will share / sell some or all of Your personal information with another business entity should we (or our assets) plan to merge with, or be acquired by that business entity, or re-organization, amalgamation, restructuring of business. Should such a transaction occur the other business entity (or the new combined entity) will be required to follow this Privacy Policy with respect to Your personal information.
+    4. LINKS TO OTHER SITES
+    Our Website links to other websites that may collect personally identifiable information about You. The Website is not responsible for the privacy practices or the content of those linked websites nor for any third party to whom we transfer Your data in accordance with our Privacy Policy. Any usage of such third party website or availing any service or product through third party shall be at Your risk and Autokatta Solutions Pvt. Ltd. is not responsible for any loss/damage or otherwise.
+    5. SECURITY PRECAUTIONS
+    Our Website has stringent security measures in place to protect the loss, misuse, and alteration of the information under our control. Whenever You change or access Your account information, we offer the use of a secure server. Once Your information is in our possession we adhere to strict security guidelines, protecting it against unauthorized access.
+    While We protect Your Personal information as per industry standards, You acknowledge that the internet or computer networks are not fully secure and that We cannot provide any absolute assurance regarding the security of Your Personal information. Therefore You acknowledge that You shall not hold responsible Autokatta Solutions Pvt. Ltd.  in any manner whatsoever for loss of Your Information, or any other data, which You share with Us or which We have with Us if such loss or any damage caused to You because of events beyond Our control. You further acknowledge that any information (including your personal information) transmitted to Us or from Your use of Website will therefore be at Your own risk.
+    6. CHOICE/OPT-OUT
+    We do not provide Users with the opportunity to opt-out of receiving non-essential (promotional, marketing-related) communications from us on behalf of our partners, and from us in general, after setting up an account.
+    7. ADVERTISEMENTS ON AUTOKATTA
+    We use third-party advertising companies to serve ads when You visit our Website/App. These companies may use information (not including Your name, address, email address, or telephone number) about Your visits to this and other websites in order to provide advertisements about goods and services of interest to You.
+    8. YOUR CONSENT
+    By using the Website/App and/ or by providing Your information, You consent to the collection and use of the information You disclose on the Website/App in accordance with this Privacy Policy, including but not limited to Your consent for sharing Your information as per this privacy policy.
+    If we decide to change our privacy policy, we will post those changes on this page so that You are always aware of what information we collect, how we use it, and under what circumstances we disclose it.
+    9. GRIEVANCE OFFICER
+    In accordance with Information Technology Act 2000 and rules made there under, the name and contact details of the Grievance Officer are provided below:
+    Grievance Officer: Amol Patil Autokatta Solutions (P) Limited. Time: Mon to Fri (9:00 to 18:00)" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="TERMS OF SERVICE"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/activity_half_margin"
+            android:text="The terms of service governs our relationship with users and others who interact with Autokatta, as well as Autokatta brands, products and services. By using or accessing the Autokatta, You agree to this Statement, as updated from time to time. Additionally, You will find resources at the end of this document that help You understand how Autokatta works.
+ 
+1. Sharing Your Content and Information
+
+You own all of the content and information You post on Autokatta. In addition:
+1. For content that is covered by intellectual property rights, like photos and videos (IP content), You specifically give us the following permission: You grant us a non-exclusive, transferable, sub-licensable, royalty-free, worldwide license to use any content that You post on or in connection with Autokatta..
+2. When You delete content, it is deleted in a manner similar to emptying the recycle bin on a computer. However, You understand that removed content may persist in backup copies for a reasonable period of time (but will not be available to others).
+3. When You use an application, the application may ask for Your permission to access Your content and information as well as content and information that others have shared with You.  We require applications to respect Your privacy, and Your agreement with that application will control how the application can use, store, and transfer that content and information.  
+4. When You publish content or information using the Public setting, it means that You are allowing everyone, including people off of Autokatta, to access and use that information, and to associate it with You (i.e., Your name and profile picture, mobile number).
+5. We always appreciate Your feedback or other suggestions about Autokatta, but You understand that we may use Your feedback or suggestions without any obligation to compensate You for them (just as You have no obligation to offer them).
+ 
+2. Safety
+
+We do our best to keep Autokatta safe, but we cannot guarantee it. We need Your help to keep Autokatta safe, which includes the following commitments by You:
+1. You will not post unauthorized commercial communications (such as spam) on Autokatta.
+2. You will not collect users' content or information, or otherwise access Autokatta, using automated means (such as harvesting bots, robots, spiders, or scrapers) without our prior permission.
+3. You will not engage in unlawful multi-level marketing, such as a pyramid scheme, on Autokatta.
+4. You will not upload viruses or other malicious code.
+5. You will not solicit login information or access an account belonging to someone else.
+6. You will not bully, intimidate, or harass any user.
+7. You will not post content that: is hate speech, threatening, or pornographic; incites violence; or contains nudity or graphic or gratuitous violence.
+8. You will not develop or operate a third-party application containing alcohol-related, dating or other mature content (including advertisements) without appropriate age-based restrictions.
+9. You will not use Autokatta to do anything unlawful, misleading, malicious, or discriminatory.
+10. You will not do anything that could disable, overburden, or impair the proper working or appearance of Autokatta, such as a denial of service attack or interference with page rendering or other Autokatta functionality.
+11. You will not facilitate or encourage any violations of this Statement or our policies.
+ 
+3. Registration and Account Security
+
+Autokatta users provide their real names, mobile number and information, and we need Your help to keep it that way. Here are some commitments You make to us relating to registering and maintaining the security of Your account:
+1. You will not provide any false personal information on Autokatta, or create an account for anyone other than Yourself without permission.
+2. You will not create more than one personal account.
+3. If we disable Your account, You will not create another one without our permission.
+4. You will not use Autokatta if You are under 18.
+5. You will keep Your contact information accurate and up-to-date.
+6. You will not share Your password (or in the case of developers, Your secret key), let anyone else access Your account, or do anything else that might jeopardize the security of Your account.
+7. If You select a username or similar identifier for Your account , we reserve the right to remove or reclaim it if we believe it is appropriate (such as when a trademark owner complains about a username that does not closely relate to a user's actual name).
+ 
+4. Protecting Other People's Rights
+
+We respect other people's rights, and expect You to do the same.
+1. You will not post content or take any action on Autokatta that infringes or violates someone else's rights or otherwise violates the law.
+2. We can remove any content or information You post on Autokatta if we believe that it violates this Statement or our policies.
+3. If we remove Your content for infringing someone else's copyright, and You believe we removed it by mistake, we will provide You with an opportunity to appeal.
+4. If You repeatedly infringe other people's intellectual property rights, we will disable Your account when appropriate.
+5. You will not use our copyrights or Trademarks or any confusingly similar marks, except as expressly permitted by our Brand Usage Guidelines or with our prior written permission.
+6. If You collect information from users, You will: obtain their consent, make it clear You (and not Autokatta) are the one collecting their information, and post a privacy policy explaining what information You collect and how You will use it.
+7. You will not post anyone's identification documents or sensitive financial information on Autokatta.
+
+5. Mobile and Other Devices
+1. We currently provide our mobile services for free, but please be aware that Your carrier's normal rates and fees, such as text messaging and data charges, will still apply.
+2. In the event You change or deactivate Your mobile telephone number, You will update Your account information on Autokatta within 48 hours to ensure that Your messages are not sent to the person who acquires Your old number.
+3. You provide consent and all rights necessary to enable users to sync (including through an application) their devices with any information that is visible to them on Autokatta.
+ 
+6. Payments
+
+If You make a payment on Autokatta, You agree to our Payments Terms unless it is stated that other terms apply.
+ 
+7. About Advertisements and Other Commercial Content Served or Enhanced by Autokatta
+
+Our goal is to deliver advertising and other commercial or sponsored content that is valuable to our users and advertisers. In order to help us do that, You agree to the following:
+1. You give us permission to use Your name, profile picture, content, Mobile number and information in connection with commercial, sponsored, or related content (such as a brand You like) served or enhanced by us. This means, for example, that You permit a business or other entity to pay us to display Your name and/or profile picture with Your content or information, without any compensation to You. If You have selected a specific audience for Your content or information, we will respect Your choice when we use it.
+2. We do not give Your content or information to advertisers without Your consent.
+3. You understand that we may not always identify paid services and communications as such.
+ 
+
+8. Special Provisions Applicable to Software
+1. If You download or use our software, such as a stand-alone software product, an app, or a browser plugin, You agree that from time to time, the software may download and install upgrades, updates and additional features from us in order to improve, enhance, and further develop the software.
+2. You will not modify, create derivative works of, decompile, or otherwise attempt to extract source code from us, unless You are expressly permitted to do so under an open source license, or we give You express written permission.
+
+ 
+9. Termination
+
+If You violate the letter or spirit of this Statement, or otherwise create risk or possible legal exposure for us, we can stop providing all or part of Autokatta to You. We will notify You by email or at the next time You attempt to access Your account. 
+ 
+10. Disputes
+1. If anyone brings a claim against us related to Your actions, content or information on Autokatta, You will indemnify and hold us harmless from and against all damages, losses, and expenses of any kind (including reasonable legal fees and costs) related to such claim. Although we provide rules for user conduct, we do not control or direct users' actions on Autokatta and are not responsible for the content or information users transmit or share on Autokatta. We are not responsible for any offensive, inappropriate, obscene, unlawful or otherwise objectionable content or information You may encounter on Autokatta. We are not responsible for the conduct, whether online or offline, of any user of Autokatta.
+2. WE TRY TO KEEP AUTOKATTA UP, BUG-FREE, AND SAFE, BUT YOU USE IT AT YOUR OWN RISK. WE ARE PROVIDING AUTOKATTA AS IS WITHOUT ANY EXPRESS OR IMPLIED WARRANTIES INCLUDING, BUT NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT. WE DO NOT GUARANTEE THAT AUTOKATTA WILL ALWAYS BE SAFE, SECURE OR ERROR-FREE OR THAT AUTOKATTA WILL ALWAYS FUNCTION WITHOUT DISRUPTIONS, DELAYS OR IMPERFECTIONS. AUTOKATTA IS NOT RESPONSIBLE FOR THE ACTIONS, CONTENT, INFORMATION, OR DATA OF THIRD PARTIES, AND YOU RELEASE US, OUR DIRECTORS, OFFICERS, EMPLOYEES, AND AGENTS FROM ANY CLAIMS AND DAMAGES, KNOWN AND UNKNOWN, ARISING OUT OF OR IN ANY WAY CONNECTED WITH ANY CLAIM YOU HAVE AGAINST ANY SUCH THIRD PARTIES. 
+ 
+
+11. Definitions
+1. By 'AUTOKATTA'  we mean the features and services we make available, including through (a) our website at www.autokatta.com and apps and any other AUTOKATTA branded or co-branded websites (including sub-domains, international versions, widgets, and mobile versions); (b) our Platform/ apps; (c) social plugins such as the Like button, the Share button and other similar offerings; and (d) other media, brands, products, services, software (such as a toolbar), devices, or networks now existing or later developed. AUTOKATTA reserves the right to designate, in its sole discretion, that certain of our brands, products, or services are governed by separate terms and not thisTerms of service.
+2. By 'Platform' we mean a set of APIs and services (such as content) that enable others, including application developers and website operators, to retrieve data from AUTOKATTA or provide data to us. “Platform” also means the application and its features we are providing which enables user to use the application.
+3. By 'information' we mean facts and other information about You, including actions taken by users and non-users who interact with AUTOKATTA.
+4. By 'content' we mean anything You or other users post, provide or share using AUTOKATTA.
+5. By 'data' or 'user data' or 'user's data' we mean any data, including a user's content or information that You or third parties can retrieve from AUTOKATTA or provide to AUTOKATTA through Platform.
+        6. By 'post' we mean post on AUTOKATTA or otherwise make available by using AUTOKATTA.
+        7. By 'use' we mean use, run, copy, publicly perform or display, distribute, modify, translate, and create derivative works of.
+        8. By 'application' we mean any application or website that uses or accesses Platform, as well as anything else that receives or has received data from us.  If You no longer access Platform but have not deleted all data from us, the term application will apply until You delete the data.
+
+         
+        12. Other
+        1. This Statement makes up the entire agreement between the parties regarding AUTOKATTA, and supersedes any prior agreements.
+        2. If any portion of this Statement is found to be unenforceable, the remaining portion will remain in full force and effect.
+        3. If we fail to enforce any of this Statement, it will not be considered a waiver.
+        4. Any amendment to or waiver of this Statement must be made in writing and signed by us.
+        5. You will not transfer any of Your rights or obligations under this Statement to anyone else without our consent.
+        6. All of our rights and obligations under this Statement are freely assignable by us in connection with a merger, acquisition, or sale of assets, or by operation of law or otherwise.
+        7. Nothing in this Statement shall prevent us from complying with the law.
+        8. This Statement does not confer any third party beneficiary rights.
+        9. We reserve all rights not expressly granted to You.
+        10. You will comply with all applicable laws when using or accessing AUTOKATTA." />
+    </LinearLayout>
+</ScrollView>

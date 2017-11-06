@@ -96,7 +96,7 @@
                 android:weightSum="2"
                 android:id="@+id/linearImages"
                 android:layout_marginTop="5dp"
-                android:layout_below="@+id/captionText"
+                android:layout_below="@+id/imageVideoCaptionText"
                 android:visibility="gone">
 
                 <LinearLayout

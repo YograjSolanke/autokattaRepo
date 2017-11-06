@@ -588,9 +588,9 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
                             startActivity(new Intent(AutokattaMainActivity.this, EnquiryActivity.class));
                         } else if (menuItem.getItemId() == R.id.leads) {
                             startActivity(new Intent(AutokattaMainActivity.this, Leads.class));
-                        } else if (menuItem.getItemId() == R.id.change_language) {
+                        } /*else if (menuItem.getItemId() == R.id.change_language) {
                             openDialog();
-                        } else if (menuItem.getItemId() == R.id.sign_out) {
+                        } */ else if (menuItem.getItemId() == R.id.sign_out) {
                             AlertDialog.Builder alert = new AlertDialog.Builder(AutokattaMainActivity.this);
                             alert.setTitle(getString(R.string.alert_title));
                             alert.setMessage(getString(R.string.sign_out_message));

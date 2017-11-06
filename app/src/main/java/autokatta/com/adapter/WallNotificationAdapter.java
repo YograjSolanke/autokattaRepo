@@ -450,7 +450,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
             action_name = (TextView) imageView.findViewById(R.id.action_name);
             action_time = (TextView) imageView.findViewById(R.id.action_time);
             videoView = (VideoView) imageView.findViewById(R.id.VideoView);
-            captionText = (TextView) imageView.findViewById(R.id.captionText);
+            captionText = (TextView) imageView.findViewById(R.id.imageVideoCaptionText);
             linearImages = (LinearLayout) imageView.findViewById(R.id.linearImages);
         }
     }

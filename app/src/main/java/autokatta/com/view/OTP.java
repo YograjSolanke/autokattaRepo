@@ -21,7 +21,7 @@ import retrofit2.Response;
 
 public class OTP extends AppCompatActivity implements RequestNotifier, View.OnClickListener {
 
-    TextView OtpText, emailOtpText;
+    TextView OtpText, emailOtpText, mResendOtp;
     EditText OtpEdit, otpemail;
     String otpstr2;
     String contact, email, call;
@@ -44,7 +44,8 @@ public class OTP extends AppCompatActivity implements RequestNotifier, View.OnCl
         OtpEdit = (EditText) findViewById(R.id.edtotp1);
         otpemail = (EditText) findViewById(R.id.otpemail);
 
-        OtpText = (TextView) findViewById(R.id.otp2);
+        //OtpText = (TextView) findViewById(R.id.otp2);
+        mResendOtp = (TextView) findViewById(R.id.textView4);
         emailOtpText = (TextView) findViewById(R.id.emailOtpText);
         mSubmit = (Button) findViewById(R.id.submit_otp);
         mSubmit.setOnClickListener(this);
@@ -54,10 +55,23 @@ public class OTP extends AppCompatActivity implements RequestNotifier, View.OnCl
         contact = i.getStringExtra("contact");
         call = i.getStringExtra("call");
 
+        sendOtp();
 
+        mResendOtp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sendOtp();
+            }
+        });
+
+    }
+
+    /*
+    Send OTP...
+     */
+    public void sendOtp() {
         ApiCall mApiCall = new ApiCall(OTP.this, this);
         mApiCall.getOTP(contact);
-
     }
 
     @Override
@@ -82,7 +96,7 @@ public class OTP extends AppCompatActivity implements RequestNotifier, View.OnCl
     @Override
     public void notifyString(String str) {
         if (str != null) {
-            OtpText.setText(str);
+//            OtpText.setText(str);
             otpstr2 = "" + str;
 
         } else {
@@ -96,7 +110,7 @@ public class OTP extends AppCompatActivity implements RequestNotifier, View.OnCl
         switch (v.getId()) {
             case R.id.submit_otp:
                 String otpstr1 = OtpEdit.getText().toString();
-                otpstr2 = OtpText.getText().toString().trim();
+                //otpstr2 = OtpText.getText().toString().trim();
                 if (otpstr1.equals(otpstr2)) {
                     if (call.equalsIgnoreCase("forgot")) {
 
