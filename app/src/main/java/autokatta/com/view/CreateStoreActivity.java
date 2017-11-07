@@ -501,6 +501,7 @@ public class CreateStoreActivity extends AppCompatActivity implements Multispinn
         super.onActivityResult(requestCode, resultCode, data);
         try {
             String result = getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).getString("imageCallStore", "");
+            getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).edit().putString("imageCallStore", "").apply();
             String fname;
             if (result.equalsIgnoreCase("addProfile")) {
                 if (requestCode == 0 && resultCode == RESULT_OK && null != data) {

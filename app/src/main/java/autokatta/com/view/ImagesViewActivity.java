@@ -35,7 +35,7 @@ import retrofit2.Response;
 public class ImagesViewActivity extends AppCompatActivity implements RequestNotifier {
 
     GridView androidGridView;
-    List<GetMediaResponse.Success.Image> imagesList = new ArrayList<GetMediaResponse.Success.Image>();
+    List<String> imagesList = new ArrayList<String>();
     int mGroupId, mStoreId;
     String mBundleContact;
     private ProgressDialog pDialog;
@@ -132,15 +132,21 @@ public class ImagesViewActivity extends AppCompatActivity implements RequestNoti
                     imagesList.clear();
 
                     for (GetMediaResponse.Success.Image sImage : mediaResponse.getSuccess().getImage()) {
-                        sImage.setLiveStatusID(sImage.getLiveStatusID());
-                        sImage.setStatus(sImage.getStatus());
-                        sImage.setUserContact(sImage.getUserContact());
-                        sImage.setInterest(sImage.getInterest());
-                        sImage.setType(sImage.getType());
-                        sImage.setImage(sImage.getImage());
-                        sImage.setVideo(sImage.getVideo());
-                        sImage.setDateTime(sImage.getDateTime());
-                        imagesList.add(sImage);
+//                        sImage.setLiveStatusID(sImage.getLiveStatusID());
+//                        sImage.setStatus(sImage.getStatus());
+//                        sImage.setUserContact(sImage.getUserContact());
+//                        sImage.setInterest(sImage.getInterest());
+//                        sImage.setType(sImage.getType());
+//                        sImage.setImage(sImage.getImage());
+//                        sImage.setVideo(sImage.getVideo());
+//                        sImage.setDateTime(sImage.getDateTime());
+
+                        if (sImage.getImage().contains(",")) {
+                            String[] array = sImage.getImage().split(",");
+                            for (String item : array)
+                                imagesList.add(item);
+                        } else
+                            imagesList.add(sImage.getImage());
                     }
 
                     ImageAdapterGridView adapter = new ImageAdapterGridView(ImagesViewActivity.this, imagesList);
@@ -204,9 +210,9 @@ public class ImagesViewActivity extends AppCompatActivity implements RequestNoti
 
     public class ImageAdapterGridView extends BaseAdapter {
         private Context mContext;
-        List<GetMediaResponse.Success.Image> imagesList = new ArrayList<GetMediaResponse.Success.Image>();
+        List<String> imagesList = new ArrayList<String>();
 
-        ImageAdapterGridView(Context c, List<GetMediaResponse.Success.Image> imagesLists) {
+        ImageAdapterGridView(Context c, List<String> imagesLists) {
             mContext = c;
             imagesList = imagesLists;
         }
@@ -253,23 +259,23 @@ public class ImagesViewActivity extends AppCompatActivity implements RequestNoti
 
                     ImageView imageViewAndroid = (ImageView) gridViewAndroid.findViewById(R.id.android_gridview_image);
 
-                    if (imagesList.get(position).getImage().contains(",")) {
-                        String[] imageArray = imagesList.get(position).getImage().split(",");
-
-                        for (String anImageArray : imageArray) {
-                            Glide.with(mContext)
-                                    .load("http://autokatta.acquiscent.com/UploadedFiles/" + anImageArray)
-                                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                                    .placeholder(R.drawable.logo48x48)
-                                    .into(imageViewAndroid);
-                        }
-                    } else {
+//                    if (imagesList.get(position).getImage().contains(",")) {
+//                        String[] imageArray = imagesList.get(position).getImage().split(",");
+//
+//                        for (String anImageArray : imageArray) {
+//                            Glide.with(mContext)
+//                                    .load("http://autokatta.acquiscent.com/UploadedFiles/" + anImageArray)
+//                                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+//                                    .placeholder(R.drawable.logo48x48)
+//                                    .into(imageViewAndroid);
+//                        }
+//                    } else {
                         Glide.with(mContext)
-                                .load("http://autokatta.acquiscent.com/UploadedFiles/" + imagesList.get(position).getImage())
+                                .load("http://autokatta.acquiscent.com/UploadedFiles/" + imagesList.get(position))
                                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                                 .placeholder(R.drawable.logo48x48)
                                 .into(imageViewAndroid);
-                    }
+//                    }
                 }
             } else {
                 gridViewAndroid = (View) convertView;

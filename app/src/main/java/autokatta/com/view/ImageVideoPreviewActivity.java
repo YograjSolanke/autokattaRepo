@@ -1,8 +1,7 @@
 package autokatta.com.view;
 
+import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.Typeface;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -12,16 +11,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Base64;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.MediaController;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.VideoView;
 
 import com.bumptech.glide.Glide;
@@ -40,7 +38,8 @@ public class ImageVideoPreviewActivity extends AppCompatActivity {
     String videoPath, videoWithoutPath = "", imagesPath, imagesWithoutPath, statusText;
     EditText mStatusText;
     String myContact, updatedImages = "";
-
+    ViewPager viewPager;
+    MyPagerAdapter myPagerAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,7 +66,7 @@ public class ImageVideoPreviewActivity extends AppCompatActivity {
         final VideoView mVideoView = (VideoView) findViewById(R.id.VideoView);
         RelativeLayout mVideoRel = (RelativeLayout) findViewById(R.id.relVideo);
         RelativeLayout mImageRel = (RelativeLayout) findViewById(R.id.relImage);
-        ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
+        viewPager = (ViewPager) findViewById(R.id.viewPager);
 
         mStatusText = (EditText) findViewById(R.id.status);
         //final Button play = (Button) findViewById(R.id.play);
@@ -139,28 +138,58 @@ public class ImageVideoPreviewActivity extends AppCompatActivity {
                 else
                     updatedImages = updatedImages + "," + image.get(k);
             }
-            MyPagerAdapter myPagerAdapter = new MyPagerAdapter(ImageVideoPreviewActivity.this, image);
+            myPagerAdapter = new MyPagerAdapter(ImageVideoPreviewActivity.this, image);
             viewPager.setAdapter(myPagerAdapter);
         }
     }
 
 
     private class MyPagerAdapter extends PagerAdapter {
-
+        Context context;
         String[] mStrings;
         ImageLoader imageLoader;
         List<String> imageList;
+        private LayoutInflater layoutInflater;
 
         private MyPagerAdapter(ImageVideoPreviewActivity sliderActivity, List<String> image) {
+            context = sliderActivity;
             mStrings = new String[image.size()];
             mStrings = (String[]) image.toArray(mStrings);
             imageList = image;
+            layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             imageLoader = new ImageLoader(ImageVideoPreviewActivity.this);
+        }
+
+
+//        public void addView(View view, int index) {
+//            mList.add(index, view);
+//            notifyDataSetChanged();
+//        }
+
+        public void removeView(int index) {
+            System.out.println("hee before remove=" + imageList.size());
+            imageList.remove(index);
+            notifyDataSetChanged();
+
+        }
+
+        @Override
+        public int getItemPosition(Object object) {
+            if (imageList.contains((View) object)) {
+                return imageList.indexOf((View) object);
+            } else {
+                return POSITION_NONE;
+            }
         }
 
         @Override
         public int getCount() {
-            return mStrings.length;
+            return imageList.size();
+        }
+
+        public List<String> getImageList() {
+            System.out.println(" hee after remove=" + imageList.size());
+            return imageList;
         }
 
         @Override
@@ -169,74 +198,35 @@ public class ImageVideoPreviewActivity extends AppCompatActivity {
         }
 
         @Override
-        public Object instantiateItem(ViewGroup container, int position) {
+        public Object instantiateItem(ViewGroup container, final int position) {
 
-            TextView textView = new TextView(ImageVideoPreviewActivity.this);
-            textView.setTextColor(Color.WHITE);
-            textView.setTextSize(30);
-            textView.setTypeface(Typeface.DEFAULT_BOLD);
-            textView.setText(String.valueOf(position));
+            View view = this.layoutInflater.inflate(R.layout.image_preview_pager_list_item, container, false);
 
-            ImageView imageView = new ImageView(ImageVideoPreviewActivity.this);
+            ImageView remove = (ImageView) view.findViewById(R.id.remove);
+            ImageView image = (ImageView) view.findViewById(R.id.image);
 
-            try {
-                Glide.with(ImageVideoPreviewActivity.this)
-                        .load(mStrings[position])
-                        .override(320, 240)
-                        .diskCacheStrategy(DiskCacheStrategy.ALL)
-                        .into(imageView);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
 
-            ViewGroup.LayoutParams imageParams = new ViewGroup.LayoutParams(
-                    ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-            imageView.setLayoutParams(imageParams);
-
-            LinearLayout layout = new LinearLayout(ImageVideoPreviewActivity.this);
-            layout.setOrientation(LinearLayout.VERTICAL);
-            ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(
-                    ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-            layout.setBackgroundColor(Color.parseColor("#000000"));
-            layout.setLayoutParams(layoutParams);
-            layout.addView(imageView);
-
-            final int page = position;
-           /* layout.setOnClickListener(new View.OnClickListener() {
-
+            remove.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v) {
-                    Toast.makeText(getActivity(),
-                            "Page " + page + " clicked",
-                            Toast.LENGTH_LONG).show();
-
-
-                    Bundle b = new Bundle();
-                    try {
-                        b.putString("path", image.get(page));
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-
-                    b.putInt("Activity", 1);
-                    b.putInt("number", page);
-
-                    ImageEditFragment fragment2 = new ImageEditFragment();
-                    fragment2.setArguments(b);
-                    getActivity().getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.vehicle_upload_container, fragment2, "imageeditfragment")
-                            .addToBackStack("imageeditfragment")
-                            .commit();
-
+                public void onClick(View view) {
+                    removeView(position);
                 }
-            });*/
-            container.addView(layout);
-            return layout;
+            });
+
+            Glide.with(context)
+                    .load(imageList.get(position))
+                    // .bitmapTransform(new CropCircleTransformation(mActivity))
+                    .override(320, 320)
+                    .diskCacheStrategy(DiskCacheStrategy.ALL) //For caching diff versions of image.
+                    .into(image);
+
+            container.addView(view);
+            return view;
         }
 
         @Override
         public void destroyItem(ViewGroup container, int position, Object object) {
-            container.removeView((LinearLayout) object);
+            container.removeView((RelativeLayout) object);
         }
     }
 
@@ -255,6 +245,8 @@ public class ImageVideoPreviewActivity extends AppCompatActivity {
                 break;
 
             case R.id.post_status:
+                imagesPath = "";
+                imagesWithoutPath = "";
                 if (mStatusText.getText().toString().equals("") ||
                         (mStatusText.getText().toString().startsWith(" ") &&
                                 mStatusText.getText().toString().endsWith(" "))) {
@@ -270,6 +262,19 @@ public class ImageVideoPreviewActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                     String encodedString = Base64.encodeToString(data, Base64.DEFAULT);
+
+
+                    for (int i = 0; i < myPagerAdapter.getImageList().size(); i++) {
+                        String path = myPagerAdapter.getImageList().get(i);
+                        String lastWord = path.substring(path.lastIndexOf("/") + 1);
+                        if (imagesWithoutPath.equalsIgnoreCase("") && imagesPath.equalsIgnoreCase("")) {
+                            imagesPath = path;
+                            imagesWithoutPath = lastWord;
+                        } else {
+                            imagesPath = imagesPath + "," + path;
+                            imagesWithoutPath = imagesWithoutPath + "," + lastWord;
+                        }
+                    }
 
                     Bundle bundle = new Bundle();
                     bundle.putString("videoPath", videoPath);
