@@ -401,9 +401,6 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
                         && !usertypeSpinner.getSelectedItem().toString().equalsIgnoreCase("Select User Type")) {
                     // otherCategorylayout.setVisibility(View.VISIBLE);
                     industrySpinner.setVisibility(View.VISIBLE);
-                    industrySpinner.setAdapter(null);
-                    moduleSpinner.setAdapter(null);
-                    brandSpinner.setVisibility(View.GONE);
                 } else {
 //                        otherCategorylayout.setVisibility(View.GONE);
                     industrySpinner.setVisibility(View.GONE);
@@ -480,7 +477,6 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
                         MODULE = (String[]) module.toArray(MODULE);
                         ArrayAdapter<String> dataadapter = new ArrayAdapter<>(getApplicationContext(), R.layout.registration_spinner, MODULE);
                         moduleSpinner.setAdapter(dataadapter);
-
                     } else
                         CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
 

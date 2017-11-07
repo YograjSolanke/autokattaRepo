@@ -150,14 +150,15 @@
                     android:gravity="center"
                     android:hint="@string/purchase_date"
                     android:textAlignment="center"
-
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
                     android:textColor="#2C3343"
                     android:visibility="visible"/>
 
 
                 <EditText
                     android:id="@+id/edittaxval"
-                    android:layout_width="fill_parent"
+                    android:layout_width="match_parent"
                     android:layout_height="40dip"
                     android:layout_below="@+id/edityear"
                     android:layout_marginTop="10dip"
@@ -168,6 +169,8 @@
                     android:hint="@string/tax_validity"
                     android:textAlignment="center"
                     android:textColor="#2C3343"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
                     android:textColorHint="#848484"
                     android:visibility="visible"/>
 
@@ -185,6 +188,7 @@
                     android:hint="@string/fitness_validity"
                     android:textAlignment="center"
                     android:textColor="#2C3343"
+                    android:focusable="false"
                     android:textColorHint="#848484"
                     android:visibility="visible"/>
 
@@ -200,6 +204,7 @@
                     android:gravity="center"
                     android:hint="@string/permit_validity"
                     android:paddingLeft="10dip"
+                    android:focusable="false"
                     android:textAlignment="center"
                     android:textColor="#2C3343"
                     android:textColorHint="#848484"
@@ -218,6 +223,7 @@
                     android:gravity="center"
                     android:hint="@string/insurance_date"
                     android:textAlignment="center"
+                    android:focusable="false"
                     android:textColor="#2C3343"
                     android:textColorHint="#848484"
                     android:visibility="visible"/>
@@ -235,6 +241,7 @@
                     android:gravity="center"
                     android:hint="@string/puc"
                     android:textAlignment="center"
+                    android:focusable="false"
                     android:textColor="#2C3343"
                     android:textColorHint="#848484"
                     android:visibility="visible"/>
@@ -255,6 +262,7 @@
                     android:textAlignment="center"
                     android:textColor="#2C3343"
                     android:textColorHint="#848484"
+                    android:focusable="false"
                     android:visibility="visible"/>
 
 
@@ -266,7 +274,7 @@
                     android:layout_marginTop="10dip"
                     android:layout_weight="1"
 
-
+                    android:focusable="false"
                     android:background="#80bebebe"
                     android:ems="10"
                     android:gravity="center"

@@ -51,7 +51,7 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
 
     EditText edtvehicleno, edtfit, edtyear, edttax, edtpermit, edtinsurance, edtpuc, edtlastservice, edtnextservice;
     Spinner mSpinnerVehitype, mSpinnerModel, mSpinnerBrand, mSpinnerVersion, mSpinnerSubType;
-String mVehicleNo ,mPurchaseyr ,mTaxVal,  mFitness,mInsurance,mPUC,mPermit ,mLastSer;
+    String mVehicleNo, mPurchaseyr, mTaxVal, mFitness, mInsurance, mPUC, mPermit, mLastSer;
 
 
     ImageView purchaseCal, fitnessCal, taxCal, permitCal, insuranceCal, pucCal, lastServiceCal, nextServiceCal,
@@ -59,7 +59,7 @@ String mVehicleNo ,mPurchaseyr ,mTaxVal,  mFitness,mInsurance,mPUC,mPermit ,mLas
             nextServiceCancel;
 
     String whichclick = "", subcategoryName;
-    int subcategoryId,mRegid;
+    int subcategoryId, mRegid;
 
     final ArrayList<String> mVehicleTypeList = new ArrayList<>();
     HashMap<String, Integer> mVehicleTypeList1 = new HashMap<>();
@@ -101,7 +101,7 @@ String mVehicleNo ,mPurchaseyr ,mTaxVal,  mFitness,mInsurance,mPUC,mPermit ,mLas
             insurance = "", puc = "", lastservice = "", nextservice = "", subcattext = "", brandtext = "", modeltext = "",
             versiontext = "", yeartext = "", contact;
 
-    RelativeLayout mNextRegistration, mHintLayout;
+    RelativeLayout mNextRegistration, mHintLayout, rPurchasedate, rTaxValid, rFitness, rPermitvalid, rInsuranceDate, rPucDate, rLastServDate, rNextServDate;
     ConnectionDetector mTestConnection;
 
     @Override
@@ -139,6 +139,14 @@ String mVehicleNo ,mPurchaseyr ,mTaxVal,  mFitness,mInsurance,mPUC,mPermit ,mLas
                     mSpinnerVersion = (Spinner) findViewById(R.id.spinner_version);
                     mNextRegistration = (RelativeLayout) findViewById(R.id.next_registration);
                     mHintLayout = (RelativeLayout) findViewById(R.id.hint_layout);
+                    rPurchasedate = (RelativeLayout) findViewById(R.id.linearPurchaseDate);
+                    rTaxValid = (RelativeLayout) findViewById(R.id.linearTaxValidity);
+                    rFitness = (RelativeLayout) findViewById(R.id.linearFitnessValidity);
+                    rPermitvalid = (RelativeLayout) findViewById(R.id.linearPermitValidity);
+                    rInsuranceDate = (RelativeLayout) findViewById(R.id.linearInsuransedate);
+                    rPucDate = (RelativeLayout) findViewById(R.id.linearPUCdate);
+                    rLastServDate = (RelativeLayout) findViewById(R.id.linearLastServicedate);
+                    rNextServDate = (RelativeLayout) findViewById(R.id.linearNextServicedate);
 
                     edtyear.setInputType(InputType.TYPE_NULL);
                     edttax.setInputType(InputType.TYPE_NULL);
@@ -167,7 +175,7 @@ String mVehicleNo ,mPurchaseyr ,mTaxVal,  mFitness,mInsurance,mPUC,mPermit ,mLas
                     lastServiceCancel = (ImageView) findViewById(R.id.lastServiceCan);
                     nextServiceCancel = (ImageView) findViewById(R.id.nextServiceCan);
 
-                    mRegid=getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
+                    mRegid = getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
                             .getInt("loginregistrationid", 0);
                     contact = getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
                             .getString("loginContact", "");
@@ -301,6 +309,23 @@ String mVehicleNo ,mPurchaseyr ,mTaxVal,  mFitness,mInsurance,mPUC,mPermit ,mLas
         insuranceCal.setOnClickListener(this);
         btncancle.setOnClickListener(this);
         btnsub.setOnClickListener(this);
+        rPurchasedate.setOnClickListener(this);
+        rTaxValid.setOnClickListener(this);
+        rFitness.setOnClickListener(this);
+        rPermitvalid.setOnClickListener(this);
+        rInsuranceDate.setOnClickListener(this);
+        rPucDate.setOnClickListener(this);
+        rLastServDate.setOnClickListener(this);
+        rNextServDate.setOnClickListener(this);
+
+        edttax.setOnClickListener(this);
+        edtfit.setOnClickListener(this);
+        edtpermit.setOnClickListener(this);
+        edtinsurance.setOnClickListener(this);
+        edtpuc.setOnClickListener(this);
+        edtlastservice.setOnClickListener(this);
+        edtnextservice.setOnClickListener(this);
+        edtyear.setOnClickListener(this);
 
         mApicall = new ApiCall(this, this);
         mApicall.getVehicleList();
@@ -393,13 +418,15 @@ String mVehicleNo ,mPurchaseyr ,mTaxVal,  mFitness,mInsurance,mPUC,mPermit ,mLas
                         flag = 0;
                     }
                 }
-
+/*validation issues*/
                 if (!lastservice.equals("")) {
-                    if (!isValidDate(lastservice, yeartext)) {
+                    if (isValidDate(lastservice, yeartext)) {
+                        // if (!isValidDate(lastservice, yeartext)) {
                         edtlastservice.setError("Invalid date");
                         flag = 0;
                     }
                 }
+
 
                 if (!nextservice.equals("")) {
                     if (!isValidDate(nextservice, yeartext)) {
@@ -431,7 +458,7 @@ String mVehicleNo ,mPurchaseyr ,mTaxVal,  mFitness,mInsurance,mPUC,mPermit ,mLas
                         mApicall.addOwn(contact, vehiclenotext, vehicletypetext, subcattext, modeltext, brandtext, versiontext, yeartext,
                                 taxvaltext, fitnessvaltext, permitvaltext, insurance, puc, lastservice, nextservice);
 
-                      //  mApicall.updateRegistration(vehiclenotext, vehicletypetext, subcattext, modeltext, brandtext, versiontext, yeartext, taxvaltext, fitnessvaltext, permitvaltext, insurance, puc, lastservice, nextservice);
+                        //  mApicall.updateRegistration(vehiclenotext, vehicletypetext, subcattext, modeltext, brandtext, versiontext, yeartext, taxvaltext, fitnessvaltext, permitvaltext, insurance, puc, lastservice, nextservice);
                     } else {
 
                         CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
@@ -488,56 +515,56 @@ String mVehicleNo ,mPurchaseyr ,mTaxVal,  mFitness,mInsurance,mPUC,mPermit ,mLas
                 finish();
                 break;
 
-            case R.id.purchaseCal:
-                edtyear.setError(null);
+            case R.id.edityear:
+                //  edtyear.setError(null);
                 new SetMyDateAndTime("date", edtyear, NextRegistrationContinue.this);
                 purchaseCancel.setVisibility(View.VISIBLE);
                 purchaseCal.setVisibility(View.GONE);
                 break;
 
-            case R.id.taxCal:
+            case R.id.edittaxval:
                 edttax.setError(null);
                 new SetMyDateAndTime("date", edttax, NextRegistrationContinue.this);
                 taxCancel.setVisibility(View.VISIBLE);
                 taxCal.setVisibility(View.GONE);
                 break;
 
-            case R.id.fitnessCal:
+            case R.id.editfitval:
                 edtfit.setError(null);
                 new SetMyDateAndTime("date", edtfit, NextRegistrationContinue.this);
                 fitnessCancel.setVisibility(View.VISIBLE);
                 fitnessCal.setVisibility(View.GONE);
                 break;
 
-            case R.id.permitCal:
+            case R.id.editpermitval:
                 edtpermit.setError(null);
                 new SetMyDateAndTime("date", edtpermit, NextRegistrationContinue.this);
                 permitCancel.setVisibility(View.VISIBLE);
                 permitCal.setVisibility(View.GONE);
                 break;
 
-            case R.id.insuranceCal:
+            case R.id.editinsurance:
                 edtinsurance.setError(null);
                 new SetMyDateAndTime("date", edtinsurance, NextRegistrationContinue.this);
                 insuranceCancel.setVisibility(View.VISIBLE);
                 insuranceCal.setVisibility(View.GONE);
                 break;
 
-            case R.id.lastServiceCal:
+            case R.id.editlastservice:
                 edtlastservice.setError(null);
                 new SetMyDateAndTime("date", edtlastservice, NextRegistrationContinue.this);
                 lastServiceCancel.setVisibility(View.VISIBLE);
                 lastServiceCal.setVisibility(View.GONE);
                 break;
 
-            case R.id.PUCCal:
+            case R.id.editpuc:
                 edtpuc.setError(null);
                 new SetMyDateAndTime("date", edtpuc, NextRegistrationContinue.this);
                 pucCancel.setVisibility(View.VISIBLE);
                 pucCal.setVisibility(View.GONE);
                 break;
 
-            case R.id.nextServiceCal:
+            case R.id.editestnextsrv:
                 whichclick = "edtnextservice";
                 edtnextservice.setError(null);
                 new SetMyDateAndTime("date", edtnextservice, NextRegistrationContinue.this);
@@ -665,7 +692,7 @@ String mVehicleNo ,mPurchaseyr ,mTaxVal,  mFitness,mInsurance,mPUC,mPermit ,mLas
                     if (!mProfileAboutResponse.getSuccess().isEmpty()) {
 
                         mVehicleNo = mProfileAboutResponse.getSuccess().get(0).getVehicleNo();
-                     //   mPurchaseyr = mProfileAboutResponse.getSuccess().get(0).ye();
+                        //   mPurchaseyr = mProfileAboutResponse.getSuccess().get(0).y();
                         mTaxVal = mProfileAboutResponse.getSuccess().get(0).getTaxValidity();
                         mFitness = mProfileAboutResponse.getSuccess().get(0).getFitnessValidity();
                         mInsurance = mProfileAboutResponse.getSuccess().get(0).getInsuranceValidityDate();
@@ -673,13 +700,13 @@ String mVehicleNo ,mPurchaseyr ,mTaxVal,  mFitness,mInsurance,mPUC,mPermit ,mLas
                         mPermit = mProfileAboutResponse.getSuccess().get(0).getPermitValidity();
                         mLastSer = mProfileAboutResponse.getSuccess().get(0).getLastServiceDate();
 
-                        edtvehicleno.setText(mVehicleNo);
-                        edttax.setText(mTaxVal);
-                        edtfit.setText(mFitness);
-                        edtinsurance.setText(mInsurance);
-                        edtpuc.setText(mPUC);
-                        edtpermit.setText(mPermit);
-                        edtlastservice.setText(mLastSer);
+                        //  edtvehicleno.setText(mVehicleNo);
+                        // edttax.setText(mTaxVal);
+                        // edtfit.setText(mFitness);
+                        //  edtinsurance.setText(mInsurance);
+                        //  edtpuc.setText(mPUC);
+                        //   edtpermit.setText(mPermit);
+                        //   edtlastservice.setText(mLastSer);
                     }
                 }
                 if (response.body() instanceof GetVehicleListResponse) {
@@ -699,7 +726,6 @@ String mVehicleNo ,mPurchaseyr ,mTaxVal,  mFitness,mInsurance,mPUC,mPermit ,mLas
                         ArrayAdapter<String> dataadapter = new ArrayAdapter<>(getApplicationContext(), R.layout.registration_spinner, parsedData1);
                         ///   dataadapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                         mSpinnerVehitype.setAdapter(dataadapter);
-                        mSpinnerSubType.setAdapter(null);
 
                         mSpinnerVehitype.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                             @Override
@@ -718,6 +744,9 @@ String mVehicleNo ,mPurchaseyr ,mTaxVal,  mFitness,mInsurance,mPUC,mPermit ,mLas
                                         edtpermit.setVisibility(View.VISIBLE);
                                         edtfit.setVisibility(View.VISIBLE);
                                     }
+                                    mSpinnerSubType.setAdapter(null);
+                                    mSpinnerBrand.setAdapter(null);
+                                    mSpinnerModel.setAdapter(null);
 
                                 }
                             }
@@ -753,6 +782,9 @@ String mVehicleNo ,mPurchaseyr ,mTaxVal,  mFitness,mInsurance,mPUC,mPermit ,mLas
                                 subcategoryName = parsedData.get(position);
                                 ((TextView) mSpinnerSubType.getSelectedView()).setTextColor(getResources().getColor(R.color.black));
                                 getBrand(vehicle_idD, subcategoryId);
+                                mSpinnerBrand.setAdapter(null);
+                                mSpinnerModel.setAdapter(null);
+                                mSpinnerVersion.setAdapter(null);
                             }
                         }
 
@@ -778,7 +810,6 @@ String mVehicleNo ,mPurchaseyr ,mTaxVal,  mFitness,mInsurance,mPUC,mPermit ,mLas
                     ArrayAdapter<String> adapter = new ArrayAdapter<>(getApplicationContext(), R.layout.registration_spinner, brandData);
                     //  adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     mSpinnerBrand.setAdapter(adapter);
-                    mSpinnerModel.setAdapter(null);
 
                     mSpinnerBrand.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
@@ -787,6 +818,8 @@ String mVehicleNo ,mPurchaseyr ,mTaxVal,  mFitness,mInsurance,mPUC,mPermit ,mLas
                                 brandId = mBrandList1.get(brandData.get(position));
                                 brandName = brandData.get(position);
                                 ((TextView) mSpinnerBrand.getSelectedView()).setTextColor(getResources().getColor(R.color.black));
+                                mSpinnerModel.setAdapter(null);
+                                mSpinnerVersion.setAdapter(null);
                             }
 
                             if (brandData.get(position).equalsIgnoreCase("other")) {
@@ -847,7 +880,7 @@ String mVehicleNo ,mPurchaseyr ,mTaxVal,  mFitness,mInsurance,mPUC,mPermit ,mLas
                     ArrayAdapter<String> adapter = new ArrayAdapter<>(getApplicationContext(), R.layout.registration_spinner, modelData);
                     //  adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     mSpinnerModel.setAdapter(adapter);
-                    mSpinnerVersion.setAdapter(null);
+
                     mSpinnerModel.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -855,6 +888,7 @@ String mVehicleNo ,mPurchaseyr ,mTaxVal,  mFitness,mInsurance,mPUC,mPermit ,mLas
                                 modelId = mModelList1.get(modelData.get(position));
                                 modelName = modelData.get(position);
                                 ((TextView) mSpinnerModel.getSelectedView()).setTextColor(getResources().getColor(R.color.black));
+                                mSpinnerVersion.setAdapter(null);
                             }
 
                             if (modelData.get(position).equalsIgnoreCase("other")) {
