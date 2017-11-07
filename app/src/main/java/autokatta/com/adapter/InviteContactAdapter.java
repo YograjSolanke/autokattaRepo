@@ -168,7 +168,7 @@ public class InviteContactAdapter extends RecyclerView.Adapter<InviteContactAdap
 
         try {
             SmsManager smsManager = SmsManager.getDefault();
-            smsManager.sendTextMessage(con, null, "Hi I am using Autokatta\n Please click below link to download and connect with me for more" , null, null);
+            smsManager.sendTextMessage(con, null, "Hi I am using Autokatta\n Please click below link to download and connect with me for more https://play.google.com/store/apps/details?id=autokatta.com" , null, null);
             CustomToast.customToast(mActivity, "SMS sent.");
         } catch (Exception e) {
             CustomToast.customToast(mActivity, "SMS faild, please try again.");

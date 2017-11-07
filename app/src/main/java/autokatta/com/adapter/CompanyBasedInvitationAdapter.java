@@ -131,7 +131,7 @@ public class CompanyBasedInvitationAdapter extends BaseAdapter {
     private void sendSMSMessage(String con, String msg) {
         try {
             SmsManager smsManager = SmsManager.getDefault();
-            smsManager.sendTextMessage(con, null, "hi..." + msg, null, null);
+            smsManager.sendTextMessage(con, null, "Hi I am using Autokatta\n Please click below link to download and connect with me for more https://play.google.com/store/apps/details?id=autokatta.com" + msg, null, null);
         } catch (Exception e) {
             CustomToast.customToast(mContext, "SMS failed, please try again.");
             e.printStackTrace();
