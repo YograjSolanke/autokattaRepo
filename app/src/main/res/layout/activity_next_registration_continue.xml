@@ -306,6 +306,8 @@
                     android:layout_marginEnd="40dp"
                     android:background="@android:color/transparent"
                     android:ems="10"
+                    android:focusable="false"
+                    android:drawableStart="@mipmap/ic_calendar"
                     android:hint="@string/purchase_datess"
                     android:textColor="#2C3343"
                     android:textSize="16sp" />
@@ -319,7 +321,7 @@
                     android:layout_marginEnd="5dp"
                     android:contentDescription="@string/app_name"
                     android:src="@mipmap/ic_calendar"
-                    android:visibility="visible" />
+                    android:visibility="gone" />
 
                 <ImageView
                     android:id="@+id/purchaseCan"
@@ -365,6 +367,8 @@
                     android:layout_marginEnd="40dp"
                     android:background="@android:color/transparent"
                     android:ems="10"
+                    android:focusable="false"
+                    android:drawableStart="@mipmap/ic_calendar"
                     android:hint="@string/enter_tax_val"
                     android:textColor="#2C3343"
                     android:textSize="16sp" />
@@ -378,7 +382,7 @@
                     android:layout_marginEnd="5dp"
                     android:contentDescription="@string/app_name"
                     android:src="@mipmap/ic_calendar"
-                    android:visibility="visible" />
+                    android:visibility="gone" />
 
                 <ImageView
                     android:id="@+id/taxCan"
@@ -423,6 +427,8 @@
                     android:layout_marginEnd="40dp"
                     android:background="@android:color/transparent"
                     android:ems="10"
+                    android:focusable="false"
+                    android:drawableStart="@mipmap/ic_calendar"
                     android:hint="@string/enter_fit_val"
                     android:textColor="#2C3343"
                     android:textSize="16sp" />
@@ -436,7 +442,7 @@
                     android:layout_marginEnd="5dp"
                     android:contentDescription="@string/app_name"
                     android:src="@mipmap/ic_calendar"
-                    android:visibility="visible" />
+                    android:visibility="gone" />
 
                 <ImageView
                     android:id="@+id/fitnessCan"
@@ -481,6 +487,8 @@
                     android:layout_marginEnd="40dp"
                     android:background="@android:color/transparent"
                     android:ems="10"
+                    android:focusable="false"
+                    android:drawableStart="@mipmap/ic_calendar"
                     android:hint="@string/enter_permit_val"
                     android:textColor="#2C3343"
                     android:textSize="16sp" />
@@ -494,7 +502,7 @@
                     android:layout_marginEnd="5dp"
                     android:contentDescription="@string/app_name"
                     android:src="@mipmap/ic_calendar"
-                    android:visibility="visible" />
+                    android:visibility="gone" />
 
                 <ImageView
                     android:id="@+id/permitCan"
@@ -539,6 +547,8 @@
                     android:layout_marginEnd="40dp"
                     android:background="@android:color/transparent"
                     android:ems="10"
+                    android:focusable="false"
+                    android:drawableStart="@mipmap/ic_calendar"
                     android:hint="@string/enter_insurance_val"
                     android:textColor="#2C3343"
                     android:textSize="16sp" />
@@ -552,7 +562,7 @@
                     android:layout_marginEnd="5dp"
                     android:contentDescription="@string/app_name"
                     android:src="@mipmap/ic_calendar"
-                    android:visibility="visible" />
+                    android:visibility="gone" />
 
                 <ImageView
                     android:id="@+id/insuranceCan"
@@ -597,6 +607,8 @@
                     android:layout_marginEnd="40dp"
                     android:background="@android:color/transparent"
                     android:ems="10"
+                    android:focusable="false"
+                    android:drawableStart="@mipmap/ic_calendar"
                     android:hint="@string/enter_puc_date"
                     android:textColor="#2C3343"
                     android:textSize="16sp" />
@@ -610,7 +622,7 @@
                     android:layout_marginEnd="5dp"
                     android:contentDescription="@string/app_name"
                     android:src="@mipmap/ic_calendar"
-                    android:visibility="visible" />
+                    android:visibility="gone" />
 
                 <ImageView
                     android:id="@+id/PUCCan"
@@ -655,6 +667,8 @@
                     android:layout_marginEnd="40dp"
                     android:background="@android:color/transparent"
                     android:ems="10"
+                    android:focusable="false"
+                    android:drawableStart="@mipmap/ic_calendar"
                     android:hint="@string/enter_last_service_date"
                     android:textColor="#2C3343"
                     android:textSize="16sp" />
@@ -668,7 +682,7 @@
                     android:layout_marginEnd="5dp"
                     android:contentDescription="@string/app_name"
                     android:src="@mipmap/ic_calendar"
-                    android:visibility="visible" />
+                    android:visibility="gone" />
 
                 <ImageView
                     android:id="@+id/lastServiceCan"
@@ -713,6 +727,8 @@
                     android:layout_marginEnd="40dp"
                     android:background="@android:color/transparent"
                     android:ems="10"
+                    android:focusable="false"
+                    android:drawableStart="@mipmap/ic_calendar"
                     android:hint="@string/enter_next_service_date"
                     android:textColor="#2C3343"
                     android:textSize="16sp" />
@@ -726,7 +742,7 @@
                     android:layout_marginEnd="5dp"
                     android:contentDescription="@string/app_name"
                     android:src="@mipmap/ic_calendar"
-                    android:visibility="visible" />
+                    android:visibility="gone" />
 
                 <ImageView
                     android:id="@+id/nextServiceCan"

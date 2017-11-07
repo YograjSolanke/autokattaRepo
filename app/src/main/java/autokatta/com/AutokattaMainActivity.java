@@ -1,5 +1,6 @@
 package autokatta.com;
 
+import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.ActivityOptions;
 import android.content.BroadcastReceiver;
@@ -57,6 +58,7 @@ import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
 import autokatta.com.other.DemoDelAct;
 import autokatta.com.other.EnquiryActivity;
+import autokatta.com.other.GoogleChecker;
 import autokatta.com.other.Leads;
 import autokatta.com.other.PostStatus;
 import autokatta.com.other.SearchActivity;
@@ -122,8 +124,8 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        /*Activity activity=this;
-        new GoogleChecker(activity, false);*/
+        Activity activity = this;
+        new GoogleChecker(activity, false);
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().setElevation(0);

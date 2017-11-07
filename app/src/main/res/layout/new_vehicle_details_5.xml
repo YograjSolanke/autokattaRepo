@@ -5,466 +5,559 @@
     android:orientation="vertical">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:id="@+id/lTypeOfGearReduction"
-        android:visibility="gone"
-        android:weightSum="2">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone">
 
-        <TextView
-            android:id="@+id/TypeOfGearReduction"
-            android:layout_width="50dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/typeofgearreduction"
-            android:layout_weight="1"
-            android:textColor="#2C3343"
-            android:visibility="visible" />
+            android:orientation="horizontal"
+            android:weightSum="2">
 
-        <TextView
-            android:id="@+id/TypeOfGearReduction1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/typeofgearreduction"
-            android:layout_weight="1"
-            android:textColor="#2C3343"
-            android:textAlignment="textStart"
-            android:visibility="visible" />
+            <TextView
+                android:id="@+id/TypeOfGearReduction"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/typeofgearreduction"
+                android:textColor="#2C3343"
+                android:visibility="visible" />
+
+            <TextView
+                android:id="@+id/TypeOfGearReduction1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/typeofgearreduction"
+                android:textAlignment="textStart"
+                android:textColor="#2C3343"
+                android:visibility="visible" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="5dp"
+            android:background="#cccccc" />
 
     </LinearLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="5dp"
-        android:background="#cccccc" />
-
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:id="@+id/lTyres"
-        android:visibility="gone"
-        android:weightSum="2">
-
-        <TextView
-            android:id="@+id/Tyres"
-            android:layout_width="50dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/Tyres"
-            android:textColor="#2C3343" />
-
-        <TextView
-            android:id="@+id/Tyres1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/Tyres"
-            android:textAlignment="textStart"
-            android:textColor="#2C3343" />
-    </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="5dp"
-        android:background="#cccccc" />
-
-    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <TextView
+                android:id="@+id/Tyres"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/Tyres"
+                android:textColor="#2C3343" />
+
+            <TextView
+                android:id="@+id/Tyres1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/Tyres"
+                android:textAlignment="textStart"
+                android:textColor="#2C3343" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="5dp"
+            android:background="#cccccc" />
+
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/lTyreSize"
-        android:visibility="gone"
-        android:weightSum="2">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone">
 
-        <TextView
-            android:id="@+id/TyreSize"
-            android:layout_width="50dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/TyreSize"
-            android:textColor="#2C3343" />
+            android:orientation="horizontal"
+            android:weightSum="2">
 
-        <TextView
-            android:id="@+id/TyreSize1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/TyreSize"
-            android:textAlignment="textStart"
-            android:textColor="#2C3343" />
+            <TextView
+                android:id="@+id/TyreSize"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/TyreSize"
+                android:textColor="#2C3343" />
+
+            <TextView
+                android:id="@+id/TyreSize1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/TyreSize"
+                android:textAlignment="textStart"
+                android:textColor="#2C3343" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="5dp"
+            android:background="#cccccc" />
 
     </LinearLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="5dp"
-        android:background="#cccccc" />
-
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:id="@+id/lTyreSizeFront"
-        android:visibility="gone"
-        android:weightSum="2">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone">
 
-        <TextView
-            android:id="@+id/TyreSizeFront"
-            android:layout_width="50dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/TyreSizeFront"
-            android:textColor="#2C3343" />
+            android:orientation="horizontal"
+            android:weightSum="2">
 
-        <TextView
-            android:id="@+id/TyreSizeFront1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/TyreSizeFront"
-            android:textAlignment="textStart"
-            android:textColor="#2C3343" />
+            <TextView
+                android:id="@+id/TyreSizeFront"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/TyreSizeFront"
+                android:textColor="#2C3343" />
+
+            <TextView
+                android:id="@+id/TyreSizeFront1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/TyreSizeFront"
+                android:textAlignment="textStart"
+                android:textColor="#2C3343" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="5dp"
+            android:background="#cccccc" />
 
     </LinearLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="5dp"
-        android:background="#cccccc" />
-
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:id="@+id/lTyreSizeRear"
-        android:visibility="gone"
-        android:weightSum="2">
-
-        <TextView
-            android:id="@+id/TyreSizeRear"
-            android:layout_width="50dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/TyreSizeRear"
-            android:textColor="#2C3343" />
-
-        <TextView
-            android:id="@+id/TyreSizeRear1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/TyreSizeRear"
-            android:textAlignment="textStart"
-            android:textColor="#2C3343" />
-    </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="5dp"
-        android:background="#cccccc" />
-
-    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <TextView
+                android:id="@+id/TyreSizeRear"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/TyreSizeRear"
+                android:textColor="#2C3343" />
+
+            <TextView
+                android:id="@+id/TyreSizeRear1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/TyreSizeRear"
+                android:textAlignment="textStart"
+                android:textColor="#2C3343" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="5dp"
+            android:background="#cccccc" />
+
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/lWarrantyKilometer"
-        android:visibility="gone"
-        android:weightSum="2">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone">
 
-        <TextView
-            android:id="@+id/WarrantyKilometer"
-            android:layout_width="50dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/WarrantyKilometer"
-            android:textColor="#2C3343" />
+            android:orientation="horizontal"
+            android:weightSum="2">
 
-        <TextView
-            android:id="@+id/WarrantyKilometer1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/WarrantyKilometer"
-            android:textAlignment="textStart"
-            android:textColor="#2C3343" />
+            <TextView
+                android:id="@+id/WarrantyKilometer"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/WarrantyKilometer"
+                android:textColor="#2C3343" />
+
+            <TextView
+                android:id="@+id/WarrantyKilometer1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/WarrantyKilometer"
+                android:textAlignment="textStart"
+                android:textColor="#2C3343" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="5dp"
+            android:background="#cccccc" />
 
     </LinearLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="5dp"
-        android:background="#cccccc" />
-
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:id="@+id/lWarrantyYear"
-        android:visibility="gone"
-        android:weightSum="2">
-
-        <TextView
-            android:id="@+id/WarrantyYear"
-            android:layout_width="50dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/WarrantyYear"
-            android:textColor="#2C3343" />
-
-        <TextView
-            android:id="@+id/WarrantyYear1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/WarrantyYear"
-            android:textAlignment="textStart"
-            android:textColor="#2C3343" />
-    </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="5dp"
-        android:background="#cccccc" />
-
-    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <TextView
+                android:id="@+id/WarrantyYear"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/WarrantyYear"
+                android:textColor="#2C3343" />
+
+            <TextView
+                android:id="@+id/WarrantyYear1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/WarrantyYear"
+                android:textAlignment="textStart"
+                android:textColor="#2C3343" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="5dp"
+            android:background="#cccccc" />
+
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/lWebSite"
-        android:visibility="gone"
-        android:weightSum="2">
-
-        <TextView
-            android:id="@+id/WebSite"
-            android:layout_width="50dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/website"
-            android:textColor="#2C3343" />
-
-        <TextView
-            android:id="@+id/WebSite1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/website"
-            android:textAlignment="textStart"
-            android:textColor="#2C3343" />
-    </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="5dp"
-        android:background="#cccccc" />
-
-    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <TextView
+                android:id="@+id/WebSite"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/website"
+                android:textColor="#2C3343" />
+
+            <TextView
+                android:id="@+id/WebSite1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/website"
+                android:textAlignment="textStart"
+                android:textColor="#2C3343" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="5dp"
+            android:background="#cccccc" />
+
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/lWeightKg"
-        android:visibility="gone"
-        android:weightSum="2">
-
-        <TextView
-            android:id="@+id/WeightKg"
-            android:layout_width="50dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/WeightKg"
-            android:textColor="#2C3343" />
-
-        <TextView
-            android:id="@+id/WeightKg1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/WeightKg"
-            android:textAlignment="textStart"
-            android:textColor="#2C3343" />
-    </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="5dp"
-        android:background="#cccccc" />
-
-    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <TextView
+                android:id="@+id/WeightKg"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/WeightKg"
+                android:textColor="#2C3343" />
+
+            <TextView
+                android:id="@+id/WeightKg1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/WeightKg"
+                android:textAlignment="textStart"
+                android:textColor="#2C3343" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="5dp"
+            android:background="#cccccc" />
+
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/lWheelBaseMM"
-        android:visibility="gone"
-        android:weightSum="2">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone">
 
-        <TextView
-            android:id="@+id/WheelBaseMM"
-            android:layout_width="50dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/WheelBaseMM"
-            android:textColor="#2C3343" />
+            android:orientation="horizontal"
+            android:weightSum="2">
 
-        <TextView
-            android:id="@+id/WheelBaseMM1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/WheelBaseMM"
-            android:textAlignment="textStart"
-            android:textColor="#2C3343" />
+            <TextView
+                android:id="@+id/WheelBaseMM"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/WheelBaseMM"
+                android:textColor="#2C3343" />
+
+            <TextView
+                android:id="@+id/WheelBaseMM1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/WheelBaseMM"
+                android:textAlignment="textStart"
+                android:textColor="#2C3343" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="5dp"
+            android:background="#cccccc" />
 
     </LinearLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="5dp"
-        android:background="#cccccc" />
-
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:id="@+id/laxelconfiguration"
-        android:visibility="gone"
-        android:weightSum="2">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone">
 
-        <TextView
-            android:id="@+id/axelconfiguration1"
-            android:layout_width="50dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/axelconfiguration"
-            android:textColor="#2C3343" />
+            android:orientation="horizontal"
+            android:weightSum="2">
 
-        <TextView
-            android:id="@+id/axelconfiguration"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/axelconfiguration"
-            android:textAlignment="textStart"
-            android:textColor="#2C3343" />
+            <TextView
+                android:id="@+id/axelconfiguration1"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/axelconfiguration"
+                android:textColor="#2C3343" />
+
+            <TextView
+                android:id="@+id/axelconfiguration"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/axelconfiguration"
+                android:textAlignment="textStart"
+                android:textColor="#2C3343" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="5dp"
+            android:background="#cccccc" />
 
     </LinearLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="5dp"
-        android:background="#cccccc"
-        />
-
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:id="@+id/lEngineDetails"
-        android:visibility="gone"
-        android:weightSum="2">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone">
 
-        <TextView
-            android:id="@+id/EngineDetails"
-            android:layout_width="50dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/EngineDetails"
-            android:textColor="#2C3343" />
+            android:orientation="horizontal"
+            android:weightSum="2">
 
-        <TextView
-            android:id="@+id/EngineDetails1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/EngineDetails"
-            android:textAlignment="textStart"
-            android:textColor="#2C3343" />
+            <TextView
+                android:id="@+id/EngineDetails"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/EngineDetails"
+                android:textColor="#2C3343" />
+
+            <TextView
+                android:id="@+id/EngineDetails1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/EngineDetails"
+                android:textAlignment="textStart"
+                android:textColor="#2C3343" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="5dp"
+            android:background="#cccccc" />
 
     </LinearLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="5dp"
-        android:background="#cccccc" />
-
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:id="@+id/lDescription"
-        android:visibility="gone"
-        android:weightSum="2">
-
-        <TextView
-            android:id="@+id/Description"
-            android:layout_width="50dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/Description"
-            android:textColor="#2C3343" />
-
-        <TextView
-            android:id="@+id/Description1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/Description"
-            android:textAlignment="textStart"
-            android:textColor="#2C3343" />
-
-    </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="5dp"
-        android:background="#cccccc" />
-
-    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:id="@+id/lAdditionalinfo"
-        android:visibility="gone"
-        android:weightSum="2">
+        android:orientation="vertical"
+        android:visibility="gone">
 
-        <TextView
-            android:id="@+id/Additionalinfo"
-            android:layout_width="50dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/AdditionInformation"
-            android:textColor="#2C3343" />
+            android:orientation="horizontal"
+            android:weightSum="2">
 
-        <TextView
-            android:id="@+id/Additionalinfo1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/AdditionInformation"
-            android:textAlignment="textStart"
-            android:textColor="#2C3343" />
+            <TextView
+                android:id="@+id/Description"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/Description"
+                android:textColor="#2C3343" />
+
+            <TextView
+                android:id="@+id/Description1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/Description"
+                android:textAlignment="textStart"
+                android:textColor="#2C3343" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="5dp"
+            android:background="#cccccc" />
 
     </LinearLayout>
 
-    <View
+    <LinearLayout
+        android:id="@+id/lAdditionalinfo"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="5dp"
-        android:background="#cccccc"
-        />
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2">
 
+            <TextView
+                android:id="@+id/Additionalinfo"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/AdditionInformation"
+                android:textColor="#2C3343" />
+
+            <TextView
+                android:id="@+id/Additionalinfo1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/AdditionInformation"
+                android:textAlignment="textStart"
+                android:textColor="#2C3343" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="5dp"
+            android:background="#cccccc" />
+    </LinearLayout>
 
 </LinearLayout>

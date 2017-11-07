@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -13,6 +14,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.net.SocketTimeoutException;
 import java.util.ArrayList;
@@ -21,9 +23,11 @@ import java.util.List;
 import autokatta.com.R;
 import autokatta.com.adapter.NewVehicleContainerAdapter;
 import autokatta.com.apicall.ApiCall;
+import autokatta.com.interfaces.OnLoadMoreListener;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.other.CustomToast;
+import autokatta.com.other.VerticalLineDecorator;
 import autokatta.com.response.NewVehicleAllResponse;
 import autokatta.com.view.AddNewVehicleActivity;
 import retrofit2.Response;
@@ -38,6 +42,7 @@ public class NewVehicleContainer extends AppCompatActivity implements RequestNot
     ConnectionDetector mConnectionDetector;
     FloatingActionButton mAddVehicle;
     NewVehicleContainerAdapter mAdapter;
+    int index = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,13 +68,33 @@ public class NewVehicleContainer extends AppCompatActivity implements RequestNot
                     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
                 }
 
+                mAdapter = new NewVehicleContainerAdapter(NewVehicleContainer.this, newVehicleList, myContact);
+                mAdapter.setLoadMoreListener(new OnLoadMoreListener() {
+                    @Override
+                    public void onLoadMore() {
+                        mRecyclerView.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                //int index = myUploadedVehiclesResponseList.size() - 1;
+                                index++;
+                                Log.i("index", "->" + index);
+                                loadMore(index);
+                            }
+                        });
+                        //Calling loadMore function in Runnable to fix the
+                        // java.lang.IllegalStateException: Cannot call this method while RecyclerView is computing a layout or scrolling error
+                    }
+                });
                 mRecyclerView.setHasFixedSize(true);
-
                 LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(NewVehicleContainer.this);
-                mLinearLayoutManager.setReverseLayout(true);
-                mLinearLayoutManager.setStackFromEnd(true);
+                //mLinearLayoutManager.setReverseLayout(true);
+                //mLinearLayoutManager.setStackFromEnd(true);
                 mLinearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+                mLinearLayoutManager.setSmoothScrollbarEnabled(true);
                 mRecyclerView.setLayoutManager(mLinearLayoutManager);
+                mRecyclerView.addItemDecoration(new VerticalLineDecorator(2));
+                mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+                mRecyclerView.setAdapter(mAdapter);
 
                 mSwipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
                         android.R.color.holo_green_light,
@@ -79,7 +104,7 @@ public class NewVehicleContainer extends AppCompatActivity implements RequestNot
                     @Override
                     public void run() {
                         mSwipeRefreshLayout.setRefreshing(true);
-                        getNewVehicleList(myContact);
+                        getNewVehicleList(myContact, 1, 10);
                     }
                 });
 
@@ -97,14 +122,20 @@ public class NewVehicleContainer extends AppCompatActivity implements RequestNot
 
     }
 
-    private void getNewVehicleList(String myContact) {
+    private void getNewVehicleList(String myContact, int pageNo, int viewRecords) {
         ApiCall mApiCall = new ApiCall(this, this);
-        mApiCall.GetNewVehicleDetailsForContact(myContact);
+        mApiCall.GetNewVehicleDetailsForContact(myContact, pageNo, viewRecords);
+    }
+
+    private void loadMore(int index) {
+        //add loading progress view
+        mAdapter.notifyItemInserted(newVehicleList.size());
+        getNewVehicleList(myContact, index, 10);
     }
 
     @Override
     public void onRefresh() {
-        getNewVehicleList(myContact);
+        getNewVehicleList(myContact, 1, 10);
     }
 
 
@@ -123,35 +154,34 @@ public class NewVehicleContainer extends AppCompatActivity implements RequestNot
         if (response != null) {
             if (response.isSuccessful()) {
                 NewVehicleAllResponse vehicleAllResponse = (NewVehicleAllResponse) response.body();
-                if (!vehicleAllResponse.getSuccess().getNewVehicle().isEmpty()) {
-                    mSwipeRefreshLayout.setRefreshing(false);
-                    newVehicleList.clear();
-                    mNoData.setVisibility(View.GONE);
+                if (vehicleAllResponse.getSuccess().getNewVehicle().size() > 0) {
+                    if (!vehicleAllResponse.getSuccess().getNewVehicle().isEmpty()) {
+                        mSwipeRefreshLayout.setRefreshing(false);
+                        //newVehicleList.clear();
+                        mNoData.setVisibility(View.GONE);
+                        for (NewVehicleAllResponse.Success.NewVehicle success : vehicleAllResponse.getSuccess().getNewVehicle()) {
+                            success.setNewVehicleID(success.getNewVehicleID());
+                            success.setCategoryID(success.getCategoryID());
+                            success.setSubCategoryID(success.getSubCategoryID());
+                            success.setBrandID(success.getBrandID());
+                            success.setModelID(success.getModelID());
+                            success.setVersionID(success.getVersionID());
+                            success.setCategoryName(success.getCategoryName());
+                            success.setSubCategoryName(success.getSubCategoryName());
+                            success.setBrandName(success.getBrandName());
+                            success.setModelName(success.getModelName());
+                            success.setVersionName(success.getVersionName());
 
-                    for (NewVehicleAllResponse.Success.NewVehicle success : vehicleAllResponse.getSuccess().getNewVehicle()) {
+                            success.setThreePointLinkage((success.getThreePointLinkage() == null ||
+                                    success.getThreePointLinkage().equalsIgnoreCase("null") ||
+                                    success.getThreePointLinkage().equalsIgnoreCase("")) ? "NA" : success.getThreePointLinkage());
 
-                        success.setNewVehicleID(success.getNewVehicleID());
-                        success.setCategoryID(success.getCategoryID());
-                        success.setSubCategoryID(success.getSubCategoryID());
-                        success.setBrandID(success.getBrandID());
-                        success.setModelID(success.getModelID());
-                        success.setVersionID(success.getVersionID());
-                        success.setCategoryName(success.getCategoryName());
-                        success.setSubCategoryName(success.getSubCategoryName());
-                        success.setBrandName(success.getBrandName());
-                        success.setModelName(success.getModelName());
-                        success.setVersionName(success.getVersionName());
-
-                        success.setThreePointLinkage((success.getThreePointLinkage() == null ||
-                                success.getThreePointLinkage().equalsIgnoreCase("null") ||
-                                success.getThreePointLinkage().equalsIgnoreCase("")) ? "NA" : success.getThreePointLinkage());
-
-                        success.setABS((success.getABS() == null ||
-                                success.getABS().equalsIgnoreCase("null") ||
-                                success.getABS().equalsIgnoreCase("")) ? "NA" : success.getABS());
+                            success.setABS((success.getABS() == null ||
+                                    success.getABS().equalsIgnoreCase("null") ||
+                                    success.getABS().equalsIgnoreCase("")) ? "NA" : success.getABS());
 
 
-                        //success.setPrice((success.getPrice().equalsIgnoreCase("")) ? "NA" : success.getPrice());
+                            //success.setPrice((success.getPrice().equalsIgnoreCase("")) ? "NA" : success.getPrice());
 
 
                             /*String vehicleImage = success.getImage();
@@ -162,17 +192,20 @@ public class NewVehicleContainer extends AppCompatActivity implements RequestNot
                                 success.setImage(vehicleImage);
                             }*/
 
-                        newVehicleList.add(success);
-
+                            newVehicleList.add(success);
+                        }
+                        //mAdapter.notifyDataSetChanged();
+                    } else {
+                        mSwipeRefreshLayout.setRefreshing(false);
+                        mNoData.setVisibility(View.VISIBLE);
                     }
-
-                    mAdapter = new NewVehicleContainerAdapter(this, newVehicleList, myContact);
-                    mRecyclerView.setAdapter(mAdapter);
-                    mAdapter.notifyDataSetChanged();
-                } else {
-                    mSwipeRefreshLayout.setRefreshing(false);
-                    mNoData.setVisibility(View.VISIBLE);
+                } else {//result size 0 means there is no more data available at server
+                    mAdapter.setMoreDataAvailable(false);
+                    //telling adapter to stop calling load more as no more server data available
+                    Toast.makeText(getApplicationContext(), "No More Data Available", Toast.LENGTH_LONG).show();
                 }
+                //adapter.notifyDataSetChanged();
+                mAdapter.notifyDataChanged();
             } else {
                 mSwipeRefreshLayout.setRefreshing(false);
                 mNoData.setVisibility(View.VISIBLE);
@@ -211,7 +244,7 @@ public class NewVehicleContainer extends AppCompatActivity implements RequestNot
     @Override
     protected void onResume() {
         super.onResume();
-        getNewVehicleList(myContact);
+        getNewVehicleList(myContact, 1, 10);
     }
 
     @Override

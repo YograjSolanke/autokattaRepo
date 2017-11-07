@@ -241,14 +241,38 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
                             vehiYear = "";
                         }
 
-                        edttax.setText(vehitaxValidity);
-                        edtpermit.setText(vehipermitValidity);
-                        edtfit.setText(vehifitnessValidity);
-                        edtinsurance.setText(vehiinsurance);
-                        edtpuc.setText(vehipuc);
-                        edtlastservice.setText(vehilastServicedate);
-                        edtnextservice.setText(vehinextservicedate);
-                        edtyear.setText(vehiYear);
+                        if (vehitaxValidity != null) {
+                            edttax.setText(vehitaxValidity);
+                            taxCancel.setVisibility(View.VISIBLE);
+                        }
+                        if (vehipermitValidity != null) {
+                            edtpermit.setText(vehipermitValidity);
+                            permitCancel.setVisibility(View.VISIBLE);
+                        }
+                        if (vehifitnessValidity != null) {
+                            edtfit.setText(vehifitnessValidity);
+                            fitnessCancel.setVisibility(View.VISIBLE);
+                        }
+                        if (vehiinsurance != null) {
+                            edtinsurance.setText(vehiinsurance);
+                            insuranceCancel.setVisibility(View.VISIBLE);
+                        }
+                        if (vehipuc != null) {
+                            edtpuc.setText(vehipuc);
+                            pucCancel.setVisibility(View.VISIBLE);
+                        }
+                        if (vehilastServicedate != null) {
+                            edtlastservice.setText(vehilastServicedate);
+                            lastServiceCancel.setVisibility(View.VISIBLE);
+                        }
+                        if (vehinextservicedate != null) {
+                            edtnextservice.setText(vehinextservicedate);
+                            nextServiceCancel.setVisibility(View.VISIBLE);
+                        }
+                        if (vehiYear != null) {
+                            edtyear.setText(vehiYear);
+                            purchaseCancel.setVisibility(View.VISIBLE);
+                        }
 
                         //Setting Spinner Values getting from edit myvehicle in myprofile
                         edtvehicleno.setText(vehino);
@@ -517,6 +541,7 @@ public class NextRegistrationContinue extends AppCompatActivity implements Reque
 
             case R.id.edityear:
                 //  edtyear.setError(null);
+                Log.e("Clicked", "-->");
                 new SetMyDateAndTime("date", edtyear, NextRegistrationContinue.this);
                 purchaseCancel.setVisibility(View.VISIBLE);
                 purchaseCal.setVisibility(View.GONE);

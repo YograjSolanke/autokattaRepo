@@ -1435,7 +1435,9 @@ public interface ServiceApi {
     Call<String> _sendFcmNotification(@Query("Contact") String contact);
 
     @GET("GetNewVehicleDetailsForContact")
-    Call<NewVehicleAllResponse> _autokattaGetNewVehicleDetailsForContact(@Query("MyContact") String myContact);
+    Call<NewVehicleAllResponse> _autokattaGetNewVehicleDetailsForContact(@Query("MyContact") String myContact,
+                                                                         @Query("pageNo") int pageNo,
+                                                                         @Query("ViewRecords") int ViewRecords);
 
     @GET("GetTransferVehicleNotification")
     Call<GetTransferVehicleNotificationResponse> GetTransferVehicleNotification(@Query("Contact") String myContact);

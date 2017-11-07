@@ -9002,7 +9002,7 @@ get ExchangeMela Analytics Data
 
     /*get new vehicle details by contact*/
 
-    public void GetNewVehicleDetailsForContact(String myContact) {
+    public void GetNewVehicleDetailsForContact(String myContact, int pageNo, int viewRecords) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 Retrofit retrofit = new Retrofit.Builder()
@@ -9012,7 +9012,7 @@ get ExchangeMela Analytics Data
                         .build();
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<NewVehicleAllResponse> mCompareResponseCall = serviceApi._autokattaGetNewVehicleDetailsForContact(myContact);
+                Call<NewVehicleAllResponse> mCompareResponseCall = serviceApi._autokattaGetNewVehicleDetailsForContact(myContact, pageNo, viewRecords);
                 mCompareResponseCall.enqueue(new Callback<NewVehicleAllResponse>() {
                     @Override
                     public void onResponse(Call<NewVehicleAllResponse> call, Response<NewVehicleAllResponse> response) {
