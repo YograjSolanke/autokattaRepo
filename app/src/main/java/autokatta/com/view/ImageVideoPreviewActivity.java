@@ -9,7 +9,6 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -31,6 +30,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import autokatta.com.R;
+import autokatta.com.generic.Base64;
 import autokatta.com.other.ImageLoader;
 
 public class ImageVideoPreviewActivity extends AppCompatActivity {
@@ -40,6 +40,7 @@ public class ImageVideoPreviewActivity extends AppCompatActivity {
     String myContact, updatedImages = "";
     ViewPager viewPager;
     MyPagerAdapter myPagerAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -146,15 +147,12 @@ public class ImageVideoPreviewActivity extends AppCompatActivity {
 
     private class MyPagerAdapter extends PagerAdapter {
         Context context;
-        String[] mStrings;
         ImageLoader imageLoader;
         List<String> imageList;
         private LayoutInflater layoutInflater;
 
         private MyPagerAdapter(ImageVideoPreviewActivity sliderActivity, List<String> image) {
             context = sliderActivity;
-            mStrings = new String[image.size()];
-            mStrings = (String[]) image.toArray(mStrings);
             imageList = image;
             layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             imageLoader = new ImageLoader(ImageVideoPreviewActivity.this);
@@ -166,7 +164,7 @@ public class ImageVideoPreviewActivity extends AppCompatActivity {
 //            notifyDataSetChanged();
 //        }
 
-        public void removeView(int index) {
+        void removeView(int index) {
             System.out.println("hee before remove=" + imageList.size());
             imageList.remove(index);
             notifyDataSetChanged();
@@ -187,7 +185,7 @@ public class ImageVideoPreviewActivity extends AppCompatActivity {
             return imageList.size();
         }
 
-        public List<String> getImageList() {
+        List<String> getImageList() {
             System.out.println(" hee after remove=" + imageList.size());
             return imageList;
         }
@@ -254,14 +252,23 @@ public class ImageVideoPreviewActivity extends AppCompatActivity {
                     mStatusText.requestFocus();
                 } else {
 
-                    /*code to encode the status string*/
+                    /*code to encode the status string (posting)*/
+
+                    /*byte[] data = new byte[0];
+                    try {
+                        data = mStatusText.getText().toString().getBytes("UTF-8");
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
+                    String encodedString = Base64.encodeToString(data, Base64.DEFAULT);*/
+
                     byte[] data = new byte[0];
                     try {
                         data = mStatusText.getText().toString().getBytes("UTF-8");
                     } catch (UnsupportedEncodingException e) {
                         e.printStackTrace();
                     }
-                    String encodedString = Base64.encodeToString(data, Base64.DEFAULT);
+                    String encodedString = Base64.encodeBytes(data);
 
 
                     for (int i = 0; i < myPagerAdapter.getImageList().size(); i++) {

@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,7 +24,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
-import java.io.UnsupportedEncodingException;
+import java.io.IOException;
 import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +32,7 @@ import java.util.List;
 import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.database.DbOperation;
+import autokatta.com.generic.Base64;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.SearchPersonResponse;
@@ -64,7 +64,7 @@ public class SearchPersonAdapter extends RecyclerView.Adapter<SearchPersonAdapte
         CardView mCardView;
         ImageView imgProfile;
         TextView mTextName, mTextNumber, mTextStatus, mCity, mCompany;
-        Button btnFollow, btnUnfollow, btnsendmsg;
+        Button btnFollow, btnUnfollow, btnsendmsg, btnGroups;
 
         private YoHolder(View itemView) {
             super(itemView);
@@ -78,6 +78,8 @@ public class SearchPersonAdapter extends RecyclerView.Adapter<SearchPersonAdapte
             btnUnfollow = (Button) itemView.findViewById(R.id.btnunfollow);
             btnsendmsg = (Button) itemView.findViewById(R.id.btnsendmsg);
             mCity = (TextView) itemView.findViewById(R.id.txtcity);
+            btnGroups = (Button) itemView.findViewById(R.id.btnGroups);
+            btnGroups.setVisibility(GONE);
         }
     }
 
@@ -100,7 +102,7 @@ public class SearchPersonAdapter extends RecyclerView.Adapter<SearchPersonAdapte
     }
 
     @Override
-    public void onBindViewHolder(final SearchPersonAdapter.YoHolder holder, final int position) {
+    public void onBindViewHolder(final SearchPersonAdapter.YoHolder holder, int position) {
         myContact = mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).getString("loginContact", "");
         holder.setIsRecyclable(false);
         holder.mTextName.setText(contactdata.get(position).getUsername());
@@ -110,20 +112,24 @@ public class SearchPersonAdapter extends RecyclerView.Adapter<SearchPersonAdapte
         holder.mCity.setText(contactdata.get(position).getCity());
         holder.mCompany.setText(contactdata.get(position).getCompany());
 
-        if (contactdata.get(position).getMystatus() == null)
-            holder.mTextStatus.setText("No Status");
-        else {
-            /*decode string code*/
+
+        if (contactdata.get(position).getMystatus() != null &&
+                !contactdata.get(position).getMystatus().equals("null")) {
+
+            /*decode string code (Getting)*/
             String decodedString = null;
-            byte[] data = Base64.decode(contactdata.get(position).getMystatus(), Base64.DEFAULT);
+            byte[] data = new byte[0];
             try {
+                data = Base64.decode(contactdata.get(position).getMystatus());
                 decodedString = new String(data, "UTF-8");
-            } catch (UnsupportedEncodingException e) {
+            } catch (IOException e) {
                 e.printStackTrace();
             }
 
             holder.mTextStatus.setText(decodedString);
-        }
+
+        } else
+            holder.mTextStatus.setText("No Status");
 
         if (contactdata.get(position).getStatus().equals("yes")) {
             holder.btnUnfollow.setVisibility(VISIBLE);
@@ -167,8 +173,8 @@ public class SearchPersonAdapter extends RecyclerView.Adapter<SearchPersonAdapte
             public void onClick(View view) {
 
                 Bundle b = new Bundle();
-                b.putString("sender", contactdata.get(position).getContact());
-                b.putString("sendername", contactdata.get(position).getUsername());
+                b.putString("sender", contactdata.get(holder.getAdapterPosition()).getContact());
+                b.putString("sendername", contactdata.get(holder.getAdapterPosition()).getUsername());
                 b.putInt("product_id", 0);
                 b.putInt("service_id", 0);
                 b.putInt("vehicle_id", 0);
@@ -289,7 +295,7 @@ public class SearchPersonAdapter extends RecyclerView.Adapter<SearchPersonAdapte
             }
             mActivity.startActivity(in);
         } catch (android.content.ActivityNotFoundException ex) {
-            System.out.println("No Activity Found For Call in Car Details Fragment\n");
+            ex.printStackTrace();
         }
     }
 

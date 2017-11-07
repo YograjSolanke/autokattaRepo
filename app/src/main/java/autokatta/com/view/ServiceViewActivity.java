@@ -706,13 +706,9 @@ Get Admin data...
                         //8007855589-dealer-RUTU
                         storeAdmins.add(contact + "-" + "Owner" + "-" + "Owner");
                         for (StoreOldAdminResponse.Success success : adminResponse.getSuccess()) {
-
                             storeAdmins.add(success.getAdmin());
-
                         }
                     }
-
-
                 } else if (response.body() instanceof ServiceResponse) {
                     ServiceResponse serviceresponse = (ServiceResponse) response.body();
                     if (!serviceresponse.getSuccess().isEmpty()) {
@@ -758,8 +754,6 @@ Get Admin data...
                                 relativerate.setVisibility(View.GONE);
                                 relativewritereview.setVisibility(View.GONE);
                                 linearlike.setEnabled(false);
-
-
                             } else {
                                 callme.setVisibility(View.VISIBLE);
                                 relativerate.setVisibility(View.VISIBLE);
@@ -887,6 +881,8 @@ Get Admin data...
                             //like code
                             lcnt = slikecnt;
                         }
+                        if (storecontact.contains(contact))
+                            AddSuggestionData(service_id);
                     }
                 } else if (response.body() instanceof EnquiryCountResponse) {
                     EnquiryCountResponse enquiryCountResponse = (EnquiryCountResponse) response.body();
@@ -901,6 +897,11 @@ Get Admin data...
         } else {
             CustomToast.customToast(ServiceViewActivity.this, getString(R.string.no_response));
         }
+    }
+
+    private void AddSuggestionData(int service_id) {
+        mApiCall.AddDataForSuggestions(contact, "Service", 0,
+                0, service_id, 0, 0, 0);
     }
 
     @Override
@@ -947,6 +948,8 @@ Get Admin data...
                     dialog.dismiss();
                 }
                 btnchat.setText("Send Enquiry");
+            } else if (str.equalsIgnoreCase("success")) {
+                Log.i("Suugesstion", "Service->" + service_id);
             }
         }
     }
@@ -1018,9 +1021,9 @@ Get Admin data...
 
                 String[] parts = text.split(",");
 
-                for (int l = 0; l < parts.length; l++) {
-                    System.out.println(parts[l]);
-                    tagpart = parts[l].trim();
+                for (String part : parts) {
+                    System.out.println(part);
+                    tagpart = part.trim();
                     if (!tagpart.equalsIgnoreCase("") && !tagpart.equalsIgnoreCase(" "))
                         images.add(tagpart);
                     if (!tagname.contains(tagpart) && !tagpart.equalsIgnoreCase("") && !tagpart.equalsIgnoreCase(" ")) {

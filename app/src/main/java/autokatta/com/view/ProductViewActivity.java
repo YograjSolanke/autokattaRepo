@@ -502,12 +502,9 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                     if (!adminResponse.getSuccess().isEmpty()) {
                         storeAdmins.add(contact + "-" + "Owner" + "-" + "Owner");
                         for (StoreOldAdminResponse.Success success : adminResponse.getSuccess()) {
-
                             storeAdmins.add(success.getAdmin());
-
                         }
                     }
-
                 } else if (response.body() instanceof OtherTagAddedResponse) {
                     CustomToast.customToast(ProductViewActivity.this, "Other Tag added successfully");
                     tagid = tagid + "," + ((OtherTagAddedResponse) response.body()).getSuccess().getTagID().toString();
@@ -707,10 +704,9 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                             sliderLayout.setBackgroundResource(R.drawable.logo);
                             photocount.setText("0 Photos");
                         }
+                        if (storecontact.contains(contact))
+                            AddSuggestionData(product_id);
                     }
-                    //??????????????????????????????????????????????????????????????????????????//
-
-
                 } else if (response.body() instanceof EnquiryCountResponse) {
                     EnquiryCountResponse enquiryCountResponse = (EnquiryCountResponse) response.body();
                     if (enquiryCountResponse.getSuccess() != null) {
@@ -727,6 +723,11 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
             hud.dismiss();
             CustomToast.customToast(ProductViewActivity.this, getString(R.string.no_response));
         }
+    }
+
+    private void AddSuggestionData(int product_id) {
+        mApiCall.AddDataForSuggestions(contact, "Product", 0,
+                0, 0, product_id, 0, 0);
     }
 
     @Override
@@ -789,6 +790,8 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                     dialog.dismiss();
                 }
                 btnchat.setText("Send Enquiry");
+            } else if (str.equalsIgnoreCase("success")) {
+                Log.i("Suugesstion", "Product->" + product_id);
             }
         }
 

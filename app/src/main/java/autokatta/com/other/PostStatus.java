@@ -14,7 +14,6 @@ import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -38,6 +37,7 @@ import java.util.List;
 
 import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
+import autokatta.com.generic.Base64;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.response.ProfileAboutResponse;
 import autokatta.com.view.AddInterestTagsActivity;
@@ -145,7 +145,6 @@ public class PostStatus extends AppCompatActivity implements RequestNotifier {
             String allimg = "";
             if (requestCode == SELECT_VIDEO) {
                 allimgpath = "";
-                System.out.println("SELECT_VIDEO");
                 Uri selectedImageUri = data.getData();
                 selectedPath = getPath(this, selectedImageUri);
                 //selectedPath = getPath(selectedImageUri);
@@ -245,14 +244,14 @@ public class PostStatus extends AppCompatActivity implements RequestNotifier {
                     mStatusText.requestFocus();
                 } else {
 
-                    /*code to encode the status string*/
+                    //code to encode the status string(posting)
                     byte[] data = new byte[0];
                     try {
                         data = mStatusText.getText().toString().getBytes("UTF-8");
                     } catch (UnsupportedEncodingException e) {
                         e.printStackTrace();
                     }
-                    String encodedString = Base64.encodeToString(data, Base64.DEFAULT);
+                    String encodedString = Base64.encodeBytes(data);
 
                     Bundle bundle = new Bundle();
                     bundle.putString("videoPath", "");
@@ -267,11 +266,6 @@ public class PostStatus extends AppCompatActivity implements RequestNotifier {
                 break;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    private void PostData(String finalInterests) {
-        dialog.show();
-        mApiCall.PostStatus(mLoginContact, statusText, "", "", finalInterests);
     }
 
     /*

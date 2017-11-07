@@ -14,6 +14,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -51,6 +52,7 @@ public class OtherProfile extends AppCompatActivity implements RequestNotifier, 
     Groups mGroupsFrag;
     AboutStore mStore;
     String dp = "";
+    int ProfileId = 0;
     Event mEventFrag;
     OtherWall mOtherWallFrag;
     String mAction = "other";
@@ -159,6 +161,7 @@ public class OtherProfile extends AppCompatActivity implements RequestNotifier, 
     public void notifySuccess(Response<?> response) {
         if (response != null) {
             if (response.isSuccessful()) {
+
                 String userName = "";
                 ProfileAboutResponse mProfileAboutResponse = (ProfileAboutResponse) response.body();
                 for (ProfileAboutResponse.Success success : mProfileAboutResponse.getSuccess()) {
@@ -166,6 +169,7 @@ public class OtherProfile extends AppCompatActivity implements RequestNotifier, 
                     dp = success.getProfilePic();
                     mFolllowstr = success.getFollowstatus();
                     mLikestr = success.getLikestatus();
+                    ProfileId = success.getId();
 
                     if (mLikestr.equalsIgnoreCase("no")) {
                         mLike.setLabelText("Like");
@@ -193,12 +197,18 @@ public class OtherProfile extends AppCompatActivity implements RequestNotifier, 
                         .diskCacheStrategy(DiskCacheStrategy.ALL)
                         .into(mOtherPicture);
                 collapsingToolbar.setTitle(userName);
+                AddSuggestionData(ProfileId);
             } else {
                 Snackbar.make(mOtherProfile, getString(R.string._404_), Snackbar.LENGTH_SHORT).show();
             }
         } else {
             Snackbar.make(mOtherProfile, getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
         }
+    }
+
+    private void AddSuggestionData(int profileId) {
+        mApiCall.AddDataForSuggestions(mLoginContact, "Profile", 0,
+                0, 0, 0, 0, ProfileId);
     }
 
     @Override
@@ -209,26 +219,35 @@ public class OtherProfile extends AppCompatActivity implements RequestNotifier, 
     @Override
     public void notifyString(String str) {
         if (str != null) {
-            if (str.equals("success_follow")) {
-                CustomToast.customToast(getApplicationContext(), " Following Successfully");
-                mFollow.setLabelText("Following");
-                mFollow.setLabelTextColor(Color.BLUE);
-                mFolllowstr = "yes";
-            } else if (str.equals("success_unfollow")) {
-                CustomToast.customToast(getApplicationContext(), " UnFollowed Successfully");
-                mFollow.setLabelText("Follow");
-                mFollow.setLabelTextColor(Color.BLACK);
-                mFolllowstr = "no";
-            } else if (str.equals("success_like")) {
-                CustomToast.customToast(getApplicationContext(), " Liked Successfully");
-                mLike.setLabelText("Liked");
-                mLike.setLabelTextColor(Color.BLUE);
-                mLikestr = "yes";
-            } else if (str.equals("success_unlike")) {
-                CustomToast.customToast(getApplicationContext(), " UnLiked Successfully");
-                mLike.setLabelText("Like");
-                mLike.setLabelTextColor(Color.BLACK);
-                mLikestr = "no";
+            switch (str) {
+                case "success_follow":
+                    CustomToast.customToast(getApplicationContext(), " Following Successfully");
+                    mFollow.setLabelText("Following");
+                    mFollow.setLabelTextColor(Color.BLUE);
+                    mFolllowstr = "yes";
+                    break;
+                case "success_unfollow":
+                    CustomToast.customToast(getApplicationContext(), " UnFollowed Successfully");
+                    mFollow.setLabelText("Follow");
+                    mFollow.setLabelTextColor(Color.BLACK);
+                    mFolllowstr = "no";
+                    break;
+                case "success_like":
+                    CustomToast.customToast(getApplicationContext(), " Liked Successfully");
+                    mLike.setLabelText("Liked");
+                    mLike.setLabelTextColor(Color.BLUE);
+                    mLikestr = "yes";
+                    break;
+                case "success_unlike":
+                    CustomToast.customToast(getApplicationContext(), " UnLiked Successfully");
+                    mLike.setLabelText("Like");
+                    mLike.setLabelTextColor(Color.BLACK);
+                    mLikestr = "no";
+                    break;
+
+                case "success":
+                    Log.i("Suugesstion", "Profile->" + ProfileId);
+                    break;
             }
         }
     }

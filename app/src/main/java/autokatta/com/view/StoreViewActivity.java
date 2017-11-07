@@ -44,6 +44,7 @@ import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.List;
 
 import autokatta.com.R;
 import autokatta.com.adapter.AdminCallContactAdapter;
@@ -59,7 +60,7 @@ import retrofit2.Response;
 public class StoreViewActivity extends AppCompatActivity implements RequestNotifier, View.OnClickListener {
 
     String mOtherContact;
-    ArrayList<String> storeAdmins = new ArrayList<>();
+    List<String> storeAdmins = new ArrayList<>();
     String storeOtherContact;
     String mFolllowstr;
     String mLikestr;
@@ -189,98 +190,6 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
                     }
 
                     mBundle.putInt("store_id", store_id);
-
-
-//                    tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-//                        @Override
-//                        public void onTabSelected(TabLayout.Tab tab) {
-//                           /* if (storeOtherContact.equals(mOtherContact)) {
-//                                mTeamVehicle.setVisibility(View.GONE);
-//                                mTeamServices.setVisibility(View.GONE);
-//                                mTeamProduct.setVisibility(View.GONE);
-//                            }*/
-//                           /* Products tab */
-//                            if (tab.getPosition() == 2) {
-//
-//                                if (myContact.equals(mOtherContact)) {
-//                                    mTeamVehicle.setVisibility(View.GONE);
-//                                    mTeamServices.setVisibility(View.GONE);
-//                                    mTeamProduct.setVisibility(View.VISIBLE);
-//
-//                                } else {
-//                                    mTeamVehicle.setVisibility(View.GONE);
-//                                    mTeamServices.setVisibility(View.GONE);
-//                                    mTeamProduct.setVisibility(View.GONE);
-//                                }
-//                            }
-//                            /* Services tab */
-//                            else if (tab.getPosition() == 3) {
-//
-//                                if (myContact.equals(mOtherContact)) {
-//                                    mTeamVehicle.setVisibility(View.GONE);
-//                                    mTeamServices.setVisibility(View.VISIBLE);
-//                                    mTeamProduct.setVisibility(View.GONE);
-//                                    /*mShare.setVisibility(View.GONE);
-//                                    mAutoshare.setVisibility(View.GONE);*/
-//                                } else {
-//                                    mTeamVehicle.setVisibility(View.GONE);
-//                                    mTeamServices.setVisibility(View.GONE);
-//                                    mTeamProduct.setVisibility(View.GONE);
-//                                    /*mShare.setVisibility(View.VISIBLE);
-//                                    mAutoshare.setVisibility(View.VISIBLE);*/
-//                                }
-//                            }
-//                            /* Vehicles tab */
-//                            else if (tab.getPosition() == 4) {
-//
-//                                if (myContact.equals(mOtherContact)) {
-//                                    mTeamVehicle.setVisibility(View.VISIBLE);
-//                                    mTeamServices.setVisibility(View.GONE);
-//                                    mTeamProduct.setVisibility(View.GONE);
-//                                    /*mShare.setVisibility(View.GONE);
-//                                    mAutoshare.setVisibility(View.GONE);*/
-//                                } else {
-//                                    mTeamVehicle.setVisibility(View.GONE);
-//                                    mTeamServices.setVisibility(View.GONE);
-//                                    mTeamProduct.setVisibility(View.GONE);
-//                                   /* mShare.setVisibility(View.VISIBLE);
-//                                    mAutoshare.setVisibility(View.VISIBLE);*/
-//                                }
-//                            }
-//                            /* Other tabs */
-//                            else {
-//                                mTeamVehicle.setVisibility(View.GONE);
-//                                mTeamServices.setVisibility(View.GONE);
-//                                mTeamProduct.setVisibility(View.GONE);
-//                                /*mShare.setVisibility(View.VISIBLE);
-//                                mAutoshare.setVisibility(View.VISIBLE);*/
-//                            }
-//                        }
-//
-//                        @Override
-//                        public void onTabUnselected(TabLayout.Tab tab) {
-//
-//                        }
-//
-//                        @Override
-//                        public void onTabReselected(TabLayout.Tab tab) {
-//
-//                        }
-//                    });
-//
-//
-//                    if (str != null) {
-//                        if (str.equals("adminMore")) {
-//                            tabLayout.setScrollPosition(1, 0f, true);
-//                            viewPager.setCurrentItem(1);
-//                        } else if (str.equals("FromProduct")) {
-//                            tabLayout.setScrollPosition(2, 0f, true);
-//                            viewPager.setCurrentItem(2);
-//                        } else if (str.equals("FromService")) {
-//                            tabLayout.setScrollPosition(3, 0f, true);
-//                            viewPager.setCurrentItem(3);
-//                        }
-//                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -573,6 +482,7 @@ Call Intent...
         mApiCall.getStoreData(contact, store_id);
         mApiCall.StoreAdmin(store_id);
     }
+
     @Override
     public void onClick(View view) {
         ActivityOptions options = ActivityOptions.makeCustomAnimation(this, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
@@ -605,10 +515,7 @@ Call Intent...
                     public boolean onMenuItemClick(MenuItem item) {
                         switch (item.getItemId()) {
 
-
                             case R.id.autokatta:
-
-
                                 String imageshare = "";
                                 imageshare = getString(R.string.base_image_url) + storeImage;
 
@@ -655,6 +562,7 @@ Call Intent...
 
                                 Log.e("TAG", "img URL: " + imagename);
 
+                                assert manager != null;
                                 manager.enqueue(request);
 
                                 imageFilePath = "/storage/emulated/0/Download/" + filename;
@@ -849,7 +757,6 @@ Call Intent...
                 intentVideos.putExtras(b);
                 startActivity(intentVideos, options.toBundle());
                 break;
-
         }
 
     }
@@ -862,6 +769,7 @@ Call Intent...
         intent.setData(Uri.parse(fullUrl));
         startActivity(intent);
     }
+
     private void showAddAlert() {
         AlertDialog.Builder builderSingle = new AlertDialog.Builder(StoreViewActivity.this);
         builderSingle.setIcon(R.drawable.ic_cart_plus);
@@ -888,79 +796,42 @@ Call Intent...
                 bundle.putInt("store_id", store_id);
 
                 if (strName != null) {
-                    if (strName.equals("Add Product")) {
-                        Intent intent = new Intent(StoreViewActivity.this, AddProductActivity.class);
-                        intent.putExtras(bundle);
-                        startActivity(intent);
-                        //finish();
-
-                    } else if (strName.equals("Add Service")) {
-                        Intent intent = new Intent(StoreViewActivity.this, AddServiceActivity.class);
-                        intent.putExtras(bundle);
-                        startActivity(intent);
-                        //finish();
-
-                    } else if (strName.equals("Add Used Vehicle")) {
-                        if (isDealing.equalsIgnoreCase("false")) {
-                            Intent intent = new Intent(StoreViewActivity.this, VehicleUpload.class);
+                    switch (strName) {
+                        case "Add Product": {
+                            Intent intent = new Intent(StoreViewActivity.this, AddProductActivity.class);
+                            intent.putExtras(bundle);
                             startActivity(intent);
-                            finish();
-                        } else {
-                            //Toast.makeText(getApplicationContext(), "new vehicle", Toast.LENGTH_SHORT).show();
-                            //alertVehicle();
+                            //finish();
+
+                            break;
                         }
-                    } else if (strName.equals("Add New Vehicle")) {
-                        //call to new Vehicle Upload
-                        Intent intent = new Intent(StoreViewActivity.this, AddNewVehicleActivity.class);
-                        bundle.putInt("store_id", store_id);
-                        bundle.putString("callFrom", "StoreViewActivity");
-                        intent.putExtras(bundle);
-                        startActivity(intent);
+                        case "Add Service": {
+                            Intent intent = new Intent(StoreViewActivity.this, AddServiceActivity.class);
+                            intent.putExtras(bundle);
+                            startActivity(intent);
+                            //finish();
 
-
-                    }
-                }
-
-            }
-        });
-        builderSingle.show();
-
-
-    }
-
-    private void alertVehicle() {
-        AlertDialog.Builder builderSingle = new AlertDialog.Builder(StoreViewActivity.this);
-        builderSingle.setIcon(R.drawable.ic_cart_plus);
-        builderSingle.setTitle("Select Vehicle Type");
-
-        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(StoreViewActivity.this, android.R.layout.select_dialog_singlechoice);
-        arrayAdapter.add("Used Vehicle");
-        arrayAdapter.add("New Vehicle");
-
-        builderSingle.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
-
-        builderSingle.setAdapter(arrayAdapter, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                String strName = arrayAdapter.getItem(which);
-
-                if (strName != null) {
-                    if (strName.equals("Used Vehicle")) {
-                        //Toast.makeText(getApplicationContext(), "used vehicle", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(StoreViewActivity.this, VehicleUpload.class);
-                        startActivity(intent);
-                        finish();
-
-                    } else if (strName.equals("New Vehicle")) {
-                        //Toast.makeText(getApplicationContext(), "new vehicle", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(StoreViewActivity.this, VehicleUpload.class);
-                        startActivity(intent);
-                        finish();
+                            break;
+                        }
+                        case "Add Used Vehicle":
+                            if (isDealing.equalsIgnoreCase("false")) {
+                                Intent intent = new Intent(StoreViewActivity.this, VehicleUpload.class);
+                                startActivity(intent);
+                                finish();
+                            } else {
+                                //Toast.makeText(getApplicationContext(), "new vehicle", Toast.LENGTH_SHORT).show();
+                                //alertVehicle();
+                            }
+                            break;
+                        case "Add New Vehicle": {
+                            //call to new Vehicle Upload
+                            Intent intent = new Intent(StoreViewActivity.this, AddNewVehicleActivity.class);
+                            bundle.putInt("store_id", store_id);
+                            bundle.putString("callFrom", "StoreViewActivity");
+                            intent.putExtras(bundle);
+                            startActivity(intent);
+                            break;
+                        }
                     }
                 }
 
@@ -1026,6 +897,7 @@ Call Intent...
                         otherViewLayout.setVisibility(View.GONE);
                         mCall.setVisibility(View.GONE);
                         mViewReview.setVisibility(View.VISIBLE);
+                        AddSuggestionData(store_id);
                     }
 
                     storerating.setRating(storeRating);
@@ -1081,16 +953,9 @@ Call Intent...
                         //8007855589-dealer-RUTU
                         storeAdmins.add(myContact + "-" + "Owner" + "-" + "Owner");
                         for (StoreOldAdminResponse.Success success : adminResponse.getSuccess()) {
-
                             storeAdmins.add(success.getAdmin());
-
                         }
-
-                        System.out.println("alreadyadmin=" + storeAdmins.size());
-
                     }
-
-
                 }
 
             } else {
@@ -1102,6 +967,11 @@ Call Intent...
             CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
         }
 
+    }
+
+    private void AddSuggestionData(int store_id) {
+        mApiCall.AddDataForSuggestions(myContact, "Store", 0,
+                0, 0, 0, store_id, 0);
     }
 
 
@@ -1126,7 +996,6 @@ Call Intent...
             error.printStackTrace();
         }
     }
-
 
 
     @Override
@@ -1205,6 +1074,10 @@ Call Intent...
                 case "success_recommended":
                     //if (mActivity != null)
                     CustomToast.customToast(StoreViewActivity.this, "Store recommended");
+                    break;
+
+                case "success":
+                    Log.i("Suugesstion", "Store->" + store_id);
                     break;
             }
         }

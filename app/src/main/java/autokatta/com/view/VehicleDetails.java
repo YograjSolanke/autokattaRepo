@@ -127,36 +127,6 @@ public class VehicleDetails extends AppCompatActivity implements RequestNotifier
                 }
             }
         });
-
-        /*
-        Banner...
-         */
-        /*Hash_file_maps = new HashMap<String, String>();
-        sliderLayout = (SliderLayout) findViewById(R.id.slider);
-        Hash_file_maps.put("Android CupCake", "http://androidblog.esy.es/images/cupcake-1.png");
-        Hash_file_maps.put("Android Donut", "http://androidblog.esy.es/images/donut-2.png");
-        Hash_file_maps.put("Android Eclair", "http://androidblog.esy.es/images/eclair-3.png");
-        Hash_file_maps.put("Android Froyo", "http://androidblog.esy.es/images/froyo-4.png");
-        Hash_file_maps.put("Android GingerBread", "http://androidblog.esy.es/images/gingerbread-5.png");
-
-        for (String name : Hash_file_maps.keySet()) {
-            TextSliderView textSliderView = new TextSliderView(VehicleDetails.this);
-            textSliderView
-                    .description(name)
-                    .image(Hash_file_maps.get(name))
-                    .setScaleType(BaseSliderView.ScaleType.Fit)
-                    .setOnSliderClickListener(this);
-            textSliderView.bundle(new Bundle());
-            textSliderView.getBundle()
-                    .putString("extra", name);
-            sliderLayout.addSlider(textSliderView);
-        }
-        sliderLayout.setPresetTransformer(SliderLayout.Transformer.Accordion);
-        sliderLayout.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
-        sliderLayout.setCustomAnimation(new DescriptionAnimation());
-        sliderLayout.setDuration(3000);
-        sliderLayout.addOnPageChangeListener(this);*/
-
     }
 
 
@@ -276,12 +246,20 @@ public class VehicleDetails extends AppCompatActivity implements RequestNotifier
                 sliderLayout.setDuration(4000);
                 sliderLayout.addOnPageChangeListener(this);
                 collapsingToolbar.setTitle(Title);
+
+                if (!contact.equals(prefcontact))
+                    AddSuggestionData(mVehicle_Id);
             } else {
                 CustomToast.customToast(getApplicationContext(), getString(R.string._404));
             }
         } else {
             CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
         }
+    }
+
+    private void AddSuggestionData(int mVehicle_id) {
+        mApiCall.AddDataForSuggestions(prefcontact, "UsedVehicle", mVehicle_id,
+                0, 0, 0, 0, 0);
     }
 
     private void getChatEnquiryStatus(String prefcontact, String contact, int mVehicle_id) {
@@ -322,7 +300,8 @@ public class VehicleDetails extends AppCompatActivity implements RequestNotifier
                 mChat.setLabelText("Chat");
             } else if (str.contains("no")) {
                 mChat.setLabelText("Send Offer");
-
+            } else if (str.equalsIgnoreCase("success")) {
+                Log.i("Suugesstion", "UploadVehicle->" + mVehicle_Id);
             }
         }
     }
@@ -447,6 +426,7 @@ public class VehicleDetails extends AppCompatActivity implements RequestNotifier
                                         .getSystemService(Context.DOWNLOAD_SERVICE);
 
                                 Log.e("TAG", "dp URL: " + imgUrl);
+                                assert manager != null;
                                 manager.enqueue(request);
                                 imageFilePath = "/storage/emulated/0/Download/" + filename;
                                 System.out.println("ImageFilePath:" + imageFilePath);

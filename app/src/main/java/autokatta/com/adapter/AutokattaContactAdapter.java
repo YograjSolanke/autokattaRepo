@@ -13,7 +13,6 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,7 +28,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
-import java.io.UnsupportedEncodingException;
+import java.io.IOException;
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
@@ -39,6 +38,7 @@ import java.util.List;
 import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.database.DbOperation;
+import autokatta.com.generic.Base64;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.Db_AutokattaContactResponse;
@@ -116,17 +116,29 @@ public class AutokattaContactAdapter extends RecyclerView.Adapter<AutokattaConta
         holder.mTextNumber.setText(contactdata.get(position).getContact());
         holder.imgCall.setVisibility(VISIBLE);
         if (contactdata.get(position).getMystatus() != null && !contactdata.get(position).getMystatus().equals("null")) {
-             /*decode string code*/
+
+            /*decode string code (Getting)*/
+
+            /* /*decode string code*//*
+                    String decodedString = null;
+                    byte[] data = Base64.decode(notificationList.get(position).getStatus(), Base64.DEFAULT);
+                    try {
+                        decodedString = new String(data, "UTF-8");
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }*/
             String decodedString = null;
-            byte[] data = Base64.decode(contactdata.get(position).getMystatus(), Base64.DEFAULT);
+            byte[] data = new byte[0];
             try {
+                data = Base64.decode(contactdata.get(position).getMystatus());
                 decodedString = new String(data, "UTF-8");
-            } catch (UnsupportedEncodingException e) {
+            } catch (IOException e) {
                 e.printStackTrace();
             }
+
             holder.mTextStatus.setText(decodedString);
-        }
-        else
+
+        } else
             holder.mTextStatus.setText("No Status");
 
 

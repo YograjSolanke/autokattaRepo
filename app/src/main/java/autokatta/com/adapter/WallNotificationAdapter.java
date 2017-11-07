@@ -26,7 +26,6 @@ import android.text.TextPaint;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.text.style.StyleSpan;
-import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -60,7 +59,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
-import java.io.UnsupportedEncodingException;
+import java.io.IOException;
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
@@ -72,6 +71,7 @@ import java.util.concurrent.TimeUnit;
 
 import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
+import autokatta.com.generic.Base64;
 import autokatta.com.interfaces.OnLoadMoreListener;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.interfaces.ServiceApi;
@@ -3498,12 +3498,13 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                     mPostHolder.mStatusText.setVisibility(View.GONE);
                     // mPostHolder.moreImages.setVisibility(View.GONE);
 
-                    /*decode string code*/
+                    /*decode string code (Getting)*/
                     String decodedString = null;
-                    byte[] data = Base64.decode(notificationList.get(position).getStatus(), Base64.DEFAULT);
+                    byte[] data = new byte[0];
                     try {
+                        data = Base64.decode(notificationList.get(position).getStatus());
                         decodedString = new String(data, "UTF-8");
-                    } catch (UnsupportedEncodingException e) {
+                    } catch (IOException e) {
                         e.printStackTrace();
                     }
                     mPostHolder.captionText.setText(decodedString);
@@ -3543,11 +3544,13 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                     mPostHolder.videoView.setVisibility(View.GONE);
                     mPostHolder.mStatusText.setVisibility(View.GONE);
 
+                   /*decode string code (Getting)*/
                     String decodedString = null;
-                    byte[] data = Base64.decode(notificationList.get(position).getStatus(), Base64.DEFAULT);
+                    byte[] data = new byte[0];
                     try {
+                        data = Base64.decode(notificationList.get(position).getStatus());
                         decodedString = new String(data, "UTF-8");
-                    } catch (UnsupportedEncodingException e) {
+                    } catch (IOException e) {
                         e.printStackTrace();
                     }
                     mPostHolder.captionText.setText(decodedString);
@@ -3638,11 +3641,13 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
 
                 } else if (keyword.equalsIgnoreCase("Status")) {
 
+                    /*decode string code (Getting)*/
                     String decodedString = null;
-                    byte[] data = Base64.decode(notificationList.get(position).getStatus(), Base64.DEFAULT);
+                    byte[] data = new byte[0];
                     try {
+                        data = Base64.decode(notificationList.get(position).getStatus());
                         decodedString = new String(data, "UTF-8");
-                    } catch (UnsupportedEncodingException e) {
+                    } catch (IOException e) {
                         e.printStackTrace();
                     }
                     mPostHolder.captionText.setVisibility(View.GONE);
