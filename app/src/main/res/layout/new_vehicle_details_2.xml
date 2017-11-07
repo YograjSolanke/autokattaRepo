@@ -16,7 +16,7 @@
             android:id="@+id/GradeAbility"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
-            android:text="GradeAbility : "
+            android:text="@string/GradeAbility"
             android:textColor="#2C3343"
             android:layout_weight="1"
             android:visibility="visible" />
@@ -52,7 +52,7 @@
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Ground Clearance : "
+            android:text="@string/GroundClearance"
             android:textColor="#2C3343" />
 
         <TextView
@@ -85,7 +85,7 @@
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="GVWGCW : "
+            android:text="@string/GVWGCW"
             android:textColor="#2C3343" />
 
         <TextView
@@ -118,7 +118,7 @@
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Head Rest : "
+            android:text="@string/HeadRest"
             android:textColor="#2C3343" />
 
         <TextView
@@ -151,7 +151,7 @@
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="HP : "
+            android:text="@string/HP"
             android:textColor="#2C3343" />
 
         <TextView
@@ -183,7 +183,7 @@
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="HP Cat : "
+            android:text="@string/HPCat"
             android:textColor="#2C3343" />
 
         <TextView
@@ -216,7 +216,7 @@
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Hydraulic : "
+            android:text="@string/Hydraulic"
             android:textColor="#2C3343" />
 
         <TextView
@@ -248,7 +248,7 @@
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Hydraulic Lift Capacity(Kg) "
+            android:text="@string/HydraulicLiftCapacityKg"
             android:textColor="#2C3343" />
 
         <TextView
@@ -256,7 +256,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/app_name"
+            android:text="@string/HydraulicLiftCapacityKg"
             android:textAlignment="center"
             android:textColor="#2C3343" />
     </LinearLayout>
@@ -280,7 +280,7 @@
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Hydraulic Type : "
+            android:text="@string/HydraulicType"
             android:textColor="#2C3343" />
 
         <TextView
@@ -312,7 +312,7 @@
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text=" Integrated Music System : "
+            android:text="@string/IntegratedMusicSystem"
             android:textColor="#2C3343" />
 
         <TextView
@@ -320,7 +320,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/app_name"
+            android:text="@string/IntegratedMusicSystem"
             android:textAlignment="center"
             android:textColor="#2C3343" />
     </LinearLayout>
@@ -344,7 +344,7 @@
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text=" Kerb Weight: "
+            android:text="@string/kerbweight"
             android:textColor="#2C3343" />
 
         <TextView
@@ -377,7 +377,7 @@
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Keyless/ButtonStart : "
+            android:text="@string/KeylessButtonStart"
             android:textColor="#2C3343" />
 
         <TextView
@@ -410,7 +410,7 @@
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Lifting Capacity At Standard Frame : "
+            android:text="@string/LiftingCapacityAtStandardFrame"
             android:textColor="#2C3343" />
 
         <TextView
@@ -443,7 +443,7 @@
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Load Body : "
+            android:text="@string/LoadBody"
             android:textColor="#2C3343" />
 
         <TextView
@@ -476,7 +476,7 @@
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text=" Load Body Dimensions: "
+            android:text="@string/app_name"
             android:textColor="#2C3343" />
 
         <TextView
@@ -509,7 +509,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="  MaxPower : "
+            android:text="@string/MaxPower"
             android:textColor="#2C3343" />
 
         <TextView
@@ -542,7 +542,7 @@
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text=" MaxReserveSpeed : "
+            android:text="@string/MaxReserveSpeed"
             android:textColor="#2C3343" />
 
         <TextView
@@ -575,7 +575,7 @@
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Max Speed : "
+            android:text="@string/MaxSpeed"
             android:textColor="#2C3343" />
 
         <TextView
@@ -608,7 +608,7 @@
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text=" Max Torque Kg : "
+            android:text="@string/MaxTorqueKgm"
             android:textColor="#2C3343" />
 
         <TextView
@@ -641,7 +641,7 @@
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text=" Mileage : "
+            android:text="@string/Mileage"
             android:textColor="#2C3343" />
 
         <TextView
@@ -674,7 +674,7 @@
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="  No Of Cylinder : "
+            android:text="@string/NoOfCylinder"
             android:textColor="#2C3343" />
 
         <TextView

@@ -16,7 +16,7 @@
             android:id="@+id/SeatBelt"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
-            android:text="Seat Belt : "
+            android:text="@string/SeatBelt"
             android:layout_weight="1"
             android:textColor="#2C3343"
             android:visibility="visible" />
@@ -53,7 +53,7 @@
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Seat Belt Warning : "
+            android:text="@string/SeatBeltWarning"
             android:textColor="#2C3343" />
 
         <TextView
@@ -86,7 +86,7 @@
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Seating Capacity : "
+            android:text="@string/seating_capacity"
             android:textColor="#2C3343" />
 
         <TextView
@@ -119,7 +119,7 @@
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Seat Type : "
+            android:text="@string/SeatType"
             android:textColor="#2C3343" />
 
         <TextView
@@ -152,7 +152,7 @@
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Seat Upholstery : "
+            android:text="@string/seatupholestery"
             android:textColor="#2C3343" />
 
         <TextView
@@ -184,7 +184,7 @@
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Speed : "
+            android:text="@string/Speed"
             android:textColor="#2C3343" />
 
         <TextView
@@ -217,7 +217,7 @@
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Sport Mode : "
+            android:text="@string/SportMode"
             android:textColor="#2C3343" />
 
         <TextView
@@ -249,7 +249,7 @@
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Steering "
+            android:text="@string/Steering"
             android:textColor="#2C3343" />
 
         <TextView
@@ -281,7 +281,7 @@
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Steering Mounted Control : "
+            android:text="@string/SteeringMountedControl"
             android:textColor="#2C3343" />
 
         <TextView
@@ -313,7 +313,7 @@
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text=" Integrated Music System : "
+            android:text="@string/IntegratedMusicSystem"
             android:textColor="#2C3343" />
 
         <TextView
@@ -346,7 +346,7 @@
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text=" Steering Type: "
+            android:text="@string/SteeringType"
             android:textColor="#2C3343" />
 
         <TextView
@@ -379,7 +379,7 @@
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="StrokeIn(MM) : "
+            android:text="@string/StrokeInMM"
             android:textColor="#2C3343" />
 
         <TextView
@@ -412,7 +412,7 @@
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="SunRoof/MoonRoof : "
+            android:text="@string/SunRoofMoonRoof"
             android:textColor="#2C3343" />
 
         <TextView
@@ -445,7 +445,7 @@
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="TMPS : "
+            android:text="@string/TMPS"
             android:textColor="#2C3343" />
 
         <TextView
@@ -478,7 +478,7 @@
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text=" Torque: "
+            android:text="@string/Torque"
             android:textColor="#2C3343" />
 
         <TextView
@@ -511,7 +511,7 @@
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Total Weight : "
+            android:text="@string/TotalWeight"
             android:textColor="#2C3343" />
 
         <TextView
@@ -544,7 +544,7 @@
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text=" Transmission Type : "
+            android:text="@string/TransmissionType"
             android:textColor="#2C3343" />
 
         <TextView
@@ -577,7 +577,7 @@
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="TurboCharge Nutral Aspirated : "
+            android:text="@string/TuboChargeNutralAspirated"
             android:textColor="#2C3343" />
 
         <TextView
@@ -610,7 +610,7 @@
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text=" Turning Radius : "
+            android:text="@string/TurningRadius"
             android:textColor="#2C3343" />
 
         <TextView
@@ -643,7 +643,7 @@
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text=" Turning Radius Of Brakes : "
+            android:text="@string/TurningRadiusOfBrakes"
             android:textColor="#2C3343" />
 
         <TextView
@@ -676,7 +676,7 @@
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Type Of Clutch And Brake Pedal : "
+            android:text="@string/TypeOfClutchAndBrakePedal"
             android:textColor="#2C3343" />
 
         <TextView

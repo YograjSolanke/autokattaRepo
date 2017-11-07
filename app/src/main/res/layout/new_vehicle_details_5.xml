@@ -16,7 +16,7 @@
             android:id="@+id/TypeOfGearReduction"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
-            android:text="Type Of Gear Reduction : "
+            android:text="@string/typeofgearreduction"
             android:layout_weight="1"
             android:textColor="#2C3343"
             android:visibility="visible" />
@@ -52,7 +52,7 @@
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Tyres : "
+            android:text="@string/Tyres"
             android:textColor="#2C3343" />
 
         <TextView
@@ -60,7 +60,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/app_name"
+            android:text="@string/Tyres"
             android:textAlignment="textStart"
             android:textColor="#2C3343" />
     </LinearLayout>
@@ -84,7 +84,7 @@
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Tyre Size : "
+            android:text="@string/TyreSize"
             android:textColor="#2C3343" />
 
         <TextView
@@ -117,7 +117,7 @@
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Tyre Size Front : "
+            android:text="@string/TyreSizeFront"
             android:textColor="#2C3343" />
 
         <TextView
@@ -150,7 +150,7 @@
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Tyre Size Rear : "
+            android:text="@string/TyreSizeRear"
             android:textColor="#2C3343" />
 
         <TextView
@@ -182,7 +182,7 @@
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Warranty(Kilometer) : "
+            android:text="@string/WarrantyKilometer"
             android:textColor="#2C3343" />
 
         <TextView
@@ -215,7 +215,7 @@
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Warranty(Year) : "
+            android:text="@string/WarrantyYear"
             android:textColor="#2C3343" />
 
         <TextView
@@ -223,7 +223,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/app_name"
+            android:text="@string/WarrantyYear"
             android:textAlignment="textStart"
             android:textColor="#2C3343" />
     </LinearLayout>
@@ -247,7 +247,7 @@
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="WebSite1 "
+            android:text="@string/website"
             android:textColor="#2C3343" />
 
         <TextView
@@ -279,7 +279,7 @@
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Weight(Kg) : "
+            android:text="@string/WeightKg"
             android:textColor="#2C3343" />
 
         <TextView
@@ -311,7 +311,7 @@
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text=" WheelBase(MM) : "
+            android:text="@string/WheelBaseMM"
             android:textColor="#2C3343" />
 
         <TextView
@@ -378,7 +378,7 @@
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text=" Engine Details : "
+            android:text="@string/EngineDetails"
             android:textColor="#2C3343" />
 
         <TextView
@@ -411,7 +411,7 @@
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text=" Description : "
+            android:text="@string/Description"
             android:textColor="#2C3343" />
 
         <TextView

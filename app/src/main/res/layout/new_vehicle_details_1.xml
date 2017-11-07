@@ -16,7 +16,7 @@
             android:id="@+id/DisplacementCC"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
-            android:text="Displacement(CC) : "
+            android:text="@string/DisplacementCC"
             android:layout_weight="1"
             android:textColor="#2C3343"
             android:visibility="visible" />
@@ -52,7 +52,7 @@
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Drive : "
+            android:text="@string/drive_type"
             android:textColor="#2C3343" />
 
         <TextView
@@ -89,7 +89,7 @@
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="DualStage Air bags : "
+            android:text="@string/DualStageAirbags1"
             android:textColor="#2C3343" />
 
 
@@ -123,7 +123,7 @@
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Emission Norms : "
+            android:text="@string/EmissionNorms"
             android:textColor="#2C3343" />
 
         <TextView
@@ -156,7 +156,7 @@
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Engine(CC) : "
+            android:text="@string/EngineCC"
             android:textColor="#2C3343" />
 
         <TextView
@@ -190,7 +190,7 @@
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Engine Location : "
+            android:text="@string/EngineLocation"
             android:textColor="#2C3343" />
 
         <TextView
@@ -223,7 +223,7 @@
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Engine Rated RPM : "
+            android:text="@string/EngineRatedRPM"
             android:textColor="#2C3343" />
 
         <TextView
@@ -257,7 +257,7 @@
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Engine Type : "
+            android:text="@string/EngineType"
             android:textColor="#2C3343" />
 
         <TextView
@@ -291,7 +291,7 @@
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="FIP : "
+            android:text="@string/FIP"
             android:textColor="#2C3343" />
 
         <TextView
@@ -325,7 +325,7 @@
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text=" Floor Type : "
+            android:text="@string/FloorType"
             android:textColor="#2C3343" />
 
         <TextView
@@ -333,7 +333,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/app_name"
+            android:text="@string/FloorType"
             android:textAlignment="center"
             android:textColor="#2C3343" />
 
@@ -358,7 +358,7 @@
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text=" Fog Lamps : "
+            android:text="@string/FogLamps"
             android:textColor="#2C3343" />
 
         <TextView
@@ -391,7 +391,7 @@
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text=" Folding Rear Seat : "
+            android:text="@string/FoldingRearSeat"
             android:textColor="#2C3343" />
 
         <TextView
@@ -424,7 +424,7 @@
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Front Axle Suspensione : "
+            android:text="@string/FrontAxleSuspension1"
             android:textColor="#2C3343" />
 
         <TextView
@@ -457,7 +457,7 @@
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Rear Axel Suspension : "
+            android:text="@string/RearAxelSuspension"
             android:textColor="#2C3343" />
 
         <TextView
@@ -465,7 +465,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/app_name"
+            android:text="@string/RearAxelSuspension"
             android:textAlignment="center"
             android:textColor="#2C3343" />
 
@@ -490,7 +490,7 @@
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text=" Front Tyre: "
+            android:text="@string/FrontTyre"
             android:textColor="#2C3343" />
 
         <TextView
@@ -523,7 +523,7 @@
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text=" Rear Tyre : "
+            android:text="@string/RearTyre"
             android:textColor="#2C3343" />
 
         <TextView
@@ -556,7 +556,7 @@
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text=" Fuel Tank : "
+            android:text="@string/FuelTank"
             android:textColor="#2C3343" />
 
         <TextView
@@ -589,7 +589,7 @@
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Fuel Tank Capacity(Ltr) : "
+            android:text="@string/FuelTankCapacityLtr"
             android:textColor="#2C3343" />
 
         <TextView
@@ -622,7 +622,7 @@
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text=" Fuel Type : "
+            android:text="@string/fuel_type"
             android:textColor="#2C3343" />
 
         <TextView
@@ -655,7 +655,7 @@
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="  Fuel System : "
+            android:text="@string/FuelSystem"
             android:textColor="#2C3343" />
 
         <TextView
@@ -688,7 +688,7 @@
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="  GearBox : "
+            android:text="@string/GearBox"
             android:textColor="#2C3343" />
 
         <TextView
@@ -696,7 +696,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/app_name"
+            android:text="@string/GearBox"
             android:textAlignment="center"
             android:textColor="#2C3343" />
 

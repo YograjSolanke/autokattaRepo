@@ -171,6 +171,7 @@ public class NewVehicleDetails extends AppCompatActivity implements RequestNotif
         lBrakes = (LinearLayout) findViewById(R.id.lBrakes);
         lBrakeType = (LinearLayout) findViewById(R.id.lBrakeType);
         lCentralLoking = (LinearLayout) findViewById(R.id.lCentralLoking);
+      //  lHypothetication = (LinearLayout) findViewById(R.id.lhypothetication);
         lChildSeat = (LinearLayout) findViewById(R.id.lChildSeat);
         lClutch = (LinearLayout) findViewById(R.id.lClutch);
         lClutchType = (LinearLayout) findViewById(R.id.lClutchType);
@@ -423,6 +424,7 @@ public class NewVehicleDetails extends AppCompatActivity implements RequestNotif
                         AdditionalInfo.setText(success.getAdditionalInformation());
                         Axelconfiguration.setText(success.getAxleConfiguration());
                         kerbweight.setText(success.getKerbWeight());
+                      //  Noofdoors.setText(success.getno());
 
                         if (success.getCategoryName().equalsIgnoreCase("Bus")) {
                             lDescription.setVisibility(View.VISIBLE);
@@ -471,8 +473,34 @@ public class NewVehicleDetails extends AppCompatActivity implements RequestNotif
                             lWheelBaseMM.setVisibility(View.VISIBLE);
                             lKerbweight.setVisibility(View.VISIBLE);
                             lGroundClearance.setVisibility(View.VISIBLE);
-                           // lnoofdoors.setVisibility(View.VISIBLE);
-                            //lGroundClearance.setVisibility(View.VISIBLE);
+                           // lNoofdoors.setVisibility(View.VISIBLE);
+                            lFuelTankCapacityLtr.setVisibility(View.VISIBLE);
+                            lEngineType.setVisibility(View.VISIBLE);
+                            lKeylessButtonStart.setVisibility(View.VISIBLE);
+                            lSportMode.setVisibility(View.VISIBLE);
+                            lDrive.setVisibility(View.VISIBLE);
+                            lRearAxelSuspension.setVisibility(View.VISIBLE);
+                            lFrontAxleSuspension.setVisibility(View.VISIBLE);
+                            lTurningRadiusOfBrakes.setVisibility(View.VISIBLE);
+                            lSteeringType.setVisibility(View.VISIBLE);
+                            lFrontTyre.setVisibility(View.VISIBLE);
+                            lRearTyre.setVisibility(View.VISIBLE);
+                            lDualStageAirbags.setVisibility(View.VISIBLE);
+                            lHeadRest.setVisibility(View.VISIBLE);
+                            lSeatBeltWarning.setVisibility(View.VISIBLE);
+                            lRearAC.setVisibility(View.VISIBLE);
+                            lCruiseControl.setVisibility(View.VISIBLE);
+                            lParkingSensors.setVisibility(View.VISIBLE);
+                            lFoldingRearSeat.setVisibility(View.VISIBLE);
+                            lRearDefogger.setVisibility(View.VISIBLE);
+                            lRearWiper.setVisibility(View.VISIBLE);
+                            lRainSensingWiper.setVisibility(View.VISIBLE);
+                            lSunRoofMoonRoof.setVisibility(View.VISIBLE);
+                            lFogLamps.setVisibility(View.VISIBLE);
+                            lIntegratedMusicSystem.setVisibility(View.VISIBLE);
+                            lSteeringMountedControl.setVisibility(View.VISIBLE);
+                            lWarrantyKilometer.setVisibility(View.VISIBLE);
+                            lWarrantyYear.setVisibility(View.VISIBLE);
 
                         } else if (success.getCategoryName().equalsIgnoreCase("Construction Equipment")) {
 
@@ -540,7 +568,28 @@ public class NewVehicleDetails extends AppCompatActivity implements RequestNotif
                             lPointLinkage.setVisibility(View.VISIBLE);
                             lPumpType.setVisibility(View.VISIBLE);
                         } else if (success.getCategoryName().equalsIgnoreCase("2 Wheeler")) {
-
+                            lDisplacementCC.setVisibility(View.VISIBLE);
+                            lMaxPower.setVisibility(View.VISIBLE);
+                            lMaxTorqueKgm.setVisibility(View.VISIBLE);
+                            lNoOfCylinder.setVisibility(View.VISIBLE);
+                            lNoOfgears.setVisibility(View.VISIBLE);
+                            lGroundClearance.setVisibility(View.VISIBLE);
+                            lKerbweight.setVisibility(View.VISIBLE);
+                            lFuelTankCapacityLtr.setVisibility(View.VISIBLE);
+                            lFrontTyre.setVisibility(View.VISIBLE);
+                            lRearTyre.setVisibility(View.VISIBLE);
+                            lOverAllLength.setVisibility(View.VISIBLE);
+                            lOverAllWidth.setVisibility(View.VISIBLE);
+                            lWheelBaseMM.setVisibility(View.VISIBLE);
+                            lDescription.setVisibility(View.VISIBLE);
+                            lEngineDetails.setVisibility(View.VISIBLE);
+                            lClutch.setVisibility(View.VISIBLE);
+                            lTransmissionType.setVisibility(View.VISIBLE);
+                            lFrontAxleSuspension.setVisibility(View.VISIBLE);
+                            lRearAxelSuspension.setVisibility(View.VISIBLE);
+                            lKeylessButtonStart.setVisibility(View.VISIBLE);
+                            lMileage.setVisibility(View.VISIBLE);
+                            lMaxSpeed.setVisibility(View.VISIBLE);
                         } else {
 
                         }
