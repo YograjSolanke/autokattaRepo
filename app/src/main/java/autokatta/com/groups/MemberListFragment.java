@@ -343,13 +343,13 @@ public class MemberListFragment extends Fragment implements SwipeRefreshLayout.O
                             mFab.hide();*/
                         if (dy > 0) {
                             // Scroll Down
-                            if (floatCreateGroup.isShown()) {
-                                floatCreateGroup.hide(true);
+                            if (floatingActionMenu.isShown()) {
+                                floatingActionMenu.hideMenu(true);
                             }
                         } else if (dy < 0) {
                             // Scroll Up
-                            if (!floatCreateGroup.isShown()) {
-                                floatCreateGroup.show(true);
+                            if (!floatingActionMenu.isShown()) {
+                                floatingActionMenu.showMenu(true);
                             }
                         }
 

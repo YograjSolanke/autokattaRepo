@@ -424,6 +424,7 @@ public class NewVehicleDetails extends AppCompatActivity implements RequestNotif
                         AdditionalInfo.setText(success.getAdditionalInformation());
                         Axelconfiguration.setText(success.getAxleConfiguration());
                         kerbweight.setText(success.getKerbWeight());
+                        seatupholestry.setText(success.getSeatUpholstery());
                       //  Noofdoors.setText(success.getno());
 
                         if (success.getCategoryName().equalsIgnoreCase("Bus")) {

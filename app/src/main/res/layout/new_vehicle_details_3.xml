@@ -19,16 +19,17 @@
 
             <TextView
                 android:id="@+id/NoOfgears"
-                android:layout_width="50dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/NoOfgears"
+                android:textStyle="bold"
                 android:textColor="#2C3343"
                 android:visibility="visible" />
 
             <TextView
                 android:id="@+id/NoOfgears1"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/NoOfgears"
@@ -59,15 +60,16 @@
 
             <TextView
                 android:id="@+id/GroundClearance"
-                android:layout_width="50dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:textStyle="bold"
                 android:text="@string/GroundClearance"
                 android:textColor="#2C3343" />
 
             <TextView
                 android:id="@+id/GroundClearance1"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/GroundClearance"
@@ -98,15 +100,16 @@
 
             <TextView
                 android:id="@+id/NoOfGearsForword"
-                android:layout_width="50dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:textStyle="bold"
                 android:text="@string/NoOfGearsForword"
                 android:textColor="#2C3343" />
 
             <TextView
                 android:id="@+id/NoOfGearsForword1"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/NoOfGearsForword"
@@ -138,15 +141,16 @@
 
             <TextView
                 android:id="@+id/NoOfGearsReverse"
-                android:layout_width="50dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:textStyle="bold"
                 android:text="@string/NoOfGearsReverse"
                 android:textColor="#2C3343" />
 
             <TextView
                 android:id="@+id/NoOfGearsReverse1"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/NoOfGearsReverse"
@@ -178,15 +182,16 @@
 
             <TextView
                 android:id="@+id/OverAllLength"
-                android:layout_width="50dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:textStyle="bold"
                 android:text="@string/OverAllLength"
                 android:textColor="#2C3343" />
 
             <TextView
                 android:id="@+id/OverAllLength1"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/OverAllLength"
@@ -218,15 +223,16 @@
 
             <TextView
                 android:id="@+id/OverAllWidth"
-                android:layout_width="50dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:textStyle="bold"
                 android:text="@string/OverAllWidth"
                 android:textColor="#2C3343" />
 
             <TextView
                 android:id="@+id/OverAllWidth1"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/OverAllWidth"
@@ -258,15 +264,16 @@
 
             <TextView
                 android:id="@+id/ParkingSensors"
-                android:layout_width="50dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:textStyle="bold"
                 android:text="@string/ParkingSensors"
                 android:textColor="#2C3343" />
 
             <TextView
                 android:id="@+id/ParkingSensors1"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/ParkingSensors"
@@ -297,15 +304,16 @@
 
             <TextView
                 android:id="@+id/PayLoad"
-                android:layout_width="50dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/PayLoad"
+                android:textStyle="bold"
                 android:textColor="#2C3343" />
 
             <TextView
                 android:id="@+id/PayLoad1"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/PayLoad"
@@ -336,10 +344,11 @@
 
             <TextView
                 android:id="@+id/PowerKW"
-                android:layout_width="50dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/PowerKW"
+                android:textStyle="bold"
                 android:textColor="#2C3343" />
 
             <TextView
@@ -376,15 +385,16 @@
 
             <TextView
                 android:id="@+id/PowerWindow"
-                android:layout_width="50dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:textStyle="bold"
                 android:text="@string/PowerWindow"
                 android:textColor="#2C3343" />
 
             <TextView
                 android:id="@+id/PowerWindow1"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/PowerWindow"
@@ -415,15 +425,16 @@
 
             <TextView
                 android:id="@+id/PTOHP"
-                android:layout_width="50dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:textStyle="bold"
                 android:text="@string/PTOHP"
                 android:textColor="#2C3343" />
 
             <TextView
                 android:id="@+id/PTOHP1"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/PTOHP"
@@ -454,15 +465,16 @@
 
             <TextView
                 android:id="@+id/PTORPM"
-                android:layout_width="50dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:textStyle="bold"
                 android:text="@string/PTORPM"
                 android:textColor="#2C3343" />
 
             <TextView
                 android:id="@+id/PTORPM1"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/PTORPM"
@@ -494,15 +506,16 @@
 
             <TextView
                 android:id="@+id/PTOSpeed"
-                android:layout_width="50dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:textStyle="bold"
                 android:text="@string/PTOSpeed"
                 android:textColor="#2C3343" />
 
             <TextView
                 android:id="@+id/PTOSpeed1"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/PTOSpeed"
@@ -534,15 +547,16 @@
 
             <TextView
                 android:id="@+id/PTOType"
-                android:layout_width="50dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/PTOType"
+                android:textStyle="bold"
                 android:textColor="#2C3343" />
 
             <TextView
                 android:id="@+id/PTOType1"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/PTOType"
@@ -574,15 +588,16 @@
 
             <TextView
                 android:id="@+id/PumpType"
-                android:layout_width="50dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:textStyle="bold"
                 android:text="@string/PumpType"
                 android:textColor="#2C3343" />
 
             <TextView
                 android:id="@+id/PumpType1"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/PumpType"
@@ -614,15 +629,16 @@
 
             <TextView
                 android:id="@+id/RainSensingWiper"
-                android:layout_width="50dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:textStyle="bold"
                 android:text="@string/RainSensingWiper"
                 android:textColor="#2C3343" />
 
             <TextView
                 android:id="@+id/RainSensingWiper1"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/RainSensingWiper"
@@ -654,15 +670,16 @@
 
             <TextView
                 android:id="@+id/RatedRPM"
-                android:layout_width="50dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/RatedRPM"
+                android:textStyle="bold"
                 android:textColor="#2C3343" />
 
             <TextView
                 android:id="@+id/RatedRPM1"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/RatedRPM"
@@ -694,15 +711,16 @@
 
             <TextView
                 android:id="@+id/RearAC"
-                android:layout_width="50dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/RearAC"
+                android:textStyle="bold"
                 android:textColor="#2C3343" />
 
             <TextView
                 android:id="@+id/RearAC1"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/RearAC"
@@ -734,15 +752,16 @@
 
             <TextView
                 android:id="@+id/RearDefogger"
-                android:layout_width="50dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:textStyle="bold"
                 android:text="@string/RearDefogger"
                 android:textColor="#2C3343" />
 
             <TextView
                 android:id="@+id/RearDefogger1"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/RearDefogger"
@@ -774,15 +793,16 @@
 
             <TextView
                 android:id="@+id/RearWiper"
-                android:layout_width="50dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/RearWiper"
+                android:textStyle="bold"
                 android:textColor="#2C3343" />
 
             <TextView
                 android:id="@+id/RearWiper1"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/RearWiper"
@@ -814,15 +834,16 @@
 
             <TextView
                 android:id="@+id/RPTOGRPTO"
-                android:layout_width="50dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:textStyle="bold"
                 android:text="@string/RPTOGRPTO"
                 android:textColor="#2C3343" />
 
             <TextView
                 android:id="@+id/RPTOGRPTO1"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/RPTOGRPTO"

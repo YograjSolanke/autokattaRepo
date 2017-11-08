@@ -111,34 +111,35 @@ public class StoreNewVehicleActiviy extends AppCompatActivity implements SwipeRe
             if (response.isSuccessful()) {
 
                 NewVehicleAllResponse vehicleAllResponse = (NewVehicleAllResponse) response.body();
-                if (!vehicleAllResponse.getSuccess().getNewVehicle().isEmpty()) {
-                    mSwipeRefreshLayout.setRefreshing(false);
-                    newVehicleList.clear();
+                if (vehicleAllResponse.getSuccess() != null) {
+                    if (!vehicleAllResponse.getSuccess().getNewVehicle().isEmpty()) {
+                        mSwipeRefreshLayout.setRefreshing(false);
+                        newVehicleList.clear();
 
-                    for (NewVehicleAllResponse.Success.NewVehicle success : vehicleAllResponse.getSuccess().getNewVehicle()) {
+                        for (NewVehicleAllResponse.Success.NewVehicle success : vehicleAllResponse.getSuccess().getNewVehicle()) {
 
-                        success.setNewVehicleID(success.getNewVehicleID());
-                        success.setCategoryID(success.getCategoryID());
-                        success.setSubCategoryID(success.getSubCategoryID());
-                        success.setBrandID(success.getBrandID());
-                        success.setModelID(success.getModelID());
-                        success.setVersionID(success.getVersionID());
-                        success.setCategoryName(success.getCategoryName());
-                        success.setSubCategoryName(success.getSubCategoryName());
-                        success.setBrandName(success.getBrandName());
-                        success.setModelName(success.getModelName());
-                        success.setVersionName(success.getVersionName());
+                            success.setNewVehicleID(success.getNewVehicleID());
+                            success.setCategoryID(success.getCategoryID());
+                            success.setSubCategoryID(success.getSubCategoryID());
+                            success.setBrandID(success.getBrandID());
+                            success.setModelID(success.getModelID());
+                            success.setVersionID(success.getVersionID());
+                            success.setCategoryName(success.getCategoryName());
+                            success.setSubCategoryName(success.getSubCategoryName());
+                            success.setBrandName(success.getBrandName());
+                            success.setModelName(success.getModelName());
+                            success.setVersionName(success.getVersionName());
 
-                        success.setThreePointLinkage((success.getThreePointLinkage() == null ||
-                                success.getThreePointLinkage().equalsIgnoreCase("null") ||
-                                success.getThreePointLinkage().equalsIgnoreCase("")) ? "NA" : success.getThreePointLinkage());
+                            success.setThreePointLinkage((success.getThreePointLinkage() == null ||
+                                    success.getThreePointLinkage().equalsIgnoreCase("null") ||
+                                    success.getThreePointLinkage().equalsIgnoreCase("")) ? "NA" : success.getThreePointLinkage());
 
-                        success.setABS((success.getABS() == null ||
-                                success.getABS().equalsIgnoreCase("null") ||
-                                success.getABS().equalsIgnoreCase("")) ? "NA" : success.getABS());
+                            success.setABS((success.getABS() == null ||
+                                    success.getABS().equalsIgnoreCase("null") ||
+                                    success.getABS().equalsIgnoreCase("")) ? "NA" : success.getABS());
 
 
-                        //success.setPrice((success.getPrice().equalsIgnoreCase("")) ? "NA" : success.getPrice());
+                            //success.setPrice((success.getPrice().equalsIgnoreCase("")) ? "NA" : success.getPrice());
 
 
                             /*String vehicleImage = success.getImage();
@@ -149,21 +150,26 @@ public class StoreNewVehicleActiviy extends AppCompatActivity implements SwipeRe
                                 success.setImage(vehicleImage);
                             }*/
 
-                        newVehicleList.add(success);
+                            newVehicleList.add(success);
 
+                        }
+
+                        adapter = new StoreNewVehicleAdapter(this, newVehicleList, myContact);
+                        mRecyclerView.setAdapter(adapter);
+                        adapter.notifyDataSetChanged();
+                    } else {
+                        mSwipeRefreshLayout.setRefreshing(false);
+                        mNoData.setVisibility(View.VISIBLE);
                     }
-
-                    adapter = new StoreNewVehicleAdapter(this, newVehicleList, myContact);
-                    mRecyclerView.setAdapter(adapter);
-                    adapter.notifyDataSetChanged();
                 } else {
                     mSwipeRefreshLayout.setRefreshing(false);
-                    mNoData.setVisibility(View.VISIBLE);
+                    CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
                 }
             } else {
                 mSwipeRefreshLayout.setRefreshing(false);
                 // CustomToast.customToast(getActivity(), getString(R.string._404));
             }
+
         } else {
             mSwipeRefreshLayout.setRefreshing(false);
             CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));

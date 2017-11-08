@@ -30,20 +30,21 @@
 
                 <TextView
                     android:id="@+id/PointLinkage"
-                    android:layout_width="50dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/PointLinkage"
+                    android:textStyle="bold"
                     android:textColor="#2C3343" />
 
                 <TextView
                     android:id="@+id/txtPointLinkage1"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="23dp"
                     android:layout_weight="1"
                     android:text="@string/PointLinkage"
-                    android:textAlignment="center"
+                    android:textAlignment="textStart"
                     android:textColor="#2C3343" />
             </LinearLayout>
 
@@ -71,19 +72,20 @@
 
                 <TextView
                     android:id="@+id/ABS"
-                    android:layout_width="50dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="@string/kms_running"
+                    android:text="@string/ABS"
+                    android:textStyle="bold"
                     android:textColor="#2C3343" />
 
                 <TextView
                     android:id="@+id/ABS1"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="@string/kms_running"
-                    android:textAlignment="center"
+                    android:text="@string/ABS"
+                    android:textAlignment="textStart"
                     android:textColor="#2C3343" />
 
             </LinearLayout>
@@ -112,19 +114,20 @@
 
                 <TextView
                     android:id="@+id/AirBagstext"
-                    android:layout_width="50dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/AirBags"
+                    android:textStyle="bold"
                     android:textColor="#2C3343" />
 
                 <TextView
                     android:id="@+id/AirBags"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/AirBags"
-                    android:textAlignment="center"
+                    android:textAlignment="textStart"
                     android:textColor="#2C3343" />
             </LinearLayout>
 
@@ -152,19 +155,20 @@
 
                 <TextView
                     android:id="@+id/AirCleaner"
-                    android:layout_width="50dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/AirCleaner"
+                    android:textStyle="bold"
                     android:textColor="#2C3343" />
 
                 <TextView
                     android:id="@+id/AirCleaner1"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/AirCleaner"
-                    android:textAlignment="center"
+                    android:textAlignment="textStart"
                     android:textColor="#2C3343" />
             </LinearLayout>
 
@@ -191,19 +195,20 @@
 
                 <TextView
                     android:id="@+id/AirCondition"
-                    android:layout_width="50dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/air_condition"
+                    android:textStyle="bold"
                     android:textColor="#2C3343" />
 
                 <TextView
                     android:id="@+id/AirCondition1"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/air_condition"
-                    android:textAlignment="center"
+                    android:textAlignment="textStart"
                     android:textColor="#2C3343" />
             </LinearLayout>
 
@@ -231,19 +236,20 @@
 
                 <TextView
                     android:id="@+id/AlternateFuelType"
-                    android:layout_width="50dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:textStyle="bold"
                     android:text="@string/AlternateFuelType"
                     android:textColor="#2C3343" />
 
                 <TextView
                     android:id="@+id/AlternateFuelType1"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/AlternateFuelType"
-                    android:textAlignment="center"
+                    android:textAlignment="textStart"
                     android:textColor="#2C3343" />
             </LinearLayout>
 
@@ -271,21 +277,20 @@
 
                 <TextView
                     android:id="@+id/AuxiliaryHydValve"
-                    android:layout_width="50dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginTop="5dp"
                     android:layout_weight="1"
                     android:text="@string/AuxiliaryHydValve1"
+                    android:textStyle="bold"
                     android:textColor="#2C3343" />
 
                 <TextView
                     android:id="@+id/AuxiliaryHydValve1"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/AuxiliaryHydValve1"
-                    android:textAlignment="center"
+                    android:textAlignment="textStart"
                     android:textColor="#2C3343" />
             </LinearLayout>
 
@@ -313,19 +318,20 @@
 
                 <TextView
                     android:id="@+id/BackUpTorque"
-                    android:layout_width="50dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:textStyle="bold"
                     android:text="@string/BackUpTorque"
                     android:textColor="#2C3343" />
 
                 <TextView
                     android:id="@+id/BackUpTorque1"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/BackUpTorque"
-                    android:textAlignment="center"
+                    android:textAlignment="textStart"
                     android:textColor="#2C3343" />
             </LinearLayout>
 
@@ -353,19 +359,20 @@
 
                 <TextView
                     android:id="@+id/BodyOptions"
-                    android:layout_width="50dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/BodyOptions1"
+                    android:textStyle="bold"
                     android:textColor="#2C3343" />
 
                 <TextView
                     android:id="@+id/BodyOptions1"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/BodyOptions1"
-                    android:textAlignment="center"
+                    android:textAlignment="textStart"
                     android:textColor="#2C3343" />
             </LinearLayout>
 
@@ -393,19 +400,20 @@
 
                 <TextView
                     android:id="@+id/Boreinmm"
-                    android:layout_width="50dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:textStyle="bold"
                     android:text="@string/Boreinmm1"
                     android:textColor="#2C3343" />
 
                 <TextView
                     android:id="@+id/Boreinmm1"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/Boreinmm1"
-                    android:textAlignment="center"
+                    android:textAlignment="textStart"
                     android:textColor="#2C3343" />
             </LinearLayout>
 
@@ -433,19 +441,20 @@
 
                 <TextView
                     android:id="@+id/BoreStroke"
-                    android:layout_width="50dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/BoreStroke"
+                    android:textStyle="bold"
                     android:textColor="#2C3343" />
 
                 <TextView
                     android:id="@+id/BoreStroke1"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/BoreStroke"
-                    android:textAlignment="center"
+                    android:textAlignment="textStart"
                     android:textColor="#2C3343" />
             </LinearLayout>
 
@@ -473,19 +482,20 @@
 
                 <TextView
                     android:id="@+id/Brakes"
-                    android:layout_width="50dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:textStyle="bold"
                     android:text="@string/Brakes"
                     android:textColor="#2C3343" />
 
                 <TextView
                     android:id="@+id/Brakes1"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/Brakes"
-                    android:textAlignment="center"
+                    android:textAlignment="textStart"
                     android:textColor="#2C3343" />
             </LinearLayout>
 
@@ -513,19 +523,20 @@
 
                 <TextView
                     android:id="@+id/BrakeType"
-                    android:layout_width="50dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/BrakeType"
+                    android:textStyle="bold"
                     android:textColor="#2C3343" />
 
                 <TextView
                     android:id="@+id/BrakeType1"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/BrakeType"
-                    android:textAlignment="center"
+                    android:textAlignment="textStart"
                     android:textColor="#2C3343" />
 
             </LinearLayout>
@@ -554,21 +565,20 @@
 
                 <TextView
                     android:id="@+id/CentralLoking"
-                    android:layout_width="50dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginTop="5dp"
+                    android:textStyle="bold"
                     android:layout_weight="1"
                     android:text="@string/CentralLoking"
                     android:textColor="#2C3343" />
 
                 <TextView
                     android:id="@+id/CentralLoking1"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/CentralLoking"
-                    android:textAlignment="center"
+                    android:textAlignment="textStart"
                     android:textColor="#2C3343" />
             </LinearLayout>
 
@@ -596,19 +606,20 @@
 
                 <TextView
                     android:id="@+id/ChildSeat"
-                    android:layout_width="50dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/ChildSeat"
+                    android:textStyle="bold"
                     android:textColor="#2C3343" />
 
                 <TextView
                     android:id="@+id/ChildSeat1"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/ChildSeat"
-                    android:textAlignment="center"
+                    android:textAlignment="textStart"
                     android:textColor="#2C3343" />
             </LinearLayout>
 
@@ -636,19 +647,20 @@
 
                 <TextView
                     android:id="@+id/Clutch"
-                    android:layout_width="50dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/Clutch"
+                    android:textStyle="bold"
                     android:textColor="#2C3343" />
 
                 <TextView
                     android:id="@+id/Clutch1"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/Clutch"
-                    android:textAlignment="center"
+                    android:textAlignment="textStart"
                     android:textColor="#2C3343" />
             </LinearLayout>
 
@@ -676,19 +688,20 @@
 
                 <TextView
                     android:id="@+id/ClutchType"
-                    android:layout_width="50dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:textStyle="bold"
                     android:text="@string/ClutchType"
                     android:textColor="#2C3343" />
 
                 <TextView
                     android:id="@+id/ClutchType1"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/ClutchType"
-                    android:textAlignment="center"
+                    android:textAlignment="textStart"
                     android:textColor="#2C3343" />
             </LinearLayout>
 
@@ -716,19 +729,20 @@
 
                 <TextView
                     android:id="@+id/CoolingSystem"
-                    android:layout_width="50dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:textStyle="bold"
                     android:text="@string/CoolingSystem"
                     android:textColor="#2C3343" />
 
                 <TextView
                     android:id="@+id/CoolingSystem1"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/CoolingSystem"
-                    android:textAlignment="center"
+                    android:textAlignment="textStart"
                     android:textColor="#2C3343" />
             </LinearLayout>
 
@@ -756,19 +770,20 @@
 
                 <TextView
                     android:id="@+id/CruiseControl"
-                    android:layout_width="50dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:textStyle="bold"
                     android:text="@string/CruiseControl"
                     android:textColor="#2C3343" />
 
                 <TextView
                     android:id="@+id/CruiseControl1"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/CruiseControl"
-                    android:textAlignment="center"
+                    android:textAlignment="textStart"
                     android:textColor="#2C3343" />
             </LinearLayout>
 
@@ -795,9 +810,9 @@
 
                 <TextView
                     android:id="@+id/CylinderCapacityCC"
-                    android:layout_width="50dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
+                    android:textStyle="bold"
                     android:layout_weight="1"
                     android:text="@string/CylinderCapacityCC"
                     android:textColor="#2C3343" />
@@ -805,11 +820,11 @@
 
                 <TextView
                     android:id="@+id/CylinderCapacityCC1"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/CylinderCapacityCC"
-                    android:textAlignment="center"
+                    android:textAlignment="textStart"
                     android:textColor="#2C3343" />
             </LinearLayout>
 
