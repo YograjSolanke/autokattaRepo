@@ -24,7 +24,7 @@ import autokatta.com.R;
  */
 
 public class GoogleChecker {
-    private static final String PLAY_STORE_ROOT_WEB = "https://play.google.com/store/apps/details?id=";
+    private static final String PLAY_STORE_ROOT_WEB = "https://play.google.com/store/apps/details?id=autokatta.com";
     private static final String PLAY_STORE_HTML_TAGS_TO_GET_RIGHT_POSITION = "itemprop=\"softwareVersion\"> ";
     private static final String PLAY_STORE_HTML_TAGS_TO_REMOVE_USELESS_CONTENT = "  </div> </div>";
     private static final String PLAY_STORE_PACKAGE_NOT_PUBLISHED_IDENTIFIER = "We're sorry, the requested URL was not found on this server.";
