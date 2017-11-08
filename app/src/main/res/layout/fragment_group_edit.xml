@@ -12,6 +12,7 @@
         android:background="@drawable/profile"
         android:contentDescription="@string/app_name"
         android:fitsSystemWindows="true"
+        android:layout_margin="5dp"
         android:scaleType="centerCrop" />
 
     <EditText
