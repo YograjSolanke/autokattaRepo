@@ -2,6 +2,10 @@ package autokatta.com.share;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.media.MediaMetadataRetriever;
+import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,9 +13,11 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.MediaController;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.VideoView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -79,6 +85,17 @@ public class ShareWithCaptionAdapter extends BaseAdapter {
 
         TextView titleevent, start_date, start_time, end_date, end_time, eventlocation, auctioneer;
         RelativeLayout btnshare;
+
+
+        //post status fields
+        TextView mStatusText, captionText;
+        ImageView image1, image2, image3, image4;
+        LinearLayout linearImages;
+        VideoView videoView;
+        LinearLayout linearImagelayout1, linearImagelayout2;
+        LinearLayout postActionButtonslayout;
+        RelativeLayout relativePostActionLayout;
+
     }
 
     @Override
@@ -215,11 +232,23 @@ public class ShareWithCaptionAdapter extends BaseAdapter {
 
                     case "poststatus":
 
-                        view = mInflater.inflate(R.layout.adapter_share_post_notification, null);
+                        view = mInflater.inflate(R.layout.fragment_wall_post_notification, null);
                         holder = new ViewHolder();
-                        holder.poststatus = (TextView) view.findViewById(R.id.statustxt);
-                        holder.relaprofilelike = (RelativeLayout) view.findViewById(R.id.relaprofilelike);
-                        holder.relalike2 = (LinearLayout) view.findViewById(R.id.relalike2);
+
+                        holder.mStatusText = (TextView) view.findViewById(R.id.statustxt);
+                        holder.image1 = (ImageView) view.findViewById(R.id.image1);
+                        holder.image2 = (ImageView) view.findViewById(R.id.image2);
+                        holder.image3 = (ImageView) view.findViewById(R.id.image3);
+                        holder.image4 = (ImageView) view.findViewById(R.id.image4);
+                        holder.videoView = (VideoView) view.findViewById(R.id.VideoView);
+                        holder.captionText = (TextView) view.findViewById(R.id.imageVideoCaptionText);
+                        holder.linearImages = (LinearLayout) view.findViewById(R.id.linearImages);
+                        holder.linearImagelayout1 = (LinearLayout) view.findViewById(R.id.linearImagelayout1);
+                        holder.linearImagelayout2 = (LinearLayout) view.findViewById(R.id.linearImagelayout2);
+                        holder.postActionButtonslayout = (LinearLayout) view.findViewById(R.id.postActionlayout);
+                        holder.relativePostActionLayout = (RelativeLayout) view.findViewById(R.id.relative);
+                        holder.postActionButtonslayout.setVisibility(View.GONE);
+                        holder.relativePostActionLayout.setVisibility(View.GONE);
 
                         break;
 
@@ -504,10 +533,145 @@ public class ShareWithCaptionAdapter extends BaseAdapter {
 
                 if (holder != null) {
                     String data5[] = sharedata.split("=");
+                    final String keyword = data5[1];
+                    if (keyword.equalsIgnoreCase("Video")) {
+                        holder.videoView.setVisibility(View.VISIBLE);
+                        holder.linearImages.setVisibility(View.GONE);
+                        holder.mStatusText.setVisibility(View.GONE);
+                        // mPostHolder.moreImages.setVisibility(View.GONE);
 
-                    holder.poststatus.setText("\"" + data5[0] + "\"");
-                    holder.relaprofilelike.setVisibility(View.GONE);
-                    holder.relalike2.setVisibility(View.GONE);
+                        holder.captionText.setText(data5[0]);
+                        try {
+                            // Start the MediaController
+                            MediaController mediacontroller = new MediaController(
+                                    activity);
+                            mediacontroller.setAnchorView(holder.videoView);
+//                        // Get the URL from String VideoURL
+                            // Uri video = Uri.parse("http://autokatta.acquiscent.com/UploadedFiles/adba403e4bcc8847f9da0aa45a9f5b9c.mp4");
+//                        mImageHolder.videoView.setMediaController(mediacontroller);
+//                        mImageHolder.videoView.setVideoURI(video);
+//                        mImageHolder.videoView.seekTo(100);
+                            Uri video = Uri.parse(data5[3]);
+
+                            Bitmap thumb = createVideoThumbnail(activity, video);
+
+                            BitmapDrawable bitmapDrawable = new BitmapDrawable(thumb);
+                            holder.videoView.setBackground(bitmapDrawable);
+
+                        } catch (Exception e) {
+                            Log.e("Error", e.getMessage());
+                            e.printStackTrace();
+                        }
+
+//                    mImageHolder.videoView.requestFocus();
+//                    mImageHolder.videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+//                        // Close the progress bar and play the video
+//                        public void onPrepared(MediaPlayer mp) {
+//                            pDialog.dismiss();
+//                            mImageHolder.videoView.start();
+//                        }
+//                    });
+
+                    } else if (keyword.equalsIgnoreCase("Image")) {
+                        holder.linearImages.setVisibility(View.VISIBLE);
+                        holder.videoView.setVisibility(View.GONE);
+                        holder.mStatusText.setVisibility(View.GONE);
+
+                        holder.captionText.setText(data5[0]);
+                        //mPostHolder.moreImages.setVisibility(View.VISIBLE);
+                        if (data5[2].contains(",")) {
+                            String[] imageArray = data5[2].split(",");
+
+                            if (imageArray.length >= 4) {
+                                Glide.with(activity)
+                                        .load("http://autokatta.acquiscent.com/UploadedFiles/" + imageArray[0])
+                                        .centerCrop()
+                                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                        .placeholder(R.drawable.logo)
+                                        .into(holder.image1);
+
+                                Glide.with(activity)
+                                        .load("http://autokatta.acquiscent.com/UploadedFiles/" + imageArray[1])
+                                        .centerCrop()
+                                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                        .placeholder(R.drawable.logo)
+                                        .into(holder.image2);
+
+                                Glide.with(activity)
+                                        .load("http://autokatta.acquiscent.com/UploadedFiles/" + imageArray[2])
+                                        .centerCrop()
+                                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                        .placeholder(R.drawable.logo)
+                                        .into(holder.image3);
+
+                                Glide.with(activity)
+                                        .load("http://autokatta.acquiscent.com/UploadedFiles/" + imageArray[3])
+                                        .centerCrop()
+                                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                        .placeholder(R.drawable.logo)
+                                        .into(holder.image4);
+                            } else if (imageArray.length == 3) {
+                                Glide.with(activity)
+                                        .load("http://autokatta.acquiscent.com/UploadedFiles/" + imageArray[0])
+                                        .centerCrop()
+                                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                        .placeholder(R.drawable.logo)
+                                        .into(holder.image1);
+
+                                Glide.with(activity)
+                                        .load("http://autokatta.acquiscent.com/UploadedFiles/" + imageArray[1])
+                                        .centerCrop()
+                                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                        .placeholder(R.drawable.logo)
+                                        .into(holder.image2);
+
+                                Glide.with(activity)
+                                        .load("http://autokatta.acquiscent.com/UploadedFiles/" + imageArray[2])
+                                        .centerCrop()
+                                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                        .placeholder(R.drawable.logo)
+                                        .into(holder.image3);
+
+                                holder.image4.setVisibility(View.GONE);
+                            } else if (imageArray.length == 2) {
+                                Glide.with(activity)
+                                        .load("http://autokatta.acquiscent.com/UploadedFiles/" + imageArray[0])
+                                        .centerCrop()
+                                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                        .placeholder(R.drawable.logo)
+                                        .into(holder.image1);
+
+                                Glide.with(activity)
+                                        .load("http://autokatta.acquiscent.com/UploadedFiles/" + imageArray[1])
+                                        .centerCrop()
+                                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                        .placeholder(R.drawable.logo)
+                                        .into(holder.image2);
+
+                                holder.linearImagelayout2.setVisibility(View.GONE);
+
+                            }
+                        } else {
+
+                            Glide.with(activity)
+                                    .load("http://autokatta.acquiscent.com/UploadedFiles/" + data5[2])
+                                    .centerCrop()
+                                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                    .placeholder(R.drawable.logo)
+                                    .into(holder.image1);
+                            holder.linearImagelayout2.setVisibility(View.GONE);
+                            holder.image2.setVisibility(View.GONE);
+                        }
+
+                    } else if (keyword.equalsIgnoreCase("Status")) {
+
+                        holder.captionText.setVisibility(View.GONE);
+                        holder.linearImages.setVisibility(View.GONE);
+                        holder.videoView.setVisibility(View.GONE);
+                        holder.mStatusText.setVisibility(View.VISIBLE);
+
+                        holder.mStatusText.setText(data5[0]);
+                    }
                 }
 
                 break;
@@ -685,5 +849,27 @@ public class ShareWithCaptionAdapter extends BaseAdapter {
         }
 
         return view;
+    }
+
+    private static Bitmap createVideoThumbnail(Context context, Uri uri) {
+        MediaMetadataRetriever mediametadataretriever = new MediaMetadataRetriever();
+
+        try {
+            mediametadataretriever.setDataSource(context, uri);
+            //            if (null != bitmap) {
+//                int j = getThumbnailSize(context, i);
+//                return ThumbnailUtils.extractThumbnail(bitmap, j, j, 2);
+//            }
+            return mediametadataretriever.getFrameAtTime(-1L);
+        } catch (Throwable t) {
+            // TODO log
+            return null;
+        } finally {
+            try {
+                mediametadataretriever.release();
+            } catch (RuntimeException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

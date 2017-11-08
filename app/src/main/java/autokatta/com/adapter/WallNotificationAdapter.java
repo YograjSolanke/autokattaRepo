@@ -390,7 +390,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
         CardView mPostCardView;
         ImageView mProfile_pic;
         TextView mAction, mActionTime, mStatusText, captionText;
-        Button mPostShare, mCall, mLike, mUnlike;
+        Button mPostShare, mPostUpload, mCall, mLike, mUnlike;
         ImageView image1, image2, image3, image4;
         LinearLayout linearImages;
         VideoView videoView;
@@ -405,7 +405,8 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
             mAction = (TextView) postView.findViewById(R.id.post_action_names);
             mActionTime = (TextView) postView.findViewById(R.id.post_action_time);
             mStatusText = (TextView) postView.findViewById(R.id.statustxt);
-            mPostShare = (Button) postView.findViewById(R.id.shares);
+            mPostUpload = (Button) postView.findViewById(R.id.upload);
+            mPostShare = (Button) postView.findViewById(R.id.share);
             mLike = (Button) postView.findViewById(R.id.like);
             mUnlike = (Button) postView.findViewById(R.id.unlike);
             image1 = (ImageView) postView.findViewById(R.id.image1);
@@ -554,9 +555,21 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                 mShareDateOfSearch, mShareMySearchLeads;
         TextView mShareAuctionName, mShareAuctionNoOfVehicles, mShareAuctionEndDate, mShareAuctionEndTime, mShareAuctionType,
                 mShareAuctionGoingCount, mShareAuctionIgnoreCount;
-        TextView mShareStatus;
+
         RelativeLayout mProfileRelative, mStoreRelative, mProductRelative, mServiceRelative, mVehicleRelative,
                 mMySearchRelative, mAuctionRelative, mpostrel;
+
+
+        //post related variables
+        LinearLayout postActionButtonslayout;
+        RelativeLayout relativePostActionLayout;
+        CardView mPostCardView;
+        ImageView mProfile_pic;
+        TextView mStatusText, captionText;
+        ImageView image1, image2, image3, image4;
+        LinearLayout linearImages;
+        VideoView videoView;
+        LinearLayout linearImagelayout1, linearImagelayout2;
 
         private ShareNotifications(View shareView) {
             super(shareView);
@@ -631,7 +644,23 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
 
     /* status notification layout*/
             mpostrel = (RelativeLayout) shareView.findViewById(R.id.postrel);
-            mShareStatus = (TextView) shareView.findViewById(R.id.share_statustxt);
+            postActionButtonslayout = (LinearLayout) shareView.findViewById(R.id.postActionlayout);
+            relativePostActionLayout = (RelativeLayout) shareView.findViewById(R.id.relative);
+            postActionButtonslayout.setVisibility(View.GONE);
+            relativePostActionLayout.setVisibility(View.GONE);
+
+            mPostCardView = (CardView) shareView.findViewById(R.id.post_card_view);
+            mProfile_pic = (ImageView) shareView.findViewById(R.id.profile_pro_pic);
+            mStatusText = (TextView) shareView.findViewById(R.id.statustxt);
+            image1 = (ImageView) shareView.findViewById(R.id.image1);
+            image2 = (ImageView) shareView.findViewById(R.id.image2);
+            image3 = (ImageView) shareView.findViewById(R.id.image3);
+            image4 = (ImageView) shareView.findViewById(R.id.image4);
+            videoView = (VideoView) shareView.findViewById(R.id.VideoView);
+            captionText = (TextView) shareView.findViewById(R.id.imageVideoCaptionText);
+            linearImages = (LinearLayout) shareView.findViewById(R.id.linearImages);
+            linearImagelayout1 = (LinearLayout) shareView.findViewById(R.id.linearImagelayout1);
+            linearImagelayout2 = (LinearLayout) shareView.findViewById(R.id.linearImagelayout2);
         }
     }
 
@@ -3246,96 +3275,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                             }
                         });
                         mPopupMenu.show(); //showing popup menu
-                        /*android.support.v7.app.AlertDialog.Builder alert = new android.support.v7.app.AlertDialog.Builder(mActivity);
-                        alert.setTitle("Share");
-                        alert.setMessage("with Autokatta or to other?");
-                        alert.setIconAttribute(android.R.attr.alertDialogIcon);
 
-                        alert.setPositiveButton("Autokatta", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
-                                String allServiceDetails = mServiceHolder.mServiceName.getText().toString() + "=" +
-                                        mServiceHolder.mServiceType.getText().toString() + "=" +
-                                        mServiceHolder.mServiceRating.getRating() + "=" +
-                                        notificationList.get(mServiceHolder.getAdapterPosition()).getServiceLikeCount() + "=" +
-                                        notificationList.get(mServiceHolder.getAdapterPosition()).getServiceImage();
-
-                                System.out.println("all service detailssss======Auto " + allServiceDetails);
-
-                                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                                        putString("Share_sharedata", allServiceDetails).apply();
-                                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                                        putInt("Share_service_id", notificationList.get(mServiceHolder.getAdapterPosition()).getServiceID()).apply();
-                                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                                        putString("Share_keyword", "service").apply();
-
-
-                                Intent i = new Intent(mActivity, ShareWithinAppActivity.class);
-                                mActivity.startActivity(i);
-                                dialog.dismiss();
-                            }
-                        });
-
-                        alert.setNegativeButton("Other", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
-                                if (notificationList.get(mServiceHolder.getAdapterPosition()).getServiceImage().equalsIgnoreCase("") ||
-                                        notificationList.get(mServiceHolder.getAdapterPosition()).getServiceImage().equalsIgnoreCase(null) ||
-                                        notificationList.get(mServiceHolder.getAdapterPosition()).getServiceImage().equalsIgnoreCase("null")) {
-                                    imagename = mActivity.getString(R.string.base_image_url) + "logo48x48.png";
-                                } else {
-                                    imagename = mActivity.getString(R.string.base_image_url) + notificationList.get(mServiceHolder.getAdapterPosition()).getServiceImage();
-                                }
-                                Log.e("TAG", "img : " + imagename);
-
-                                DownloadManager.Request request = new DownloadManager.Request(
-                                        Uri.parse(imagename));
-                                request.allowScanningByMediaScanner();
-                                String filename = URLUtil.guessFileName(imagename, null, MimeTypeMap.getFileExtensionFromUrl(imagename));
-                                request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, filename);
-                                Log.e("ShareImagePath :", filename);
-                                Log.e("TAG", "img : " + imagename);
-
-                                DownloadManager manager = (DownloadManager) mActivity.getApplication()
-                                        .getSystemService(Context.DOWNLOAD_SERVICE);
-
-                                Log.e("TAG", "img URL: " + imagename);
-
-                                manager.enqueue(request);
-
-                                imageFilePath = "/storage/emulated/0/Download/" + filename;
-                                System.out.println("ImageFilePath:" + imageFilePath);
-
-                                String allServiceDetails = "Service name : " + mServiceHolder.mServiceName.getText().toString() + "\n" +
-                                        "Service type : " + mServiceHolder.mServiceType.getText().toString() + "\n" +
-                                        "Ratings : " + mServiceHolder.mServiceRating.getRating() + "\n" +
-                                        "Likes : " + notificationList.get(mServiceHolder.getAdapterPosition()).getServiceLikeCount() *//*+ "\n" +
-                                        notificationList.get(mProfileHolder.getAdapterPosition()).getSenderLikeCount() + "\n"+
-                                        notificationList.get(mProfileHolder.getAdapterPosition()).getSenderFollowCount()*//*;
-
-                                System.out.println("all service detailssss======Other " + allServiceDetails);
-
-                                intent.setType("text/plain");
-
-                                intent.putExtra(Intent.EXTRA_TEXT, "Please visit and Follow my store on Autokatta. Stay connected for Product and Service updates and enquiries"
-                                        + "\n" + "http://autokatta.com/service/" + notificationList.get(mServiceHolder.getAdapterPosition()).getServiceID()
-                                        //   + "/" + notificationList.get(mServiceHolder.getAdapterPosition()).getStoreContact()
-                                        + "\n" + "\n" + allServiceDetails);
-
-                                intent.setType("image/jpeg");
-                                intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(imageFilePath)));
-                                intent.putExtra(Intent.EXTRA_SUBJECT, "Please Find Below Attachments");
-                                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                                mActivity.startActivity(Intent.createChooser(intent, "Autokatta"));
-
-                                dialog.dismiss();
-                            }
-
-                        });
-                        alert.create();
-                        alert.show();*/
                     }
                 });
                 break;
@@ -3472,12 +3412,115 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                     }
                 });
 
-                mPostHolder.mPostShare.setOnClickListener(new View.OnClickListener() {
+                mPostHolder.mPostUpload.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(mActivity, UploadToGroupStoreActivity.class);
                         intent.putExtra("statusId", notificationList.get(position).getStatusID());
                         mActivity.startActivity(intent);
+                    }
+                });
+
+                mPostHolder.mPostShare.setOnClickListener(new View.OnClickListener() {
+
+                    String imageFilePath = "", imagename;
+                    Intent intent = new Intent(Intent.ACTION_SEND);
+
+                    /*decode string code (Getting)*/
+                    String decodedString = null;
+                    byte[] data = new byte[0];
+
+                    @Override
+                    public void onClick(View view) {
+                        PopupMenu mPopupMenu = new PopupMenu(mActivity, mPostHolder.mPostShare);
+                        mPopupMenu.getMenuInflater().inflate(R.menu.more_menu, mPopupMenu.getMenu());
+                        mPopupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                            @Override
+                            public boolean onMenuItemClick(MenuItem item) {
+                                switch (item.getItemId()) {
+                                    case R.id.autokatta:
+
+
+                                        try {
+                                            data = Base64.decode(notificationList.get(mPostHolder.getAdapterPosition()).getStatus());
+                                            decodedString = new String(data, "UTF-8");
+                                        } catch (IOException e) {
+                                            e.printStackTrace();
+                                        }
+                                        String allPostDetails = decodedString + "=" +
+                                                notificationList.get(mPostHolder.getAdapterPosition()).getStatusType() + "=" +
+                                                notificationList.get(mPostHolder.getAdapterPosition()).getStatusImages() + "=" +
+                                                notificationList.get(mPostHolder.getAdapterPosition()).getStatusVideos();
+
+                                        System.out.println("all allPostDetails detailssss======Auto " + allPostDetails);
+
+                                        mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                                                putString("Share_sharedata", allPostDetails).apply();
+                                        mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                                                putInt("Share_status_id", notificationList.get(mPostHolder.getAdapterPosition()).getStatusID()).apply();
+                                        mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                                                putString("Share_keyword", "poststatus").apply();
+
+
+                                        Intent i = new Intent(mActivity, ShareWithinAppActivity.class);
+                                        mActivity.startActivity(i);
+                                        break;
+                                    case R.id.other:
+                                        if (notificationList.get(mPostHolder.getAdapterPosition()).getStatusImages().equalsIgnoreCase("") ||
+                                                notificationList.get(mPostHolder.getAdapterPosition()).getStatusImages().equalsIgnoreCase(null) ||
+                                                notificationList.get(mPostHolder.getAdapterPosition()).getStatusImages().equalsIgnoreCase("null")) {
+                                            imagename = mActivity.getString(R.string.base_image_url) + "logo48x48.png";
+                                        } else {
+                                            imagename = mActivity.getString(R.string.base_image_url) + notificationList.get(mPostHolder.getAdapterPosition()).getStatusImages();
+                                        }
+                                        Log.e("TAG", "img : " + imagename);
+
+                                        DownloadManager.Request request = new DownloadManager.Request(
+                                                Uri.parse(imagename));
+                                        request.allowScanningByMediaScanner();
+                                        String filename = URLUtil.guessFileName(imagename, null, MimeTypeMap.getFileExtensionFromUrl(imagename));
+                                        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, filename);
+                                        Log.e("ShareImagePath :", filename);
+                                        Log.e("TAG", "img : " + imagename);
+
+                                        DownloadManager manager = (DownloadManager) mActivity.getApplication()
+                                                .getSystemService(Context.DOWNLOAD_SERVICE);
+
+                                        Log.e("TAG", "img URL: " + imagename);
+
+                                        assert manager != null;
+                                        manager.enqueue(request);
+
+                                        imageFilePath = "/storage/emulated/0/Download/" + filename;
+                                        System.out.println("ImageFilePath:" + imageFilePath);
+                                        try {
+                                            data = Base64.decode(notificationList.get(mPostHolder.getAdapterPosition()).getStatus());
+                                            decodedString = new String(data, "UTF-8");
+                                        } catch (IOException e) {
+                                            e.printStackTrace();
+                                        }
+
+
+                                        String allServiceDetailss = "Posted Status : " + decodedString;
+
+                                        intent.setType("text/plain");
+
+                                        intent.putExtra(Intent.EXTRA_TEXT, "Please visit and Follow my store on Autokatta. Stay connected for Product and Service updates and enquiries"
+                                                + "\n" + "http://autokatta.com/post status/" + notificationList.get(mPostHolder.getAdapterPosition()).getStatusID()
+                                                //   + "/" + notificationList.get(mServiceHolder.getAdapterPosition()).getStoreContact()
+                                                + "\n" + "\n" + allServiceDetailss);
+
+                                        intent.setType("image/jpeg");
+                                        intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(imageFilePath)));
+                                        intent.putExtra(Intent.EXTRA_SUBJECT, "Please Find Below Attachments");
+                                        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                                        mActivity.startActivity(Intent.createChooser(intent, "Autokatta"));
+                                        break;
+                                }
+                                return false;
+                            }
+                        });
+                        mPopupMenu.show();
                     }
                 });
 
@@ -5812,6 +5855,202 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                         mShareolder.mServiceRelative.setVisibility(View.GONE);
                         mShareolder.mAuctionRelative.setVisibility(View.GONE);
                         mShareolder.mProfileRelative.setVisibility(View.GONE);
+
+
+                        //here is case 7 sub code
+
+                        final String postKeyword = notificationList.get(position).getStatusType();
+                        if (postKeyword.equalsIgnoreCase("Video")) {
+                            mShareolder.videoView.setVisibility(View.VISIBLE);
+                            mShareolder.linearImages.setVisibility(View.GONE);
+                            mShareolder.mStatusText.setVisibility(View.GONE);
+                            // mPostHolder.moreImages.setVisibility(View.GONE);
+
+                    /*decode string code (Getting)*/
+                            String decodedString = null;
+                            byte[] data = new byte[0];
+                            try {
+                                data = Base64.decode(notificationList.get(position).getStatus());
+                                decodedString = new String(data, "UTF-8");
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            mShareolder.captionText.setText(decodedString);
+                            try {
+                                // Start the MediaController
+                                MediaController mediacontroller = new MediaController(
+                                        mActivity);
+                                mediacontroller.setAnchorView(mShareolder.videoView);
+//                        // Get the URL from String VideoURL
+                                // Uri video = Uri.parse("http://autokatta.acquiscent.com/UploadedFiles/adba403e4bcc8847f9da0aa45a9f5b9c.mp4");
+//                        mImageHolder.videoView.setMediaController(mediacontroller);
+//                        mImageHolder.videoView.setVideoURI(video);
+//                        mImageHolder.videoView.seekTo(100);
+                                Uri video = Uri.parse(notificationList.get(position).getStatusVideos());
+
+                                Bitmap thumb = createVideoThumbnail(mActivity, video);
+
+                                BitmapDrawable bitmapDrawable = new BitmapDrawable(thumb);
+                                mShareolder.videoView.setBackground(bitmapDrawable);
+
+                            } catch (Exception e) {
+                                Log.e("Error", e.getMessage());
+                                e.printStackTrace();
+                            }
+
+//                    mImageHolder.videoView.requestFocus();
+//                    mImageHolder.videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+//                        // Close the progress bar and play the video
+//                        public void onPrepared(MediaPlayer mp) {
+//                            pDialog.dismiss();
+//                            mImageHolder.videoView.start();
+//                        }
+//                    });
+
+                        } else if (postKeyword.equalsIgnoreCase("Image")) {
+                            mShareolder.linearImages.setVisibility(View.VISIBLE);
+                            mShareolder.videoView.setVisibility(View.GONE);
+                            mShareolder.mStatusText.setVisibility(View.GONE);
+
+                   /*decode string code (Getting)*/
+                            String decodedString = null;
+                            byte[] data = new byte[0];
+                            try {
+                                data = Base64.decode(notificationList.get(position).getStatus());
+                                decodedString = new String(data, "UTF-8");
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            mShareolder.captionText.setText(decodedString);
+                            //mPostHolder.moreImages.setVisibility(View.VISIBLE);
+                            if (notificationList.get(position).getStatusImages().contains(",")) {
+                                String[] imageArray = notificationList.get(position).getStatusImages().split(",");
+
+                                if (imageArray.length >= 4) {
+                                    Glide.with(mActivity)
+                                            .load("http://autokatta.acquiscent.com/UploadedFiles/" + imageArray[0])
+                                            .centerCrop()
+                                            .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                            .placeholder(R.drawable.logo)
+                                            .into(mShareolder.image1);
+
+                                    Glide.with(mActivity)
+                                            .load("http://autokatta.acquiscent.com/UploadedFiles/" + imageArray[1])
+                                            .centerCrop()
+                                            .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                            .placeholder(R.drawable.logo)
+                                            .into(mShareolder.image2);
+
+                                    Glide.with(mActivity)
+                                            .load("http://autokatta.acquiscent.com/UploadedFiles/" + imageArray[2])
+                                            .centerCrop()
+                                            .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                            .placeholder(R.drawable.logo)
+                                            .into(mShareolder.image3);
+
+                                    Glide.with(mActivity)
+                                            .load("http://autokatta.acquiscent.com/UploadedFiles/" + imageArray[3])
+                                            .centerCrop()
+                                            .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                            .placeholder(R.drawable.logo)
+                                            .into(mShareolder.image4);
+                                } else if (imageArray.length == 3) {
+                                    Glide.with(mActivity)
+                                            .load("http://autokatta.acquiscent.com/UploadedFiles/" + imageArray[0])
+                                            .centerCrop()
+                                            .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                            .placeholder(R.drawable.logo)
+                                            .into(mShareolder.image1);
+
+                                    Glide.with(mActivity)
+                                            .load("http://autokatta.acquiscent.com/UploadedFiles/" + imageArray[1])
+                                            .centerCrop()
+                                            .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                            .placeholder(R.drawable.logo)
+                                            .into(mShareolder.image2);
+
+                                    Glide.with(mActivity)
+                                            .load("http://autokatta.acquiscent.com/UploadedFiles/" + imageArray[2])
+                                            .centerCrop()
+                                            .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                            .placeholder(R.drawable.logo)
+                                            .into(mShareolder.image3);
+
+                                    mShareolder.image4.setVisibility(View.GONE);
+                                } else if (imageArray.length == 2) {
+                                    Glide.with(mActivity)
+                                            .load("http://autokatta.acquiscent.com/UploadedFiles/" + imageArray[0])
+                                            .centerCrop()
+                                            .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                            .placeholder(R.drawable.logo)
+                                            .into(mShareolder.image1);
+
+                                    Glide.with(mActivity)
+                                            .load("http://autokatta.acquiscent.com/UploadedFiles/" + imageArray[1])
+                                            .centerCrop()
+                                            .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                            .placeholder(R.drawable.logo)
+                                            .into(mShareolder.image2);
+
+                                    mShareolder.linearImagelayout2.setVisibility(View.GONE);
+
+                                }
+                            } else {
+
+                                Glide.with(mActivity)
+                                        .load("http://autokatta.acquiscent.com/UploadedFiles/" + notificationList.get(position).getStatusImages())
+                                        .centerCrop()
+                                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                        .placeholder(R.drawable.logo)
+                                        .into(mShareolder.image1);
+                                mShareolder.linearImagelayout2.setVisibility(View.GONE);
+                                mShareolder.image2.setVisibility(View.GONE);
+                            }
+
+                        } else if (postKeyword.equalsIgnoreCase("Status")) {
+
+                    /*decode string code (Getting)*/
+                            String decodedString = null;
+                            byte[] data = new byte[0];
+                            try {
+                                data = Base64.decode(notificationList.get(position).getStatus());
+                                decodedString = new String(data, "UTF-8");
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            mShareolder.captionText.setVisibility(View.GONE);
+                            mShareolder.linearImages.setVisibility(View.GONE);
+                            mShareolder.videoView.setVisibility(View.GONE);
+                            mShareolder.mStatusText.setVisibility(View.VISIBLE);
+
+                            mShareolder.mStatusText.setText(decodedString);
+                        }
+
+                        mShareolder.mPostCardView.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+
+                                if (postKeyword.equalsIgnoreCase("Video")) {
+                                    ActivityOptions options = ActivityOptions.makeCustomAnimation(mActivity, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
+                                    Bundle b = new Bundle();
+                                    //b.putString("url", videosList.get(mImageHolder.getAdapterPosition()).getVideo());
+                                    b.putString("url", notificationList.get(mShareolder.getAdapterPosition()).getStatusVideos());
+                                    Intent intentnewvehicle = new Intent(mActivity, SingleVideoActivity.class);
+                                    intentnewvehicle.putExtras(b);
+                                    //intentnewvehicle.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                    mActivity.startActivity(intentnewvehicle, options.toBundle());
+                                } else if (postKeyword.equalsIgnoreCase("Image")) {
+                                    ActivityOptions options = ActivityOptions.makeCustomAnimation(mActivity, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
+                                    Bundle b = new Bundle();
+                                    b.putString("image", notificationList.get(mShareolder.getAdapterPosition()).getStatusImages());
+                                    Intent intentnewvehicle = new Intent(mActivity, RecyclerImageView.class);
+                                    intentnewvehicle.putExtras(b);
+                                    //intentnewvehicle.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                    mActivity.startActivity(intentnewvehicle, options.toBundle());
+                                }
+                            }
+                        });
+
 
                         break;
 

@@ -239,7 +239,9 @@
                 android:layout_below="@+id/v2"
                 android:baselineAligned="false"
                 android:orientation="horizontal"
-                android:weightSum="2">
+                android:weightSum="3"
+                android:id="@+id/postActionlayout"
+                android:visibility="visible">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -271,6 +273,7 @@
 
                 </LinearLayout>
 
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -278,7 +281,24 @@
                     android:layout_weight="1">
 
                     <Button
-                        android:id="@+id/shares"
+                        android:id="@+id/share"
+                        style="?android:attr/button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:background="@android:color/transparent"
+                        android:drawableStart="@mipmap/new_share"
+                        android:text="Share" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_weight="1">
+
+                    <Button
+                        android:id="@+id/upload"
                         style="?android:attr/button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -287,6 +307,8 @@
                         android:drawableStart="@mipmap/new_share"
                         android:text="Upload" />
                 </LinearLayout>
+
+
             </LinearLayout>
 
         </RelativeLayout>

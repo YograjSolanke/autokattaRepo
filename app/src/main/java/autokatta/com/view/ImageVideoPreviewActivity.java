@@ -208,6 +208,8 @@ public class ImageVideoPreviewActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     removeView(position);
+                    if (imageList.size() == 0)
+                        finish();
                 }
             });
 

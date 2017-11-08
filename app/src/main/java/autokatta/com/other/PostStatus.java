@@ -145,6 +145,7 @@ public class PostStatus extends AppCompatActivity implements RequestNotifier {
             String allimg = "";
             if (requestCode == SELECT_VIDEO) {
                 allimgpath = "";
+                selectedPath = "";
                 Uri selectedImageUri = data.getData();
                 selectedPath = getPath(this, selectedImageUri);
                 //selectedPath = getPath(selectedImageUri);

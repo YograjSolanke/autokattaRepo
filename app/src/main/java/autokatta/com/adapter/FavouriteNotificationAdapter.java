@@ -536,8 +536,8 @@ public class FavouriteNotificationAdapter extends RecyclerView.Adapter<RecyclerV
             mShareAuctionIgnoreCount = (TextView) shareView.findViewById(R.id.share_ignore_cnt);
 
     /* status notification layout*/
-            mAuctionRelative = (RelativeLayout) shareView.findViewById(R.id.auctionrel);
-            mShareStatus = (TextView) shareView.findViewById(R.id.share_statustxt);
+//            mAuctionRelative = (RelativeLayout) shareView.findViewById(R.id.auctionrel);
+//            mShareStatus = (TextView) shareView.findViewById(R.id.share_statustxt);
         }
     }
 
