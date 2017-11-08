@@ -43,20 +43,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.VideoView;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
@@ -64,9 +56,7 @@ import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import autokatta.com.R;
@@ -79,6 +69,7 @@ import autokatta.com.model.WallResponseModel;
 import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.ModelSuggestionsResponse;
+import autokatta.com.response.SuggestionsResponse;
 import autokatta.com.view.GroupsActivity;
 import autokatta.com.view.OtherProfile;
 import autokatta.com.view.ProductViewActivity;
@@ -5964,69 +5955,112 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
 
     private void getSuggestionData(String mUrl) throws JSONException {
 
-        RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
-        StringRequest request = new StringRequest(Request.Method.GET, mUrl,
-                new com.android.volley.Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        JSONObject parentObject = null;
-                        try {
-                            parentObject = new JSONObject(response);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                        JSONArray new_array = null;
-                        try {
-                            assert parentObject != null;
-                            new_array = parentObject.getJSONArray("Success");
+        try {
+            final Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl(mActivity.getString(R.string.base_url))
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .client(initLog().build())
+                    .build();
+
+            ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+            Call<SuggestionsResponse> mediaResponseCall = serviceApi.getClientList(mUrl);
+            mediaResponseCall.enqueue(new Callback<SuggestionsResponse>() {
+                @Override
+                public void onResponse(Call<SuggestionsResponse> call, Response<SuggestionsResponse> response) {
+                    if (response.isSuccessful()) {
+                        SuggestionsResponse suggestion = response.body();
+                        if (!suggestion.getSuccess().isEmpty()) {
                             suggestionResponseList.clear();
-                            for (int i = new_array.length() - 1; i >= 0; i--) {
+                            for (SuggestionsResponse.Success suggestionsResponse : suggestion.getSuccess()) {
 
-                                JSONObject jsonObject = new_array.getJSONObject(i);
-                                ModelSuggestionsResponse suggestionsResponse = new ModelSuggestionsResponse();
-                                suggestionsResponse.setName(jsonObject.getString("username"));
-                                suggestionsResponse.setImage(jsonObject.getString("profile_pic"));
-                                suggestionsResponse.setLayoutId(jsonObject.getInt("Layout"));
-                                suggestionsResponse.setUserContact(jsonObject.getString("contact"));
+                                ModelSuggestionsResponse modelsuggestionsResponse = new ModelSuggestionsResponse();
+                                modelsuggestionsResponse.setName(suggestionsResponse.getUsername());
+                                modelsuggestionsResponse.setImage(suggestionsResponse.getProfilePic());
+                                modelsuggestionsResponse.setLayoutId(suggestionsResponse.getLayout());
+                                modelsuggestionsResponse.setUserContact(suggestionsResponse.getContact());
 
-                                suggestionResponseList.add(suggestionsResponse);
+                                suggestionResponseList.add(modelsuggestionsResponse);
                             }
                             if (suggestionResponseList.size() != 0) {
                                 CustomSuggestionAdapter adapter = new CustomSuggestionAdapter(mActivity, suggestionResponseList, mCustomView.txtSuggestion, mLoginContact);
                                 mCustomView.mSuggestionRecycler.setAdapter(adapter);
                             } else {
-                                mCustomView.mLinearLayout.setVisibility(View.GONE);
+                                // mCustomView.mLinearLayout.setVisibility(View.GONE);
                             }
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
                         }
                     }
-                }, new com.android.volley.Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
+                }
 
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                /*params.put("contact", contact);
-                params.put("timestamp", TimeStampConstants.storetimeId);
-                System.out.println("+++++++++going timestamp" + storetimeId);*/
-                return new HashMap<>();
-            }
-        };
-        requestQueue.add(request);
+                @Override
+                public void onFailure(Call<SuggestionsResponse> call, Throwable t) {
+
+                }
+            });
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+//
+//
+//
+//
+//
+//        RequestQueue requestQueue = Volley.newRequestQueue(mActivity);
+//        StringRequest request = new StringRequest(Request.Method.GET, mUrl,
+//                new com.android.volley.Response.Listener<String>() {
+//                    @Override
+//                    public void onResponse(String response) {
+//                        JSONObject parentObject = null;
+//                        try {
+//                            parentObject = new JSONObject(response);
+//                        } catch (Exception e) {
+//                            e.printStackTrace();
+//                        }
+//                        JSONArray new_array = null;
+//                        try {
+//                            assert parentObject != null;
+//                            new_array = parentObject.getJSONArray("Success");
+//                            suggestionResponseList.clear();
+//                            for (int i = new_array.length() - 1; i >= 0; i--) {
+//
+//                                JSONObject jsonObject = new_array.getJSONObject(i);
+//                                ModelSuggestionsResponse suggestionsResponse = new ModelSuggestionsResponse();
+//                                suggestionsResponse.setName(jsonObject.getString("username"));
+//                                suggestionsResponse.setImage(jsonObject.getString("profile_pic"));
+//                                suggestionsResponse.setLayoutId(jsonObject.getInt("Layout"));
+//                                suggestionsResponse.setUserContact(jsonObject.getString("contact"));
+//
+//                                suggestionResponseList.add(suggestionsResponse);
+//                            }
+//                            if (suggestionResponseList.size() != 0) {
+//                                CustomSuggestionAdapter adapter = new CustomSuggestionAdapter(mActivity, suggestionResponseList, mCustomView.txtSuggestion, mLoginContact);
+//                                mCustomView.mSuggestionRecycler.setAdapter(adapter);
+//                            } else {
+//                                mCustomView.mLinearLayout.setVisibility(View.GONE);
+//                            }
+//
+//                        } catch (JSONException e) {
+//                            e.printStackTrace();
+//                        }
+//                    }
+//                }, new com.android.volley.Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//
+//            }
+//        }) {
+//            @Override
+//            protected Map<String, String> getParams() throws AuthFailureError {
+//                /*params.put("contact", contact);
+//                params.put("timestamp", TimeStampConstants.storetimeId);
+//                System.out.println("+++++++++going timestamp" + storetimeId);*/
+//                return new HashMap<>();
+//            }
+//        };
+//        requestQueue.add(request);
     }
 
-//    private void call(String otherContact) {
-//        Intent in = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + otherContact));
-//        try {
-//            mActivity.startActivity(in);
-//        } catch (android.content.ActivityNotFoundException ex) {
-//            System.out.println("No Activity Found For Call in Car Details Fragment\n");
-//        }
-//    }
 
     @Override
     public void notifySuccess(Response<?> response) {
