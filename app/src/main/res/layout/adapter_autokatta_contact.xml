@@ -31,7 +31,7 @@
                 android:layout_marginStart="5dp"
                 android:layout_toEndOf="@+id/profileImg"
                 android:text="@string/names"
-                android:layout_toStartOf="@+id/callImg"
+                android:layout_toStartOf="@+id/btnsendmsg"
                 android:textColor="#2C3343"
                 android:textSize="16sp"
                 android:textStyle="bold" />
@@ -49,14 +49,6 @@
                 android:textStyle="bold"
                 android:visibility="gone" />
 
-            <!--       <ImageView
-                       android:id="@+id/loc"
-                       android:layout_width="20dp"
-                       android:layout_height="20dp"
-                       android:contentDescription="@string/app_name"
-                       android:layout_toStartOf="@+id/txtcity"
-                       android:layout_below="@id/txtname"
-                       android:layout_toEndOf="@id/profileImg"/>-->
 
             <TextView
                 android:id="@+id/txtcity"
@@ -94,22 +86,15 @@
                 android:layout_below="@+id/txtcity"
                 android:layout_marginStart="5dp"
                 android:layout_toEndOf="@+id/profileImg"
-                android:layout_toStartOf="@+id/callImg"
+                android:layout_toStartOf="@+id/btnsendmsg"
                 android:text="@string/selectStatus"
+                android:ellipsize="end"
+                android:maxEms="15"
+                android:singleLine="true"
                 android:textColor="#2C3343"
                 android:textSize="15sp"
                 android:textStyle="italic" />
 
-            <ImageView
-                android:id="@+id/callImg"
-                android:layout_width="50dp"
-                android:layout_height="60dp"
-                android:layout_alignParentEnd="true"
-                android:layout_marginEnd="90dp"
-                android:contentDescription="@string/app_name"
-                android:padding="5dp"
-                android:src="@mipmap/new_call"
-                android:visibility="gone" />
 
             <Button
                 android:id="@+id/btnfollow"

@@ -7086,7 +7086,7 @@ done
     create Group
      */
 
-    public void createGroups(String title, String image, String adminComtact) {
+    public void createGroups(String title, String image, String adminComtact, String PrivacyStatus) {
 
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
@@ -7103,7 +7103,7 @@ done
                         .build();
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<String> mUnfollowResponse = serviceApi.createGroup(title, image, adminComtact);
+                Call<String> mUnfollowResponse = serviceApi.createGroup(title, image, adminComtact, PrivacyStatus);
                 mUnfollowResponse.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {

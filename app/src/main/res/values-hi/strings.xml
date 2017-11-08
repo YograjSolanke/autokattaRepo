@@ -804,6 +804,9 @@
     <string name="seatupholestery">सीट उपहोलस्टरी</string>
     <string name="typeofgearreduction">टाइप ऑफ गिअर रिड्युक्शन</string>
     <string name="axelconfiguration">"क्सेकॉन्फीगुरटीओं "</string>
+    <string name="groupType">"समूह टाइप?"</string>
+    <string name="groupPublic">पब्लिक</string>
+    <string name="groupPrivate">प्रायव्हेट</string>
 
     <!-- Array Tags -->
 </resources>

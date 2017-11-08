@@ -21,7 +21,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
+import android.widget.RadioButton;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -64,6 +64,7 @@ public class CreateGroupFragment extends Fragment implements View.OnClickListene
     Bundle b = new Bundle();
     ApiCall mApiCall;
     String classname;
+    RadioButton rdbPublic, rdbPrivate;
 
     public CreateGroupFragment() {
         //empty fragment...
@@ -78,6 +79,8 @@ public class CreateGroupFragment extends Fragment implements View.OnClickListene
         mGroupTitle = (EditText) mCreateGroup.findViewById(R.id.group_title);
         mAddmember = (Button) mCreateGroup.findViewById(R.id.BtnAddMember);
         mGroupImg = (ImageView) mCreateGroup.findViewById(R.id.group_profile_pic);
+        rdbPublic = (RadioButton) mCreateGroup.findViewById(R.id.radioPublic);
+        rdbPrivate = (RadioButton) mCreateGroup.findViewById(R.id.radioPrivate);
         mContact = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "");
 
         mApiCall = new ApiCall(getActivity(), this);
@@ -88,7 +91,7 @@ public class CreateGroupFragment extends Fragment implements View.OnClickListene
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 if (mGroupTitle.getText().toString().trim().length() > 0 && mGroupTitle.getText().toString().trim().startsWith(" ")) {
-                    Toast.makeText(getActivity(), " Space ", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getActivity(), " Space ", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -107,12 +110,20 @@ public class CreateGroupFragment extends Fragment implements View.OnClickListene
 
     @Override
     public void onClick(View view) {
+        String strGroupPriavcy = "";
         switch (view.getId()) {
             case R.id.BtnAddMember:
-                if (mGroupTitle.getText().toString().equalsIgnoreCase("") || mGroupTitle.getText().toString().startsWith(" ") && mGroupTitle.getText().toString().endsWith(" ")/*|| mGroupTitle.getText().toString().startsWith(" ")*/) {
-                    CustomToast.customToast(getActivity(),"Please provide group name and optional group icon");
+                if (mGroupTitle.getText().toString().equalsIgnoreCase("") ||
+                        mGroupTitle.getText().toString().startsWith(" ") &&
+                                mGroupTitle.getText().toString().endsWith(" ")/*|| mGroupTitle.getText().toString().startsWith(" ")*/) {
+                    CustomToast.customToast(getActivity(), "Please provide group name and optional group icon");
                 } else {
-                    mApiCall.createGroups(mGroupTitle.getText().toString(), lastWord, mContact);
+                    if (rdbPublic.isChecked()) {
+                        strGroupPriavcy = "public";
+                    } else if (rdbPrivate.isChecked()) {
+                        strGroupPriavcy = "private";
+                    }
+                    mApiCall.createGroups(mGroupTitle.getText().toString(), lastWord, mContact, strGroupPriavcy);
                 }
                 break;
             case R.id.group_profile_pic:
@@ -285,21 +296,21 @@ public class CreateGroupFragment extends Fragment implements View.OnClickListene
     @Override
     public void notifyError(Throwable error) {
         if (error instanceof SocketTimeoutException) {
-            CustomToast.customToast(getActivity(),getString(R.string._404_));
+            CustomToast.customToast(getActivity(), getString(R.string._404_));
             //   showMessage(getActivity(), getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
-            CustomToast.customToast(getActivity(),getString(R.string.no_response));
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
             // showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            CustomToast.customToast(getActivity(),getString(R.string.no_response));
+            CustomToast.customToast(getActivity(), getString(R.string.no_response));
             //   showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
-            CustomToast.customToast(getActivity(),getString(R.string.no_internet));
+            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
             //   errorMessage(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
-            CustomToast.customToast(getActivity(),getString(R.string.no_internet));
+            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
             //   errorMessage(getActivity(), getString(R.string.no_internet));
-        }else {
+        } else {
             Log.i("Check Class-", "Create Group Fragment");
             error.printStackTrace();
         }
@@ -337,7 +348,7 @@ public class CreateGroupFragment extends Fragment implements View.OnClickListene
             }
 
         } else {
-            CustomToast.customToast(getActivity(),getString(R.string._404_));
+            CustomToast.customToast(getActivity(), getString(R.string._404_));
             //Snackbar.make(getView(), getString(R.string._404_), Snackbar.LENGTH_SHORT).show();
         }
     }

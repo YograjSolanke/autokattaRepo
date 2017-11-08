@@ -23,7 +23,8 @@
         android:id="@+id/lineartitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/group_profile_pic">
+        android:layout_below="@+id/group_profile_pic"
+        android:layout_marginTop="5dp">
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
@@ -56,11 +57,46 @@
         android:text="Please provide group name and optional group icon"
         android:textColor="@color/black" />
 
+    <TextView
+        android:id="@+id/groupprivacy"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/lineartitle"
+        android:layout_marginTop="5dp"
+        android:text="@string/groupType"
+        android:textColor="#2C3343"
+        android:textSize="18sp" />
+
+    <RadioGroup
+        android:id="@+id/radioprivacy"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/groupprivacy"
+        android:layout_marginTop="1dp"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/radioPublic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/groupPublic"
+            android:checked="true"
+            android:textColor="#2C3343" />
+
+        <RadioButton
+            android:id="@+id/radioPrivate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/groupPrivate"
+            android:textColor="#2C3343" />
+    </RadioGroup>
+
     <Button
         android:id="@+id/BtnAddMember"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:layout_below="@+id/lineartitle"
+        android:layout_below="@+id/radioprivacy"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
         android:background="@color/background"

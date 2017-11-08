@@ -72,7 +72,7 @@ public class AutokattaContactAdapter extends RecyclerView.Adapter<AutokattaConta
     static class YoHolder extends RecyclerView.ViewHolder {
 
         CardView mCardView;
-        ImageView imgProfile, imgCall;
+        ImageView imgProfile;
         TextView mTextName, mTextNumber, mTextStatus;
         Button btnFollow, btnUnfollow, btnsendmsg, btnGroups;
 
@@ -80,7 +80,6 @@ public class AutokattaContactAdapter extends RecyclerView.Adapter<AutokattaConta
             super(itemView);
             mCardView = (CardView) itemView.findViewById(R.id.adapter_autokatta_contactCard_view);
             imgProfile = (ImageView) itemView.findViewById(R.id.profileImg);
-            imgCall = (ImageView) itemView.findViewById(R.id.callImg);
             mTextName = (TextView) itemView.findViewById(R.id.txtname);
             mTextNumber = (TextView) itemView.findViewById(R.id.txtnumber);
             mTextStatus = (TextView) itemView.findViewById(R.id.txtstatus);
@@ -114,7 +113,6 @@ public class AutokattaContactAdapter extends RecyclerView.Adapter<AutokattaConta
         myContact = mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).getString("loginContact", "");
         holder.mTextName.setText(contactdata.get(position).getUsername());
         holder.mTextNumber.setText(contactdata.get(position).getContact());
-        holder.imgCall.setVisibility(VISIBLE);
         if (contactdata.get(position).getMystatus() != null && !contactdata.get(position).getMystatus().equals("null")) {
 
             /*decode string code (Getting)*/
@@ -169,15 +167,6 @@ public class AutokattaContactAdapter extends RecyclerView.Adapter<AutokattaConta
                     //.error(R.drawable.blocked) //To show error image if problem in loading.
                     .into(holder.imgProfile);
         }
-
-
-        //calling Functionality
-        holder.imgCall.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                call(contactdata.get(holder.getAdapterPosition()).getContact());
-            }
-        });
 
        /*Send Message*/
         holder.btnsendmsg.setOnClickListener(new OnClickListener() {

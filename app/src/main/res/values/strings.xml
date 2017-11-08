@@ -1009,4 +1009,8 @@
     <string name="MarketPlace" translatable="false">Market Place</string>
     <string name="carrequirements" translatable="false">car requirements</string>
 
+    <string name="groupType">Group Type?<font color="#FF0000">\\u002A</font></string>
+    <string name="groupPublic">Public</string>
+    <string name="groupPrivate">Private</string>
+
 </resources>

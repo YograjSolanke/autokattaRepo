@@ -1089,7 +1089,8 @@ public interface ServiceApi {
 
     //Create Groups
     @POST("CreateGroup")
-    Call<String> createGroup(@Query("Title") String title, @Query("Image") String image, @Query("AdminContact") String admin_contact);
+    Call<String> createGroup(@Query("Title") String title, @Query("Image") String image, @Query("AdminContact") String admin_contact,
+                             @Query("PrivacyStatus") String PrivacyStatus);
 
     //Add contacts to  Groups
     @POST("AddContacts")
