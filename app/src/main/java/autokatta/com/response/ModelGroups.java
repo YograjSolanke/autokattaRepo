@@ -6,7 +6,7 @@ package autokatta.com.response;
 
 public class ModelGroups {
 
-    private String title, image, adminVehicleCount;
+    private String title, image, adminVehicleCount, groupPrivacyStatus;
     private int vehicleCount;
     private int groupCount;
     private int id;
@@ -76,5 +76,17 @@ public class ModelGroups {
 
     public void setVehicleCount(int vehicleCount) {
         this.vehicleCount = vehicleCount;
+    }
+
+    public String getGroupPrivacyStatus() {
+        return groupPrivacyStatus;
+    }
+
+    public void setGroupPrivacyStatus(String groupPrivacyStatus) {
+        this.groupPrivacyStatus = groupPrivacyStatus;
+    }
+
+    public void setGroupCount(int groupCount) {
+        this.groupCount = groupCount;
     }
 }

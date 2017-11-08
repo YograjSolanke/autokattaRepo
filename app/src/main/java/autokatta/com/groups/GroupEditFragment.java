@@ -20,6 +20,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -34,7 +35,6 @@ import java.util.Random;
 import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.initial_fragment.GroupMyJoined;
-import autokatta.com.interfaces.ImageUpload;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.interfaces.ServiceApi;
 import autokatta.com.other.CustomToast;
@@ -42,13 +42,10 @@ import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import jp.wasabeef.glide.transformations.CropSquareTransformation;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
-import okhttp3.OkHttpClient;
 import okhttp3.RequestBody;
-import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
 
 import static android.app.Activity.RESULT_OK;
 import static autokatta.com.R.id.group_image;
@@ -63,18 +60,13 @@ public class GroupEditFragment extends Fragment implements RequestNotifier {
     EditText group_name;
     Button BtnUpdateGroup;
     ApiCall mApiCall;
-    String group_name_update;
     int bundle_id;
-    ImageUpload mImageUpload;
-    String mediaPath = "", mContact;
     Uri selectedImage = null;
-    Bitmap bitmapRotate;
-    String fname;
+    Bitmap bitmapRotate, bitmap;
     File file;
-    Bitmap bitmap;
-    String lastWord = "", localImage;
-    String bundle_image;
-
+    String bundle_image, bundle_groupPrivacy, lastWord = "",
+            group_name_update, mediaPath = "", fname;
+    RadioButton rdbPublic, rdbPrivate;
 
     @Nullable
     @Override
@@ -86,6 +78,8 @@ public class GroupEditFragment extends Fragment implements RequestNotifier {
         group_name = (EditText) view.findViewById(R.id.group_name);
         mGroup_image = (ImageView) view.findViewById(group_image);
         BtnUpdateGroup = (Button) view.findViewById(R.id.BtnUpdateGroup);
+        rdbPublic = (RadioButton) view.findViewById(R.id.radioPublic);
+        rdbPrivate = (RadioButton) view.findViewById(R.id.radioPrivate);
         mApiCall = new ApiCall(getActivity(), this);
         Bundle bundle = getArguments();
         //get the values out by key
@@ -93,13 +87,18 @@ public class GroupEditFragment extends Fragment implements RequestNotifier {
         String bundle_name = bundle.getString("bundle_name");
         bundle_image = bundle.getString("bundle_image", "");
         bundle_image = bundle_image.replaceAll(" ", "%20");
+        bundle_groupPrivacy = bundle.getString("bundle_groupPrivacy", "");
+
+        if (bundle_groupPrivacy.equalsIgnoreCase("Private")) {
+            rdbPublic.setChecked(false);
+            rdbPrivate.setChecked(true);
+        } else {
+            rdbPublic.setChecked(true);
+            rdbPrivate.setChecked(false);
+        }
         group_name.setText(bundle_name);
 
-        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
-        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
-        // Change base URL to your upload server URL.
-        mImageUpload = new Retrofit.Builder().baseUrl(getString(R.string.base_url)).client(client).build().create(ImageUpload.class);
+
         try {
             if (bundle_image.equals("") || bundle_image.equalsIgnoreCase(null) || bundle_image.equalsIgnoreCase("null")) {
                 mGroup_image.setBackgroundResource(R.drawable.profile);
@@ -113,9 +112,7 @@ public class GroupEditFragment extends Fragment implements RequestNotifier {
                 } catch (Exception e) {
                     e.printStackTrace();
                     if (isAdded())
-                    CustomToast.customToast(getActivity(),"Error uploading image");
-
-                    //showMessage(getActivity(), "Error uploading image");
+                        CustomToast.customToast(getActivity(), "Error uploading image");
                 }
             }
         } catch (Exception e) {
@@ -128,18 +125,25 @@ public class GroupEditFragment extends Fragment implements RequestNotifier {
                 onPickImage(view);
             }
         });
+
         BtnUpdateGroup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String strGroupPriavcy = "";
                 group_name_update = group_name.getText().toString();
-                if (group_name_update.equals("")||group_name_update.startsWith(" ")&&group_name_update.endsWith(" ")) {
-                    CustomToast.customToast(getActivity(),"Please provide group name");
+                if (group_name_update.equals("") || group_name_update.startsWith(" ") && group_name_update.endsWith(" ")) {
+                    CustomToast.customToast(getActivity(), "Please provide group name");
                     //  showMessage(getActivity(), "Please provide group name");
                 } else {
+                    if (rdbPublic.isChecked()) {
+                        strGroupPriavcy = "public";
+                    } else if (rdbPrivate.isChecked()) {
+                        strGroupPriavcy = "private";
+                    }
                     if (!lastWord.equals("")) {
-                        mApiCall.editGroup(group_name_update, bundle_id, lastWord);
+                        mApiCall.editGroup(group_name_update, bundle_id, lastWord, strGroupPriavcy);
                     } else {
-                        mApiCall.editGroup(group_name_update, bundle_id, bundle_image);
+                        mApiCall.editGroup(group_name_update, bundle_id, bundle_image, strGroupPriavcy);
                     }
 
                 }
@@ -180,6 +184,7 @@ public class GroupEditFragment extends Fragment implements RequestNotifier {
                 // Get the Image from data
                 Uri selectedImage = data.getData();
                 String[] filePathColumn = {MediaStore.Images.Media.DATA};
+                assert selectedImage != null;
                 Cursor cursor = getActivity().getContentResolver().query(selectedImage, filePathColumn, null, null, null);
                 assert cursor != null;
                 cursor.moveToFirst();
@@ -202,8 +207,8 @@ public class GroupEditFragment extends Fragment implements RequestNotifier {
                         } else {
                             bitmap = (Bitmap) data.getExtras().get("data");
                         }
-                        if (Float.valueOf(getImageOrientation()) >= 0) {
-                            bitmapRotate = rotateImage(bitmap, Float.valueOf(getImageOrientation()));
+                        if ((float) getImageOrientation() >= 0) {
+                            bitmapRotate = rotateImage(bitmap, (float) getImageOrientation());
                         } else {
                             bitmapRotate = bitmap;
                             bitmap.recycle();
@@ -294,6 +299,7 @@ public class GroupEditFragment extends Fragment implements RequestNotifier {
         Cursor cursor = getActivity().getContentResolver().query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
                 imageColumns, null, null, imageOrderBy);
 
+        assert cursor != null;
         if (cursor.moveToFirst()) {
             int orientation = cursor.getInt(cursor.getColumnIndex(MediaStore.Images.ImageColumns.ORIENTATION));
             cursor.close();
@@ -312,7 +318,7 @@ public class GroupEditFragment extends Fragment implements RequestNotifier {
     public void notifyError(Throwable error) {
         if (error instanceof SocketTimeoutException) {
             if (isAdded())
-            CustomToast.customToast(getActivity(),getString(R.string._404_));
+                CustomToast.customToast(getActivity(), getString(R.string._404_));
 
         } else if (error instanceof NullPointerException) {
             // CustomToast.customToast(getActivity(),getString(R.string.no_response));
@@ -322,11 +328,11 @@ public class GroupEditFragment extends Fragment implements RequestNotifier {
 
         } else if (error instanceof ConnectException) {
             if (isAdded())
-            CustomToast.customToast(getActivity(),getString(R.string.no_internet));
+                CustomToast.customToast(getActivity(), getString(R.string.no_internet));
 
         } else if (error instanceof UnknownHostException) {
             if (isAdded())
-            CustomToast.customToast(getActivity(),getString(R.string.no_internet));
+                CustomToast.customToast(getActivity(), getString(R.string.no_internet));
 
         } else {
             Log.i("Check Class-"
@@ -339,13 +345,9 @@ public class GroupEditFragment extends Fragment implements RequestNotifier {
     public void notifyString(String str) {
         if (str.equals("Success")) {
             if (isAdded())
-            CustomToast.customToast(getActivity(),"Group Updated");
-            //showMessage(getActivity(), "Group Updated");
+                CustomToast.customToast(getActivity(), "Group Updated");
+
             uploadImage(mediaPath);
-           /* MyGroupsFragment frag = new MyGroupsFragment();
-            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-            FragmentTransaction mTransaction = fragmentManager.beginTransaction();
-            mTransaction.replace(R.id.group_container, frag).commit();*/
 
             getActivity().getSupportFragmentManager()
                     .beginTransaction()
@@ -362,8 +364,7 @@ public class GroupEditFragment extends Fragment implements RequestNotifier {
             } catch (Exception e) {
                 e.printStackTrace();
                 if (isAdded())
-                CustomToast.customToast(getActivity(),"Error uploading image");
-                //showMessage(getActivity(), "Error uploading image");
+                    CustomToast.customToast(getActivity(), "Error uploading image");
             }
         }
     }

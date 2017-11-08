@@ -72,7 +72,6 @@ public class MyGroupsFragment extends Fragment implements SwipeRefreshLayout.OnR
         } else {
             if (isAdded())
                 CustomToast.customToast(getActivity(), getString(R.string.no_internet));
-            // errorMessage(activity, getString(R.string.no_internet));
         }
     }
 
@@ -95,6 +94,7 @@ public class MyGroupsFragment extends Fragment implements SwipeRefreshLayout.OnR
                         modelGroups.setAdminVehicleCount(success.getAdminVehicleCount());
                         modelGroups.setProductcount(success.getProductcount());
                         modelGroups.setServicecount(success.getServicecount());
+                        modelGroups.setGroupPrivacyStatus(success.getGroupPrivacyStatus());
 
                         mMyGroupsList.add(modelGroups);
                     }
@@ -115,7 +115,6 @@ public class MyGroupsFragment extends Fragment implements SwipeRefreshLayout.OnR
             mSwipeRefreshLayout.setRefreshing(false);
             if (isAdded())
                 CustomToast.customToast(getActivity(), getString(R.string.no_response));
-            //showMessage(activity, getString(R.string.no_response));
         }
     }
 
@@ -151,7 +150,7 @@ public class MyGroupsFragment extends Fragment implements SwipeRefreshLayout.OnR
             //   errorMessage(getActivity(), getString(R.string.no_internet));
         } else {
             Log.i("Check Class-"
-                    , "mygroupfragment");
+                    , "MyGroupsFragment");
             error.printStackTrace();
         }
     }

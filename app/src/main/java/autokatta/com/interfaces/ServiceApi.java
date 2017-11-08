@@ -514,7 +514,8 @@ public interface ServiceApi {
 
     //Edit Group
     @POST("UpdateGroupProfile")
-    Call<String> editGroup(@Query("GroupName") String groupname, @Query("GroupID") int group_id, @Query("ProfilePicture") String profile);
+    Call<String> editGroup(@Query("GroupName") String groupname, @Query("GroupID") int group_id, @Query("ProfilePicture") String profile,
+                           @Query("PrivacyStatus") String PrivacyStatus);
 
     //Delete Group
     @GET("DeleteMyGroups")
@@ -1498,6 +1499,10 @@ public interface ServiceApi {
                                                  @Query("NewVehicleID") int NewVehicleID, @Query("StoreServiceID") int StoreServiceID,
                                                  @Query("ProductID") int ProductID, @Query("StoreID") int StoreID,
                                                  @Query("ProfileID") int ProfileID);
+
+    /* //Add Contact in Public Group*/
+    @POST("AddContactForPublicGroup")
+    Call<String> _autokattaAddContactForPublicGroup(@Query("GroupID") int GroupID, @Query("MyContact") String Contact);
 
     @GET
     Call<SuggestionsResponse> getClientList(@Url String anEmptyString);

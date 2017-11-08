@@ -114,6 +114,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> impl
                 bundle.putInt("bundle_GroupId", mGroupid);
                 bundle.putString("bundle_name", mGroupName);
                 bundle.putString("bundle_image", mGroupImage);
+                bundle.putString("bundle_groupPrivacy", mItemList.get(holder.getAdapterPosition()).getGroupPrivacyStatus());
                 frag.setArguments(bundle);
 
                 ((FragmentActivity) mActivity).getSupportFragmentManager().beginTransaction().

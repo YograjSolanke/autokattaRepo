@@ -165,6 +165,7 @@ public class CreateGroupFragment extends Fragment implements View.OnClickListene
                 // Get the Image from data
                 Uri selectedImage = data.getData();
                 String[] filePathColumn = {MediaStore.Images.Media.DATA};
+                assert selectedImage != null;
                 Cursor cursor = getActivity().getContentResolver().query(selectedImage, filePathColumn, null, null, null);
                 assert cursor != null;
                 cursor.moveToFirst();
@@ -187,8 +188,8 @@ public class CreateGroupFragment extends Fragment implements View.OnClickListene
                         } else {
                             bitmap = (Bitmap) data.getExtras().get("data");
                         }
-                        if (Float.valueOf(getImageOrientation()) >= 0) {
-                            bitmapRotate = rotateImage(bitmap, Float.valueOf(getImageOrientation()));
+                        if ((float) getImageOrientation() >= 0) {
+                            bitmapRotate = rotateImage(bitmap, (float) getImageOrientation());
                         } else {
                             bitmapRotate = bitmap;
                             bitmap.recycle();
@@ -262,12 +263,12 @@ public class CreateGroupFragment extends Fragment implements View.OnClickListene
         call.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
-                Log.i("image", "->" + response.body());
+                Log.i("createGroup", "image->" + response.body());
             }
 
             @Override
             public void onFailure(Call<String> call, Throwable t) {
-
+                t.getMessage();
             }
         });
     }
@@ -279,6 +280,7 @@ public class CreateGroupFragment extends Fragment implements View.OnClickListene
         Cursor cursor = getActivity().getContentResolver().query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
                 imageColumns, null, null, imageOrderBy);
 
+        assert cursor != null;
         if (cursor.moveToFirst()) {
             int orientation = cursor.getInt(cursor.getColumnIndex(MediaStore.Images.ImageColumns.ORIENTATION));
             cursor.close();
@@ -297,19 +299,14 @@ public class CreateGroupFragment extends Fragment implements View.OnClickListene
     public void notifyError(Throwable error) {
         if (error instanceof SocketTimeoutException) {
             CustomToast.customToast(getActivity(), getString(R.string._404_));
-            //   showMessage(getActivity(), getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
             CustomToast.customToast(getActivity(), getString(R.string.no_response));
-            // showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
             CustomToast.customToast(getActivity(), getString(R.string.no_response));
-            //   showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
             CustomToast.customToast(getActivity(), getString(R.string.no_internet));
-            //   errorMessage(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
             CustomToast.customToast(getActivity(), getString(R.string.no_internet));
-            //   errorMessage(getActivity(), getString(R.string.no_internet));
         } else {
             Log.i("Check Class-", "Create Group Fragment");
             error.printStackTrace();
@@ -349,7 +346,6 @@ public class CreateGroupFragment extends Fragment implements View.OnClickListene
 
         } else {
             CustomToast.customToast(getActivity(), getString(R.string._404_));
-            //Snackbar.make(getView(), getString(R.string._404_), Snackbar.LENGTH_SHORT).show();
         }
     }
 }

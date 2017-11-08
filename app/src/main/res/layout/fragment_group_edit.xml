@@ -19,8 +19,7 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_below="@+id/group_image"
-        android:layout_marginEnd="@dimen/text_margin_top"
-        android:layout_marginStart="@dimen/text_margin_top"
+        android:layout_margin="@dimen/text_margin_top"
         android:background="#80bebebe"
         android:inputType="text"
         android:labelFor="@+id/group_name"
@@ -29,10 +28,46 @@
         android:text="@string/group_name"
         android:textColor="#2C3343" />
 
-    <RelativeLayout
+    <TextView
+        android:id="@+id/groupprivacy"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/group_name"
+        android:layout_marginStart="@dimen/text_margin_top"
+        android:paddingEnd="@dimen/text_margin_top"
+        android:paddingStart="@dimen/text_margin_top"
+        android:text="@string/groupType"
+        android:textColor="#2C3343"
+        android:textSize="18sp" />
+
+    <RadioGroup
+        android:id="@+id/radioprivacy"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/groupprivacy"
+        android:layout_marginTop="1dp"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/radioPublic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/groupPublic"
+            android:textColor="#2C3343" />
+
+        <RadioButton
+            android:id="@+id/radioPrivate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/groupPrivate"
+            android:textColor="#2C3343" />
+    </RadioGroup>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/radioprivacy"
         android:background="@android:drawable/dialog_holo_light_frame">
 
         <Button

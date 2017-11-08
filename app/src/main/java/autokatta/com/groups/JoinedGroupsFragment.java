@@ -71,9 +71,7 @@ public class JoinedGroupsFragment extends Fragment implements SwipeRefreshLayout
             ApiCall mApiCall = new ApiCall(getActivity(), this);
             mApiCall.profileGroup(loginContact, 1, 10);
         } else {
-            CustomToast.customToast(getActivity(),getString(R.string.no_internet));
-
-            // errorMessage(getActivity(), getString(R.string.no_internet));
+            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         }
     }
 
@@ -95,6 +93,7 @@ public class JoinedGroupsFragment extends Fragment implements SwipeRefreshLayout
                         modelGroups.setVehicleCount(joinedGroup.getVehiclecount());
                         modelGroups.setServicecount(joinedGroup.getServicecount());
                         modelGroups.setProductcount(joinedGroup.getProductcount());
+                        modelGroups.setGroupPrivacyStatus(joinedGroup.getGroupPrivacyStatus());
                         mJoinedGroupsList.add(modelGroups);
                     }
                     mMyAdapter = new MyAdapter(getActivity(), mJoinedGroupsList, "JoinedGroups");
@@ -103,7 +102,6 @@ public class JoinedGroupsFragment extends Fragment implements SwipeRefreshLayout
                     mMyAdapter.notifyDataSetChanged();
                 } else {
                     mPlaceHolder.setVisibility(View.VISIBLE);
-                    //mNoInternetIcon.setVisibility(View.GONE);
                 }
             } else {
                 mSwipeRefreshLayout.setRefreshing(false);
@@ -112,7 +110,7 @@ public class JoinedGroupsFragment extends Fragment implements SwipeRefreshLayout
         } else {
             mSwipeRefreshLayout.setRefreshing(false);
             if (isAdded())
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+                CustomToast.customToast(getActivity(), getString(R.string.no_response));
         }
 
     }
@@ -122,7 +120,7 @@ public class JoinedGroupsFragment extends Fragment implements SwipeRefreshLayout
         mSwipeRefreshLayout.setRefreshing(false);
         if (error instanceof SocketTimeoutException) {
             if (isAdded())
-            CustomToast.customToast(getActivity(),getString(R.string._404_));
+                CustomToast.customToast(getActivity(), getString(R.string._404_));
             //   showMessage(getActivity(), getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
             //  CustomToast.customToast(getActivity(),getString(R.string.no_response));
@@ -132,15 +130,15 @@ public class JoinedGroupsFragment extends Fragment implements SwipeRefreshLayout
             //   showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
             if (isAdded())
-            CustomToast.customToast(getActivity(),getString(R.string.no_internet));
+                CustomToast.customToast(getActivity(), getString(R.string.no_internet));
             //   errorMessage(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
             if (isAdded())
-            CustomToast.customToast(getActivity(),getString(R.string.no_internet));
+                CustomToast.customToast(getActivity(), getString(R.string.no_internet));
             //   errorMessage(getActivity(), getString(R.string.no_internet));
         } else {
             Log.i("Check Class-"
-                    , "joinedgroupsfragment");
+                    , "JoinedGroupsFragment");
             error.printStackTrace();
         }
     }
