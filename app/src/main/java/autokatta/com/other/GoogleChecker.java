@@ -93,7 +93,7 @@ public class GoogleChecker {
                                 marketVersion = String.valueOf(PACKAGE_NOT_PUBLISHED);
                             }
 
-                            //Log.e("ilkMarketVersion:", marketVersion);
+                            Log.e("ilkMarketVersion:", marketVersion);
 
 
                             PackageInfo pInfo = null;
@@ -101,14 +101,14 @@ public class GoogleChecker {
                             try {
                                 pInfo = context.getPackageManager().getPackageInfo(context
                                         .getPackageName(), 0);
-                                version = String.valueOf(pInfo.versionName);
+                                version = String.valueOf(pInfo.versionCode);
                             } catch (PackageManager.NameNotFoundException e) {
                                 Log.e("Error", e.getMessage());
                             }
 
 
-                            Integer newversion = Integer.valueOf(version != null ? version.replaceAll("[^\\d-]", "") : "0");
-                            Integer newMarketVersion = Integer.valueOf(marketVersion.replaceAll("[^\\d-]", ""));
+                            Integer newversion = Integer.valueOf(version != null ? version.replaceAll("[^\\d-.]", "") : "0");
+                            Integer newMarketVersion = Integer.valueOf(marketVersion.replaceAll("[^\\d-.]", ""));
 
                             if (newversion < newMarketVersion) {
                                 isThereNewVersion = true;
