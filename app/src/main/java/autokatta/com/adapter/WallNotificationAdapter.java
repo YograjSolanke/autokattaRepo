@@ -76,6 +76,7 @@ import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.ModelSuggestionsResponse;
 import autokatta.com.response.SuggestionsResponse;
+import autokatta.com.view.BrowserView;
 import autokatta.com.view.GroupsActivity;
 import autokatta.com.view.OtherProfile;
 import autokatta.com.view.ProductViewActivity;
@@ -3700,7 +3701,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                     mPostHolder.videoView.setVisibility(View.GONE);
 
                     if (decodedString.startsWith("www")) {
-                        String newStr = "http://" + decodedString;
+                        final String newStr = "http://" + decodedString;
                         mPostHolder.webView.setVisibility(View.VISIBLE);
                         mPostHolder.mStatusText.setVisibility(View.GONE);
                         mPostHolder.mStatusText.setText(newStr);
@@ -3708,7 +3709,9 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                         mPostHolder.viewClick.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-
+                                Intent intent = new Intent(mActivity, BrowserView.class);
+                                intent.putExtra("url", newStr);
+                                mActivity.startActivity(intent);
                             }
                         });
                         /*
