@@ -273,19 +273,25 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
                 case "group": {
                     Log.i("group", "->" + commaSplit[3]);
                     /*decode string code (Getting)*/
-                    String decodedString = null;
-                    byte[] data1 = new byte[0];
+                    String decodedString = null, decodedString1 = null;
+                    byte[] data1, data2;
                     try {
                         data1 = Base64.decode(commaSplit[5]);
+                        data2 = Base64.decode(commaSplit[6]);
                         decodedString = new String(data1, "UTF-8");
+                        decodedString1 = new String(data2, "UTF-8");
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                     int groupId = Integer.parseInt(decodedString);
+                    String bundleContact = decodedString1;
+
                     Bundle mBundle = new Bundle();
                     Intent intent = new Intent(getApplicationContext(), GroupLinkActivity.class);
-                    intent.putExtra("bundle_GroupId", groupId);
+                    mBundle.putInt("bundle_GroupId", groupId);
+                    mBundle.putString("bundle_Contact", bundleContact);
                     mBundle.putString("uri", data.toString());
+                    intent.putExtras(mBundle);
                     startActivity(intent);
                     break;
                 }
