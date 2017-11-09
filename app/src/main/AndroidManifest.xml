@@ -873,6 +873,11 @@
             android:name=".view.BrowserView"
             android:label="@string/title_activity_browser_view"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".view.InventoryNotesActivity"
+            android:label="@string/title_activity_inventory_notes"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
     </application>
 
 </manifest>

@@ -167,6 +167,7 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<RecyclerView.
             holder.stock_type.setText(mMainList.get(position).getStockType());
             holder.mChatcount.setText(mMainList.get(position).getChatCount());
             holder.mEnquiryCount.setText(mMainList.get(position).getEnquiryCount());
+      //      holder.mClientName.setText(mMainList.get(position).getEnquiryCount());
             myContact = activity.getSharedPreferences(activity.getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "");
 
             if (mMainList.get(position).getKmsRunning().equals(""))
@@ -1358,7 +1359,7 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<RecyclerView.
     static class VehicleHolder extends RecyclerView.ViewHolder {
         ImageView vehicleimage, mMoreItems;
         TextView edittitles, editprices, editcategorys, editbrands, editmodels, editleads, edituploadedon, editmfgyr,
-                editkms, editrto, editlocation, editregNo, stock_type, mChatcount, mEnquiryCount;
+                editkms, editrto, editlocation, editregNo, stock_type, mChatcount, mEnquiryCount,mClientName;
         Button vehidetails, btnnotify, mUploadGroup, mUploadStore;
         CardView mcardView;
         //RelativeLayout mBroadcast;
@@ -1388,6 +1389,7 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<RecyclerView.
             stock_type = (TextView) itemView.findViewById(R.id.stock_type);
             mChatcount = (TextView) itemView.findViewById(R.id.chatcount);
             mEnquiryCount = (TextView) itemView.findViewById(R.id.enquirycount);
+            mClientName = (TextView) itemView.findViewById(R.id.clientname);
             mcardView = (CardView) itemView.findViewById(R.id.card_view);
             //mBroadcast = (RelativeLayout) itemView.findViewById(R.id.relativebroadcast);
             mLinear = (LinearLayout) itemView.findViewById(R.id.linearbtns);

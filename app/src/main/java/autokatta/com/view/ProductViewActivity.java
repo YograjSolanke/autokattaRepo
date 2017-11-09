@@ -159,6 +159,7 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
     String prevGroupIds = "";
     LinearLayout mLinearLayout;
     Button mUploadGroup;
+    ImageView mNote;
     private List<String> mGrouplist = new ArrayList<>();
     private List<String> groupIdList = new ArrayList<>();
     private List<String> groupTitleList = new ArrayList<>();
@@ -228,6 +229,7 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
         mainlayout = (RelativeLayout) findViewById(R.id.mainlayout);
         mLinearLayout = (LinearLayout) findViewById(R.id.linearbtns);
         mUploadGroup = (Button) findViewById(R.id.upload_group);
+        mNote = (ImageView) findViewById(R.id.note);
 
         mainlayout.setVisibility(View.GONE);
         overallbar.setEnabled(false);
@@ -248,6 +250,9 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
         linearshare.setOnClickListener(this);
         seellreview.setOnClickListener(this);
         mUploadGroup.setOnClickListener(this);
+        mNote.setOnClickListener(this);
+
+
 
         if (getIntent().getExtras() != null) {
             product_id = getIntent().getExtras().getInt("product_id");
@@ -565,6 +570,7 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                                 callme.setVisibility(View.GONE);
                                 relativerate.setVisibility(View.GONE);
                                 relativewritereview.setVisibility(View.GONE);
+                                mNote.setVisibility(View.VISIBLE);
                                 //  linearlike.setEnabled(false);
 
                             } else {
@@ -790,7 +796,7 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                     dialog.dismiss();
                 }
                 btnchat.setText("Send Enquiry");
-            } else if (str.equalsIgnoreCase("success")) {
+            } else if (str.equalsIgnoreCase("success_added_suggestion")) {
                 Log.i("Suugesstion", "Product->" + product_id);
             }
         }
@@ -1237,6 +1243,18 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                 intent.putExtra("product_id", product_id);
                 intent.putExtra("contact", receiver_contact);
                 startActivity(intent);
+
+                break;
+            case R.id.note:
+
+                Intent intent1 = new Intent(ProductViewActivity.this, InventoryNotesActivity.class);
+                intent1.putExtra("vehicle_id", 0);
+                intent1.putExtra("newvehicle_id", 0);
+                intent1.putExtra("product_id", product_id);
+                intent1.putExtra("service_id", 0);
+                intent1.putExtra("contact", contact);
+
+                startActivity(intent1);
 
                 break;
         }

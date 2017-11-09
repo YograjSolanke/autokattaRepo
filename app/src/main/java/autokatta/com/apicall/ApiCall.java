@@ -9321,6 +9321,37 @@ get ExchangeMela Analytics Data
         }
     }
 
+ /*Get Inventory Note*/
+    public void getInventoryNote(int newvehicleid,int productid,int serviceid,int vehicleid) {
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<GetReplayInventoryNoteResponse> mediaResponseCall = serviceApi._autokattaGetInventoryNote(newvehicleid,vehicleid,serviceid,productid);
+                mediaResponseCall.enqueue(new Callback<GetReplayInventoryNoteResponse>() {
+                    @Override
+                    public void onResponse(Call<GetReplayInventoryNoteResponse> call, Response<GetReplayInventoryNoteResponse> response) {
+                        mNotifier.notifySuccess(response);
+                    }
+
+                    @Override
+                    public void onFailure(Call<GetReplayInventoryNoteResponse> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+            } else {
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     //Transfer Vehicle
     public void TransferVehicle(String Status, int TransferId) {
         try {
@@ -9339,6 +9370,46 @@ get ExchangeMela Analytics Data
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
                 Call<String> forgetPasswordResponseCall = serviceApi._autokattaTransferVehicle(TransferId, Status);
+                forgetPasswordResponseCall.enqueue(new Callback<String>() {
+                    @Override
+                    public void onResponse(Call<String> call, Response<String> response) {
+                        mNotifier.notifyString(response.body());
+                    }
+
+                    @Override
+                    public void onFailure(Call<String> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+            } else {
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    //Inventory Notes
+    public void AddInventoryNote(String UserContact, String keyword, int inventorynoteid,
+                                String Message, int ServiceID, int ProductID,
+                                int NewVehicleID, int VehicleId) {
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+
+                //JSON to Gson conversion
+                Gson gson = new GsonBuilder()
+                        .setLenient()
+                        .create();
+
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create(gson))
+                        .client(initLog().build())
+                        .build();
+
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<String> forgetPasswordResponseCall = serviceApi._autokattaAddInventoryNote(inventorynoteid,keyword,UserContact,Message,ServiceID,ProductID,NewVehicleID,VehicleId);
                 forgetPasswordResponseCall.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {

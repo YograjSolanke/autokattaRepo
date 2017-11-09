@@ -1085,7 +1085,7 @@ Call Intent...
                     CustomToast.customToast(StoreViewActivity.this, "Store recommended");
                     break;
 
-                case "success":
+                case "success_added_suggestion":
                     Log.i("Suugesstion", "Store->" + store_id);
                     break;
             }

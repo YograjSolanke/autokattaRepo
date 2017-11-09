@@ -245,7 +245,7 @@ public class OtherProfile extends AppCompatActivity implements RequestNotifier, 
                     mLikestr = "no";
                     break;
 
-                case "success":
+                case "success_added_suggestion":
                     Log.i("Suugesstion", "Profile->" + ProfileId);
                     break;
             }

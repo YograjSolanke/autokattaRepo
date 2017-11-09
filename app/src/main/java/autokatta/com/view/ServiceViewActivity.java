@@ -163,6 +163,7 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
     String prevGroupIds = "";
     LinearLayout mLinearLayout;
     Button mUploadGroup;
+    ImageView mNote;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -194,6 +195,7 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
         spinCategory = (Spinner) findViewById(R.id.spincategory);
         spinnerlayout = (RelativeLayout) findViewById(R.id.linearcategory);
         callme = (ImageView) findViewById(R.id.call);
+        mNote = (ImageView) findViewById(R.id.note);
         textlike = (TextView) findViewById(R.id.txtlike);
         textshare = (TextView) findViewById(R.id.txtshare);
         linearlike = (Button) findViewById(R.id.linearlike);
@@ -237,6 +239,7 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
         submitfeedback.setOnClickListener(this);
         linearshare.setOnClickListener(this);
         mUploadGroup.setOnClickListener(this);
+        mNote.setOnClickListener(this);
 
         if (getIntent().getExtras() != null) {
             service_id = getIntent().getExtras().getInt("service_id");
@@ -749,6 +752,7 @@ Get Admin data...
                                 btnchat.setVisibility(View.GONE);
                                 no_of_enquiries.setVisibility(View.VISIBLE);
                                 edit.setVisibility(View.VISIBLE);
+                                mNote.setVisibility(View.VISIBLE);
                                 deleteservice.setVisibility(View.VISIBLE);
                                 callme.setVisibility(View.GONE);
                                 relativerate.setVisibility(View.GONE);
@@ -948,7 +952,7 @@ Get Admin data...
                     dialog.dismiss();
                 }
                 btnchat.setText("Send Enquiry");
-            } else if (str.equalsIgnoreCase("success")) {
+            } else if (str.equalsIgnoreCase("success_added_suggestion")) {
                 Log.i("Suugesstion", "Service->" + service_id);
             }
         }
@@ -1336,6 +1340,17 @@ Get Admin data...
                 intent.putExtra("contact", receiver_contact);
                 startActivity(intent);
 
+                break;
+
+            case R.id.note:
+                Intent intent1 = new Intent(ServiceViewActivity.this, InventoryNotesActivity.class);
+                intent1.putExtra("vehicle_id", 0);
+                intent1.putExtra("newvehicle_id", 0);
+                intent1.putExtra("product_id", 0);
+                intent1.putExtra("service_id", service_id);
+                intent1.putExtra("contact", contact);
+
+                startActivity(intent1);
                 break;
         }
     }

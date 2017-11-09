@@ -1487,10 +1487,22 @@ public interface ServiceApi {
     @GET("GetContactMedia")
     Call<GetMediaResponse> _autokattaGetContactMedia(@Query("MyContact") String MyContact);
 
+ /*get Inventory Note*/
+    @GET("GetReplayInventoryNote")
+    Call<GetReplayInventoryNoteResponse> _autokattaGetInventoryNote(@Query("StoreID") int NewVehicleID,@Query("VehicleID") int VehicleID,@Query("ServiceID") int ServiceID,@Query("ProductID") int ProductID);
+
 
     /* TransferVehicle*/
     @POST("TransferVehicle")
     Call<String> _autokattaTransferVehicle(@Query("TransferID") int Transferid, @Query("Status") String Status);
+
+
+    /* Inventory Notes*/
+    @POST("AddReplayInventoryNote")
+    Call<String> _autokattaAddInventoryNote(@Query("InventoryNoteID") int InventoryNoteID, @Query("keyword") String keyword,@Query("Contact") String Contact,
+                                           @Query("Message") String Message, @Query("ServiceID") int ServiceID,
+                                           @Query("ProductID") int ProductID, @Query("NewVehicleID") int NewVehicleID, @Query("VehicleID") int VehicleID
+                                         );
 
     /* AddDataForSuggestions*/
     @POST("AddDataForSuggestions")

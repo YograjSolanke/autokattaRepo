@@ -57,7 +57,7 @@ public class VehicleDetails extends AppCompatActivity implements RequestNotifier
     CollapsingToolbarLayout collapsingToolbar;
     String name;
     FloatingActionMenu mFab;
-    FloatingActionButton mLike, mCall, mShare, mChat, mReview;
+    FloatingActionButton mLike, mCall, mShare, mChat, mReview, mNote;
     String Title, mPrice, mBrand, mModel, mYear, mRTO_City, mAddress, mRegistration, mSendImage, imgUrl;
     Double mKms;
     String contact, mLikestr, prefcontact, allDetails;
@@ -82,6 +82,7 @@ public class VehicleDetails extends AppCompatActivity implements RequestNotifier
         mShare = (FloatingActionButton) findViewById(R.id.share);
         mChat = (FloatingActionButton) findViewById(R.id.chat_c);
         mReview = (FloatingActionButton) findViewById(R.id.review);
+        mNote = (FloatingActionButton) findViewById(R.id.note);
 
         mApiCall = new ApiCall(VehicleDetails.this, this);
         mCall.setOnClickListener(this);
@@ -90,11 +91,13 @@ public class VehicleDetails extends AppCompatActivity implements RequestNotifier
         mShare.setOnClickListener(this);
         mChat.setOnClickListener(this);
         mReview.setOnClickListener(this);
+        mNote.setOnClickListener(this);
 
         mChat.setLabelTextColor(Color.BLACK);
         mCall.setLabelTextColor(Color.BLACK);
         mShare.setLabelTextColor(Color.BLACK);
         mReview.setLabelTextColor(Color.BLACK);
+        mNote.setLabelTextColor(Color.BLACK);
 
         runOnUiThread(new Runnable() {
             @Override
@@ -186,6 +189,8 @@ public class VehicleDetails extends AppCompatActivity implements RequestNotifier
                         mLike.setVisibility(View.GONE);
                         mCall.setVisibility(View.GONE);
                         mChat.setVisibility(View.GONE);
+                    } else {
+                        mNote.setVisibility(View.GONE);
                     }
 
                     Hash_file_maps = new HashMap<String, String>();
@@ -300,7 +305,7 @@ public class VehicleDetails extends AppCompatActivity implements RequestNotifier
                 mChat.setLabelText("Chat");
             } else if (str.contains("no")) {
                 mChat.setLabelText("Send Offer");
-            } else if (str.equalsIgnoreCase("success")) {
+            } else if (str.equalsIgnoreCase("success_added_suggestion")) {
                 Log.i("Suugesstion", "UploadVehicle->" + mVehicle_Id);
             }
         }
@@ -466,6 +471,17 @@ public class VehicleDetails extends AppCompatActivity implements RequestNotifier
                 intent.putExtra("vehicle_id", mVehicle_Id);
                 intent.putExtra("contact", contact);
                 startActivity(intent);
+                break;
+
+            case R.id.note:
+                Intent intent1 = new Intent(VehicleDetails.this, InventoryNotesActivity.class);
+                intent1.putExtra("vehicle_id", mVehicle_Id);
+                intent1.putExtra("newvehicle_id", 0);
+                intent1.putExtra("product_id", 0);
+                intent1.putExtra("service_id", 0);
+                intent1.putExtra("contact", prefcontact);
+
+                startActivity(intent1);
                 break;
         }
     }

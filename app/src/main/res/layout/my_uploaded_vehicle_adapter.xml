@@ -566,6 +566,47 @@
                 android:layout_toEndOf="@+id/vehiprofile">
 
                 <TextView
+                    android:id="@+id/client"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:gravity="center"
+                    android:text="@string/client_name"
+                    android:textColor="#808080"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/dashstock"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="5dp"
+                    android:layout_toEndOf="@+id/client"
+                    android:gravity="center"
+                    android:text="-"
+                    android:textColor="#808080"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/clientname"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="5dp"
+                    android:layout_toEndOf="@+id/dashstock"
+                    android:textColor="#0f0ff0"  />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/relativeclient"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/relativestock"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_toEndOf="@+id/vehiprofile">
+
+                <TextView
                     android:id="@+id/stock"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -601,7 +642,7 @@
                 android:id="@+id/relativeenquirycount"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/relativestock"
+                android:layout_below="@+id/relativeclient"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="5dp"
                 android:layout_toEndOf="@+id/vehiprofile">

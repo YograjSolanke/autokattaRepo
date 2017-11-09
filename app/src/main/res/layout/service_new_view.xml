@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/mainlayout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".view.ServiceViewActivity"
-    tools:showIn="@layout/activity_service_view">
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:id="@+id/mainlayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                tools:context=".view.ServiceViewActivity"
+                tools:showIn="@layout/activity_service_view">
 
     <RelativeLayout
         android:id="@+id/linear1"
@@ -27,7 +27,7 @@
             android:textAlignment="center"
             android:textColor="#2C3343"
             android:textSize="15sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"/>
 
         <TextView
             android:id="@+id/txtstorename"
@@ -39,7 +39,7 @@
             android:layout_toStartOf="@+id/call"
             android:text="Store Name"
             android:textColor="@color/textColor"
-            android:textSize="15sp" />
+            android:textSize="15sp"/>
 
         <TextView
             android:id="@+id/lstorewebsite"
@@ -51,7 +51,7 @@
             android:text="Website"
             android:textColor="@color/textColor"
             android:textSize="15sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"/>
 
         <TextView
             android:id="@+id/txtstorewebsite"
@@ -62,7 +62,7 @@
             android:layout_marginTop="5dp"
             android:text="website"
             android:textColor="@color/textColor"
-            android:textSize="15sp" />
+            android:textSize="15sp"/>
 
 
         <TextView
@@ -77,7 +77,7 @@
             android:textColor="@color/textColor"
             android:textSize="12sp"
             android:textStyle="bold"
-            android:visibility="gone" />
+            android:visibility="gone"/>
 
         <Button
             android:id="@+id/btnchat"
@@ -92,7 +92,7 @@
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="12sp"
-            android:visibility="visible" />
+            android:visibility="visible"/>
 
         <ImageView
             android:id="@+id/call"
@@ -103,7 +103,7 @@
             android:layout_marginTop="10dp"
             android:contentDescription="@string/app_name"
             android:src="@mipmap/new_call"
-            android:visibility="gone" />
+            android:visibility="gone"/>
 
         <RatingBar
             android:id="@+id/storerating"
@@ -117,7 +117,7 @@
             android:layout_marginTop="10dp"
             android:numStars="5"
             android:stepSize="1"
-            android:theme="@style/RatingBar" />
+            android:theme="@style/RatingBar"/>
 
 
     </RelativeLayout>
@@ -151,7 +151,7 @@
                         android:layout_marginBottom="10dp"
                         android:layout_marginTop="10dp"
                         android:text="Photos"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"/>
 
                     <com.daimajia.slider.library.SliderLayout
                         android:id="@+id/slider"
@@ -160,7 +160,7 @@
                         android:layout_below="@+id/no_of_photos"
                         android:layout_centerHorizontal="true"
                         android:fitsSystemWindows="true"
-                        app:layout_collapseMode="parallax" />
+                        app:layout_collapseMode="parallax"/>
 
                     <LinearLayout
                         android:id="@+id/lineartxts"
@@ -180,7 +180,7 @@
                             android:gravity="center"
                             android:text="likes"
                             android:textAlignment="center"
-                            android:textColor="#2C3343" />
+                            android:textColor="#2C3343"/>
 
                         <TextView
                             android:id="@+id/txtshare"
@@ -190,7 +190,7 @@
                             android:gravity="center"
                             android:text="shares"
                             android:textAlignment="center"
-                            android:textColor="#2C3343" />
+                            android:textColor="#2C3343"/>
 
                         <TextView
                             android:id="@+id/txtreview"
@@ -201,7 +201,7 @@
                             android:text="review"
                             android:textAlignment="center"
                             android:textColor="#2C3343"
-                            android:visibility="gone" />
+                            android:visibility="gone"/>
 
                     </LinearLayout>
 
@@ -222,7 +222,7 @@
                             android:layout_height="wrap_content"
                             android:numStars="5"
                             android:stepSize="1"
-                            android:theme="@style/RatingBar" />
+                            android:theme="@style/RatingBar"/>
 
                     </LinearLayout>
 
@@ -232,7 +232,7 @@
                         android:layout_height="1dp"
                         android:layout_below="@+id/linearstars"
                         android:layout_marginTop="5dp"
-                        android:background="#cccccc" />
+                        android:background="#cccccc"/>
 
                     <LinearLayout
                         android:id="@+id/relalike2"
@@ -258,7 +258,7 @@
                                 android:background="@android:color/transparent"
                                 android:drawableStart="@mipmap/unlike"
                                 android:text="@string/likes"
-                                android:visibility="visible" />
+                                android:visibility="visible"/>
 
                             <Button
                                 android:id="@+id/linearunlike"
@@ -270,7 +270,7 @@
                                 android:text="@string/likes"
                                 android:textColor="#5176c9"
                                 android:textStyle="bold"
-                                android:visibility="gone" />
+                                android:visibility="gone"/>
 
                         </LinearLayout>
 
@@ -288,7 +288,7 @@
                                 android:layout_gravity="center"
                                 android:background="@android:color/transparent"
                                 android:drawableStart="@mipmap/new_share"
-                                android:text="Share" />
+                                android:text="Share"/>
                         </LinearLayout>
 
                         <LinearLayout
@@ -305,7 +305,7 @@
                                 android:layout_gravity="center"
                                 android:background="@android:color/transparent"
                                 android:drawableStart="@mipmap/review_gray"
-                                android:text="Review" />
+                                android:text="Review"/>
                         </LinearLayout>
 
 
@@ -316,7 +316,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:layout_below="@+id/relalike2"
-                        android:background="#cccccc" />
+                        android:background="#cccccc"/>
 
                     <ImageView
                         android:id="@+id/checkservice"
@@ -328,7 +328,7 @@
                         android:layout_marginTop="5dp"
                         android:contentDescription="@string/app_name"
                         android:src="@drawable/check"
-                        android:visibility="gone" />
+                        android:visibility="gone"/>
 
                     <ImageView
                         android:id="@+id/editservice"
@@ -340,7 +340,7 @@
                         android:layout_marginTop="5dp"
                         android:contentDescription="@string/app_name"
                         android:src="@mipmap/ic_edit"
-                        android:visibility="gone" />
+                        android:visibility="gone"/>
 
                     <ImageView
                         android:id="@+id/deleteservice"
@@ -352,7 +352,19 @@
                         android:layout_toStartOf="@+id/editservice"
                         android:contentDescription="@string/app_name"
                         android:src="@mipmap/ic_delete"
-                        android:visibility="gone" />
+                        android:visibility="gone"/>
+
+                    <ImageView
+                        android:id="@+id/note"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/v3"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_toStartOf="@+id/deleteservice"
+                        android:contentDescription="@string/app_name"
+                        android:src="@mipmap/note"
+                        android:visibility="gone"/>
 
                     <RelativeLayout
                         android:id="@+id/relativetype"
@@ -370,7 +382,7 @@
                             android:textColor="@color/textColor"
                             android:textColorHint="#000000"
                             android:textSize="15sp"
-                            android:textStyle="bold" />
+                            android:textStyle="bold"/>
 
                         <EditText
                             android:id="@+id/txtstype"
@@ -382,7 +394,7 @@
                             android:hint="service type"
                             android:textColor="@color/textColor"
                             android:textColorHint="@color/hintColor"
-                            android:textSize="15sp" />
+                            android:textSize="15sp"/>
                     </RelativeLayout>
 
                     <RelativeLayout
@@ -399,7 +411,7 @@
                             android:text="Service Name"
                             android:textColor="@color/textColor"
                             android:textSize="15sp"
-                            android:textStyle="bold" />
+                            android:textStyle="bold"/>
 
                         <EditText
                             android:id="@+id/txtsname"
@@ -411,7 +423,7 @@
                             android:hint="service name"
                             android:textColor="@color/textColor"
                             android:textColorHint="@color/hintColor"
-                            android:textSize="15sp" />
+                            android:textSize="15sp"/>
                     </RelativeLayout>
 
                     <RelativeLayout
@@ -429,7 +441,7 @@
                             android:textColor="@color/textColor"
                             android:textColorHint="@color/hintColor"
                             android:textSize="15sp"
-                            android:textStyle="bold" />
+                            android:textStyle="bold"/>
 
 
                         <EditText
@@ -442,7 +454,7 @@
                             android:inputType="number"
                             android:textColor="@color/textColor"
                             android:textColorHint="@color/hintColor"
-                            android:textSize="15sp" />
+                            android:textSize="15sp"/>
                     </RelativeLayout>
 
                     <RelativeLayout
@@ -459,7 +471,7 @@
                             android:text="Tags"
                             android:textColor="@color/textColor"
                             android:textSize="15sp"
-                            android:textStyle="bold" />
+                            android:textStyle="bold"/>
 
                         <MultiAutoCompleteTextView
                             android:id="@+id/txtstags"
@@ -471,7 +483,7 @@
                             android:hint="tags"
                             android:textColor="@color/textColor"
                             android:textColorHint="@color/hintColor"
-                            android:textSize="15sp" />
+                            android:textSize="15sp"/>
                     </RelativeLayout>
 
                     <RelativeLayout
@@ -488,7 +500,7 @@
                             android:text="Brand Tags"
                             android:textColor="@color/textColor"
                             android:textSize="15sp"
-                            android:textStyle="bold" />
+                            android:textStyle="bold"/>
 
                         <MultiAutoCompleteTextView
                             android:id="@+id/txtbrandptags"
@@ -500,7 +512,7 @@
                             android:hint="brand tags"
                             android:textColor="@color/textColor"
                             android:textColorHint="@color/hintColor"
-                            android:textSize="15sp" />
+                            android:textSize="15sp"/>
                     </RelativeLayout>
 
 
@@ -518,7 +530,7 @@
                             android:text="Details"
                             android:textColor="@color/textColor"
                             android:textSize="15sp"
-                            android:textStyle="bold" />
+                            android:textStyle="bold"/>
 
                         <EditText
                             android:id="@+id/txtsdetails"
@@ -530,7 +542,7 @@
                             android:hint="service details"
                             android:textColor="@color/textColor"
                             android:textColorHint="@color/hintColor"
-                            android:textSize="15sp" />
+                            android:textSize="15sp"/>
 
                     </RelativeLayout>
 
@@ -548,7 +560,7 @@
                             android:text="Category"
                             android:textColor="@color/textColor"
                             android:textSize="15sp"
-                            android:textStyle="bold" />
+                            android:textStyle="bold"/>
 
                         <Spinner
                             android:id="@+id/spincategory"
@@ -577,7 +589,7 @@
                             android:text="Upload In->"
                             android:textColor="@color/textColor"
                             android:textSize="15sp"
-                            android:textStyle="bold" />
+                            android:textStyle="bold"/>
 
                         <Button
                             android:id="@+id/upload_group"
@@ -587,7 +599,7 @@
                             android:layout_marginEnd="@dimen/card_margin"
                             android:background="@android:color/transparent"
                             android:drawableEnd="@drawable/ic_upload"
-                            android:text="group" />
+                            android:text="group"/>
 
                         <Button
                             android:id="@+id/upload_store"
@@ -596,7 +608,7 @@
                             android:background="@android:color/transparent"
                             android:drawableEnd="@drawable/ic_upload"
                             android:text="store"
-                            android:visibility="gone" />
+                            android:visibility="gone"/>
                     </LinearLayout>
 
                     <RelativeLayout
@@ -619,7 +631,7 @@
                             android:gravity="center"
                             android:hint="Write Review.."
                             android:textColor="#2C3343"
-                            android:textColorHint="#848484" />
+                            android:textColorHint="#848484"/>
 
                         <Button
                             android:id="@+id/btnpost"
@@ -630,7 +642,7 @@
                             android:gravity="center"
                             android:text="Post"
                             android:textAllCaps="false"
-                            android:textColor="@color/white" />
+                            android:textColor="@color/white"/>
 
                     </RelativeLayout>
 
@@ -651,7 +663,7 @@
                             android:background="@drawable/button_background"
                             android:text="See All Reviews"
                             android:textAllCaps="false"
-                            android:textColor="@color/white" />
+                            android:textColor="@color/white"/>
                     </LinearLayout>
 
                     <RelativeLayout
@@ -675,7 +687,7 @@
                                 android:padding="5dp"
                                 android:text="Rate This Service"
                                 android:textColor="#2C3343"
-                                android:textStyle="bold" />
+                                android:textStyle="bold"/>
                         </LinearLayout>
 
                         <RelativeLayout
@@ -692,7 +704,7 @@
                                 android:layout_marginTop="5dp"
                                 android:padding="5dip"
                                 android:text="Price"
-                                android:textColor="#2C3343" />
+                                android:textColor="#2C3343"/>
 
                             <RatingBar
                                 android:id="@+id/pricebar"
@@ -704,7 +716,7 @@
                                 android:isIndicator="false"
                                 android:numStars="5"
                                 android:stepSize="1"
-                                android:theme="@style/RatingBar" />
+                                android:theme="@style/RatingBar"/>
                         </RelativeLayout>
 
                         <RelativeLayout
@@ -721,7 +733,7 @@
                                 android:layout_marginTop="5dp"
                                 android:padding="5dip"
                                 android:text="Quality of Work"
-                                android:textColor="#2C3343" />
+                                android:textColor="#2C3343"/>
 
                             <RatingBar
                                 android:id="@+id/qualitybar"
@@ -733,7 +745,7 @@
                                 android:isIndicator="false"
                                 android:numStars="5"
                                 android:stepSize="1"
-                                android:theme="@style/RatingBar" />
+                                android:theme="@style/RatingBar"/>
 
                         </RelativeLayout>
 
@@ -751,7 +763,7 @@
                                 android:layout_marginTop="5dp"
                                 android:padding="5dip"
                                 android:text="Time Management"
-                                android:textColor="#2C3343" />
+                                android:textColor="#2C3343"/>
 
                             <RatingBar
                                 android:id="@+id/tmbar"
@@ -763,7 +775,7 @@
                                 android:isIndicator="false"
                                 android:numStars="5"
                                 android:stepSize="1"
-                                android:theme="@style/RatingBar" />
+                                android:theme="@style/RatingBar"/>
                         </RelativeLayout>
 
                         <RelativeLayout
@@ -782,7 +794,7 @@
                                 android:layout_marginTop="5dp"
                                 android:padding="5dip"
                                 android:text="Your overall rating of this service "
-                                android:textColor="#2C3343" />
+                                android:textColor="#2C3343"/>
 
                             <RatingBar
                                 android:id="@+id/overallbar"
@@ -794,7 +806,7 @@
                                 android:layout_centerVertical="true"
                                 android:numStars="5"
                                 android:stepSize="1"
-                                android:theme="@style/RatingBar" />
+                                android:theme="@style/RatingBar"/>
 
                             <Button
                                 android:id="@+id/btnfeedback"
@@ -806,7 +818,7 @@
                                 android:background="@drawable/buttonback"
                                 android:text="Submit Your Feedback"
                                 android:textAllCaps="false"
-                                android:textColor="@color/white" />
+                                android:textColor="@color/white"/>
                         </RelativeLayout>
 
                     </RelativeLayout>
