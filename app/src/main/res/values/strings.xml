@@ -1012,5 +1012,9 @@
     <string name="groupType">Group Type?<font color="#FF0000">\\u002A</font></string>
     <string name="groupPublic">Public</string>
     <string name="groupPrivate">Private</string>
+    <string name="title_activity_inventory_notes">InventoryNotesActivity</string>
+
+    <string name="client_name">Client Name</string>
+
 
 </resources>
