@@ -1,10 +1,11 @@
 package autokatta.com.view;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.PopupMenu;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,16 +18,23 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.io.UnsupportedEncodingException;
+import java.net.ConnectException;
+import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 
 import autokatta.com.R;
+import autokatta.com.apicall.ApiCall;
 import autokatta.com.generic.Base64;
 import autokatta.com.groups_container.CommunicationContainer;
 import autokatta.com.groups_container.GroupProductContainer;
 import autokatta.com.groups_container.GroupServiceContainer;
 import autokatta.com.groups_container.MemberContainer;
 import autokatta.com.groups_container.VehicleContainer;
+import autokatta.com.interfaces.RequestNotifier;
+import autokatta.com.other.CustomToast;
+import retrofit2.Response;
 
-public class GroupsActivity extends AppCompatActivity {
+public class GroupsActivity extends AppCompatActivity implements RequestNotifier {
     Bundle b = new Bundle();
     String groupPrivacy, groupType;
     GridView androidGridView;
@@ -34,6 +42,7 @@ public class GroupsActivity extends AppCompatActivity {
     Button mShare;
     int mGroupID;
     private String mLoginContact;
+    private ProgressDialog pDialog;
     String[] gridViewString = {
             "Communication", "Members", "Vehicle", "Product", "Service", "Video's",
             "Image's",};
@@ -51,6 +60,10 @@ public class GroupsActivity extends AppCompatActivity {
             getSupportActionBar().setHomeButtonEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
+
+        pDialog = new ProgressDialog(this);
+        pDialog.setMessage("Loading...");
+
         mLoginContact = getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
                 .getString("loginContact", "");
 
@@ -72,6 +85,8 @@ public class GroupsActivity extends AppCompatActivity {
             groupPrivacy = i.getStringExtra("bundle_groupPrivacy");
             mGroupID = i.getIntExtra("bundle_GroupId", 0);
             groupType = i.getStringExtra("grouptype");
+
+            getGroupData(mGroupID);
 
 
             /*Glide.with(getApplicationContext())
@@ -130,11 +145,17 @@ public class GroupsActivity extends AppCompatActivity {
         mShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sharePopUp();
+                shareOther();
             }
         });
     }
 
+    private void getGroupData(int mGroupID) {
+        ApiCall mApiCall = new ApiCall(this, this);
+        pDialog.show();
+    }
+
+/*
     private void sharePopUp() {
 
         PopupMenu mPopupMenu = new PopupMenu(GroupsActivity.this, mShare);
@@ -145,6 +166,7 @@ public class GroupsActivity extends AppCompatActivity {
                 Intent intent = new Intent(Intent.ACTION_SEND);
                 switch (item.getItemId()) {
                     case R.id.autokatta:
+*/
 /*
                         String allPostDetails = decodedString + "=" +
                                 notificationList.get(mPostHolder.getAdapterPosition()).getStatusType() + "=" +
@@ -160,16 +182,19 @@ public class GroupsActivity extends AppCompatActivity {
 
 
                         Intent i = new Intent(getApplicationContext(), ShareWithinAppActivity.class);
-                        startActivity(i);*/
+                        startActivity(i);*//*
+
                         break;
                     case R.id.other:
-                        /*String linkDetails = "Search Category : " + mSearchHolder.mSearchCategory.getText().toString() + "\n" +
+                        */
+/*String linkDetails = "Search Category : " + mSearchHolder.mSearchCategory.getText().toString() + "\n" +
                                 "Search Brand : " + mSearchHolder.mSearchBrand.getText().toString() + "\n" +
                                 "Search Model : " + mSearchHolder.mSearchModel.getText().toString() + "\n" +
                                 "Year Of Mfg : " + mSearchHolder.mSearchYear.getText().toString() + "\n" +
                                 "Price : " + mSearchHolder.mSearchPrice.getText().toString() + "\n" +
                                 "Leads : " + mSearchHolder.mSearchLeads.getText().toString() + "\n" +
-                                "Date : " + mSearchHolder.mSearchDate.getText().toString();*/
+                                "Date : " + mSearchHolder.mSearchDate.getText().toString();*//*
+
 
                         //code to encode the status string(posting)
                         byte[] data = new byte[0], data1 = data = new byte[0];
@@ -185,7 +210,9 @@ public class GroupsActivity extends AppCompatActivity {
                         intent.setType("text/plain");
                         intent.putExtra(Intent.EXTRA_TEXT, "Please visit the link to join my group in Autokatta"
                                         + "\n" + "http://autokatta.com/group/main/" + encodedGroupId + "/" + encodedContact
-                                /*+ "\n" + "\n" + allSearchDetails*/);
+                                */
+/*+ "\n" + "\n" + allSearchDetails*//*
+);
                         //intent.putExtra(Intent.EXTRA_TEXT, allSearchDetailss);
                         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                         intent.putExtra(Intent.EXTRA_SUBJECT, "Group Invitation from Autokatta User");
@@ -196,6 +223,30 @@ public class GroupsActivity extends AppCompatActivity {
             }
         });
         mPopupMenu.show();
+    }
+*/
+
+    private void shareOther() {
+
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        byte[] data = new byte[0], data1 = data = new byte[0];
+        try {
+            data = String.valueOf(mGroupID).getBytes("UTF-8");
+            data1 = mLoginContact.getBytes("UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        String encodedGroupId = Base64.encodeBytes(data);
+        String encodedContact = Base64.encodeBytes(data1);
+
+        intent.setType("text/plain");
+        intent.putExtra(Intent.EXTRA_TEXT, "Please visit the link to join my group in Autokatta"
+                        + "\n" + "http://autokatta.com/group/main/" + encodedGroupId + "/" + encodedContact
+                                /*+ "\n" + "\n" + allSearchDetails*/);
+        //intent.putExtra(Intent.EXTRA_TEXT, allSearchDetailss);
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        intent.putExtra(Intent.EXTRA_SUBJECT, "Group Invitation from Autokatta User");
+        startActivity(Intent.createChooser(intent, "Autokatta"));
     }
 
     @Override
@@ -221,6 +272,38 @@ public class GroupsActivity extends AppCompatActivity {
                 super.onBackPressed();
             }
         }
+    }
+
+    @Override
+    public void notifySuccess(Response<?> response) {
+
+    }
+
+    @Override
+    public void notifyError(Throwable error) {
+        if (pDialog.isShowing()) {
+            pDialog.dismiss();
+        }
+        if (error instanceof SocketTimeoutException) {
+            CustomToast.customToast(getApplicationContext(), getString(R.string._404));
+        } else if (error instanceof NullPointerException) {
+            // CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
+        } else if (error instanceof ClassCastException) {
+            //CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
+        } else if (error instanceof ConnectException) {
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
+        } else if (error instanceof UnknownHostException) {
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
+        } else {
+            Log.i("Check Class-"
+                    , "GroupsActivity");
+            error.printStackTrace();
+        }
+    }
+
+    @Override
+    public void notifyString(String str) {
+
     }
 
     private class CustomGridViewActivity extends BaseAdapter {
