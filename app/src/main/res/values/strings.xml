@@ -1019,5 +1019,7 @@
     <string name="title_activity_group_link">GroupLinkActivity</string>
     <string name="title_activity_browser_view">BrowserView</string>
 
+    <string name="joinGroup">Join Group</string>
+
 
 </resources>

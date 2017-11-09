@@ -808,6 +808,7 @@
     <string name="groupPublic">पब्लिक</string>
     <string name="groupPrivate">प्रायव्हेट</string>
     <string name="client_name">क्लाइंट नाम </string>
+    <string name="joinGroup">जॉईन समूह</string>
 
     <!-- Array Tags -->
 </resources>
