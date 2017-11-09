@@ -806,6 +806,7 @@
     <string name="groupType">"गट टाइप?"</string>
     <string name="groupPublic">पब्लिक</string>
     <string name="groupPrivate">प्रायव्हेट</string>
+    <string name="client_name">क्लायंट नाव </string>
 
 
     <!-- Array Tags -->
