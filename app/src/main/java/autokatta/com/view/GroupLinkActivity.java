@@ -79,7 +79,7 @@ public class GroupLinkActivity extends AppCompatActivity implements View.OnClick
 
     private void acceptGroupRequest() {
         ApiCall mApiCall = new ApiCall(this, this);
-        mApiCall.addContactInGroup(mGroupID, mLoginContact);
+        mApiCall.AddContactForPublicGroup(mGroupID, mLoginContact);
     }
 
     @Override
@@ -109,13 +109,15 @@ public class GroupLinkActivity extends AppCompatActivity implements View.OnClick
     @Override
     public void notifyString(String str) {
         if (str != null) {
-            if (str.equalsIgnoreCase("you_are_added")) {
+            if (str.equalsIgnoreCase("you are added")) {
                 CustomToast.customToast(this, "you joined the group");
-            } else if (str.equalsIgnoreCase("you_are_already_in_group")) {
+                finish();
+            } else if (str.equalsIgnoreCase("you are already in group")) {
                 CustomToast.customToast(this, "you are already in group");
+                finish();
             }
-            finish();
-        }
-        CustomToast.customToast(this, getString(R.string.no_response));
+
+        } else
+            CustomToast.customToast(this, getString(R.string.no_response));
     }
 }

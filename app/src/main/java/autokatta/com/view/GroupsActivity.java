@@ -152,7 +152,7 @@ public class GroupsActivity extends AppCompatActivity implements RequestNotifier
 
     private void getGroupData(int mGroupID) {
         ApiCall mApiCall = new ApiCall(this, this);
-        pDialog.show();
+        //pDialog.show();
     }
 
 /*
