@@ -31,46 +31,83 @@
             android:padding="10dp">
 
 
-            <EditText
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Enter Employee Name"
-                android:id="@+id/empName"
+                android:layout_height="@dimen/text_layout_height"
+                android:layout_marginTop="10dp"
+                android:id="@+id/nameLayout">
 
-                android:layout_marginTop="10dp" />
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Enter Employee Name"
+                    android:id="@+id/empName"
+                    android:inputType="textPersonName"
+                    android:maxLines="1"
+                    android:textSize="15sp" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/text_layout_height"
+                android:layout_marginTop="10dp"
+                android:id="@+id/contactLayout"
+                android:layout_below="@+id/nameLayout">
 
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Enter Employee Contact"
                 android:id="@+id/empContact"
-                android:layout_below="@+id/empName"
+                android:inputType="phone"
+                android:maxLength="10"
+                android:maxLines="1"
+                android:textSize="15sp"
                 android:layout_marginTop="10dp" />
+            </android.support.design.widget.TextInputLayout>
 
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Enter Employee Designation"
-                android:id="@+id/empDesignation"
-                android:layout_below="@+id/empContact"
-                android:layout_marginTop="10dp" />
 
-            <EditText
+            <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Enter Employee Description"
-                android:id="@+id/empDescription"
-                android:layout_below="@+id/empDesignation"
-                android:layout_marginTop="10dp" />
+                android:layout_height="@dimen/text_layout_height"
+                android:layout_marginTop="10dp"
+                android:id="@+id/designationLayout"
+                android:layout_below="@+id/contactLayout">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Enter Employee Designation"
+                    android:id="@+id/empDesignation"
+                    android:textSize="15sp"
+                    android:layout_marginTop="10dp" />
+            </android.support.design.widget.TextInputLayout>
+
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/text_layout_height"
+                android:layout_marginTop="10dp"
+                android:id="@+id/descriptionLayout"
+                android:layout_below="@+id/designationLayout">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Enter Employee Description"
+                    android:id="@+id/empDescription"
+                    android:textSize="15sp"
+                    android:layout_marginTop="10dp" />
+            </android.support.design.widget.TextInputLayout>
 
 
             <CheckBox
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/empDescription"
+                android:layout_below="@+id/descriptionLayout"
                 android:text="Set Permission to upload post,images,videos,links"
                 android:textStyle="bold"
-                android:id="@+id/permissionText"
+                android:id="@+id/permissionCheck"
                 android:layout_marginTop="10dp" />
 
 

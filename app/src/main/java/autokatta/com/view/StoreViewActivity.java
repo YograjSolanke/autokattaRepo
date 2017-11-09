@@ -223,6 +223,7 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
         mVideos.setOnClickListener(this);
         mImages.setOnClickListener(this);
         mViewReview.setOnClickListener(this);
+        mAddEmployee.setOnClickListener(this);
     }
 
     public void hideFloatingButton() {
@@ -759,6 +760,11 @@ Call Intent...
                 Intent intentVideos = new Intent(StoreViewActivity.this, VideosViewActivity.class);
                 intentVideos.putExtras(b);
                 startActivity(intentVideos, options.toBundle());
+                break;
+
+            case R.id.add_employee:
+                Intent intentAddEmp = new Intent(StoreViewActivity.this, AddEmployeeActivity.class);
+                startActivity(intentAddEmp, options.toBundle());
                 break;
         }
 
