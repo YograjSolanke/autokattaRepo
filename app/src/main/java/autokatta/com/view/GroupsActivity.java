@@ -36,11 +36,11 @@ public class GroupsActivity extends AppCompatActivity {
     private String mLoginContact;
     String[] gridViewString = {
             "Communication", "Members", "Vehicle", "Product", "Service", "Video's",
-            "Image's", "Share Link",};
+            "Image's",};
 
     int[] gridViewImageId = {
             R.mipmap.communication, R.mipmap.members, R.mipmap.group_vehicles, R.mipmap.product, R.mipmap.services,
-            R.mipmap.videos, R.mipmap.images, R.mipmap.images,
+            R.mipmap.videos, R.mipmap.images,
     };
 
     @Override
@@ -122,11 +122,6 @@ public class GroupsActivity extends AppCompatActivity {
                         Intent images = new Intent(getApplicationContext(), ImagesViewActivity.class);
                         images.putExtras(b);
                         startActivity(images);
-                        break;
-                    case "Share Link":
-                        Intent link = new Intent(getApplicationContext(), ImagesViewActivity.class);
-                        link.putExtras(b);
-                        startActivity(link);
                         break;
                 }
             }

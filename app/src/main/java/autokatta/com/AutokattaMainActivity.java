@@ -44,6 +44,7 @@ import com.google.zxing.integration.android.IntentResult;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.Locale;
 
 import autokatta.com.adapter.TabAdapter;
@@ -54,6 +55,7 @@ import autokatta.com.fragment.FavoriteNotificationFragment;
 import autokatta.com.fragment.GroupNotification;
 import autokatta.com.fragment.StoreNotification;
 import autokatta.com.fragment.WallNotificationFragment;
+import autokatta.com.generic.Base64;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
 import autokatta.com.other.DemoDelAct;
@@ -69,6 +71,7 @@ import autokatta.com.response.ModelFirebase;
 import autokatta.com.view.BroadcastMessageActivity;
 import autokatta.com.view.BrowseStoreActivity;
 import autokatta.com.view.BussinessChatActivity;
+import autokatta.com.view.GroupLinkActivity;
 import autokatta.com.view.GroupTabs;
 import autokatta.com.view.MyAutokattaContactsActivity;
 import autokatta.com.view.MyBroadcastGroupsActivity;
@@ -263,6 +266,25 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
                     Bundle mBundle = new Bundle();
                     Intent intent = new Intent(getApplicationContext(), ServiceViewActivity.class);
                     intent.putExtra("service_id", serviceId);
+                    mBundle.putString("uri", data.toString());
+                    startActivity(intent);
+                    break;
+                }
+                case "group": {
+                    Log.i("group", "->" + commaSplit[3]);
+                    /*decode string code (Getting)*/
+                    String decodedString = null;
+                    byte[] data1 = new byte[0];
+                    try {
+                        data1 = Base64.decode(commaSplit[5]);
+                        decodedString = new String(data1, "UTF-8");
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    int groupId = Integer.parseInt(decodedString);
+                    Bundle mBundle = new Bundle();
+                    Intent intent = new Intent(getApplicationContext(), GroupLinkActivity.class);
+                    intent.putExtra("bundle_GroupId", groupId);
                     mBundle.putString("uri", data.toString());
                     startActivity(intent);
                     break;
