@@ -1012,5 +1012,6 @@
     <string name="groupType">Group Type?<font color="#FF0000">\\u002A</font></string>
     <string name="groupPublic">Public</string>
     <string name="groupPrivate">Private</string>
+    <string name="title_activity_add_employee">AddEmployeeActivity</string>
 
 </resources>

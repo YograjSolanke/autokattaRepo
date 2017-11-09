@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="autokatta.com.view.AddEmployeeActivity"
+    tools:showIn="@layout/activity_add_employee">
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Add Employee Form"
+        android:textSize="20sp"
+        android:id="@+id/maintext"
+        android:gravity="center"
+        android:textStyle="bold" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/addEmployee"
+        android:layout_below="@+id/maintext">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/relativeMain"
+            android:padding="10dp">
+
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter Employee Name"
+                android:id="@+id/empName"
+
+                android:layout_marginTop="10dp" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter Employee Contact"
+                android:id="@+id/empContact"
+                android:layout_below="@+id/empName"
+                android:layout_marginTop="10dp" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter Employee Designation"
+                android:id="@+id/empDesignation"
+                android:layout_below="@+id/empContact"
+                android:layout_marginTop="10dp" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Enter Employee Description"
+                android:id="@+id/empDescription"
+                android:layout_below="@+id/empDesignation"
+                android:layout_marginTop="10dp" />
+
+
+            <CheckBox
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/empDescription"
+                android:text="Set Permission to upload post,images,videos,links"
+                android:textStyle="bold"
+                android:id="@+id/permissionText"
+                android:layout_marginTop="10dp" />
+
+
+        </RelativeLayout>
+    </ScrollView>
+
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add"
+        android:id="@+id/addEmployee"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+
+
+</>
