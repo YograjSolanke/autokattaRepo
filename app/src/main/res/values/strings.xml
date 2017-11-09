@@ -1013,6 +1013,7 @@
     <string name="groupPublic">Public</string>
     <string name="groupPrivate">Private</string>
     <string name="title_activity_inventory_notes">InventoryNotesActivity</string>
+    <string name="title_activity_add_employee">AddEmployeeActivity</string>
 
     <string name="client_name">Client Name</string>
 
