@@ -29,10 +29,16 @@ import android.text.style.StyleSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.MimeTypeMap;
 import android.webkit.URLUtil;
+import android.webkit.WebChromeClient;
+import android.webkit.WebResourceError;
+import android.webkit.WebResourceRequest;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -112,6 +118,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
     //WallResponseModel responseModel = new WallResponseModel();
     private Suggestions mCustomView;
     private List<ModelSuggestionsResponse> suggestionResponseList = new ArrayList<>();
+    private float m_downX;
 
     public WallNotificationAdapter(Activity mActivity1, List<WallResponseModel> notificationList, String mLoginContact) {
         this.mActivity = mActivity1;
@@ -390,11 +397,12 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
         CardView mPostCardView;
         ImageView mProfile_pic;
         TextView mAction, mActionTime, mStatusText, captionText;
-        Button mPostShare, mPostUpload, mCall, mLike, mUnlike;
+        Button mPostShare, mPostUpload, mCall, mLike, mUnlike, viewClick;
         ImageView image1, image2, image3, image4;
         LinearLayout linearImages;
         VideoView videoView;
-        LinearLayout linearImagelayout1, linearImagelayout2;
+        LinearLayout linearImagelayout1, linearImagelayout2, webView;
+        WebView webUrl;
 
 
         private PostNotifications(View postView) {
@@ -409,6 +417,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
             mPostShare = (Button) postView.findViewById(R.id.share);
             mLike = (Button) postView.findViewById(R.id.like);
             mUnlike = (Button) postView.findViewById(R.id.unlike);
+            viewClick = (Button) postView.findViewById(R.id.viewClick);
             image1 = (ImageView) postView.findViewById(R.id.image1);
             image2 = (ImageView) postView.findViewById(R.id.image2);
             image3 = (ImageView) postView.findViewById(R.id.image3);
@@ -418,6 +427,8 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
             linearImages = (LinearLayout) postView.findViewById(R.id.linearImages);
             linearImagelayout1 = (LinearLayout) postView.findViewById(R.id.linearImagelayout1);
             linearImagelayout2 = (LinearLayout) postView.findViewById(R.id.linearImagelayout2);
+            webView = (LinearLayout) postView.findViewById(R.id.webView);
+            webUrl = (WebView) postView.findViewById(R.id.webUrl);
 
         }
     }
@@ -3687,9 +3698,86 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                     mPostHolder.captionText.setVisibility(View.GONE);
                     mPostHolder.linearImages.setVisibility(View.GONE);
                     mPostHolder.videoView.setVisibility(View.GONE);
-                    mPostHolder.mStatusText.setVisibility(View.VISIBLE);
 
-                    mPostHolder.mStatusText.setText(decodedString);
+                    if (decodedString.startsWith("www")) {
+                        String newStr = "http://" + decodedString;
+                        mPostHolder.webView.setVisibility(View.VISIBLE);
+                        mPostHolder.mStatusText.setVisibility(View.GONE);
+                        mPostHolder.mStatusText.setText(newStr);
+                        mPostHolder.webUrl.loadUrl(newStr);
+                        mPostHolder.viewClick.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+
+                            }
+                        });
+                        /*
+                        Web View
+                         */
+
+                        mPostHolder.webUrl.setWebChromeClient(new MyWebChromeClient(mActivity));
+                        mPostHolder.webUrl.setWebViewClient(new WebViewClient() {
+                            @Override
+                            public void onPageStarted(WebView view, String url, Bitmap favicon) {
+                                super.onPageStarted(view, url, favicon);
+                                //invalidateOptionsMenu();
+                            }
+
+                            @Override
+                            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                                mPostHolder.webUrl.loadUrl(url);
+                                return true;
+                            }
+
+                            @Override
+                            public void onPageFinished(WebView view, String url) {
+                                super.onPageFinished(view, url);
+                                //invalidateOptionsMenu();
+                            }
+
+                            @Override
+                            public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
+                                super.onReceivedError(view, request, error);
+                                //invalidateOptionsMenu();
+                            }
+                        });
+                        mPostHolder.webUrl.clearCache(true);
+                        mPostHolder.webUrl.clearHistory();
+                        mPostHolder.webUrl.getSettings().setJavaScriptEnabled(true);
+                        mPostHolder.webUrl.setHorizontalScrollBarEnabled(false);
+                        mPostHolder.webUrl.setOnTouchListener(new View.OnTouchListener() {
+                            public boolean onTouch(View v, MotionEvent event) {
+                                if (event.getPointerCount() > 1) {
+                                    //Multi touch detected
+                                    return true;
+                                }
+
+                                switch (event.getAction()) {
+                                    case MotionEvent.ACTION_DOWN: {
+                                        // save the x
+                                        m_downX = event.getX();
+                                    }
+                                    break;
+
+                                    case MotionEvent.ACTION_MOVE:
+                                    case MotionEvent.ACTION_CANCEL:
+                                    case MotionEvent.ACTION_UP: {
+                                        // set x so that it doesn't move
+                                        event.setLocation(m_downX, event.getY());
+                                    }
+                                    break;
+                                }
+
+                                return false;
+                            }
+                        });
+
+                        //End webView...
+                    } else {
+                        mPostHolder.webView.setVisibility(View.GONE);
+                        mPostHolder.mStatusText.setVisibility(View.VISIBLE);
+                        mPostHolder.mStatusText.setText(decodedString);
+                    }
                 }
 
                 mPostHolder.mPostCardView.setOnClickListener(new View.OnClickListener() {
@@ -6395,5 +6483,16 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                 e.printStackTrace();
             }
         }
+    }
+
+    private class MyWebChromeClient extends WebChromeClient {
+        Context context;
+
+        public MyWebChromeClient(Context context) {
+            super();
+            this.context = context;
+        }
+
+
     }
 }

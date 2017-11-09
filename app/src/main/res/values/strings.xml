@@ -1017,6 +1017,7 @@
 
     <string name="client_name">Client Name</string>
     <string name="title_activity_group_link">GroupLinkActivity</string>
+    <string name="title_activity_browser_view">BrowserView</string>
 
 
 </resources>

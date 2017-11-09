@@ -107,95 +107,95 @@
                 android:background="#cccccc" />
 
             <RelativeLayout
+                android:id="@+id/mainLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/mainLayout"
                 android:layout_below="@+id/relative">
 
                 <TextView
+                    android:id="@+id/imageVideoCaptionText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Some Videos and images are posted here"
-                    android:textSize="15sp"
                     android:padding="5dp"
-                    android:id="@+id/imageVideoCaptionText"
+                    android:text="Some Videos and images are posted here"
                     android:textColor="@color/black"
+                    android:textSize="15sp"
                     android:textStyle="bold"
                     android:visibility="visible" />
 
 
                 <VideoView
                     android:id="@+id/VideoView"
-                    android:layout_below="@+id/imageVideoCaptionText"
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
+                    android:layout_below="@+id/imageVideoCaptionText"
                     android:layout_marginTop="5dp"
                     android:visibility="gone" />
 
                 <LinearLayout
+                    android:id="@+id/linearImages"
                     android:layout_width="match_parent"
                     android:layout_height="300dp"
-                    android:orientation="horizontal"
-                    android:weightSum="2"
-                    android:id="@+id/linearImages"
-                    android:layout_marginTop="5dp"
                     android:layout_below="@+id/imageVideoCaptionText"
-                    android:visibility="gone">
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal"
+                    android:visibility="gone"
+                    android:weightSum="2">
 
                     <LinearLayout
+                        android:id="@+id/linearImagelayout1"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="vertical"
-                        android:weightSum="2"
                         android:layout_weight="1"
-                        android:id="@+id/linearImagelayout1">
+                        android:orientation="vertical"
+                        android:weightSum="2">
 
                         <ImageView
+                            android:id="@+id/image1"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:background="@color/black"
-                            android:id="@+id/image1"
                             android:visibility="visible" />
 
 
                         <ImageView
+                            android:id="@+id/image2"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_weight="1"
                             android:layout_marginTop="2dp"
+                            android:layout_weight="1"
                             android:background="@color/black"
-                            android:id="@+id/image2"
                             android:visibility="visible" />
                     </LinearLayout>
 
 
                     <LinearLayout
+                        android:id="@+id/linearImagelayout2"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="vertical"
-                        android:weightSum="2"
-                        android:visibility="visible"
-                        android:layout_weight="1"
                         android:layout_marginLeft="2dp"
-                        android:id="@+id/linearImagelayout2">
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:visibility="visible"
+                        android:weightSum="2">
 
                         <ImageView
+                            android:id="@+id/image3"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:background="@color/black"
-                            android:id="@+id/image3"
                             android:visibility="visible" />
 
 
                         <ImageView
+                            android:id="@+id/image4"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_weight="1"
                             android:layout_marginTop="2dp"
+                            android:layout_weight="1"
                             android:background="@color/black"
-                            android:id="@+id/image4"
                             android:visibility="visible" />
 
                     </LinearLayout>
@@ -213,17 +213,42 @@
 
 
                 <TextView
-                android:id="@+id/statustxt"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:maxLength="200"
-                android:minHeight="100dp"
-                android:text="@string/app_name"
-                android:textColor="#808080"
-                android:textSize="18sp"
-                android:textStyle="italic"
+                    android:id="@+id/statustxt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:maxLength="200"
+                    android:minHeight="100dp"
+                    android:text="@string/app_name"
+                    android:textColor="#808080"
+                    android:textSize="18sp"
+                    android:textStyle="italic"
                     android:visibility="gone" />
+
+                <LinearLayout
+                    android:id="@+id/webView"
+                    android:layout_width="match_parent"
+                    android:layout_height="180dp"
+                    android:layout_below="@+id/imageVideoCaptionText"
+                    android:layout_marginTop="3dp"
+                    android:orientation="vertical"
+                    android:visibility="visible">
+
+                    <WebView
+                        android:id="@+id/webUrl"
+                        android:layout_width="match_parent"
+                        android:layout_height="150dp" />
+
+                    <Button
+                        android:id="@+id/viewClick"
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:background="@android:color/transparent"
+                        android:text="@string/view_more"
+                        android:textStyle="bold"
+                        android:textColor="@color/medium_sea_green" />
+
+                </LinearLayout>
             </RelativeLayout>
 
             <View
@@ -234,20 +259,20 @@
                 android:background="#cccccc" />
 
             <LinearLayout
+                android:id="@+id/postActionlayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/v2"
                 android:baselineAligned="false"
                 android:orientation="horizontal"
-                android:weightSum="3"
-                android:id="@+id/postActionlayout"
-                android:visibility="visible">
+                android:visibility="visible"
+                android:weightSum="3">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    android:gravity="center">
 
                     <Button
                         android:id="@+id/unlike"
@@ -277,8 +302,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    android:gravity="center">
 
                     <Button
                         android:id="@+id/share"
@@ -294,8 +319,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    android:gravity="center">
 
                     <Button
                         android:id="@+id/upload"
