@@ -4,17 +4,22 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.PopupMenu;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.io.UnsupportedEncodingException;
+
 import autokatta.com.R;
+import autokatta.com.generic.Base64;
 import autokatta.com.groups_container.CommunicationContainer;
 import autokatta.com.groups_container.GroupProductContainer;
 import autokatta.com.groups_container.GroupServiceContainer;
@@ -23,16 +28,19 @@ import autokatta.com.groups_container.VehicleContainer;
 
 public class GroupsActivity extends AppCompatActivity {
     Bundle b = new Bundle();
-    String className;
+    String groupPrivacy, groupType;
     GridView androidGridView;
-
+    ImageView mImageView;
+    Button mShare;
+    int mGroupID;
+    private String mLoginContact;
     String[] gridViewString = {
             "Communication", "Members", "Vehicle", "Product", "Service", "Video's",
-            "Image's",};
+            "Image's", "Share Link",};
 
     int[] gridViewImageId = {
             R.mipmap.communication, R.mipmap.members, R.mipmap.group_vehicles, R.mipmap.product, R.mipmap.services,
-            R.mipmap.videos, R.mipmap.images,
+            R.mipmap.videos, R.mipmap.images, R.mipmap.images,
     };
 
     @Override
@@ -43,21 +51,34 @@ public class GroupsActivity extends AppCompatActivity {
             getSupportActionBar().setHomeButtonEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
+        mLoginContact = getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
+                .getString("loginContact", "");
+
+        androidGridView = (GridView) findViewById(R.id.group_grid_view);
+        mImageView = (ImageView) findViewById(R.id.groupImage);
+        mShare = (Button) findViewById(R.id.shares);
+
         Intent i = getIntent();
-        String grouptype = i.getStringExtra("grouptype");
-        className = i.getStringExtra("className");
-        if (grouptype != null) {
+        if (i.getExtras() != null) {
             b.putString("grouptype", i.getStringExtra("grouptype"));
             b.putString("className", i.getStringExtra("className"));
             b.putInt("bundle_GroupId", i.getIntExtra("bundle_GroupId", 0));
             b.putString("bundle_GroupName", i.getStringExtra("bundle_GroupName"));
             b.putString("tabIndex", i.getStringExtra("tabIndex"));
             b.putString("bundle_Contact", i.getStringExtra("bundle_Contact"));
+            b.putString("bundle_groupPrivacy", i.getStringExtra("bundle_groupPrivacy"));
             setTitle(i.getStringExtra("bundle_GroupName"));
+
+            groupPrivacy = i.getStringExtra("bundle_groupPrivacy");
+            mGroupID = i.getIntExtra("bundle_GroupId", 0);
+            groupType = i.getStringExtra("grouptype");
+
+
+            /*Glide.with(getApplicationContext())
+                    .load(getString(R.string.base_image_url)+)*/
         }
 
         GroupsActivity.CustomGridViewActivity adapterViewAndroid = new GroupsActivity.CustomGridViewActivity(GroupsActivity.this, gridViewString, gridViewImageId);
-        androidGridView = (GridView) findViewById(R.id.group_grid_view);
         androidGridView.setAdapter(adapterViewAndroid);
 
         androidGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -66,6 +87,7 @@ public class GroupsActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int i, long id) {
                 switch (gridViewString[+i]) {
+
                     case "Communication":
                         Intent communication = new Intent(getApplicationContext(), CommunicationContainer.class);
                         communication.putExtras(b);
@@ -101,27 +123,84 @@ public class GroupsActivity extends AppCompatActivity {
                         images.putExtras(b);
                         startActivity(images);
                         break;
+                    case "Share Link":
+                        Intent link = new Intent(getApplicationContext(), ImagesViewActivity.class);
+                        link.putExtras(b);
+                        startActivity(link);
+                        break;
                 }
             }
         });
 
-        /*GroupDetailTabs groupDetailTabs = new GroupDetailTabs();
-        Intent i = getIntent();
-        String grouptype = i.getStringExtra("grouptype");
-        className = i.getStringExtra("className");
-        if (grouptype != null) {
-            b.putString("grouptype", i.getStringExtra("grouptype"));
-            b.putString("className", i.getStringExtra("className"));
-            b.putInt("bundle_GroupId", i.getIntExtra("bundle_GroupId", 0));
-            b.putString("bundle_GroupName", i.getStringExtra("bundle_GroupName"));
-            b.putString("tabIndex", i.getStringExtra("tabIndex"));
-            b.putString("bundle_Contact", i.getStringExtra("bundle_Contact"));
-            groupDetailTabs.setArguments(b);
-        }
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.profile_groups_container, groupDetailTabs, "GroupActivity")
-                .addToBackStack("GroupActivity")
-                .commit();*/
+        mShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sharePopUp();
+            }
+        });
+    }
+
+    private void sharePopUp() {
+
+        PopupMenu mPopupMenu = new PopupMenu(GroupsActivity.this, mShare);
+        mPopupMenu.getMenuInflater().inflate(R.menu.more_menu, mPopupMenu.getMenu());
+        mPopupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                Intent intent = new Intent(Intent.ACTION_SEND);
+                switch (item.getItemId()) {
+                    case R.id.autokatta:
+/*
+                        String allPostDetails = decodedString + "=" +
+                                notificationList.get(mPostHolder.getAdapterPosition()).getStatusType() + "=" +
+                                notificationList.get(mPostHolder.getAdapterPosition()).getStatusImages() + "=" +
+                                notificationList.get(mPostHolder.getAdapterPosition()).getStatusVideos();
+
+                        mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                                putString("Share_sharedata", allPostDetails).apply();
+                        mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                                putInt("Share_status_id", notificationList.get(mPostHolder.getAdapterPosition()).getStatusID()).apply();
+                        mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
+                                putString("Share_keyword", "poststatus").apply();
+
+
+                        Intent i = new Intent(getApplicationContext(), ShareWithinAppActivity.class);
+                        startActivity(i);*/
+                        break;
+                    case R.id.other:
+                        /*String linkDetails = "Search Category : " + mSearchHolder.mSearchCategory.getText().toString() + "\n" +
+                                "Search Brand : " + mSearchHolder.mSearchBrand.getText().toString() + "\n" +
+                                "Search Model : " + mSearchHolder.mSearchModel.getText().toString() + "\n" +
+                                "Year Of Mfg : " + mSearchHolder.mSearchYear.getText().toString() + "\n" +
+                                "Price : " + mSearchHolder.mSearchPrice.getText().toString() + "\n" +
+                                "Leads : " + mSearchHolder.mSearchLeads.getText().toString() + "\n" +
+                                "Date : " + mSearchHolder.mSearchDate.getText().toString();*/
+
+                        //code to encode the status string(posting)
+                        byte[] data = new byte[0], data1 = data = new byte[0];
+                        try {
+                            data = String.valueOf(mGroupID).getBytes("UTF-8");
+                            data1 = mLoginContact.getBytes("UTF-8");
+                        } catch (UnsupportedEncodingException e) {
+                            e.printStackTrace();
+                        }
+                        String encodedGroupId = Base64.encodeBytes(data);
+                        String encodedContact = Base64.encodeBytes(data1);
+
+                        intent.setType("text/plain");
+                        intent.putExtra(Intent.EXTRA_TEXT, "Please visit the link to join my group in Autokatta"
+                                        + "\n" + "http://autokatta.com/group/main/" + encodedGroupId + "/" + encodedContact
+                                /*+ "\n" + "\n" + allSearchDetails*/);
+                        //intent.putExtra(Intent.EXTRA_TEXT, allSearchDetailss);
+                        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                        intent.putExtra(Intent.EXTRA_SUBJECT, "Group Invitation from Autokatta User");
+                        startActivity(Intent.createChooser(intent, "Autokatta"));
+                        break;
+                }
+                return false;
+            }
+        });
+        mPopupMenu.show();
     }
 
     @Override
@@ -150,7 +229,6 @@ public class GroupsActivity extends AppCompatActivity {
     }
 
     private class CustomGridViewActivity extends BaseAdapter {
-
         private Context mContext;
         private final String[] gridViewString;
         private final int[] gridViewImageId;

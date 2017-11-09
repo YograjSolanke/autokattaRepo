@@ -182,6 +182,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> impl
                 intent.putExtra("className", "MyAdapter");
                 intent.putExtra("bundle_GroupId", mGroupid);
                 intent.putExtra("bundle_GroupName", mItemList.get(holder.getAdapterPosition()).getTitle());
+                intent.putExtra("bundle_groupPrivacy", mItemList.get(holder.getAdapterPosition()).getGroupPrivacyStatus());
                 mActivity.startActivity(intent, options.toBundle());
             }
         });

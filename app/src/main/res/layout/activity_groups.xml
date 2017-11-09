@@ -7,10 +7,23 @@
     tools:context="autokatta.com.view.GroupsActivity">
 
     <ImageView
+        android:id="@+id/groupImage"
         android:layout_width="match_parent"
         android:layout_height="@dimen/card_image_height"
         android:src="@mipmap/no_image_auto"
         android:contentDescription="@string/app_name" />
+
+    <Button
+        android:id="@+id/shares"
+        style="?android:attr/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textAllCaps="false"
+        android:padding="5dp"
+        android:background="@android:color/transparent"
+        android:drawableStart="@mipmap/new_share"
+        android:text="Share Link" />
 
     <GridView
         android:id="@+id/group_grid_view"

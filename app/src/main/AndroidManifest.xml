@@ -864,6 +864,10 @@
         <activity
             android:name=".view.AddEmployeeActivity"
             android:label="@string/title_activity_add_employee"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".view.GroupLinkActivity"
+            android:label="@string/title_activity_group_link"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

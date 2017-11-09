@@ -1016,6 +1016,7 @@
     <string name="title_activity_add_employee">AddEmployeeActivity</string>
 
     <string name="client_name">Client Name</string>
+    <string name="title_activity_group_link">GroupLinkActivity</string>
 
 
 </resources>
