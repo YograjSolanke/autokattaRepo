@@ -178,7 +178,6 @@ public class AddInterestTagsActivity extends AppCompatActivity implements Reques
                 dialog.dismiss();
             }
             if (str.equals("success")) {
-
                 if (videoPath.equals("") && !imagesPath.equals("")) {
                     uploadImage(imagesPath);
                     CustomToast.customToast(getApplicationContext(), "Status posted successfully");
@@ -187,11 +186,8 @@ public class AddInterestTagsActivity extends AppCompatActivity implements Reques
                 } else {
                     uploadVideo(videoPath);
                 }
-
-
             } else
                 CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
-
         } else
             CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
     }
@@ -202,7 +198,6 @@ public class AddInterestTagsActivity extends AppCompatActivity implements Reques
         List<String> imgList = Arrays.asList(picturePath.split(","));
 
         for (int i = 0; i < imgList.size(); i++) {
-
             File file = new File(imgList.get(i));
             // Parsing any Media type file
             RequestBody requestBody = RequestBody.create(MediaType.parse("*/*"), file);

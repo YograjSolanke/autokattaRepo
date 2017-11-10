@@ -1,11 +1,13 @@
 package autokatta.com.other;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -14,12 +16,24 @@ import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.webkit.WebChromeClient;
+import android.webkit.WebResourceError;
+import android.webkit.WebResourceRequest;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -60,6 +74,8 @@ public class PostStatus extends AppCompatActivity implements RequestNotifier {
     int REQUEST_CODE_PICKER = 2000;
     List<Image> mImages = new ArrayList<>();
     String allimgpath = "";
+    WebView webView;
+    private float m_downX;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,6 +135,202 @@ public class PostStatus extends AppCompatActivity implements RequestNotifier {
                 builder.show();
 
                 //CustomToast.customToast(getApplicationContext(), "Coming soon... please be connected for update..");
+            }
+        });
+
+        mStatusText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (!TextUtils.isEmpty(s)) {
+                    if (s.toString().startsWith("www")) {
+                        String newStr = "http://" + s.toString();
+                        Log.i("checked1", "->" + newStr);
+                        if (newStr.endsWith(".com")) {
+                            View view = getLayoutInflater().inflate(R.layout.custom_link_preview_status, null);
+                            ImageView mClose = (ImageView) view.findViewById(R.id.close);
+                            Button mPost = (Button) view.findViewById(R.id.post);
+                            webView = (WebView) view.findViewById(R.id.webUrl);
+                            final Dialog mBottomSheetDialog = new Dialog(PostStatus.this, R.style.MaterialDialogSheet);
+                            mBottomSheetDialog.setContentView(view);
+                            mBottomSheetDialog.setCancelable(true);
+                            mBottomSheetDialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                            mBottomSheetDialog.getWindow().setGravity(Gravity.BOTTOM);
+                            mBottomSheetDialog.show();
+
+                            mClose.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    mBottomSheetDialog.dismiss();
+                                }
+                            });
+
+                            mPost.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    statusText = mStatusText.getText().toString();
+                                    Log.i("status", statusText);
+                                    if (statusText.equals("") || statusText.startsWith(" ") && statusText.endsWith(" ")) {
+                                        mStatusText.setError("Enter data");
+                                        mStatusText.requestFocus();
+                                    } else {
+
+                                        //code to encode the status string(posting)
+                                        byte[] data = new byte[0];
+                                        try {
+                                            data = mStatusText.getText().toString().getBytes("UTF-8");
+                                        } catch (UnsupportedEncodingException e) {
+                                            e.printStackTrace();
+                                        }
+                                        String encodedString = Base64.encodeBytes(data);
+
+                                        Bundle bundle = new Bundle();
+                                        bundle.putString("videoPath", "");
+                                        bundle.putString("imagesPath", "");
+                                        bundle.putString("images", "");
+                                        bundle.putString("statusText", encodedString);
+                                        Intent intent = new Intent(PostStatus.this, AddInterestTagsActivity.class);
+                                        intent.putExtras(bundle);
+                                        startActivity(intent);
+                                        finish();
+                                    }
+                                }
+                            });
+                            webView.loadUrl(newStr);
+                            sendUrl();
+                        }
+                    } else if (s.toString().startsWith("http://")) {
+                        String newStr = s.toString();
+                        Log.i("checked", "->" + newStr);
+                        if (newStr.endsWith(".com")) {
+                            View view = getLayoutInflater().inflate(R.layout.custom_link_preview_status, null);
+                            ImageView mClose = (ImageView) view.findViewById(R.id.close);
+                            Button mPost = (Button) view.findViewById(R.id.post);
+                            webView = (WebView) view.findViewById(R.id.webUrl);
+                            final Dialog mBottomSheetDialog = new Dialog(PostStatus.this, R.style.MaterialDialogSheet);
+                            mBottomSheetDialog.setContentView(view);
+                            mBottomSheetDialog.setCancelable(true);
+                            mBottomSheetDialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                            mBottomSheetDialog.getWindow().setGravity(Gravity.BOTTOM);
+                            mBottomSheetDialog.show();
+
+                            mClose.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    mBottomSheetDialog.dismiss();
+                                }
+                            });
+
+                            mPost.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    statusText = mStatusText.getText().toString();
+                                    Log.i("status", statusText);
+                                    if (statusText.equals("") || statusText.startsWith(" ") && statusText.endsWith(" ")) {
+                                        mStatusText.setError("Enter data");
+                                        mStatusText.requestFocus();
+                                    } else {
+                                        //code to encode the status string(posting)
+                                        byte[] data = new byte[0];
+                                        try {
+                                            data = mStatusText.getText().toString().getBytes("UTF-8");
+                                        } catch (UnsupportedEncodingException e) {
+                                            e.printStackTrace();
+                                        }
+                                        String encodedString = Base64.encodeBytes(data);
+
+                                        Bundle bundle = new Bundle();
+                                        bundle.putString("videoPath", "");
+                                        bundle.putString("imagesPath", "");
+                                        bundle.putString("images", "");
+                                        bundle.putString("statusText", encodedString);
+                                        Intent intent = new Intent(PostStatus.this, AddInterestTagsActivity.class);
+                                        intent.putExtras(bundle);
+                                        startActivity(intent);
+                                        finish();
+                                    }
+                                }
+                            });
+                            webView.loadUrl(newStr);
+                            sendUrl();
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    /*
+    Send URL...
+     */
+    private void sendUrl() {
+        /*
+        WebView...
+         */
+        webView.setWebChromeClient(new MyWebChromeClient(PostStatus.this));
+        webView.setWebViewClient(new WebViewClient() {
+            @Override
+            public void onPageStarted(WebView view, String url, Bitmap favicon) {
+                super.onPageStarted(view, url, favicon);
+                invalidateOptionsMenu();
+            }
+
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                webView.loadUrl(url);
+                return true;
+            }
+
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+                invalidateOptionsMenu();
+            }
+
+            @Override
+            public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
+                super.onReceivedError(view, request, error);
+                invalidateOptionsMenu();
+            }
+        });
+
+        webView.clearCache(true);
+        webView.clearHistory();
+        webView.getSettings().setJavaScriptEnabled(true);
+        webView.setHorizontalScrollBarEnabled(false);
+        webView.setOnTouchListener(new View.OnTouchListener() {
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getPointerCount() > 1) {
+                    //Multi touch detected
+                    return true;
+                }
+
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN: {
+                        // save the x
+                        m_downX = event.getX();
+                    }
+                    break;
+
+                    case MotionEvent.ACTION_MOVE:
+                    case MotionEvent.ACTION_CANCEL:
+                    case MotionEvent.ACTION_UP: {
+                        // set x so that it doesn't move
+                        event.setLocation(m_downX, event.getY());
+                    }
+                    break;
+                }
+
+                return false;
             }
         });
     }
@@ -262,7 +474,7 @@ public class PostStatus extends AppCompatActivity implements RequestNotifier {
                     Intent intent = new Intent(this, AddInterestTagsActivity.class);
                     intent.putExtras(bundle);
                     startActivity(intent);
-
+                    finish();
                 }
                 break;
         }
@@ -274,7 +486,6 @@ public class PostStatus extends AppCompatActivity implements RequestNotifier {
      */
     private void getProfileData() {
         ApiCall mApiCall = new ApiCall(PostStatus.this, this);
-
         dialog.show();
         mApiCall.profileAbout(mLoginContact, mLoginContact);
     }
@@ -505,5 +716,14 @@ public class PostStatus extends AppCompatActivity implements RequestNotifier {
      */
     public static boolean isGooglePhotosUri(Uri uri) {
         return "com.google.android.apps.photos.content".equals(uri.getAuthority());
+    }
+
+    private class MyWebChromeClient extends WebChromeClient {
+        Context context;
+
+        public MyWebChromeClient(Context context) {
+            super();
+            this.context = context;
+        }
     }
 }

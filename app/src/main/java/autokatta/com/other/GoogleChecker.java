@@ -18,6 +18,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import autokatta.com.R;
+import autokatta.com.networkreceiver.ConnectionDetector;
 
 /**
  * Created by ak-001 on 3/11/17.
@@ -43,21 +44,26 @@ public class GoogleChecker {
     private String TAG = "GoogleChecker.java";
     private String appPackageName;
     private Context context;
+    ConnectionDetector mTestConnection;
 
     public GoogleChecker(final Activity activity, final Boolean haveNoButton) {
+        mTestConnection = new ConnectionDetector(activity);
         RequestQueue queue = Volley.newRequestQueue(activity.getBaseContext());
         appPackageName = activity.getBaseContext().getPackageName();
         context = activity;
         String url = PLAY_STORE_ROOT_WEB + appPackageName;
-        control(context, activity, queue, url, haveNoButton);
+        if (mTestConnection.isConnectedToInternet())
+            control(context, activity, queue, url, haveNoButton);
     }
 
     public GoogleChecker(String packageName, final Activity activity, final Boolean haveNoButton) {
+        mTestConnection = new ConnectionDetector(activity);
         RequestQueue queue = Volley.newRequestQueue(activity.getApplicationContext());
         appPackageName = packageName;
         String url = PLAY_STORE_ROOT_WEB + packageName;
         context = activity;
-        control(context, activity, queue, url, haveNoButton);
+        if (mTestConnection.isConnectedToInternet())
+            control(context, activity, queue, url, haveNoButton);
     }
 
     public static void AlertDialog(int message, Context c, boolean haveno, DialogInterface.OnClickListener listener) {

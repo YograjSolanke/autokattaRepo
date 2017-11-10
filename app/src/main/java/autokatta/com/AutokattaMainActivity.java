@@ -57,6 +57,7 @@ import autokatta.com.fragment.StoreNotification;
 import autokatta.com.fragment.WallNotificationFragment;
 import autokatta.com.generic.Base64;
 import autokatta.com.interfaces.RequestNotifier;
+import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.other.CustomToast;
 import autokatta.com.other.DemoDelAct;
 import autokatta.com.other.EnquiryActivity;
@@ -106,6 +107,7 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
     Locale myLocale;
     String mLanguage;
     AlertDialog alertDialog;
+    ConnectionDetector mTestConnection;
 
     private boolean isBackgroundServiceRunning(Class<?> serviceClass) {
         ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
@@ -126,9 +128,13 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
         setContentView(R.layout.activity_autokatta_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        Activity activity = this;
-        new GoogleChecker(activity, false);
+        mTestConnection = new ConnectionDetector(AutokattaMainActivity.this);
+        if (mTestConnection.isConnectedToInternet()) {
+            Activity activity = this;
+            new GoogleChecker(activity, false);
+        } else {
+            CustomToast.customToast(AutokattaMainActivity.this, getString(R.string.no_internet));
+        }
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().setElevation(0);

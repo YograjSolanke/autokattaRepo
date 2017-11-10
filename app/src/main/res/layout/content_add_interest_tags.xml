@@ -26,12 +26,8 @@
                 app:alignItems="flex_start"
                 app:dividerDrawable="@drawable/div"
                 app:flexWrap="wrap"
-
                 app:showDivider="middle" />
-
-
         </LinearLayout>
-
     </ScrollView>
 
     <Button
