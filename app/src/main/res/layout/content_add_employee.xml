@@ -52,7 +52,8 @@
                 android:layout_height="@dimen/text_layout_height"
                 android:layout_marginTop="10dp"
                 android:id="@+id/contactLayout"
-                android:layout_below="@+id/nameLayout">
+                android:layout_below="@+id/nameLayout"
+                android:layout_toStartOf="@+id/contact_list_menu">
 
             <EditText
                 android:layout_width="match_parent"
@@ -65,6 +66,36 @@
                 android:textSize="15sp"
                 android:layout_marginTop="10dp" />
             </android.support.design.widget.TextInputLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/edit_background"
+                android:id="@+id/contact_list_menu"
+                android:layout_marginRight="10dp"
+                android:orientation="vertical"
+                android:layout_alignParentEnd="true"
+                android:layout_below="@+id/nameLayout">
+
+                <ImageView
+                    android:id="@+id/contact_list"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/card_title_height"
+                    android:layout_gravity="center"
+                    android:contentDescription="@string/app_name"
+                    android:src="@drawable/ic_contact_phone_black_24dp"
+                    android:visibility="visible" />
+
+                <TextView
+                    android:id="@+id/txtUser"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/ic_check_black_24dp"
+                    android:text="@string/go_profile"
+                    android:textColor="@color/zxing_custom_possible_result_points"
+                    android:textStyle="bold"
+                    android:visibility="gone" />
+            </LinearLayout>
 
 
             <android.support.design.widget.TextInputLayout
@@ -118,7 +149,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Add"
+        android:text="Send Request"
         android:id="@+id/addEmployee"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />
