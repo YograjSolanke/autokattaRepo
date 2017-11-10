@@ -259,11 +259,18 @@
                 android:layout_below="@+id/mainLayout"
                 android:background="#cccccc" />
 
+            <TextView
+                android:id="@+id/txtInterests"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_below="@+id/v2" />
+
             <LinearLayout
                 android:id="@+id/postActionlayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/v2"
+                android:layout_below="@+id/txtInterests"
                 android:baselineAligned="false"
                 android:orientation="horizontal"
                 android:visibility="visible"

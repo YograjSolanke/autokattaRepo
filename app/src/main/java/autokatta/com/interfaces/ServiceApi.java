@@ -1489,7 +1489,7 @@ public interface ServiceApi {
 
  /*get Inventory Note*/
     @GET("GetReplayInventoryNote")
-    Call<GetReplayInventoryNoteResponse> _autokattaGetInventoryNote(@Query("StoreID") int NewVehicleID,@Query("VehicleID") int VehicleID,@Query("ServiceID") int ServiceID,@Query("ProductID") int ProductID);
+    Call<GetReplayInventoryNoteResponse> _autokattaGetInventoryNote(@Query("NewVehicleID") int NewVehicleID, @Query("VehicleID") int VehicleID, @Query("ServiceID") int ServiceID, @Query("ProductID") int ProductID);
 
 
     /* TransferVehicle*/
@@ -1519,4 +1519,6 @@ public interface ServiceApi {
     @GET
     Call<SuggestionsResponse> getClientList(@Url String anEmptyString);
 
+    @GET("GetGroupDetailsByID")
+    Call<GroupDetailedResponse> _autokattaGetGroupDetails(@Query("GroupID") int groupID);
 }

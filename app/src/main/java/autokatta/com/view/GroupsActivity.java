@@ -32,6 +32,7 @@ import autokatta.com.groups_container.MemberContainer;
 import autokatta.com.groups_container.VehicleContainer;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
+import autokatta.com.response.GroupDetailedResponse;
 import retrofit2.Response;
 
 public class GroupsActivity extends AppCompatActivity implements RequestNotifier {
@@ -152,7 +153,8 @@ public class GroupsActivity extends AppCompatActivity implements RequestNotifier
 
     private void getGroupData(int mGroupID) {
         ApiCall mApiCall = new ApiCall(this, this);
-        //pDialog.show();
+        pDialog.show();
+        mApiCall.getGroupDetails(mGroupID);
     }
 
 /*
@@ -276,7 +278,31 @@ public class GroupsActivity extends AppCompatActivity implements RequestNotifier
 
     @Override
     public void notifySuccess(Response<?> response) {
+        if (response != null) {
+            if (response.isSuccessful()) {
+                if (pDialog.isShowing()) {
+                    pDialog.dismiss();
+                }
+                GroupDetailedResponse mResponse1 = (GroupDetailedResponse) response.body();
+                if (!mResponse1.getSuccess().isEmpty()) {
+                    for (GroupDetailedResponse.Success success : mResponse1.getSuccess()) {
 
+                        success.setId(success.getId());
+                        success.setGroupMember(success.getGroupMember());
+                        success.setTitle(success.getTitle());
+                        success.setPrivacyStatus(success.getPrivacyStatus());
+                        success.setGroupcount(success.getGroupcount());
+                        success.setVehiclecount(success.getVehiclecount());
+                        success.setProductcount(success.getProductcount());
+                        success.setServicecount(success.getServicecount());
+                        groupPrivacy = success.getPrivacyStatus();
+                    }
+
+                    if (groupPrivacy.equalsIgnoreCase("private"))
+                        mShare.setVisibility(View.GONE);
+                }
+            }
+        }
     }
 
     @Override

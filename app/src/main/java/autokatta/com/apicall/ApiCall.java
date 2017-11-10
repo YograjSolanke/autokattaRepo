@@ -9321,8 +9321,8 @@ get ExchangeMela Analytics Data
         }
     }
 
- /*Get Inventory Note*/
-    public void getInventoryNote(int newvehicleid,int productid,int serviceid,int vehicleid) {
+    /*Get Inventory Note*/
+    public void getInventoryNote(int newvehicleid, int productid, int serviceid, int vehicleid) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 Retrofit retrofit = new Retrofit.Builder()
@@ -9332,7 +9332,7 @@ get ExchangeMela Analytics Data
                         .build();
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<GetReplayInventoryNoteResponse> mediaResponseCall = serviceApi._autokattaGetInventoryNote(newvehicleid,vehicleid,serviceid,productid);
+                Call<GetReplayInventoryNoteResponse> mediaResponseCall = serviceApi._autokattaGetInventoryNote(newvehicleid, vehicleid, serviceid, productid);
                 mediaResponseCall.enqueue(new Callback<GetReplayInventoryNoteResponse>() {
                     @Override
                     public void onResponse(Call<GetReplayInventoryNoteResponse> call, Response<GetReplayInventoryNoteResponse> response) {
@@ -9392,8 +9392,8 @@ get ExchangeMela Analytics Data
 
     //Inventory Notes
     public void AddInventoryNote(String UserContact, String keyword, int inventorynoteid,
-                                String Message, int ServiceID, int ProductID,
-                                int NewVehicleID, int VehicleId) {
+                                 String Message, int ServiceID, int ProductID,
+                                 int NewVehicleID, int VehicleId) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
 
@@ -9409,7 +9409,7 @@ get ExchangeMela Analytics Data
                         .build();
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<String> forgetPasswordResponseCall = serviceApi._autokattaAddInventoryNote(inventorynoteid,keyword,UserContact,Message,ServiceID,ProductID,NewVehicleID,VehicleId);
+                Call<String> forgetPasswordResponseCall = serviceApi._autokattaAddInventoryNote(inventorynoteid, keyword, UserContact, Message, ServiceID, ProductID, NewVehicleID, VehicleId);
                 forgetPasswordResponseCall.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
@@ -9496,6 +9496,37 @@ get ExchangeMela Analytics Data
 
                     @Override
                     public void onFailure(Call<String> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+            } else {
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /*Get Inventory Note*/
+    public void getGroupDetails(int GroupID) {
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<GroupDetailedResponse> responseCall = serviceApi._autokattaGetGroupDetails(GroupID);
+                responseCall.enqueue(new Callback<GroupDetailedResponse>() {
+                    @Override
+                    public void onResponse(Call<GroupDetailedResponse> call, Response<GroupDetailedResponse> response) {
+                        mNotifier.notifySuccess(response);
+                    }
+
+                    @Override
+                    public void onFailure(Call<GroupDetailedResponse> call, Throwable t) {
                         mNotifier.notifyError(t);
                     }
                 });

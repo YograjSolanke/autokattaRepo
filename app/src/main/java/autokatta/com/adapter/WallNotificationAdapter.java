@@ -21,6 +21,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.text.Spannable;
+import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.TextPaint;
 import android.text.method.LinkMovementMethod;
@@ -64,10 +65,14 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.generic.Base64;
+import autokatta.com.generic.CalloutLink;
+import autokatta.com.generic.Hashtag;
 import autokatta.com.interfaces.OnLoadMoreListener;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.interfaces.ServiceApi;
@@ -129,30 +134,6 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
         mConnectionDetector = new ConnectionDetector(mActivity);
     }
 
-    /*public WallNotificationAdapter() {
-        final LinearLayoutManager linearLayoutManager = (LinearLayoutManager) WallNotificationFragment.mRecyclerView.getLayoutManager();
-        WallNotificationFragment.mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-
-                totalItemCount = linearLayoutManager.getItemCount();
-                lastVisibleItem = linearLayoutManager.findLastVisibleItemPosition();
-
-                if (!isLoading && totalItemCount <= (lastVisibleItem + visibleThreshold)) {
-                    if (mOnLoadMoreListener != null) {
-                        mOnLoadMoreListener.onLoadMore();
-                    }
-                    isLoading = true;
-                }
-            }
-        });
-    }
-
-    public void setOnLoadMoreListener(OnLoadMoreListener mOnLoadMoreListener) {
-        this.mOnLoadMoreListener = mOnLoadMoreListener;
-    }*/
-
     /*
     Profile Notification Class...
      */
@@ -210,12 +191,6 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
             mProfilePic = (ImageView) storeView.findViewById(R.id.store_pic);
             mStoreImage = (ImageView) storeView.findViewById(R.id.store_image);
 
-            // mStoreAutokattaShare = (ImageButton) storeView.findViewById(R.id.share_autokatta);
-            //mCall = (ImageButton) storeView.findViewById(R.id.call);
-            //mLike = (ImageButton) storeView.findViewById(R.id.like);
-            //mUnlike = (ImageButton) storeView.findViewById(R.id.unlike);
-            //mFollow = (ImageButton) storeView.findViewById(R.id.follow_store);
-            //mUnfollow = (ImageButton) storeView.findViewById(R.id.unfollow_store);
             mStoreLike = (Button) storeView.findViewById(R.id.unlike);
             mStoreUnlike = (Button) storeView.findViewById(R.id.like);
             mStoreFollow = (Button) storeView.findViewById(R.id.follow);
@@ -404,7 +379,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
         VideoView videoView;
         LinearLayout linearImagelayout1, linearImagelayout2, webView;
         WebView webUrl;
-
+        TextView mInterestTextView;
 
         private PostNotifications(View postView) {
             super(postView);
@@ -430,6 +405,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
             linearImagelayout2 = (LinearLayout) postView.findViewById(R.id.linearImagelayout2);
             webView = (LinearLayout) postView.findViewById(R.id.webView);
             webUrl = (WebView) postView.findViewById(R.id.webUrl);
+            mInterestTextView = (TextView) postView.findViewById(R.id.txtInterests);
 
         }
     }
@@ -582,6 +558,10 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
         LinearLayout linearImages;
         VideoView videoView;
         LinearLayout linearImagelayout1, linearImagelayout2;
+        TextView mInterestTextView;
+        WebView webUrl;
+        LinearLayout webView;
+        Button viewClick;
 
         private ShareNotifications(View shareView) {
             super(shareView);
@@ -673,6 +653,10 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
             linearImages = (LinearLayout) shareView.findViewById(R.id.linearImages);
             linearImagelayout1 = (LinearLayout) shareView.findViewById(R.id.linearImagelayout1);
             linearImagelayout2 = (LinearLayout) shareView.findViewById(R.id.linearImagelayout2);
+            webView = (LinearLayout) shareView.findViewById(R.id.webView);
+            webUrl = (WebView) shareView.findViewById(R.id.webUrl);
+            mInterestTextView = (TextView) shareView.findViewById(R.id.txtInterests);
+            viewClick = (Button) shareView.findViewById(R.id.viewClick);
         }
     }
 
@@ -1019,6 +1003,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
 
                                         Log.e("TAG", "img URL: " + imagename);
 
+                                        assert manager != null;
                                         manager.enqueue(request);
 
                                         imageFilePath = "/storage/emulated/0/Download/" + filename;
@@ -1080,105 +1065,6 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                         notificationList.get(mProfileHolder.getAdapterPosition()).setMyFavStatus("yes");
                     }
                 });
-
-                /*mProfileHolder.mShareAutokatta.setOnClickListener(new View.OnClickListener() {
-                    String imageFilePath = "", imagename;
-                    Intent intent = new Intent(Intent.ACTION_SEND);
-
-                    @Override
-                    public void onClick(View v) {
-                        //shareProfileData();
-                        android.support.v7.app.AlertDialog.Builder alert = new android.support.v7.app.AlertDialog.Builder(mActivity);
-                        alert.setTitle("Share");
-                        alert.setMessage("with Autokatta or to other?");
-                        alert.setIconAttribute(android.R.attr.alertDialogIcon);
-
-                        alert.setPositiveButton("Autokatta", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
-                                String allProfileDetails = mProfileHolder.mUserName.getText().toString() + "=" +
-                                        mProfileHolder.mProfileWorkAt.getText().toString() + "=" +
-                                        mProfileHolder.mProfileWebSite.getText().toString() + "=" +
-                                        mProfileHolder.mLocation.getText().toString() + "=" +
-                                        notificationList.get(mProfileHolder.getAdapterPosition()).getSenderPicture() + "=" +
-                                        notificationList.get(mProfileHolder.getAdapterPosition()).getSenderLikeCount() + "=" +
-                                        notificationList.get(mProfileHolder.getAdapterPosition()).getSenderFollowCount();
-
-                                System.out.println("all sender detailssss======Auto " + allProfileDetails);
-
-                                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                                        putString("Share_sharedata", allProfileDetails).apply();
-                                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                                        putString("Share_profile_contact", notificationList.get(mProfileHolder.getAdapterPosition()).getSender()).apply();
-                                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                                        putString("Share_keyword", "profile").apply();
-
-                                Intent i = new Intent(mActivity, ShareWithinAppActivity.class);
-                                mActivity.startActivity(i);
-                                dialog.dismiss();
-                            }
-                        });
-
-                        alert.setNegativeButton("Other", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                if (notificationList.get(mProfileHolder.getAdapterPosition()).getSenderPicture().equalsIgnoreCase("") ||
-                                        notificationList.get(mProfileHolder.getAdapterPosition()).getSenderPicture().equalsIgnoreCase(null) ||
-                                        notificationList.get(mProfileHolder.getAdapterPosition()).getSenderPicture().equalsIgnoreCase("null")) {
-                                    imagename = mActivity.getString(R.string.base_image_url) + "logo48x48.png";
-                                } else {
-                                    imagename = mActivity.getString(R.string.base_image_url) + notificationList.get(mProfileHolder.getAdapterPosition()).getSenderPicture();
-                                }
-                                Log.e("TAG", "img : " + imagename);
-
-                                DownloadManager.Request request = new DownloadManager.Request(
-                                        Uri.parse(imagename));
-                                request.allowScanningByMediaScanner();
-                                String filename = URLUtil.guessFileName(imagename, null, MimeTypeMap.getFileExtensionFromUrl(imagename));
-                                request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, filename);
-                                Log.e("ShareImagePath :", filename);
-                                Log.e("TAG", "img : " + imagename);
-
-                                DownloadManager manager = (DownloadManager) mActivity.getApplication()
-                                        .getSystemService(Context.DOWNLOAD_SERVICE);
-
-                                Log.e("TAG", "img URL: " + imagename);
-
-                                manager.enqueue(request);
-
-                                imageFilePath = "/storage/emulated/0/Download/" + filename;
-                                System.out.println("ImageFilePath:" + imageFilePath);
-
-                                String allProfileDetails = "Username : " + mProfileHolder.mUserName.getText().toString() + "\n" +
-                                        "Profession : " + mProfileHolder.mProfileWorkAt.getText().toString() + "\n" +
-                                        "Website : " + mProfileHolder.mProfileWebSite.getText().toString() + "\n" +
-                                        "Address : " + mProfileHolder.mLocation.getText().toString() *//*+ "\n" +
-                                        notificationList.get(mProfileHolder.getAdapterPosition()).getSenderLikeCount() + "\n"+
-                                        notificationList.get(mProfileHolder.getAdapterPosition()).getSenderFollowCount()*//*;
-
-                                System.out.println("all sender detailssss======Other " + allProfileDetails);
-
-                                intent.setType("text/plain");
-                                intent.putExtra(Intent.EXTRA_TEXT, "Please visit and Follow my profile on Autokatta. Stay connected for Product and Service updates and enquiries"
-                                        + "\n" + "http://autokatta.com/profile/other/" + notificationList.get(mProfileHolder.getAdapterPosition()).getSender()
-                                        + "\n" + "\n" + allProfileDetails);
-                                intent.setType("image/jpeg");
-                                intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(imageFilePath)));
-                                intent.putExtra(Intent.EXTRA_SUBJECT, "Please Find Below Attachments");
-                                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                                mActivity.startActivity(Intent.createChooser(intent, "Autokatta"));
-
-                                dialog.dismiss();
-                            }
-
-                        });
-                        alert.create();
-                        alert.show();
-                    }
-                });*/
-
-
                 break;
 
             case 2:
@@ -1258,10 +1144,6 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
 
                                 @Override
                                 public void updateDrawState(TextPaint ds) {
-                                    /*ds.setUnderlineText(false);
-                                    ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
-                                    ds.setFakeBoldText(true);
-                                    ds.setTextSize((float) 31.0);*/
                                 }
                             }, notificationList.get(position).getSenderName().length() +
                                 notificationList.get(position).getAction().length() +
@@ -1292,10 +1174,6 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
 
                                 @Override
                                 public void updateDrawState(TextPaint ds) {
-                                    /*ds.setUnderlineText(false);
-                                    ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
-                                    ds.setFakeBoldText(true);
-                                    ds.setTextSize((float) 31.0);*/
                                 }
                             }, notificationList.get(position).getSenderName().length() +
                                 notificationList.get(position).getAction().length() +
@@ -1559,6 +1437,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
 
                                         Log.e("TAG", "img URL: " + imagename);
 
+                                        assert manager != null;
                                         manager.enqueue(request);
 
                                         imageFilePath = "/storage/emulated/0/Download/" + filename;
@@ -1633,11 +1512,6 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
 
                     @Override
                     public void updateDrawState(TextPaint ds) {
-                        /*ds.setUnderlineText(false);
-                        ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
-                        ds.setFakeBoldText(true);
-                        ds.setTextSize((float) 31.0);
-                        Log.i("TextSize", "->" + ds.getTextSize());*/
                     }
                 }, 0, notificationList.get(position).getSenderName().length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
@@ -1663,10 +1537,6 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
 
                                 @Override
                                 public void updateDrawState(TextPaint ds) {
-                                    /*ds.setUnderlineText(false);
-                                    ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
-                                    ds.setFakeBoldText(true);
-                                    ds.setTextSize((float) 31.0);*/
                                 }
                             }, notificationList.get(position).getSenderName().length() +
                                 notificationList.get(position).getAction().length() + 2,
@@ -1708,10 +1578,6 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
 
                                 @Override
                                 public void updateDrawState(TextPaint ds) {
-                                    /*ds.setUnderlineText(false);
-                                    ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
-                                    ds.setFakeBoldText(true);
-                                    ds.setTextSize((float) 31.0);*/
                                 }
                             }, notificationList.get(position).getSenderName().length() +
                                 notificationList.get(position).getAction().length() +
@@ -1820,14 +1686,6 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                     //mVehicleHolder.mRelativeLike.setVisibility(View.VISIBLE);
                 }
 
-                /*mVehicleHolder.mActionName.setText(notificationList.get(position).getSenderName()
-                        + " "
-                        + notificationList.get(position).getAction()
-                        + "\n"
-                        + notificationList.get(position).getReceiverName()
-                        + " "
-                        + notificationList.get(position).getUpVehicleTitle() + " " + "Vehicle");*/
-
                 sb4 = new SpannableStringBuilder();
                 sb4.append(notificationList.get(position).getSenderName());
                 sb4.append(" ");
@@ -1856,11 +1714,6 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
 
                     @Override
                     public void updateDrawState(TextPaint ds) {
-                        /*ds.setUnderlineText(false);
-                        ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
-                        ds.setFakeBoldText(true);
-                        ds.setTextSize((float) 31.0);
-                        Log.i("TextSize", "->" + ds.getTextSize());*/
                     }
                 }, 0, notificationList.get(position).getSenderName().length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
@@ -1886,10 +1739,6 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
 
                                 @Override
                                 public void updateDrawState(TextPaint ds) {
-                                    /*ds.setUnderlineText(false);
-                                    ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
-                                    ds.setFakeBoldText(true);
-                                    ds.setTextSize((float) 31.0);*/
                                 }
                             }, notificationList.get(position).getSenderName().length() +
                                 notificationList.get(position).getAction().length() + 2,
@@ -1921,10 +1770,6 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
 
                                 @Override
                                 public void updateDrawState(TextPaint ds) {
-                                    /*ds.setUnderlineText(false);
-                                    ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
-                                    ds.setFakeBoldText(true);
-                                    ds.setTextSize((float) 31.0);*/
                                 }
                             }, notificationList.get(position).getSenderName().length() +
                                 notificationList.get(position).getAction().length() +
@@ -2189,6 +2034,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
 
                                         Log.e("TAG", "img URL: " + imagename);
 
+                                        assert manager != null;
                                         manager.enqueue(request);
 
                                         imageFilePath = "/storage/emulated/0/Download/" + filename;
@@ -2220,110 +2066,6 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                         mPopupMenu.show(); //showing popup menu
                     }
                 });
-                /*mVehicleHolder.mVehicleAutokattaShare.setOnClickListener(new View.OnClickListener() {
-                    String imageFilePath = "", imagename;
-                    Intent intent = new Intent(Intent.ACTION_SEND);
-
-                    @Override
-                    public void onClick(View v) {
-                        //shareProfileData();
-                        android.support.v7.app.AlertDialog.Builder alert = new android.support.v7.app.AlertDialog.Builder(mActivity);
-                        alert.setTitle("Share");
-                        alert.setMessage("with Autokatta or to other?");
-                        alert.setIconAttribute(android.R.attr.alertDialogIcon);
-
-                        alert.setPositiveButton("Autokatta", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
-                                String allVehicleDetails = mVehicleHolder.mVehicleName.getText().toString() + "=" +
-                                        mVehicleHolder.mVehiclePrice.getText().toString() + "=" +
-                                        mVehicleHolder.mVehicleBrand.getText().toString() + "=" +
-                                        mVehicleHolder.mVehicleModel.getText().toString() + "=" +
-                                        mVehicleHolder.mVehicleYearOfMfg.getText().toString() + "=" +
-                                        mVehicleHolder.mVehicleKmsHrs.getText().toString() + "=" +
-                                        mVehicleHolder.mRtoCity.getText().toString() + "=" +
-                                        mVehicleHolder.mVehicleLocation.getText().toString() + "=" +
-                                        mVehicleHolder.mVehicleRegistration.getText().toString() + "=" +
-                                        notificationList.get(mVehicleHolder.getAdapterPosition()).getUpVehicleImage() + "=" +
-                                        notificationList.get(mVehicleHolder.getAdapterPosition()).getUpVehicleLikeCount();
-
-
-                                System.out.println("all vehicle detailssss======Auto " + allVehicleDetails);
-
-                                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                                        putString("Share_sharedata", allVehicleDetails).apply();
-                                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                                        putInt("Share_vehicle_id", notificationList.get(mVehicleHolder.getAdapterPosition()).getUploadVehicleID()).apply();
-                                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                                        putString("Share_keyword", "vehicle").apply();
-
-
-                                Intent i = new Intent(mActivity, ShareWithinAppActivity.class);
-                                mActivity.startActivity(i);
-                                dialog.dismiss();
-                            }
-                        });
-
-                        alert.setNegativeButton("Other", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                if (notificationList.get(mVehicleHolder.getAdapterPosition()).getUpVehicleImage().equalsIgnoreCase("") ||
-                                        notificationList.get(mVehicleHolder.getAdapterPosition()).getUpVehicleImage().equalsIgnoreCase(null) ||
-                                        notificationList.get(mVehicleHolder.getAdapterPosition()).getUpVehicleImage().equalsIgnoreCase("null")) {
-                                    imagename = mActivity.getString(R.string.base_image_url) + "logo48x48.png";
-                                } else {
-                                    imagename = mActivity.getString(R.string.base_image_url) + notificationList.get(mVehicleHolder.getAdapterPosition()).getUpVehicleImage();
-                                }
-                                Log.e("TAG", "img : " + imagename);
-
-                                DownloadManager.Request request = new DownloadManager.Request(
-                                        Uri.parse(imagename));
-                                request.allowScanningByMediaScanner();
-                                String filename = URLUtil.guessFileName(imagename, null, MimeTypeMap.getFileExtensionFromUrl(imagename));
-                                request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, filename);
-                                Log.e("ShareImagePath :", filename);
-                                Log.e("TAG", "img : " + imagename);
-
-                                DownloadManager manager = (DownloadManager) mActivity.getApplication()
-                                        .getSystemService(Context.DOWNLOAD_SERVICE);
-
-                                Log.e("TAG", "img URL: " + imagename);
-
-                                manager.enqueue(request);
-
-                                imageFilePath = "/storage/emulated/0/Download/" + filename;
-                                System.out.println("ImageFilePath:" + imageFilePath);
-
-                                String allVehicleDetails = "Vehicle Title : " + mVehicleHolder.mVehicleName.getText().toString() + "\n" +
-                                        "Vehicle Brand : " + mVehicleHolder.mVehicleBrand.getText().toString() + "\n" +
-                                        "Vehicle Model : " + mVehicleHolder.mVehicleModel.getText().toString() + "\n" +
-                                        "Year Of Mfg : " + mVehicleHolder.mVehicleYearOfMfg.getText().toString() + "\n" +
-                                        "Rto city : " + mVehicleHolder.mRtoCity.getText().toString() + "\n" +
-                                        "Location : " + mVehicleHolder.mVehicleLocation.getText().toString() + "\n" +
-                                        "Registeration No : " + mVehicleHolder.mVehicleRegistration.getText().toString() + "\n" +
-                                        "Likes : " + notificationList.get(mVehicleHolder.getAdapterPosition()).getUpVehicleLikeCount();
-
-                                System.out.println("all vehicle detailssss======Other " + allVehicleDetails);
-
-                                intent.setType("text/plain");
-                                intent.putExtra(Intent.EXTRA_TEXT, "Please visit and Follow my vehicle on Autokatta. Stay connected for Product and Service updates and enquiries"
-                                        + "\n" + "http://autokatta.com/vehicle/main/" + notificationList.get(mVehicleHolder.getAdapterPosition()).getUploadVehicleID() + "/" + mLoginContact
-                                        + "\n" + "\n" + allVehicleDetails);
-                                intent.setType("image/jpeg");
-                                intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(imageFilePath)));
-                                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                                intent.putExtra(Intent.EXTRA_SUBJECT, "Please Find Below Attachments");
-                                mActivity.startActivity(Intent.createChooser(intent, "Autokatta"));
-
-                                dialog.dismiss();
-                            }
-
-                        });
-                        alert.create();
-                        alert.show();
-                    }
-                });*/
 
                 break;
 
@@ -2343,12 +2085,6 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                     // mProductHolder.mProductUnlike.setVisibility(View.VISIBLE);
                     //mProductHolder.mRelativeLike.setVisibility(View.VISIBLE);
                 }
-
-               /* mProductHolder.mProductActionName.setText(notificationList.get(position).getSenderName() + " " +
-                        notificationList.get(position).getAction() + "\n" +
-                        notificationList.get(position).getProductName()
-                        + " product");*/
-
 
                 if (notificationList.get(position).getAction().equalsIgnoreCase("added")) {
                     sb5.append(notificationList.get(position).getSenderName());
@@ -2376,11 +2112,6 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
 
                         @Override
                         public void updateDrawState(TextPaint ds) {
-                            /*ds.setUnderlineText(false);
-                            ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
-                            ds.setFakeBoldText(true);
-                            ds.setTextSize((float) 31.0);
-                            Log.i("TextSize", "->" + ds.getTextSize());*/
                         }
                     }, 0, notificationList.get(position).getSenderName().length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
@@ -2402,10 +2133,6 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
 
                                     @Override
                                     public void updateDrawState(TextPaint ds) {
-                                        /*ds.setUnderlineText(false);
-                                        ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
-                                        ds.setFakeBoldText(true);
-                                        ds.setTextSize((float) 31.0);*/
                                     }
                                 }, notificationList.get(position).getSenderName().length() +
                                     notificationList.get(position).getAction().length() +
@@ -2457,11 +2184,6 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
 
                         @Override
                         public void updateDrawState(TextPaint ds) {
-                            /*ds.setUnderlineText(false);
-                            ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
-                            ds.setFakeBoldText(true);
-                            ds.setTextSize((float) 31.0);
-                            Log.i("TextSize", "->" + ds.getTextSize());*/
                         }
                     }, 0, notificationList.get(position).getSenderName().length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
@@ -2490,10 +2212,6 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
 
                                     @Override
                                     public void updateDrawState(TextPaint ds) {
-                                        /*ds.setUnderlineText(false);
-                                        ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
-                                        ds.setFakeBoldText(true);
-                                        ds.setTextSize((float) 31.0);*/
                                     }
                                 }, notificationList.get(position).getSenderName().length() +
                                     notificationList.get(position).getAction().length() + 2,
@@ -2524,10 +2242,6 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
 
                                     @Override
                                     public void updateDrawState(TextPaint ds) {
-                                        /*ds.setUnderlineText(false);
-                                        ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
-                                        ds.setFakeBoldText(true);
-                                        ds.setTextSize((float) 31.0);*/
                                     }
                                 }, notificationList.get(position).getSenderName().length() + notificationList.get(position).getAction().length() +
                                     notificationList.get(position).getReceiverName().length() + 3,
@@ -2730,6 +2444,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
 
                                         Log.e("TAG", "img URL: " + imagename);
 
+                                        assert manager != null;
                                         manager.enqueue(request);
 
                                         imageFilePath = "/storage/emulated/0/Download/" + filename;
@@ -2763,104 +2478,6 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                     }
                 });
 
-                /*mProductHolder.mProductAutokattaShare.setOnClickListener(new View.OnClickListener() {
-                    String imageFilePath = "", imagename;
-                    Intent intent = new Intent(Intent.ACTION_SEND);
-
-                    @Override
-                    public void onClick(View v) {
-                        //shareProfileData();
-                        android.support.v7.app.AlertDialog.Builder alert = new android.support.v7.app.AlertDialog.Builder(mActivity);
-                        alert.setTitle("Share");
-                        alert.setMessage("with Autokatta or to other?");
-                        alert.setIconAttribute(android.R.attr.alertDialogIcon);
-
-                        alert.setPositiveButton("Autokatta", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
-                                String allProductDetails = mProductHolder.mProductName.getText().toString() + "=" +
-                                        mProductHolder.mProductType.getText().toString() + "=" +
-                                        mProductHolder.mProductRating.getRating() + "=" +
-                                        notificationList.get(mProductHolder.getAdapterPosition()).getProductLikeCount() + "=" +
-                                        notificationList.get(mProductHolder.getAdapterPosition()).getProductImage();
-
-                                System.out.println("all product detailssss======Auto " + allProductDetails);
-
-                                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                                        putString("Share_sharedata", allProductDetails).apply();
-                                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                                        putInt("Share_product_id", notificationList.get(mProductHolder.getAdapterPosition()).getProductID()).apply();
-                                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                                        putString("Share_keyword", "product").apply();
-
-
-                                Intent i = new Intent(mActivity, ShareWithinAppActivity.class);
-                                mActivity.startActivity(i);
-                                dialog.dismiss();
-                            }
-                        });
-
-                        alert.setNegativeButton("Other", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                if (notificationList.get(mProductHolder.getAdapterPosition()).getProductImage().equalsIgnoreCase("") ||
-                                        notificationList.get(mProductHolder.getAdapterPosition()).getProductImage().equalsIgnoreCase(null) ||
-                                        notificationList.get(mProductHolder.getAdapterPosition()).getProductImage().equalsIgnoreCase("null")) {
-                                    imagename = mActivity.getString(R.string.base_image_url) + "logo48x48.png";
-                                } else {
-                                    imagename = mActivity.getString(R.string.base_image_url) + notificationList.get(mProductHolder.getAdapterPosition()).getProductImage();
-                                }
-                                Log.e("TAG", "img : " + imagename);
-
-                                DownloadManager.Request request = new DownloadManager.Request(
-                                        Uri.parse(imagename));
-                                request.allowScanningByMediaScanner();
-                                String filename = URLUtil.guessFileName(imagename, null, MimeTypeMap.getFileExtensionFromUrl(imagename));
-                                request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, filename);
-                                Log.e("ShareImagePath :", filename);
-                                Log.e("TAG", "img : " + imagename);
-
-                                DownloadManager manager = (DownloadManager) mActivity.getApplication()
-                                        .getSystemService(Context.DOWNLOAD_SERVICE);
-
-                                Log.e("TAG", "img URL: " + imagename);
-
-                                manager.enqueue(request);
-
-                                imageFilePath = "/storage/emulated/0/Download/" + filename;
-                                System.out.println("ImageFilePath:" + imageFilePath);
-
-                                String allProductDetails = "Product name : " + mProductHolder.mProductName.getText().toString() + "\n" +
-                                        "Product type : " + mProductHolder.mProductType.getText().toString() + "\n" +
-                                        "Ratings : " + mProductHolder.mProductRating.getRating() + "\n" +
-                                        "Likes : " + notificationList.get(mProductHolder.getAdapterPosition()).getProductLikeCount() *//*+ "\n" +
-                                        notificationList.get(mProfileHolder.getAdapterPosition()).getSenderLikeCount() + "\n"+
-                                        notificationList.get(mProfileHolder.getAdapterPosition()).getSenderFollowCount()*//*;
-
-                                System.out.println("all product detailssss======Other " + allProductDetails);
-
-                                intent.setType("text/plain");
-                                intent.putExtra(Intent.EXTRA_TEXT, "Please visit and Follow my store on Autokatta. Stay connected for Product and Service updates and enquiries"
-                                        + "\n" + "http://autokatta.com/product/" + notificationList.get(mProductHolder.getAdapterPosition()).getProductID()
-                                        //  + "/" + notificationList.get(mProductHolder.getAdapterPosition()).getStoreContact()
-                                        + "\n" + "\n" + allProductDetails);
-
-                                intent.setType("image/jpeg");
-                                intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(imageFilePath)));
-                                intent.putExtra(Intent.EXTRA_SUBJECT, "Please Find Below Attachments");
-                                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                                mActivity.startActivity(Intent.createChooser(intent, "Autokatta"));
-
-                                dialog.dismiss();
-                            }
-
-                        });
-                        alert.create();
-                        alert.show();
-                    }
-                });*/
-
                 break;
 
             case 6:
@@ -2873,11 +2490,6 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                 } else {
                     // mServiceHolder.mRelativeLike.setVisibility(View.VISIBLE);
                 }
-
-                /*mServiceHolder.mServiceActionName.setText(notificationList.get(position).getSenderName() + " " +
-                        notificationList.get(position).getAction() + "\n" +
-                        notificationList.get(position).getServiceName()
-                        + " service");*/
 
                 if (notificationList.get(position).getAction().equalsIgnoreCase("added")) {
                     sb6.append(notificationList.get(position).getSenderName());
@@ -2906,11 +2518,6 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
 
                         @Override
                         public void updateDrawState(TextPaint ds) {
-                            /*ds.setUnderlineText(false);
-                            ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
-                            ds.setFakeBoldText(true);
-                            ds.setTextSize((float) 31.0);
-                            Log.i("TextSize", "->" + ds.getTextSize());*/
                         }
                     }, 0, notificationList.get(position).getSenderName().length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
@@ -2932,10 +2539,6 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
 
                                     @Override
                                     public void updateDrawState(TextPaint ds) {
-                                        /*ds.setUnderlineText(false);
-                                        ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
-                                        ds.setFakeBoldText(true);
-                                        ds.setTextSize((float) 31.0);*/
                                     }
                                 }, notificationList.get(position).getSenderName().length() +
                                     notificationList.get(position).getAction().length() + 2,
@@ -2985,11 +2588,6 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
 
                         @Override
                         public void updateDrawState(TextPaint ds) {
-                           /* ds.setUnderlineText(false);
-                            ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
-                            ds.setFakeBoldText(true);
-                            ds.setTextSize((float) 31.0);
-                            Log.i("TextSize", "->" + ds.getTextSize());*/
                         }
                     }, 0, notificationList.get(position).getSenderName().length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
@@ -3019,10 +2617,6 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
 
                                     @Override
                                     public void updateDrawState(TextPaint ds) {
-                                        /*ds.setUnderlineText(false);
-                                        ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
-                                        ds.setFakeBoldText(true);
-                                        ds.setTextSize((float) 31.0);*/
                                     }
                                 }, notificationList.get(position).getSenderName().length() + notificationList.get(position).getAction().length() + 2,
                             notificationList.get(position).getSenderName().length() +
@@ -3050,10 +2644,6 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
 
                                     @Override
                                     public void updateDrawState(TextPaint ds) {
-                                        /*ds.setUnderlineText(false);
-                                        ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
-                                        ds.setFakeBoldText(true);
-                                        ds.setTextSize((float) 31.0);*/
                                     }
                                 }, notificationList.get(position).getSenderName().length() + notificationList.get(position).getAction().length() +
                                     notificationList.get(position).getReceiverName().length() + 3,
@@ -3257,6 +2847,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
 
                                         Log.e("TAG", "img URL: " + imagename);
 
+                                        assert manager != null;
                                         manager.enqueue(request);
 
                                         imageFilePath = "/storage/emulated/0/Download/" + filename;
@@ -3334,11 +2925,6 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
 
                     @Override
                     public void updateDrawState(TextPaint ds) {
-                        /*ds.setUnderlineText(false);
-                        ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
-                        ds.setFakeBoldText(true);
-                        ds.setTextSize((float) 31.0);
-                        Log.i("TextSize", "->" + ds.getTextSize());*/
                     }
                 }, 0, notificationList.get(position).getSenderName().length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
@@ -3353,20 +2939,9 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                 mPostHolder.mAction.setText(sb7);
                 mPostHolder.mAction.setMovementMethod(LinkMovementMethod.getInstance());
                 mPostHolder.mAction.setHighlightColor(Color.TRANSPARENT);
-
-                /*if (notificationList.get(position).getStatus().startsWith("http://")||notificationList.get(position).getStatus().startsWith("https://")){
-                    mPreview.setVisibility(View.VISIBLE);
-                    mPostHolder.mStatusText.setVisibility(View.GONE);
-                    mPreview.setData(obj.statusld.toString());
-                    Log.i("SetData","->"+obj.statusld.toString());
-                    sid = obj.status_idld.toString();
-                }else{
-                    mPreview.setVisibility(View.GONE);
-                    mPostHolder.mStatusText.setVisibility(View.VISIBLE);
-                    mPostHolder.mStatusText.setText(notificationList.get(position).getStatus());
-                }*/
                 mPostHolder.mActionTime.setText(notificationList.get(position).getDateTime());
-                 /* Sender Profile Pic */
+                 
+                /* Sender Profile Pic */
 
                 if (notificationList.get(position).getSenderPicture() == null ||
                         notificationList.get(position).getSenderPicture().equals("") ||
@@ -3380,13 +2955,6 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                             .into(mPostHolder.mProfile_pic);
                 }
 
-                /*mPostHolder.mCall.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        String otherContact = notificationList.get(mPostHolder.getAdapterPosition()).getSender();
-                        call(otherContact);
-                    }
-                });*/
 
                 /* Like & Unlike Functionality */
 
@@ -3559,11 +3127,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                         MediaController mediacontroller = new MediaController(
                                 mActivity);
                         mediacontroller.setAnchorView(mPostHolder.videoView);
-//                        // Get the URL from String VideoURL
-                        // Uri video = Uri.parse("http://autokatta.acquiscent.com/UploadedFiles/adba403e4bcc8847f9da0aa45a9f5b9c.mp4");
-//                        mImageHolder.videoView.setMediaController(mediacontroller);
-//                        mImageHolder.videoView.setVideoURI(video);
-//                        mImageHolder.videoView.seekTo(100);
+
                         Uri video = Uri.parse(notificationList.get(position).getStatusVideos());
 
                         Bitmap thumb = createVideoThumbnail(mActivity, video);
@@ -3575,15 +3139,6 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                         Log.e("Error", e.getMessage());
                         e.printStackTrace();
                     }
-
-//                    mImageHolder.videoView.requestFocus();
-//                    mImageHolder.videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-//                        // Close the progress bar and play the video
-//                        public void onPrepared(MediaPlayer mp) {
-//                            pDialog.dismiss();
-//                            mImageHolder.videoView.start();
-//                        }
-//                    });
 
                 } else if (keyword.equalsIgnoreCase("Image")) {
                     mPostHolder.linearImages.setVisibility(View.VISIBLE);
@@ -3688,7 +3243,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                 } else if (keyword.equalsIgnoreCase("Status")) {
 
                     /*decode string code (Getting)*/
-                    String decodedString = null;
+                    String decodedString = "";
                     byte[] data = new byte[0];
                     try {
                         data = Base64.decode(notificationList.get(position).getStatus());
@@ -3808,6 +3363,35 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                     }
                 });
 
+                String mInterests = notificationList.get(position).getStatusInterest();
+                String[] interestArray = mActivity.getResources().getStringArray(R.array.demo_array);
+
+                if (!mInterests.equals("")) {
+                    String[] commaSplit = new String[0];
+                    commaSplit = mInterests.split(",");
+                    String hashTags = "";
+
+                    for (String aCommaSplit : commaSplit) {
+                        if (hashTags.equals(""))
+                            hashTags = "#" + interestArray[Integer.parseInt(aCommaSplit)];
+                        else
+                            hashTags = hashTags + " #" + interestArray[Integer.parseInt(aCommaSplit)];
+                    }
+
+                    ArrayList<int[]> hashtagSpans1 = getSpans(hashTags, '#');
+                    ArrayList<int[]> calloutSpans1 = getSpans(hashTags, '@');
+
+                    SpannableString commentsContent1 =
+                            new SpannableString(hashTags);
+
+                    setSpanComment(commentsContent1, hashtagSpans1);
+                    setSpanUname(commentsContent1, calloutSpans1);
+
+                    mPostHolder.mInterestTextView.setMovementMethod(LinkMovementMethod.getInstance());
+                    mPostHolder.mInterestTextView.setText(commentsContent1);
+                } else {
+                    mPostHolder.mInterestTextView.setVisibility(View.GONE);
+                }
                 break;
 
             case 8:
@@ -3847,11 +3431,6 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
 
                     @Override
                     public void updateDrawState(TextPaint ds) {
-                       /* ds.setUnderlineText(false);
-                        ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
-                        ds.setFakeBoldText(true);
-                        ds.setTextSize((float) 31.0);
-                        Log.i("TextSize", "->" + ds.getTextSize());*/
                     }
                 }, 0, notificationList.get(position).getSenderName().length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
@@ -4027,71 +3606,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                                 return false;
                             }
                         });
-                        mPopupMenu.show(); //showing popup menu
-                        /*android.support.v7.app.AlertDialog.Builder alert = new android.support.v7.app.AlertDialog.Builder(mActivity);
-                        alert.setTitle("Share");
-                        alert.setMessage("with Autokatta or to other?");
-                        alert.setIconAttribute(android.R.attr.alertDialogIcon);
-
-                        alert.setPositiveButton("Autokatta", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
-                                String allSearchDetails = mSearchHolder.mSearchCategory.getText().toString() + "=" +
-                                        mSearchHolder.mSearchBrand.getText().toString() + "=" +
-                                        mSearchHolder.mSearchModel.getText().toString() + "=" +
-                                        mSearchHolder.mSearchPrice.getText().toString() + "=" +
-                                        mSearchHolder.mSearchYear.getText().toString() + "=" +
-                                        mSearchHolder.mSearchDate.getText().toString() + "=" +
-                                        mSearchHolder.mSearchLeads.getText().toString();
-
-
-                                System.out.println("all search detailssss======Auto " + allSearchDetails);
-
-                                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                                        putString("Share_sharedata", allSearchDetails).apply();
-                                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                                        putInt("Share_search_id", notificationList.get(mSearchHolder.getAdapterPosition()).getSearchId()).apply();
-                                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                                        putString("Share_keyword", "mysearch").apply();
-
-
-                                Intent i = new Intent(mActivity, ShareWithinAppActivity.class);
-                                mActivity.startActivity(i);
-                                dialog.dismiss();
-                            }
-                        });
-
-                        alert.setNegativeButton("Other", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
-
-                                String allSearchDetails = "Search Category : " + mSearchHolder.mSearchCategory.getText().toString() + "\n" +
-                                        "Search Brand : " + mSearchHolder.mSearchBrand.getText().toString() + "\n" +
-                                        "Search Model : " + mSearchHolder.mSearchModel.getText().toString() + "\n" +
-                                        "Year Of Mfg : " + mSearchHolder.mSearchYear.getText().toString() + "\n" +
-                                        "Price : " + mSearchHolder.mSearchPrice.getText().toString() + "\n" +
-                                        "Leads : " + mSearchHolder.mSearchLeads.getText().toString() + "\n" +
-                                        "Date : " + mSearchHolder.mSearchDate.getText().toString();
-
-                                System.out.println("all search detailssss======Other " + allSearchDetails);
-
-                                intent.setType("text/plain");
-                                *//*intent.putExtra(Intent.EXTRA_TEXT, "Please visit and Follow my vehicle on Autokatta. Stay connected for Product and Service updates and enquiries"
-                                        + "\n" + "http://autokatta.com/vehicle/main/" + notificationList.get(mSearchHolder.getAdapterPosition()).getSearchId() + "/" + mLoginContact
-                                        + "\n" + "\n" + allSearchDetails);*//*
-                                intent.putExtra(Intent.EXTRA_TEXT, allSearchDetails);
-                                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                                intent.putExtra(Intent.EXTRA_SUBJECT, "Search list from Autokatta User");
-                                mActivity.startActivity(Intent.createChooser(intent, "Autokatta"));
-
-                                dialog.dismiss();
-                            }
-
-                        });
-                        alert.create();
-                        alert.show();*/
+                        mPopupMenu.show();
                     }
                 });
 
@@ -4331,99 +3846,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                                 return false;
                             }
                         });
-                        mPopupMenu.show(); //showing popup menu
-                        /*android.support.v7.app.AlertDialog.Builder alert = new android.support.v7.app.AlertDialog.Builder(mActivity);
-                        alert.setTitle("Share");
-                        alert.setMessage("with Autokatta or to other?");
-                        alert.setIconAttribute(android.R.attr.alertDialogIcon);
-
-                        alert.setPositiveButton("Autokatta", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
-                                String allVehicleDetails = mActiveHolder.mAuctionTitle.getText().toString() + "=" +
-                                        mActiveHolder.mAuctionNoOfVehicles.getText().toString() + "=" +
-                                        mActiveHolder.mAuctionEndDate.getText().toString() + "=" +
-                                        mActiveHolder.mAuctionEndTime.getText().toString() + "=" +
-                                        mActiveHolder.mAuctionType.getText().toString() + "=" +
-                                        mActiveHolder.mAuctionGoingCount.getText().toString() + "=" +
-                                        mActiveHolder.mAuctionIgnoreCount.getText().toString() + "=" +
-                                        shareKey;
-
-
-                                System.out.println("all vehicle detailssss======Auto " + allVehicleDetails);
-
-                                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                                        putString("Share_sharedata", allVehicleDetails).apply();
-                                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                                        putInt("Share_auction_id", notificationList.get(mActiveHolder.getAdapterPosition()).getAuctionID()).apply();
-                                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                                        putString("Share_keyword", "auction").apply();
-
-
-                                Intent i = new Intent(mActivity, ShareWithinAppActivity.class);
-                                mActivity.startActivity(i);
-                                dialog.dismiss();
-                            }
-                        });
-
-                        alert.setNegativeButton("Other", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-//                                if (notificationList.get(mUpVehicleHolder.getAdapterPosition()).getUpVehicleImage().equalsIgnoreCase("") ||
-//                                        notificationList.get(mUpVehicleHolder.getAdapterPosition()).getUpVehicleImage().equalsIgnoreCase(null) ||
-//                                        notificationList.get(mUpVehicleHolder.getAdapterPosition()).getUpVehicleImage().equalsIgnoreCase("null")) {
-//                                    imagename = mActivity.getString(R.string.base_image_url) + "logo48x48.png";
-//                                } else {
-//                                    imagename = mActivity.getString(R.string.base_image_url) + notificationList.get(mUpVehicleHolder.getAdapterPosition()).getUpVehicleImage();
-//                                }
-//                                Log.e("TAG", "img : " + imagename);
-//
-//                                DownloadManager.Request request = new DownloadManager.Request(
-//                                        Uri.parse(imagename));
-//                                request.allowScanningByMediaScanner();
-//                                String filename = URLUtil.guessFileName(imagename, null, MimeTypeMap.getFileExtensionFromUrl(imagename));
-//                                request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, filename);
-//                                Log.e("ShareImagePath :", filename);
-//                                Log.e("TAG", "img : " + imagename);
-//
-//                                DownloadManager manager = (DownloadManager) mActivity.getApplication()
-//                                        .getSystemService(Context.DOWNLOAD_SERVICE);
-//
-//                                Log.e("TAG", "img URL: " + imagename);
-//
-//                                manager.enqueue(request);
-//
-//                                imageFilePath = "/storage/emulated/0/Download/" + filename;
-//                                System.out.println("ImageFilePath:" + imageFilePath);
-
-                                String allVehicleDetails = "Auction Title : " + mActiveHolder.mAuctionTitle.getText().toString() + "\n" +
-                                        "No.of Vehicles : " + mActiveHolder.mAuctionNoOfVehicles.getText().toString() + "\n" +
-                                        "Auction End Date : " + mActiveHolder.mAuctionEndDate.getText().toString() + "\n" +
-                                        "Auction End Time : " + mActiveHolder.mAuctionEndTime.getText().toString() + "\n" +
-                                        "Auction Type : " + mActiveHolder.mAuctionType.getText().toString() + "\n" +
-                                        "Auction Going Count : " + mActiveHolder.mAuctionGoingCount.getText().toString() + "\n" +
-                                        "Auction Ignore Count : " + mActiveHolder.mAuctionIgnoreCount.getText().toString();
-
-
-                                System.out.println("all vehicle detailssss======Other " + allVehicleDetails);
-
-                                intent.setType("text/plain");
-                                intent.putExtra(Intent.EXTRA_TEXT, "Please visit and Follow my vehicle on Autokatta. Stay connected for Product and Service updates and enquiries"
-                                        + "\n" + "http://autokatta.com/vehicle/main/" + notificationList.get(mActiveHolder.getAdapterPosition()).getActionID() + "/" + mLoginContact
-                                        + "\n" + "\n" + allVehicleDetails);
-//                                intent.setType("image/jpeg");
-//                                intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(imageFilePath)));
-                                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                                intent.putExtra(Intent.EXTRA_SUBJECT, "Please Find Below Attachments");
-                                mActivity.startActivity(Intent.createChooser(intent, "Autokatta"));
-
-                                dialog.dismiss();
-                            }
-
-                        });
-                        alert.create();
-                        alert.show();*/
+                        mPopupMenu.show();
                     }
                 });
 
@@ -4448,14 +3871,6 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                     //mUpVehicleHolder.mRelativeLike.setVisibility(View.VISIBLE);
                 }
 
-                /*mUpVehicleHolder.mActionName.setText(notificationList.get(position).getSenderName() + " "
-                        + notificationList.get(position).getAction() + " "
-                        + "\n'" + notificationList.get(position).getUpVehicleTitle() + "'"
-                        + " Vehicle In"
-                        + "'" + notificationList.get(position).getGroupName() + "'"
-                        + " Group");*/
-
-                //sb10 = new SpannableStringBuilder();
                 sb10.append(notificationList.get(position).getSenderName());
                 sb10.append(" ");
                 sb10.append(notificationList.get(position).getAction());
@@ -4483,11 +3898,6 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
 
                     @Override
                     public void updateDrawState(TextPaint ds) {
-                        /*ds.setUnderlineText(false);
-                        ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
-                        ds.setFakeBoldText(true);
-                        ds.setTextSize((float) 31.0);
-                        Log.i("TextSize", "->" + ds.getTextSize());*/
                     }
                 }, 0, notificationList.get(position).getSenderName().length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
@@ -4510,10 +3920,6 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
 
                                  @Override
                                  public void updateDrawState(TextPaint ds) {
-                                     /*ds.setUnderlineText(false);
-                                     ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
-                                     ds.setFakeBoldText(true);
-                                     ds.setTextSize((float) 31.0);*/
                                  }
                              }, notificationList.get(position).getSenderName().length() +
                                 notificationList.get(position).getAction().length() + 2,
@@ -4557,10 +3963,6 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
 
                                  @Override
                                  public void updateDrawState(TextPaint ds) {
-                                     /*ds.setUnderlineText(false);
-                                     ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
-                                     ds.setFakeBoldText(true);
-                                     ds.setTextSize((float) 31.0);*/
                                  }
                              }, notificationList.get(position).getSenderName().length() +
                                 notificationList.get(position).getAction().length() +
@@ -4827,6 +4229,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
 
                                         Log.e("TAG", "img URL: " + imagename);
 
+                                        assert manager != null;
                                         manager.enqueue(request);
 
                                         imageFilePath = "/storage/emulated/0/Download/" + filename;
@@ -4855,103 +4258,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                                 return false;
                             }
                         });
-                        mPopupMenu.show(); //showing popup menu
-
-                        /*android.support.v7.app.AlertDialog.Builder alert = new android.support.v7.app.AlertDialog.Builder(mActivity);
-                        alert.setTitle("Share");
-                        alert.setMessage("with Autokatta or to other?");
-                        alert.setIconAttribute(android.R.attr.alertDialogIcon);
-
-                        alert.setPositiveButton("Autokatta", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
-                                String allVehicleDetails = mUpVehicleHolder.mVehicleName.getText().toString() + "=" +
-                                        mUpVehicleHolder.mVehiclePrice.getText().toString() + "=" +
-                                        mUpVehicleHolder.mVehicleBrand.getText().toString() + "=" +
-                                        mUpVehicleHolder.mVehicleModel.getText().toString() + "=" +
-                                        mUpVehicleHolder.mVehicleYearOfMfg.getText().toString() + "=" +
-                                        mUpVehicleHolder.mVehicleKmsHrs.getText().toString() + "=" +
-                                        mUpVehicleHolder.mRtoCity.getText().toString() + "=" +
-                                        mUpVehicleHolder.mVehicleLocation.getText().toString() + "=" +
-                                        mUpVehicleHolder.mVehicleRegistration.getText().toString() + "=" +
-                                        notificationList.get(mUpVehicleHolder.getAdapterPosition()).getUpVehicleImage() + "=" +
-                                        notificationList.get(mUpVehicleHolder.getAdapterPosition()).getUpVehicleLikeCount();
-
-
-                                System.out.println("all vehicle detailssss======Auto " + allVehicleDetails);
-
-                                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                                        putString("Share_sharedata", allVehicleDetails).apply();
-                                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                                        putInt("Share_vehicle_id", notificationList.get(mUpVehicleHolder.getAdapterPosition()).getUploadVehicleID()).apply();
-                                mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
-                                        putString("Share_keyword", "vehicle").apply();
-
-
-                                Intent i = new Intent(mActivity, ShareWithinAppActivity.class);
-                                mActivity.startActivity(i);
-                                dialog.dismiss();
-                            }
-                        });
-
-                        alert.setNegativeButton("Other", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                if (notificationList.get(mUpVehicleHolder.getAdapterPosition()).getUpVehicleImage().equalsIgnoreCase("") ||
-                                        notificationList.get(mUpVehicleHolder.getAdapterPosition()).getUpVehicleImage().equalsIgnoreCase(null) ||
-                                        notificationList.get(mUpVehicleHolder.getAdapterPosition()).getUpVehicleImage().equalsIgnoreCase("null")) {
-                                    imagename = mActivity.getString(R.string.base_image_url) + "logo48x48.png";
-                                } else {
-                                    imagename = mActivity.getString(R.string.base_image_url) + notificationList.get(mUpVehicleHolder.getAdapterPosition()).getUpVehicleImage();
-                                }
-                                Log.e("TAG", "img : " + imagename);
-
-                                DownloadManager.Request request = new DownloadManager.Request(
-                                        Uri.parse(imagename));
-                                request.allowScanningByMediaScanner();
-                                String filename = URLUtil.guessFileName(imagename, null, MimeTypeMap.getFileExtensionFromUrl(imagename));
-                                request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, filename);
-                                Log.e("ShareImagePath :", filename);
-                                Log.e("TAG", "img : " + imagename);
-
-                                DownloadManager manager = (DownloadManager) mActivity.getApplication()
-                                        .getSystemService(Context.DOWNLOAD_SERVICE);
-
-                                Log.e("TAG", "img URL: " + imagename);
-
-                                manager.enqueue(request);
-
-                                imageFilePath = "/storage/emulated/0/Download/" + filename;
-                                System.out.println("ImageFilePath:" + imageFilePath);
-
-                                String allVehicleDetails = "Vehicle Title : " + mUpVehicleHolder.mVehicleName.getText().toString() + "\n" +
-                                        "Vehicle Brand : " + mUpVehicleHolder.mVehicleBrand.getText().toString() + "\n" +
-                                        "Vehicle Model : " + mUpVehicleHolder.mVehicleModel.getText().toString() + "\n" +
-                                        "Year Of Mfg : " + mUpVehicleHolder.mVehicleYearOfMfg.getText().toString() + "\n" +
-                                        "Rto city : " + mUpVehicleHolder.mRtoCity.getText().toString() + "\n" +
-                                        "Location : " + mUpVehicleHolder.mVehicleLocation.getText().toString() + "\n" +
-                                        "Registeration No : " + mUpVehicleHolder.mVehicleRegistration.getText().toString() + "\n" +
-                                        "Likes : " + notificationList.get(mUpVehicleHolder.getAdapterPosition()).getUpVehicleLikeCount();
-
-                                System.out.println("all vehicle detailssss======Other " + allVehicleDetails);
-
-                                intent.setType("text/plain");
-                                intent.putExtra(Intent.EXTRA_TEXT, "Please visit and Follow my vehicle on Autokatta. Stay connected for Product and Service updates and enquiries"
-                                        + "\n" + "http://autokatta.com/vehicle/main/" + notificationList.get(mUpVehicleHolder.getAdapterPosition()).getUploadVehicleID() + "/" + mLoginContact
-                                        + "\n" + "\n" + allVehicleDetails);
-                                intent.setType("image/jpeg");
-                                intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(imageFilePath)));
-                                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                                intent.putExtra(Intent.EXTRA_SUBJECT, "Please Find Below Attachments");
-                                mActivity.startActivity(Intent.createChooser(intent, "Autokatta"));
-
-                                dialog.dismiss();
-                            }
-
-                        });
-                        alert.create();
-                        alert.show();*/
+                        mPopupMenu.show();
                     }
                 });
                 break;
@@ -5002,11 +4309,6 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
 
                                          @Override
                                          public void updateDrawState(TextPaint ds) {
-                                    /*ds.setUnderlineText(false);
-                                    ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
-                                    ds.setFakeBoldText(true);
-                                    ds.setTextSize((float) 31.0);
-                                    Log.i("TextSize", "->" + ds.getTextSize());*/
                                          }
                                      }, 0, notificationList.get(position).getSenderName().length(),
                                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -5034,10 +4336,6 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
 
                                          @Override
                                          public void updateDrawState(TextPaint ds) {
-                                    /*ds.setUnderlineText(false);
-                                    ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
-                                    ds.setFakeBoldText(true);
-                                    ds.setTextSize((float) 31.0);*/
                                          }
                                      }, notificationList.get(position).getSenderName().length() +
                                         notificationList.get(position).getAction().length() +
@@ -5087,11 +4385,6 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                             //mStoreHolder.mRelativeLike.setVisibility(View.VISIBLE);
                         }
 
-                /*mStoreHolder.mStoreActionName.setText(notificationList.get(position).getSenderName() + " "
-                        + notificationList.get(position).getAction() + "\n"
-                        + notificationList.get(position).getReceiverName() + " "
-                        + notificationList.get(position).getStoreName() + " " + "Store");*/
-
                         sb22 = new SpannableStringBuilder();
                         sb22.append(notificationList.get(position).getSenderName());
                         sb22.append(" ");
@@ -5120,11 +4413,6 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
 
                             @Override
                             public void updateDrawState(TextPaint ds) {
-                       /* ds.setUnderlineText(false);
-                        ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
-                        ds.setFakeBoldText(true);
-                        ds.setTextSize((float) 31.0);
-                        Log.i("TextSize", "->" + ds.getTextSize());*/
                             }
                         }, 0, notificationList.get(position).getSenderName().length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
@@ -5149,10 +4437,6 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
 
                                          @Override
                                          public void updateDrawState(TextPaint ds) {
-                                    /*ds.setUnderlineText(false);
-                                    ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
-                                    ds.setFakeBoldText(true);
-                                    ds.setTextSize((float) 31.0);*/
                                          }
                                      }, notificationList.get(position).getSenderName().length() +
                                         notificationList.get(position).getAction().length() +
@@ -5183,10 +4467,6 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
 
                                          @Override
                                          public void updateDrawState(TextPaint ds) {
-                                    /*ds.setUnderlineText(false);
-                                    ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
-                                    ds.setFakeBoldText(true);
-                                    ds.setTextSize((float) 31.0);*/
                                          }
                                      }, notificationList.get(position).getSenderName().length() +
                                         notificationList.get(position).getAction().length() +
@@ -5247,13 +4527,6 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                             //mVehicleHolder.mRelativeLike.setVisibility(View.VISIBLE);
                         }
 
-                /*mVehicleHolder.mActionName.setText(notificationList.get(position).getSenderName()
-                        + " "
-                        + notificationList.get(position).getAction()
-                        + "\n"
-                        + notificationList.get(position).getReceiverName()
-                        + " "
-                        + notificationList.get(position).getUpVehicleTitle() + " " + "Vehicle");*/
 
                         sb44 = new SpannableStringBuilder();
                         sb44.append(notificationList.get(position).getSenderName());
@@ -5283,11 +4556,6 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
 
                             @Override
                             public void updateDrawState(TextPaint ds) {
-                        /*ds.setUnderlineText(false);
-                        ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
-                        ds.setFakeBoldText(true);
-                        ds.setTextSize((float) 31.0);
-                        Log.i("TextSize", "->" + ds.getTextSize());*/
                             }
                         }, 0, notificationList.get(position).getSenderName().length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
@@ -5313,10 +4581,6 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
 
                                          @Override
                                          public void updateDrawState(TextPaint ds) {
-                                    /*ds.setUnderlineText(false);
-                                    ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
-                                    ds.setFakeBoldText(true);
-                                    ds.setTextSize((float) 31.0);*/
                                          }
                                      }, notificationList.get(position).getSenderName().length() +
                                         notificationList.get(position).getAction().length() + 2,
@@ -5348,10 +4612,6 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
 
                                          @Override
                                          public void updateDrawState(TextPaint ds) {
-                                    /*ds.setUnderlineText(false);
-                                    ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
-                                    ds.setFakeBoldText(true);
-                                    ds.setTextSize((float) 31.0);*/
                                          }
                                      }, notificationList.get(position).getSenderName().length() +
                                         notificationList.get(position).getAction().length() +
@@ -5418,12 +4678,6 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                             //mProductHolder.mRelativeLike.setVisibility(View.VISIBLE);
                         }
 
-               /* mProductHolder.mProductActionName.setText(notificationList.get(position).getSenderName() + " " +
-                        notificationList.get(position).getAction() + "\n" +
-                        notificationList.get(position).getProductName()
-                        + " product");*/
-
-
                         if (notificationList.get(position).getAction().equalsIgnoreCase("added")) {
                             sb55.append(notificationList.get(position).getSenderName());
                             sb55.append(" ");
@@ -5450,11 +4704,6 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
 
                                 @Override
                                 public void updateDrawState(TextPaint ds) {
-                            /*ds.setUnderlineText(false);
-                            ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
-                            ds.setFakeBoldText(true);
-                            ds.setTextSize((float) 31.0);
-                            Log.i("TextSize", "->" + ds.getTextSize());*/
                                 }
                             }, 0, notificationList.get(position).getSenderName().length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
@@ -5476,10 +4725,6 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
 
                                              @Override
                                              public void updateDrawState(TextPaint ds) {
-                                        /*ds.setUnderlineText(false);
-                                        ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
-                                        ds.setFakeBoldText(true);
-                                        ds.setTextSize((float) 31.0);*/
                                              }
                                          }, notificationList.get(position).getSenderName().length() +
                                             notificationList.get(position).getAction().length() +
@@ -5531,11 +4776,6 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
 
                                 @Override
                                 public void updateDrawState(TextPaint ds) {
-                            /*ds.setUnderlineText(false);
-                            ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
-                            ds.setFakeBoldText(true);
-                            ds.setTextSize((float) 31.0);
-                            Log.i("TextSize", "->" + ds.getTextSize());*/
                                 }
                             }, 0, notificationList.get(position).getSenderName().length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
@@ -5564,10 +4804,6 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
 
                                              @Override
                                              public void updateDrawState(TextPaint ds) {
-                                        /*ds.setUnderlineText(false);
-                                        ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
-                                        ds.setFakeBoldText(true);
-                                        ds.setTextSize((float) 31.0);*/
                                              }
                                          }, notificationList.get(position).getSenderName().length() +
                                             notificationList.get(position).getAction().length() + 2,
@@ -5598,10 +4834,6 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
 
                                              @Override
                                              public void updateDrawState(TextPaint ds) {
-                                        /*ds.setUnderlineText(false);
-                                        ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
-                                        ds.setFakeBoldText(true);
-                                        ds.setTextSize((float) 31.0);*/
                                              }
                                          }, notificationList.get(position).getSenderName().length() + notificationList.get(position).getAction().length() +
                                             notificationList.get(position).getReceiverName().length() + 3,
@@ -5656,11 +4888,6 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                             // mServiceHolder.mRelativeLike.setVisibility(View.VISIBLE);
                         }
 
-                /*mServiceHolder.mServiceActionName.setText(notificationList.get(position).getSenderName() + " " +
-                        notificationList.get(position).getAction() + "\n" +
-                        notificationList.get(position).getServiceName()
-                        + " service");*/
-
                         if (notificationList.get(position).getAction().equalsIgnoreCase("added")) {
                             sb66.append(notificationList.get(position).getSenderName());
                             sb66.append(" ");
@@ -5688,11 +4915,6 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
 
                                 @Override
                                 public void updateDrawState(TextPaint ds) {
-                            /*ds.setUnderlineText(false);
-                            ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
-                            ds.setFakeBoldText(true);
-                            ds.setTextSize((float) 31.0);
-                            Log.i("TextSize", "->" + ds.getTextSize());*/
                                 }
                             }, 0, notificationList.get(position).getSenderName().length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
@@ -5714,10 +4936,6 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
 
                                              @Override
                                              public void updateDrawState(TextPaint ds) {
-                                        /*ds.setUnderlineText(false);
-                                        ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
-                                        ds.setFakeBoldText(true);
-                                        ds.setTextSize((float) 31.0);*/
                                              }
                                          }, notificationList.get(position).getSenderName().length() +
                                             notificationList.get(position).getAction().length() + 2,
@@ -5767,11 +4985,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
 
                                 @Override
                                 public void updateDrawState(TextPaint ds) {
-                           /* ds.setUnderlineText(false);
-                            ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
-                            ds.setFakeBoldText(true);
-                            ds.setTextSize((float) 31.0);
-                            Log.i("TextSize", "->" + ds.getTextSize());*/
+
                                 }
                             }, 0, notificationList.get(position).getSenderName().length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
@@ -5801,10 +5015,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
 
                                              @Override
                                              public void updateDrawState(TextPaint ds) {
-                                        /*ds.setUnderlineText(false);
-                                        ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
-                                        ds.setFakeBoldText(true);
-                                        ds.setTextSize((float) 31.0);*/
+
                                              }
                                          }, notificationList.get(position).getSenderName().length() + notificationList.get(position).getAction().length() + 2,
                                     notificationList.get(position).getSenderName().length() +
@@ -5832,10 +5043,6 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
 
                                              @Override
                                              public void updateDrawState(TextPaint ds) {
-                                        /*ds.setUnderlineText(false);
-                                        ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
-                                        ds.setFakeBoldText(true);
-                                        ds.setTextSize((float) 31.0);*/
                                              }
                                          }, notificationList.get(position).getSenderName().length() + notificationList.get(position).getAction().length() +
                                             notificationList.get(position).getReceiverName().length() + 3,
@@ -5889,9 +5096,6 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                         } else {
                             //mPostHolder.mRelativeLike.setVisibility(View.VISIBLE);
                         }
-//
-//                mPostHolder.mAction.setText(notificationList.get(position).getSenderName() + " "
-//                        + notificationList.get(position).getAction() + " " + "status");
 
                         sb77.append(notificationList.get(position).getSenderName());
                         sb77.append(" ");
@@ -5916,11 +5120,6 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
 
                             @Override
                             public void updateDrawState(TextPaint ds) {
-                        /*ds.setUnderlineText(false);
-                        ds.setColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryDark));
-                        ds.setFakeBoldText(true);
-                        ds.setTextSize((float) 31.0);
-                        Log.i("TextSize", "->" + ds.getTextSize());*/
                             }
                         }, 0, notificationList.get(position).getSenderName().length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
@@ -5972,11 +5171,6 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                                 MediaController mediacontroller = new MediaController(
                                         mActivity);
                                 mediacontroller.setAnchorView(mShareolder.videoView);
-//                        // Get the URL from String VideoURL
-                                // Uri video = Uri.parse("http://autokatta.acquiscent.com/UploadedFiles/adba403e4bcc8847f9da0aa45a9f5b9c.mp4");
-//                        mImageHolder.videoView.setMediaController(mediacontroller);
-//                        mImageHolder.videoView.setVideoURI(video);
-//                        mImageHolder.videoView.seekTo(100);
                                 Uri video = Uri.parse(notificationList.get(position).getStatusVideos());
 
                                 Bitmap thumb = createVideoThumbnail(mActivity, video);
@@ -5988,15 +5182,6 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                                 Log.e("Error", e.getMessage());
                                 e.printStackTrace();
                             }
-
-//                    mImageHolder.videoView.requestFocus();
-//                    mImageHolder.videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-//                        // Close the progress bar and play the video
-//                        public void onPrepared(MediaPlayer mp) {
-//                            pDialog.dismiss();
-//                            mImageHolder.videoView.start();
-//                        }
-//                    });
 
                         } else if (postKeyword.equalsIgnoreCase("Image")) {
                             mShareolder.linearImages.setVisibility(View.VISIBLE);
@@ -6101,7 +5286,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                         } else if (postKeyword.equalsIgnoreCase("Status")) {
 
                     /*decode string code (Getting)*/
-                            String decodedString = null;
+                            String decodedString = "";
                             byte[] data = new byte[0];
                             try {
                                 data = Base64.decode(notificationList.get(position).getStatus());
@@ -6113,8 +5298,89 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                             mShareolder.linearImages.setVisibility(View.GONE);
                             mShareolder.videoView.setVisibility(View.GONE);
                             mShareolder.mStatusText.setVisibility(View.VISIBLE);
-
                             mShareolder.mStatusText.setText(decodedString);
+
+                            if (decodedString.startsWith("www")) {
+                                final String newStr = "http://" + decodedString;
+                                mShareolder.webView.setVisibility(View.VISIBLE);
+                                mShareolder.mStatusText.setVisibility(View.GONE);
+                                mShareolder.mStatusText.setText(newStr);
+                                mShareolder.webUrl.loadUrl(newStr);
+                                mShareolder.viewClick.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        Intent intent = new Intent(mActivity, BrowserView.class);
+                                        intent.putExtra("url", newStr);
+                                        mActivity.startActivity(intent);
+                                    }
+                                });
+                        /*
+                        Web View
+                         */
+
+                                mShareolder.webUrl.setWebChromeClient(new MyWebChromeClient(mActivity));
+                                mShareolder.webUrl.setWebViewClient(new WebViewClient() {
+                                    @Override
+                                    public void onPageStarted(WebView view, String url, Bitmap favicon) {
+                                        super.onPageStarted(view, url, favicon);
+                                        //invalidateOptionsMenu();
+                                    }
+
+                                    @Override
+                                    public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                                        mShareolder.webUrl.loadUrl(url);
+                                        return true;
+                                    }
+
+                                    @Override
+                                    public void onPageFinished(WebView view, String url) {
+                                        super.onPageFinished(view, url);
+                                        //invalidateOptionsMenu();
+                                    }
+
+                                    @Override
+                                    public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
+                                        super.onReceivedError(view, request, error);
+                                        //invalidateOptionsMenu();
+                                    }
+                                });
+                                mShareolder.webUrl.clearCache(true);
+                                mShareolder.webUrl.clearHistory();
+                                mShareolder.webUrl.getSettings().setJavaScriptEnabled(true);
+                                mShareolder.webUrl.setHorizontalScrollBarEnabled(false);
+                                mShareolder.webUrl.setOnTouchListener(new View.OnTouchListener() {
+                                    public boolean onTouch(View v, MotionEvent event) {
+                                        if (event.getPointerCount() > 1) {
+                                            //Multi touch detected
+                                            return true;
+                                        }
+
+                                        switch (event.getAction()) {
+                                            case MotionEvent.ACTION_DOWN: {
+                                                // save the x
+                                                m_downX = event.getX();
+                                            }
+                                            break;
+
+                                            case MotionEvent.ACTION_MOVE:
+                                            case MotionEvent.ACTION_CANCEL:
+                                            case MotionEvent.ACTION_UP: {
+                                                // set x so that it doesn't move
+                                                event.setLocation(m_downX, event.getY());
+                                            }
+                                            break;
+                                        }
+
+                                        return false;
+                                    }
+                                });
+
+                                //End webView...
+                            } else {
+                                mShareolder.webView.setVisibility(View.GONE);
+                                mShareolder.mStatusText.setVisibility(View.VISIBLE);
+                                mShareolder.mStatusText.setText(decodedString);
+                            }
                         }
 
                         mShareolder.mPostCardView.setOnClickListener(new View.OnClickListener() {
@@ -6142,6 +5408,35 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                             }
                         });
 
+                        String mInterests1 = notificationList.get(position).getStatusInterest();
+                        String[] interestArray1 = mActivity.getResources().getStringArray(R.array.demo_array);
+
+                        if (!mInterests1.equals("")) {
+                            String[] commaSplit = new String[0];
+                            commaSplit = mInterests1.split(",");
+                            String hashTags = "";
+
+                            for (String aCommaSplit : commaSplit) {
+                                if (hashTags.equals(""))
+                                    hashTags = "#" + interestArray1[Integer.parseInt(aCommaSplit)];
+                                else
+                                    hashTags = hashTags + " #" + interestArray1[Integer.parseInt(aCommaSplit)];
+                            }
+
+                            ArrayList<int[]> hashtagSpans1 = getSpans(hashTags, '#');
+                            ArrayList<int[]> calloutSpans1 = getSpans(hashTags, '@');
+
+                            SpannableString commentsContent1 =
+                                    new SpannableString(hashTags);
+
+                            setSpanComment(commentsContent1, hashtagSpans1);
+                            setSpanUname(commentsContent1, calloutSpans1);
+
+                            mShareolder.mInterestTextView.setMovementMethod(LinkMovementMethod.getInstance());
+                            mShareolder.mInterestTextView.setText(commentsContent1);
+                        } else {
+                            mShareolder.mInterestTextView.setVisibility(View.GONE);
+                        }
 
                         break;
 
@@ -6491,11 +5786,54 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
     private class MyWebChromeClient extends WebChromeClient {
         Context context;
 
-        public MyWebChromeClient(Context context) {
+        MyWebChromeClient(Context context) {
             super();
             this.context = context;
         }
-
-
     }
+
+    private ArrayList<int[]> getSpans(String body, char prefix) {
+        ArrayList<int[]> spans = new ArrayList<int[]>();
+
+        Pattern pattern = Pattern.compile(prefix + "[a-zA-Z][a-zA-Z ]*");
+        Matcher matcher = pattern.matcher(body);
+
+        // Check all occurrences
+        while (matcher.find()) {
+            int[] currentSpan = new int[2];
+            currentSpan[0] = matcher.start();
+            currentSpan[1] = matcher.end();
+            spans.add(currentSpan);
+        }
+
+        return spans;
+    }
+
+    /* for string containing # */
+    private void setSpanComment(SpannableString commentsContent, ArrayList<int[]> hashtagSpans) {
+        for (int i = 0; i < hashtagSpans.size(); i++) {
+            int[] span = hashtagSpans.get(i);
+            int hashTagStart = span[0];
+            int hashTagEnd = span[1];
+
+            commentsContent.setSpan(new Hashtag(mActivity),
+                    hashTagStart,
+                    hashTagEnd, 0);
+
+        }
+    }
+
+    /* for string containing @ */
+    private void setSpanUname(SpannableString commentsUname, ArrayList<int[]> calloutSpans) {
+        for (int i = 0; i < calloutSpans.size(); i++) {
+            int[] span = calloutSpans.get(i);
+            int calloutStart = span[0];
+            int calloutEnd = span[1];
+            commentsUname.setSpan(new CalloutLink(mActivity),
+                    calloutStart,
+                    calloutEnd, 0);
+        }
+    }
+
+
 }
