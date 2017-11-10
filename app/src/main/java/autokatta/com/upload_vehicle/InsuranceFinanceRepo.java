@@ -42,7 +42,7 @@ import static com.google.zxing.integration.android.IntentIntegrator.REQUEST_CODE
 
 public class InsuranceFinanceRepo extends Fragment implements RequestNotifier {
     View mInsuranceFinanceRepo;
-    EditText loanaccno, borrowername, borrowercontact, inwarddate, branchmanagername, branchcmanagerontact, dealername, stockyardname;
+    EditText loanaccno, borrowername,mClientName, borrowercontact, inwarddate, branchmanagername, branchcmanagerontact, dealername, stockyardname;
     AutoCompleteTextView branchcity, stockyardadddress;
     LinearLayout txtUser;
 
@@ -68,6 +68,7 @@ public class InsuranceFinanceRepo extends Fragment implements RequestNotifier {
                 branchcmanagerontact = (EditText) mInsuranceFinanceRepo.findViewById(R.id.manager_cnt);
                 dealername = (EditText) mInsuranceFinanceRepo.findViewById(R.id.dealer_name);
                 stockyardname = (EditText) mInsuranceFinanceRepo.findViewById(R.id.stock_yard_name);
+                mClientName = (EditText) mInsuranceFinanceRepo.findViewById(R.id.clientname);
                 branchcity = (AutoCompleteTextView) mInsuranceFinanceRepo.findViewById(R.id.branch_city);
                 stockyardadddress = (AutoCompleteTextView) mInsuranceFinanceRepo.findViewById(R.id.stock_yard_addr);
                 txtUser = (LinearLayout) mInsuranceFinanceRepo.findViewById(R.id.txtUser);
@@ -144,6 +145,7 @@ public class InsuranceFinanceRepo extends Fragment implements RequestNotifier {
                         String strstockyardname = stockyardname.getText().toString();
                         String strbranchcity = branchcity.getText().toString();
                         String strstockyardadddress = stockyardadddress.getText().toString();
+                        String strClientname = mClientName.getText().toString();
                         String strinwarddate = inwarddate.getText().toString();
 
                         if (!branchcity.getText().toString().isEmpty()) {
@@ -205,7 +207,10 @@ public class InsuranceFinanceRepo extends Fragment implements RequestNotifier {
                         } else if (strinwarddate.equals("") || strinwarddate.startsWith(" ")) {
                             inwarddate.setError("Enter Date");
                             inwarddate.requestFocus();
-                        } else {
+                        } /* else if (strClientname.equals("") || strClientname.startsWith(" ")) {
+                            mClientName.setError("Enter Client Name");
+                            mClientName.requestFocus();
+                        }*/ else {
                             getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("loan_acc_no", loanno).apply();
                             getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("borrower_name", strborrowername).apply();
                             getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("borrower_contact", strborrowercontact).apply();
@@ -216,6 +221,7 @@ public class InsuranceFinanceRepo extends Fragment implements RequestNotifier {
                             getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("stockyardname", strstockyardname).apply();
                             getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("stockyardaddr", strstockyardadddress).apply();
                             getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("inwarddate", strinwarddate).apply();
+                         //   getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("clientname", strClientname).apply();
 
                             getActivity().getSupportFragmentManager().beginTransaction()
                                     .replace(R.id.vehicle_upload_container, new Title(), "Category_list")

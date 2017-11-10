@@ -60,7 +60,7 @@ public class VehicleDetails extends AppCompatActivity implements RequestNotifier
     FloatingActionButton mLike, mCall, mShare, mChat, mReview, mNote;
     String Title, mPrice, mBrand, mModel, mYear, mRTO_City, mAddress, mRegistration, mSendImage, imgUrl;
     Double mKms;
-    String contact, mLikestr, prefcontact, allDetails;
+    String contact, mLikestr, prefcontact, allDetails,singleimage;
     ApiCall mApiCall;
     int mVehicle_Id;
     SliderLayout sliderLayout;
@@ -209,6 +209,7 @@ public class VehicleDetails extends AppCompatActivity implements RequestNotifier
                             Hash_file_maps.put("Image-"+i,dp_path+arr[0]);
                         }*/
                         String[] items = dp.split(",");
+                        singleimage=items[0];
                         for (String item : items) {
                             Hash_file_maps.put("Image-" + item, dp_path + item.replaceAll(" ", ""));
                         }
@@ -220,6 +221,7 @@ public class VehicleDetails extends AppCompatActivity implements RequestNotifier
                     } else {
                         /*success.setSingleImage(firstWord);
                         success.setAllImage(all);*/
+                        singleimage=dp;
                         Hash_file_maps.put("Image-" + dp, dp_path + dp.replaceAll(" ", ""));
                     }
                 }
@@ -480,6 +482,7 @@ public class VehicleDetails extends AppCompatActivity implements RequestNotifier
                 intent1.putExtra("product_id", 0);
                 intent1.putExtra("service_id", 0);
                 intent1.putExtra("contact", prefcontact);
+                intent1.putExtra("image", singleimage);
 
                 startActivity(intent1);
                 break;

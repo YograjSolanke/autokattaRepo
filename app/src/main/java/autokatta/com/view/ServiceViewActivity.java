@@ -112,7 +112,7 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
     int srate2;
     int srate3;
     int store_id;
-    String storecontact;
+    String storecontact,singleimage;
     private String[] groupIdArray = new String[0];
     String brandtags_list;
     TextView storename, website, textlike, textshare;
@@ -818,12 +818,14 @@ Get Admin data...
                                 if (simages.contains(",")) {
                                     String[] items = simages.split(",");
                                     photocount.setText(items.length + " photos");
+                                    singleimage=items[0];
                                     imageslist.add(items[0].substring(items[0].length()));
                                     for (String item : items) {
                                         Hash_file_maps.put("Image-" + item, dp_path + item.replaceAll(" ", ""));
                                     }
                                 } else {
                                     Hash_file_maps.put("Image-" + simages, dp_path + simages.replaceAll(" ", ""));
+                                singleimage=simages;
                                 }
 
                                 for (final String name : Hash_file_maps.keySet()) {
@@ -1349,6 +1351,7 @@ Get Admin data...
                 intent1.putExtra("product_id", 0);
                 intent1.putExtra("service_id", service_id);
                 intent1.putExtra("contact", contact);
+                intent1.putExtra("image", singleimage);
 
                 startActivity(intent1);
                 break;

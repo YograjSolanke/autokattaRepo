@@ -24,6 +24,14 @@
             android:orientation="vertical">
 
             <EditText
+                android:id="@+id/clientname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:digits="qwertyuioplkjhgfdsazxcvbnm0123456789"
+                android:hint="Client Name"
+                android:labelFor="@+id/transfer_date"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+ <EditText
                 android:id="@+id/loan_no"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

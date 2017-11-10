@@ -107,6 +107,7 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
     String pimages;
     String plikestatus;
     String action;
+    String singleimage;
     String pcategory;
     Integer prating;
     String receiver_contact;
@@ -669,12 +670,14 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
 
                                 String[] items = pimages.split(",");
                                 photocount.setText("" + items.length + " photos");
+                                singleimage=items[0];
                                 imageslist.add(items[0].substring(items[0].length()));
                                 for (String item : items) {
                                     Hash_file_maps.put("Image-" + item, dp_path + item.replaceAll(" ", ""));
                                 }
                             } else {
                                 Hash_file_maps.put("Image-" + pimages, dp_path + pimages.replaceAll(" ", ""));
+                               singleimage=pimages;
                             }
 
 
@@ -1253,6 +1256,7 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                 intent1.putExtra("product_id", product_id);
                 intent1.putExtra("service_id", 0);
                 intent1.putExtra("contact", contact);
+                intent1.putExtra("image",singleimage);
 
                 startActivity(intent1);
 

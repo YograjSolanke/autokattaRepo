@@ -43,13 +43,14 @@ import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.GetReplayInventoryNoteResponse;
 import autokatta.com.response.ReviewAndReplyResponse.Success.ReviewMessage;
+import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import retrofit2.Response;
 
 public class InventoryNotesActivity extends AppCompatActivity implements RequestNotifier, View.OnClickListener {
     ConnectionDetector mConnectionDetector;
     ApiCall mApiCall;
     String myContact, inComingContact;
- //   KProgressHUD hud;
+    //   KProgressHUD hud;
     public List<ReviewMessage> topList = new ArrayList<>();
     public List<GetReplayInventoryNoteResponse.Success.ReviewMessage> mainList = new ArrayList<>();
     public List<GetReplayInventoryNoteResponse.Success.ReplayMessage> childlist;
@@ -64,6 +65,7 @@ public class InventoryNotesActivity extends AppCompatActivity implements Request
     LinearLayout mLinearScrollSecond[];
     RelativeLayout relativeLayout;
     FloatingActionButton fab;
+    String mImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,6 +101,7 @@ public class InventoryNotesActivity extends AppCompatActivity implements Request
                         product_id = getIntent().getExtras().getInt("product_id", 0);
                         service_id = getIntent().getExtras().getInt("service_id", 0);
                         vehicle_id = getIntent().getExtras().getInt("vehicle_id", 0);
+                        mImage = getIntent().getExtras().getString("image","");
                         inComingContact = getIntent().getExtras().getString("contact");
 
                     }
@@ -123,14 +126,13 @@ public class InventoryNotesActivity extends AppCompatActivity implements Request
         });
 
 
-
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.fab:
-            //    hud.dismiss();
+                //    hud.dismiss();
                 //write review here
                 sendmessage(0, "Note");
                 break;
@@ -177,7 +179,7 @@ public class InventoryNotesActivity extends AppCompatActivity implements Request
         send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mApiCall.AddInventoryNote(myContact,keyword,review_id,message.getText().toString(),service_id,product_id,newvehicleid,vehicle_id);
+                mApiCall.AddInventoryNote(myContact, keyword, review_id, message.getText().toString(), service_id, product_id, newvehicleid, vehicle_id);
                 alert.dismiss();
             }
         });
@@ -210,7 +212,7 @@ public class InventoryNotesActivity extends AppCompatActivity implements Request
         DateFormat f = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
         if (response != null) {
             if (response.isSuccessful()) {
-            //    hud.dismiss();
+                //    hud.dismiss();
                 /*
                         Response to get review message
                  */
@@ -292,12 +294,13 @@ public class InventoryNotesActivity extends AppCompatActivity implements Request
                         });
 
 
-
-                        if (!mainList.get(i).getProfilePic().equals("")) {
-                            String dp_path = getString(R.string.base_image_url) + mainList.get(i).getProfilePic();
+                      //  if (!mainList.get(i).getProfilePic().equals("")) {
+                        if (!mImage.equals("")) {
+                            String dp_path = getString(R.string.base_image_url) +mImage /*mainList.get(i).getProfilePic()*/;
                             Glide.with(getApplicationContext())
                                     .load(dp_path)
                                     .centerCrop()
+                                    .bitmapTransform(new CropCircleTransformation(this))
                                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                                     .placeholder(R.drawable.logo)
                                     .into(profile);
@@ -321,7 +324,7 @@ public class InventoryNotesActivity extends AppCompatActivity implements Request
                             //System.out.println("jjj"+date);
                             String output = outputFormat.format(date);
                             //System.out.println(mainList.get(i).getDate()+" jjj " + output);
-                            dateNtime.setText(mainList.get(i).getUsername() + " " + output);
+                            dateNtime.setText(/*mainList.get(i).getUsername() + */" " + output);
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -347,12 +350,13 @@ public class InventoryNotesActivity extends AppCompatActivity implements Request
 
                             TextView repdateNtime = (TextView) mLinearView2.findViewById(R.id.dateNtime);
                             reply.setText(mainList.get(i).getReplayMessage().get(j).getReplayString());
-
-                            if (!mainList.get(i).getReplayMessage().get(j).getProfilePic().equals("")) {
-                                String dp_path = getString(R.string.base_image_url) + mainList.get(i).getReplayMessage().get(j).getProfilePic();
+                          //  if (!mainList.get(i).getReplayMessage().get(j).getProfilePic().equals("")) {
+                            if (!mImage.equals("")) {
+                                String dp_path = getString(R.string.base_image_url) +mImage /*mainList.get(i).getReplayMessage().get(j).getProfilePic()*/;
                                 Glide.with(getApplicationContext())
                                         .load(dp_path)
                                         .centerCrop()
+                                        .bitmapTransform(new CropCircleTransformation(this))
                                         .diskCacheStrategy(DiskCacheStrategy.ALL)
                                         .placeholder(R.drawable.logo)
                                         .into(profilePic);
@@ -401,7 +405,7 @@ public class InventoryNotesActivity extends AppCompatActivity implements Request
                                 //System.out.println("jjj"+date);
                                 String output = outputFormat.format(date);
                                 //System.out.println(mainList.get(i).getDate()+" jjj " + output);
-                                repdateNtime.setText(mainList.get(i).getReplayMessage().get(j).getUsername() + " replied " + output);
+                                repdateNtime.setText(/*mainList.get(i).getReplayMessage().get(j).getUsername() */"You" + " replied " + output);
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
@@ -415,11 +419,11 @@ public class InventoryNotesActivity extends AppCompatActivity implements Request
                     //????????????????????????????????????????????????????????????
 
                 } else {
-                  //  hud.dismiss();
+                    //  hud.dismiss();
                     CustomToast.customToast(getApplicationContext(), getString(R.string._404));
                 }
             } else {
-               // hud.dismiss();
+                // hud.dismiss();
                 CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
             }
 
@@ -428,7 +432,7 @@ public class InventoryNotesActivity extends AppCompatActivity implements Request
 
     @Override
     public void notifyError(Throwable error) {
-       // hud.dismiss();
+        // hud.dismiss();
         if (error instanceof SocketTimeoutException) {
             CustomToast.customToast(getApplicationContext(), getString(R.string._404));
         } else if (error instanceof NullPointerException) {
@@ -445,12 +449,12 @@ public class InventoryNotesActivity extends AppCompatActivity implements Request
     public void notifyString(String str) {
         if (str != null) {
             if (str.equals("sent_InventoryNote")) {
-             //   hud.dismiss();
+                //   hud.dismiss();
                 CustomToast.customToast(InventoryNotesActivity.this, "Note Added");
                 //   mApiCall.getReviewOrReply(store_id, product_id, service_id, vehicle_id);
 
             } else if (str.equals("sent_reply")) {
-           //     hud.dismiss();
+                //     hud.dismiss();
                 CustomToast.customToast(InventoryNotesActivity.this, "Reply Added to note");
                 mApiCall.getInventoryNote(newvehicleid, product_id, service_id, vehicle_id);
             }

@@ -21,7 +21,7 @@
             android:layout_height="30dp"
             android:layout_centerVertical="true"
             android:contentDescription="@string/app_name"
-            android:src="@mipmap/profile" />
+            android:src="@mipmap/app_logo" />
 
         <TextView
             android:id="@+id/msgr"

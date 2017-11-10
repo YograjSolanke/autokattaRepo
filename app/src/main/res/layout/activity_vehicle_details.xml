@@ -162,7 +162,7 @@
             android:id="@+id/note"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/note"
+            android:src="@mipmap/ic_note"
             fab:fab_label="Add Note"
             fab:fab_colorNormal="#5176C9"
             fab:fab_colorPressed="#5176C9"

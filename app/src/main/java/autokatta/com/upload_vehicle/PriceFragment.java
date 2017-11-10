@@ -72,7 +72,7 @@ public class PriceFragment extends Fragment implements RequestNotifier, View.OnC
             strModelName = "", strVersionName = "",strStocktype,strScrapCustName="",strScrapCustContact="",strScrapCustAddress,strScrapCustFullAddress,
             strScrapPurchaseDate="",strExCustName="",strExCustContact="",strExCustAddress="",strExFullAddress="",strExInventoryType,strExEnquiryStatus,
     strExDescription="",strExNextFollowUpdate="",strEnquiryVehiIds="",strloanaccno="",strBorrowerName="",strBorrowerContact="",
-    strBranchManagerName="",strManagerContact="",strExchange="",strDealerName="",strBranchCity="",strStockYardName="",strStockYardAddr="",strInwardDate="";
+    strBranchManagerName="",strManagerContact="",strExchange="",strDealerName="",strBranchCity="",strStockYardName="",strStockYardAddr="",strClientName,strInwardDate="";
     double strKms;
     int strOwner, strCategoryId, vehicle_id, strSubcategoryId, strBrandId, strModelId, strVersionId,strScrapPurchasePrice;
 
@@ -207,6 +207,7 @@ public class PriceFragment extends Fragment implements RequestNotifier, View.OnC
         strStockYardName = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("stockyardname", "");
         strStockYardAddr = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("stockyardaddr", "");
         strInwardDate = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("inwarddate", "");
+        strClientName = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("clientname", "");
 
 
         System.out.println("incoming images=" + strImages);

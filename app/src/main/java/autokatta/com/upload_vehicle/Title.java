@@ -127,7 +127,7 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
      */
     private MonthYearPicker myp;
     private MonthYearPicker myp1;
-    EditText mMakeMonth, mMakeYear,mClientName;
+    EditText mMakeMonth, mMakeYear;
     EditText mRegisterMonth, mRegisterYear;
     LinearLayout linearPermit;
 
@@ -148,7 +148,6 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
         getActivity().setTitle("Category");
         scrollView1 = (ScrollView) mTitle.findViewById(R.id.scrollView1);
         title = (EditText) mTitle.findViewById(R.id.titleText1);
-        mClientName = (EditText) mTitle.findViewById(R.id.edtclient);
         mCategory = (TextView) mTitle.findViewById(R.id.categorytext1);
         radioButton1 = (RadioButton) mTitle.findViewById(R.id.radioButton1);
         radioButton2 = (RadioButton) mTitle.findViewById(R.id.radioButton2);
@@ -396,6 +395,7 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
         uploadauctioncat = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("upload_auction_categoryName", null);
 
         mCategory.setText(category + "->" + uploadauctioncat);
+
 
         mSubmit = (Button) mTitle.findViewById(R.id.title_next);
         mSubmit.setOnClickListener(this);
@@ -1475,10 +1475,7 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                     Toast.makeText(getActivity(), "Sorry Registration year not valid", Toast.LENGTH_LONG).show();
                 } else if (reg_yearposition == man_yearposition && reg_monthposition > man_monthposition) {
                     Toast.makeText(getActivity(), "Sorry Registration Month not valid", Toast.LENGTH_LONG).show();
-                }else  if (mClientName.getText().toString().equals("")) {
-                    mClientName.setError("Please Provide Client Name");
-                    mClientName.requestFocus();
-                } else {
+                }else {
 
                     Log.i("Data", "GroupIds" + stringgroupids);
                     Log.i("Data", "GroupNames" + stringgroupname);
@@ -1521,8 +1518,6 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
 
                     getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_Hrs", strHrs).apply();
                     getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putLong("upload_Kms", strKms).apply();
-
-                    getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("client_name", mClientName.getText().toString()).apply();
 
 
                     FragmentManager manager = getFragmentManager();

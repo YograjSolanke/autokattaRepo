@@ -65,10 +65,10 @@ public class GetReplayInventoryNoteResponse {
             @SerializedName("ReplayString")
             @Expose
             private String replayString;
-            @SerializedName("ReplayId")
+            @SerializedName("NoteReplayID")
             @Expose
             private Integer replayId;
-            @SerializedName("ReviewId")
+            @SerializedName("InventoryNoteID")
             @Expose
             private Integer reviewId;
             @SerializedName("SenderContact")

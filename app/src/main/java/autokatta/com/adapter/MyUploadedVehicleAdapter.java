@@ -167,7 +167,6 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<RecyclerView.
             holder.stock_type.setText(mMainList.get(position).getStockType());
             holder.mChatcount.setText(mMainList.get(position).getChatCount());
             holder.mEnquiryCount.setText(mMainList.get(position).getEnquiryCount());
-      //      holder.mClientName.setText(mMainList.get(position).getEnquiryCount());
             myContact = activity.getSharedPreferences(activity.getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "");
 
             if (mMainList.get(position).getKmsRunning().equals(""))
@@ -723,6 +722,7 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<RecyclerView.
                         dialog.show();
 
                         final TextView mLoanNo = (TextView) dialoglayout.findViewById(R.id.loanno);
+                        final TextView mClientName = (TextView) dialoglayout.findViewById(R.id.clientname);
                         final TextView mBorrowerName = (TextView) dialoglayout.findViewById(R.id.borrowername);
                         final TextView mBorrowerContact = (TextView) dialoglayout.findViewById(R.id.borrowercontact);
                         final TextView mBranchCity = (TextView) dialoglayout.findViewById(R.id.branchcity);
@@ -760,6 +760,7 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<RecyclerView.
                                                 mDealerName.setText(success.getDealerName());
                                                 mStockYardNAme.setText(success.getStockYardName());
                                                 mStockYardAddresss.setText(success.getStockYardAddress());
+                                               // mClientName.setText(success.getClientName());
                                                 //  mInwardDate.setText(success.getInwardDate().replace("T00:00:00",""));
                                                 //To set Date
                                                 try {

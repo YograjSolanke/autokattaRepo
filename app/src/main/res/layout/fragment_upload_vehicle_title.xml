@@ -84,26 +84,6 @@
                     android:textColor="#2C3343"
                     android:textColorHint="#848484" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:visibility="gone"
-                    >
-                    <EditText
-                        android:id="@+id/edtclient"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:background="#80bebebe"
-                        android:ems="10"
-                        android:hint="Client Name"
-                        android:padding="5dp"
-                        android:textColor="#2C3343"
-                        android:textColorHint="#848484" />
-
-                </LinearLayout>
-
                 <TextView
                     android:id="@+id/grouptitle"
                     android:layout_width="match_parent"
