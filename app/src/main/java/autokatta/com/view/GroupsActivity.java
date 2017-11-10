@@ -280,13 +280,12 @@ public class GroupsActivity extends AppCompatActivity implements RequestNotifier
     public void notifySuccess(Response<?> response) {
         if (response != null) {
             if (response.isSuccessful()) {
-                if (pDialog.isShowing()) {
-                    pDialog.dismiss();
-                }
                 GroupDetailedResponse mResponse1 = (GroupDetailedResponse) response.body();
                 if (!mResponse1.getSuccess().isEmpty()) {
+                    if (pDialog.isShowing()) {
+                        pDialog.dismiss();
+                    }
                     for (GroupDetailedResponse.Success success : mResponse1.getSuccess()) {
-
                         success.setId(success.getId());
                         success.setGroupMember(success.getGroupMember());
                         success.setTitle(success.getTitle());
@@ -297,7 +296,6 @@ public class GroupsActivity extends AppCompatActivity implements RequestNotifier
                         success.setServicecount(success.getServicecount());
                         groupPrivacy = success.getPrivacyStatus();
                     }
-
                     if (groupPrivacy.equalsIgnoreCase("private"))
                         mShare.setVisibility(View.GONE);
                 }
