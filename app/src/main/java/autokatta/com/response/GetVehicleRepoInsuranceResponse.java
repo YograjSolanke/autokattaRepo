@@ -78,6 +78,17 @@ public class GetVehicleRepoInsuranceResponse {
         @SerializedName("VehicleID")
         @Expose
         private Integer vehicleID;
+  @SerializedName("ClientName")
+        @Expose
+        private String ClientName;
+
+        public String getClientName() {
+            return ClientName;
+        }
+
+        public void setClientName(String clientName) {
+            ClientName = clientName;
+        }
 
         public Integer getVehicleRepoInsuranceID() {
             return vehicleRepoInsuranceID;

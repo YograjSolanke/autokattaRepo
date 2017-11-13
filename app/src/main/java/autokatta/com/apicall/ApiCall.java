@@ -5754,7 +5754,7 @@ Get saved search Seller list
     /*
  VehicleRepoInsurance
   */
-    public void VehicleRepoInsurance(String accno, String brrowername, String borrowercontact, String branchcity, String managername, String managercontact, String delearname, String stockyardname, String stockyardaddr, String inwarddate, int vehiID) {
+    public void VehicleRepoInsurance(String accno, String brrowername, String borrowercontact, String branchcity, String managername, String managercontact, String delearname, String stockyardname, String stockyardaddr, String inwarddate,String ClientName, int vehiID) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 //JSON to Gson conversion
@@ -5769,7 +5769,7 @@ Get saved search Seller list
                         .build();
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<String> updateStore = serviceApi._autokattaVehicleRepoInsurance(accno, brrowername, borrowercontact, branchcity, managername, managercontact, delearname, stockyardname, stockyardaddr, inwarddate, vehiID);
+                Call<String> updateStore = serviceApi._autokattaVehicleRepoInsurance(accno, brrowername, borrowercontact, branchcity, managername, managercontact, delearname,ClientName, stockyardname, stockyardaddr, inwarddate, vehiID);
                 updateStore.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {

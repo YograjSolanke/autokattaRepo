@@ -1394,7 +1394,7 @@ public interface ServiceApi {
     Call<String> _autokattaVehicleRepoInsurance(@Query("AccountNumber") String AccountNumber, @Query("BorrowerName") String BorrowerName,
                                                 @Query("BorrowerContact") String BorrowerContact, @Query("BranchCityName") String BranchCityName,
                                                 @Query("BrachMangerName") String BrachMangerName, @Query("BranchContact") String BranchContact,
-                                                @Query("DealerName") String DealerName,
+                                                @Query("DealerName") String DealerName,@Query("ClientName") String ClientName,
                                                 @Query("StockYardName") String StockYardName, @Query("StockYardAddress") String StockYardAddress,
                                                 @Query("InwardDate") String InwardDate, @Query("VehicleID") int VehicleID);
 

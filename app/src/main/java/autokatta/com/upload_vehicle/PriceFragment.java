@@ -306,7 +306,7 @@ public class PriceFragment extends Fragment implements RequestNotifier, View.OnC
     }
 
     private void addvehiclerepodata() {
-        apiCall.VehicleRepoInsurance(strloanaccno,strBorrowerName,strBorrowerContact,strBranchCity,strBranchManagerName,strManagerContact,strDealerName,strStockYardName,strStockYardAddr,strInwardDate,vehicle_id);
+        apiCall.VehicleRepoInsurance(strloanaccno,strBorrowerName,strBorrowerContact,strBranchCity,strBranchManagerName,strManagerContact,strDealerName,strStockYardName,strStockYardAddr,strInwardDate,strClientName,vehicle_id);
     }
 
     private void addvehiclescrapdata() {
