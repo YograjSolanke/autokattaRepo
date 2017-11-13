@@ -25,10 +25,14 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.webkit.MimeTypeMap;
 import android.webkit.URLUtil;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
@@ -108,6 +112,16 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
     ImageView mLike, mUnlike, mRating, mFollow, mUnFollow, mMap, mAddReview;
     private int likecountint, followcountint;
     LikeUnlike likeUnlike = new LikeUnlike();
+    GridView androidGridView;
+
+    String[] gridViewString = {
+            "About", "Product", "Service", "Used Vehicle", "New Vehicle", "Video's",
+            "Image's",};
+
+    int[] gridViewImageId = {
+            R.mipmap.communication, R.mipmap.store_product, R.mipmap.store_service, R.mipmap.store_used_vehicle, R.mipmap.new_vehicle,
+            R.mipmap.videos, R.mipmap.images,
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -154,13 +168,13 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
                     mMap = (ImageView) findViewById(R.id.map);
                     mAddReview = (ImageView) findViewById(R.id.add_review);
                     otherViewLayout = (LinearLayout) findViewById(R.id.actionLayout);
-                    mAbout = (LinearLayout) findViewById(R.id.about);
+                    /*mAbout = (LinearLayout) findViewById(R.id.about);
                     mProducts = (LinearLayout) findViewById(R.id.product);
                     mService = (LinearLayout) findViewById(R.id.service);
                     mVehicle = (LinearLayout) findViewById(R.id.vehicle);
                     mNewVehicle = (LinearLayout) findViewById(R.id.new_vehicle);
                     mVideos = (LinearLayout) findViewById(R.id.my_video);
-                    mImages = (LinearLayout) findViewById(R.id.images);
+                    mImages = (LinearLayout) findViewById(R.id.images);*/
 
                     mBannerImage = (ImageView) findViewById(R.id.other_store_image);
                     mStoreImage = (ImageView) findViewById(R.id.other_store_images);
@@ -172,6 +186,8 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
                     mFollowCount = (TextView) findViewById(R.id.followCount);
                     mStoreType = (TextView) findViewById(R.id.storeType);
                     mCall = (ImageView) findViewById(R.id.call);
+
+                    androidGridView = (GridView) findViewById(R.id.store_grid_view);
 
 
                     mShare.setLabelTextColor(Color.BLACK);
@@ -215,15 +231,81 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
         mUnlike.setOnClickListener(this);
         mFollow.setOnClickListener(this);
         mUnFollow.setOnClickListener(this);
-        mAbout.setOnClickListener(this);
+        /*mAbout.setOnClickListener(this);
         mProducts.setOnClickListener(this);
         mService.setOnClickListener(this);
         mVehicle.setOnClickListener(this);
         mNewVehicle.setOnClickListener(this);
         mVideos.setOnClickListener(this);
-        mImages.setOnClickListener(this);
+        mImages.setOnClickListener(this);*/
         mViewReview.setOnClickListener(this);
         mAddEmployee.setOnClickListener(this);
+
+
+        CustomGridViewActivity adapterViewAndroid = new CustomGridViewActivity(this, gridViewString, gridViewImageId);
+        androidGridView.setAdapter(adapterViewAndroid);
+
+        androidGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int i, long id) {
+                ActivityOptions options = ActivityOptions.makeCustomAnimation(StoreViewActivity.this, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
+                Bundle b = new Bundle();
+                switch (gridViewString[+i]) {
+
+                    case "About":
+                        b.putInt("store_id", store_id);
+                        Intent intent1 = new Intent(StoreViewActivity.this, StoreInfoActivity.class);
+                        intent1.putExtras(b);
+                        startActivity(intent1, options.toBundle());
+
+                        break;
+                    case "Product":
+                        b.putInt("store_id", store_id);
+                        Intent intentproduct = new Intent(StoreViewActivity.this, StoreProductActivity.class);
+                        intentproduct.putExtras(b);
+                        startActivity(intentproduct, options.toBundle());
+
+                        break;
+                    case "Service":
+                        b.putInt("store_id", store_id);
+                        Intent intentservice = new Intent(StoreViewActivity.this, StoreServiceActivity.class);
+                        intentservice.putExtras(b);
+                        startActivity(intentservice, options.toBundle());
+
+                        break;
+                    case "Used Vehicle":
+                        b.putInt("store_id", store_id);
+                        Intent intentvehicle = new Intent(StoreViewActivity.this, StoreVehicleActivity.class);
+                        intentvehicle.putExtras(b);
+                        startActivity(intentvehicle, options.toBundle());
+
+                        break;
+                    case "New Vehicle":
+                        b.putInt("store_id", store_id);
+                        Intent intentnewvehicle = new Intent(StoreViewActivity.this, StoreNewVehicleActiviy.class);
+                        intentnewvehicle.putExtras(b);
+                        startActivity(intentnewvehicle, options.toBundle());
+
+                        break;
+                    case "Video's":
+                        b.putInt("store_id", store_id);
+                        Intent intentVideos = new Intent(StoreViewActivity.this, VideosViewActivity.class);
+                        intentVideos.putExtras(b);
+                        startActivity(intentVideos, options.toBundle());
+
+                        break;
+                    case "Image's":
+                        b.putInt("store_id", store_id);
+                        Intent intentImages = new Intent(StoreViewActivity.this, ImagesViewActivity.class);
+                        intentImages.putExtras(b);
+                        startActivity(intentImages, options.toBundle());
+
+                        break;
+                }
+            }
+        });
     }
 
     public void hideFloatingButton() {
@@ -709,59 +791,6 @@ Call Intent...
                 likeUnlike.setFollowCount(followcountint);
                 break;
 
-            case R.id.about:
-
-                b.putInt("store_id", store_id);
-                Intent intent1 = new Intent(StoreViewActivity.this, StoreInfoActivity.class);
-                intent1.putExtras(b);
-                startActivity(intent1, options.toBundle());
-                break;
-
-            case R.id.product:
-                b.putInt("store_id", store_id);
-                Intent intentproduct = new Intent(StoreViewActivity.this, StoreProductActivity.class);
-                intentproduct.putExtras(b);
-                startActivity(intentproduct, options.toBundle());
-                break;
-
-            case R.id.service:
-                b.putInt("store_id", store_id);
-                Intent intentservice = new Intent(StoreViewActivity.this, StoreServiceActivity.class);
-                intentservice.putExtras(b);
-                startActivity(intentservice, options.toBundle());
-                break;
-
-            case R.id.vehicle:
-
-                b.putInt("store_id", store_id);
-                Intent intentvehicle = new Intent(StoreViewActivity.this, StoreVehicleActivity.class);
-                intentvehicle.putExtras(b);
-                startActivity(intentvehicle, options.toBundle());
-                break;
-
-
-            case R.id.new_vehicle:
-                b.putInt("store_id", store_id);
-                Intent intentnewvehicle = new Intent(StoreViewActivity.this, StoreNewVehicleActiviy.class);
-                intentnewvehicle.putExtras(b);
-                startActivity(intentnewvehicle, options.toBundle());
-                break;
-
-            case R.id.images:
-                b.putInt("store_id", store_id);
-                Intent intentImages = new Intent(StoreViewActivity.this, ImagesViewActivity.class);
-                intentImages.putExtras(b);
-                startActivity(intentImages, options.toBundle());
-                break;
-
-
-            case R.id.my_video:
-                b.putInt("store_id", store_id);
-                Intent intentVideos = new Intent(StoreViewActivity.this, VideosViewActivity.class);
-                intentVideos.putExtras(b);
-                startActivity(intentVideos, options.toBundle());
-                break;
-
             case R.id.add_employee:
                 Intent intentAddEmp = new Intent(StoreViewActivity.this, AddEmployeeActivity.class);
                 startActivity(intentAddEmp, options.toBundle());
@@ -1089,6 +1118,53 @@ Call Intent...
                     Log.i("Suugesstion", "Store->" + store_id);
                     break;
             }
+        }
+    }
+
+    private class CustomGridViewActivity extends BaseAdapter {
+        private Context mContext;
+        private final String[] gridViewString;
+        private final int[] gridViewImageId;
+
+        private CustomGridViewActivity(Context context, String[] gridViewString, int[] gridViewImageId) {
+            mContext = context;
+            this.gridViewImageId = gridViewImageId;
+            this.gridViewString = gridViewString;
+        }
+
+        @Override
+        public int getCount() {
+            return gridViewString.length;
+        }
+
+        @Override
+        public Object getItem(int i) {
+            return null;
+        }
+
+        @Override
+        public long getItemId(int i) {
+            return 0;
+        }
+
+        @Override
+        public View getView(int i, View convertView, ViewGroup parent) {
+            View gridViewAndroid;
+            LayoutInflater inflater = (LayoutInflater) mContext
+                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            if (convertView == null) {
+                gridViewAndroid = new View(mContext);
+                if (inflater != null) {
+                    gridViewAndroid = inflater.inflate(R.layout.gridview_layout, null);
+                }
+                TextView textViewAndroid = (TextView) gridViewAndroid.findViewById(R.id.android_gridview_text);
+                ImageView imageViewAndroid = (ImageView) gridViewAndroid.findViewById(R.id.android_gridview_image);
+                textViewAndroid.setText(gridViewString[i]);
+                imageViewAndroid.setImageResource(gridViewImageId[i]);
+            } else {
+                gridViewAndroid = (View) convertView;
+            }
+            return gridViewAndroid;
         }
     }
 }

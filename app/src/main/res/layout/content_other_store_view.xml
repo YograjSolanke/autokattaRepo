@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="10dp"
     android:orientation="vertical"
+    android:padding="10dp"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="autokatta.com.view.StoreViewActivity"
     tools:showIn="@layout/activity_other_store_view">
@@ -15,9 +15,9 @@
         android:layout_height="match_parent">
 
         <RelativeLayout
+            android:id="@+id/mainRel"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-
 
             <ImageView
                 android:id="@+id/other_store_image"
@@ -30,8 +30,8 @@
                 android:id="@+id/linear_one"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
                 android:layout_below="@+id/other_store_image"
+                android:layout_marginTop="10dp"
                 android:orientation="horizontal"
                 android:padding="@dimen/card_margin">
 
@@ -39,22 +39,22 @@
                     android:id="@+id/other_store_images"
                     android:layout_width="90dp"
                     android:layout_height="90dp"
+                    android:background="@drawable/frame"
                     android:contentDescription="@string/app_name"
                     android:scaleType="fitXY"
-                    android:src="@drawable/store"
-                    android:background="@drawable/frame" />
+                    android:src="@drawable/store" />
 
                 <RatingBar
                     android:id="@+id/store_rating"
                     style="?android:attr/ratingBarStyleSmall"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_below="@+id/other_store_images"
                     android:layout_gravity="center"
-                    android:numStars="5"
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="5dp"
+                    android:numStars="5"
                     android:stepSize="1"
-                    android:layout_below="@+id/other_store_images"
                     android:theme="@style/RatingBar" />
 
 
@@ -76,8 +76,8 @@
                         android:id="@+id/web"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/inset"
                         android:layout_below="@+id/store_name"
+                        android:layout_marginTop="@dimen/inset"
                         android:text="@string/website"
                         android:textColor="@color/background" />
 
@@ -86,32 +86,32 @@
                         android:id="@+id/location"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/location"
-                        android:layout_below="@+id/web" />
+                        android:layout_below="@+id/web"
+                        android:text="@string/location" />
 
 
                     <TextView
                         android:id="@+id/storeType"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/store_type"
+                        android:layout_below="@+id/location"
                         android:layout_toLeftOf="@+id/call"
-                        android:layout_below="@+id/location" />
+                        android:text="@string/store_type" />
 
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/inset"
-                        android:orientation="horizontal"
                         android:layout_below="@+id/storeType"
-                        android:layout_toStartOf="@+id/call">
+                        android:layout_marginTop="@dimen/inset"
+                        android:layout_toStartOf="@+id/call"
+                        android:orientation="horizontal">
 
                         <TextView
+                            android:id="@+id/likeCount"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/likes"
-                            android:id="@+id/likeCount" />
+                            android:text="@string/likes" />
 
                         <!--<TextView-->
                         <!--android:layout_width="wrap_content"-->
@@ -120,11 +120,11 @@
                         <!--android:text="@string/share" />-->
 
                         <TextView
+                            android:id="@+id/followCount"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/indicator_size"
-                            android:text="@string/follow"
-                            android:id="@+id/followCount" />
+                            android:text="@string/follow" />
 
                     </LinearLayout>
 
@@ -132,22 +132,22 @@
                         android:id="@+id/call"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
-                        android:src="@mipmap/new_call"
-                        android:contentDescription="@string/app_name"
+                        android:layout_alignParentBottom="true"
                         android:layout_alignParentEnd="true"
-                        android:layout_alignParentBottom="true" />
+                        android:contentDescription="@string/app_name"
+                        android:src="@mipmap/new_call" />
                 </RelativeLayout>
             </RelativeLayout>
 
             <LinearLayout
+                android:id="@+id/actionLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/linear_one"
                 android:layout_marginTop="5dp"
                 android:orientation="horizontal"
-                android:id="@+id/actionLayout"
-                android:layout_below="@+id/linear_one"
-                android:weightSum="4"
-                android:visibility="visible">
+                android:visibility="visible"
+                android:weightSum="4">
 
                 <ImageView
                     android:id="@+id/like"
@@ -255,7 +255,7 @@
 
             </LinearLayout>
 
-            <LinearLayout
+            <!--<LinearLayout
                 android:id="@+id/linear_two"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -644,98 +644,124 @@
                         </LinearLayout>
                     </LinearLayout>
 
-            <!--<View-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="1dp"-->
-            <!--android:layout_marginTop="@dimen/inset"-->
-            <!--android:background="#cccccc" />-->
+            &lt;!&ndash;<View&ndash;&gt;
+            &lt;!&ndash;android:layout_width="match_parent"&ndash;&gt;
+            &lt;!&ndash;android:layout_height="1dp"&ndash;&gt;
+            &lt;!&ndash;android:layout_marginTop="@dimen/inset"&ndash;&gt;
+            &lt;!&ndash;android:background="#cccccc" />&ndash;&gt;
 
-            <!--<LinearLayout-->
-            <!--android:id="@+id/post"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:baselineAligned="false"-->
-            <!--android:orientation="horizontal"-->
-            <!--android:padding="@dimen/card_margin"-->
-            <!--android:weightSum="1">-->
+            &lt;!&ndash;<LinearLayout&ndash;&gt;
+            &lt;!&ndash;android:id="@+id/post"&ndash;&gt;
+            &lt;!&ndash;android:layout_width="match_parent"&ndash;&gt;
+            &lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;
+            &lt;!&ndash;android:baselineAligned="false"&ndash;&gt;
+            &lt;!&ndash;android:orientation="horizontal"&ndash;&gt;
+            &lt;!&ndash;android:padding="@dimen/card_margin"&ndash;&gt;
+            &lt;!&ndash;android:weightSum="1">&ndash;&gt;
 
-            <!--<LinearLayout-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_weight="0.8">-->
+            &lt;!&ndash;<LinearLayout&ndash;&gt;
+            &lt;!&ndash;android:layout_width="0dp"&ndash;&gt;
+            &lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;
+            &lt;!&ndash;android:layout_weight="0.8">&ndash;&gt;
 
-            <!--<TextView-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:drawablePadding="@dimen/fab_margin"-->
-            <!--android:drawableStart="@mipmap/ic_account"-->
-            <!--android:gravity="center"-->
-            <!--android:text="@string/post"-->
-            <!--android:textStyle="bold" />-->
+            &lt;!&ndash;<TextView&ndash;&gt;
+            &lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;
+            &lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;
+            &lt;!&ndash;android:drawablePadding="@dimen/fab_margin"&ndash;&gt;
+            &lt;!&ndash;android:drawableStart="@mipmap/ic_account"&ndash;&gt;
+            &lt;!&ndash;android:gravity="center"&ndash;&gt;
+            &lt;!&ndash;android:text="@string/post"&ndash;&gt;
+            &lt;!&ndash;android:textStyle="bold" />&ndash;&gt;
 
-            <!--</LinearLayout>-->
+            &lt;!&ndash;</LinearLayout>&ndash;&gt;
 
-            <!--<LinearLayout-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_gravity="center"-->
-            <!--android:layout_weight="0.2"-->
-            <!--android:gravity="end">-->
+            &lt;!&ndash;<LinearLayout&ndash;&gt;
+            &lt;!&ndash;android:layout_width="0dp"&ndash;&gt;
+            &lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;
+            &lt;!&ndash;android:layout_gravity="center"&ndash;&gt;
+            &lt;!&ndash;android:layout_weight="0.2"&ndash;&gt;
+            &lt;!&ndash;android:gravity="end">&ndash;&gt;
 
-            <!--<ImageView-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:contentDescription="@string/app_name"-->
-            <!--android:src="@drawable/ic_chevron_right" />-->
-            <!--</LinearLayout>-->
-            <!--</LinearLayout>-->
+            &lt;!&ndash;<ImageView&ndash;&gt;
+            &lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;
+            &lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;
+            &lt;!&ndash;android:contentDescription="@string/app_name"&ndash;&gt;
+            &lt;!&ndash;android:src="@drawable/ic_chevron_right" />&ndash;&gt;
+            &lt;!&ndash;</LinearLayout>&ndash;&gt;
+            &lt;!&ndash;</LinearLayout>&ndash;&gt;
 
-            <!--<View-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="1dp"-->
-            <!--android:layout_marginTop="@dimen/inset"-->
-            <!--android:background="#cccccc" />-->
+            &lt;!&ndash;<View&ndash;&gt;
+            &lt;!&ndash;android:layout_width="match_parent"&ndash;&gt;
+            &lt;!&ndash;android:layout_height="1dp"&ndash;&gt;
+            &lt;!&ndash;android:layout_marginTop="@dimen/inset"&ndash;&gt;
+            &lt;!&ndash;android:background="#cccccc" />&ndash;&gt;
 
-            <!--<LinearLayout-->
-            <!--android:id="@+id/blog"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:baselineAligned="false"-->
-            <!--android:orientation="horizontal"-->
-            <!--android:padding="@dimen/card_margin"-->
-            <!--android:weightSum="1">-->
+            &lt;!&ndash;<LinearLayout&ndash;&gt;
+            &lt;!&ndash;android:id="@+id/blog"&ndash;&gt;
+            &lt;!&ndash;android:layout_width="match_parent"&ndash;&gt;
+            &lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;
+            &lt;!&ndash;android:baselineAligned="false"&ndash;&gt;
+            &lt;!&ndash;android:orientation="horizontal"&ndash;&gt;
+            &lt;!&ndash;android:padding="@dimen/card_margin"&ndash;&gt;
+            &lt;!&ndash;android:weightSum="1">&ndash;&gt;
 
-            <!--<LinearLayout-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_weight="0.8">-->
+            &lt;!&ndash;<LinearLayout&ndash;&gt;
+            &lt;!&ndash;android:layout_width="0dp"&ndash;&gt;
+            &lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;
+            &lt;!&ndash;android:layout_weight="0.8">&ndash;&gt;
 
-            <!--<TextView-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:drawablePadding="@dimen/fab_margin"-->
-            <!--android:drawableStart="@mipmap/ic_account"-->
-            <!--android:gravity="center"-->
-            <!--android:text="@string/blog"-->
-            <!--android:textStyle="bold" />-->
+            &lt;!&ndash;<TextView&ndash;&gt;
+            &lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;
+            &lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;
+            &lt;!&ndash;android:drawablePadding="@dimen/fab_margin"&ndash;&gt;
+            &lt;!&ndash;android:drawableStart="@mipmap/ic_account"&ndash;&gt;
+            &lt;!&ndash;android:gravity="center"&ndash;&gt;
+            &lt;!&ndash;android:text="@string/blog"&ndash;&gt;
+            &lt;!&ndash;android:textStyle="bold" />&ndash;&gt;
 
-            <!--</LinearLayout>-->
+            &lt;!&ndash;</LinearLayout>&ndash;&gt;
 
-            <!--<LinearLayout-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_gravity="center"-->
-            <!--android:layout_weight="0.2"-->
-            <!--android:gravity="end">-->
+            &lt;!&ndash;<LinearLayout&ndash;&gt;
+            &lt;!&ndash;android:layout_width="0dp"&ndash;&gt;
+            &lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;
+            &lt;!&ndash;android:layout_gravity="center"&ndash;&gt;
+            &lt;!&ndash;android:layout_weight="0.2"&ndash;&gt;
+            &lt;!&ndash;android:gravity="end">&ndash;&gt;
 
-            <!--<ImageView-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:contentDescription="@string/app_name"-->
-            <!--android:src="@drawable/ic_chevron_right" />-->
-            <!--</LinearLayout>-->
-            <!--</LinearLayout>-->
+            &lt;!&ndash;<ImageView&ndash;&gt;
+            &lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;
+            &lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;
+            &lt;!&ndash;android:contentDescription="@string/app_name"&ndash;&gt;
+            &lt;!&ndash;android:src="@drawable/ic_chevron_right" />&ndash;&gt;
+            &lt;!&ndash;</LinearLayout>&ndash;&gt;
+            &lt;!&ndash;</LinearLayout>&ndash;&gt;
                 </LinearLayout>
+            </LinearLayout>-->
+            <View
+                android:id="@+id/view"
+                android:layout_below="@+id/actionLayout"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="5dp"
+                android:background="#000000" />
+
+
+            <LinearLayout
+                android:id="@+id/linear_two"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/view"
+                android:layout_marginTop="@dimen/activity_half_margin"
+                android:orientation="vertical">
+
+                <GridView
+                    android:id="@+id/store_grid_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/activity_half_margin"
+                    android:columnWidth="110dp"
+                    android:gravity="center"
+                    android:numColumns="auto_fit" />
             </LinearLayout>
         </RelativeLayout>
     </android.support.v4.widget.NestedScrollView>
