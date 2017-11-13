@@ -1260,7 +1260,7 @@ public interface ServiceApi {
                                                  @Query("custContact") String custContact, @Query("custAddress") String custAddress
             , @Query("custFullAddress") String custFullAddress, @Query("custInventoryType") String custInventoryType,
                                                  @Query("custEnquiryStatus") String custEnquiryStatus, @Query("discussion") String discussion,
-                                                 @Query("nextFollowupDate") String nextFollowupDate, @Query("idsList") String idsList);
+                                                 @Query("nextFollowupDate") String nextFollowupDate, @Query("idsList") String idsList ,@Query("Source") String Source);
 
     //Get Manual enquiry
     @GET("GetEnquiredPersonsData")
@@ -1273,7 +1273,7 @@ public interface ServiceApi {
             , @Query("custFullAddress") String custFullAddress,
                                                               @Query("custInventoryType") String custInventoryType,
                                                               @Query("custEnquiryStatus") String custEnquiryStatus, @Query("discussion") String discussion,
-                                                              @Query("nextFollowupDate") String nextFollowupDate, @Query("idsList") String idsList);
+                                                              @Query("nextFollowupDate") String nextFollowupDate, @Query("idsList") String idsList,@Query("Source") String Source);
 
     //Get Inventory Data...
     @GET("GetMyInventoryData")

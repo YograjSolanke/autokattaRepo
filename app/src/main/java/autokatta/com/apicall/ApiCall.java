@@ -8184,7 +8184,7 @@ get ExchangeMela Analytics Data
                         .client(initLog().build())
                         .build();
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<ManualEnquiryResponse> mServiceMelaResponse = serviceApi.getManualEnquiry(myContact, "null", "null", "null", "null", "null", "null", "null", "null", "null");
+                Call<ManualEnquiryResponse> mServiceMelaResponse = serviceApi.getManualEnquiry(myContact, "null", "null", "null", "null", "null", "null", "null", "null", "null","null");
                 mServiceMelaResponse.enqueue(new Callback<ManualEnquiryResponse>() {
                     @Override
                     public void onResponse(Call<ManualEnquiryResponse> call, Response<ManualEnquiryResponse> response) {
@@ -8239,7 +8239,7 @@ get ExchangeMela Analytics Data
     */
     public void addManualEnquiryData(String myContact, String custName, String custContact, String custAddress,
                                      String custFullAddress, String custInventoryType, String custEnquiryStatus,
-                                     String discussion, String nextFollowupDate, String idsList) {
+                                     String discussion, String nextFollowupDate, String idsList,String source) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 Retrofit retrofit = new Retrofit.Builder()
@@ -8251,7 +8251,7 @@ get ExchangeMela Analytics Data
                 //      AddManualEnquiryRequest addManualEnquiryRequest = new AddManualEnquiryRequest();
 
                 Call<AddManualEnquiryResponse> mServiceMelaResponse = serviceApi._autokattaAddManualEnquiry(myContact, custName, custContact, custAddress,
-                        custFullAddress, custInventoryType, custEnquiryStatus, discussion, nextFollowupDate, idsList);
+                        custFullAddress, custInventoryType, custEnquiryStatus, discussion, nextFollowupDate, idsList,source);
                 mServiceMelaResponse.enqueue(new Callback<AddManualEnquiryResponse>() {
                     @Override
                     public void onResponse(Call<AddManualEnquiryResponse> call, Response<AddManualEnquiryResponse> response) {
