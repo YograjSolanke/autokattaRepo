@@ -37,6 +37,8 @@ public class AddEmployeeActivity extends AppCompatActivity implements RequestNot
     Button btnAdd;
     ImageView imgContact;
     TextView txtUser;
+    String name, contact, designation, description, permission, status;
+    int store_id;
 
 
     @Override
@@ -70,6 +72,10 @@ public class AddEmployeeActivity extends AppCompatActivity implements RequestNot
                 if (getSupportActionBar() != null) {
                     getSupportActionBar().setHomeButtonEnabled(true);
                     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+                }
+
+                if (getIntent().getExtras() != null) {
+                    store_id = getIntent().getExtras().getInt("store_id", 0);
                 }
 
             }
@@ -136,6 +142,19 @@ public class AddEmployeeActivity extends AppCompatActivity implements RequestNot
         switch (view.getId()) {
 
             case R.id.addEmployee:
+
+                name = empName.getText().toString();
+                contact = empContact.getText().toString();
+                designation = empDesignation.getText().toString();
+                description = empDescription.getText().toString();
+                if (permissionCheck.isChecked())
+                    permission = "yes";
+                else
+                    permission = "no";
+                status = "";
+
+
+
                 if (empName.getText().toString().isEmpty()) {
                     empName.setError("Please Enter Name");
                 } else if (empContact.getText().toString().isEmpty()) {
@@ -145,6 +164,9 @@ public class AddEmployeeActivity extends AppCompatActivity implements RequestNot
                 } else if (empDescription.getText().toString().isEmpty()) {
                     empDescription.setError("Please Enter Short Description");
                 } else {
+
+                    mApiCall.AddEmloyeeInStore(name, contact, myContact, designation, store_id, description,
+                            status, permission);
 
                 }
 
@@ -211,6 +233,10 @@ public class AddEmployeeActivity extends AppCompatActivity implements RequestNot
             } else {
                 empContact.setError("Not Autokatta User");
                 txtUser.setVisibility(View.GONE);
+            }
+
+            if (str.startsWith("success")) {
+                CustomToast.customToast(getApplicationContext(), "Request Sent");
             }
         } else
             CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));

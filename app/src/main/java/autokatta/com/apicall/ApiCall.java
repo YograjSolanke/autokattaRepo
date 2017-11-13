@@ -9539,6 +9539,46 @@ get ExchangeMela Analytics Data
     }
 
 
+    //Add Contact in Public Group
+    public void AddEmloyeeInStore(String Name, String ContactNo, String StoreContactNo,
+                                  String Designation, int StoreID, String Description, String Status,
+                                  String Permission) {
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+
+                //JSON to Gson conversion
+                Gson gson = new GsonBuilder()
+                        .setLenient()
+                        .create();
+
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create(gson))
+                        .client(initLog().build())
+                        .build();
+
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<String> addSuggestionResponseCall = serviceApi._autokattaAddEmployeeForStore(Name, ContactNo, StoreContactNo, Designation, StoreID, Description, Status, Permission);
+                addSuggestionResponseCall.enqueue(new Callback<String>() {
+                    @Override
+                    public void onResponse(Call<String> call, Response<String> response) {
+                        mNotifier.notifyString(response.body());
+                    }
+
+                    @Override
+                    public void onFailure(Call<String> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+            } else {
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
     /***
      * Retrofit Logs
      ***/
