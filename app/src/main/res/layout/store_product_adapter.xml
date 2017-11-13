@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+                xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
     <android.support.v7.widget.CardView
         android:id="@+id/card_view"
@@ -29,7 +29,7 @@
                 android:text="@string/store_name"
                 android:textColor="#2C3343"
                 android:textSize="@dimen/article_subheading"
-                android:textStyle="bold" />
+                android:textStyle="bold"/>
 
             <ImageView
                 android:id="@+id/deleteproduct"
@@ -38,7 +38,16 @@
                 android:layout_alignParentEnd="true"
                 android:contentDescription="@string/app_name"
                 android:src="@mipmap/ic_delete"
-                android:visibility="gone" />
+                android:visibility="gone"/>
+
+            <ImageView
+                android:id="@+id/addnote"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_toLeftOf="@+id/deleteproduct"
+                android:contentDescription="@string/app_name"
+                android:src="@mipmap/note"
+                android:visibility="gone"/>
 
             <ImageView
                 android:id="@+id/enquiry"
@@ -48,7 +57,7 @@
                 android:layout_marginTop="2dp"
                 android:contentDescription="@string/app_name"
                 android:src="@drawable/ic_comment_question_outline"
-                android:visibility="visible" />
+                android:visibility="visible"/>
         </RelativeLayout>
 
         <RelativeLayout
@@ -66,7 +75,7 @@
                     android:id="@+id/profile"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
-                    android:contentDescription="@string/app_name" />
+                    android:contentDescription="@string/app_name"/>
 
                 <!-- <TextView
                      android:id="@+id/rating_count"
@@ -86,7 +95,7 @@
                     android:layout_below="@+id/profile"
                     android:numStars="5"
                     android:stepSize="1.0"
-                    android:theme="@style/RatingBar" />
+                    android:theme="@style/RatingBar"/>
 
             </RelativeLayout>
 
@@ -110,7 +119,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif"
                         android:text="@string/type"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"/>
 
                     <TextView
                         android:id="@+id/editproducttype"
@@ -118,7 +127,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif"
                         android:text="@string/store_type"
-                        android:textColor="@color/enteredTextColor" />
+                        android:textColor="@color/enteredTextColor"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -135,7 +144,7 @@
                         android:fontFamily="sans-serif"
                         android:gravity="start"
                         android:text="@string/price"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"/>
 
                     <TextView
                         android:id="@+id/priceedit"
@@ -143,7 +152,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif"
                         android:text="@string/price"
-                        android:textColor="@color/enteredTextColor" />
+                        android:textColor="@color/enteredTextColor"/>
 
                 </LinearLayout>
 
@@ -161,7 +170,7 @@
                         android:fontFamily="sans-serif"
                         android:gravity="start"
                         android:text="@string/tags"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"/>
 
                     <TextView
                         android:id="@+id/edittags"
@@ -170,7 +179,7 @@
                         android:fontFamily="sans-serif"
                         android:gravity="start"
                         android:text="@string/tags"
-                        android:textColor="@color/enteredTextColor" />
+                        android:textColor="@color/enteredTextColor"/>
 
                 </LinearLayout>
 
@@ -188,7 +197,7 @@
                         android:fontFamily="sans-serif"
                         android:gravity="start"
                         android:text="@string/details"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"/>
 
                     <TextView
                         android:id="@+id/editdetails"
@@ -197,7 +206,7 @@
                         android:fontFamily="sans-serif"
                         android:gravity="start"
                         android:text="@string/details"
-                        android:textColor="@color/enteredTextColor" />
+                        android:textColor="@color/enteredTextColor"/>
 
                 </LinearLayout>
 
@@ -215,7 +224,7 @@
                         android:fontFamily="sans-serif"
                         android:gravity="start"
                         android:text="@string/category"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"/>
 
                     <TextView
                         android:id="@+id/editCategory"
@@ -224,7 +233,7 @@
                         android:fontFamily="sans-serif"
                         android:gravity="start"
                         android:text="@string/category"
-                        android:textColor="@color/enteredTextColor" />
+                        android:textColor="@color/enteredTextColor"/>
                 </LinearLayout>
             </RelativeLayout>
 
@@ -248,7 +257,7 @@
                         android:background="@drawable/buttonback"
                         android:text="@string/view_details"
                         android:textAllCaps="false"
-                        android:textColor="@color/white" />
+                        android:textColor="@color/white"/>
 
                     <Button
                         android:id="@+id/btnEdit"
@@ -259,7 +268,7 @@
                         android:background="@drawable/buttonback"
                         android:text="@string/edit_details"
                         android:textAllCaps="false"
-                        android:textColor="@color/white" />
+                        android:textColor="@color/white"/>
                 </LinearLayout>
             </RelativeLayout>
         </RelativeLayout>

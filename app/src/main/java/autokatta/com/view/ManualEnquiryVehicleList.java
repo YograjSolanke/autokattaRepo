@@ -32,7 +32,7 @@ public class ManualEnquiryVehicleList extends AppCompatActivity implements Reque
     String mInventoryType, addArray = "";
     ListView mListView;
     String custName, custContact, custAddress, custFullAddress, custInventoryType = "", custEnquiryStatus = "";
-    String discussion, nextFollowupDate, callfrom;
+    String discussion, nextFollowupDate, callfrom,mSource;
     Button mSubmit;
     List<String> arrayList = new ArrayList<>();
 
@@ -66,6 +66,7 @@ public class ManualEnquiryVehicleList extends AppCompatActivity implements Reque
             discussion = getIntent().getExtras().getString("discussion");
             nextFollowupDate = getIntent().getExtras().getString("nextFollowupDate");
             callfrom = getIntent().getExtras().getString("callfrom", "");
+            mSource = getIntent().getExtras().getString("source", "");
         }
     }
 
@@ -320,6 +321,6 @@ public class ManualEnquiryVehicleList extends AppCompatActivity implements Reque
         ApiCall mApiCall = new ApiCall(this, this);
         mApiCall.addManualEnquiryData(getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "")
                 , custName, custContact, custAddress, custFullAddress, custInventoryType,
-                custEnquiryStatus, discussion, nextFollowupDate, addArray);
+                custEnquiryStatus, discussion, nextFollowupDate, addArray,mSource);
     }
 }

@@ -33,6 +33,7 @@ import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.StoreInventoryResponse;
 import autokatta.com.view.AddManualEnquiry;
+import autokatta.com.view.InventoryNotesActivity;
 import autokatta.com.view.ServiceViewActivity;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import retrofit2.Response;
@@ -101,6 +102,7 @@ public class StoreServiceAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
             if (myContact.equals(service.getStorecontact())) {
                 holder.deleteproduct.setVisibility(View.VISIBLE);
+                holder.mNote.setVisibility(View.VISIBLE);
             } else {
                 holder.editdetails.setVisibility(View.GONE);
                 holder.mEnquiry.setVisibility(View.GONE);
@@ -194,6 +196,20 @@ public class StoreServiceAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 }
             });
 
+            holder.mNote.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent1 = new Intent(activity, InventoryNotesActivity.class);
+                    intent1.putExtra("vehicle_id", 0);
+                    intent1.putExtra("newvehicle_id", 0);
+                    intent1.putExtra("product_id", 0);
+                    intent1.putExtra("service_id", mMainList.get(position).getServiceId());
+                    intent1.putExtra("contact", mMainList.get(position).getStorecontact());
+                    intent1.putExtra("image", images.get(0));
+
+                    activity.startActivity(intent1);
+                }
+            });
 
             holder.deleteproduct.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -301,7 +317,7 @@ public class StoreServiceAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     class ServiceHolder extends RecyclerView.ViewHolder {
         TextView pname, pprice, pdetails, ptype, ptags, pCategory;
-        ImageView image, deleteproduct, mEnquiry;
+        ImageView image, deleteproduct, mEnquiry,mNote;
         Button viewdetails, editdetails;
         RatingBar productrating;
         // CardView viewdetails;
@@ -320,6 +336,7 @@ public class StoreServiceAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             productrating = (RatingBar) itemView.findViewById(R.id.productrating);
             deleteproduct = (ImageView) itemView.findViewById(R.id.deleteproduct);
             mEnquiry = (ImageView) itemView.findViewById(R.id.enquiry);
+            mNote = (ImageView) itemView.findViewById(R.id.addnote);
         }
     }
 }

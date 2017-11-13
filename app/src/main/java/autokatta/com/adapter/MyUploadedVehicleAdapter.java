@@ -69,6 +69,7 @@ import autokatta.com.response.ProfileGroupResponse;
 import autokatta.com.view.AddManualEnquiry;
 import autokatta.com.view.BussinessChatActivity;
 import autokatta.com.view.EnquiredPersonsActivity;
+import autokatta.com.view.InventoryNotesActivity;
 import autokatta.com.view.MyVehicleQuotationListActivity;
 import autokatta.com.view.VehicleDetails;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
@@ -251,6 +252,7 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<RecyclerView.
                     Button mSold = (Button) view.findViewById(R.id.delete);
                     Button mViewQuote = (Button) view.findViewById(R.id.view_quotation);
                     Button mOfferRecived = (Button) view.findViewById(R.id.offerrecived);
+                    Button mAddNote = (Button) view.findViewById(R.id.addnote);
 
                     final Dialog mBottomSheetDialog = new Dialog(activity, R.style.MaterialDialogSheet);
                     mBottomSheetDialog.setContentView(view);
@@ -385,6 +387,25 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<RecyclerView.
                         }
                     });
 
+
+
+
+                    /*Add Notes*/
+
+                    mAddNote.setOnClickListener(new OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent intent1 = new Intent(activity, InventoryNotesActivity.class);
+                            intent1.putExtra("vehicle_id",  mMainList.get(holder.getAdapterPosition()).getVehicleId());
+                            intent1.putExtra("newvehicle_id", 0);
+                            intent1.putExtra("product_id", 0);
+                            intent1.putExtra("service_id", 0);
+                            intent1.putExtra("contact",  mMainList.get(holder.getAdapterPosition()).getContactVehicle());
+                            intent1.putExtra("image",  vimages.get(0));
+
+                            activity.startActivity(intent1);
+                        }
+                    });
                 /*
                 Transfer Stock listener...
                  */
@@ -760,7 +781,7 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<RecyclerView.
                                                 mDealerName.setText(success.getDealerName());
                                                 mStockYardNAme.setText(success.getStockYardName());
                                                 mStockYardAddresss.setText(success.getStockYardAddress());
-                                               // mClientName.setText(success.getClientName());
+                                                mClientName.setText(success.getClientName());
                                                 //  mInwardDate.setText(success.getInwardDate().replace("T00:00:00",""));
                                                 //To set Date
                                                 try {

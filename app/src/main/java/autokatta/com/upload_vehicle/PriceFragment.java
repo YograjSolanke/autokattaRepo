@@ -296,9 +296,9 @@ public class PriceFragment extends Fragment implements RequestNotifier, View.OnC
     }
 
     private void AddEnquiryData() {
-        apiCall.addManualEnquiryData(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "")
+       /* apiCall.addManualEnquiryData(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "")
                 , strExCustName, strExCustContact, strExCustAddress, strExFullAddress, strExInventoryType,
-                strExEnquiryStatus, strExDescription, strExNextFollowUpdate, String.valueOf(vehicle_id));//check if vehicle id or ids
+                strExEnquiryStatus, strExDescription, strExNextFollowUpdate, String.valueOf(vehicle_id));//check if vehicle id or ids*/
     }
 
     private void addvehicleexchangedata() {

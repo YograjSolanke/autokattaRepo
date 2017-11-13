@@ -45,6 +45,13 @@
         android:background="@android:color/transparent" />
 
     <Button
+        android:id="@+id/addnote"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/add_notes"
+        android:background="@android:color/transparent" />
+
+    <Button
         android:id="@+id/Enquiry"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

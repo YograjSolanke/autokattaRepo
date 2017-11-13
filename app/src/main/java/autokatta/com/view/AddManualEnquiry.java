@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.annotation.IdRes;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.telephony.gsm.SmsManager;
@@ -22,12 +23,15 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
+import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -36,6 +40,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import autokatta.com.R;
@@ -46,6 +51,7 @@ import autokatta.com.generic.SetMyDateAndTime;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.AddManualEnquiryResponse;
+import autokatta.com.response.GetSourceOfEnquiryResponse;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import retrofit2.Response;
 
@@ -53,8 +59,8 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
 
     EditText edtName, edtContact, edtAddress, edtDiscussion, edtDate, edtTime;
     AutoCompleteTextView autoAddress;
-    Spinner spnInventory, spnStatus;
-    String myContact;
+    Spinner spnInventory, spnStatus,spnSource;
+    String myContact,mSource;
     LinearLayout txtUser, txtInvite, mInventory;
     ImageView imgContact;
     RelativeLayout mRelative;
@@ -70,6 +76,9 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
     String mId, mKeyword, mTitle, mPrice, mCategory, mBrand, mModel, mClassname, mImage;
     private final int REQUEST_CODE = 99;
     Button mSubmit;
+    EditText othersource;
+    TextInputLayout othersourcelayout;
+    String SOURCE[]=null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,6 +103,9 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
                 autoAddress = (AutoCompleteTextView) findViewById(R.id.autoAddress);
                 spnInventory = (Spinner) findViewById(R.id.spnInventory);
                 spnStatus = (Spinner) findViewById(R.id.spnStatus);
+                spnSource = (Spinner) findViewById(R.id.spnsource);
+                othersource = (EditText) findViewById(R.id.editothersource);
+                othersourcelayout = (TextInputLayout) findViewById(R.id.othersourcelayout);
                 edtDate = (EditText) findViewById(R.id.edtDate);
                 edtTime = (EditText) findViewById(R.id.edtTime);
                 txtUser = (LinearLayout) findViewById(R.id.txtUser);
@@ -104,8 +116,9 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
                 mInventory = (LinearLayout) findViewById(R.id.selctinventory);
                 mSubmit = (Button) findViewById(R.id.sub);
 
-
+                getSourceofenquiry();
                 RadioGroup mRadioGroup = (RadioGroup) findViewById(R.id.exchange);
+                RadioGroup mFinanceRadioGroup = (RadioGroup) findViewById(R.id.financegrp);
                 mRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                     @Override
                     public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
@@ -137,7 +150,42 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
                         }
                     }
                 });
+                mFinanceRadioGroup.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
+                        if (checkedId == R.id.financeyes) {
+                           /* View view = getLayoutInflater().inflate(R.layout.custom_enquiry_finance_info, null);
+                            ImageView mClose = (ImageView) view.findViewById(R.id.close);
+                            Button mAdd = (Button) view.findViewById(R.id.submit);
+                            EditText mLoanAmount = (EditText) view.findViewById(R.id.loanamt);
+                            EditText mLoanPer = (EditText) view.findViewById(R.id.loanpercent);
+                            AutoCompleteTextView mFinancerName = (AutoCompleteTextView) view.findViewById(R.id.financername);
 
+                            mBottomSheetDialog = new Dialog(AddManualEnquiry.this, R.style.MaterialDialogSheet);
+                            mBottomSheetDialog.setContentView(view);
+                            mBottomSheetDialog.setCancelable(true);
+                            mBottomSheetDialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                            mBottomSheetDialog.getWindow().setGravity(Gravity.BOTTOM);
+                            mBottomSheetDialog.show();
+
+                            mClose.setOnClickListener(new OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    mBottomSheetDialog.dismiss();
+                                }
+                            });
+
+                            mAdd.setOnClickListener(new OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+
+                                }
+                            });
+*/
+
+                        }
+                    }
+                });
                 Keyword = (TextView) findViewById(R.id.keyword);
                 Title = (TextView) findViewById(R.id.settitle);
                 Category = (TextView) findViewById(R.id.setcategory);
@@ -325,13 +373,25 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
                             } /*else if (spnInventory.getSelectedItemPosition() == 0 && custInventoryType.equalsIgnoreCase("")) {
                                 CustomToast.customToast(getApplicationContext(), "Please provide inventory");
                                 spnInventory.requestFocus();
-                            } */ else if (spnStatus.getSelectedItemPosition() == 0) {
+                            } */ else if (spnStatus.getSelectedItem().toString().equalsIgnoreCase("select enquiry status")) {
                                 CustomToast.customToast(getApplicationContext(), "Please provide status");
                                 spnStatus.requestFocus();
-                            } /*else if (discussion.equals("")) {
-                    edtDiscussion.setError("Enter discussion data");
-                    edtDiscussion.requestFocus();
-                }*/ else if (nextFollowupDate.equals("") || nextFollowupDate.startsWith(" ")) {
+                            } else if (spnStatus.getSelectedItem().toString().equalsIgnoreCase("other")&& othersource.getText().toString().equalsIgnoreCase("")){
+                                othersource.setError("Please enter status");
+                                othersource.setFocusable(true);
+                            }else if (spnSource.getSelectedItem().toString().equalsIgnoreCase("select source of enquiry")) {
+                                CustomToast.customToast(getApplicationContext(), "Please provide source");
+                                spnStatus.requestFocus();
+                            } else if (!spnSource.getSelectedItem().toString().equalsIgnoreCase("select source of enquiry")&&!spnSource.getSelectedItem().toString().equalsIgnoreCase("other")) {
+                                mSource=spnSource.getSelectedItem().toString();
+                            } else if (spnSource.getSelectedItem().toString().equalsIgnoreCase("other")&& othersource.getText().toString().equalsIgnoreCase("")){
+                                othersource.setError("Please enter source");
+                                othersource.setFocusable(true);
+                            }else if (spnSource.getSelectedItem().toString().equalsIgnoreCase("other")){
+                                addsource(othersource.getText().toString());
+                                mSource=othersource.getText().toString();
+                            }
+                            else if (nextFollowupDate.equals("") || nextFollowupDate.startsWith(" ")) {
                                 edtDate.setError("Enter Date");
                                 edtDate.requestFocus();
                             } else {
@@ -363,7 +423,6 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
                     }
                 });
 
-
                 spnInventory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -392,6 +451,16 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
     private void checkUser(String contact) {
         ApiCall mApiCall = new ApiCall(this, this);
         mApiCall.registrationContactValidation(contact);
+    }
+
+    private void addsource(String othersource) {
+        ApiCall mApiCall = new ApiCall(this, this);
+        mApiCall.addOthersource(othersource);
+    }
+
+    private void getSourceofenquiry() {
+        ApiCall mApiCall = new ApiCall(this, this);
+        mApiCall.getSourceOfEnquiry();
     }
 
     private void sendSMSMessage(String con, String msg) {
@@ -520,6 +589,17 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
                 }*/ else if (nextFollowupDate.equals("") || nextFollowupDate.startsWith(" ")) {
                     edtDate.setError("Enter Date");
                     edtDate.requestFocus();
+                } else if (spnSource.getSelectedItem().toString().equalsIgnoreCase("select source of enquiry")) {
+                    CustomToast.customToast(getApplicationContext(), "Please provide source");
+                    spnStatus.requestFocus();
+                } else if (!spnSource.getSelectedItem().toString().equalsIgnoreCase("select source of enquiry")&&!spnSource.getSelectedItem().toString().equalsIgnoreCase("other")) {
+                    mSource=spnSource.getSelectedItem().toString();
+                } else if (spnSource.getSelectedItem().toString().equalsIgnoreCase("other")&& othersource.getText().toString().equalsIgnoreCase("")){
+                    othersource.setError("Please enter source");
+                    othersource.setFocusable(true);
+                }else if (spnSource.getSelectedItem().toString().equalsIgnoreCase("other")){
+                    addsource(othersource.getText().toString());
+                    mSource=othersource.getText().toString();
                 } else {
                     Bundle bundle = new Bundle();
                     bundle.putString("spinnerValue", spnInventory.getSelectedItem().toString());
@@ -531,6 +611,8 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
                     bundle.putString("custEnquiryStatus", custEnquiryStatus);
                     bundle.putString("discussion", discussion);
                     bundle.putString("nextFollowupDate", nextFollowupDate);
+                    bundle.putString("nextFollowupDate", nextFollowupDate);
+                    bundle.putString("source", mSource);
 
                     ActivityOptions options = ActivityOptions.makeCustomAnimation(AddManualEnquiry.this, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
                     Intent intent = new Intent(getApplicationContext(), ManualEnquiryVehicleList.class);
@@ -550,7 +632,7 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
                                 String nextFollowupDate, String addArray) {
         ApiCall mApiCall = new ApiCall(this, this);
         mApiCall.addManualEnquiryData(myContact, custName, custContact, custAddress, custFullAddress, custInventoryType,
-                custEnquiryStatus, discussion, nextFollowupDate, addArray);
+                custEnquiryStatus, discussion, nextFollowupDate, addArray,mSource);
     }
 
 
@@ -616,7 +698,37 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
                     } else {
                         CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
                     }
-                } /*else if (response.body() instanceof GetInventoryResponse) {
+                }else if (response.body() instanceof GetSourceOfEnquiryResponse) {
+                    GetSourceOfEnquiryResponse moduleResponse = (GetSourceOfEnquiryResponse) response.body();
+                    final List<String> source = new ArrayList<>();
+                    if (!moduleResponse.getSuccess().isEmpty()) {
+                        source.add("Select Industry");
+                        for (GetSourceOfEnquiryResponse.Success message : moduleResponse.getSuccess()) {
+                            source.add(message.getSource());
+                        }
+                        source.add("Other");
+                        SOURCE = new String[source.size()];
+                        SOURCE = (String[]) source.toArray(SOURCE);
+                        ArrayAdapter<String> dataadapter = new ArrayAdapter<>(getApplicationContext(), R.layout.registration_spinner, SOURCE);
+                        spnSource.setAdapter(dataadapter);
+
+                        spnSource.setOnItemSelectedListener(new OnItemSelectedListener() {
+                            @Override
+                            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                                if (spnSource.getSelectedItem().toString().equalsIgnoreCase("other"))
+                                {
+                                    othersourcelayout.setVisibility(View.VISIBLE);
+                                }
+                            }
+
+                            @Override
+                            public void onNothingSelected(AdapterView<?> adapterView) {
+
+                            }
+                        });
+                    } else
+                        CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
+                }  /*else if (response.body() instanceof GetInventoryResponse) {
                     GetInventoryResponse mInventoryResponse = (GetInventoryResponse) response.body();
                     if (mInventoryResponse.getSuccess() != null) {
                         mItemList.clear();

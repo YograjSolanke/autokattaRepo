@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/add_manual"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginEnd="@dimen/text_margin_top"
-    android:layout_marginStart="@dimen/text_margin_top"
-    android:layout_marginTop="@dimen/text_margin_top">
+                android:id="@+id/add_manual"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/text_margin_top"
+                android:layout_marginStart="@dimen/text_margin_top"
+                android:layout_marginTop="@dimen/text_margin_top">
 
     <android.support.v4.widget.NestedScrollView
         android:id="@+id/scroll_view"
@@ -25,18 +25,18 @@
                 android:id="@+id/details"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
-                android:background="@color/edit_background">
+                android:background="@color/edit_background"
+                android:visibility="gone">
 
-                <include layout="@layout/business_chat_module" />
+                <include layout="@layout/business_chat_module"/>
 
             </RelativeLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:layout_marginTop="10dp"
+                android:orientation="horizontal"
                 android:weightSum="2">
 
                 <TextView
@@ -44,7 +44,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.4"
                     android:text="@string/name"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"/>
 
                 <EditText
                     android:id="@+id/edtName"
@@ -55,7 +55,7 @@
                     android:hint="@string/name"
                     android:paddingEnd="@dimen/card_margin"
                     android:paddingStart="@dimen/card_margin"
-                    android:textColor="#708090" />
+                    android:textColor="#708090"/>
             </LinearLayout>
 
             <LinearLayout
@@ -70,7 +70,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.65"
                     android:text="@string/contact_enquiry"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"/>
 
                 <EditText
                     android:id="@+id/edtContact"
@@ -85,7 +85,7 @@
                     android:maxLines="1"
                     android:paddingEnd="@dimen/card_margin"
                     android:paddingStart="@dimen/card_margin"
-                    android:textColor="#708090" />
+                    android:textColor="#708090"/>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -101,7 +101,7 @@
                         android:layout_gravity="center"
                         android:contentDescription="@string/app_name"
                         android:src="@drawable/ic_contact_phone_black_24dp"
-                        android:visibility="visible" />
+                        android:visibility="visible"/>
                 </LinearLayout>
 
             </LinearLayout>
@@ -126,7 +126,7 @@
                         android:gravity="center"
                         android:text="@string/go_profile"
                         android:textColor="@color/zxing_custom_possible_result_points"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -143,7 +143,7 @@
                         android:gravity="center"
                         android:text="Invite"
                         android:textColor="@color/zxing_custom_possible_result_points"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"/>
 
                 </LinearLayout>
             </LinearLayout>
@@ -160,7 +160,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.4"
                     android:text="@string/address_manual"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"/>
 
                 <AutoCompleteTextView
                     android:id="@+id/autoAddress"
@@ -171,7 +171,7 @@
                     android:hint="@string/address"
                     android:paddingEnd="@dimen/card_margin"
                     android:paddingStart="@dimen/card_margin"
-                    android:textColor="#708090" />
+                    android:textColor="#708090"/>
             </LinearLayout>
 
             <LinearLayout
@@ -183,10 +183,10 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:layout_weight="0.6"
                     android:text="@string/exchange"
-                    android:layout_gravity="center"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"/>
 
                 <RadioGroup
                     android:id="@+id/exchange"
@@ -199,12 +199,12 @@
                         android:id="@+id/exchangeYes"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/yes" />
+                        android:text="@string/yes"/>
 
                     <RadioButton
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/no" />
+                        android:text="@string/no"/>
                 </RadioGroup>
 
             </LinearLayout>
@@ -350,12 +350,13 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:layout_weight="0.6"
                     android:text="@string/finance"
-                    android:layout_gravity="center"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"/>
 
                 <RadioGroup
+                    android:id="@+id/financegrp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1.4"
@@ -364,12 +365,13 @@
                     <RadioButton
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/yes" />
+                        android:text="@string/yes"/>
 
                     <RadioButton
+                        android:id="@+id/financeyes"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/no" />
+                        android:text="@string/no"/>
                 </RadioGroup>
 
             </LinearLayout>
@@ -386,7 +388,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
                     android:text="@string/completeAddress_manual"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"/>
 
                 <EditText
                     android:id="@+id/edtAddress"
@@ -397,7 +399,7 @@
                     android:hint="@string/completeAddress"
                     android:paddingEnd="@dimen/card_margin"
                     android:paddingStart="@dimen/card_margin"
-                    android:textColor="#708090" />
+                    android:textColor="#708090"/>
             </LinearLayout>
 
             <LinearLayout
@@ -412,7 +414,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
                     android:text="@string/discussion"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"/>
 
                 <EditText
                     android:id="@+id/edtDiscussion"
@@ -423,7 +425,7 @@
                     android:hint="@string/discussion"
                     android:paddingEnd="@dimen/card_margin"
                     android:paddingStart="@dimen/card_margin"
-                    android:textColor="#708090" />
+                    android:textColor="#708090"/>
             </LinearLayout>
 
             <LinearLayout
@@ -438,7 +440,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/followdate"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"/>
 
                 <EditText
                     android:id="@+id/edtDate"
@@ -452,7 +454,7 @@
                     android:inputType="datetime"
                     android:paddingEnd="@dimen/card_margin"
                     android:paddingStart="@dimen/card_margin"
-                    android:textColor="#708090" />
+                    android:textColor="#708090"/>
 
                 <EditText
                     android:id="@+id/edtTime"
@@ -465,7 +467,7 @@
                     android:inputType="datetime"
                     android:paddingEnd="@dimen/card_margin"
                     android:paddingStart="@dimen/card_margin"
-                    android:textColor="#708090" />
+                    android:textColor="#708090"/>
             </LinearLayout>
 
             <LinearLayout
@@ -480,7 +482,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_weight="0.4"
                     android:text="@string/select"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"/>
 
                 <RelativeLayout
                     android:id="@+id/relStatus"
@@ -505,7 +507,7 @@
                         android:background="@android:color/transparent"
                         android:entries="@array/ManualEnquiryStatus"
                         android:gravity="center"
-                        android:spinnerMode="dropdown" />
+                        android:spinnerMode="dropdown"/>
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -514,18 +516,18 @@
                         android:layout_centerVertical="true"
                         android:layout_gravity="center"
                         android:contentDescription="@string/app_name"
-                        android:src="@mipmap/ic_down" />
+                        android:src="@mipmap/ic_down"/>
 
                 </RelativeLayout>
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/selctinventory"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:orientation="horizontal"
-                android:weightSum="2"
-                android:id="@+id/selctinventory">
+                android:weightSum="2">
 
                 <TextView
                     android:layout_width="0dp"
@@ -533,7 +535,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_weight="0.4"
                     android:text="@string/select"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"/>
 
                 <RelativeLayout
                     android:id="@+id/relInventory"
@@ -558,7 +560,7 @@
                         android:background="@android:color/transparent"
                         android:entries="@array/UserInventory"
                         android:gravity="center"
-                        android:spinnerMode="dropdown" />
+                        android:spinnerMode="dropdown"/>
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -567,25 +569,98 @@
                         android:layout_centerVertical="true"
                         android:layout_gravity="center"
                         android:contentDescription="@string/app_name"
-                        android:src="@mipmap/ic_down" />
+                        android:src="@mipmap/ic_down"/>
 
                 </RelativeLayout>
             </LinearLayout>
 
-            <Button
+        <LinearLayout
+            android:id="@+id/selctinventory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="0.4"
+                android:text="@string/select"
+                android:textStyle="bold"/>
+
+            <RelativeLayout
+                android:id="@+id/relInventory"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/spinner_height"
+                android:layout_marginEnd="3dp"
+                android:layout_marginTop="@dimen/card_margin"
+                android:layout_weight="1.6"
+                android:background="@drawable/spinner_background"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingEnd="@dimen/card_margin"
+                android:paddingStart="@dimen/card_margin">
+
+                <Spinner
+                    android:id="@+id/spnsource"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@android:color/transparent"
+                    android:gravity="center"
+                    android:spinnerMode="dropdown"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center"
+                    android:contentDescription="@string/app_name"
+                    android:src="@mipmap/ic_down"/>
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/othersourcelayout"
                 android:layout_width="match_parent"
+                android:layout_height="@dimen/text_layout_height"
+                android:visibility="gone">
+
+                <EditText
+                    android:id="@+id/editothersource"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="@dimen/card_margin"
+                    android:drawableStart="@mipmap/ic_account_star"
+                    android:hint="@string/enter_your_profession"
+                    android:maxLines="1"
+                    android:paddingEnd="@dimen/margin_heading_top"
+                    android:paddingStart="@dimen/margin_heading_top"
+                    android:textColor="@color/textColor"
+                    android:textColorHint="@color/hintColor"
+                    android:textSize="15sp" />
+            </android.support.design.widget.TextInputLayout>
+            </RelativeLayout>
+        </LinearLayout>
+
+            <Button
                 android:id="@+id/sub"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
+                android:layout_marginTop="5dp"
                 android:background="@color/background"
+                android:text="@string/submit"
                 android:textColor="@color/white"
                 android:textStyle="bold"
-                android:layout_marginTop="5dp"
-                android:text="@string/submit"
                 android:visibility="gone"/>
             <!-- </LinearLayout>-->
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 
-    <include layout="@layout/error_view" />
+    <include layout="@layout/error_view"/>
 </RelativeLayout>
