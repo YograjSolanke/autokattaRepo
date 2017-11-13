@@ -58,6 +58,7 @@ import autokatta.com.fragment.WallNotificationFragment;
 import autokatta.com.generic.Base64;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.networkreceiver.ConnectionDetector;
+import autokatta.com.notifications.NotificationAddEmployeeActivity;
 import autokatta.com.other.CustomToast;
 import autokatta.com.other.DemoDelAct;
 import autokatta.com.other.EnquiryActivity;
@@ -206,6 +207,15 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
                 }
                 case "New": {
 
+                }
+
+                case "AddEmployee": {
+                    Bundle mBundle = new Bundle();
+                    mBundle.putString("like", status);
+                    mBundle.putString("firebaseContact", contact);
+                    Intent intent = new Intent(getApplicationContext(), NotificationAddEmployeeActivity.class);
+                    intent.putExtras(mBundle);
+                    startActivity(intent);
                 }
 
             }
