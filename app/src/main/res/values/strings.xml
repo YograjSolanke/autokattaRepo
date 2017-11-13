@@ -1021,6 +1021,7 @@
     <string name="title_activity_browser_view" translatable="false">BrowserView</string>
 
     <string name="joinGroup">Join Group</string>
+    <string name="title_activity_notification_add_employee" translatable="false">NotificationAddEmployeeActivity</string>
 
 
 </resources>
