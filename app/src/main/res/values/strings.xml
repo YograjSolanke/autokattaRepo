@@ -737,6 +737,7 @@
 
     <string name="transfer_stock">Transfer Stock</string>
     <string name="send_quot">Send Quot</string>
+    <string name="add_notes">Add Note</string>
     <string name="title_activity_store_info" translatable="false">StoreInfoActivity</string>
     <string name="title_activity_store_product" translatable="false">StoreProductActivity</string>
     <string name="title_activity_store_service" translatable="false">StoreServiceActivity</string>
