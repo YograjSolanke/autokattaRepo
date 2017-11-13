@@ -1523,8 +1523,8 @@ public interface ServiceApi {
     Call<GroupDetailedResponse> _autokattaGetGroupDetails(@Query("GroupID") int groupID);
 
 
-    /* AddDataForSuggestions*/
-    @POST("AddDataForSuggestions")
+    /* AddStoreEmployee*/
+    @POST("AddStoreEmployee")
     Call<String> _autokattaAddEmployeeForStore(@Query("Name") String Name,
                                                @Query("ContactNo") String ContactNo,
                                                @Query("StoreContactNo") String StoreContactNo,

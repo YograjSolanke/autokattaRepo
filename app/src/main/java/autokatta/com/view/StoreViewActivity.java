@@ -796,6 +796,8 @@ Call Intent...
 
             case R.id.add_employee:
                 Intent intentAddEmp = new Intent(StoreViewActivity.this, AddEmployeeActivity.class);
+                b.putInt("store_id", store_id);
+                intentAddEmp.putExtras(b);
                 startActivity(intentAddEmp, options.toBundle());
                 break;
         }

@@ -76,6 +76,8 @@ public class AddEmployeeActivity extends AppCompatActivity implements RequestNot
 
                 if (getIntent().getExtras() != null) {
                     store_id = getIntent().getExtras().getInt("store_id", 0);
+
+                    System.out.println("output=" + store_id);
                 }
 
             }
@@ -226,6 +228,8 @@ public class AddEmployeeActivity extends AppCompatActivity implements RequestNot
     @Override
     public void notifyString(String str) {
         if (str != null) {
+
+            System.out.println("output=" + str);
             if (str.equalsIgnoreCase("Success")) {
                 txtUser.setVisibility(View.VISIBLE);
                 //txtInvite.setVisibility(View.GONE);
