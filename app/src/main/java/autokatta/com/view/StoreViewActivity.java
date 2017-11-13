@@ -22,6 +22,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
@@ -107,20 +108,19 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
     LinearLayout mLinear, mAbout, mProducts, mService, mVehicle, mNewVehicle, mVideos, mImages;
     ImageView mBannerImage, mStoreImage;
     TextView mStoreName, mWebSite, mLocation, mLikeCount, mFollowCount, mStoreType;
-    ImageView mCall;
+    //ImageView mCall;
     LinearLayout otherViewLayout;
     ImageView mLike, mUnlike, mRating, mFollow, mUnFollow, mMap, mAddReview;
     private int likecountint, followcountint;
     LikeUnlike likeUnlike = new LikeUnlike();
     GridView androidGridView;
+    private Menu mMenu;
 
     String[] gridViewString = {
-            "About", "Product", "Service", "Used Vehicle", "New Vehicle", "Video's",
-            "Image's",};
+            "About", "Product", "Service", "Used Vehicle", "New Vehicle", "Video's", "Image's",};
 
     int[] gridViewImageId = {
-            R.mipmap.communication, R.mipmap.store_product, R.mipmap.store_service, R.mipmap.store_used_vehicle, R.mipmap.new_vehicle,
-            R.mipmap.videos, R.mipmap.images,
+            R.mipmap.communication, R.mipmap.store_product, R.mipmap.store_service, R.mipmap.store_used_vehicle, R.mipmap.new_vehicle, R.mipmap.videos, R.mipmap.images,
     };
 
     @Override
@@ -185,7 +185,7 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
                     mLikeCount = (TextView) findViewById(R.id.likeCount);
                     mFollowCount = (TextView) findViewById(R.id.followCount);
                     mStoreType = (TextView) findViewById(R.id.storeType);
-                    mCall = (ImageView) findViewById(R.id.call);
+                    //mCall = (ImageView) findViewById(R.id.call);
 
                     androidGridView = (GridView) findViewById(R.id.store_grid_view);
 
@@ -204,7 +204,7 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
                         store_id = getIntent().getExtras().getInt("store_id");
                         storeOtherContact = getIntent().getExtras().getString("StoreContact");
                         str = getIntent().getExtras().getString("flow_tab_name");
-                        Log.i("storeOtherContact", "->" + store_id);
+                        Log.i("storeOtherContact", "->" + storeOtherContact);
                         getOtherStore(myContact, store_id);
                     }
 
@@ -221,7 +221,7 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
         mTeamServices.setOnClickListener(this);
         mTeamVehicle.setOnClickListener(this);
         mShare.setOnClickListener(this);
-        mCall.setOnClickListener(this);
+        //mCall.setOnClickListener(this);
         mWebSite.setOnClickListener(this);
         mBannerImage.setOnClickListener(this);
         mStoreImage.setOnClickListener(this);
@@ -308,6 +308,9 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
         });
     }
 
+    /*
+
+     */
     public void hideFloatingButton() {
         menuRed.hideMenu(true);
 
@@ -699,14 +702,14 @@ Call Intent...
                 CustomToast.customToast(getApplicationContext(), "Coming soon... please be connected for update..");
                 break;
 
-            case R.id.call:
+            /*case R.id.call:
                 if (storeAdmins.size() == 0)
                     call(mOtherContact);
                 else
                     getCallContactList();
 
                 break;
-
+*/
             case R.id.web:
                 String website = mWebSite.getText().toString().trim();
                 goToUrl(website);
@@ -933,7 +936,7 @@ Call Intent...
                     if (mOtherContact.equals(myContact)) {
                         mAdd.setVisibility(View.VISIBLE);
                         otherViewLayout.setVisibility(View.GONE);
-                        mCall.setVisibility(View.GONE);
+                        //mCall.setVisibility(View.GONE);
                         mViewReview.setVisibility(View.VISIBLE);
                         AddSuggestionData(store_id);
                     }
@@ -1037,10 +1040,27 @@ Call Intent...
 
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.store_call, menu);
+        mMenu = menu;
+        menu.findItem(R.id.call).setVisible(false);
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
                 onBackPressed();
+                break;
+
+            case R.id.call:
+                if (storeAdmins.size() == 0) {
+                    call(mOtherContact);
+                } else {
+                    getCallContactList();
+                }
                 break;
         }
         return super.onOptionsItemSelected(item);
