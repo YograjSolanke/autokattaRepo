@@ -1533,4 +1533,15 @@ public interface ServiceApi {
                                                @Query("Description") String Description,
                                                @Query("Status") String Status,
                                                @Query("Permission") String Permission);
+
+    /*Source Of enquiry*/
+    @GET("GetSourceOfEnquiry")
+    Call<GetSourceOfEnquiryResponse> _autokattagetsource();
+
+    /*add source*/
+    @POST("AddSourceOfEnquiry")
+    Call<String> addOthersource(@Query("Source") String source);
+
+
+
 }

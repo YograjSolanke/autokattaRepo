@@ -9579,6 +9579,81 @@ get ExchangeMela Analytics Data
     }
 
 
+/*Get Source of enquiry*/
+
+    public void getSourceOfEnquiry() {
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<GetSourceOfEnquiryResponse> categoryResponseCall = serviceApi._autokattagetsource();
+                categoryResponseCall.enqueue(new Callback<GetSourceOfEnquiryResponse>() {
+                    @Override
+                    public void onResponse(Call<GetSourceOfEnquiryResponse> call, Response<GetSourceOfEnquiryResponse> response) {
+                        Log.i("loo", "" + response);
+                        mNotifier.notifySuccess(response);
+                    }
+
+                    @Override
+                    public void onFailure(Call<GetSourceOfEnquiryResponse> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+            } else {
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
+
+    //add other user source in database
+    public void addOthersource(String name) {
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+
+                //JSON to Gson conversion
+                Gson gson = new GsonBuilder()
+                        .setLenient()
+                        .create();
+
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create(gson))
+                        .client(initLog().build())
+                        .build();
+
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<String> forgetPasswordResponseCall = serviceApi.addOthersource(name);
+                forgetPasswordResponseCall.enqueue(new Callback<String>() {
+                    @Override
+                    public void onResponse(Call<String> call, Response<String> response) {
+                        mNotifier.notifyString(response.body());
+                    }
+
+                    @Override
+                    public void onFailure(Call<String> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+            } else {
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
     /***
      * Retrofit Logs
      ***/
