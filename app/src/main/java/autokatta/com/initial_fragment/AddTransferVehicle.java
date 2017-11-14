@@ -8,8 +8,10 @@ import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.telephony.SmsManager;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +20,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import java.util.List;
 
@@ -85,6 +86,12 @@ public class AddTransferVehicle extends Fragment implements RequestNotifier, Vie
                 startActivity(intent);
             }
         });
+        txtInvite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sendSMSMessage(mContact.getText().toString());
+            }
+        });
 
         address.setAdapter(new GooglePlacesAdapter(getActivity(), R.layout.simple));
         mContact.addTextChangedListener(new TextWatcher() {
@@ -99,14 +106,17 @@ public class AddTransferVehicle extends Fragment implements RequestNotifier, Vie
                     if (!myContact.equalsIgnoreCase(s.toString()))
                         checkUser(s.toString());
                     else {
-                        Toast.makeText(getActivity(), "Admin not allowed", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getActivity(), "Admin not allowed", Toast.LENGTH_SHORT).show();
+                        mContact.setError("Admin not allowed");
                     }
                 }
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-
+                txtInvite.setVisibility(View.GONE);
+                txtUser.setVisibility(View.GONE);
+                linear_transfer.setVisibility(View.GONE);
             }
         });
         return mTransferVehicle;
@@ -156,22 +166,30 @@ public class AddTransferVehicle extends Fragment implements RequestNotifier, Vie
                 if (resultCode == Activity.RESULT_OK) {
                     try {
                         Uri contactData = data.getData();
-                        Cursor c = getActivity().getContentResolver().query(contactData, null, null, null, null);
-                        if (c.moveToFirst()) {
-                            String contactId = c.getString(c.getColumnIndex(ContactsContract.Contacts._ID));
-                            String hasNumber = c.getString(c.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER));
-                            String num = "";
-                            if (Integer.valueOf(hasNumber) == 1) {
-                                Cursor numbers = getActivity().getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = " + contactId, null, null);
-                                while (numbers.moveToNext()) {
-                                    num = numbers.getString(numbers.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
-                                    num = num.replaceAll("-", "");
-                                    num = num.replace("(", "").replace(")", "").replaceAll(" ", "").replaceAll("[\\D]", "");
+                        Cursor c = null;
+                        if (contactData != null) {
+                            c = getActivity().getContentResolver().query(contactData, null, null, null, null);
 
-                                    if (num.length() > 10)
-                                        num = num.substring(num.length() - 10);
-                                    mContact.setText(num);
+                            assert c != null;
+                            if (c.moveToFirst()) {
+                                String contactId = c.getString(c.getColumnIndex(ContactsContract.Contacts._ID));
+                                String hasNumber = c.getString(c.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER));
+                                String num = "";
+                                if (Integer.valueOf(hasNumber) == 1) {
+                                    Cursor numbers = getActivity().getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = " + contactId, null, null);
+                                    assert numbers != null;
+                                    while (numbers.moveToNext()) {
+                                        num = numbers.getString(numbers.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+                                        num = num.replaceAll("-", "");
+                                        num = num.replace("(", "").replace(")", "").replaceAll(" ", "").replaceAll("[\\D]", "");
+
+                                        if (num.length() > 10)
+                                            num = num.substring(num.length() - 10);
+                                        mContact.setText(num);
+                                    }
+                                    numbers.close();
                                 }
+                                c.close();
                             }
                         }
                         break;
@@ -230,8 +248,20 @@ public class AddTransferVehicle extends Fragment implements RequestNotifier, Vie
                             reason_for_transfer.getText().toString(), address.getText().toString(), full_address.getText().toString(),
                             description.getText().toString(), myContact, "");
                 }
-                //add status param
                 break;
+        }
+    }
+
+    private void sendSMSMessage(String con) {
+        Log.i("Send SMS", "");
+
+        try {
+            SmsManager smsManager = SmsManager.getDefault();
+            smsManager.sendTextMessage(con, null, "Hi I am using Autokatta\n Please click below link to download and connect with me for more https://play.google.com/store/apps/details?id=autokatta.com", null, null);
+            CustomToast.customToast(getActivity(), "SMS sent.");
+        } catch (Exception e) {
+            CustomToast.customToast(getActivity(), "SMS failed, please try again.");
+            e.printStackTrace();
         }
     }
 }
