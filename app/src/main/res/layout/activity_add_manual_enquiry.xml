@@ -363,12 +363,12 @@
                     android:orientation="horizontal">
 
                     <RadioButton
+                        android:id="@+id/financeyes"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/yes"/>
 
                     <RadioButton
-                        android:id="@+id/financeyes"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/no"/>
@@ -575,11 +575,12 @@
             </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/selctinventory"
+            android:id="@+id/selectsource"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:orientation="horizontal"
+            android:layout_marginBottom="30dp"
             android:weightSum="2">
 
             <TextView
@@ -591,7 +592,7 @@
                 android:textStyle="bold"/>
 
             <RelativeLayout
-                android:id="@+id/relInventory"
+                android:id="@+id/relsource"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/spinner_height"
                 android:layout_marginEnd="3dp"
@@ -628,6 +629,8 @@
                 android:id="@+id/othersourcelayout"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/text_layout_height"
+                android:layout_below="@+id/spnsource"
+                android:layout_marginBottom="20dp"
                 android:visibility="gone">
 
                 <EditText
@@ -635,8 +638,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:drawablePadding="@dimen/card_margin"
+                    android:layout_marginBottom="15dp"
                     android:drawableStart="@mipmap/ic_account_star"
-                    android:hint="@string/enter_your_profession"
+                    android:hint="Enter Source of Enquiry"
                     android:maxLines="1"
                     android:paddingEnd="@dimen/margin_heading_top"
                     android:paddingStart="@dimen/margin_heading_top"

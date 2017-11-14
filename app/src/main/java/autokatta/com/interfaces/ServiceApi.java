@@ -1260,7 +1260,8 @@ public interface ServiceApi {
                                                  @Query("custContact") String custContact, @Query("custAddress") String custAddress
             , @Query("custFullAddress") String custFullAddress, @Query("custInventoryType") String custInventoryType,
                                                  @Query("custEnquiryStatus") String custEnquiryStatus, @Query("discussion") String discussion,
-                                                 @Query("nextFollowupDate") String nextFollowupDate, @Query("idsList") String idsList ,@Query("Source") String Source);
+                                                 @Query("nextFollowupDate") String nextFollowupDate, @Query("idsList") String idsList, @Query("Source") String Source, @Query("financerName") String financerName,
+                                                 @Query("LoanAmount") int LoanAmount, @Query("LoanPercent") float LoanPercent);
 
     //Get Manual enquiry
     @GET("GetEnquiredPersonsData")
@@ -1269,11 +1270,11 @@ public interface ServiceApi {
     //Post Manual enquiry
     @POST("AddEnquiryData")
     Call<AddManualEnquiryResponse> _autokattaAddManualEnquiry(@Query("MyContact") String myContact, @Query("custName") String custName,
-                                                              @Query("custContact") String custContact, @Query("custAddress") String custAddress
-            , @Query("custFullAddress") String custFullAddress,
+                                                              @Query("custContact") String custContact, @Query("custAddress") String custAddress, @Query("custFullAddress") String custFullAddress,
                                                               @Query("custInventoryType") String custInventoryType,
                                                               @Query("custEnquiryStatus") String custEnquiryStatus, @Query("discussion") String discussion,
-                                                              @Query("nextFollowupDate") String nextFollowupDate, @Query("idsList") String idsList,@Query("Source") String Source);
+                                                              @Query("nextFollowupDate") String nextFollowupDate, @Query("idsList") String idsList, @Query("Source") String Source,
+                                                              @Query("financerName") String financerName, @Query("LoanAmount") int LoanAmount, @Query("LoanPercent") float LoanPercent);
 
     //Get Inventory Data...
     @GET("GetMyInventoryData")
@@ -1394,7 +1395,7 @@ public interface ServiceApi {
     Call<String> _autokattaVehicleRepoInsurance(@Query("AccountNumber") String AccountNumber, @Query("BorrowerName") String BorrowerName,
                                                 @Query("BorrowerContact") String BorrowerContact, @Query("BranchCityName") String BranchCityName,
                                                 @Query("BrachMangerName") String BrachMangerName, @Query("BranchContact") String BranchContact,
-                                                @Query("DealerName") String DealerName,@Query("ClientName") String ClientName,
+                                                @Query("DealerName") String DealerName, @Query("ClientName") String ClientName,
                                                 @Query("StockYardName") String StockYardName, @Query("StockYardAddress") String StockYardAddress,
                                                 @Query("InwardDate") String InwardDate, @Query("VehicleID") int VehicleID);
 
@@ -1487,7 +1488,7 @@ public interface ServiceApi {
     @GET("GetContactMedia")
     Call<GetMediaResponse> _autokattaGetContactMedia(@Query("MyContact") String MyContact);
 
- /*get Inventory Note*/
+    /*get Inventory Note*/
     @GET("GetReplayInventoryNote")
     Call<GetReplayInventoryNoteResponse> _autokattaGetInventoryNote(@Query("NewVehicleID") int NewVehicleID, @Query("VehicleID") int VehicleID, @Query("ServiceID") int ServiceID, @Query("ProductID") int ProductID);
 
@@ -1499,10 +1500,10 @@ public interface ServiceApi {
 
     /* Inventory Notes*/
     @POST("AddReplayInventoryNote")
-    Call<String> _autokattaAddInventoryNote(@Query("InventoryNoteID") int InventoryNoteID, @Query("keyword") String keyword,@Query("Contact") String Contact,
-                                           @Query("Message") String Message, @Query("ServiceID") int ServiceID,
-                                           @Query("ProductID") int ProductID, @Query("NewVehicleID") int NewVehicleID, @Query("VehicleID") int VehicleID
-                                         );
+    Call<String> _autokattaAddInventoryNote(@Query("InventoryNoteID") int InventoryNoteID, @Query("keyword") String keyword, @Query("Contact") String Contact,
+                                            @Query("Message") String Message, @Query("ServiceID") int ServiceID,
+                                            @Query("ProductID") int ProductID, @Query("NewVehicleID") int NewVehicleID, @Query("VehicleID") int VehicleID
+    );
 
     /* AddDataForSuggestions*/
     @POST("AddDataForSuggestions")
@@ -1542,6 +1543,14 @@ public interface ServiceApi {
     @POST("AddSourceOfEnquiry")
     Call<String> addOthersource(@Query("Source") String source);
 
+
+    /* get Financer*/
+    @GET("GetFinancierName")
+    Call<GetFinancerNameResponse> _autokattagetFinancername();
+
+    /*add Financer*/
+    @POST("AddAddFinancierName")
+    Call<String> addFienancername(@Query("FinancierName") String FinancierName);
 
 
 }

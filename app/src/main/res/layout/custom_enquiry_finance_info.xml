@@ -3,7 +3,7 @@
               android:id="@+id/popup_window"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:layout_gravity="bottom|center"
+              android:layout_gravity="top"
               android:background="@android:color/white"
               android:orientation="vertical"
               android:padding="10dp">
@@ -29,6 +29,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Loan Percentage"
+        android:inputType="numberDecimal"
         android:labelFor="@+id/reason_for_transfer"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 

@@ -3,6 +3,7 @@ package autokatta.com.view;
 import android.app.Activity;
 import android.app.ActivityOptions;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -17,11 +18,14 @@ import android.telephony.gsm.SmsManager;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
@@ -41,7 +45,9 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import autokatta.com.R;
 import autokatta.com.Registration.InviteFriends;
@@ -49,20 +55,30 @@ import autokatta.com.adapter.GooglePlacesAdapter;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.generic.SetMyDateAndTime;
 import autokatta.com.interfaces.RequestNotifier;
+import autokatta.com.interfaces.ServiceApi;
+import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.AddManualEnquiryResponse;
+import autokatta.com.response.GetFinancerNameResponse;
 import autokatta.com.response.GetSourceOfEnquiryResponse;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Call;
+import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class AddManualEnquiry extends AppCompatActivity implements RequestNotifier, View.OnTouchListener {
 
     EditText edtName, edtContact, edtAddress, edtDiscussion, edtDate, edtTime;
     AutoCompleteTextView autoAddress;
-    Spinner spnInventory, spnStatus,spnSource;
-    String myContact,mSource;
+    Spinner spnInventory, spnStatus, spnSource;
+    String myContact, mSource;
     LinearLayout txtUser, txtInvite, mInventory;
     ImageView imgContact;
+    private ConnectionDetector mConnectionDetector;
     RelativeLayout mRelative;
     android.support.v4.widget.NestedScrollView scrollView;
     TextView mNoData;
@@ -70,6 +86,9 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
     RelativeLayout relCategory, relBrand, relModel, relPrice, mDetails;
     ImageView Image;
     Menu menu;
+    String strFinancername;
+    int strLoanAmt;
+    float strLoanPer;
     String fullpath = "";
     Dialog mBottomSheetDialog;
     //int mSId,mVId,mPId;
@@ -78,7 +97,12 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
     Button mSubmit;
     EditText othersource;
     TextInputLayout othersourcelayout;
-    String SOURCE[]=null;
+    String SOURCE[] = null;
+    final List<String> mFinancerList = new ArrayList<>();
+    final HashMap<String, Integer> mFinancerList1 = new HashMap<>();
+    List<String> parsedDataFinancer= new ArrayList<>();
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,6 +139,7 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
                 txtInvite = (LinearLayout) findViewById(R.id.txtInvite);
                 mInventory = (LinearLayout) findViewById(R.id.selctinventory);
                 mSubmit = (Button) findViewById(R.id.sub);
+                mConnectionDetector = new ConnectionDetector(AddManualEnquiry.this);
 
                 getSourceofenquiry();
                 RadioGroup mRadioGroup = (RadioGroup) findViewById(R.id.exchange);
@@ -154,19 +179,14 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
                     @Override
                     public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
                         if (checkedId == R.id.financeyes) {
-                           /* View view = getLayoutInflater().inflate(R.layout.custom_enquiry_finance_info, null);
+                            mBottomSheetDialog = new Dialog(AddManualEnquiry.this, R.style.MaterialDialogSheet);
+                            LayoutInflater layoutInflater=(LayoutInflater) AddManualEnquiry.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                            final View view = layoutInflater.inflate(R.layout.custom_enquiry_finance_info, null);
                             ImageView mClose = (ImageView) view.findViewById(R.id.close);
                             Button mAdd = (Button) view.findViewById(R.id.submit);
-                            EditText mLoanAmount = (EditText) view.findViewById(R.id.loanamt);
-                            EditText mLoanPer = (EditText) view.findViewById(R.id.loanpercent);
-                            AutoCompleteTextView mFinancerName = (AutoCompleteTextView) view.findViewById(R.id.financername);
-
-                            mBottomSheetDialog = new Dialog(AddManualEnquiry.this, R.style.MaterialDialogSheet);
-                            mBottomSheetDialog.setContentView(view);
-                            mBottomSheetDialog.setCancelable(true);
-                            mBottomSheetDialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-                            mBottomSheetDialog.getWindow().setGravity(Gravity.BOTTOM);
-                            mBottomSheetDialog.show();
+                            final EditText mLoanAmount = (EditText) view.findViewById(R.id.loanamt);
+                            final EditText mLoanPer = (EditText) view.findViewById(R.id.loanpercent);
+                            final AutoCompleteTextView mFinancerName = (AutoCompleteTextView) view.findViewById(R.id.financername);
 
                             mClose.setOnClickListener(new OnClickListener() {
                                 @Override
@@ -175,16 +195,86 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
                                 }
                             });
 
+
+                            try {
+                                if (mConnectionDetector.isConnectedToInternet()) {
+                                    Retrofit retrofit = new Retrofit.Builder()
+                                            .baseUrl(getString(R.string.base_url))
+                                            .addConverterFactory(GsonConverterFactory.create())
+                                            .client(initLog().build())
+                                            .build();
+
+                                    ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                                    Call<GetFinancerNameResponse> add = serviceApi._autokattagetFinancername();
+                                    add.enqueue(new Callback<GetFinancerNameResponse>() {
+                                        @Override
+                                        public void onResponse(Call<GetFinancerNameResponse> call, Response<GetFinancerNameResponse> response) {
+                                            if (response.isSuccessful()) {
+                                                mFinancerList.clear();
+                                                GetFinancerNameResponse mRepo = (GetFinancerNameResponse) response.body();
+                                                for (GetFinancerNameResponse.Success success : mRepo.getSuccess()) {
+                                                    success.setFinancierID(success.getFinancierID());
+                                                    success.setFinancierName(success.getFinancierName());
+                                                    mFinancerList.add(success.getFinancierName());
+                                                    //  mFinancerList1.put(success.getFinancierName(), success.getFinancierID());
+                                                }
+                                                // parsedDataFinancer.addAll(mFinancerList);
+                                                ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(mBottomSheetDialog.getContext(),
+                                                        R.layout.registration_spinner, mFinancerList);
+                                                mFinancerName.setAdapter(dataAdapter);
+
+
+                                            } else {
+                                                CustomToast.customToast(getApplicationContext(), getString(R.string._404));
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onFailure(Call<GetFinancerNameResponse> call, Throwable t) {
+
+                                        }
+                                    });
+                                } else
+                                    CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+
+
                             mAdd.setOnClickListener(new OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
+                                    strFinancername = mFinancerName.getText().toString();
+                                    if (!mFinancerList.contains(strFinancername) && !strFinancername.equalsIgnoreCase("")) {
+                                        addFinancername(strFinancername);
+                                    }
+                                    if (mLoanAmount.getText().toString().equalsIgnoreCase("")) {
+                                        mLoanAmount.setError("Please add Loan Amount");
+                                    } else if (mLoanPer.getText().toString().equalsIgnoreCase("")) {
+                                        mLoanPer.setError("Please add Loan Percentage");
+                                    } else if (mFinancerName.getText().toString().equalsIgnoreCase("")) {
+                                        mFinancerName.setError("Please add Financer Name");
+                                    } else {
+                                        strLoanAmt = Integer.parseInt(mLoanAmount.getText().toString());
+                                        strLoanPer = Float.parseFloat(mLoanPer.getText().toString());
+                                        strFinancername = mFinancerName.getText().toString();
+                                        mBottomSheetDialog.dismiss();
+                                    }
 
                                 }
                             });
-*/
 
-                        }
+                        mBottomSheetDialog.setContentView(view);
+                        mBottomSheetDialog.setCancelable(true);
+                        mBottomSheetDialog.getWindow().setTitle("Finance Info");
+                        mBottomSheetDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+                        mBottomSheetDialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                        mBottomSheetDialog.getWindow().setGravity(Gravity.TOP);
+                        mBottomSheetDialog.show();
                     }
+                }
+
+
                 });
                 Keyword = (TextView) findViewById(R.id.keyword);
                 Title = (TextView) findViewById(R.id.settitle);
@@ -376,22 +466,21 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
                             } */ else if (spnStatus.getSelectedItem().toString().equalsIgnoreCase("select enquiry status")) {
                                 CustomToast.customToast(getApplicationContext(), "Please provide status");
                                 spnStatus.requestFocus();
-                            } else if (spnStatus.getSelectedItem().toString().equalsIgnoreCase("other")&& othersource.getText().toString().equalsIgnoreCase("")){
+                            } else if (spnStatus.getSelectedItem().toString().equalsIgnoreCase("other") && othersource.getText().toString().equalsIgnoreCase("")) {
                                 othersource.setError("Please enter status");
                                 othersource.setFocusable(true);
-                            }else if (spnSource.getSelectedItem().toString().equalsIgnoreCase("select source of enquiry")) {
+                            } else if (spnSource.getSelectedItem().toString().equalsIgnoreCase("select source of enquiry")) {
                                 CustomToast.customToast(getApplicationContext(), "Please provide source");
                                 spnStatus.requestFocus();
-                            } else if (!spnSource.getSelectedItem().toString().equalsIgnoreCase("select source of enquiry")&&!spnSource.getSelectedItem().toString().equalsIgnoreCase("other")) {
-                                mSource=spnSource.getSelectedItem().toString();
-                            } else if (spnSource.getSelectedItem().toString().equalsIgnoreCase("other")&& othersource.getText().toString().equalsIgnoreCase("")){
+                            } else if (!spnSource.getSelectedItem().toString().equalsIgnoreCase("select source of enquiry") && !spnSource.getSelectedItem().toString().equalsIgnoreCase("other")) {
+                                mSource = spnSource.getSelectedItem().toString();
+                            } else if (spnSource.getSelectedItem().toString().equalsIgnoreCase("other") && othersource.getText().toString().equalsIgnoreCase("")) {
                                 othersource.setError("Please enter source");
                                 othersource.setFocusable(true);
-                            }else if (spnSource.getSelectedItem().toString().equalsIgnoreCase("other")){
+                            } else if (spnSource.getSelectedItem().toString().equalsIgnoreCase("other")) {
                                 addsource(othersource.getText().toString());
-                                mSource=othersource.getText().toString();
-                            }
-                            else if (nextFollowupDate.equals("") || nextFollowupDate.startsWith(" ")) {
+                                mSource = othersource.getText().toString();
+                            } else if (nextFollowupDate.equals("") || nextFollowupDate.startsWith(" ")) {
                                 edtDate.setError("Enter Date");
                                 edtDate.requestFocus();
                             } else {
@@ -592,15 +681,18 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
                 } else if (spnSource.getSelectedItem().toString().equalsIgnoreCase("select source of enquiry")) {
                     CustomToast.customToast(getApplicationContext(), "Please provide source");
                     spnStatus.requestFocus();
-                } else if (!spnSource.getSelectedItem().toString().equalsIgnoreCase("select source of enquiry")&&!spnSource.getSelectedItem().toString().equalsIgnoreCase("other")) {
-                    mSource=spnSource.getSelectedItem().toString();
-                } else if (spnSource.getSelectedItem().toString().equalsIgnoreCase("other")&& othersource.getText().toString().equalsIgnoreCase("")){
+                } else  if (spnSource.getSelectedItem().toString().equalsIgnoreCase("other") && othersource.getText().toString().equalsIgnoreCase("")) {
                     othersource.setError("Please enter source");
                     othersource.setFocusable(true);
-                }else if (spnSource.getSelectedItem().toString().equalsIgnoreCase("other")){
-                    addsource(othersource.getText().toString());
-                    mSource=othersource.getText().toString();
-                } else {
+                }  else {
+                    if (!spnSource.getSelectedItem().toString().equalsIgnoreCase("select source of enquiry") && !spnSource.getSelectedItem().toString().equalsIgnoreCase("other")) {
+                        mSource = spnSource.getSelectedItem().toString();
+                    }
+                    else if (spnSource.getSelectedItem().toString().equalsIgnoreCase("other")) {
+                        addsource(othersource.getText().toString());
+                        mSource = othersource.getText().toString();
+                    }
+
                     Bundle bundle = new Bundle();
                     bundle.putString("spinnerValue", spnInventory.getSelectedItem().toString());
                     bundle.putString("custName", custName);
@@ -613,6 +705,9 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
                     bundle.putString("nextFollowupDate", nextFollowupDate);
                     bundle.putString("nextFollowupDate", nextFollowupDate);
                     bundle.putString("source", mSource);
+                    bundle.putFloat("loanpercent", strLoanPer);
+                    bundle.putInt("loanamt", strLoanAmt);
+                    bundle.putString("financername", strFinancername);
 
                     ActivityOptions options = ActivityOptions.makeCustomAnimation(AddManualEnquiry.this, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
                     Intent intent = new Intent(getApplicationContext(), ManualEnquiryVehicleList.class);
@@ -632,7 +727,12 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
                                 String nextFollowupDate, String addArray) {
         ApiCall mApiCall = new ApiCall(this, this);
         mApiCall.addManualEnquiryData(myContact, custName, custContact, custAddress, custFullAddress, custInventoryType,
-                custEnquiryStatus, discussion, nextFollowupDate, addArray,mSource);
+                custEnquiryStatus, discussion, nextFollowupDate, addArray, mSource,strFinancername,strLoanAmt,strLoanPer);
+    }
+
+    private void addFinancername(String fName) {
+        ApiCall mApiCall = new ApiCall(this, this);
+        mApiCall.addFinancerName(fName);
     }
 
 
@@ -698,11 +798,11 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
                     } else {
                         CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
                     }
-                }else if (response.body() instanceof GetSourceOfEnquiryResponse) {
+                } else if (response.body() instanceof GetSourceOfEnquiryResponse) {
                     GetSourceOfEnquiryResponse moduleResponse = (GetSourceOfEnquiryResponse) response.body();
                     final List<String> source = new ArrayList<>();
                     if (!moduleResponse.getSuccess().isEmpty()) {
-                        source.add("Select Industry");
+                        source.add("select source of enquiry");
                         for (GetSourceOfEnquiryResponse.Success message : moduleResponse.getSuccess()) {
                             source.add(message.getSource());
                         }
@@ -715,8 +815,7 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
                         spnSource.setOnItemSelectedListener(new OnItemSelectedListener() {
                             @Override
                             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                                if (spnSource.getSelectedItem().toString().equalsIgnoreCase("other"))
-                                {
+                                if (spnSource.getSelectedItem().toString().equalsIgnoreCase("other")) {
                                     othersourcelayout.setVisibility(View.VISIBLE);
                                 }
                             }
@@ -819,6 +918,11 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
             if (str.equalsIgnoreCase("Success")) {
                 txtUser.setVisibility(View.VISIBLE);
                 txtInvite.setVisibility(View.GONE);
+            } else if (str.equalsIgnoreCase("success_source_added")) {
+                CustomToast.customToast(this, "New Source Added");
+            } else if (str.equalsIgnoreCase("success_financier_added")) {
+                CustomToast.customToast(this, "New Financer Added");
+                mBottomSheetDialog.dismiss();
             } else {
                 txtInvite.setVisibility(View.VISIBLE);
                 txtUser.setVisibility(View.GONE);
@@ -861,6 +965,18 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
                 }
         }
     }
+
+    /***
+     * Retrofit Logs
+     ***/
+    private OkHttpClient.Builder initLog() {
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        httpClient.addInterceptor(logging).readTimeout(90, TimeUnit.SECONDS);
+        return httpClient;
+    }
+
 
     @Override
     public void onDestroy() {

@@ -8184,7 +8184,7 @@ get ExchangeMela Analytics Data
                         .client(initLog().build())
                         .build();
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<ManualEnquiryResponse> mServiceMelaResponse = serviceApi.getManualEnquiry(myContact, "null", "null", "null", "null", "null", "null", "null", "null", "null","null");
+                Call<ManualEnquiryResponse> mServiceMelaResponse = serviceApi.getManualEnquiry(myContact, "null", "null", "null", "null", "null", "null", "null", "null", "null","null","null",0,0);
                 mServiceMelaResponse.enqueue(new Callback<ManualEnquiryResponse>() {
                     @Override
                     public void onResponse(Call<ManualEnquiryResponse> call, Response<ManualEnquiryResponse> response) {
@@ -8239,7 +8239,7 @@ get ExchangeMela Analytics Data
     */
     public void addManualEnquiryData(String myContact, String custName, String custContact, String custAddress,
                                      String custFullAddress, String custInventoryType, String custEnquiryStatus,
-                                     String discussion, String nextFollowupDate, String idsList,String source) {
+                                     String discussion, String nextFollowupDate, String idsList,String source,String financername,int loanamt,float loanper) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 Retrofit retrofit = new Retrofit.Builder()
@@ -8251,7 +8251,7 @@ get ExchangeMela Analytics Data
                 //      AddManualEnquiryRequest addManualEnquiryRequest = new AddManualEnquiryRequest();
 
                 Call<AddManualEnquiryResponse> mServiceMelaResponse = serviceApi._autokattaAddManualEnquiry(myContact, custName, custContact, custAddress,
-                        custFullAddress, custInventoryType, custEnquiryStatus, discussion, nextFollowupDate, idsList,source);
+                        custFullAddress, custInventoryType, custEnquiryStatus, discussion, nextFollowupDate, idsList,source,financername,loanamt,loanper);
                 mServiceMelaResponse.enqueue(new Callback<AddManualEnquiryResponse>() {
                     @Override
                     public void onResponse(Call<AddManualEnquiryResponse> call, Response<AddManualEnquiryResponse> response) {
@@ -9633,6 +9633,43 @@ get ExchangeMela Analytics Data
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
                 Call<String> forgetPasswordResponseCall = serviceApi.addOthersource(name);
+                forgetPasswordResponseCall.enqueue(new Callback<String>() {
+                    @Override
+                    public void onResponse(Call<String> call, Response<String> response) {
+                        mNotifier.notifyString(response.body());
+                    }
+
+                    @Override
+                    public void onFailure(Call<String> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+            } else {
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+//add other Financer  in database
+    public void addFinancerName(String name) {
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+
+                //JSON to Gson conversion
+                Gson gson = new GsonBuilder()
+                        .setLenient()
+                        .create();
+
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create(gson))
+                        .client(initLog().build())
+                        .build();
+
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<String> forgetPasswordResponseCall = serviceApi.addFienancername(name);
                 forgetPasswordResponseCall.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
