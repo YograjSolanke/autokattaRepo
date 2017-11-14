@@ -22,7 +22,7 @@ import retrofit2.Response;
 public class NotificationAddEmployeeActivity extends AppCompatActivity implements View.OnClickListener, RequestNotifier {
 
     String mBundleContact;
-    String strMessage;
+    String strMessage, strName, strBody;
     Button mBtnApprove, mBtnReject;
     private String mLoginContact;
     TextView mMessage;
@@ -54,9 +54,11 @@ public class NotificationAddEmployeeActivity extends AppCompatActivity implement
 
         if (getIntent().getExtras() != null) {
             strMessage = getIntent().getExtras().getString("like", "");
+            strName = getIntent().getExtras().getString("name", "");
+            strBody = getIntent().getExtras().getString("body", "");
             mBundleContact = getIntent().getExtras().getString("firebaseContact", "");
 
-            mMessage.setText(strMessage);
+            mMessage.setText(strName + " " + strBody);
         }
     }
 

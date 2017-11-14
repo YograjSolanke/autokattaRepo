@@ -63,10 +63,13 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
                 if (key.equals("name")) {
                     name = value;
+                    bundle.putString("name", name);
                 }
 
                 if (key.equals("body")) {
                     body = value;
+                    bundle.putString("body", body);
+
                 }
 
                 if (key.equals("contact")) {
@@ -142,10 +145,12 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
                 if (key.equals("name")) {
                     name = value;
+                    bundle.putString("name", name);
                 }
 
                 if (key.equals("body")) {
                     body = value;
+                    bundle.putString("body", body);
                 }
 
                 if (key.equals("contact")) {

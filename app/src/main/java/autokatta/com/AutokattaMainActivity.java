@@ -185,6 +185,8 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
         if (getIntent().getExtras() != null) {
             String status = getIntent().getExtras().getString("Like", "");
             String contact = getIntent().getExtras().getString("contact", "");
+            String name = getIntent().getExtras().getString("name", "");
+            String body = getIntent().getExtras().getString("body", "");
 
             switch (status) {
                 case "Profile": {
@@ -213,6 +215,8 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
                     Bundle mBundle = new Bundle();
                     mBundle.putString("like", status);
                     mBundle.putString("firebaseContact", contact);
+                    mBundle.putString("name", name);
+                    mBundle.putString("body", body);
                     Intent intent = new Intent(getApplicationContext(), NotificationAddEmployeeActivity.class);
                     intent.putExtras(mBundle);
                     startActivity(intent);
