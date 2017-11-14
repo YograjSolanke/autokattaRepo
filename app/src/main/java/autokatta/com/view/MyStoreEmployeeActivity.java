@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import autokatta.com.R;
+import autokatta.com.adapter.MyStoreEmployeeAdapter;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.networkreceiver.ConnectionDetector;
@@ -39,6 +40,7 @@ public class MyStoreEmployeeActivity extends AppCompatActivity implements Reques
     TextView mNoData;
     SwipeRefreshLayout mSwipeRefreshLayout;
     RecyclerView mRecyclerView;
+    MyStoreEmployeeAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,8 +75,8 @@ public class MyStoreEmployeeActivity extends AppCompatActivity implements Reques
                     System.out.println("output=" + store_id);
                 }
 
-                mRecyclerView = (RecyclerView) findViewById(R.id.rv_recycler_view);
-                mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayoutMyStoreList);
+                mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+                mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayoutMyEmpList);
                 myContact = getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", null);
                 mRecyclerView.setHasFixedSize(true);
                 mLinearLayoutManager = new LinearLayoutManager(MyStoreEmployeeActivity.this);
@@ -89,11 +91,28 @@ public class MyStoreEmployeeActivity extends AppCompatActivity implements Reques
                     @Override
                     public void run() {
                         mSwipeRefreshLayout.setRefreshing(true);
-                        // mApiCall.MyStoreList(myContact, 1, 10);
+                        mApiCall.getStoreEmployees(store_id, myContact);
                     }
                 });
 
 
+            }
+        });
+
+
+        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+                if (dy > 0) {
+                    // Scrolling up
+                    fab.setVisibility(View.GONE);
+
+                } else {
+                    // Scrolling down
+                    fab.setVisibility(View.VISIBLE);
+                }
             }
         });
 
@@ -127,6 +146,10 @@ public class MyStoreEmployeeActivity extends AppCompatActivity implements Reques
 
 
                     }
+
+                    adapter = new MyStoreEmployeeAdapter(this, employees);
+                    mRecyclerView.setAdapter(adapter);
+                    adapter.notifyDataSetChanged();
                 }
             } else {
                 mSwipeRefreshLayout.setRefreshing(false);

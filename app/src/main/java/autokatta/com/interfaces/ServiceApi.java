@@ -1553,4 +1553,10 @@ public interface ServiceApi {
     Call<String> addFienancername(@Query("FinancierName") String FinancierName);
 
 
+    /*GetStoreEmployee*/
+    @GET("GetStoreEmployee")
+    Call<StoreEmployeeResponse> getStoreEmployees(@Query("StoreID") int store_id, @Query("ContactNo") String ContactNo);
+
+
+
 }

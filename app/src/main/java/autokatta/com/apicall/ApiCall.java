@@ -9689,6 +9689,44 @@ get ExchangeMela Analytics Data
         }
     }
 
+     /*
+       Get Store Employees
+     */
+
+    public void getStoreEmployees(int store_id, String contact) {
+
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+
+
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<StoreEmployeeResponse> mGetRegisteredContact = serviceApi.getStoreEmployees(store_id, contact);
+                mGetRegisteredContact.enqueue(new Callback<StoreEmployeeResponse>() {
+                    @Override
+                    public void onResponse(Call<StoreEmployeeResponse> call, Response<StoreEmployeeResponse> response) {
+                        mNotifier.notifySuccess(response);
+                    }
+
+                    @Override
+                    public void onFailure(Call<StoreEmployeeResponse> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+            } else
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
 
 
     /***
