@@ -91,7 +91,7 @@ public class MyStoreEmployeeActivity extends AppCompatActivity implements Reques
                     @Override
                     public void run() {
                         mSwipeRefreshLayout.setRefreshing(true);
-                        mApiCall.getStoreEmployees(store_id, myContact);
+                        mApiCall.getStoreEmployees(12, myContact);
                     }
                 });
 

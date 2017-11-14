@@ -876,7 +876,7 @@ public interface ServiceApi {
      */
 
     @GET("GetMyInventoryCatalogDetails")
-    Call<StoreInventoryResponse> getInventoryCatalog(@Query("MyContact") String mycontact);
+    Call<StoreInventoryResponse> getInventoryCatalog(@Query("MyContact") String mycontact, @Query("StoreID") int mStoreId);
 
     /*
     Like

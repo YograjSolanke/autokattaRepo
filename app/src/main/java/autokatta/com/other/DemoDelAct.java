@@ -29,6 +29,9 @@ import autokatta.com.view.ManualEnquiry;
 public class DemoDelAct extends AppCompatActivity {
 
     GridView androidGridView;
+    int mStoreID;
+    String mBundleContact;
+    Bundle mBundle;
 
     String[] gridViewString = {
             "Product", "Service", "Used Vehicle", "New Vehicle", "Sold Vehicle", "My Vehicle",
@@ -49,6 +52,17 @@ public class DemoDelAct extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
+
+        if (getIntent().getExtras() != null) {
+            mStoreID = getIntent().getExtras().getInt("bundle_storeId", 0);
+            mBundleContact = getIntent().getExtras().getString("bundle_contact", "");
+        }
+
+        mBundle = new Bundle();
+        mBundle.putInt("bundle_storeId", mStoreID);
+        mBundle.putString("bundle_contact", mBundleContact);
+
+
         CustomGridViewActivity adapterViewAndroid = new CustomGridViewActivity(DemoDelAct.this, gridViewString, gridViewImageId);
         androidGridView = (GridView) findViewById(R.id.grid_view_image_text);
         androidGridView.setAdapter(adapterViewAndroid);
@@ -57,26 +71,37 @@ public class DemoDelAct extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int i, long id) {
-                if (gridViewString[+i].equals("Product")) {
-                    startActivity(new Intent(getApplicationContext(), ProductContainer.class));
-                } else if (gridViewString[+i].equals("Service")) {
-                    startActivity(new Intent(getApplicationContext(), ServiceContainer.class));
-                } else if (gridViewString[+i].equals("Used Vehicle")) {
-                    startActivity(new Intent(getApplicationContext(), UsedVehicleContainer.class));
-                } else if (gridViewString[+i].equals("New Vehicle")) {
-                    startActivity(new Intent(getApplicationContext(), NewVehicleContainer.class));
-                } else if (gridViewString[+i].equals("Sold Vehicle")) {
-                    startActivity(new Intent(getApplicationContext(), SoldVehicleContainer.class));
-                } else if (gridViewString[+i].equals("My Vehicle")) {
-                    startActivity(new Intent(getApplicationContext(), MyVehicleContainer.class));
-                } else if (gridViewString[+i].equals("Transfer Stock")) {
-                    startActivity(new Intent(getApplicationContext(), TransferStock.class));
-                } else if (gridViewString[+i].equals("Search Leads")) {
-                    startActivity(new Intent(getApplicationContext(), BuyerNotificationContainer.class));
-                } else if (gridViewString[+i].equals("Manual Enquiry")) {
-                    startActivity(new Intent(getApplicationContext(), ManualEnquiry.class));
-                } else if (gridViewString[+i].equals("Business Chat")) {
-                    startActivity(new Intent(getApplicationContext(), BussinessChatActivity.class));
+                switch (gridViewString[+i]) {
+                    case "Product":
+                        startActivity(new Intent(getApplicationContext(), ProductContainer.class).putExtras(mBundle));
+                        break;
+                    case "Service":
+                        startActivity(new Intent(getApplicationContext(), ServiceContainer.class).putExtras(mBundle));
+                        break;
+                    case "Used Vehicle":
+                        startActivity(new Intent(getApplicationContext(), UsedVehicleContainer.class).putExtras(mBundle));
+                        break;
+                    case "New Vehicle":
+                        startActivity(new Intent(getApplicationContext(), NewVehicleContainer.class));
+                        break;
+                    case "Sold Vehicle":
+                        startActivity(new Intent(getApplicationContext(), SoldVehicleContainer.class));
+                        break;
+                    case "My Vehicle":
+                        startActivity(new Intent(getApplicationContext(), MyVehicleContainer.class));
+                        break;
+                    case "Transfer Stock":
+                        startActivity(new Intent(getApplicationContext(), TransferStock.class));
+                        break;
+                    case "Search Leads":
+                        startActivity(new Intent(getApplicationContext(), BuyerNotificationContainer.class));
+                        break;
+                    case "Manual Enquiry":
+                        startActivity(new Intent(getApplicationContext(), ManualEnquiry.class));
+                        break;
+                    case "Business Chat":
+                        startActivity(new Intent(getApplicationContext(), BussinessChatActivity.class));
+                        break;
                 }
             }
         });
@@ -88,7 +113,7 @@ public class DemoDelAct extends AppCompatActivity {
         private final String[] gridViewString;
         private final int[] gridViewImageId;
 
-        public CustomGridViewActivity(Context context, String[] gridViewString, int[] gridViewImageId) {
+        CustomGridViewActivity(Context context, String[] gridViewString, int[] gridViewImageId) {
             mContext = context;
             this.gridViewImageId = gridViewImageId;
             this.gridViewString = gridViewString;

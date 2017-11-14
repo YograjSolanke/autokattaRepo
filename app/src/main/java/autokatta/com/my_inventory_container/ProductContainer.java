@@ -8,6 +8,9 @@ import autokatta.com.R;
 import autokatta.com.inventory_catalog.InventoryProductsFragment;
 
 public class ProductContainer extends AppCompatActivity {
+    Bundle mBundle;
+    InventoryProductsFragment mProductsFragment = new InventoryProductsFragment();
+    String Sharedcontact;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,9 +25,16 @@ public class ProductContainer extends AppCompatActivity {
             @Override
             public void run() {
                 try {
+                    Sharedcontact = getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "");
+                    if (getIntent().getExtras() != null) {
+                        mBundle = new Bundle();
+                        mBundle.putInt("bundle_storeId", getIntent().getExtras().getInt("bundle_storeId", 0));
+                        mBundle.putString("bundle_contact", getIntent().getExtras().getString("bundle_contact", Sharedcontact));
+                        mProductsFragment.setArguments(mBundle);
+                    }
+
                     getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.myProductFrame, new InventoryProductsFragment(), "myProductFrame")
-                            //.addToBackStack("MyUploadedVehicleTabs")
+                            .replace(R.id.myProductFrame, mProductsFragment, "myProductFrame")
                             .commit();
                 } catch (Exception e) {
                     e.printStackTrace();

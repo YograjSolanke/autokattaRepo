@@ -2,6 +2,8 @@ package autokatta.com.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -21,6 +23,7 @@ import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.other.CustomToast;
+import autokatta.com.other.DemoDelAct;
 import autokatta.com.response.StoreEmployeeResponse;
 import retrofit2.Response;
 
@@ -90,6 +93,19 @@ public class MyStoreEmployeeAdapter extends RecyclerView.Adapter<MyStoreEmployee
 
         holder.mEmpName.setText(mEmpList.get(position).getName());
         holder.mEmpContact.setText(mEmpList.get(position).getContactNo());
+
+        holder.mInventory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle mBundle = new Bundle();
+                mBundle.putString("bundle_contact", holder.mEmpContact.getText().toString());
+                mBundle.putInt("bundle_storeId", mEmpList.get(holder.getAdapterPosition()).getStoreID());
+
+                Intent mIntent = new Intent(mActivity, DemoDelAct.class);
+                mIntent.putExtras(mBundle);
+                mActivity.startActivity(mIntent);
+            }
+        });
 
 
 //        holder.img.setOnClickListener(new View.OnClickListener() {

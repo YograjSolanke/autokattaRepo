@@ -117,10 +117,12 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
     private Menu mMenu;
 
     String[] gridViewString = {
-            "About", "Product", "Service", "Used Vehicle", "New Vehicle", "Video's", "Image's",};
+            "About", "Product", "Service", "Used Vehicle", "New Vehicle", "Video's",
+            "Image's", "My Employees",};
 
     int[] gridViewImageId = {
             R.mipmap.communication, R.mipmap.store_product, R.mipmap.store_service, R.mipmap.store_used_vehicle, R.mipmap.new_vehicle, R.mipmap.videos, R.mipmap.images,
+            R.mipmap.members
     };
 
     @Override
@@ -301,6 +303,14 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
                         Intent intentImages = new Intent(StoreViewActivity.this, ImagesViewActivity.class);
                         intentImages.putExtras(b);
                         startActivity(intentImages, options.toBundle());
+
+                        break;
+
+                    case "My Employees":
+                        b.putInt("store_id", store_id);
+                        Intent intentEmployee = new Intent(StoreViewActivity.this, MyStoreEmployeeActivity.class);
+                        intentEmployee.putExtras(b);
+                        startActivity(intentEmployee, options.toBundle());
 
                         break;
                 }

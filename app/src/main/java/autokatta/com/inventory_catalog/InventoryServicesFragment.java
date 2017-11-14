@@ -134,7 +134,7 @@ public class InventoryServicesFragment extends Fragment implements RequestNotifi
     private void getInventoryService(String sharedcontact) {
         if (mTestConnection.isConnectedToInternet()) {
             ApiCall apiCall = new ApiCall(getActivity(), this);
-            apiCall.getMyInventory_Catalog(sharedcontact);
+            apiCall.getMyInventory_Catalog(sharedcontact, 0);
         } else {
             mSwipeRefreshLayout.setRefreshing(false);
             mNoData.setVisibility(View.GONE);

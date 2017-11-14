@@ -40,8 +40,6 @@ import autokatta.com.other.CustomToast;
 import autokatta.com.response.StoreInventoryResponse;
 import retrofit2.Response;
 
-import static android.content.Context.MODE_PRIVATE;
-
 /**
  * Created by ak-003 on 7/6/17.
  */
@@ -66,6 +64,7 @@ public class InventoryProductsFragment extends Fragment implements RequestNotifi
     List<String> finalcategory = new ArrayList<>();
     TextView mNoData;
     int counter = 0;
+    int mStoreID;
 
     public InventoryProductsFragment() {
         //empty constructor...
@@ -85,7 +84,11 @@ public class InventoryProductsFragment extends Fragment implements RequestNotifi
             @Override
             public void run() {
                 mTestConnection = new ConnectionDetector(getActivity());
-                Sharedcontact = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", null);
+
+                Bundle mBundle = getArguments();
+                Sharedcontact = mBundle.getString("bundle_contact");
+                mStoreID = mBundle.getInt("bundle_storeId");
+
                 mNoData = (TextView) mProduct.findViewById(R.id.no_category);
                 filterImg = (ImageView) mProduct.findViewById(R.id.filterimg);
                 relativeFilter = (RelativeLayout) mProduct.findViewById(R.id.rel);
@@ -130,7 +133,7 @@ public class InventoryProductsFragment extends Fragment implements RequestNotifi
     private void getInventoryProducts(String sharedcontact) {
         if (mTestConnection.isConnectedToInternet()) {
             ApiCall apiCall = new ApiCall(getActivity(), this);
-            apiCall.getMyInventory_Catalog(sharedcontact);
+            apiCall.getMyInventory_Catalog(sharedcontact, mStoreID);
         } else {
             mSwipeRefreshLayout.setRefreshing(false);
             mNoData.setVisibility(View.GONE);
