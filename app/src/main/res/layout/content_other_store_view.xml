@@ -190,10 +190,10 @@
     <View
         android:id="@+id/view"
         android:layout_width="match_parent"
-        android:layout_height="0.1dp"
+        android:layout_height="1dp"
         android:layout_below="@+id/actionLayout"
         android:layout_marginTop="1dp"
-        android:background="#000000" />
+        android:background="#cccccc" />
 
     <GridView
         android:id="@+id/store_grid_view"

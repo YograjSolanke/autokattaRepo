@@ -1,6 +1,7 @@
 package autokatta.com.view;
 
 import android.app.ActivityOptions;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -25,7 +26,6 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.kaopiz.kprogresshud.KProgressHUD;
 
 import java.net.SocketTimeoutException;
 import java.text.DateFormat;
@@ -51,7 +51,6 @@ public class ReviewActivity extends AppCompatActivity implements RequestNotifier
     ConnectionDetector mConnectionDetector;
     ApiCall mApiCall;
     String myContact, inComingContact;
-    KProgressHUD hud;
     public List<ReviewAndReplyResponse.Success.ReviewMessage> topList = new ArrayList<>();
     public List<ReviewAndReplyResponse.Success.ReviewMessage> mainList = new ArrayList<>();
     public List<ReviewAndReplyResponse.Success.ReplayMessage> childlist;
@@ -66,6 +65,7 @@ public class ReviewActivity extends AppCompatActivity implements RequestNotifier
     LinearLayout mLinearScrollSecond[];
     RelativeLayout relativeLayout;
     FloatingActionButton fab;
+    private ProgressDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +74,8 @@ public class ReviewActivity extends AppCompatActivity implements RequestNotifier
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         setTitle("Reviews");
-
+        dialog = new ProgressDialog(this);
+        dialog.setMessage("Loading...");
         mApiCall = new ApiCall(ReviewActivity.this, this);
         myContact = getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
                 .getString("loginContact", "");
@@ -108,11 +109,7 @@ public class ReviewActivity extends AppCompatActivity implements RequestNotifier
                     if (inComingContact.equals(myContact))
                         fab.setVisibility(View.GONE);
 
-                    hud = KProgressHUD.create(ReviewActivity.this)
-                            .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
-                            .setLabel("Please wait")
-                            .setMaxProgress(100)
-                            .show();
+                    dialog.show();
                     if (!mConnectionDetector.isConnectedToInternet()) {
                         Toast.makeText(ReviewActivity.this, "Please check your internet connection", Toast.LENGTH_SHORT).show();
                     } else {
@@ -132,7 +129,9 @@ public class ReviewActivity extends AppCompatActivity implements RequestNotifier
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.fab:
-                hud.dismiss();
+                if (dialog.isShowing()) {
+                    dialog.dismiss();
+                }
                 //write review here
                 sendmessage(0, "Review");
                 break;
@@ -208,11 +207,12 @@ public class ReviewActivity extends AppCompatActivity implements RequestNotifier
 
     @Override
     public void notifySuccess(Response<?> response) {
-
         DateFormat f = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
         if (response != null) {
             if (response.isSuccessful()) {
-                hud.dismiss();
+                if (dialog.isShowing()) {
+                    dialog.dismiss();
+                }
                 /*
                         Response to get review message
                  */
@@ -229,7 +229,6 @@ public class ReviewActivity extends AppCompatActivity implements RequestNotifier
                         obj.setReviewId(obj.getReviewId());
                         obj.setUsername(obj.getUsername());
                         obj.setProfilePic(obj.getProfilePic());
-
 
                         for (ReviewAndReplyResponse.Success.ReplayMessage objectmatch : object.getReplayMessage()) {
                             if (obj.getReviewId().equals(objectmatch.getReviewId())) {
@@ -267,15 +266,12 @@ public class ReviewActivity extends AppCompatActivity implements RequestNotifier
                         mLinearScrollSecond[i] = (LinearLayout) mLinearView.findViewById(R.id.linear_scroll);
 
                         msg.setText(mainList.get(i).getReviewString());
-
-
                         final int finalI2 = i;
                         profile.setOnClickListener(new View.OnClickListener() {
                             Bundle bundle = new Bundle();
 
                             @Override
                             public void onClick(View view) {
-
                                 bundle.putString("contactOtherProfile", mainList.get(finalI2).getContact());
                                 if (myContact.equalsIgnoreCase(mainList.get(finalI2).getContact())) {
                                     ActivityOptions options = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.ok_left_to_right, R.anim.ok_right_to_left);
@@ -417,11 +413,15 @@ public class ReviewActivity extends AppCompatActivity implements RequestNotifier
                     //????????????????????????????????????????????????????????????
 
                 } else {
-                    hud.dismiss();
+                    if (dialog.isShowing()) {
+                        dialog.dismiss();
+                    }
                     CustomToast.customToast(getApplicationContext(), getString(R.string._404));
                 }
             } else {
-                hud.dismiss();
+                if (dialog.isShowing()) {
+                    dialog.dismiss();
+                }
                 CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
             }
 
@@ -430,7 +430,9 @@ public class ReviewActivity extends AppCompatActivity implements RequestNotifier
 
     @Override
     public void notifyError(Throwable error) {
-        hud.dismiss();
+        if (dialog.isShowing()) {
+            dialog.dismiss();
+        }
         if (error instanceof SocketTimeoutException) {
             CustomToast.customToast(getApplicationContext(), getString(R.string._404));
         } else if (error instanceof NullPointerException) {
@@ -447,12 +449,16 @@ public class ReviewActivity extends AppCompatActivity implements RequestNotifier
     public void notifyString(String str) {
         if (str != null) {
             if (str.equals("sent_review")) {
-                hud.dismiss();
+                if (dialog.isShowing()) {
+                    dialog.dismiss();
+                }
                 CustomToast.customToast(ReviewActivity.this, "Review Posted");
                 //   mApiCall.getReviewOrReply(store_id, product_id, service_id, vehicle_id);
 
             } else if (str.equals("sent_reply")) {
-                hud.dismiss();
+                if (dialog.isShowing()) {
+                    dialog.dismiss();
+                }
                 CustomToast.customToast(ReviewActivity.this, "Reply Sent");
                 mApiCall.getReviewOrReply(store_id, product_id, service_id, vehicle_id);
             }

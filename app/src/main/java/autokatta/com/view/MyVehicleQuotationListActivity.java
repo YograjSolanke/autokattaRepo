@@ -80,7 +80,10 @@ public class MyVehicleQuotationListActivity extends AppCompatActivity implements
         setContentView(R.layout.activity_my_vehicle_quotation_list);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setHomeButtonEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
         myContact = getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", null);
         quotationRecycler = (RecyclerView) findViewById(R.id.quotationList);
@@ -94,7 +97,6 @@ public class MyVehicleQuotationListActivity extends AppCompatActivity implements
         mLinearLayoutManager.setStackFromEnd(true);
         quotationRecycler.setLayoutManager(mLinearLayoutManager);
         firstVisibleInListview = mLinearLayoutManager.findFirstVisibleItemPosition();
-
 
         Keyword = (TextView) findViewById(R.id.keyword);
         Title = (TextView) findViewById(R.id.settitle);
@@ -114,22 +116,14 @@ public class MyVehicleQuotationListActivity extends AppCompatActivity implements
         get_Quote.setVisibility(View.GONE);
         Keyword.setVisibility(View.GONE);
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayoutQuotList);
-
         mSwipeRefreshLayout.setOnRefreshListener(this);
-
 
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-
-                if (getSupportActionBar() != null) {
-                    getSupportActionBar().setHomeButtonEnabled(true);
-                    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-                }
-
-
                 Intent i = getIntent();
                 Title.setText(i.getStringExtra("Title"));
+                setTitle(i.getStringExtra("Title") + " " + "Quotation's");
                 Category.setText(i.getStringExtra("Category"));
                 Brand.setText(i.getStringExtra("Brand"));
                 Model.setText(i.getStringExtra("Model"));
@@ -139,7 +133,6 @@ public class MyVehicleQuotationListActivity extends AppCompatActivity implements
                 bundle_Type = i.getStringExtra("bundle_Type");
                 bundle_Contact = i.getStringExtra("bundle_Contact");
                 image = i.getStringExtra("Image");
-
 
                 if (image.equalsIgnoreCase("") || image == null) {
                     Image.setBackgroundResource(R.drawable.vehiimg);
