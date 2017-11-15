@@ -13,16 +13,16 @@ public class StoreEmployeeResponse {
 
     @SerializedName("Success")
     @Expose
-    private Success success;
+    private List<Success> success = null;
     @SerializedName("Error")
     @Expose
     private Object error;
 
-    public Success getSuccess() {
+    public List<Success> getSuccess() {
         return success;
     }
 
-    public void setSuccess(Success success) {
+    public void setSuccess(List<Success> success) {
         this.success = success;
     }
 
