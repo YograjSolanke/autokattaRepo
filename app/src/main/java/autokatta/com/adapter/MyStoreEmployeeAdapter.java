@@ -1,10 +1,14 @@
 package autokatta.com.adapter;
 
+import android.Manifest;
 import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -26,6 +30,7 @@ import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.other.CustomToast;
 import autokatta.com.other.DemoDelAct;
 import autokatta.com.response.StoreEmployeeResponse;
+import autokatta.com.view.AddEmployeeActivity;
 import retrofit2.Response;
 
 /**
@@ -39,12 +44,12 @@ public class MyStoreEmployeeAdapter extends RecyclerView.Adapter<MyStoreEmployee
     private String strDetailsShare = "", myContact;
 
     // Provide a reference to the views for each data item
-// Complex data items may need more than one view per item, and
+    // Complex data items may need more than one view per item, and
 // you provide access to all the views for a data item in a view holder
     static class YoHolder extends RecyclerView.ViewHolder {
         CardView mCardView;
         TextView mEmpName, mEmpContact;
-        ImageView mCall;
+        ImageView mCall, mEdit;
         Button mRemove, mInventory, mEnquiries;
 
 
@@ -57,6 +62,7 @@ public class MyStoreEmployeeAdapter extends RecyclerView.Adapter<MyStoreEmployee
             mRemove = (Button) itemView.findViewById(R.id.btnRemove);
             mInventory = (Button) itemView.findViewById(R.id.btnInventory);
             mEnquiries = (Button) itemView.findViewById(R.id.btnEnquiries);
+            mEdit = (ImageView) itemView.findViewById(R.id.edit);
 
 
         }
@@ -112,10 +118,40 @@ public class MyStoreEmployeeAdapter extends RecyclerView.Adapter<MyStoreEmployee
         holder.mCall.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String contact = holder.mEmpContact.getText().toString();
+
+                call(contact);
+            }
+        });
+
+
+        holder.mEdit.setOnClickListener(new View.OnClickListener() {
+
+            ActivityOptions options = ActivityOptions.makeCustomAnimation(mActivity, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
+
+            @Override
+            public void onClick(View view) {
+
+                StoreEmployeeResponse.Success.Employee employee = mEmpList.get(holder.getAdapterPosition());
+                Bundle bundle = new Bundle();
+
+                Intent intentAddEmp = new Intent(mActivity, AddEmployeeActivity.class);
+                bundle.putInt("id", mEmpList.get(holder.getAdapterPosition()).getStoreEmplyeeID());
+                bundle.putString("name", mEmpList.get(holder.getAdapterPosition()).getName());
+                bundle.putString("contact", mEmpList.get(holder.getAdapterPosition()).getContactNo());
+                bundle.putString("designation", mEmpList.get(holder.getAdapterPosition()).getDesignation());
+                bundle.putString("description", mEmpList.get(holder.getAdapterPosition()).getDescription());
+                bundle.putInt("store_id", mEmpList.get(holder.getAdapterPosition()).getStoreID());
+                bundle.putString("permission", mEmpList.get(holder.getAdapterPosition()).getPermission());
+                bundle.putString("deletstatus", mEmpList.get(holder.getAdapterPosition()).getDeleteStatus());
+                bundle.putString("keyword", "update");
+                intentAddEmp.putExtras(bundle);
+                mActivity.startActivity(intentAddEmp, options.toBundle());
 
             }
         });
     }
+
 
     private void deleteStore(int storeId) {
         ApiCall apiCall = new ApiCall(mActivity, this);
@@ -158,6 +194,16 @@ public class MyStoreEmployeeAdapter extends RecyclerView.Adapter<MyStoreEmployee
     private void call(String StoreContact) {
         Intent in = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + StoreContact));
         try {
+            if (ActivityCompat.checkSelfPermission(mActivity, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
+                return;
+            }
             mActivity.startActivity(in);
         } catch (android.content.ActivityNotFoundException ex) {
             System.out.println("No Activity Found For Call in Group contact adapter \n");

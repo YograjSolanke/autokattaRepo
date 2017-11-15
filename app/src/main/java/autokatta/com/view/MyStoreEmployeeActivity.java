@@ -52,7 +52,7 @@ public class MyStoreEmployeeActivity extends AppCompatActivity implements Reques
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        setTitle("Add Employee");
+        setTitle("Store Employees");
 
         mApiCall = new ApiCall(MyStoreEmployeeActivity.this, this);
         myContact = getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
@@ -137,6 +137,7 @@ public class MyStoreEmployeeActivity extends AppCompatActivity implements Reques
             case R.id.fab:
                 Intent intentAddEmp = new Intent(MyStoreEmployeeActivity.this, AddEmployeeActivity.class);
                 b.putInt("store_id", store_id);
+                b.putString("keyword", "Add");
                 intentAddEmp.putExtras(b);
                 startActivity(intentAddEmp, options.toBundle());
                 break;
@@ -173,7 +174,7 @@ public class MyStoreEmployeeActivity extends AppCompatActivity implements Reques
                         }
 
                         mSwipeRefreshLayout.setRefreshing(false);
-                        adapter = new MyStoreEmployeeAdapter(this, employees);
+                        adapter = new MyStoreEmployeeAdapter(MyStoreEmployeeActivity.this, employees);
                         mRecyclerView.setAdapter(adapter);
                         adapter.notifyDataSetChanged();
                     } else {

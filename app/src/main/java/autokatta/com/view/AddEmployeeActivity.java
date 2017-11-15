@@ -24,6 +24,7 @@ import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
+import autokatta.com.response.StoreEmployeeResponse;
 import retrofit2.Response;
 
 import static com.google.zxing.integration.android.IntentIntegrator.REQUEST_CODE;
@@ -39,6 +40,8 @@ public class AddEmployeeActivity extends AppCompatActivity implements RequestNot
     TextView txtUser;
     String name, contact, designation, description, permission, status;
     int store_id;
+    String keyword = "";
+    StoreEmployeeResponse.Success.Employee employee;
 
 
     @Override
@@ -75,7 +78,24 @@ public class AddEmployeeActivity extends AppCompatActivity implements RequestNot
                 }
 
                 if (getIntent().getExtras() != null) {
-                    store_id = getIntent().getExtras().getInt("store_id", 0);
+
+                    if (getIntent().getExtras().getString("keyword", "").equalsIgnoreCase("update")) {
+
+                        // employee=(StoreEmployeeResponse.Success.Employee)getIntent().getSerializableExtra("EmployeeData");
+                        empName.setText(getIntent().getExtras().getString("name", ""));
+                        empContact.setText(getIntent().getExtras().getString("contact", ""));
+                        empDescription.setText(getIntent().getExtras().getString("description", ""));
+                        empDesignation.setText(getIntent().getExtras().getString("designation", ""));
+                        if (getIntent().getExtras().getString("permission", "").equalsIgnoreCase("yes")) {
+                            permissionCheck.setChecked(true);
+                        }
+
+                        store_id = getIntent().getExtras().getInt("store_id", 0);
+                        btnAdd.setText("update");
+                    } else {
+
+                        store_id = getIntent().getExtras().getInt("store_id", 0);
+                    }
 
                     System.out.println("output=" + store_id);
                 }
@@ -167,8 +187,12 @@ public class AddEmployeeActivity extends AppCompatActivity implements RequestNot
                     empDescription.setError("Please Enter Short Description");
                 } else {
 
-                    mApiCall.AddEmloyeeInStore(name, contact, myContact, designation, store_id, description,
-                            status, permission);
+                    if (keyword.equalsIgnoreCase("Add")) {
+                        mApiCall.AddEmloyeeInStore(name, contact, myContact, designation, store_id, description,
+                                status, permission);
+                    } else if (keyword.equalsIgnoreCase("update")) {
+
+                    }
 
                 }
 
