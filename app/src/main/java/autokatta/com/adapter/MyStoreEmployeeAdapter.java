@@ -3,6 +3,7 @@ package autokatta.com.adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -108,21 +109,12 @@ public class MyStoreEmployeeAdapter extends RecyclerView.Adapter<MyStoreEmployee
         });
 
 
-//        holder.img.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                String image;
-//                if (mStoreList.get(holder.getAdapterPosition()).getStoreImage().equals(""))
-//                    image = mActivity.getString(R.string.base_image_url) + "logo48x48.png";
-//                else
-//                    image = mActivity.getString(R.string.base_image_url) + mStoreList.get(holder.getAdapterPosition()).getStoreImage();
-//                Intent intent = new Intent(mActivity, FullImageActivity.class);
-//                Bundle b = new Bundle();
-//                b.putString("image", image);
-//                intent.putExtras(b);
-//                mActivity.startActivity(intent);
-//            }
-//        });
+        holder.mCall.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
     }
 
     private void deleteStore(int storeId) {
@@ -159,6 +151,16 @@ public class MyStoreEmployeeAdapter extends RecyclerView.Adapter<MyStoreEmployee
                 //mStoreList.remove(getAdapterPosition());
             }
 
+        }
+    }
+
+    //Calling Functionality
+    private void call(String StoreContact) {
+        Intent in = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + StoreContact));
+        try {
+            mActivity.startActivity(in);
+        } catch (android.content.ActivityNotFoundException ex) {
+            System.out.println("No Activity Found For Call in Group contact adapter \n");
         }
     }
 

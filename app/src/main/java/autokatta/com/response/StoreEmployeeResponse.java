@@ -13,16 +13,16 @@ public class StoreEmployeeResponse {
 
     @SerializedName("Success")
     @Expose
-    private List<Success> success = null;
+    private Success success = null;
     @SerializedName("Error")
     @Expose
     private Object error;
 
-    public List<Success> getSuccess() {
+    public Success getSuccess() {
         return success;
     }
 
-    public void setSuccess(List<Success> success) {
+    public void setSuccess(Success success) {
         this.success = success;
     }
 
@@ -76,6 +76,22 @@ public class StoreEmployeeResponse {
             @SerializedName("Permission")
             @Expose
             private String permission;
+
+            public String getDeleteStatus() {
+                return DeleteStatus;
+            }
+
+            public void setDeleteStatus(String deleteStatus) {
+                DeleteStatus = deleteStatus;
+            }
+
+            @SerializedName("DeleteStatus")
+
+            @Expose
+            private String DeleteStatus;
+
+
+
 
             public Integer getStoreEmplyeeID() {
                 return storeEmplyeeID;

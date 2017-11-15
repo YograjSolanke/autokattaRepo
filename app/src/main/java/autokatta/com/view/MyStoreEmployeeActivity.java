@@ -30,7 +30,7 @@ import autokatta.com.other.CustomToast;
 import autokatta.com.response.StoreEmployeeResponse;
 import retrofit2.Response;
 
-public class MyStoreEmployeeActivity extends AppCompatActivity implements RequestNotifier, View.OnClickListener {
+public class MyStoreEmployeeActivity extends AppCompatActivity implements RequestNotifier, View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
 
     ApiCall mApiCall;
     String myContact;
@@ -103,10 +103,10 @@ public class MyStoreEmployeeActivity extends AppCompatActivity implements Reques
                         mApiCall.getStoreEmployees(store_id, myContact);
                     }
                 });
-
-
             }
         });
+
+        mSwipeRefreshLayout.setOnRefreshListener(this);
 
 
         mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -150,12 +150,13 @@ public class MyStoreEmployeeActivity extends AppCompatActivity implements Reques
             if (response.isSuccessful()) {
                 if (response.body() instanceof StoreEmployeeResponse) {
                     dialog.dismiss();
-                    employees.clear();
 
-                    StoreEmployeeResponse.Success Response = (StoreEmployeeResponse.Success) response.body();
-                    if (!Response.getEmployee().isEmpty()) {
+
+                    StoreEmployeeResponse Response = (StoreEmployeeResponse) response.body();
+                    if (!Response.getSuccess().getEmployee().isEmpty()) {
                         mNoData.setVisibility(View.GONE);
-                        for (StoreEmployeeResponse.Success.Employee success : Response.getEmployee()) {
+                        employees.clear();
+                        for (StoreEmployeeResponse.Success.Employee success : Response.getSuccess().getEmployee()) {
                             success.setStoreEmplyeeID(success.getStoreEmplyeeID());
                             success.setName(success.getName());
                             success.setContactNo(success.getContactNo());
@@ -164,6 +165,7 @@ public class MyStoreEmployeeActivity extends AppCompatActivity implements Reques
                             success.setDescription(success.getDescription());
                             success.setDesignation(success.getDesignation());
                             success.setStoreID(success.getStoreID());
+                            success.setDeleteStatus(success.getDeleteStatus());
 
                             employees.add(success);
 
@@ -238,5 +240,12 @@ public class MyStoreEmployeeActivity extends AppCompatActivity implements Reques
         super.onBackPressed();
         finish();
         overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
+    }
+
+    @Override
+    public void onRefresh() {
+
+        mApiCall.getStoreEmployees(store_id, myContact);
+
     }
 }
