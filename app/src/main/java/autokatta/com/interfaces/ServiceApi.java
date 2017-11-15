@@ -121,7 +121,8 @@ public interface ServiceApi {
     //get My Uploaded vehicles
     @GET("GetUploadedvehicles")
     Call<MyUploadedVehiclesResponse> _autokattaGetMyUploadedVehicles(@Query("Contact") String myContact,
-                                                                     @Query("pageNo") int pageNo, @Query("ViewRecords") int viewRecords);
+                                                                     @Query("pageNo") int pageNo, @Query("ViewRecords") int viewRecords,
+                                                                     @Query("StoreID") int mStoreID);
 
     //get My Active Events
     @GET("GetAuctionEvents")
@@ -1278,18 +1279,18 @@ public interface ServiceApi {
                                                               @Query("custEnquiryStatus") String custEnquiryStatus, @Query("discussion") String discussion,
                                                               @Query("nextFollowupDate") String nextFollowupDate, @Query("idsList") String idsList, @Query("Source") String Source,
                                                               @Query("financerName") String financerName, @Query("LoanAmount") int LoanAmount, @Query("LoanPercent") float LoanPercent
-                                                            , @Query("FinancerStatus") String FinancerStatus);
+            , @Query("FinancerStatus") String FinancerStatus);
 
 
- //Update Manual enquiry
+    //Update Manual enquiry
     @PUT("AddEnquiryData")
     Call<String> _autokattaUpdateManualEnquiry(@Query("MyContact") String myContact, @Query("custName") String custName,
-                                                              @Query("custContact") String custContact, @Query("custAddress") String custAddress, @Query("custFullAddress") String custFullAddress,
-                                                              @Query("custInventoryType") String custInventoryType,
-                                                              @Query("custEnquiryStatus") String custEnquiryStatus, @Query("discussion") String discussion,
-                                                              @Query("nextFollowupDate") String nextFollowupDate, @Query("idsList") String idsList, @Query("Source") String Source,
-                                                              @Query("financerName") String financerName, @Query("LoanAmount") int LoanAmount, @Query("LoanPercent") float LoanPercent
-                                                                , @Query("FinancerStatus") String FinancerStatus);
+                                               @Query("custContact") String custContact, @Query("custAddress") String custAddress, @Query("custFullAddress") String custFullAddress,
+                                               @Query("custInventoryType") String custInventoryType,
+                                               @Query("custEnquiryStatus") String custEnquiryStatus, @Query("discussion") String discussion,
+                                               @Query("nextFollowupDate") String nextFollowupDate, @Query("idsList") String idsList, @Query("Source") String Source,
+                                               @Query("financerName") String financerName, @Query("LoanAmount") int LoanAmount, @Query("LoanPercent") float LoanPercent
+            , @Query("FinancerStatus") String FinancerStatus);
 
     //Get Inventory Data...
     @GET("GetMyInventoryData")
@@ -1571,7 +1572,6 @@ public interface ServiceApi {
     /*GetStoreEmployee*/
     @GET("GetStoreEmployee")
     Call<StoreEmployeeResponse> getStoreEmployees(@Query("StoreID") int store_id, @Query("ContactNo") String ContactNo);
-
 
 
 }

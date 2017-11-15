@@ -758,7 +758,7 @@ public class ApiCall {
         MyUploaded Vehicles
      */
 
-    public void MyUploadedVehicles(String myContact, int pageNo, int record) {
+    public void MyUploadedVehicles(String myContact, int pageNo, int record, int mStoreID) {
 
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
@@ -769,7 +769,7 @@ public class ApiCall {
                         .build();
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<MyUploadedVehiclesResponse> myUploadedVehiclesResponseCall = serviceApi._autokattaGetMyUploadedVehicles(myContact, pageNo, record);
+                Call<MyUploadedVehiclesResponse> myUploadedVehiclesResponseCall = serviceApi._autokattaGetMyUploadedVehicles(myContact, pageNo, record, mStoreID);
                 myUploadedVehiclesResponseCall.enqueue(new Callback<MyUploadedVehiclesResponse>() {
                     @Override
                     public void onResponse(Call<MyUploadedVehiclesResponse> call, Response<MyUploadedVehiclesResponse> response) {
@@ -5754,7 +5754,7 @@ Get saved search Seller list
     /*
  VehicleRepoInsurance
   */
-    public void VehicleRepoInsurance(String accno, String brrowername, String borrowercontact, String branchcity, String managername, String managercontact, String delearname, String stockyardname, String stockyardaddr, String inwarddate,String ClientName, int vehiID) {
+    public void VehicleRepoInsurance(String accno, String brrowername, String borrowercontact, String branchcity, String managername, String managercontact, String delearname, String stockyardname, String stockyardaddr, String inwarddate, String ClientName, int vehiID) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 //JSON to Gson conversion
@@ -5769,7 +5769,7 @@ Get saved search Seller list
                         .build();
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<String> updateStore = serviceApi._autokattaVehicleRepoInsurance(accno, brrowername, borrowercontact, branchcity, managername, managercontact, delearname,ClientName, stockyardname, stockyardaddr, inwarddate, vehiID);
+                Call<String> updateStore = serviceApi._autokattaVehicleRepoInsurance(accno, brrowername, borrowercontact, branchcity, managername, managercontact, delearname, ClientName, stockyardname, stockyardaddr, inwarddate, vehiID);
                 updateStore.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
@@ -8186,7 +8186,7 @@ get ExchangeMela Analytics Data
                         .client(initLog().build())
                         .build();
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<ManualEnquiryResponse> mServiceMelaResponse = serviceApi.getManualEnquiry(myContact, "null", "null", "null", "null", "null", "null", "null", "null", "null","null","null",0,0,"null");
+                Call<ManualEnquiryResponse> mServiceMelaResponse = serviceApi.getManualEnquiry(myContact, "null", "null", "null", "null", "null", "null", "null", "null", "null", "null", "null", 0, 0, "null");
                 mServiceMelaResponse.enqueue(new Callback<ManualEnquiryResponse>() {
                     @Override
                     public void onResponse(Call<ManualEnquiryResponse> call, Response<ManualEnquiryResponse> response) {
@@ -8209,7 +8209,7 @@ get ExchangeMela Analytics Data
       Update Manual Enquiry Details...
     */
 
-    public void updateManualEnquiry(String myContact,String Financername,float loanpercent,int loanamount,String keyword,String ids) {
+    public void updateManualEnquiry(String myContact, String Financername, float loanpercent, int loanamount, String keyword, String ids) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
 
@@ -8224,7 +8224,7 @@ get ExchangeMela Analytics Data
                         .client(initLog().build())
                         .build();
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<String> mServiceMelaResponse = serviceApi._autokattaUpdateManualEnquiry(myContact, "null", "null", "null", "null", keyword, "null", "null", "null", ids,"null",Financername,loanamount,loanpercent,"null");
+                Call<String> mServiceMelaResponse = serviceApi._autokattaUpdateManualEnquiry(myContact, "null", "null", "null", "null", keyword, "null", "null", "null", ids, "null", Financername, loanamount, loanpercent, "null");
                 mServiceMelaResponse.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
@@ -8311,7 +8311,7 @@ get ExchangeMela Analytics Data
     */
     public void addManualEnquiryData(String myContact, String custName, String custContact, String custAddress,
                                      String custFullAddress, String custInventoryType, String custEnquiryStatus,
-                                     String discussion, String nextFollowupDate, String idsList,String source,String financername,int loanamt,float loanper,String financerstatus) {
+                                     String discussion, String nextFollowupDate, String idsList, String source, String financername, int loanamt, float loanper, String financerstatus) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 Retrofit retrofit = new Retrofit.Builder()
@@ -8323,7 +8323,7 @@ get ExchangeMela Analytics Data
                 //      AddManualEnquiryRequest addManualEnquiryRequest = new AddManualEnquiryRequest();
 
                 Call<AddManualEnquiryResponse> mServiceMelaResponse = serviceApi._autokattaAddManualEnquiry(myContact, custName, custContact, custAddress,
-                        custFullAddress, custInventoryType, custEnquiryStatus, discussion, nextFollowupDate, idsList,source,financername,loanamt,loanper,financerstatus);
+                        custFullAddress, custInventoryType, custEnquiryStatus, discussion, nextFollowupDate, idsList, source, financername, loanamt, loanper, financerstatus);
                 mServiceMelaResponse.enqueue(new Callback<AddManualEnquiryResponse>() {
                     @Override
                     public void onResponse(Call<AddManualEnquiryResponse> call, Response<AddManualEnquiryResponse> response) {
@@ -9685,8 +9685,6 @@ get ExchangeMela Analytics Data
     }
 
 
-
-
     //add other user source in database
     public void addOthersource(String name) {
         try {
@@ -9724,7 +9722,7 @@ get ExchangeMela Analytics Data
         }
     }
 
-//add other Financer  in database
+    //add other Financer  in database
     public void addFinancerName(String name) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
@@ -9796,9 +9794,6 @@ get ExchangeMela Analytics Data
             e.printStackTrace();
         }
     }
-
-
-
 
 
     /***

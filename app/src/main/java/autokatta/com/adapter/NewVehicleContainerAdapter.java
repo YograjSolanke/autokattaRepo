@@ -95,6 +95,8 @@ public class NewVehicleContainerAdapter extends RecyclerView.Adapter<RecyclerVie
                     mViewQuote.setVisibility(View.GONE);
                     Button mOfferRecived = (Button) view.findViewById(R.id.offerrecived);
                     mOfferRecived.setVisibility(View.GONE);
+                    Button mAddNote = (Button) view.findViewById(R.id.addnote);
+                    mAddNote.setVisibility(View.GONE);
 
                     final Dialog mBottomSheetDialog = new Dialog(mActivity, R.style.MaterialDialogSheet);
 

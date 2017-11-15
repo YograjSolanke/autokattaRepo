@@ -82,7 +82,7 @@ public class DemoDelAct extends AppCompatActivity {
                         startActivity(new Intent(getApplicationContext(), UsedVehicleContainer.class).putExtras(mBundle));
                         break;
                     case "New Vehicle":
-                        startActivity(new Intent(getApplicationContext(), NewVehicleContainer.class));
+                        startActivity(new Intent(getApplicationContext(), NewVehicleContainer.class).putExtras(mBundle));
                         break;
                     case "Sold Vehicle":
                         startActivity(new Intent(getApplicationContext(), SoldVehicleContainer.class));

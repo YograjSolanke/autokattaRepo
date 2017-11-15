@@ -34,8 +34,6 @@ import autokatta.com.other.VerticalLineDecorator;
 import autokatta.com.response.MyUploadedVehiclesResponse;
 import retrofit2.Response;
 
-import static android.content.Context.MODE_PRIVATE;
-
 /**
  * Created by ak-004 on 1/4/17.
  */
@@ -51,6 +49,7 @@ public class MyUploadedVehiclesFragment extends Fragment implements RequestNotif
     ConnectionDetector mTestConnection;
     boolean hasView = false;
     int index = 1;
+    int mStoreID;
 
     @Nullable
     @Override
@@ -68,8 +67,11 @@ public class MyUploadedVehiclesFragment extends Fragment implements RequestNotif
             public void run() {
 
                 mTestConnection = new ConnectionDetector(getActivity());
-                myContact = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
-                        .getString("loginContact", "");
+                /*myContact = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
+                        .getString("loginContact", "");*/
+                Bundle mBundle = getArguments();
+                myContact = mBundle.getString("bundle_contact");
+                mStoreID = mBundle.getInt("bundle_storeId");
 
                 mSwipeRefreshLayout = (SwipeRefreshLayout) myVehicles.findViewById(R.id.swipeRefreshLayoutMyUploadedVehicle);
                 mRecyclerView = (RecyclerView) myVehicles.findViewById(R.id.recyclerMyUploadedVehicle);
@@ -139,7 +141,7 @@ public class MyUploadedVehiclesFragment extends Fragment implements RequestNotif
     private void getMyUploadedVehicles(String myContact, int pageNo, int record) {
         if (mTestConnection.isConnectedToInternet()) {
             ApiCall apiCall = new ApiCall(getActivity(), this);
-            apiCall.MyUploadedVehicles(myContact, pageNo, record);
+            apiCall.MyUploadedVehicles(myContact, pageNo, record, mStoreID);
         } else {
             mSwipeRefreshLayout.setRefreshing(false);
             mNoData.setVisibility(View.GONE);
@@ -208,7 +210,7 @@ public class MyUploadedVehiclesFragment extends Fragment implements RequestNotif
                     adapter.setMoreDataAvailable(false);
                     //telling adapter to stop calling load more as no more server data available
                     if (isAdded())
-                    Toast.makeText(getActivity(), "No More Data Available", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity(), "No More Data Available", Toast.LENGTH_LONG).show();
                 }
                 //adapter.notifyDataSetChanged();
                 adapter.notifyDataChanged();

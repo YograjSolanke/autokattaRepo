@@ -1,6 +1,5 @@
 package autokatta.com.my_inventory_container;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -43,6 +42,8 @@ public class NewVehicleContainer extends AppCompatActivity implements RequestNot
     FloatingActionButton mAddVehicle;
     NewVehicleContainerAdapter mAdapter;
     int index = 1;
+    Bundle mBundle;
+    int mStoreId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,8 +56,13 @@ public class NewVehicleContainer extends AppCompatActivity implements RequestNot
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                myContact = getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).getString("loginContact", "");
-
+                //myContact = getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).getString("loginContact", "");
+                myContact = getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "");
+                /*if (getIntent().getExtras() != null) {
+                    mBundle = new Bundle();
+                    mBundle.putInt("bundle_storeId", getIntent().getExtras().getInt("bundle_storeId", 0));
+                    mBundle.putString("bundle_contact", getIntent().getExtras().getString("bundle_contact", Sharedcontact));
+                }*/
                 mAddVehicle = (FloatingActionButton) findViewById(R.id.fab);
                 mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);
                 mRecyclerView = (RecyclerView) findViewById(R.id.newVehicleListRecycler);
