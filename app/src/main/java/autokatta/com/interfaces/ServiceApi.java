@@ -23,6 +23,7 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Part;
 import retrofit2.http.Query;
 import retrofit2.http.Url;
@@ -1263,7 +1264,7 @@ public interface ServiceApi {
             , @Query("custFullAddress") String custFullAddress, @Query("custInventoryType") String custInventoryType,
                                                  @Query("custEnquiryStatus") String custEnquiryStatus, @Query("discussion") String discussion,
                                                  @Query("nextFollowupDate") String nextFollowupDate, @Query("idsList") String idsList, @Query("Source") String Source, @Query("financerName") String financerName,
-                                                 @Query("LoanAmount") int LoanAmount, @Query("LoanPercent") float LoanPercent);
+                                                 @Query("LoanAmount") int LoanAmount, @Query("LoanPercent") float LoanPercent, @Query("FinancerStatus") String FinancerStatus);
 
     //Get Manual enquiry
     @GET("GetEnquiredPersonsData")
@@ -1276,7 +1277,19 @@ public interface ServiceApi {
                                                               @Query("custInventoryType") String custInventoryType,
                                                               @Query("custEnquiryStatus") String custEnquiryStatus, @Query("discussion") String discussion,
                                                               @Query("nextFollowupDate") String nextFollowupDate, @Query("idsList") String idsList, @Query("Source") String Source,
-                                                              @Query("financerName") String financerName, @Query("LoanAmount") int LoanAmount, @Query("LoanPercent") float LoanPercent);
+                                                              @Query("financerName") String financerName, @Query("LoanAmount") int LoanAmount, @Query("LoanPercent") float LoanPercent
+                                                            , @Query("FinancerStatus") String FinancerStatus);
+
+
+ //Update Manual enquiry
+    @PUT("AddEnquiryData")
+    Call<String> _autokattaUpdateManualEnquiry(@Query("MyContact") String myContact, @Query("custName") String custName,
+                                                              @Query("custContact") String custContact, @Query("custAddress") String custAddress, @Query("custFullAddress") String custFullAddress,
+                                                              @Query("custInventoryType") String custInventoryType,
+                                                              @Query("custEnquiryStatus") String custEnquiryStatus, @Query("discussion") String discussion,
+                                                              @Query("nextFollowupDate") String nextFollowupDate, @Query("idsList") String idsList, @Query("Source") String Source,
+                                                              @Query("financerName") String financerName, @Query("LoanAmount") int LoanAmount, @Query("LoanPercent") float LoanPercent
+                                                                , @Query("FinancerStatus") String FinancerStatus);
 
     //Get Inventory Data...
     @GET("GetMyInventoryData")

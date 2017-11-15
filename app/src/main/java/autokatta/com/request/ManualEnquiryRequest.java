@@ -23,6 +23,27 @@ public class ManualEnquiryRequest {
     public String productPrice;
     public String productImage;
     public String productId;
+    public String FinancerName;
+
+    public int getEnquiryID() {
+        return enquiryID;
+    }
+
+    public void setEnquiryID(int enquiryID) {
+        this.enquiryID = enquiryID;
+    }
+
+    public int enquiryID;
+
+    public String getFinancerstatus() {
+        return financerstatus;
+    }
+
+    public void setFinancerstatus(String financerstatus) {
+        this.financerstatus = financerstatus;
+    }
+
+    public String financerstatus;
 
     public String getProductId() {
         return productId;
@@ -52,6 +73,33 @@ public class ManualEnquiryRequest {
     public String createdDate;
     public String followupDate;
     public String enquiryStatus;
+
+    public Integer loanamount;
+    public Float loanpercent;
+
+    public String getFinancerName() {
+        return FinancerName;
+    }
+
+    public void setFinancerName(String financerName) {
+        FinancerName = financerName;
+    }
+
+    public Integer getLoanamount() {
+        return loanamount;
+    }
+
+    public void setLoanamount(Integer loanamount) {
+        this.loanamount = loanamount;
+    }
+
+    public Float getLoanpercent() {
+        return loanpercent;
+    }
+
+    public void setLoanpercent(Float loanpercent) {
+        this.loanpercent = loanpercent;
+    }
 
     public String getEnquiryStatus() {
         return enquiryStatus;

@@ -280,6 +280,11 @@ public class ManualEnquiry extends AppCompatActivity implements SwipeRefreshLayo
                             request.setVehicleCategory(success.getCategory());
                             request.setVehicleSubCategory(success.getSubCategory());
                             request.setVehicleModel(success.getModel());
+                            request.setFinancerName(success.getFinancerName());
+                            request.setLoanamount(success.getLoanAmount());
+                            request.setLoanpercent(success.getLoanPercent());
+                            request.setFinancerstatus(success.getFinancerStatus());
+
 
                             request.setCustomerName("name");
                             request.setCustomerContact("contact");
@@ -337,6 +342,13 @@ public class ManualEnquiry extends AppCompatActivity implements SwipeRefreshLayo
                             request.setProductCategory(success.getCategory());
                             request.setProductType(success.getProductType());
 
+                            request.setFinancerName(success.getFinancerName());
+                            request.setLoanamount(success.getLoanAmount());
+                            request.setLoanpercent(success.getLoanPercent());
+                            request.setFinancerstatus(success.getFinancerStatus());
+
+
+
                             request.setCustomerName("name");
                             request.setCustomerContact("contact");
                             request.setCreatedDate(success.getCreatedDate());
@@ -393,6 +405,13 @@ public class ManualEnquiry extends AppCompatActivity implements SwipeRefreshLayo
                             request.setServiceCategory(service.getCategory());
                             request.setServiceType(service.getType());
 
+                            request.setFinancerName(service.getFinancerName());
+                            request.setLoanamount(service.getLoanAmount());
+                            request.setLoanpercent(service.getLoanPercent());
+                            request.setFinancerstatus(service.getFinancerStatus());
+
+
+
                             request.setCustomerName("name");
                             request.setCustomerContact("contact");
                             request.setCreatedDate(service.getCreatedDate());
@@ -448,6 +467,12 @@ public class ManualEnquiry extends AppCompatActivity implements SwipeRefreshLayo
                             request.setVehicleCategory(success.getCategoryName());
                             request.setVehicleSubCategory(success.getSubCategoryName());
                             request.setVehicleModel(success.getModelName());
+
+                            request.setFinancerName(success.getFinancerName());
+                            request.setLoanamount(success.getLoanAmount());
+                            request.setLoanpercent(success.getLoanPercent());
+                            request.setFinancerstatus(success.getFinancerStatus());
+
 
                             request.setCustomerName("name");
                             request.setCustomerContact("contact");
@@ -588,18 +613,37 @@ public class ManualEnquiry extends AppCompatActivity implements SwipeRefreshLayo
             case "Products":
                 intent.putExtra("id", request.getProductId());
                 intent.putExtra("name", request.getProductName());
+                intent.putExtra("financername", request.getFinancerName());
+                intent.putExtra("loanamount", request.getLoanamount());
+                intent.putExtra("loanpercent", request.getLoanpercent());
+                intent.putExtra("financestatus", request.getFinancerstatus());
                 break;
             case "Services":
                 intent.putExtra("id", request.getServiceId());
                 intent.putExtra("name", request.getServiceName());
+                intent.putExtra("financername", request.getFinancerName());
+                intent.putExtra("loanamount", request.getLoanamount());
+                intent.putExtra("loanpercent", request.getLoanpercent());
+                intent.putExtra("financestatus", request.getFinancerstatus());
+
                 break;
             case "Used Vehicle":
                 intent.putExtra("id", request.getVehicleId());
                 intent.putExtra("name", request.getVehicleName());
+                intent.putExtra("financername", request.getFinancerName());
+                intent.putExtra("loanamount", request.getLoanamount());
+                intent.putExtra("loanpercent", request.getLoanpercent());
+                intent.putExtra("financestatus", request.getFinancerstatus());
+
                 break;
             case "New Vehicle":
                 intent.putExtra("id", request.getVehicleId());
                 intent.putExtra("name", request.getVehicleName());
+                intent.putExtra("financername", request.getFinancerName());
+                intent.putExtra("loanamount", request.getLoanamount());
+                intent.putExtra("loanpercent", request.getLoanpercent());
+                intent.putExtra("financestatus", request.getFinancerstatus());
+
                 break;
         }
         startActivity(intent);

@@ -32,7 +32,7 @@ public class ManualEnquiryVehicleList extends AppCompatActivity implements Reque
     String mInventoryType, addArray = "";
     ListView mListView;
     String custName, custContact, custAddress, custFullAddress, custInventoryType = "", custEnquiryStatus = "";
-    String discussion, nextFollowupDate, callfrom,mSource,mFinancerName;
+    String discussion, nextFollowupDate, callfrom,mSource,mFinancerName,mFinanceStatus;
     int mLoanAmt;
     float mLoanPercent;
     Button mSubmit;
@@ -72,6 +72,7 @@ public class ManualEnquiryVehicleList extends AppCompatActivity implements Reque
             mLoanPercent = getIntent().getExtras().getFloat("loanpercent",0);
             mLoanAmt = getIntent().getExtras().getInt("loanamt", 0);
             mFinancerName = getIntent().getExtras().getString("financername", "");
+            mFinanceStatus = getIntent().getExtras().getString("financerstatus", "");
         }
     }
 
@@ -326,6 +327,6 @@ public class ManualEnquiryVehicleList extends AppCompatActivity implements Reque
         ApiCall mApiCall = new ApiCall(this, this);
         mApiCall.addManualEnquiryData(getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "")
                 , custName, custContact, custAddress, custFullAddress, custInventoryType,
-                custEnquiryStatus, discussion, nextFollowupDate, addArray,mSource,mFinancerName,mLoanAmt,mLoanPercent);
+                custEnquiryStatus, discussion, nextFollowupDate, addArray,mSource,mFinancerName,mLoanAmt,mLoanPercent,mFinanceStatus);
     }
 }

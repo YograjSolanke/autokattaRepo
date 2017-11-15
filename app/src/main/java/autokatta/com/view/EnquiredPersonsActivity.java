@@ -14,8 +14,14 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
+import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.io.IOException;
@@ -36,6 +42,7 @@ import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.other.CustomToast;
+import autokatta.com.response.GetFinancerNameResponse;
 import autokatta.com.response.GetPersonDataResponse;
 import retrofit2.Response;
 
@@ -49,7 +56,15 @@ public class EnquiredPersonsActivity extends AppCompatActivity implements Reques
     LinearLayout filterLayout;
     TextView mNoData, mTitletxt, mTypetxt;
     ConnectionDetector mConnectionDetector;
+    EditText mLoanPer, mLoanAmt;
+    AutoCompleteTextView mFinancer;
+    ImageView mEdit, mDone;
     private ProgressDialog dialog;
+    int strLoanAmount;
+    float strLoanPercent;
+    String strFinancername, strFinancestatus;
+    RelativeLayout mRelFinancerDetails;
+    List<String> mFinancerList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,9 +80,15 @@ public class EnquiredPersonsActivity extends AppCompatActivity implements Reques
             @Override
             public void run() {
 
+                mConnectionDetector = new ConnectionDetector(EnquiredPersonsActivity.this);
+
                 strId = getIntent().getExtras().getString("id");
                 strKeyword = getIntent().getExtras().getString("keyword");
                 strTitle = getIntent().getExtras().getString("name");
+                strFinancername = getIntent().getExtras().getString("financername");
+                strLoanPercent = getIntent().getExtras().getFloat("loanpercent");
+                strLoanAmount = getIntent().getExtras().getInt("loanamount");
+                strFinancestatus = getIntent().getExtras().getString("financestatus", "");
 
                 mNoData = (TextView) findViewById(R.id.no_category);
 
@@ -76,16 +97,31 @@ public class EnquiredPersonsActivity extends AppCompatActivity implements Reques
                 mFrameLayout = (FrameLayout) findViewById(R.id.person_enquiry_frame);
                 mTypetxt = (TextView) findViewById(R.id.type);
                 mTitletxt = (TextView) findViewById(R.id.title);
+                mLoanAmt = (EditText) findViewById(R.id.edtloanamt);
+                mLoanPer = (EditText) findViewById(R.id.edtloanper);
+                mFinancer = (AutoCompleteTextView) findViewById(R.id.edtfinancername);
+                mEdit = (ImageView) findViewById(R.id.imgedit);
+                mDone = (ImageView) findViewById(R.id.imgdone);
+                mRelFinancerDetails = (RelativeLayout) findViewById(R.id.relfinancedetails);
                 filterLayout = (LinearLayout) findViewById(R.id.below);
                 filterLayout.setVisibility(View.GONE);
 
                 mTypetxt.setText(strKeyword);
                 mTitletxt.setText(strTitle);
+                mLoanAmt.setText(String.valueOf(strLoanAmount));
+                mLoanPer.setText(String.valueOf(strLoanPercent));
+                mFinancer.setText(strFinancername);
+                getFinancernames();
+                mFinancer.setEnabled(false);
+                mLoanAmt.setEnabled(false);
+                mLoanPer.setEnabled(false);
+
+                if (strFinancestatus.equalsIgnoreCase("yes")) {
+                    mRelFinancerDetails.setVisibility(View.VISIBLE);
+                }
 
                 dialog = new ProgressDialog(EnquiredPersonsActivity.this);
                 dialog.setMessage("Loading...");
-
-                mConnectionDetector = new ConnectionDetector(EnquiredPersonsActivity.this);
 
                 mPersonRecyclerView.setHasFixedSize(true);
 
@@ -97,6 +133,7 @@ public class EnquiredPersonsActivity extends AppCompatActivity implements Reques
                 mPersonRecyclerView.setItemAnimator(new DefaultItemAnimator());
                 mPersonRecyclerView.addItemDecoration(new DividerItemDecoration(getApplicationContext(), LinearLayoutManager.VERTICAL));
 
+                getPersonData(strId, strKeyword);
 
                 mSwipeRefreshLayout.setOnRefreshListener(EnquiredPersonsActivity.this);
 
@@ -110,6 +147,7 @@ public class EnquiredPersonsActivity extends AppCompatActivity implements Reques
                     public void run() {
                         mSwipeRefreshLayout.setRefreshing(true);
                         getPersonData(strId, strKeyword);
+                        getFinancernames();
                     }
                 });
 
@@ -122,6 +160,44 @@ public class EnquiredPersonsActivity extends AppCompatActivity implements Reques
                 CustomToast.customToast(getApplicationContext(), "Coming soon....");
             }
         });
+
+        mEdit.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mFinancer.setEnabled(true);
+                mLoanAmt.setEnabled(true);
+                mLoanPer.setEnabled(true);
+                mDone.setVisibility(View.VISIBLE);
+                mEdit.setVisibility(View.GONE);
+            }
+        });
+
+        mDone.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if (mFinancer.getText().toString().equalsIgnoreCase("")) {
+                    mFinancer.setError("Please provide financer Name");
+                } else if (mLoanAmt.getText().toString().equalsIgnoreCase("0") || mLoanAmt.getText().toString().equalsIgnoreCase("")) {
+                    mLoanAmt.setError("Please provide Loan Amount");
+                } else if (mLoanPer.getText().toString().equalsIgnoreCase("0") || mLoanPer.getText().toString().equalsIgnoreCase("")) {
+                    mLoanPer.setError("Please provide Loan Percentage");
+                } else {
+                    if (!mFinancer.getText().toString().equalsIgnoreCase("") && !mFinancerList.contains(mFinancer.getText().toString())) {
+                        addNewFinancerName(mFinancer.getText().toString());
+                    }
+                    mFinancer.setEnabled(false);
+                    mLoanAmt.setEnabled(false);
+                    mLoanPer.setEnabled(false);
+                    mEdit.setVisibility(View.VISIBLE);
+                    float fper = Float.valueOf(mLoanPer.getText().toString());
+                    int famt = Integer.valueOf(mLoanAmt.getText().toString());
+                    updateManualEnquiry(fper, famt);
+                }
+            }
+        });
+
+
     }
 
     @Override
@@ -142,6 +218,46 @@ public class EnquiredPersonsActivity extends AppCompatActivity implements Reques
             CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
         }
     }
+
+    /*
+       Get Financer Data...
+        */
+    private void getFinancernames() {
+
+        if (mConnectionDetector.isConnectedToInternet()) {
+            ApiCall mApiCall = new ApiCall(this, this);
+            mApiCall.getFinancerName();
+        } else {
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
+        }
+    }
+
+    /*
+    Add Financer Data...
+     */
+    private void addNewFinancerName(String newfinancer) {
+
+        if (mConnectionDetector.isConnectedToInternet()) {
+            ApiCall mApiCall = new ApiCall(this, this);
+            mApiCall.addFinancerName(newfinancer);
+        } else {
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
+        }
+    }
+
+    /*
+    Update Manual enquiry Data...
+     */
+    private void updateManualEnquiry(float fper, int famt) {
+
+        if (mConnectionDetector.isConnectedToInternet()) {
+            ApiCall mApiCall = new ApiCall(this, this);
+            mApiCall.updateManualEnquiry(getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""), mFinancer.getText().toString(), fper, famt, strKeyword, strId);
+        } else {
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
+        }
+    }
+
 
     @Override
     public void notifySuccess(Response<?> response) {
@@ -215,6 +331,25 @@ public class EnquiredPersonsActivity extends AppCompatActivity implements Reques
                             filterLayout.setVisibility(View.GONE);
                         }
                     }
+                } else if (response.body() instanceof GetFinancerNameResponse) {
+                    if (response.isSuccessful()) {
+                        mFinancerList.clear();
+                        GetFinancerNameResponse mRepo = (GetFinancerNameResponse) response.body();
+                        for (GetFinancerNameResponse.Success success : mRepo.getSuccess()) {
+                            success.setFinancierID(success.getFinancierID());
+                            success.setFinancierName(success.getFinancierName());
+                            mFinancerList.add(success.getFinancierName());
+                            //  mFinancerList1.put(success.getFinancierName(), success.getFinancierID());
+                        }
+                        // parsedDataFinancer.addAll(mFinancerList);
+                        ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(getApplicationContext(),
+                                R.layout.registration_spinner, mFinancerList);
+                        mFinancer.setAdapter(dataAdapter);
+
+
+                    } else {
+                        CustomToast.customToast(getApplicationContext(), getString(R.string._404));
+                    }
                 }
             } else {
                 mSwipeRefreshLayout.setRefreshing(false);
@@ -280,7 +415,11 @@ public class EnquiredPersonsActivity extends AppCompatActivity implements Reques
 
     @Override
     public void notifyString(String str) {
-
+        if (str != null) {
+            if (str.equalsIgnoreCase("success_updated")) {
+                CustomToast.customToast(getApplicationContext(), "Updated Successfully");
+            }
+        }
     }
 
 

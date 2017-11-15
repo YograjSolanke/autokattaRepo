@@ -95,6 +95,7 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
     String mId, mKeyword, mTitle, mPrice, mCategory, mBrand, mModel, mClassname, mImage;
     private final int REQUEST_CODE = 99;
     Button mSubmit;
+    String mFinancestatus="";
     EditText othersource;
     TextInputLayout othersourcelayout;
     String SOURCE[] = null;
@@ -188,6 +189,7 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
                             final EditText mLoanPer = (EditText) view.findViewById(R.id.loanpercent);
                             final AutoCompleteTextView mFinancerName = (AutoCompleteTextView) view.findViewById(R.id.financername);
 
+                            mFinancestatus="yes";
                             mClose.setOnClickListener(new OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
@@ -708,6 +710,7 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
                     bundle.putFloat("loanpercent", strLoanPer);
                     bundle.putInt("loanamt", strLoanAmt);
                     bundle.putString("financername", strFinancername);
+                    bundle.putString("financerstatus", mFinancestatus);
 
                     ActivityOptions options = ActivityOptions.makeCustomAnimation(AddManualEnquiry.this, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
                     Intent intent = new Intent(getApplicationContext(), ManualEnquiryVehicleList.class);
@@ -727,7 +730,7 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
                                 String nextFollowupDate, String addArray) {
         ApiCall mApiCall = new ApiCall(this, this);
         mApiCall.addManualEnquiryData(myContact, custName, custContact, custAddress, custFullAddress, custInventoryType,
-                custEnquiryStatus, discussion, nextFollowupDate, addArray, mSource,strFinancername,strLoanAmt,strLoanPer);
+                custEnquiryStatus, discussion, nextFollowupDate, addArray, mSource,strFinancername,strLoanAmt,strLoanPer,mFinancestatus);
     }
 
     private void addFinancername(String fName) {

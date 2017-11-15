@@ -176,6 +176,54 @@ public class ManualEnquiryResponse {
             @Expose
             private String nextFollowupDate;
 
+            @SerializedName("LoanAmount")
+            @Expose
+            private Integer LoanAmount;
+
+            @SerializedName("financerName")
+
+            @Expose
+            private String financerName;
+            @SerializedName("LoanPercent")
+            @Expose
+            private Float LoanPercent;
+
+            public String getFinancerStatus() {
+                return FinancerStatus;
+            }
+
+            public void setFinancerStatus(String financerStatus) {
+                FinancerStatus = financerStatus;
+            }
+
+            @SerializedName("FinancerStatus")
+            @Expose
+            private String FinancerStatus;
+
+            public Integer getLoanAmount() {
+                return LoanAmount;
+            }
+
+            public void setLoanAmount(Integer loanAmount) {
+                LoanAmount = loanAmount;
+            }
+
+            public String getFinancerName() {
+                return financerName;
+            }
+
+            public void setFinancerName(String financerName) {
+                this.financerName = financerName;
+            }
+
+            public Float getLoanPercent() {
+                return LoanPercent;
+            }
+
+            public void setLoanPercent(Float loanPercent) {
+                LoanPercent = loanPercent;
+            }
+
             public String getProductId() {
                 return productId;
             }
@@ -498,6 +546,52 @@ public class ManualEnquiryResponse {
             @SerializedName("nextFollowupDate")
             @Expose
             private String nextFollowupDate;
+
+            @SerializedName("LoanAmount")
+            @Expose
+            private Integer LoanAmount;
+            @SerializedName("financerName")
+            @Expose
+            private String financerName;
+            @SerializedName("LoanPercent")
+            @Expose
+            private Float LoanPercent;
+
+            public String getFinancerStatus() {
+                return FinancerStatus;
+            }
+
+            public void setFinancerStatus(String financerStatus) {
+                FinancerStatus = financerStatus;
+            }
+
+            @SerializedName("FinancerStatus")
+            @Expose
+            private String FinancerStatus;
+
+            public Integer getLoanAmount() {
+                return LoanAmount;
+            }
+
+            public void setLoanAmount(Integer loanAmount) {
+                LoanAmount = loanAmount;
+            }
+
+            public String getFinancerName() {
+                return financerName;
+            }
+
+            public void setFinancerName(String financerName) {
+                this.financerName = financerName;
+            }
+
+            public Float getLoanPercent() {
+                return LoanPercent;
+            }
+
+            public void setLoanPercent(Float loanPercent) {
+                LoanPercent = loanPercent;
+            }
 
             public String getId() {
                 return id;
@@ -946,6 +1040,15 @@ public class ManualEnquiryResponse {
             @SerializedName("discussion")
             @Expose
             private String discussion;
+            @SerializedName("LoanAmount")
+            @Expose
+            private Integer LoanAmount;
+            @SerializedName("financerName")
+            @Expose
+            private String financerName;
+            @SerializedName("LoanPercent")
+            @Expose
+            private Float LoanPercent;
 
             @SerializedName("createdDate")
             @Expose
@@ -962,6 +1065,58 @@ public class ManualEnquiryResponse {
             @SerializedName("nextFollowupDate")
             @Expose
             private String nextFollowupDate;
+
+ @SerializedName("FinancerStatus")
+            @Expose
+            private String FinancerStatus;
+
+            public String getFinancerStatus() {
+                return FinancerStatus;
+            }
+
+            public void setFinancerStatus(String financerStatus) {
+                FinancerStatus = financerStatus;
+            }
+
+            public String get_implements() {
+                return _implements;
+            }
+
+            public void set_implements(String _implements) {
+                this._implements = _implements;
+            }
+
+            public String getjIB() {
+                return jIB;
+            }
+
+            public void setjIB(String jIB) {
+                this.jIB = jIB;
+            }
+
+            public Integer getLoanAmount() {
+                return LoanAmount;
+            }
+
+            public void setLoanAmount(Integer loanAmount) {
+                LoanAmount = loanAmount;
+            }
+
+            public String getFinancerName() {
+                return financerName;
+            }
+
+            public void setFinancerName(String financerName) {
+                this.financerName = financerName;
+            }
+
+            public Float getLoanPercent() {
+                return LoanPercent;
+            }
+
+            public void setLoanPercent(Float loanPercent) {
+                LoanPercent = loanPercent;
+            }
 
             public String getVehicleId() {
                 return vehicleId;
@@ -2042,6 +2197,16 @@ public class ManualEnquiryResponse {
             @Expose
             private String discussion;
 
+            @SerializedName("LoanAmount")
+            @Expose
+            private Integer LoanAmount;
+            @SerializedName("financerName")
+            @Expose
+            private String financerName;
+            @SerializedName("LoanPercent")
+            @Expose
+            private Float LoanPercent;
+
             @SerializedName("createdDate")
             @Expose
             private String createdDate;
@@ -2058,6 +2223,41 @@ public class ManualEnquiryResponse {
             @Expose
             private String nextFollowupDate;
 
+            public String getFinancerStatus() {
+                return FinancerStatus;
+            }
+
+            public void setFinancerStatus(String financerStatus) {
+                FinancerStatus = financerStatus;
+            }
+
+            @SerializedName("FinancerStatus")
+            @Expose
+            private String FinancerStatus;
+
+            public Integer getLoanAmount() {
+                return LoanAmount;
+            }
+
+            public void setLoanAmount(Integer loanAmount) {
+                LoanAmount = loanAmount;
+            }
+
+            public String getFinancerName() {
+                return financerName;
+            }
+
+            public void setFinancerName(String financerName) {
+                this.financerName = financerName;
+            }
+
+            public Float getLoanPercent() {
+                return LoanPercent;
+            }
+
+            public void setLoanPercent(Float loanPercent) {
+                LoanPercent = loanPercent;
+            }
 
             public Integer getNewVehicleID() {
                 return newVehicleID;

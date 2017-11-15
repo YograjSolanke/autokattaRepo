@@ -8186,7 +8186,7 @@ get ExchangeMela Analytics Data
                         .client(initLog().build())
                         .build();
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<ManualEnquiryResponse> mServiceMelaResponse = serviceApi.getManualEnquiry(myContact, "null", "null", "null", "null", "null", "null", "null", "null", "null","null","null",0,0);
+                Call<ManualEnquiryResponse> mServiceMelaResponse = serviceApi.getManualEnquiry(myContact, "null", "null", "null", "null", "null", "null", "null", "null", "null","null","null",0,0,"null");
                 mServiceMelaResponse.enqueue(new Callback<ManualEnquiryResponse>() {
                     @Override
                     public void onResponse(Call<ManualEnquiryResponse> call, Response<ManualEnquiryResponse> response) {
@@ -8195,6 +8195,76 @@ get ExchangeMela Analytics Data
 
                     @Override
                     public void onFailure(Call<ManualEnquiryResponse> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+            } else
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+  /*
+      Update Manual Enquiry Details...
+    */
+
+    public void updateManualEnquiry(String myContact,String Financername,float loanpercent,int loanamount,String keyword,String ids) {
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+
+                //JSON to Gson conversion
+                Gson gson = new GsonBuilder()
+                        .setLenient()
+                        .create();
+
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create(gson))
+                        .client(initLog().build())
+                        .build();
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<String> mServiceMelaResponse = serviceApi._autokattaUpdateManualEnquiry(myContact, "null", "null", "null", "null", keyword, "null", "null", "null", ids,"null",Financername,loanamount,loanpercent,"null");
+                mServiceMelaResponse.enqueue(new Callback<String>() {
+                    @Override
+                    public void onResponse(Call<String> call, Response<String> response) {
+                        mNotifier.notifyString(response.body());
+                    }
+
+                    @Override
+                    public void onFailure(Call<String> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+            } else
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /*
+      Get Financer Name...
+    */
+
+    public void getFinancerName() {
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<GetFinancerNameResponse> mServiceMelaResponse = serviceApi._autokattagetFinancername();
+                mServiceMelaResponse.enqueue(new Callback<GetFinancerNameResponse>() {
+                    @Override
+                    public void onResponse(Call<GetFinancerNameResponse> call, Response<GetFinancerNameResponse> response) {
+                        mNotifier.notifySuccess(response);
+                    }
+
+                    @Override
+                    public void onFailure(Call<GetFinancerNameResponse> call, Throwable t) {
                         mNotifier.notifyError(t);
                     }
                 });
@@ -8241,7 +8311,7 @@ get ExchangeMela Analytics Data
     */
     public void addManualEnquiryData(String myContact, String custName, String custContact, String custAddress,
                                      String custFullAddress, String custInventoryType, String custEnquiryStatus,
-                                     String discussion, String nextFollowupDate, String idsList,String source,String financername,int loanamt,float loanper) {
+                                     String discussion, String nextFollowupDate, String idsList,String source,String financername,int loanamt,float loanper,String financerstatus) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 Retrofit retrofit = new Retrofit.Builder()
@@ -8253,7 +8323,7 @@ get ExchangeMela Analytics Data
                 //      AddManualEnquiryRequest addManualEnquiryRequest = new AddManualEnquiryRequest();
 
                 Call<AddManualEnquiryResponse> mServiceMelaResponse = serviceApi._autokattaAddManualEnquiry(myContact, custName, custContact, custAddress,
-                        custFullAddress, custInventoryType, custEnquiryStatus, discussion, nextFollowupDate, idsList,source,financername,loanamt,loanper);
+                        custFullAddress, custInventoryType, custEnquiryStatus, discussion, nextFollowupDate, idsList,source,financername,loanamt,loanper,financerstatus);
                 mServiceMelaResponse.enqueue(new Callback<AddManualEnquiryResponse>() {
                     @Override
                     public void onResponse(Call<AddManualEnquiryResponse> call, Response<AddManualEnquiryResponse> response) {
