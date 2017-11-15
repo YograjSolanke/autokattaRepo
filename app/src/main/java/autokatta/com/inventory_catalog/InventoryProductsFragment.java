@@ -401,8 +401,6 @@ public class InventoryProductsFragment extends Fragment implements RequestNotifi
                         counter--;
                         finalcategory.set(position, "0");
                     }
-
-                    System.out.println("finalcatery=" + finalcategory.get(position));
                 }
             });
 

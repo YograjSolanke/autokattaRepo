@@ -40,8 +40,6 @@ import autokatta.com.other.CustomToast;
 import autokatta.com.response.StoreInventoryResponse;
 import retrofit2.Response;
 
-import static android.content.Context.MODE_PRIVATE;
-
 /**
  * Created by ak-003 on 7/6/17.
  */
@@ -66,6 +64,7 @@ public class InventoryServicesFragment extends Fragment implements RequestNotifi
     List<String> finalcategory = new ArrayList<>();
     RelativeLayout relativeFilter;
     int counter = 0;
+    int mStoreID;
 
 
     public InventoryServicesFragment() {
@@ -86,10 +85,13 @@ public class InventoryServicesFragment extends Fragment implements RequestNotifi
             @Override
             public void run() {
                 mTestConnection = new ConnectionDetector(getActivity());
-                Sharedcontact = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "");
+
+                Bundle mBundle = getArguments();
+                Sharedcontact = mBundle.getString("bundle_contact");
+                mStoreID = mBundle.getInt("bundle_storeId");
+
                 mSwipeRefreshLayout = (SwipeRefreshLayout) mService.findViewById(R.id.swipeRefreshLayout);
                 mRecyclerView = (RecyclerView) mService.findViewById(R.id.recycler_view);
-                //titleText = (TextView) mService.findViewById(R.id.titleText);
                 mNoData = (TextView) mService.findViewById(R.id.no_category);
                 filterImg = (ImageView) mService.findViewById(R.id.filterimg);
                 relativeFilter = (RelativeLayout) mService.findViewById(R.id.rel);
@@ -134,7 +136,7 @@ public class InventoryServicesFragment extends Fragment implements RequestNotifi
     private void getInventoryService(String sharedcontact) {
         if (mTestConnection.isConnectedToInternet()) {
             ApiCall apiCall = new ApiCall(getActivity(), this);
-            apiCall.getMyInventory_Catalog(sharedcontact, 0);
+            apiCall.getMyInventory_Catalog(sharedcontact, mStoreID);
         } else {
             mSwipeRefreshLayout.setRefreshing(false);
             mNoData.setVisibility(View.GONE);
@@ -177,22 +179,7 @@ public class InventoryServicesFragment extends Fragment implements RequestNotifi
                         success.setSrate3(success.getSrate3());
                         serviceList.add(success);
 
-//filter code commented
-//                        if (success.getServicecategory().trim().contains(",")) {
-//                            String arr[] = success.getServicecategory().trim().split(",");
-//                            for (int l = 0; l < arr.length; l++) {
-//                                String part = arr[l].trim();
-//                                if (!part.equals(" ") && !part.equals(""))
-//                                    categoryList.add(part);
-//                            }
-//                        } else {
-//                            categoryList.add(success.getServicecategory().trim());
-//                        }
                     }
-//
-//
-//                    categoryHashSet = new HashSet<>(categoryList);
-//                    filterResult(categoryHashSet.toArray(new String[categoryHashSet.size()]));
                     mSwipeRefreshLayout.setRefreshing(false);
                     adapter = new StoreServiceAdapter(getActivity(), serviceList, Sharedcontact, storeContact);
                     mRecyclerView.setAdapter(adapter);
@@ -399,8 +386,6 @@ public class InventoryServicesFragment extends Fragment implements RequestNotifi
                         counter--;
                         finalcategory.set(position, "0");
                     }
-
-                    System.out.println("finalcatery=" + finalcategory.get(position));
                 }
             });
 

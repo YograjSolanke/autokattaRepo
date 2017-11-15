@@ -35,7 +35,7 @@ public class DemoDelAct extends AppCompatActivity {
 
     String[] gridViewString = {
             "Product", "Service", "Used Vehicle", "New Vehicle", "Sold Vehicle", "My Vehicle",
-            "Transfer Stock", "Manual Enquiry", "Business Chat", "Search Leads"};
+            "Transfer Stock", "Manual Enquiry", "Business Chat", "Search Leads",};
 
     int[] gridViewImageId = {
             R.mipmap.product, R.mipmap.services, R.mipmap.used_vehicle, R.mipmap.new_vehicle, R.mipmap.sold_vehicle,
