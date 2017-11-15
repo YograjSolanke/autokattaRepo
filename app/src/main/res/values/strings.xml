@@ -1022,7 +1022,8 @@
 
     <string name="joinGroup">Join Group</string>
     <string name="title_activity_notification_add_employee" translatable="false">NotificationAddEmployeeActivity</string>
-    <string name="title_activity_my_store_employee">MyStoreEmployeeActivity</string>
+    <string name="title_activity_my_store_employee" translatable="false">MyStoreEmployeeActivity</string>
+    <string name="app_update" translatable="false">is available to download. Downloading the latest update you will get the latest feature, improvements and bug fixes.</string>
 
 
 </resources>

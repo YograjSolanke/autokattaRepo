@@ -106,6 +106,7 @@ dependencies {
     compile 'com.mcxiaoke.photoview:library:1.2.3'
     compile 'com.allattentionhere:autoplayvideos:0.1.6'
     compile 'com.android.volley:volley:1.0.0'
+    compile 'com.google.firebase:firebase-config:9.6.1'
     testCompile 'junit:junit:4.12'
 }
 apply plugin: 'com.google.gms.google-services'
