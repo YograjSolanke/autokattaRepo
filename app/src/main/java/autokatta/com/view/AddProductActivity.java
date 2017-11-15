@@ -378,7 +378,7 @@ public class AddProductActivity extends AppCompatActivity implements RequestNoti
                                String group_id) {
 
         ApiCall mApiCall = new ApiCall(AddProductActivity.this, this);
-        mApiCall.addProduct(store_id, product_name, price, product_details, product_tags, product_type, images, category, brandtags, group_id);
+        mApiCall.addProduct(store_id, product_name, price, product_details, product_tags, product_type, images, category, brandtags, group_id, myContact);
     }
 
     @Override

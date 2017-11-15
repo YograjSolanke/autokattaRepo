@@ -1,6 +1,8 @@
 package autokatta.com.view;
 
+import android.app.ActivityOptions;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -9,6 +11,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
@@ -56,9 +59,15 @@ public class MyStoreEmployeeActivity extends AppCompatActivity implements Reques
                 .getString("loginContact", "");
 
         fab = (FloatingActionButton) findViewById(R.id.fab);
+        mNoData = (TextView) findViewById(R.id.no_category);
+        mNoData.setVisibility(View.GONE);
+        mTestConnection = new ConnectionDetector(this);
 
         dialog = new ProgressDialog(this);
         dialog.setMessage("Loading...");
+
+
+        fab.setOnClickListener(this);
 
         runOnUiThread(new Runnable() {
             @Override
@@ -91,7 +100,7 @@ public class MyStoreEmployeeActivity extends AppCompatActivity implements Reques
                     @Override
                     public void run() {
                         mSwipeRefreshLayout.setRefreshing(true);
-                        mApiCall.getStoreEmployees(12, myContact);
+                        mApiCall.getStoreEmployees(store_id, myContact);
                     }
                 });
 
@@ -120,7 +129,18 @@ public class MyStoreEmployeeActivity extends AppCompatActivity implements Reques
 
     @Override
     public void onClick(View view) {
+        ActivityOptions options = ActivityOptions.makeCustomAnimation(this, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
+        Bundle b = new Bundle();
 
+        switch (view.getId()) {
+
+            case R.id.fab:
+                Intent intentAddEmp = new Intent(MyStoreEmployeeActivity.this, AddEmployeeActivity.class);
+                b.putInt("store_id", store_id);
+                intentAddEmp.putExtras(b);
+                startActivity(intentAddEmp, options.toBundle());
+                break;
+        }
     }
 
     @Override
@@ -131,27 +151,38 @@ public class MyStoreEmployeeActivity extends AppCompatActivity implements Reques
                 if (response.body() instanceof StoreEmployeeResponse) {
                     dialog.dismiss();
                     employees.clear();
+
                     StoreEmployeeResponse.Success Response = (StoreEmployeeResponse.Success) response.body();
-                    for (StoreEmployeeResponse.Success.Employee success : Response.getEmployee()) {
-                        success.setStoreEmplyeeID(success.getStoreEmplyeeID());
-                        success.setName(success.getName());
-                        success.setContactNo(success.getContactNo());
-                        success.setStatus(success.getStatus());
-                        success.setPermission(success.getPermission());
-                        success.setDescription(success.getDescription());
-                        success.setDesignation(success.getDesignation());
-                        success.setStoreID(success.getStoreID());
+                    if (!Response.getEmployee().isEmpty()) {
+                        mNoData.setVisibility(View.GONE);
+                        for (StoreEmployeeResponse.Success.Employee success : Response.getEmployee()) {
+                            success.setStoreEmplyeeID(success.getStoreEmplyeeID());
+                            success.setName(success.getName());
+                            success.setContactNo(success.getContactNo());
+                            success.setStatus(success.getStatus());
+                            success.setPermission(success.getPermission());
+                            success.setDescription(success.getDescription());
+                            success.setDesignation(success.getDesignation());
+                            success.setStoreID(success.getStoreID());
 
-                        employees.add(success);
+                            employees.add(success);
 
+
+                        }
+
+                        mSwipeRefreshLayout.setRefreshing(false);
+                        adapter = new MyStoreEmployeeAdapter(this, employees);
+                        mRecyclerView.setAdapter(adapter);
+                        adapter.notifyDataSetChanged();
+                    } else {
+                        mSwipeRefreshLayout.setRefreshing(false);
+                        mNoData.setVisibility(View.VISIBLE);
 
                     }
 
-                    adapter = new MyStoreEmployeeAdapter(this, employees);
-                    mRecyclerView.setAdapter(adapter);
-                    adapter.notifyDataSetChanged();
                 }
             } else {
+                mNoData.setVisibility(View.VISIBLE);
                 mSwipeRefreshLayout.setRefreshing(false);
                 // CustomToast.customToast(getActivity(), getString(R.string._404));
             }
@@ -164,7 +195,7 @@ public class MyStoreEmployeeActivity extends AppCompatActivity implements Reques
 
     @Override
     public void notifyError(Throwable error) {
-
+        mSwipeRefreshLayout.setRefreshing(false);
         if (dialog.isShowing()) {
             dialog.dismiss();
         }
@@ -189,5 +220,23 @@ public class MyStoreEmployeeActivity extends AppCompatActivity implements Reques
     @Override
     public void notifyString(String str) {
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+        overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
     }
 }

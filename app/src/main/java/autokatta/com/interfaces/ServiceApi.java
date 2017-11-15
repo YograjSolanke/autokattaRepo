@@ -1127,7 +1127,8 @@ public interface ServiceApi {
                                           @Query("Images") String images,
                                           @Query("Category") String category,
                                           @Query("BrandTags") String brandtags,
-                                          @Query("GroupID") String group_id);
+                                          @Query("GroupID") String group_id,
+                                          @Query("AddedBy") String AddedBy);
 
 
     //add service into store...
@@ -1135,6 +1136,7 @@ public interface ServiceApi {
     Call<ServiceAddedResponse> addService(@Query("StoreID") int store_id,
                                           @Query("ServiceName") String service_name,
                                           @Query("Price") String price,
+                                          @Query("AddedBy") String AddedBy,
                                           @Query("ServiceDetails") String service_details,
                                           @Query("ServiceTags") String service_tags,
                                           @Query("ServiceType") String service_type,

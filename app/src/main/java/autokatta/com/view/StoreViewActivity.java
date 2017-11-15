@@ -88,7 +88,7 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
     RatingBar csbar, qwbar, frbar, prbar, tmbar, overallbar;
     Float csrate = 0.0f, qwrate = 0.0f, frrate = 0.0f, prrate = 0.0f, tmrate = 0.0f, total = 0.0f, count = 0.0f;
     FloatingActionButton mGoogleMap, mAdd, mShare, mTeamProduct,
-            mTeamServices, mTeamVehicle, mViewReview, mAddEmployee;
+            mTeamServices, mTeamVehicle, mViewReview;
 
     ApiCall mApiCall;
     CoordinatorLayout mLayout;
@@ -159,7 +159,7 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
                     storerating = (RatingBar) findViewById(R.id.store_rating);
                     mShare = (FloatingActionButton) findViewById(R.id.share);
                     mViewReview = (FloatingActionButton) findViewById(R.id.view_review);
-                    mAddEmployee = (FloatingActionButton) findViewById(R.id.add_employee);
+
 
                     mLinear = (LinearLayout) findViewById(R.id.my_home);
                     mLike = (ImageView) findViewById(R.id.like);
@@ -199,7 +199,6 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
                     mGoogleMap.setLabelTextColor(Color.BLACK);
                     mAdd.setLabelTextColor(Color.BLACK);
                     mViewReview.setLabelTextColor(Color.BLACK);
-                    mAddEmployee.setLabelTextColor(Color.BLACK);
 
 
                     if (getIntent().getExtras() != null) {
@@ -241,7 +240,6 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
         mVideos.setOnClickListener(this);
         mImages.setOnClickListener(this);*/
         mViewReview.setOnClickListener(this);
-        mAddEmployee.setOnClickListener(this);
 
 
         CustomGridViewActivity adapterViewAndroid = new CustomGridViewActivity(this, gridViewString, gridViewImageId);
@@ -804,12 +802,6 @@ Call Intent...
                 likeUnlike.setFollowCount(followcountint);
                 break;
 
-            case R.id.add_employee:
-                Intent intentAddEmp = new Intent(StoreViewActivity.this, AddEmployeeActivity.class);
-                b.putInt("store_id", store_id);
-                intentAddEmp.putExtras(b);
-                startActivity(intentAddEmp, options.toBundle());
-                break;
         }
 
     }

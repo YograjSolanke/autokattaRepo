@@ -210,17 +210,17 @@
             fab:fab_colorRipple="#5176C9"
             fab:fab_size="mini" />
 
-        <com.github.clans.fab.FloatingActionButton
-            android:id="@+id/add_employee"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/ic_add_group_member"
-            android:visibility="visible"
-            fab:fab_label="Add Employee"
-            fab:fab_colorNormal="#5176C9"
-            fab:fab_colorPressed="#5176C9"
-            fab:fab_colorRipple="#5176C9"
-            fab:fab_size="mini" />
+        <!--<com.github.clans.fab.FloatingActionButton-->
+        <!--android:id="@+id/add_employee"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:src="@mipmap/ic_add_group_member"-->
+        <!--android:visibility="visible"-->
+        <!--fab:fab_label="Add Employee"-->
+        <!--fab:fab_colorNormal="#5176C9"-->
+        <!--fab:fab_colorPressed="#5176C9"-->
+        <!--fab:fab_colorRipple="#5176C9"-->
+        <!--fab:fab_size="mini" />-->
 
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/gotoMap"

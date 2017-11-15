@@ -398,7 +398,7 @@ public class AddServiceActivity extends AppCompatActivity implements RequestNoti
                                String group_id) {
 
         ApiCall mApiCall = new ApiCall(AddServiceActivity.this, this);
-        mApiCall.addService(store_id, service_name, price, service_details, service_tags, service_type, images, category, brandtags, group_id);
+        mApiCall.addService(store_id, service_name, price, myContact, service_details, service_tags, service_type, images, category, brandtags, group_id);
     }
 
     @Override

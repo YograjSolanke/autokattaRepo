@@ -7378,7 +7378,8 @@ done
                            String images,
                            String category,
                            String brandtags,
-                           String group_id) {
+                           String group_id,
+                           String AddedBy) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 Retrofit retrofit = new Retrofit.Builder()
@@ -7389,7 +7390,7 @@ done
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
                 Call<ProductAddedResponse> addTags = serviceApi.addProduct(store_id, product_name, price, product_details,
-                        product_tags, product_type, images, category, brandtags, group_id);
+                        product_tags, product_type, images, category, brandtags, group_id, AddedBy);
                 addTags.enqueue(new Callback<ProductAddedResponse>() {
                     @Override
                     public void onResponse(Call<ProductAddedResponse> call, Response<ProductAddedResponse> response) {
@@ -7414,6 +7415,7 @@ Add service
     public void addService(int store_id,
                            String service_name,
                            String price,
+                           String AddedBy,
                            String service_details,
                            String service_tags,
                            String service_type,
@@ -7430,7 +7432,7 @@ Add service
                         .build();
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<ServiceAddedResponse> addTags = serviceApi.addService(store_id, service_name, price, service_details,
+                Call<ServiceAddedResponse> addTags = serviceApi.addService(store_id, service_name, price, AddedBy, service_details,
                         service_tags, service_type, images, category, brandtags, group_id);
                 addTags.enqueue(new Callback<ServiceAddedResponse>() {
                     @Override
