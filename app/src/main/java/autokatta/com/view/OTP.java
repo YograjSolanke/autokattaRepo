@@ -21,10 +21,10 @@ import retrofit2.Response;
 
 public class OTP extends AppCompatActivity implements RequestNotifier, View.OnClickListener {
 
-    TextView OtpText, emailOtpText, mResendOtp;
+    TextView emailOtpText, mResendOtp;
     EditText OtpEdit, otpemail;
     String otpstr2;
-    String contact, email, call;
+    String contact, call;
     Button mSubmit;
 
 
@@ -32,38 +32,31 @@ public class OTP extends AppCompatActivity implements RequestNotifier, View.OnCl
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_otp);
-
+        setTitle("Enter OTP");
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
-
         OtpEdit = (EditText) findViewById(R.id.edtotp1);
         otpemail = (EditText) findViewById(R.id.otpemail);
 
-        //OtpText = (TextView) findViewById(R.id.otp2);
         mResendOtp = (TextView) findViewById(R.id.textView4);
         emailOtpText = (TextView) findViewById(R.id.emailOtpText);
         mSubmit = (Button) findViewById(R.id.submit_otp);
         mSubmit.setOnClickListener(this);
 
-
         Intent i = getIntent();
         contact = i.getStringExtra("contact");
         call = i.getStringExtra("call");
-
         sendOtp();
-
         mResendOtp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 sendOtp();
             }
         });
-
     }
 
     /*
@@ -96,13 +89,10 @@ public class OTP extends AppCompatActivity implements RequestNotifier, View.OnCl
     @Override
     public void notifyString(String str) {
         if (str != null) {
-//            OtpText.setText(str);
             otpstr2 = "" + str;
-
         } else {
             CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
         }
-
     }
 
     @Override
@@ -113,7 +103,6 @@ public class OTP extends AppCompatActivity implements RequestNotifier, View.OnCl
                 //otpstr2 = OtpText.getText().toString().trim();
                 if (otpstr1.equals(otpstr2)) {
                     if (call.equalsIgnoreCase("forgot")) {
-
                         Intent i = new Intent(OTP.this, NewPassword.class);
                         i.putExtra("contact", contact);
                         startActivity(i);
@@ -121,9 +110,7 @@ public class OTP extends AppCompatActivity implements RequestNotifier, View.OnCl
                     }
                 } else {
                     OtpEdit.setError("Please enter valid OTP");
-
                 }
-
                 break;
         }
     }

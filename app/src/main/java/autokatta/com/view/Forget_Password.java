@@ -15,7 +15,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import java.net.SocketTimeoutException;
-import java.util.Random;
 
 import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
@@ -34,7 +33,6 @@ public class Forget_Password extends AppCompatActivity implements View.OnClickLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forget__password);
-        final Random myRandom = new Random();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -59,7 +57,6 @@ public class Forget_Password extends AppCompatActivity implements View.OnClickLi
                 forgetPassword();
                 break;
             case R.id.clear:
-
                 edtContact.setText("");
         }
     }
@@ -106,10 +103,10 @@ public class Forget_Password extends AppCompatActivity implements View.OnClickLi
                 Log.i("String", "->" + str);
                 CustomToast.customToast(getApplicationContext(), "You are a valid user");
                 Intent i = new Intent(Forget_Password.this, OTP.class);
-                System.out.println("contact================================================" + contact);
                 i.putExtra("contact", contact);
                 i.putExtra("call", "forgot");
                 startActivity(i);
+                finish();
             } else {
                 CustomToast.customToast(getApplicationContext(), "You are not a valid user");
                 AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
@@ -120,12 +117,14 @@ public class Forget_Password extends AppCompatActivity implements View.OnClickLi
                     public void onClick(DialogInterface dialog, int which) {
                         Intent i = new Intent(Forget_Password.this, Registration.class);
                         startActivity(i);
+                        finish();
                     }
                 });
                 alertDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         Intent i = new Intent(Forget_Password.this, LoginActivity.class);
                         startActivity(i);
+                        finish();
                         dialog.cancel();
 
                     }
