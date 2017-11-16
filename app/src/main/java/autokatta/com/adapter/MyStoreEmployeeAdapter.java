@@ -77,7 +77,6 @@ public class MyStoreEmployeeAdapter extends RecyclerView.Adapter<MyStoreEmployee
         try {
             this.mActivity = mActivity1;
             this.mEmpList = mItemList;
-
             mConnectionDetector = new ConnectionDetector(mActivity);
         } catch (ClassCastException c) {
             c.printStackTrace();
@@ -123,6 +122,17 @@ public class MyStoreEmployeeAdapter extends RecyclerView.Adapter<MyStoreEmployee
                 call(contact);
             }
         });
+        holder.mRemove.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                int emp_id = mEmpList.get(holder.getAdapterPosition()).getStoreEmplyeeID();
+
+                deleteEmployee(emp_id);
+
+
+            }
+        });
 
 
         holder.mEdit.setOnClickListener(new View.OnClickListener() {
@@ -153,9 +163,9 @@ public class MyStoreEmployeeAdapter extends RecyclerView.Adapter<MyStoreEmployee
     }
 
 
-    private void deleteStore(int storeId) {
+    private void deleteEmployee(int empId) {
         ApiCall apiCall = new ApiCall(mActivity, this);
-        apiCall.DeleteStore(storeId, "delete");
+        apiCall.DeleteStore(empId, "Delete");
     }
 
     @Override

@@ -1575,4 +1575,12 @@ public interface ServiceApi {
     Call<StoreEmployeeResponse> getStoreEmployees(@Query("StoreID") int store_id, @Query("ContactNo") String ContactNo);
 
 
+    //Update Or delete Employee From Store
+    @POST("UpdateAuctionCreation")
+    Call<String> updateDeleteEmployee(@Query("StoreEmplyeeID") int StoreEmplyeeID, @Query("Name") String Name,
+                                      @Query("ContactNo") String ContactNo, @Query("Designation") String Designation,
+                                      @Query("Description") String Description, @Query("Permission") String Permission,
+                                      @Query("Keyword") String Keyword);
+
+
 }
