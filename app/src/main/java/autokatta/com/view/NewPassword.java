@@ -29,26 +29,20 @@ public class NewPassword extends AppCompatActivity implements View.OnClickListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_password);
-
+        setTitle("Change Password");
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
-
         mNewPass = (EditText) findViewById(R.id.editnewpass);
         mConfirmPass = (EditText) findViewById(R.id.confirmpass);
         mSubmit = (Button) findViewById(R.id.newsubmit);
-
         //get parameters from previous Activity
         Intent intent = getIntent();
         mContact = intent.getStringExtra("contact");
-
         mSubmit.setOnClickListener(this);
-
-
     }
 
     @Override
@@ -57,7 +51,6 @@ public class NewPassword extends AppCompatActivity implements View.OnClickListen
             case R.id.newsubmit:
                 StrNewPass = mNewPass.getText().toString();
                 StrConfirmPass = mConfirmPass.getText().toString();
-
                 if (TextUtils.isEmpty(mNewPass.getText().toString().trim())) {
                     mNewPass.requestFocus();
                     mNewPass.setFocusable(true);
@@ -66,21 +59,17 @@ public class NewPassword extends AppCompatActivity implements View.OnClickListen
                     mConfirmPass.requestFocus();
                     mConfirmPass.setFocusable(true);
                     mConfirmPass.setError(getString(R.string.err_confirm_password));
-                    {
-                    }
                 } else if (mNewPass.length() < 6) {
                     mNewPass.setError("Password should be minimum of 6 characters");
                 } else if (!StrNewPass.equalsIgnoreCase(StrConfirmPass)) {
                     mConfirmPass.setError("Password & confirm password should be same");
                 } else {
-
                     ApiCall mApiCall = new ApiCall(NewPassword.this, this);
                     mApiCall.newPassword(mContact, StrNewPass);
                 }
                 break;
         }
     }
-
 
     @Override
     public void notifySuccess(Response<?> response) {
@@ -109,13 +98,13 @@ public class NewPassword extends AppCompatActivity implements View.OnClickListen
                 Intent intent = new Intent(NewPassword.this, LoginActivity.class);
                 intent.putExtra("call", "forgot");
                 startActivity(intent);
+                finish();
             } else {
                 CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
             }
         } else {
             CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
         }
-
     }
 
     @Override
