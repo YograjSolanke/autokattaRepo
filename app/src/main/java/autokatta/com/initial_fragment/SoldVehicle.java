@@ -12,6 +12,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.net.ConnectException;
+import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -29,8 +32,6 @@ import autokatta.com.other.CustomToast;
 import autokatta.com.response.SoldVehicleResponse;
 import retrofit2.Response;
 
-import static android.content.Context.MODE_PRIVATE;
-
 /**
  * Created by ak-001 on 29/7/17.
  */
@@ -43,6 +44,8 @@ public class SoldVehicle extends Fragment implements RequestNotifier, SwipeRefre
     TextView mNoData;
     List<SoldVehicleResponse.Success.SoldVehicle> myUploadedVehiclesResponseList = new ArrayList<>();
     boolean hasView = false;
+    String myContact;
+    int mStoreID;
 
     @Nullable
     @Override
@@ -57,6 +60,10 @@ public class SoldVehicle extends Fragment implements RequestNotifier, SwipeRefre
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                Bundle mBundle = getArguments();
+                myContact = mBundle.getString("bundle_contact");
+                mStoreID = mBundle.getInt("bundle_storeId");
+
                 mTestConnection = new ConnectionDetector(getActivity());
                 mSwipeRefreshLayout = (SwipeRefreshLayout) mSoldVehicle.findViewById(R.id.swipeRefreshLayoutSold);
                 mRecyclerView = (RecyclerView) mSoldVehicle.findViewById(R.id.recyclerSold);
@@ -79,8 +86,7 @@ public class SoldVehicle extends Fragment implements RequestNotifier, SwipeRefre
                     @Override
                     public void run() {
                         mSwipeRefreshLayout.setRefreshing(true);
-                        getSoldVehicle(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
-                                .getString("loginContact", ""));
+                        getSoldVehicle(myContact);
                     }
                 });
             }
@@ -91,7 +97,7 @@ public class SoldVehicle extends Fragment implements RequestNotifier, SwipeRefre
     private void getSoldVehicle(String loginContact) {
         if (mTestConnection.isConnectedToInternet()) {
             ApiCall apiCall = new ApiCall(getActivity(), this);
-            apiCall.getSoldVehicle(loginContact);
+            apiCall.getSoldVehicle(loginContact, mStoreID);
         } else {
             mSwipeRefreshLayout.setRefreshing(false);
             mNoData.setVisibility(View.GONE);
@@ -105,8 +111,7 @@ public class SoldVehicle extends Fragment implements RequestNotifier, SwipeRefre
         super.setUserVisibleHint(isVisibleToUser);
         if (this.isVisible()) {
             if (isVisibleToUser && !hasView) {
-                getSoldVehicle(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
-                        .getString("loginContact", ""));
+                getSoldVehicle(myContact);
                 hasView = true;
             }
         }
@@ -114,8 +119,7 @@ public class SoldVehicle extends Fragment implements RequestNotifier, SwipeRefre
 
     @Override
     public void onRefresh() {
-        getSoldVehicle(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
-                .getString("loginContact", ""));
+        getSoldVehicle(myContact);
     }
 
     @Override
@@ -207,7 +211,27 @@ public class SoldVehicle extends Fragment implements RequestNotifier, SwipeRefre
 
     @Override
     public void notifyError(Throwable error) {
-
+        mSwipeRefreshLayout.setRefreshing(false);
+        if (error instanceof SocketTimeoutException) {
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string._404_));
+        } else if (error instanceof NullPointerException) {
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string.no_response));
+        } else if (error instanceof ClassCastException) {
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string.no_response));
+        } else if (error instanceof ConnectException) {
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string.no_internet));
+        } else if (error instanceof UnknownHostException) {
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string.no_internet));
+        } else {
+            Log.i("Check Class-"
+                    , "SoldVehicle");
+            error.printStackTrace();
+        }
     }
 
     @Override

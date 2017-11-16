@@ -9,6 +9,10 @@ import autokatta.com.initial_fragment.SoldVehicle;
 
 public class SoldVehicleContainer extends AppCompatActivity {
 
+    Bundle mBundle;
+    SoldVehicle mSoldVehicle = new SoldVehicle();
+    String Sharedcontact;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,10 +25,16 @@ public class SoldVehicleContainer extends AppCompatActivity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                Sharedcontact = getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "");
+                if (getIntent().getExtras() != null) {
+                    mBundle = new Bundle();
+                    mBundle.putInt("bundle_storeId", getIntent().getExtras().getInt("bundle_storeId", 0));
+                    mBundle.putString("bundle_contact", getIntent().getExtras().getString("bundle_contact", Sharedcontact));
+                    mSoldVehicle.setArguments(mBundle);
+                }
                 try {
                     getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.mySoldVehicleFrame, new SoldVehicle(), "mySoldVehicleFrame")
-                            //.addToBackStack("MyUploadedVehicleTabs")
+                            .replace(R.id.mySoldVehicleFrame, mSoldVehicle, "mySoldVehicleFrame")
                             .commit();
                 } catch (Exception e) {
                     e.printStackTrace();

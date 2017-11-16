@@ -1364,7 +1364,7 @@ public interface ServiceApi {
 
     //get Sold Vehicle...
     @GET("GetSoldVehicles")
-    Call<SoldVehicleResponse> getSoldVehicle(@Query("mycontact") String contact);
+    Call<SoldVehicleResponse> getSoldVehicle(@Query("mycontact") String contact, @Query("StoreID") int StoreID);
 
     //get Vehicle for comaprison...
     @GET("GetVehiclesForCompare")

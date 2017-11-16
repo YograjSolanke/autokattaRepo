@@ -8803,7 +8803,7 @@ get ExchangeMela Analytics Data
     /*
       Get Sold Vehicle...
     */
-    public void getSoldVehicle(String contact) {
+    public void getSoldVehicle(String contact, int mStoreID) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 //JSON to Gson conversion
@@ -8818,7 +8818,7 @@ get ExchangeMela Analytics Data
                         .build();
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<SoldVehicleResponse> mSoldVehicle = serviceApi.getSoldVehicle(contact);
+                Call<SoldVehicleResponse> mSoldVehicle = serviceApi.getSoldVehicle(contact, mStoreID);
                 mSoldVehicle.enqueue(new Callback<SoldVehicleResponse>() {
                     @Override
                     public void onResponse(Call<SoldVehicleResponse> call, Response<SoldVehicleResponse> response) {
