@@ -8186,7 +8186,7 @@ get ExchangeMela Analytics Data
                         .client(initLog().build())
                         .build();
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<ManualEnquiryResponse> mServiceMelaResponse = serviceApi.getManualEnquiry(myContact, "null", "null", "null", "null", "null", "null", "null", "null", "null", "null", "null", 0, 0, "null");
+                Call<ManualEnquiryResponse> mServiceMelaResponse = serviceApi.getManualEnquiry(myContact, "null", "null", "null", "null", "null", "null", "null", "null", "null", "null", "null", 0, 0, "null",0);
                 mServiceMelaResponse.enqueue(new Callback<ManualEnquiryResponse>() {
                     @Override
                     public void onResponse(Call<ManualEnquiryResponse> call, Response<ManualEnquiryResponse> response) {
@@ -8209,7 +8209,7 @@ get ExchangeMela Analytics Data
       Update Manual Enquiry Details...
     */
 
-    public void updateManualEnquiry(String myContact, String Financername, float loanpercent, int loanamount, String keyword, String ids) {
+    public void updateManualEnquiry(String myContact, String Financername, float loanpercent, int loanamount, String keyword, String ids,int ManualEnquiryID) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
 
@@ -8224,7 +8224,7 @@ get ExchangeMela Analytics Data
                         .client(initLog().build())
                         .build();
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<String> mServiceMelaResponse = serviceApi._autokattaUpdateManualEnquiry(myContact, "null", "null", "null", "null", keyword, "null", "null", "null", ids, "null", Financername, loanamount, loanpercent, "null");
+                Call<String> mServiceMelaResponse = serviceApi._autokattaUpdateManualEnquiry(myContact, "null", "null", "null", "null", keyword, "null", "null", "null", ids, "null", Financername, loanamount, loanpercent, "null",ManualEnquiryID);
                 mServiceMelaResponse.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
@@ -8323,7 +8323,7 @@ get ExchangeMela Analytics Data
                 //      AddManualEnquiryRequest addManualEnquiryRequest = new AddManualEnquiryRequest();
 
                 Call<AddManualEnquiryResponse> mServiceMelaResponse = serviceApi._autokattaAddManualEnquiry(myContact, custName, custContact, custAddress,
-                        custFullAddress, custInventoryType, custEnquiryStatus, discussion, nextFollowupDate, idsList, source, financername, loanamt, loanper, financerstatus);
+                        custFullAddress, custInventoryType, custEnquiryStatus, discussion, nextFollowupDate, idsList, source, financername, loanamt, loanper, financerstatus,0);
                 mServiceMelaResponse.enqueue(new Callback<AddManualEnquiryResponse>() {
                     @Override
                     public void onResponse(Call<AddManualEnquiryResponse> call, Response<AddManualEnquiryResponse> response) {

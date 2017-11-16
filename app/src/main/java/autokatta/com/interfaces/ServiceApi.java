@@ -1265,7 +1265,7 @@ public interface ServiceApi {
             , @Query("custFullAddress") String custFullAddress, @Query("custInventoryType") String custInventoryType,
                                                  @Query("custEnquiryStatus") String custEnquiryStatus, @Query("discussion") String discussion,
                                                  @Query("nextFollowupDate") String nextFollowupDate, @Query("idsList") String idsList, @Query("Source") String Source, @Query("financerName") String financerName,
-                                                 @Query("LoanAmount") int LoanAmount, @Query("LoanPercent") float LoanPercent, @Query("FinancerStatus") String FinancerStatus);
+                                                 @Query("LoanAmount") int LoanAmount, @Query("LoanPercent") float LoanPercent, @Query("FinancerStatus") String FinancerStatus, @Query("ManualEnquiryID") int ManualEnquiryID);
 
     //Get Manual enquiry
     @GET("GetEnquiredPersonsData")
@@ -1279,7 +1279,7 @@ public interface ServiceApi {
                                                               @Query("custEnquiryStatus") String custEnquiryStatus, @Query("discussion") String discussion,
                                                               @Query("nextFollowupDate") String nextFollowupDate, @Query("idsList") String idsList, @Query("Source") String Source,
                                                               @Query("financerName") String financerName, @Query("LoanAmount") int LoanAmount, @Query("LoanPercent") float LoanPercent
-            , @Query("FinancerStatus") String FinancerStatus);
+            , @Query("FinancerStatus") String FinancerStatus, @Query("ManualEnquiryID") int ManualEnquiryID);
 
 
     //Update Manual enquiry
@@ -1290,7 +1290,7 @@ public interface ServiceApi {
                                                @Query("custEnquiryStatus") String custEnquiryStatus, @Query("discussion") String discussion,
                                                @Query("nextFollowupDate") String nextFollowupDate, @Query("idsList") String idsList, @Query("Source") String Source,
                                                @Query("financerName") String financerName, @Query("LoanAmount") int LoanAmount, @Query("LoanPercent") float LoanPercent
-            , @Query("FinancerStatus") String FinancerStatus);
+            , @Query("FinancerStatus") String FinancerStatus, @Query("ManualEnquiryID") int ManualEnquiryID);
 
     //Get Inventory Data...
     @GET("GetMyInventoryData")

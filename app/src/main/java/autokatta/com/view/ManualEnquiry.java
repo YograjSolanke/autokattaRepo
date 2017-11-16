@@ -284,6 +284,7 @@ public class ManualEnquiry extends AppCompatActivity implements SwipeRefreshLayo
                             request.setLoanamount(success.getLoanAmount());
                             request.setLoanpercent(success.getLoanPercent());
                             request.setFinancerstatus(success.getFinancerStatus());
+                            request.setEnquiryID(success.getId());
 
 
                             request.setCustomerName("name");
@@ -400,7 +401,7 @@ public class ManualEnquiry extends AppCompatActivity implements SwipeRefreshLayo
                         for (ManualEnquiryResponse.Success.Service service : manualEnquiry.getSuccess().getServices()) {
                             ManualEnquiryRequest request = new ManualEnquiryRequest();
                             request.setLayoutNo(3);
-                            request.setServiceId(service.getId());
+                            request.setServiceId(service.getService_id());
                             request.setServiceName(service.getName());
                             request.setServiceCategory(service.getCategory());
                             request.setServiceType(service.getType());
@@ -409,6 +410,7 @@ public class ManualEnquiry extends AppCompatActivity implements SwipeRefreshLayo
                             request.setLoanamount(service.getLoanAmount());
                             request.setLoanpercent(service.getLoanPercent());
                             request.setFinancerstatus(service.getFinancerStatus());
+                            request.setEnquiryID(service.getId());
 
 
 
@@ -472,6 +474,7 @@ public class ManualEnquiry extends AppCompatActivity implements SwipeRefreshLayo
                             request.setLoanamount(success.getLoanAmount());
                             request.setLoanpercent(success.getLoanPercent());
                             request.setFinancerstatus(success.getFinancerStatus());
+                            request.setEnquiryID(success.getId());
 
 
                             request.setCustomerName("name");
@@ -617,6 +620,8 @@ public class ManualEnquiry extends AppCompatActivity implements SwipeRefreshLayo
                 intent.putExtra("loanamount", request.getLoanamount());
                 intent.putExtra("loanpercent", request.getLoanpercent());
                 intent.putExtra("financestatus", request.getFinancerstatus());
+                intent.putExtra("financestatus", request.getFinancerstatus());
+                intent.putExtra("enquiryid", request.getEnquiryID());
                 break;
             case "Services":
                 intent.putExtra("id", request.getServiceId());
@@ -625,6 +630,7 @@ public class ManualEnquiry extends AppCompatActivity implements SwipeRefreshLayo
                 intent.putExtra("loanamount", request.getLoanamount());
                 intent.putExtra("loanpercent", request.getLoanpercent());
                 intent.putExtra("financestatus", request.getFinancerstatus());
+                intent.putExtra("enquiryid", request.getEnquiryID());
 
                 break;
             case "Used Vehicle":
@@ -634,6 +640,7 @@ public class ManualEnquiry extends AppCompatActivity implements SwipeRefreshLayo
                 intent.putExtra("loanamount", request.getLoanamount());
                 intent.putExtra("loanpercent", request.getLoanpercent());
                 intent.putExtra("financestatus", request.getFinancerstatus());
+                intent.putExtra("enquiryid", request.getEnquiryID());
 
                 break;
             case "New Vehicle":
@@ -643,6 +650,7 @@ public class ManualEnquiry extends AppCompatActivity implements SwipeRefreshLayo
                 intent.putExtra("loanamount", request.getLoanamount());
                 intent.putExtra("loanpercent", request.getLoanpercent());
                 intent.putExtra("financestatus", request.getFinancerstatus());
+                intent.putExtra("enquiryid", request.getEnquiryID());
 
                 break;
         }

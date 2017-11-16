@@ -60,7 +60,7 @@ public class EnquiredPersonsActivity extends AppCompatActivity implements Reques
     AutoCompleteTextView mFinancer;
     ImageView mEdit, mDone;
     private ProgressDialog dialog;
-    int strLoanAmount;
+    int strLoanAmount,mEnquiryId;
     float strLoanPercent;
     String strFinancername, strFinancestatus;
     RelativeLayout mRelFinancerDetails;
@@ -89,6 +89,7 @@ public class EnquiredPersonsActivity extends AppCompatActivity implements Reques
                 strLoanPercent = getIntent().getExtras().getFloat("loanpercent");
                 strLoanAmount = getIntent().getExtras().getInt("loanamount");
                 strFinancestatus = getIntent().getExtras().getString("financestatus", "");
+                mEnquiryId = getIntent().getExtras().getInt("enquiryid", 0);
 
                 mNoData = (TextView) findViewById(R.id.no_category);
 
@@ -252,7 +253,7 @@ public class EnquiredPersonsActivity extends AppCompatActivity implements Reques
 
         if (mConnectionDetector.isConnectedToInternet()) {
             ApiCall mApiCall = new ApiCall(this, this);
-            mApiCall.updateManualEnquiry(getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""), mFinancer.getText().toString(), fper, famt, strKeyword, strId);
+            mApiCall.updateManualEnquiry(getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""), mFinancer.getText().toString(), fper, famt, strKeyword, strId,mEnquiryId);
         } else {
             CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
         }

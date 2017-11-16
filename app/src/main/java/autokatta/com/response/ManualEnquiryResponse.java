@@ -468,9 +468,21 @@ public class ManualEnquiryResponse {
 
         public class Service {
 
+            @SerializedName("id")
+            @Expose
+            private int id;
+
+            public int getService_id() {
+                return service_id;
+            }
+
+            public void setService_id(int service_id) {
+                this.service_id = service_id;
+            }
+
             @SerializedName("service_id")
             @Expose
-            private String id;
+            private int service_id;
             @SerializedName("store_id")
             @Expose
             private String storeId;
@@ -593,11 +605,11 @@ public class ManualEnquiryResponse {
                 LoanPercent = loanPercent;
             }
 
-            public String getId() {
+            public int getId() {
                 return id;
             }
 
-            public void setId(String id) {
+            public void setId(int id) {
                 this.id = id;
             }
 
@@ -1012,7 +1024,7 @@ public class ManualEnquiryResponse {
             private String enquiryCount;
             @SerializedName("id")
             @Expose
-            private String id;
+            private int id;
             @SerializedName("myContact")
             @Expose
             private String myContact;
@@ -1686,11 +1698,11 @@ public class ManualEnquiryResponse {
                 this.enquiryCount = enquiryCount;
             }
 
-            public String getId() {
+            public int getId() {
                 return id;
             }
 
-            public void setId(String id) {
+            public void setId(int id) {
                 this.id = id;
             }
 
@@ -2168,7 +2180,7 @@ public class ManualEnquiryResponse {
             private String enquiryCount;
             @SerializedName("id")
             @Expose
-            private String id;
+            private int id;
             @SerializedName("myContact")
             @Expose
             private String myContact;
@@ -3379,11 +3391,11 @@ public class ManualEnquiryResponse {
                 this.enquiryCount = enquiryCount;
             }
 
-            public String getId() {
+            public int getId() {
                 return id;
             }
 
-            public void setId(String id) {
+            public void setId(int id) {
                 this.id = id;
             }
 

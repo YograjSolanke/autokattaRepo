@@ -53,11 +53,11 @@ public class ManualEnquiryRequest {
         this.productId = productId;
     }
 
-    public String getServiceId() {
+    public int getServiceId() {
         return serviceId;
     }
 
-    public void setServiceId(String serviceId) {
+    public void setServiceId(int serviceId) {
         this.serviceId = serviceId;
     }
 
@@ -66,7 +66,7 @@ public class ManualEnquiryRequest {
     public String serviceType;
     public String servicePrice;
     public String serviceImage;
-    public String serviceId;
+    public int serviceId;
 
     public String customerName;
     public String customerContact;

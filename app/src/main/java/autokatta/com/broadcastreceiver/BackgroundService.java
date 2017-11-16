@@ -308,7 +308,7 @@ public class BackgroundService extends Service {
                     .build();
             ServiceApi serviceApi = retrofit.create(ServiceApi.class);
             Call<ManualEnquiryResponse> mServiceMelaResponse = serviceApi.getManualEnquiry(getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
-                    .getString("loginContact", ""), "null", "null", "null", "null", "null", "null", "null", "null", "null", "null","null",0,0,"null");
+                    .getString("loginContact", ""), "null", "null", "null", "null", "null", "null", "null", "null", "null", "null","null",0,0,"null",0);
             mServiceMelaResponse.enqueue(new Callback<ManualEnquiryResponse>() {
                 @Override
                 public void onResponse(Call<ManualEnquiryResponse> call, Response<ManualEnquiryResponse> response) {
@@ -338,7 +338,7 @@ public class BackgroundService extends Service {
                         /*Services*/
                             for (ManualEnquiryResponse.Success.Service service : manualEnquiry.getSuccess().getServices()) {
                                 ManualEnquiryRequestCount request = new ManualEnquiryRequestCount();
-                                request.setServiceId(service.getId());
+                                request.setServiceId(String.valueOf(service.getService_id()));
                                 mMyGroupsList.add(request);
                             }
                             result = operation.updateEnquiryCount(mMyGroupsList.size());
