@@ -91,7 +91,7 @@ public class InventoryDashboard extends AppCompatActivity {
                         startActivity(new Intent(getApplicationContext(), MyVehicleContainer.class));
                         break;
                     case "Transfer Stock":
-                        startActivity(new Intent(getApplicationContext(), TransferStock.class));
+                        startActivity(new Intent(getApplicationContext(), TransferStock.class).putExtras(mBundle));
                         break;
                     case "Search Leads":
                         startActivity(new Intent(getApplicationContext(), BuyerNotificationContainer.class));

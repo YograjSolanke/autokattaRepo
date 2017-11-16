@@ -1460,7 +1460,8 @@ public interface ServiceApi {
                                                                          @Query("StoreID") int mStoreId);
 
     @GET("GetTransferVehicleNotification")
-    Call<GetTransferVehicleNotificationResponse> GetTransferVehicleNotification(@Query("Contact") String myContact);
+    Call<GetTransferVehicleNotificationResponse> GetTransferVehicleNotification(@Query("Contact") String myContact,
+                                                                                @Query("StoreID") int mStoreId);
 
 
     @GET("GetNewVehicleDetailsForStore")

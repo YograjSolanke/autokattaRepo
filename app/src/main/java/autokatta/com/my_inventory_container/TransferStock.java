@@ -2,11 +2,13 @@ package autokatta.com.my_inventory_container;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +26,10 @@ public class TransferStock extends AppCompatActivity implements RequestNotifier 
     ListView listView;
     List<Success> mGetTransferVehicleList = new ArrayList<>();
     TextView mNoData;
+    String myContact;
+    Bundle mBundle;
+    int mStoreId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,8 +39,16 @@ public class TransferStock extends AppCompatActivity implements RequestNotifier 
             getSupportActionBar().setHomeButtonEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
+
+        myContact = getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "");
+        if (getIntent().getExtras() != null) {
+            mBundle = new Bundle();
+            mStoreId = getIntent().getExtras().getInt("bundle_storeId", 0);
+            myContact = getIntent().getExtras().getString("bundle_contact", myContact);
+        }
+
         listView = (ListView) findViewById(R.id.transfer_list);
-        mNoData= (TextView) findViewById(R.id.no_category);
+        mNoData = (TextView) findViewById(R.id.no_category);
         getTransferData();
     }
 
@@ -43,8 +57,7 @@ public class TransferStock extends AppCompatActivity implements RequestNotifier 
      */
     private void getTransferData() {
         ApiCall apiCall = new ApiCall(this, this);
-        apiCall.GetTransferVehicleNotification(getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
-                .getString("loginContact", ""));
+        apiCall.GetTransferVehicleNotification(myContact, mStoreId);
     }
 
     @Override
@@ -80,16 +93,17 @@ public class TransferStock extends AppCompatActivity implements RequestNotifier 
                     GetTransferVehicleListAdapter adapter = new GetTransferVehicleListAdapter(TransferStock.this, mGetTransferVehicleList);
                     listView.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
-                }else
-                {
+                } else {
                     mNoData.setVisibility(View.VISIBLE);
                 }
 
             } else {
-                    CustomToast.customToast(TransferStock.this ,getString(R.string.no_response));
+                mNoData.setVisibility(View.VISIBLE);
+                CustomToast.customToast(TransferStock.this, getString(R.string.no_response));
             }
         } else {
-            CustomToast.customToast(TransferStock.this ,getString(R.string.no_response));
+            mNoData.setVisibility(View.VISIBLE);
+            CustomToast.customToast(TransferStock.this, getString(R.string.no_response));
             // CustomToast.customToast(getActivity(), getActivity().getString(R.string._404));
 
         }
@@ -97,6 +111,17 @@ public class TransferStock extends AppCompatActivity implements RequestNotifier 
 
     @Override
     public void notifyError(Throwable error) {
+        mNoData.setVisibility(View.VISIBLE);
+        if (error instanceof SocketTimeoutException) {
+            CustomToast.customToast(getApplicationContext(), getString(R.string._404));
+        } else if (error instanceof NullPointerException) {
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
+        } else if (error instanceof ClassCastException) {
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
+        } else {
+            Log.i("Check Class-", "TransferStock");
+            error.printStackTrace();
+        }
 
     }
 
