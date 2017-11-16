@@ -58,11 +58,11 @@ public class NewVehicleContainer extends AppCompatActivity implements RequestNot
             public void run() {
                 //myContact = getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).getString("loginContact", "");
                 myContact = getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "");
-                /*if (getIntent().getExtras() != null) {
+                if (getIntent().getExtras() != null) {
                     mBundle = new Bundle();
-                    mBundle.putInt("bundle_storeId", getIntent().getExtras().getInt("bundle_storeId", 0));
-                    mBundle.putString("bundle_contact", getIntent().getExtras().getString("bundle_contact", Sharedcontact));
-                }*/
+                    mStoreId = getIntent().getExtras().getInt("bundle_storeId", 0);
+                    myContact = getIntent().getExtras().getString("bundle_contact", myContact);
+                }
                 mAddVehicle = (FloatingActionButton) findViewById(R.id.fab);
                 mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);
                 mRecyclerView = (RecyclerView) findViewById(R.id.newVehicleListRecycler);
@@ -130,7 +130,7 @@ public class NewVehicleContainer extends AppCompatActivity implements RequestNot
 
     private void getNewVehicleList(String myContact, int pageNo, int viewRecords) {
         ApiCall mApiCall = new ApiCall(this, this);
-        mApiCall.GetNewVehicleDetailsForContact(myContact, pageNo, viewRecords);
+        mApiCall.GetNewVehicleDetailsForContact(myContact, pageNo, viewRecords, mStoreId);
     }
 
     private void loadMore(int index) {
@@ -207,6 +207,7 @@ public class NewVehicleContainer extends AppCompatActivity implements RequestNot
                     }
                 } else {//result size 0 means there is no more data available at server
                     mAdapter.setMoreDataAvailable(false);
+                    mSwipeRefreshLayout.setRefreshing(false);
                     //telling adapter to stop calling load more as no more server data available
                     Toast.makeText(getApplicationContext(), "No More Data Available", Toast.LENGTH_LONG).show();
                 }

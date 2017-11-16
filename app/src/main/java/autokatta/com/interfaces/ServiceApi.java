@@ -1456,7 +1456,8 @@ public interface ServiceApi {
     @GET("GetNewVehicleDetailsForContact")
     Call<NewVehicleAllResponse> _autokattaGetNewVehicleDetailsForContact(@Query("MyContact") String myContact,
                                                                          @Query("pageNo") int pageNo,
-                                                                         @Query("ViewRecords") int ViewRecords);
+                                                                         @Query("ViewRecords") int ViewRecords,
+                                                                         @Query("StoreID") int mStoreId);
 
     @GET("GetTransferVehicleNotification")
     Call<GetTransferVehicleNotificationResponse> GetTransferVehicleNotification(@Query("Contact") String myContact);
