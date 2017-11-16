@@ -26,7 +26,7 @@ import autokatta.com.my_inventory_container.UsedVehicleContainer;
 import autokatta.com.view.BussinessChatActivity;
 import autokatta.com.view.ManualEnquiry;
 
-public class DemoDelAct extends AppCompatActivity {
+public class InventoryDashboard extends AppCompatActivity {
 
     GridView androidGridView;
     int mStoreID;
@@ -63,7 +63,7 @@ public class DemoDelAct extends AppCompatActivity {
         mBundle.putString("bundle_contact", mBundleContact);
 
 
-        CustomGridViewActivity adapterViewAndroid = new CustomGridViewActivity(DemoDelAct.this, gridViewString, gridViewImageId);
+        CustomGridViewActivity adapterViewAndroid = new CustomGridViewActivity(InventoryDashboard.this, gridViewString, gridViewImageId);
         androidGridView = (GridView) findViewById(R.id.grid_view_image_text);
         androidGridView.setAdapter(adapterViewAndroid);
         androidGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

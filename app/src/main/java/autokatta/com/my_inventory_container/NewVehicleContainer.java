@@ -56,7 +56,7 @@ public class NewVehicleContainer extends AppCompatActivity implements RequestNot
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                //myContact = getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).getString("loginContact", "");
+
                 myContact = getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "");
                 if (getIntent().getExtras() != null) {
                     mBundle = new Bundle();
@@ -87,8 +87,6 @@ public class NewVehicleContainer extends AppCompatActivity implements RequestNot
                                 loadMore(index);
                             }
                         });
-                        //Calling loadMore function in Runnable to fix the
-                        // java.lang.IllegalStateException: Cannot call this method while RecyclerView is computing a layout or scrolling error
                     }
                 });
                 mRecyclerView.setHasFixedSize(true);
@@ -110,7 +108,7 @@ public class NewVehicleContainer extends AppCompatActivity implements RequestNot
                     @Override
                     public void run() {
                         mSwipeRefreshLayout.setRefreshing(true);
-                        getNewVehicleList(myContact, 1, 10);
+                        getNewVehicleList(myContact, 1);
                     }
                 });
 
@@ -122,26 +120,34 @@ public class NewVehicleContainer extends AppCompatActivity implements RequestNot
         mAddVehicle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), AddNewVehicleActivity.class));
+                if (mStoreId == 0)
+                    startActivity(new Intent(NewVehicleContainer.this, AddNewVehicleActivity.class));
+                else {
+                    Intent intent = new Intent(NewVehicleContainer.this, AddNewVehicleActivity.class);
+                    mBundle.putInt("store_id", mStoreId);
+                    mBundle.putString("callFrom", "StoreViewActivity");
+                    intent.putExtras(mBundle);
+                    startActivity(intent);
+                }
             }
         });
 
     }
 
-    private void getNewVehicleList(String myContact, int pageNo, int viewRecords) {
+    private void getNewVehicleList(String myContact, int pageNo) {
         ApiCall mApiCall = new ApiCall(this, this);
-        mApiCall.GetNewVehicleDetailsForContact(myContact, pageNo, viewRecords, mStoreId);
+        mApiCall.GetNewVehicleDetailsForContact(myContact, pageNo, 10, mStoreId);
     }
 
     private void loadMore(int index) {
         //add loading progress view
         mAdapter.notifyItemInserted(newVehicleList.size());
-        getNewVehicleList(myContact, index, 10);
+        getNewVehicleList(myContact, index);
     }
 
     @Override
     public void onRefresh() {
-        getNewVehicleList(myContact, 1, 10);
+        getNewVehicleList(myContact, 1);
     }
 
 
@@ -251,7 +257,7 @@ public class NewVehicleContainer extends AppCompatActivity implements RequestNot
     @Override
     protected void onResume() {
         super.onResume();
-        getNewVehicleList(myContact, 1, 10);
+        getNewVehicleList(myContact, 1);
     }
 
     @Override

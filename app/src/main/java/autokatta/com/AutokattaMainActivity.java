@@ -64,8 +64,8 @@ import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.notifications.NotificationAddEmployeeActivity;
 import autokatta.com.other.CustomToast;
-import autokatta.com.other.DemoDelAct;
 import autokatta.com.other.EnquiryActivity;
+import autokatta.com.other.InventoryDashboard;
 import autokatta.com.other.Leads;
 import autokatta.com.other.PostStatus;
 import autokatta.com.other.SearchActivity;
@@ -663,7 +663,7 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
                         } else if (menuItem.getItemId() == R.id.my_search) {
                             startActivity(new Intent(AutokattaMainActivity.this, MySearchActivity.class));
                         } else if (menuItem.getItemId() == R.id.my_vehicle) {
-                            startActivity(new Intent(AutokattaMainActivity.this, DemoDelAct.class));
+                            startActivity(new Intent(AutokattaMainActivity.this, InventoryDashboard.class));
                         } else if (menuItem.getItemId() == R.id.create_event) {
                             CustomToast.customToast(getApplicationContext(), "Coming soon... be connected for update");
                             //startActivity(new Intent(AutokattaMainActivity.this, Create_Event.class));

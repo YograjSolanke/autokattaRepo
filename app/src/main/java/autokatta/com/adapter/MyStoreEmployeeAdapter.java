@@ -28,7 +28,7 @@ import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.other.CustomToast;
-import autokatta.com.other.DemoDelAct;
+import autokatta.com.other.InventoryDashboard;
 import autokatta.com.response.StoreEmployeeResponse;
 import autokatta.com.view.AddEmployeeActivity;
 import retrofit2.Response;
@@ -107,7 +107,7 @@ public class MyStoreEmployeeAdapter extends RecyclerView.Adapter<MyStoreEmployee
                 mBundle.putString("bundle_contact", holder.mEmpContact.getText().toString());
                 mBundle.putInt("bundle_storeId", mEmpList.get(holder.getAdapterPosition()).getStoreID());
 
-                Intent mIntent = new Intent(mActivity, DemoDelAct.class);
+                Intent mIntent = new Intent(mActivity, InventoryDashboard.class);
                 mIntent.putExtras(mBundle);
                 mActivity.startActivity(mIntent);
             }
