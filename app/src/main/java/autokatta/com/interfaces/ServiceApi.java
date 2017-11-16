@@ -1576,7 +1576,7 @@ public interface ServiceApi {
 
 
     //Update Or delete Employee From Store
-    @POST("UpdateAuctionCreation")
+    @POST("UpdateDeleteStoreEmployee")
     Call<String> updateDeleteEmployee(@Query("StoreEmplyeeID") int StoreEmplyeeID, @Query("Name") String Name,
                                       @Query("ContactNo") String ContactNo, @Query("Designation") String Designation,
                                       @Query("Description") String Description, @Query("Permission") String Permission,

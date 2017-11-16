@@ -43,6 +43,7 @@ public class MyStoreEmployeeAdapter extends RecyclerView.Adapter<MyStoreEmployee
     private ConnectionDetector mConnectionDetector;
     private String strDetailsShare = "", myContact;
 
+    YoHolder yoHolder;
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
 // you provide access to all the views for a data item in a view holder
@@ -96,6 +97,7 @@ public class MyStoreEmployeeAdapter extends RecyclerView.Adapter<MyStoreEmployee
     public void onBindViewHolder(final MyStoreEmployeeAdapter.YoHolder holder, int position) {
         myContact = mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).
                 getString("loginContact", "");
+        yoHolder = holder;
 
         holder.mEmpName.setText(mEmpList.get(position).getName());
         holder.mEmpContact.setText(mEmpList.get(position).getContactNo());
@@ -165,7 +167,8 @@ public class MyStoreEmployeeAdapter extends RecyclerView.Adapter<MyStoreEmployee
 
     private void deleteEmployee(int empId) {
         ApiCall apiCall = new ApiCall(mActivity, this);
-        apiCall.DeleteStore(empId, "Delete");
+        apiCall.updateDeleteEmployee(empId, "", "", "", "", "",
+                "Delete");
     }
 
     @Override
@@ -191,8 +194,10 @@ public class MyStoreEmployeeAdapter extends RecyclerView.Adapter<MyStoreEmployee
     public void notifyString(String str) {
 
         if (str != null) {
-            if (str.startsWith("success")) {
-                CustomToast.customToast(mActivity, "Store deleted");
+            if (str.startsWith("Success_Deleted")) {
+                CustomToast.customToast(mActivity, "Employee deleted");
+                yoHolder.mRemove.setText("Removed");
+                yoHolder.mRemove.setClickable(false);
 
                 //mStoreList.remove(getAdapterPosition());
             }
@@ -219,5 +224,6 @@ public class MyStoreEmployeeAdapter extends RecyclerView.Adapter<MyStoreEmployee
             System.out.println("No Activity Found For Call in Group contact adapter \n");
         }
     }
+
 
 }

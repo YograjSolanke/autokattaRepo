@@ -100,7 +100,7 @@ public class MyStoreEmployeeActivity extends AppCompatActivity implements Reques
                     @Override
                     public void run() {
                         mSwipeRefreshLayout.setRefreshing(true);
-                        mApiCall.getStoreEmployees(store_id, myContact);
+                        getEmployeeData(store_id, myContact);
                     }
                 });
             }
@@ -246,7 +246,19 @@ public class MyStoreEmployeeActivity extends AppCompatActivity implements Reques
     @Override
     public void onRefresh() {
 
-        mApiCall.getStoreEmployees(store_id, myContact);
+        getEmployeeData(store_id, myContact);
 
+    }
+
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+        getEmployeeData(store_id, myContact);
+
+    }
+
+    public void getEmployeeData(int store_id, String contact) {
+        ApiCall mApiCall = new ApiCall(this, this);
+        mApiCall.getStoreEmployees(store_id, myContact);
     }
 }
