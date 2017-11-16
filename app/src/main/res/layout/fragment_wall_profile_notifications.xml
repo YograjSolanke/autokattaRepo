@@ -114,7 +114,7 @@
                 android:layout_below="@+id/relative"
                 android:layout_marginTop="5dp"
                 android:contentDescription="@string/app_name"
-                android:scaleType="centerCrop"
+                android:scaleType="fitXY"
                 tools:src="@mipmap/demo" />
 
             <TextView

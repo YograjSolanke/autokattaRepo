@@ -1,6 +1,7 @@
 package autokatta.com.view;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -23,6 +24,10 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
+
+import java.net.ConnectException;
+import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 
 import autokatta.com.R;
 import autokatta.com.adapter.TabAdapterName;
@@ -54,6 +59,7 @@ public class OtherProfile extends AppCompatActivity implements RequestNotifier, 
     String dp = "";
     int ProfileId = 0;
     Event mEventFrag;
+    private ProgressDialog dialog;
     OtherWall mOtherWallFrag;
     String mAction = "other";
     Follow mFollowFrag;
@@ -66,7 +72,8 @@ public class OtherProfile extends AppCompatActivity implements RequestNotifier, 
         setContentView(R.layout.activity_other_profile);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        dialog = new ProgressDialog(this);
+        dialog.setMessage("Loading...");
         if (getSupportActionBar() != null) {
             getSupportActionBar().setHomeButtonEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -143,6 +150,7 @@ public class OtherProfile extends AppCompatActivity implements RequestNotifier, 
     GET Other Profile...
      */
     private void getOtherProfile(String contact) {
+        dialog.show();
         mApiCall.profileAbout(contact, mLoginContact);
     }
 
@@ -159,9 +167,11 @@ public class OtherProfile extends AppCompatActivity implements RequestNotifier, 
 
     @Override
     public void notifySuccess(Response<?> response) {
+        if (dialog.isShowing()) {
+            dialog.dismiss();
+        }
         if (response != null) {
             if (response.isSuccessful()) {
-
                 String userName = "";
                 ProfileAboutResponse mProfileAboutResponse = (ProfileAboutResponse) response.body();
                 for (ProfileAboutResponse.Success success : mProfileAboutResponse.getSuccess()) {
@@ -213,11 +223,31 @@ public class OtherProfile extends AppCompatActivity implements RequestNotifier, 
 
     @Override
     public void notifyError(Throwable error) {
-
+        if (dialog.isShowing()) {
+            dialog.dismiss();
+        }
+        if (error instanceof SocketTimeoutException) {
+            CustomToast.customToast(getApplicationContext(), getString(R.string._404));
+        } else if (error instanceof NullPointerException) {
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
+        } else if (error instanceof ClassCastException) {
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
+        } else if (error instanceof ConnectException) {
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
+        } else if (error instanceof UnknownHostException) {
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
+        } else {
+            Log.i("Check Class-"
+                    , "OtherProfile");
+            error.printStackTrace();
+        }
     }
 
     @Override
     public void notifyString(String str) {
+        if (dialog.isShowing()) {
+            dialog.dismiss();
+        }
         if (str != null) {
             switch (str) {
                 case "success_follow":
