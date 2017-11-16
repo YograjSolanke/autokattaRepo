@@ -8626,6 +8626,44 @@ get ExchangeMela Analytics Data
             e.printStackTrace();
         }
     }
+ /*
+     Add trnasfer enquiry ...
+    */
+
+    public void addtransferenquiry(int enquiryid, String transfercontact, String enquirycontact, String mycontact, String tranfertoname, String description, String reasonfortransfer,String monitorstatus) {
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                //JSON to Gson conversion
+                Gson gson = new GsonBuilder()
+                        .setLenient()
+                        .create();
+
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create(gson))
+                        .client(initLog().build())
+                        .build();
+
+
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<String> mServiceMelaResponse = serviceApi.addtransferenquiry(enquiryid,transfercontact,enquirycontact,mycontact,tranfertoname,description,reasonfortransfer,monitorstatus);
+                mServiceMelaResponse.enqueue(new Callback<String>() {
+                    @Override
+                    public void onResponse(Call<String> call, Response<String> response) {
+                        mNotifier.notifyString(response.body());
+                    }
+
+                    @Override
+                    public void onFailure(Call<String> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+            } else
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     public void GetGroupQuotation(int mGrpId) {
         try {

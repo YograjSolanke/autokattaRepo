@@ -24,7 +24,7 @@ import autokatta.com.my_inventory_container.SoldVehicleContainer;
 import autokatta.com.my_inventory_container.TransferStock;
 import autokatta.com.my_inventory_container.UsedVehicleContainer;
 import autokatta.com.view.BussinessChatActivity;
-import autokatta.com.view.ManualEnquiry;
+import autokatta.com.view.ManualEnquiryMainActivity;
 
 public class InventoryDashboard extends AppCompatActivity {
 
@@ -97,7 +97,7 @@ public class InventoryDashboard extends AppCompatActivity {
                         startActivity(new Intent(getApplicationContext(), BuyerNotificationContainer.class));
                         break;
                     case "Manual Enquiry":
-                        startActivity(new Intent(getApplicationContext(), ManualEnquiry.class));
+                        startActivity(new Intent(getApplicationContext(), ManualEnquiryMainActivity.class));
                         break;
                     case "Business Chat":
                         startActivity(new Intent(getApplicationContext(), BussinessChatActivity.class));

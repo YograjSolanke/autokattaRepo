@@ -1329,6 +1329,12 @@ public interface ServiceApi {
                                             @Query("MyContact") String MyContact, @Query("Keyword") String keyword,
                                             @Query("Discussion") String Discussion, @Query("NextFollowUpDate") String NextFollowUpDate,
                                             @Query("Idslist") String Idslist);
+//transfer enquiry..
+    @POST("Addtransferenquiry")
+    Call<String> addtransferenquiry(@Query("enquiryid") int enquiryid, @Query("transfercontact") String transfercontact,
+                                            @Query("enquirycontact") String enquirycontact, @Query("mycontact") String mycontact,
+                                            @Query("transfertoname") String transfertoname, @Query("description") String description,
+                                            @Query("reasonfortransfer") String reasonfortransfer, @Query("monitorstatus") String monitorstatus);
 
     //Get Group Quotation
     @GET("GetGroupQuotation")

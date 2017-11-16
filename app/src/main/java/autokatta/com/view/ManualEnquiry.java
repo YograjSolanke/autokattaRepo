@@ -1,24 +1,25 @@
 package autokatta.com.view;
 
-import android.app.ActivityOptions;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.Menu;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
@@ -42,8 +43,6 @@ import java.util.TimeZone;
 import autokatta.com.R;
 import autokatta.com.adapter.ManualEnquiryAdapter;
 import autokatta.com.apicall.ApiCall;
-import autokatta.com.app_info.ManualAppIntro;
-import autokatta.com.enquiries.TodaysFollowUp;
 import autokatta.com.interfaces.ItemClickListener;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
@@ -51,7 +50,9 @@ import autokatta.com.request.ManualEnquiryRequest;
 import autokatta.com.response.ManualEnquiryResponse;
 import retrofit2.Response;
 
-public class ManualEnquiry extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener, RequestNotifier, ItemClickListener {
+import static android.content.Context.MODE_PRIVATE;
+
+public class ManualEnquiry extends Fragment implements SwipeRefreshLayout.OnRefreshListener, RequestNotifier, ItemClickListener {
 
     SwipeRefreshLayout mSwipeRefreshLayout;
     RecyclerView mRecyclerView;
@@ -64,36 +65,35 @@ public class ManualEnquiry extends AppCompatActivity implements SwipeRefreshLayo
     SharedPreferences.Editor editor;
     ManualEnquiryAdapter adapter;
 
+View mManualEnquiry;
+
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_manual_enquiry);
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setHomeButtonEnabled(true);
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
-        setTitle("Enquiry's");
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        mManualEnquiry = inflater.inflate(R.layout.activity_manual_enquiry, container, false);
+        getActivity().setTitle("Enquiry's");
+
         showDatePicker();
-        startActivity(new Intent(getApplicationContext(), ManualAppIntro.class));
-        sharedPreferences = getSharedPreferences(getString(R.string.firstRun), MODE_PRIVATE);
-        runOnUiThread(new Runnable() {
+     //   getActivity().startActivity(new Intent(getActivity(), ManualAppIntro.class));
+        sharedPreferences = getActivity().getSharedPreferences(getString(R.string.firstRun), MODE_PRIVATE);
+        getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 getManualData();
-                mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.manual_swipeRefreshLayout);
+                mSwipeRefreshLayout = (SwipeRefreshLayout) mManualEnquiry.findViewById(R.id.manual_swipeRefreshLayout);
                 //mPersonSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.person_swipeRefreshLayout);
 
-                mRecyclerView = (RecyclerView) findViewById(R.id.manual_recycler_view);
-                mFrameLayout = (FrameLayout) findViewById(R.id.manual_enquiry);
+                mRecyclerView = (RecyclerView) mManualEnquiry.findViewById(R.id.manual_recycler_view);
+                mFrameLayout = (FrameLayout) mManualEnquiry.findViewById(R.id.manual_enquiry);
                 mRecyclerView.setHasFixedSize(true);
-                filterLayout = (LinearLayout) findViewById(R.id.below);
-                mRelStatus = (RelativeLayout) findViewById(R.id.rel_status);
-                mRelDate = (RelativeLayout) findViewById(R.id.rel_date);
+                filterLayout = (LinearLayout) mManualEnquiry.findViewById(R.id.below);
+                mRelStatus = (RelativeLayout) mManualEnquiry.findViewById(R.id.rel_status);
+                mRelDate = (RelativeLayout) mManualEnquiry.findViewById(R.id.rel_date);
 
                 mRelStatus.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        PopupMenu mPopupMenu = new PopupMenu(ManualEnquiry.this, v);
+                        PopupMenu mPopupMenu = new PopupMenu(getActivity(), v);
                         mPopupMenu.getMenuInflater().inflate(R.menu.manual_status_filter, mPopupMenu.getMenu());
                         mPopupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                             @Override
@@ -159,13 +159,13 @@ public class ManualEnquiry extends AppCompatActivity implements SwipeRefreshLayo
                     }
                 });
 
-                LinearLayoutManager mLinearLayout = new LinearLayoutManager(getApplicationContext());
+                LinearLayoutManager mLinearLayout = new LinearLayoutManager(getActivity());
                 mLinearLayout.setReverseLayout(true);
                 mLinearLayout.setStackFromEnd(true);
 
                 mRecyclerView.setLayoutManager(mLinearLayout);
                 mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-                mRecyclerView.addItemDecoration(new DividerItemDecoration(getApplicationContext(), LinearLayoutManager.VERTICAL));
+                mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL));
 
                 mSwipeRefreshLayout.setOnRefreshListener(ManualEnquiry.this);
                 //mPersonSwipeRefreshLayout.setOnRefreshListener(ManualEnquiry.this);
@@ -200,25 +200,29 @@ public class ManualEnquiry extends AppCompatActivity implements SwipeRefreshLayo
         filterLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CustomToast.customToast(getApplicationContext(), "Coming soon....");
+                CustomToast.customToast(getActivity(), "Coming soon....");
             }
         });
+
+        return mManualEnquiry;
     }
 
     /*
     Get Manual Data...
      */
     private void getManualData() {
-        ApiCall mApiCall = new ApiCall(ManualEnquiry.this, this);
-        mApiCall.getManualEnquiry(getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
+        ApiCall mApiCall = new ApiCall(getActivity(), this);
+        mApiCall.getManualEnquiry(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
                 .getString("loginContact", ""));
     }
 
+/*
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.manual_add, menu);
-        return true;
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.manual_add, menu);
+     //   getActivity().getMenuInflater().inflate(R.menu.manual_add, menu);
     }
 
     @Override
@@ -237,22 +241,24 @@ public class ManualEnquiry extends AppCompatActivity implements SwipeRefreshLayo
                 return true;
 
             case R.id.add_manual:
-                ActivityOptions options = ActivityOptions.makeCustomAnimation(ManualEnquiry.this, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
-                startActivity(new Intent(getApplicationContext(), AddManualEnquiry.class), options.toBundle());
+                ActivityOptions options = ActivityOptions.makeCustomAnimation(getActivity(), R.anim.ok_left_to_right, R.anim.ok_right_to_left);
+                startActivity(new Intent(getActivity(), AddManualEnquiry.class), options.toBundle());
                 return true;
 
             case R.id.today_follow_up:
-                startActivity(new Intent(getApplicationContext(), TodaysFollowUp.class));
+                startActivity(new Intent(getActivity(), TodaysFollowUp.class));
                 return true;
         }
         return super.onOptionsItemSelected(item);
     }
+*/
 
-    @Override
+
+    //@Override
     public void onBackPressed() {
-        super.onBackPressed();
-        finish();
-        overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
+        super.getActivity().onBackPressed();
+        getActivity().finish();
+        getActivity().overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
     }
 
     @Override
@@ -347,6 +353,7 @@ public class ManualEnquiry extends AppCompatActivity implements SwipeRefreshLayo
                             request.setLoanamount(success.getLoanAmount());
                             request.setLoanpercent(success.getLoanPercent());
                             request.setFinancerstatus(success.getFinancerStatus());
+                            request.setEnquiryID(success.getId());
 
 
 
@@ -522,7 +529,7 @@ public class ManualEnquiry extends AppCompatActivity implements SwipeRefreshLayo
                             mMyGroupsList.add(request);
                         }
 
-                        adapter = new ManualEnquiryAdapter(ManualEnquiry.this, mMyGroupsList);
+                        adapter = new ManualEnquiryAdapter(getActivity(), mMyGroupsList);
                         mRecyclerView.setAdapter(adapter);
                         adapter.setClickListener(this);
                         adapter.notifyDataSetChanged();
@@ -535,7 +542,7 @@ public class ManualEnquiry extends AppCompatActivity implements SwipeRefreshLayo
                                         getManualData();
                                     }
                                 })
-                                .setActionTextColor(ContextCompat.getColor(getApplicationContext(), R.color.text_color))
+                                .setActionTextColor(ContextCompat.getColor(getActivity(), R.color.text_color))
                                 .setDuration(4000).show();
                     }
                 }
@@ -609,7 +616,7 @@ public class ManualEnquiry extends AppCompatActivity implements SwipeRefreshLayo
         ManualEnquiryRequest request = mMyGroupsList.get(position);
         //getPersonData(request.getVehicleId(), request.getVehicleInventory());
 
-        Intent intent = new Intent(ManualEnquiry.this, EnquiredPersonsActivity.class);
+        Intent intent = new Intent(getActivity(), EnquiredPersonsActivity.class);
 
         intent.putExtra("keyword", request.getVehicleInventory());
         switch (request.getVehicleInventory()) {
@@ -665,7 +672,7 @@ public class ManualEnquiry extends AppCompatActivity implements SwipeRefreshLayo
      */
     private void showDatePicker() {
         Calendar newCalendar = Calendar.getInstance();
-        datePickerDialog = new DatePickerDialog(ManualEnquiry.this, new DatePickerDialog.OnDateSetListener() {
+        datePickerDialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
 
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 Calendar newDate = Calendar.getInstance();
@@ -803,6 +810,7 @@ public class ManualEnquiry extends AppCompatActivity implements SwipeRefreshLayo
 
         }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
     }
+
 
     /*@Override
     protected void onResume() {
