@@ -93,6 +93,7 @@ public class AddEmployeeActivity extends AppCompatActivity implements RequestNot
 
                         store_id = getIntent().getExtras().getInt("store_id", 0);
                         btnAdd.setText("update");
+                        setTitle("Update Employee");
                     } else {
 
                         store_id = getIntent().getExtras().getInt("store_id", 0);
