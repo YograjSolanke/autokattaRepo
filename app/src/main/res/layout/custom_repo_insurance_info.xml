@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:id="@+id/popup_window"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:orientation="vertical"
-              android:padding="10dp">
+    android:id="@+id/popup_window"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="10dp">
 
     <!--<ImageView
         android:id="@+id/close"
@@ -29,7 +29,7 @@
                 android:layout_height="wrap_content"
                 android:hint="Client Name"
                 android:labelFor="@+id/transfer_date"
-                android:textAppearance="?android:attr/textAppearanceMedium"/>
+                android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <EditText
                 android:id="@+id/loan_no"
@@ -37,15 +37,14 @@
                 android:layout_height="wrap_content"
                 android:hint="Loan Account Number"
                 android:labelFor="@+id/transfer_date"
-                android:textAppearance="?android:attr/textAppearanceMedium"/>
+                android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <EditText
                 android:id="@+id/borrower_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Borrower Name"
-                android:maxLength="10"
-                android:textAppearance="?android:attr/textAppearanceMedium"/>
+                android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -60,7 +59,7 @@
                     android:hint="Borrower Contact"
                     android:inputType="number"
                     android:maxLength="10"
-                    android:textAppearance="?android:attr/textAppearanceMedium"/>
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -73,7 +72,7 @@
                         android:layout_height="wrap_content"
                         android:contentDescription="@string/app_name"
                         android:src="@drawable/ic_contact_phone_black_24dp"
-                        android:visibility="visible"/>
+                        android:visibility="visible" />
                 </LinearLayout>
             </RelativeLayout>
 
@@ -92,7 +91,7 @@
                     android:gravity="center"
                     android:text="@string/go_profile"
                     android:textColor="@color/zxing_custom_possible_result_points"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
             </LinearLayout>
 
             <AutoCompleteTextView
@@ -100,47 +99,83 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Branch City"
-                android:textAppearance="?android:attr/textAppearanceMedium"/>
+                android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <EditText
                 android:id="@+id/manager_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:digits="abcdefghijklmnopqrstuvwxyz0123456789,"
                 android:hint="Manager Name"
-                android:textAppearance="?android:attr/textAppearanceMedium"/>
+                android:textAppearance="?android:attr/textAppearanceMedium" />
 
-            <EditText
-                android:id="@+id/manager_cnt"
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Manager Contact"
-                android:inputType="number"
-                android:maxLength="10"
-                android:textAppearance="?android:attr/textAppearanceMedium"/>
+                android:layout_marginTop="@dimen/layout_top"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/manager_cnt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Manager Contact"
+                    android:inputType="number"
+                    android:maxLength="10"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true">
+
+                    <ImageView
+                        android:id="@+id/manager_contact_list"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:contentDescription="@string/app_name"
+                        android:src="@drawable/ic_contact_phone_black_24dp"
+                        android:visibility="visible" />
+                </LinearLayout>
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/txtManager"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/txtManager1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/ic_check_black_24dp"
+                    android:gravity="center"
+                    android:text="@string/go_profile"
+                    android:textColor="@color/zxing_custom_possible_result_points"
+                    android:textStyle="bold" />
+            </LinearLayout>
 
             <EditText
                 android:id="@+id/dealer_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:digits="abcdefghijklmnopqrstuvwxyz0123456789,"
                 android:hint="Dealer Name"
-                android:textAppearance="?android:attr/textAppearanceMedium"/>
+                android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <EditText
                 android:id="@+id/stock_yard_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:digits="abcdefghijklmnopqrstuvwxyz0123456789,"
                 android:hint="Stock Yard Name"
-                android:textAppearance="?android:attr/textAppearanceMedium"/>
+                android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <AutoCompleteTextView
                 android:id="@+id/stock_yard_addr"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Stock Yard Address"
-                android:textAppearance="?android:attr/textAppearanceMedium"/>
+                android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -154,7 +189,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Inward Date"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
 
                 <EditText
                     android:id="@+id/edtDate"
@@ -168,7 +203,7 @@
                     android:inputType="datetime"
                     android:paddingEnd="@dimen/card_margin"
                     android:paddingStart="@dimen/card_margin"
-                    android:textColor="#708090"/>
+                    android:textColor="#708090" />
             </LinearLayout>
 
             <LinearLayout
@@ -183,7 +218,7 @@
                     android:background="@color/button_default"
                     android:text="ADD"
                     android:textColor="@color/white"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
 
             </LinearLayout>
         </LinearLayout>

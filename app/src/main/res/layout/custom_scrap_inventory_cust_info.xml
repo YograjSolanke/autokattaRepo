@@ -82,7 +82,6 @@
         android:id="@+id/cust_detailaddress"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:digits="abcdefghijklmnopqrstuvwxyz0123456789,"
         android:hint="Customer Detail Address"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 

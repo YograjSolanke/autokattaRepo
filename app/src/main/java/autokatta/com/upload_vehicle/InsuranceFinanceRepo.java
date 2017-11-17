@@ -34,7 +34,6 @@ import autokatta.com.view.OtherProfile;
 import retrofit2.Response;
 
 import static android.content.Context.MODE_PRIVATE;
-import static com.google.zxing.integration.android.IntentIntegrator.REQUEST_CODE;
 
 /**
  * Created by ak-001 on 16/10/17.
@@ -42,9 +41,11 @@ import static com.google.zxing.integration.android.IntentIntegrator.REQUEST_CODE
 
 public class InsuranceFinanceRepo extends Fragment implements RequestNotifier {
     View mInsuranceFinanceRepo;
-    EditText loanaccno, borrowername,mClientName, borrowercontact, inwarddate, branchmanagername, branchcmanagerontact, dealername, stockyardname;
+    EditText loanaccno, borrowername, mClientName, borrowercontact, inwarddate, branchmanagername, branchcmanagerontact, dealername, stockyardname;
     AutoCompleteTextView branchcity, stockyardadddress;
-    LinearLayout txtUser;
+    LinearLayout txtUser, txtManager;
+    public static final int REQ_ONE = 1, REQ_TWO = 2;
+    boolean flag = false;
 
     public InsuranceFinanceRepo() {
         //empty constructor...
@@ -72,6 +73,7 @@ public class InsuranceFinanceRepo extends Fragment implements RequestNotifier {
                 branchcity = (AutoCompleteTextView) mInsuranceFinanceRepo.findViewById(R.id.branch_city);
                 stockyardadddress = (AutoCompleteTextView) mInsuranceFinanceRepo.findViewById(R.id.stock_yard_addr);
                 txtUser = (LinearLayout) mInsuranceFinanceRepo.findViewById(R.id.txtUser);
+                txtManager = (LinearLayout) mInsuranceFinanceRepo.findViewById(R.id.txtManager);
 
                 branchcity.setAdapter(new GooglePlacesAdapter(getActivity(), R.layout.registration_spinner));
                 stockyardadddress.setAdapter(new GooglePlacesAdapter(getActivity(), R.layout.registration_spinner));
@@ -89,15 +91,35 @@ public class InsuranceFinanceRepo extends Fragment implements RequestNotifier {
                 });
 
                 ImageView mContactList = (ImageView) mInsuranceFinanceRepo.findViewById(R.id.contact_list);
+                ImageView mContactManager = (ImageView) mInsuranceFinanceRepo.findViewById(R.id.manager_contact_list);
                 mContactList.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        flag = false;
                         Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
-                        startActivityForResult(intent, REQUEST_CODE);
+                        startActivityForResult(intent, REQ_ONE);
+                    }
+                });
+                mContactManager.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        flag = true;
+                        Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
+                        startActivityForResult(intent, REQ_TWO);
                     }
                 });
 
                 txtUser.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Bundle bundle = new Bundle();
+                        bundle.putString("contactOtherProfile", borrowercontact.getText().toString());
+                        Intent intent = new Intent(getActivity(), OtherProfile.class);
+                        intent.putExtras(bundle);
+                        startActivity(intent);
+                    }
+                });
+                txtManager.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Bundle bundle = new Bundle();
@@ -118,9 +140,35 @@ public class InsuranceFinanceRepo extends Fragment implements RequestNotifier {
                     public void onTextChanged(CharSequence s, int start, int before, int count) {
                         if (s.length() == 10) {
                             if (!getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "")
-                                    .equalsIgnoreCase(s.toString()))
+                                    .equalsIgnoreCase(s.toString())) {
+                                flag = false;
                                 checkUser(s.toString());
-                            else {
+                            } else {
+                                Toast.makeText(getActivity(), "Admin not allowed", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {
+
+                    }
+                });
+
+                branchcmanagerontact.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                        if (s.length() == 10) {
+                            if (!getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "")
+                                    .equalsIgnoreCase(s.toString())) {
+                                flag = true;
+                                checkUser(s.toString());
+                            } else {
                                 Toast.makeText(getActivity(), "Admin not allowed", Toast.LENGTH_SHORT).show();
                             }
                         }
@@ -221,7 +269,7 @@ public class InsuranceFinanceRepo extends Fragment implements RequestNotifier {
                             getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("stockyardname", strstockyardname).apply();
                             getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("stockyardaddr", strstockyardadddress).apply();
                             getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("inwarddate", strinwarddate).apply();
-                         //   getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("clientname", strClientname).apply();
+                            //   getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("clientname", strClientname).apply();
 
                             getActivity().getSupportFragmentManager().beginTransaction()
                                     .replace(R.id.vehicle_upload_container, new Title(), "Category_list")
@@ -244,7 +292,7 @@ public class InsuranceFinanceRepo extends Fragment implements RequestNotifier {
     public void onActivityResult(int reqCode, int resultCode, Intent data) {
         super.onActivityResult(reqCode, resultCode, data);
         switch (reqCode) {
-            case (REQUEST_CODE):
+            case (REQ_ONE):
                 if (resultCode == Activity.RESULT_OK) {
                     try {
                         Uri contactData = data.getData();
@@ -271,6 +319,34 @@ public class InsuranceFinanceRepo extends Fragment implements RequestNotifier {
                         e.printStackTrace();
                     }
                 }
+
+            case (REQ_TWO):
+                if (resultCode == Activity.RESULT_OK) {
+                    try {
+                        Uri contactData = data.getData();
+                        Cursor c = getActivity().getContentResolver().query(contactData, null, null, null, null);
+                        if (c.moveToFirst()) {
+                            String contactId = c.getString(c.getColumnIndex(ContactsContract.Contacts._ID));
+                            String hasNumber = c.getString(c.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER));
+                            String num = "";
+                            if (Integer.valueOf(hasNumber) == 1) {
+                                Cursor numbers = getActivity().getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = " + contactId, null, null);
+                                while (numbers.moveToNext()) {
+                                    num = numbers.getString(numbers.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+                                    num = num.replaceAll("-", "");
+                                    num = num.replace("(", "").replace(")", "").replaceAll(" ", "").replaceAll("[\\D]", "");
+
+                                    if (num.length() > 10)
+                                        num = num.substring(num.length() - 10);
+                                    branchcmanagerontact.setText(num);
+                                }
+                            }
+                        }
+                        break;
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
         }
     }
 
@@ -288,9 +364,17 @@ public class InsuranceFinanceRepo extends Fragment implements RequestNotifier {
     public void notifyString(String str) {
         if (str != null) {
             if (str.equalsIgnoreCase("Success")) {
-                txtUser.setVisibility(View.VISIBLE);
+                if (flag) {
+                    txtManager.setVisibility(View.VISIBLE);
+                } else {
+                    txtUser.setVisibility(View.VISIBLE);
+                }
             } else {
-                txtUser.setVisibility(View.GONE);
+                if (flag) {
+                    txtManager.setVisibility(View.GONE);
+                } else {
+                    txtUser.setVisibility(View.GONE);
+                }
             }
         } else
             CustomToast.customToast(getActivity(), getString(R.string.no_response));

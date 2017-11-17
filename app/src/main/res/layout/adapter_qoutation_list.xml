@@ -21,22 +21,30 @@
             android:padding="5dp">
 
             <ImageView
+                android:id="@+id/call"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/new_call"
                 android:layout_alignParentEnd="true"
-                android:id="@+id/call"
-                android:visibility="gone" />
+                android:contentDescription="@string/app_name"
+                android:src="@mipmap/new_call"
+                android:visibility="visible" />
 
+            <ImageView
+                android:id="@+id/reply"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:contentDescription="@string/app_name"
+                android:layout_below="@+id/call"
+                android:src="@mipmap/reply" />
 
             <RelativeLayout
                 android:id="@+id/relative1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:layout_marginTop="5dp"
-                android:visibility="visible"
-                android:layout_toLeftOf="@+id/call">
+                android:layout_toStartOf="@+id/call"
+                android:visibility="visible">
 
                 <TextView
                     android:id="@+id/titletext"
@@ -68,8 +76,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/relative1"
+                android:layout_toStartOf="@+id/call"
                 android:layout_marginStart="10dp"
-                android:layout_marginTop="5dp"
                 android:visibility="visible">
 
                 <TextView
@@ -102,8 +110,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/relative2"
+                android:layout_toStartOf="@+id/call"
                 android:layout_marginStart="10dp"
-                android:layout_marginTop="5dp"
                 android:visibility="visible">
 
                 <TextView
@@ -136,9 +144,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/relative3"
+                android:layout_toStartOf="@+id/call"
                 android:layout_marginStart="10dp"
-                android:layout_marginTop="5dp"
-                android:layout_toEndOf="@+id/image"
                 android:visibility="visible">
 
                 <TextView
@@ -172,10 +179,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/relative4"
+                android:layout_toStartOf="@+id/call"
                 android:layout_marginStart="10dp"
-                android:layout_marginTop="5dp"
-                android:layout_toEndOf="@+id/image"
                 android:visibility="visible">
+
 
                 <TextView
                     android:id="@+id/queryText"
@@ -200,10 +207,8 @@
                     android:textColor="#2C3343"
                     android:textColorHint="#000000"
                     android:textSize="12sp" />
+
             </RelativeLayout>
-
-
         </RelativeLayout>
     </android.support.v7.widget.CardView>
-
 </RelativeLayout>

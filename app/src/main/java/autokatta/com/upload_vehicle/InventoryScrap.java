@@ -178,7 +178,6 @@ public class InventoryScrap extends Fragment implements RequestNotifier {
                             getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("scrap_cust_full_addr", custFullAddress).apply();
                             getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putInt("scrap_purchase_price", custpurchaseprice).apply();
                             getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("scrap_purchase_date", purchaseDate).apply();
-
                             getActivity().getSupportFragmentManager().beginTransaction()
                                     .replace(R.id.vehicle_upload_container, new Title(), "Category_list")
                                     .addToBackStack("Category_list")
@@ -224,7 +223,6 @@ public class InventoryScrap extends Fragment implements RequestNotifier {
                                     num = numbers.getString(numbers.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
                                     num = num.replaceAll("-", "");
                                     num = num.replace("(", "").replace(")", "").replaceAll(" ", "").replaceAll("[\\D]", "");
-
                                     if (num.length() > 10)
                                         num = num.substring(num.length() - 10);
                                     scrapcustcontact.setText(num);

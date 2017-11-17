@@ -1,10 +1,13 @@
 package autokatta.com.adapter;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.ActivityOptions;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +19,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import autokatta.com.R;
+import autokatta.com.groups.ReplyGroupQuot;
 import autokatta.com.response.MyVehicleQuotationListResponse;
 import autokatta.com.view.OtherProfile;
 
@@ -83,6 +87,12 @@ public class QuotationListAdapter extends RecyclerView.Adapter<RecyclerView.View
                 }
             }
         });
+        holder.reply.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mActivity.startActivity(new Intent(mActivity, ReplyGroupQuot.class));
+            }
+        });
 
     }
 
@@ -90,6 +100,16 @@ public class QuotationListAdapter extends RecyclerView.Adapter<RecyclerView.View
         Intent in = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + custContact));
         System.out.println("calling started");
         try {
+            if (ActivityCompat.checkSelfPermission(mActivity, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
+                return;
+            }
             mActivity.startActivity(in);
         } catch (android.content.ActivityNotFoundException ex) {
             System.out.println("No Activity Found For Call in Other Profile\n");
@@ -105,7 +125,7 @@ public class QuotationListAdapter extends RecyclerView.Adapter<RecyclerView.View
     private static class QuotationHolder extends RecyclerView.ViewHolder {
 
         TextView name, contact, reservedPrice, date, priceText, query;
-        ImageView callMe;
+        ImageView callMe, reply;
         RelativeLayout nameRelative;
 
         QuotationHolder(View itemView) {
@@ -118,6 +138,7 @@ public class QuotationListAdapter extends RecyclerView.Adapter<RecyclerView.View
             date = (TextView) itemView.findViewById(R.id.setDate);
             query = (TextView) itemView.findViewById(R.id.setQuery);
             callMe = (ImageView) itemView.findViewById(R.id.call);
+            reply = (ImageView) itemView.findViewById(R.id.reply);
             nameRelative = (RelativeLayout) itemView.findViewById(R.id.relative1);
         }
     }

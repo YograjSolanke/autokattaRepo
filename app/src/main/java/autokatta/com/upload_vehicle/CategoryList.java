@@ -49,7 +49,6 @@ public class CategoryList extends Fragment {
                 // String subTypeId = mList.get(position).getId();
                 if (s != null) {
                     getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_auction_categoryName", s).apply();
-
                     if (s.equalsIgnoreCase("Scrap") || s.equalsIgnoreCase("Inventory")) {
                         getActivity().getSupportFragmentManager().beginTransaction()
                                 .replace(R.id.vehicle_upload_container, new InventoryScrap(), "InventoryScrap")
