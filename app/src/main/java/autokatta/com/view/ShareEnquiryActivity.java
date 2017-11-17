@@ -20,6 +20,7 @@ import android.widget.LinearLayout;
 import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
+import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.other.CustomToast;
 import retrofit2.Response;
 
@@ -31,6 +32,9 @@ public class ShareEnquiryActivity extends AppCompatActivity implements RequestNo
     String myContact;
     int mEnquiryId;
     LinearLayout txtUser, txtInvite, linear_transfer;
+    String mEnquContact,mKeyword,mIds;
+    ConnectionDetector mConnectionDetector;
+ApiCall mApiCall;
 
 
     @Override
@@ -40,18 +44,22 @@ public class ShareEnquiryActivity extends AppCompatActivity implements RequestNo
 
         mContact = (EditText) findViewById(R.id.contact_no);
         owner_name = (EditText) findViewById(R.id.owner_name);
-        full_address = (EditText) findViewById(R.id.full_address);
         reason_for_transfer = (EditText) findViewById(R.id.reason_for_transfer);
         description = (EditText) findViewById(R.id.description);
         submit = (Button) findViewById(R.id.submit);
         txtUser = (LinearLayout) findViewById(R.id.txtUser);
         txtInvite = (LinearLayout) findViewById(R.id.txtInvite);
         linear_transfer = (LinearLayout) findViewById(R.id.linear_transfer);
+        mConnectionDetector = new ConnectionDetector(this);
+        mApiCall=new ApiCall(this,this);
 
         submit.setOnClickListener(this);
 
         Intent i=getIntent();
       mEnquiryId=  i.getIntExtra("enquiryid",0);
+        mEnquContact=  i.getStringExtra("enqcontact");
+        mKeyword=  i.getStringExtra("keyword");
+        mIds=  i.getStringExtra("Ids");
       //  vehicleId = bundle.getInt("bundle_VehicleId");
         myContact = getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "");
         ImageView mContactList = (ImageView) findViewById(R.id.contact_list);
@@ -108,9 +116,24 @@ public class ShareEnquiryActivity extends AppCompatActivity implements RequestNo
 
 
     private void checkUser(String contact) {
-        ApiCall mApiCall = new ApiCall(getApplicationContext(), this);
-        mApiCall.registrationContactValidation(contact);
+        if (mConnectionDetector.isConnectedToInternet()) {
+            //ApiCall mApiCall = new ApiCall(getApplicationContext(), this);
+            mApiCall.registrationContactValidation(contact);
+        }else
+        {
+            CustomToast.customToast(getApplicationContext(),getString(R.string.no_internet));
+        }
     }
+
+  private void addTransferrequest() {
+      if (mConnectionDetector.isConnectedToInternet()) {
+        //  ApiCall mApiCall = new ApiCall(getApplicationContext(), this);
+          mApiCall.addtransferenquiry(mEnquiryId, mContact.getText().toString(), mEnquContact, myContact, owner_name.getText().toString(), description.getText().toString(), reason_for_transfer.getText().toString(), "yes",mKeyword,"",mIds);
+      } else {
+          CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
+
+      }
+  }
 
     @Override
     public void notifySuccess(Response<?> response) {
@@ -200,10 +223,11 @@ public class ShareEnquiryActivity extends AppCompatActivity implements RequestNo
                     description.setFocusable(true);
                     description.setError("Please Provide Description");
                 } else {
-                    //ApiCall apiCall = new ApiCall(getActivity(), this);
-                 /*   apiCall._autokattaRequestForTransferVehicle(vehicleId, owner_name.getText().toString(), mContact.getText().toString(),
+                    /*ApiCall apiCall = new ApiCall(getApplicationContext(), this);
+                    apiCall.add(vehicleId, owner_name.getText().toString(), mContact.getText().toString(),
                             reason_for_transfer.getText().toString(), address.getText().toString(), full_address.getText().toString(),
                             description.getText().toString(), myContact, "");*/
+                    addTransferrequest();
                 }
                 break;
         }

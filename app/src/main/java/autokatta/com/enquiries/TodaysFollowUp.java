@@ -391,18 +391,22 @@ public class TodaysFollowUp extends AppCompatActivity implements SwipeRefreshLay
             case "Products":
                 intent.putExtra("id", request.getProductId());
                 intent.putExtra("name", request.getProductName());
+                intent.putExtra("enquiryid", request.getEnquiryID());
                 break;
             case "Services":
                 intent.putExtra("id", request.getServiceId());
                 intent.putExtra("name", request.getServiceName());
+                intent.putExtra("enquiryid", request.getEnquiryID());
                 break;
             case "Used Vehicle":
                 intent.putExtra("id", request.getVehicleId());
                 intent.putExtra("name", request.getVehicleName());
+                intent.putExtra("enquiryid", request.getEnquiryID());
                 break;
             case "New Vehicle":
                 intent.putExtra("id", request.getVehicleId());
                 intent.putExtra("name", request.getVehicleName());
+                intent.putExtra("enquiryid", request.getEnquiryID());
                 break;
         }
         startActivity(intent);

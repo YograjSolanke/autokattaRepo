@@ -24,9 +24,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.github.clans.fab.FloatingActionButton;
-import com.github.clans.fab.FloatingActionMenu;
-
 import java.io.IOException;
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
@@ -68,8 +65,6 @@ public class EnquiredPersonsActivity extends AppCompatActivity implements Reques
     String strFinancername, strFinancestatus;
     RelativeLayout mRelFinancerDetails;
     List<String> mFinancerList = new ArrayList<>();
-    FloatingActionButton mRequests,mTransfer;
-    FloatingActionMenu mFloatingMenu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,9 +103,6 @@ public class EnquiredPersonsActivity extends AppCompatActivity implements Reques
                 mFinancer = (AutoCompleteTextView) findViewById(R.id.edtfinancername);
                 mEdit = (ImageView) findViewById(R.id.imgedit);
                 mDone = (ImageView) findViewById(R.id.imgdone);
-                mFloatingMenu = (FloatingActionMenu) findViewById(R.id.menu_red);
-                mRequests = (FloatingActionButton) findViewById(R.id.requests);
-                mTransfer= (FloatingActionButton) findViewById(R.id.shareenquiry);
                 mRelFinancerDetails = (RelativeLayout) findViewById(R.id.relfinancedetails);
                 filterLayout = (LinearLayout) findViewById(R.id.below);
                 filterLayout.setVisibility(View.GONE);
@@ -206,15 +198,6 @@ public class EnquiredPersonsActivity extends AppCompatActivity implements Reques
             }
         });
 
-        mRequests.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-              Intent i=new Intent(EnquiredPersonsActivity.this,ShareEnquiryActivity.class);
-             i.putExtra("enquiryid",mEnquiryId);
-              startActivity(i);
-              CustomToast.customToast(getApplicationContext(),"clicked");
-            }
-        });
 
     }
 
@@ -340,7 +323,7 @@ public class EnquiredPersonsActivity extends AppCompatActivity implements Reques
                                 }
                                 mList.add(success);
                             }
-                            GetPersonDataAdapter adapter = new GetPersonDataAdapter(this, mList, strId, strKeyword, strTitle);
+                            GetPersonDataAdapter adapter = new GetPersonDataAdapter(this, mList, strId, strKeyword, strTitle,mEnquiryId);
                             mPersonRecyclerView.setAdapter(adapter);
                             adapter.notifyDataSetChanged();
                         } else {

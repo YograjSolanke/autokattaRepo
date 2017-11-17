@@ -35,13 +35,15 @@ public class GetPersonDataAdapter extends RecyclerView.Adapter<GetPersonDataAdap
     Activity mActivity;
     List<GetPersonDataResponse.Success> list = new ArrayList<>();
     private String strId, strKeyword, strTitle;
+    int mEnquiryID;
 
-    public GetPersonDataAdapter(Activity mActivity, List<GetPersonDataResponse.Success> list, String strId, String strKeyword, String strTitle) {
+    public GetPersonDataAdapter(Activity mActivity, List<GetPersonDataResponse.Success> list, String strId, String strKeyword, String strTitle,int enquiryid) {
         this.mActivity = mActivity;
         this.list = list;
         this.strId = strId;
         this.strKeyword = strKeyword;
         this.strTitle = strTitle;
+        this.mEnquiryID = enquiryid;
     }
 
 
@@ -78,7 +80,7 @@ public class GetPersonDataAdapter extends RecyclerView.Adapter<GetPersonDataAdap
     }
 
     @Override
-    public void onBindViewHolder(final PersonData holder, int position) {
+    public void onBindViewHolder(final PersonData holder, final int position) {
         holder.mPersonName.setText(list.get(position).getUsername());
         holder.mContact.setText(list.get(position).getContactNo());
         holder.mAddress.setText(list.get(position).getCity());
@@ -139,6 +141,7 @@ public class GetPersonDataAdapter extends RecyclerView.Adapter<GetPersonDataAdap
                 intent.putExtra("contact", holder.mContact.getText().toString());
                 intent.putExtra("custname", holder.mPersonName.getText().toString());
                 intent.putExtra("address", holder.mAddress.getText().toString());
+                intent.putExtra("enquiryid", mEnquiryID);
 
                 mActivity.startActivity(intent);
             }

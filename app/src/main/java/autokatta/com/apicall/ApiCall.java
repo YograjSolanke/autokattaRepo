@@ -8275,6 +8275,39 @@ get ExchangeMela Analytics Data
         }
     }
 
+
+    /*
+      Get Transfer enquries...
+    */
+
+    public void getTransferEnquryRequests(String ContactNo) {
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<GetTransferEnquiryRequestResponse> mServiceMelaResponse = serviceApi._autokattagetTransferenquiryRequests(ContactNo);
+                mServiceMelaResponse.enqueue(new Callback<GetTransferEnquiryRequestResponse>() {
+                    @Override
+                    public void onResponse(Call<GetTransferEnquiryRequestResponse> call, Response<GetTransferEnquiryRequestResponse> response) {
+                        mNotifier.notifySuccess(response);
+                    }
+
+                    @Override
+                    public void onFailure(Call<GetTransferEnquiryRequestResponse> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+            } else
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     /*
       Get Person Details...
     */
@@ -8630,7 +8663,7 @@ get ExchangeMela Analytics Data
      Add trnasfer enquiry ...
     */
 
-    public void addtransferenquiry(int enquiryid, String transfercontact, String enquirycontact, String mycontact, String tranfertoname, String description, String reasonfortransfer,String monitorstatus) {
+    public void addtransferenquiry(int enquiryid, String transfercontact, String enquirycontact, String mycontact, String tranfertoname, String description, String reasonfortransfer,String monitorstatus,String keyword,String acceptstatus,String ids) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 //JSON to Gson conversion
@@ -8646,7 +8679,7 @@ get ExchangeMela Analytics Data
 
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<String> mServiceMelaResponse = serviceApi.addtransferenquiry(enquiryid,transfercontact,enquirycontact,mycontact,tranfertoname,description,reasonfortransfer,monitorstatus);
+                Call<String> mServiceMelaResponse = serviceApi.addtransferenquiry(enquiryid,transfercontact,enquirycontact,mycontact,tranfertoname,description,reasonfortransfer,monitorstatus,keyword,acceptstatus,ids);
                 mServiceMelaResponse.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
@@ -8801,6 +8834,40 @@ get ExchangeMela Analytics Data
         }
     }
 
+    /*
+ transfer Enquiry Accept Status
+*/
+    public void transferEnquiryAcceptStatus(int TransferID, String Status) {
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                //JSON to Gson conversion
+                Gson gson = new GsonBuilder()
+                        .setLenient()
+                        .create();
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create(gson))
+                        .client(initLog().build())
+                        .build();
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<String> mSoldVehicle = serviceApi._transferEnquiryreply(TransferID, Status);
+                mSoldVehicle.enqueue(new Callback<String>() {
+                    @Override
+                    public void onResponse(Call<String> call, Response<String> response) {
+                        mNotifier.notifyString(response.body());
+                    }
+
+                    @Override
+                    public void onFailure(Call<String> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+            } else
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     /*
   Sold Vehicle...
 */

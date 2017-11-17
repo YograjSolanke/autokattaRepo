@@ -1,12 +1,15 @@
 package autokatta.com.view;
 
+import android.Manifest.permission;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -27,6 +30,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.github.clans.fab.FloatingActionButton;
+import com.github.clans.fab.FloatingActionMenu;
 
 import java.io.IOException;
 import java.net.ConnectException;
@@ -57,19 +61,23 @@ public class EnquiredPersonsListActivity extends AppCompatActivity implements Re
     List<GetManualEnquiryPersonDataResponse.Success> mList = new ArrayList<>();
     RelativeLayout mRelativeLayout;
     private String strId, strKeyword, strTitle;
-    TextView mNoData, mTitletxt, mTypetxt,mAddress,mContact,mCustname;
+    TextView mNoData, mTitletxt, mTypetxt, mAddress, mContact, mCustname;
     ConnectionDetector mConnectionDetector;
     private ProgressDialog dialog;
     FloatingActionButton fabAddNewEnquiry;
-    String bundlecontact,bundleAddress,bundleCustname;
+    String bundlecontact, bundleAddress, bundleCustname;
     ImageView mCall;
+    FloatingActionButton mRequests, mTransfer;
+    FloatingActionMenu mFloatingMenu;
     String strNewDiscussion = "", strNewFollowDate = "", strNewStatus = "";
+    int bundleEnquiryID;
+    ApiCall mApiCall;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_enquired_persons_list);
-
+        mConnectionDetector = new ConnectionDetector(EnquiredPersonsListActivity.this);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setHomeButtonEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -85,6 +93,7 @@ public class EnquiredPersonsListActivity extends AppCompatActivity implements Re
                 bundlecontact = getIntent().getExtras().getString("contact");
                 bundleAddress = getIntent().getExtras().getString("address");
                 bundleCustname = getIntent().getExtras().getString("custname");
+                bundleEnquiryID = getIntent().getExtras().getInt("enquiryid");
 
 
                 mNoData = (TextView) findViewById(R.id.no_category);
@@ -99,6 +108,9 @@ public class EnquiredPersonsListActivity extends AppCompatActivity implements Re
                 mCall = (ImageView) findViewById(R.id.call);
                 mCustname = (TextView) findViewById(R.id.custname);
                 fabAddNewEnquiry = (FloatingActionButton) findViewById(R.id.fabAddNewEnquiry);
+                mFloatingMenu = (FloatingActionMenu) findViewById(R.id.menu_red);
+                mRequests = (FloatingActionButton) findViewById(R.id.requests);
+                mTransfer = (FloatingActionButton) findViewById(R.id.shareenquiry);
 
                 mTypetxt.setText(strKeyword);
                 mTitletxt.setText(strTitle);
@@ -109,7 +121,6 @@ public class EnquiredPersonsListActivity extends AppCompatActivity implements Re
                 dialog = new ProgressDialog(EnquiredPersonsListActivity.this);
                 dialog.setMessage("Loading...");
 
-                mConnectionDetector = new ConnectionDetector(EnquiredPersonsListActivity.this);
 
                 mPersonRecyclerView.setHasFixedSize(true);
 
@@ -160,12 +171,35 @@ public class EnquiredPersonsListActivity extends AppCompatActivity implements Re
 
                 if (dy > 0) {
                     // Scrolling up
-                    fabAddNewEnquiry.hide(true);
+                    mFloatingMenu.hideMenu(true);
 
                 } else {
                     // Scrolling down
-                    fabAddNewEnquiry.show(true);
+                    mFloatingMenu.showMenu(true);
                 }
+            }
+        });
+
+
+        mTransfer.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(EnquiredPersonsListActivity.this, ShareEnquiryActivity.class);
+                     i.putExtra("enquiryid",bundleEnquiryID);
+                     i.putExtra("Ids",strId);
+                     i.putExtra("keyword",strKeyword);
+                     i.putExtra("enqcontact",bundlecontact);
+                startActivity(i);
+            }
+        });
+
+        mRequests.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(EnquiredPersonsListActivity.this, TransferEnquiryRequestActivity.class);
+                //     i.putExtra("enquiryid",mEnquiryId);
+                startActivity(i);
+
             }
         });
     }
@@ -183,7 +217,7 @@ public class EnquiredPersonsListActivity extends AppCompatActivity implements Re
         if (mConnectionDetector.isConnectedToInternet()) {
             dialog.show();
             ApiCall mApiCall = new ApiCall(this, this);
-            mApiCall.getManualEnquiryPersonData(bundlecontact,id,getSharedPreferences(getString(R.string.my_preference),MODE_PRIVATE).getString("loginContact", ""), keyword);
+            mApiCall.getManualEnquiryPersonData(bundlecontact, id, getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""), keyword);
         } else {
             CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
         }
@@ -215,11 +249,11 @@ public class EnquiredPersonsListActivity extends AppCompatActivity implements Re
                                     success.setCustomerName("Unknown");
                                 else
                                     success.setCustomerName(success.getCustomerName());
-                                    success.setDiscussion(success.getDiscussion());
-                                    success.setCreatedDate(success.getCreatedDate());
-                                    success.setEnquiryStatus(success.getEnquiryStatus());
-                                    success.setNextFollowUpDate(success.getNextFollowUpDate());
-                                    success.setInventoryType(success.getInventoryType());
+                                success.setDiscussion(success.getDiscussion());
+                                success.setCreatedDate(success.getCreatedDate());
+                                success.setEnquiryStatus(success.getEnquiryStatus());
+                                success.setNextFollowUpDate(success.getNextFollowUpDate());
+                                success.setInventoryType(success.getInventoryType());
 
                                 /*Date format*/      /*  two dates in different format *//*Date format*/
                                 try {
@@ -250,11 +284,11 @@ public class EnquiredPersonsListActivity extends AppCompatActivity implements Re
                                 }
                                 mList.add(success);
                             }
-                            GetPersonsEnquiriesAdapter adapter = new GetPersonsEnquiriesAdapter(this, mList, strId, strKeyword, strTitle,bundlecontact);
+                            GetPersonsEnquiriesAdapter adapter = new GetPersonsEnquiriesAdapter(this, mList, strId, strKeyword, strTitle, bundlecontact);
                             mPersonRecyclerView.setAdapter(adapter);
                             adapter.notifyDataSetChanged();
                         } else {
-                             Snackbar.make(mRelativeLayout, getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
+                            Snackbar.make(mRelativeLayout, getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
                             mNoData.setVisibility(View.VISIBLE);
                         }
                     }
@@ -323,19 +357,16 @@ public class EnquiredPersonsListActivity extends AppCompatActivity implements Re
 
     @Override
     public void notifyString(String str) {
-            if (str!=null)
-            {
-                if (str.equalsIgnoreCase("success")) {
-                    Snackbar.make(mRelativeLayout, "Enquiry Added Successfully", Snackbar.LENGTH_SHORT).show();
-                    getPersonData(strId,strKeyword);
-                }else
-                {
-                    Snackbar.make(mRelativeLayout, getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
-                }
-            }else
-            {
+        if (str != null) {
+            if (str.equalsIgnoreCase("success")) {
+                Snackbar.make(mRelativeLayout, "Enquiry Added Successfully", Snackbar.LENGTH_SHORT).show();
+                getPersonData(strId, strKeyword);
+            } else {
                 Snackbar.make(mRelativeLayout, getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
             }
+        } else {
+            Snackbar.make(mRelativeLayout, getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
+        }
     }
 
 
@@ -405,6 +436,16 @@ public class EnquiredPersonsListActivity extends AppCompatActivity implements Re
     private void call(String rcontact) {
         Intent in = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + rcontact));
         try {
+            if (ActivityCompat.checkSelfPermission(this, permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
+                return;
+            }
             startActivity(in);
         } catch (android.content.ActivityNotFoundException ex) {
             System.out.println("No Activity Found For Call in Car Details Fragment\n");

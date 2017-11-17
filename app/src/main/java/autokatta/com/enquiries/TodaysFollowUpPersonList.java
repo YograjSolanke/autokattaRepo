@@ -36,6 +36,7 @@ public class TodaysFollowUpPersonList extends AppCompatActivity implements Reque
     RecyclerView mPersonRecyclerView;
     List<GetPersonDataResponse.Success> mList = new ArrayList<>();
     String formattedDate;
+    int mEnquiryID;
     private String strId, strKeyword, strTitle;
     TextView mNoData, mTitletxt, mTypetxt;
     ConnectionDetector mConnectionDetector;
@@ -60,6 +61,7 @@ public class TodaysFollowUpPersonList extends AppCompatActivity implements Reque
                 strId = getIntent().getExtras().getString("id");
                 strKeyword = getIntent().getExtras().getString("keyword");
                 strTitle = getIntent().getExtras().getString("name");
+                mEnquiryID = getIntent().getExtras().getInt("enquiryid");
                 mNoData = (TextView) findViewById(R.id.no_category);
 
                 mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.person_swipeRefreshLayout);
@@ -179,7 +181,7 @@ public class TodaysFollowUpPersonList extends AppCompatActivity implements Reque
                                     mList.add(success);
                                 }
                             }
-                            GetPersonDataAdapter adapter = new GetPersonDataAdapter(this, mList, strId, strKeyword, strTitle);
+                            GetPersonDataAdapter adapter = new GetPersonDataAdapter(this, mList, strId, strKeyword, strTitle,mEnquiryID);
                             mPersonRecyclerView.setAdapter(adapter);
                             adapter.notifyDataSetChanged();
                         } else {

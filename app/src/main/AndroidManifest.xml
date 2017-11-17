@@ -570,11 +570,6 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".view.ManualEnquiry"
-            android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize" />
-        <activity
             android:name=".view.AddManualEnquiry"
             android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
             android:screenOrientation="portrait"
@@ -888,6 +883,8 @@
         <activity android:name=".view.ManualEnquiryMainActivity"></activity>
         <activity android:name=".view.ShareEnquiryActivity"></activity>
         <activity android:name=".groups.ReplyGroupQuot"></activity>
+        <activity android:name=".view.TransferEnquiryRequestActivity">
+        </activity>
     </application>
 
 </manifest>

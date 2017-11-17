@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/relative"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:id="@+id/relImg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/pro_pic"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="7dp"
+                android:src="@drawable/logo48x48"
+                android:contentDescription="@string/app_name" />
+
+            <!--<ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignBottom="@+id/pro_pic"
+                android:layout_marginStart="58dp"
+                android:contentDescription="@string/app_name"
+                android:src="@drawable/contact1" />-->
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/relContact"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/relImg">
+
+            <TextView
+                android:id="@+id/OwnerName1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="7dp"
+                android:layout_marginTop="30dp"
+                android:text="@string/owner"
+                android:textColor="#2C3343"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/OwnerName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="7dp"
+                android:layout_marginTop="30dp"
+                android:text="@string/owner"
+                android:layout_toRightOf="@+id/OwnerName1"
+                android:textColor="#2C3343"/>
+
+         <!--   <TextView
+                android:id="@+id/address1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="7dp"
+                android:layout_marginTop="3dp"
+                android:layout_below="@+id/OwnerName"
+                android:text="@string/address"
+                android:textColor="#2C3343"
+                android:textStyle="bold" />-->
+ <!--           <TextView
+                android:id="@+id/address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="7dp"
+                android:layout_marginTop="3dp"
+                android:layout_toRightOf="@+id/address1"
+                android:layout_below="@+id/OwnerName"
+                android:text="-"
+                android:textColor="#2C3343"/>
+-->
+            <TextView
+                android:id="@+id/resonfortranser1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="7dp"
+                android:layout_marginTop="3dp"
+                android:layout_below="@+id/OwnerName"
+                android:text="Reason For Transfer"
+                android:textColor="#2C3343"
+                android:textStyle="bold" />
+            <TextView
+                android:id="@+id/reason"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="7dp"
+                android:layout_marginTop="3dp"
+                android:layout_toRightOf="@+id/resonfortranser1"
+                android:layout_below="@+id/OwnerName"
+                android:text="-"
+                android:textColor="#2C3343"/>
+
+            <TextView
+                android:id="@+id/Description1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="7dp"
+                android:layout_marginTop="3dp"
+                android:layout_below="@+id/resonfortranser1"
+                android:text="Description"
+                android:textColor="#2C3343"
+                android:textStyle="bold" />
+            <TextView
+                android:id="@+id/description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="7dp"
+                android:layout_marginTop="3dp"
+                android:layout_toRightOf="@+id/Description1"
+                android:layout_below="@+id/reason"
+                android:text="-"
+                android:textColor="#2C3343"/>
+
+
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/txtadmin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginBottom="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginStart="89dp"
+            android:layout_marginTop="5dp"
+            android:padding="5dp"
+            android:text="@string/vehicle_title"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:visibility="visible" />
+
+
+        <ImageView
+            android:id="@+id/call"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/delete_member"
+            android:layout_marginBottom="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:contentDescription="@string/app_name"
+            android:padding="7dp"
+            android:src="@mipmap/new_call" />
+
+    </RelativeLayout>
+    <View
+        android:id="@+id/vieww"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_below="@+id/relative"
+        android:background="@color/grey"
+        android:layout_marginTop="5dp"
+        />
+
+    <LinearLayout
+        android:id="@+id/rel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/vieww"
+        android:weightSum="2"
+
+        >
+        <Button
+            android:layout_width="100dp"
+            android:layout_height="20dp"
+            android:text="Accept"
+            android:background="@color/background"
+            android:id="@+id/accept"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="1"/>
+        <Button
+            android:layout_width="100dp"
+            android:layout_height="20dp"
+            android:text="Reject"
+            android:id="@+id/reject"
+            android:layout_marginStart="3dp"
+            android:background="@color/background"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
+    <View
+        android:id="@+id/vieww2"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_below="@+id/rel"
+        android:layout_marginBottom="5dp"
+        android:background="@color/grey" />
+</RelativeLayout>

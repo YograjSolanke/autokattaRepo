@@ -1334,7 +1334,8 @@ public interface ServiceApi {
     Call<String> addtransferenquiry(@Query("enquiryid") int enquiryid, @Query("transfercontact") String transfercontact,
                                             @Query("enquirycontact") String enquirycontact, @Query("mycontact") String mycontact,
                                             @Query("transfertoname") String transfertoname, @Query("description") String description,
-                                            @Query("reasonfortransfer") String reasonfortransfer, @Query("monitorstatus") String monitorstatus);
+                                            @Query("reasonfortransfer") String reasonfortransfer, @Query("monitorstatus") String monitorstatus,
+                                            @Query("Keyword") String Keyword, @Query("AcceptStatus") String AcceptStatus, @Query("PSVN_ID") String ID);
 
     //Get Group Quotation
     @GET("GetGroupQuotation")
@@ -1361,6 +1362,10 @@ public interface ServiceApi {
                                         @Query("custcontact") String custContact, @Query("price") double price,
                                         @Query("type") String type,
                                         @Query("query") String query);
+
+    ///enquiry accept reject...data...
+    @POST("TransferEnquiry")
+    Call<String> _transferEnquiryreply(@Query("TransferID") int TransferID, @Query("Status") String Status);
 
     ///Sold Vehicle...data...
     @POST("SoldVehicle")
@@ -1571,6 +1576,10 @@ public interface ServiceApi {
     /* get Financer*/
     @GET("GetFinancierName")
     Call<GetFinancerNameResponse> _autokattagetFinancername();
+
+    /* get transfer enquiries*/
+    @GET("GetTransferEnquiry")
+    Call<GetTransferEnquiryRequestResponse> _autokattagetTransferenquiryRequests(@Query("ContactNo") String ContactNo);
 
     /*add Financer*/
     @POST("AddAddFinancierName")

@@ -163,18 +163,75 @@
             android:scrollbars="vertical" />
     </android.support.v4.widget.SwipeRefreshLayout>
 
-    <com.github.clans.fab.FloatingActionButton
-        android:id="@+id/fabAddNewEnquiry"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/personList_swipeRefreshLayout"
-        android:layout_alignEnd="@id/personList_swipeRefreshLayout"
-        android:layout_gravity="end"
-        android:layout_margin="@dimen/fab_margin"
-        fab:fab_colorNormal="#5176C9"
-        fab:fab_colorPressed="#5176C9"
-        fab:fab_colorRipple="#5176C9"
-        android:src="@mipmap/ic_plus" />
+
+    <com.github.clans.fab.FloatingActionMenu
+        android:id="@+id/menu_red"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:paddingBottom="10dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        fab:menu_labels_ellipsize="end"
+        fab:menu_labels_colorNormal="#A2C7D3"
+        fab:menu_labels_colorPressed="#A2C7D3"
+        fab:menu_labels_colorRipple="#A2C7D3"
+        fab:menu_colorNormal="#5176C9"
+        fab:menu_colorPressed="#5176C9"
+        fab:menu_colorRipple="#5176C9"
+        fab:menu_labels_singleLine="true"
+        android:src="@mipmap/ic_add_group_member">
+
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/requests"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            fab:fab_label="Recived Transfer Requests"
+            fab:fab_colorNormal="#5176C9"
+            fab:fab_colorPressed="#5176C9"
+            fab:fab_colorRipple="#5176C9"
+            android:src="@mipmap/reply"
+            fab:fab_size="mini" />
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/shareenquiry"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            fab:fab_label="Share Enquires"
+            fab:fab_colorNormal="#5176C9"
+            fab:fab_colorPressed="#5176C9"
+            fab:fab_colorRipple="#5176C9"
+            android:src="@mipmap/new_share"
+            fab:fab_size="mini" />
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fabAddNewEnquiry"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            fab:fab_label="Add Enquires"
+            fab:fab_colorNormal="#5176C9"
+            fab:fab_colorPressed="#5176C9"
+            fab:fab_colorRipple="#5176C9"
+            android:src="@mipmap/ic_plus"
+            fab:fab_size="mini" />
+
+       <!-- <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fabAddNewEnquiry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/personList_swipeRefreshLayout"
+            android:layout_alignEnd="@id/personList_swipeRefreshLayout"
+            android:layout_gravity="end"
+            android:layout_margin="@dimen/fab_margin"
+            fab:fab_colorNormal="#5176C9"
+            fab:fab_colorPressed="#5176C9"
+            fab:fab_colorRipple="#5176C9"
+            fab:fab_label="Add Enquires"
+            android:src="@mipmap/ic_plus" />
+-->
+    </com.github.clans.fab.FloatingActionMenu>
 
     <include layout="@layout/error_view" />
 

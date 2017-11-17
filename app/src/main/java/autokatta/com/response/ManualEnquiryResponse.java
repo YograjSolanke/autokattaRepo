@@ -471,15 +471,6 @@ public class ManualEnquiryResponse {
             @SerializedName("id")
             @Expose
             private int id;
-
-            public int getService_id() {
-                return service_id;
-            }
-
-            public void setService_id(int service_id) {
-                this.service_id = service_id;
-            }
-
             @SerializedName("service_id")
             @Expose
             private int service_id;
@@ -580,6 +571,14 @@ public class ManualEnquiryResponse {
             @SerializedName("FinancerStatus")
             @Expose
             private String FinancerStatus;
+
+            public int getService_id() {
+                return service_id;
+            }
+
+            public void setService_id(int service_id) {
+                this.service_id = service_id;
+            }
 
             public Integer getLoanAmount() {
                 return LoanAmount;
