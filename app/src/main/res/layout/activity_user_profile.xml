@@ -7,60 +7,11 @@
     android:layout_height="match_parent"
     tools:context="autokatta.com.view.UserProfile">
 
-    <!--<android.support.v4.view.ViewPager
-        android:id="@+id/user_profile_viewpager"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="45dp"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
-    &lt;!&ndash;android:layout_marginTop="?attr/actionBarSize"&ndash;&gt;
-    <android.support.design.widget.TabLayout
-        android:id="@+id/user_profile_tabs"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/card_title_height"
-        android:layout_gravity="bottom"
-        android:background="@color/colorPrimary"
-        android:longClickable="true"
-        app:layout_anchor="@+id/appbar"
-        app:layout_anchorGravity="bottom"
-        app:tabGravity="fill"
-        app:tabIndicatorColor="@color/white"
-        app:tabMode="scrollable"
-        app:tabSelectedTextColor="@color/white"
-        app:tabTextColor="#B0C4DE" />-->
-
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay">
-
-        <!--<android.support.design.widget.CollapsingToolbarLayout
-            android:id="@+id/collapsing_toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fitsSystemWindows="true"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark"
-            app:contentScrim="?attr/colorPrimary"
-            app:expandedTitleMarginEnd="64dp"
-            app:expandedTitleMarginStart="48dp"
-            app:layout_scrollFlags="scroll|enterAlways">
-
-            <ImageView
-                android:id="@+id/user_image"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:contentDescription="@string/app_name"
-                android:fitsSystemWindows="true"
-                android:scaleType="centerCrop"
-                app:layout_collapseMode="parallax" />
-
-            <ProgressBar
-                android:id="@+id/progress"
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:layout_marginTop="50dp"
-                android:visibility="visible" />-->
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
@@ -69,54 +20,8 @@
             android:background="?attr/colorPrimary"
             app:popupTheme="@style/AppTheme.PopupOverlay" />
 
-        <!--<ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/addgrp" />
-        </android.support.v7.widget.Toolbar>-->
-        <!--</android.support.design.widget.CollapsingToolbarLayout>-->
-
     </android.support.design.widget.AppBarLayout>
 
     <include layout="@layout/content_user_profile" />
-
-    <!--<android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab_edit_prof"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:clickable="true"
-        android:src="@mipmap/ic_profile_edit"
-        app:backgroundTint="@android:color/transparent"
-        app:fabSize="mini"
-        app:layout_anchor="@id/appbar"
-        app:layout_anchorGravity="top|right|end" />
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab_edit_done"
-        android:layout_width="43dp"
-        android:layout_height="43dp"
-        android:layout_margin="@dimen/fab_margin"
-        android:background="@color/stateBlue"
-        android:clickable="true"
-        android:src="@mipmap/ic_check"
-        android:visibility="gone"
-        app:fabSize="mini"
-        app:layout_anchor="@id/appbar"
-        app:layout_anchorGravity="top|right|end" />
-
-    <com.github.clans.fab.FloatingActionButton
-        android:id="@+id/add_vehicle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end|bottom"
-        android:layout_margin="@dimen/fab_margin"
-        android:src="@mipmap/ic_add_my_vehi"
-        android:visibility="gone"
-        fab:fab_colorNormal="#5176C9"
-        fab:fab_colorPressed="#5176C9"
-        fab:fab_colorRipple="#5176C9" />
-
-    -->
 
 </android.support.design.widget.CoordinatorLayout>

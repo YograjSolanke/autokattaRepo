@@ -1,12 +1,10 @@
 package autokatta.com.view;
 
-import android.app.Activity;
 import android.app.ActivityOptions;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -32,8 +30,6 @@ import autokatta.com.response.StoreResponse;
 import retrofit2.Response;
 
 public class StoreInfoActivity extends AppCompatActivity implements RequestNotifier, View.OnClickListener {
-
-
     String myContact, StoreContact;
     int Store_id;
     RelativeLayout ownerLayout;
@@ -45,7 +41,6 @@ public class StoreInfoActivity extends AppCompatActivity implements RequestNotif
     TextView storeName, storeLocation, storeWebsite, storeWorkDays, storeOpen, editbrandtags, storeOwner,
             storeClose, storeAddress, storeServiceOffered, storeType, storeDescription, mNoData, adminContacts;
     ConnectionDetector mTestConnection;
-    Activity mActivity;
     String storeAdmins = "";
 
     @Override
@@ -60,16 +55,12 @@ public class StoreInfoActivity extends AppCompatActivity implements RequestNotif
             getSupportActionBar().setHomeButtonEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
-
-
         dialog = new ProgressDialog(this);
         dialog.setMessage("Loading...");
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-
                 myContact = getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "");
-
                 mRel = (RelativeLayout) findViewById(R.id.info_home);
                 storeName = (TextView) findViewById(R.id.editstname);
                 storeLocation = (TextView) findViewById(R.id.autolocation);
@@ -131,17 +122,6 @@ public class StoreInfoActivity extends AppCompatActivity implements RequestNotif
         });
         editStore.setOnClickListener(this);
         addEnquiry.setOnClickListener(this);
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setVisibility(View.GONE);
-
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
     }
 
     private void getStoredata(String myContact, int store_id) {

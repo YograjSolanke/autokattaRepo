@@ -1,9 +1,7 @@
 package autokatta.com.adapter;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -19,7 +17,6 @@ import java.util.List;
 
 import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
-import autokatta.com.fragment_profile.EditAllAbout;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.GetCompaniesResponse;
@@ -31,33 +28,34 @@ import static android.content.Context.MODE_PRIVATE;
  * Created by ak-005 on 26/10/17.
  */
 
-public class EditCompanyNameAdapter extends RecyclerView.Adapter<EditCompanyNameAdapter.MyViewHolder> implements RequestNotifier,Filterable {
+public class EditCompanyNameAdapter extends RecyclerView.Adapter<EditCompanyNameAdapter.MyViewHolder> implements RequestNotifier, Filterable {
 
     Activity mActivity;
-    List<GetCompaniesResponse.Success>mList=new ArrayList<>();
+    private List<GetCompaniesResponse.Success> mList = new ArrayList<>();
     private List<GetCompaniesResponse.Success> filteredData = new ArrayList<>();
     CustomFilter filter;
-    Button mAdd;
-    String mNewCompany;
+    private Button mAdd;
+    private String mNewCompany;
 
     ApiCall mApiCall;
-    public EditCompanyNameAdapter(Activity activity,List<GetCompaniesResponse.Success>list,Button add) {
-        this.mActivity=activity;
-        this.mList=list;
-        this.filteredData=list;
-        this.mAdd=add;
-        mApiCall=new ApiCall(mActivity,this);
+
+    public EditCompanyNameAdapter(Activity activity, List<GetCompaniesResponse.Success> list, Button add) {
+        this.mActivity = activity;
+        this.mList = list;
+        this.filteredData = list;
+        this.mAdd = add;
+        mApiCall = new ApiCall(mActivity, this);
     }
 
 
-    class MyViewHolder extends RecyclerView.ViewHolder
-   {
+    class MyViewHolder extends RecyclerView.ViewHolder {
         TextView Name;
-       public MyViewHolder(View itemView) {
-           super(itemView);
-           Name= (TextView) itemView.findViewById(R.id.names);
-       }
-   }
+
+        public MyViewHolder(View itemView) {
+            super(itemView);
+            Name = (TextView) itemView.findViewById(R.id.names);
+        }
+    }
 
 
     @Override
@@ -74,9 +72,7 @@ public class EditCompanyNameAdapter extends RecyclerView.Adapter<EditCompanyName
         holder.Name.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                mApiCall.updateProfile(mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), MODE_PRIVATE).getInt("loginregistrationid",0),"","","","","",mList.get(position).getCompanyName(),"","","","","","","Company");
-                mActivity.startActivity(new Intent(mActivity, EditAllAbout.class));
-                mActivity.finish();
+                mApiCall.updateProfile(mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), MODE_PRIVATE).getInt("loginregistrationid", 0), "", "", "", "", "", mList.get(position).getCompanyName(), "", "", "", "", "", "", "Company");
             }
         });
     }
@@ -95,9 +91,9 @@ public class EditCompanyNameAdapter extends RecyclerView.Adapter<EditCompanyName
     public void notifyString(String str) {
         if (!str.equals("")) {
             if (str.equals("success_update_Company")) {
-                CustomToast.customToast(mActivity,"Company Added");
-            }else
-            {
+                CustomToast.customToast(mActivity, "Company Added");
+                mActivity.finish();
+            } else {
                 CustomToast.customToast(mActivity, "New Company Added");
                 mActivity.finish();
             }
@@ -106,7 +102,6 @@ public class EditCompanyNameAdapter extends RecyclerView.Adapter<EditCompanyName
 
     @Override
     public int getItemViewType(int position) {
-
         return position;
     }
 
@@ -114,7 +109,6 @@ public class EditCompanyNameAdapter extends RecyclerView.Adapter<EditCompanyName
     public int getItemCount() {
         return mList.size();
     }
-
 
 
     /*
@@ -128,15 +122,15 @@ public class EditCompanyNameAdapter extends RecyclerView.Adapter<EditCompanyName
         return filter;
     }
 
-  /* **
-     * Filter Class
-     **/
+    /* **
+       * Filter Class
+       **/
     private class CustomFilter extends Filter {
 
         @Override
         protected FilterResults performFiltering(CharSequence charSequence) {
             FilterResults results = new FilterResults();
-            mNewCompany=charSequence.toString();
+            mNewCompany = charSequence.toString();
             try {
                 if (charSequence != null && charSequence.length() > 0) {
                     List<GetCompaniesResponse.Success> filterResults = new ArrayList<>();
@@ -174,6 +168,4 @@ public class EditCompanyNameAdapter extends RecyclerView.Adapter<EditCompanyName
             }
         }
     }
-
-
 }

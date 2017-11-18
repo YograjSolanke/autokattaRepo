@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:tools="http://schemas.android.com/tools"
-             xmlns:fab="http://schemas.android.com/apk/res-auto"
-             android:id="@+id/person_enquiry_frame"
-             android:layout_width="match_parent"
-             android:layout_height="wrap_content"
-             tools:context="autokatta.com.view.EnquiredPersonsActivity">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/person_enquiry_frame"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context="autokatta.com.view.EnquiredPersonsActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -32,7 +31,7 @@
                     android:layout_height="30dp"
                     android:contentDescription="@string/app_name"
                     android:padding="5dp"
-                    android:src="@drawable/filter"/>
+                    android:src="@drawable/filter" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -41,7 +40,7 @@
                     android:contentDescription="@string/app_name"
                     android:padding="5dp"
                     android:text="Filter By Month"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
 
             </RelativeLayout>
 
@@ -59,7 +58,7 @@
                     android:layout_height="30dp"
                     android:contentDescription="@string/app_name"
                     android:padding="5dp"
-                    android:src="@drawable/filter"/>
+                    android:src="@drawable/filter" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -68,7 +67,7 @@
                     android:contentDescription="@string/app_name"
                     android:padding="5dp"
                     android:text="Filter By Name"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
 
             </RelativeLayout>
 
@@ -86,7 +85,7 @@
                     android:layout_height="30dp"
                     android:contentDescription="@string/app_name"
                     android:padding="5dp"
-                    android:src="@drawable/filter"/>
+                    android:src="@drawable/filter" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -95,7 +94,7 @@
                     android:contentDescription="@string/app_name"
                     android:padding="5dp"
                     android:text="Filter By Status"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
 
             </RelativeLayout>
         </LinearLayout>
@@ -131,7 +130,7 @@
                         android:contentDescription="@string/app_name"
                         android:padding="5dp"
                         android:text="Type :"
-                        android:textStyle="bold"/>
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/type"
@@ -141,7 +140,7 @@
                         android:contentDescription="@string/app_name"
                         android:padding="5dp"
                         android:text="-"
-                        android:textStyle="bold"/>
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/titletxt"
@@ -151,7 +150,7 @@
                         android:contentDescription="@string/app_name"
                         android:padding="5dp"
                         android:text="Title :"
-                        android:textStyle="bold"/>
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/title"
@@ -162,14 +161,14 @@
                         android:contentDescription="@string/app_name"
                         android:padding="5dp"
                         android:text="-"
-                        android:textStyle="bold"/>
+                        android:textStyle="bold" />
 
                     <RelativeLayout
+                        android:id="@+id/relfinancedetails"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/title"
-                        android:visibility="gone"
-                        android:id="@+id/relfinancedetails">
+                        android:visibility="gone">
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -180,87 +179,86 @@
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:orientation="horizontal"
-                                android:layout_weight="1">
+                                android:layout_weight="1"
+                                android:orientation="horizontal">
 
                                 <TextView
                                     android:id="@+id/txtlonaamt"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:textStyle="bold"
                                     android:text="Loan Amount -"
-                                    />
+                                    android:textStyle="bold" />
 
                                 <EditText
+                                    android:id="@+id/edtloanamt"
                                     android:layout_width="150dp"
                                     android:layout_height="wrap_content"
+                                    android:layout_marginLeft="20dp"
                                     android:layout_toEndOf="@+id/txtlonaamt"
-                                    android:text="-"
                                     android:inputType="number"
-                                    android:id="@+id/edtloanamt"
-                                    android:layout_marginLeft="20dp"/>
+                                    android:text="-" />
 
                                 <ImageView
+                                    android:id="@+id/imgedit"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="end"
-                                    android:id="@+id/imgedit"
                                     android:contentDescription="@string/app_name"
-                                    android:src="@mipmap/ic_edit"/>
+                                    android:src="@mipmap/ic_edit" />
 
                                 <ImageView
+                                    android:id="@+id/imgdone"
                                     android:layout_width="40dp"
                                     android:layout_height="40dp"
                                     android:layout_gravity="end"
-                                    android:id="@+id/imgdone"
                                     android:contentDescription="@string/app_name"
                                     android:src="@mipmap/ic_check_icon"
-                                    android:visibility="gone"/>
+                                    android:visibility="gone" />
                             </LinearLayout>
 
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:orientation="horizontal"
-                                android:layout_weight="1">
+                                android:layout_weight="1"
+                                android:orientation="horizontal">
 
                                 <TextView
                                     android:id="@+id/txtloanpercent"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:textStyle="bold"
-                                    android:text="Loan Percent -"/>
+                                    android:text="Loan Percent -"
+                                    android:textStyle="bold" />
 
                                 <EditText
+                                    android:id="@+id/edtloanper"
                                     android:layout_width="150dp"
                                     android:layout_height="wrap_content"
-                                    android:id="@+id/edtloanper"
-                                    android:text="-"
+                                    android:layout_marginLeft="20dp"
                                     android:inputType="numberDecimal"
-                                    android:layout_marginLeft="20dp"/>
+                                    android:text="-" />
 
                             </LinearLayout>
 
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:orientation="horizontal"
-                                android:layout_weight="1">
+                                android:layout_weight="1"
+                                android:orientation="horizontal">
 
                                 <TextView
                                     android:id="@+id/txtfinancername"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_below="@id/txtloanpercent"
-                                    android:textStyle="bold"
-                                    android:text="Financier Name"/>
+                                    android:text="Financier Name"
+                                    android:textStyle="bold" />
 
                                 <AutoCompleteTextView
+                                    android:id="@+id/edtfinancername"
                                     android:layout_width="150dp"
                                     android:layout_height="wrap_content"
-                                    android:id="@+id/edtfinancername"
-                                    android:text="-"
-                                    android:layout_marginLeft="20dp"/>
+                                    android:layout_marginLeft="20dp"
+                                    android:text="-" />
                             </LinearLayout>
                         </LinearLayout>
 
@@ -282,11 +280,11 @@
                 android:id="@+id/person_recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:scrollbars="vertical"/>
+                android:scrollbars="vertical" />
         </android.support.v4.widget.SwipeRefreshLayout>
 
 
-        <include layout="@layout/error_view"/>
+        <include layout="@layout/error_view" />
 
     </RelativeLayout>
 

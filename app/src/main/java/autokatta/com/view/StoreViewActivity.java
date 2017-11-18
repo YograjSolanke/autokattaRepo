@@ -66,25 +66,9 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
 
     String mOtherContact;
     List<String> storeAdmins = new ArrayList<>();
-    String storeOtherContact;
-    String mFolllowstr;
-    String mLikestr;
-    int storeRating;
-    String str;
-    int store_id;
     Bundle mBundle = new Bundle();
     FloatingActionMenu menuRed;
     RatingBar storerating;
-    String myContact;
-    int preqwrate = 0;
-    int prefrrate = 0;
-    int preprrate = 0;
-    int pretmrate = 0;
-    int precsrate = 0;
-    int preoverall = 0;
-    String isDealing = "";
-    String storelattitude;
-    String storelongitude;
     RatingBar csbar, qwbar, frbar, prbar, tmbar, overallbar;
     Float csrate = 0.0f, qwrate = 0.0f, frrate = 0.0f, prrate = 0.0f, tmrate = 0.0f, total = 0.0f, count = 0.0f;
     FloatingActionButton mGoogleMap, mAdd, mShare, mTeamProduct,
@@ -92,17 +76,9 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
 
     ApiCall mApiCall;
     CoordinatorLayout mLayout;
-    String storeName = "";
-    String storeImage = "";
-    String storeCoverImage = "";
-    String storeType = "";
-    String storeWebsite = "";
-    String storeTiming = "";
-    String storeLocation = "";
-    String storeWorkingDays = "";
-    int storeLikeCount;
-    int storeFollowCount;
-    String strDetailsShare = "";
+    String storeName = "", storeImage = "", storeCoverImage = "", storeType = "", storeWebsite = "",
+            storeTiming = "", storeLocation = "", storeWorkingDays = "", strDetailsShare = "", myContact, isDealing = "", storelattitude, storelongitude, storeOtherContact, mFolllowstr, mLikestr, str;
+    int storeLikeCount, storeFollowCount, preqwrate = 0, prefrrate = 0, preprrate = 0, pretmrate = 0, precsrate = 0, preoverall = 0, store_id, storeRating;
     private ProgressDialog dialog;
     AdminCallContactAdapter adapter;
     LinearLayout mLinear, mAbout, mProducts, mService, mVehicle, mNewVehicle, mVideos, mImages;
@@ -160,7 +136,6 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
                     mShare = (FloatingActionButton) findViewById(R.id.share);
                     mViewReview = (FloatingActionButton) findViewById(R.id.view_review);
 
-
                     mLinear = (LinearLayout) findViewById(R.id.my_home);
                     mLike = (ImageView) findViewById(R.id.like);
                     mUnlike = (ImageView) findViewById(R.id.unlike);
@@ -191,7 +166,6 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
 
                     androidGridView = (GridView) findViewById(R.id.store_grid_view);
 
-
                     mShare.setLabelTextColor(Color.BLACK);
                     mTeamProduct.setLabelTextColor(Color.BLACK);
                     mTeamServices.setLabelTextColor(Color.BLACK);
@@ -200,7 +174,6 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
                     mAdd.setLabelTextColor(Color.BLACK);
                     mViewReview.setLabelTextColor(Color.BLACK);
 
-
                     if (getIntent().getExtras() != null) {
                         store_id = getIntent().getExtras().getInt("store_id");
                         storeOtherContact = getIntent().getExtras().getString("StoreContact");
@@ -208,7 +181,6 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
                         Log.i("storeOtherContact", "->" + storeOtherContact);
                         getOtherStore(myContact, store_id);
                     }
-
                     mBundle.putInt("store_id", store_id);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -253,55 +225,47 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
                 ActivityOptions options = ActivityOptions.makeCustomAnimation(StoreViewActivity.this, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
                 Bundle b = new Bundle();
                 switch (gridViewString[+i]) {
-
                     case "About":
                         b.putInt("store_id", store_id);
                         Intent intent1 = new Intent(StoreViewActivity.this, StoreInfoActivity.class);
                         intent1.putExtras(b);
                         startActivity(intent1, options.toBundle());
-
                         break;
                     case "Product":
                         b.putInt("store_id", store_id);
                         Intent intentproduct = new Intent(StoreViewActivity.this, StoreProductActivity.class);
                         intentproduct.putExtras(b);
                         startActivity(intentproduct, options.toBundle());
-
                         break;
                     case "Service":
                         b.putInt("store_id", store_id);
                         Intent intentservice = new Intent(StoreViewActivity.this, StoreServiceActivity.class);
                         intentservice.putExtras(b);
                         startActivity(intentservice, options.toBundle());
-
                         break;
                     case "Used Vehicle":
                         b.putInt("store_id", store_id);
                         Intent intentvehicle = new Intent(StoreViewActivity.this, StoreVehicleActivity.class);
                         intentvehicle.putExtras(b);
                         startActivity(intentvehicle, options.toBundle());
-
                         break;
                     case "New Vehicle":
                         b.putInt("store_id", store_id);
                         Intent intentnewvehicle = new Intent(StoreViewActivity.this, StoreNewVehicleActiviy.class);
                         intentnewvehicle.putExtras(b);
                         startActivity(intentnewvehicle, options.toBundle());
-
                         break;
                     case "Video's":
                         b.putInt("store_id", store_id);
                         Intent intentVideos = new Intent(StoreViewActivity.this, VideosViewActivity.class);
                         intentVideos.putExtras(b);
                         startActivity(intentVideos, options.toBundle());
-
                         break;
                     case "Image's":
                         b.putInt("store_id", store_id);
                         Intent intentImages = new Intent(StoreViewActivity.this, ImagesViewActivity.class);
                         intentImages.putExtras(b);
                         startActivity(intentImages, options.toBundle());
-
                         break;
 
                     case "My Employees":
@@ -309,7 +273,6 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
                         Intent intentEmployee = new Intent(StoreViewActivity.this, MyStoreEmployeeActivity.class);
                         intentEmployee.putExtras(b);
                         startActivity(intentEmployee, options.toBundle());
-
                         break;
                 }
             }
@@ -552,7 +515,6 @@ Call Intent...
     }
 
     private void getCallContactList() {
-
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
 // ...Irrelevant code for customizing the buttons and title
         LayoutInflater inflater = getLayoutInflater();
@@ -563,16 +525,12 @@ Call Intent...
         LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
-
-
         AlertDialog alertDialog = dialogBuilder.create();
 
         adapter = new AdminCallContactAdapter(this, storeAdmins);
         recyclerView.setAdapter(adapter);
         alertDialog.show();
-
     }
-
 
     private void getOtherStore(String contact, int store_id) {
         dialog.show();

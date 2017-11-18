@@ -52,21 +52,14 @@ public class EditCompanyName extends AppCompatActivity implements SwipeRefreshLa
         }
 
         mAddNewCompany= (Button) findViewById(R.id.add);
-
         mApiCall = new ApiCall(EditCompanyName.this, this);
-
         mApiCall.getCompany();
-
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayoutBGroup);
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerBGroup);
 
         mRecyclerView.setHasFixedSize(true);
         LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(this);
-        //  mLinearLayoutManager.setReverseLayout(true);
-     //   mLinearLayoutManager.setStackFromEnd(true);
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
-
-
         mSwipeRefreshLayout.setOnRefreshListener(EditCompanyName.this);
         mSwipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
                 android.R.color.holo_green_light,
@@ -78,7 +71,6 @@ public class EditCompanyName extends AppCompatActivity implements SwipeRefreshLa
             @Override
             public void run() {
                 mSwipeRefreshLayout.setRefreshing(true);
-
                 mApiCall.getCompany();
             }
         });
@@ -101,15 +93,11 @@ public class EditCompanyName extends AppCompatActivity implements SwipeRefreshLa
                         companyResponse.setCompanyID(companyResponse.getCompanyID());
                         companyResponse.setCompanyName(companyResponse.getCompanyName());
                         mCompanyList.add(companyResponse);
-                        //     mCompanyList.add(companyResponse.getCompanyName());
-                        //  mCompanyList1.put(companyResponse.getCompanyName(), companyResponse.getCompanyID());
                     }
-                    //  parsedDataCompany.addAll(mCompanyList);
                     mAdapter = new EditCompanyNameAdapter(EditCompanyName.this, mCompanyList,mAddNewCompany);
                     mRecyclerView.setAdapter(mAdapter);
                 }
             }
-
         }
     }
 
@@ -166,22 +154,15 @@ public class EditCompanyName extends AppCompatActivity implements SwipeRefreshLa
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                //fillter(s.toString());
-                //getSearchResults(s.toString());
                 Log.i("Strings", "-->" + s.toString());
                 mAdapter.getFilter().filter(s.toString());
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-                //fillter(s.toString());
-                Log.i("Strings", "-->" + s.toString());
-              //  getSearchAuction(s.toString());
-              //  mAdapter.getFilter().filter(s.toString());
+
             }
         });
-
-
         return true;
     }
 }

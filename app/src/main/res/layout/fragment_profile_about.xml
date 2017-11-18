@@ -18,7 +18,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="end"
             android:layout_marginStart="@dimen/card_margin"
-            android:layout_marginTop="@dimen/margin_small"
             android:orientation="horizontal">
 
             <ImageView
@@ -43,64 +42,65 @@
                 android:text="@string/worked_at"
                 android:textColor="@color/black"
                 android:textSize="@dimen/text_about" />
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:id="@+id/llusertype">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="User Type- "
-                android:textColor="#708090"
-                android:textStyle="bold"/>
 
-            <TextView
-                android:id="@+id/usertypetxt"
+            <LinearLayout
+                android:id="@+id/llusertype"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
-                android:hint="@string/worked_at"
-                android:textColor="#708090"
-                android:textStyle="bold"
-                />
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="User Type- "
+                    android:textColor="#708090"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/usertypetxt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:hint="@string/worked_at"
+                    android:textColor="#708090"
+                    android:textStyle="bold" />
             </LinearLayout>
-           <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:id="@+id/llindustry"
-               >
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Industry -"
-                android:textColor="#708090"
-                android:textStyle="bold"/>
-
-            <TextView
-                android:id="@+id/industrytxt"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
-                android:hint="Industry"
-                android:textColor="#708090"
-                android:textStyle="bold"
-                />
-        </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/llindustry"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Industry -"
+                    android:textColor="#708090"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/industrytxt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:hint="Industry"
+                    android:textColor="#708090"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
                 android:id="@+id/llcategory"
-                >
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Category -"
                     android:textColor="#708090"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/categorytxt"
@@ -109,21 +109,21 @@
                     android:background="@android:color/transparent"
                     android:hint="Category"
                     android:textColor="#708090"
-                    android:textStyle="bold"
-                    />
+                    android:textStyle="bold" />
             </LinearLayout>
+
             <LinearLayout
+                android:id="@+id/llbrand"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:id="@+id/llbrand"
-               >
+                android:orientation="horizontal">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Brand -"
                     android:textColor="#708090"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/brandtxt"
@@ -132,53 +132,18 @@
                     android:background="@android:color/transparent"
                     android:hint="Brand"
                     android:textColor="#708090"
-                    android:textStyle="bold"
-                    />
+                    android:textStyle="bold" />
             </LinearLayout>
 
         </LinearLayout>
 
-       <!-- <RadioGroup
-            android:id="@+id/usertype"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/card_margin"
-            android:orientation="horizontal"
-            android:visibility="gone">
-
-            <RadioButton
-                android:id="@+id/student"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Student" />
-
-            <RadioButton
-                android:id="@+id/employee"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Employee" />
-
-            <RadioButton
-                android:id="@+id/selfemployee"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Self Employee" />
-        </RadioGroup>-->
-
-  <!--      <Spinner
-            android:id="@+id/spinner"
-            android:layout_width="match_parent"
-            android:layout_height="35dp"
-            android:layout_marginStart="@dimen/card_margin"
-            android:layout_marginTop="2dp"
-            android:visibility="" />-->
         <Spinner
             android:id="@+id/spinnerUsertype"
             android:layout_width="match_parent"
             android:layout_height="35dp"
             android:layout_marginTop="10dp"
             android:entries="@array/userType"
-            android:visibility="gone"/>
+            android:visibility="gone" />
 
         <Spinner
             android:id="@+id/spinnerindustry"
@@ -241,8 +206,7 @@
             android:layout_width="match_parent"
             android:layout_height="35dp"
             android:layout_marginTop="10dp"
-            android:visibility="gone"
-            />
+            android:visibility="gone" />
 
         <android.support.design.widget.TextInputLayout
             android:id="@+id/otherbrand"
@@ -578,9 +542,7 @@
                 android:text="@string/app_name"
                 android:textColor="@color/text_color"
                 android:textSize="@dimen/text_about" />
-            <!--<me.gujun.android.taggroup.TagGroup
-                android:id="@+id/tag_group"
-                style="@style/TagGroup" />-->
+
         </LinearLayout>
 
         <View
@@ -601,317 +563,4 @@
             android:textStyle="bold"
             android:visibility="gone" />
     </LinearLayout>
-    <!--<android.support.v7.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/card_margin">
-
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
-            android:gravity="center"
-            android:text="@string/about"
-            android:layout_marginBottom="@dimen/text_about"
-            android:textAppearance="@style/TextAppearance.AppCompat.Title"
-            android:textColor="@color/white"/>
-
-        <LinearLayout
-            style="@style/Widget.CardContent"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/text_about">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="start">
-
-                <ImageView
-                    android:id="@+id/image1"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_marginStart="@dimen/text_about"
-                    android:contentDescription="@string/app_name"
-                    android:src="@mipmap/ic_briefcase" />
-
-                <TextView
-                    android:id="@+id/worked_at"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/text_about"
-                    android:gravity="start"
-                    android:textColor="@color/black"
-                    android:layout_toEndOf="@+id/image1"
-                    android:text="@string/worked_at"
-                    android:textSize="@dimen/text_about"
-                    android:textStyle="bold" />
-
-            </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/radiolayout"
-            android:layout_below="@+id/workedat"
-            android:visibility="gone"
-
-            android:layout_marginTop="2dp">
-            <RadioGroup
-                android:layout_width="wrap_content"
-                android:id="@+id/usertype"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_centerHorizontal="true">
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/student"
-                    android:text="Student"/>
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/employee"
-                    android:text="Employee"/>
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/selfemployee"
-                    android:text="Self Employee"/>
-
-            </RadioGroup>
-        </RelativeLayout>
-
-        <Spinner
-            android:layout_width="match_parent"
-            android:layout_height="35dp"
-            android:id="@+id/spinner"
-
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="2dp"
-            android:layout_below="@+id/radiolayout"
-            android:visibility="gone">
-        </Spinner>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="start">
-
-                <ImageView
-                    android:id="@+id/image2"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_gravity="start"
-                    android:layout_marginStart="@dimen/text_about"
-                    android:contentDescription="@string/app_name"
-                    android:src="@mipmap/livein" />
-
-                <AutoCompleteTextView
-                    android:id="@+id/address"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/text_about"
-                    android:layout_toEndOf="@+id/image2"
-                    android:gravity="start"
-                    android:textColor="@color/black"
-
-                    android:text="@string/address"
-                    android:textSize="@dimen/text_about"
-                    android:textStyle="bold" />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="start">
-
-                <ImageView
-                    android:id="@+id/image3"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_marginStart="@dimen/text_about"
-                    android:contentDescription="@string/app_name"
-                    android:src="@mipmap/company_name" />
-
-                <AutoCompleteTextView
-                    android:id="@+id/company_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_toEndOf="@+id/image3"
-                    android:gravity="start"
-                    android:textColor="@color/black"
-                    android:layout_marginStart="@dimen/text_about"
-                    android:text="@string/company_name"
-                    android:textSize="@dimen/text_about"
-                    android:textStyle="bold" />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="start">
-
-                <ImageView
-                    android:id="@+id/image4"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_marginStart="@dimen/text_about"
-                    android:contentDescription="@string/app_name"
-                    android:src="@mipmap/ic_atom" />
-
-                <AutoCompleteTextView
-                    android:id="@+id/designation"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_toEndOf="@+id/image4"
-                    android:gravity="start"
-                    android:layout_marginStart="@dimen/text_about"
-                    android:textColor="@color/black"
-                    android:text="@string/designation"
-                    android:textSize="@dimen/text_about"
-                    android:textStyle="bold" />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="start">
-
-                <ImageView
-                    android:id="@+id/image5"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_marginStart="@dimen/text_about"
-                    android:contentDescription="@string/app_name"
-                    android:src="@mipmap/ic_diamond" />
-
-                <MultiAutoCompleteTextView
-                    android:id="@+id/skills"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_toEndOf="@+id/image5"
-                    android:layout_marginStart="@dimen/text_about"
-                    android:textColor="@color/black"
-                    android:gravity="start"
-                    android:text="@string/skills"
-                    android:textSize="@dimen/text_about"
-                    android:textStyle="bold" />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="start">
-
-                <ImageView
-                    android:id="@+id/image6"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_marginStart="@dimen/text_about"
-                    android:contentDescription="@string/app_name"
-                    android:textColor="@color/black"
-                    android:src="@mipmap/mobile" />
-
-                <TextView
-                    android:id="@+id/contact_no"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/text_about"
-                    android:layout_toEndOf="@+id/image6"
-                    android:gravity="start"
-                    android:textColor="@color/black"
-                    android:text="@string/contact_no"
-                    android:textSize="@dimen/text_about"
-                    android:textStyle="bold" />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="start">
-
-                <ImageView
-                    android:id="@+id/image7"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_marginStart="@dimen/text_about"
-                    android:contentDescription="@string/app_name"
-                    android:src="@mipmap/email" />
-
-                <EditText
-                    android:id="@+id/email"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/text_about"
-                    android:layout_toEndOf="@+id/image7"
-                    android:gravity="start"
-                    android:text="@string/email"
-                    android:textColor="@color/black"
-
-                    android:textSize="@dimen/text_about"
-                    android:textStyle="bold" />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="start">
-
-                <ImageView
-                    android:id="@+id/image8"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_marginStart="@dimen/text_about"
-                    android:contentDescription="@string/app_name"
-                    android:src="@mipmap/web" />
-
-                <EditText
-                    android:id="@+id/website"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/text_about"
-                    android:layout_toEndOf="@+id/image8"
-                    android:gravity="start"
-                    android:text="@string/website"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/text_about"
-                    android:textStyle="bold" />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:background="@android:drawable/dialog_holo_light_frame"
-                android:layout_below="@+id/web"
-                android:id="@+id/rel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="gone">
-
-                <Button
-                    android:textSize="15dp"
-                    android:textAllCaps="false"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:text="Done"
-                    android:id="@+id/done"
-                    android:background="@color/background"
-                    android:textColor="@color/white"
-                    />
-
-
-            </RelativeLayout>
-        </LinearLayout>
-
-
-
-    </android.support.v7.widget.CardView>-->
-
 </android.support.v4.widget.NestedScrollView>

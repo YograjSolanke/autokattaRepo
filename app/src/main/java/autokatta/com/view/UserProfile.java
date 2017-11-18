@@ -7,21 +7,15 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
-import android.graphics.Paint;
-import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -33,7 +27,6 @@ import android.view.animation.DecelerateInterpolator;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -43,22 +36,14 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 import java.util.Random;
 
 import autokatta.com.R;
-import autokatta.com.adapter.TabAdapterName;
 import autokatta.com.apicall.ApiCall;
-import autokatta.com.fragment_profile.About;
-import autokatta.com.fragment_profile.AboutStore;
-import autokatta.com.fragment_profile.Follow;
-import autokatta.com.fragment_profile.Groups;
-import autokatta.com.fragment_profile.Modules;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.interfaces.ServiceApi;
 import autokatta.com.my_profile_container.AboutContainer;
@@ -82,10 +67,7 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
     LinearLayout mAbout, mGroup, mStore, mModule, mFollow, mMyVideo, mImages, mBlog, mPost;
     ImageView mEdit;
     Bundle mUserProfileBundle;
-    CollapsingToolbarLayout collapsingToolbar;
     String mLoginContact;
-    FloatingActionButton mfab_edit, mfab_done;
-    com.github.clans.fab.FloatingActionButton addVehicle, mCreateStore, mCreateGroup;
     Bitmap bitmap;
     String lastWord = "";
     String mediaPath = "";
@@ -93,7 +75,6 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
     Bitmap bitmapRotate;
     String fname;
     File file;
-    ViewPager viewPager;
     String dp, names;
     String updatedUsername;
     int RegID;
@@ -107,19 +88,7 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile);
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        appBar = (AppBarLayout) findViewById(R.id.appbar);
-       /* mfab_edit = (FloatingActionButton) findViewById(R.id.fab_edit_prof);
-        mfab_done = (FloatingActionButton) findViewById(R.id.fab_edit_done);*/
-        //addVehicle = (com.github.clans.fab.FloatingActionButton) findViewById(R.id.add_vehicle);
-        /*mCreateStore = (com.github.clans.fab.FloatingActionButton) findViewById(R.id.create_store);
-        mCreateGroup = (com.github.clans.fab.FloatingActionButton) findViewById(R.id.create_group);*/
-//        mfab_done.setVisibility(View.GONE);
         setSupportActionBar(toolbar);
-
-//        mCreateGroup.setOnClickListener(this);
-        // mCreateStore.setOnClickListener(this);
-//        addVehicle.setOnClickListener(this);
-
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().setHomeButtonEnabled(true);
@@ -133,14 +102,11 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
         dialog.setMessage("Loading...");
 
         try {
-
              /*
             Get Profile Data
              */
             getProfileData();
             mUserParent = (CoordinatorLayout) findViewById(R.id.main_content);
-            //collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
-            //collapsingToolbar.setCollapsedTitleTextColor(Color.WHITE);
             mProfilePicture = (ImageView) findViewById(R.id.user_image);
             mUserName = (TextView) findViewById(R.id.user_name);
             mWorkedAt = (TextView) findViewById(R.id.worked_at);
@@ -154,7 +120,6 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
             mBlog = (LinearLayout) findViewById(R.id.blog);
             mPost = (LinearLayout) findViewById(R.id.post);
             mEdit = (ImageView) findViewById(R.id.edit);
-            //mProfilePicture.setEnabled(false);
             mProfilePicture.setOnClickListener(this);
             mAbout.setOnClickListener(this);
             mGroup.setOnClickListener(this);
@@ -166,197 +131,10 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
             mPost.setOnClickListener(this);
             mEdit.setOnClickListener(this);
             mModule.setOnClickListener(this);
-            //viewPager = (ViewPager) findViewById(R.id.user_profile_viewpager);
-            /*if (viewPager != null) {
-                setupViewPager(viewPager);
-            }*/
-
-            /*TabLayout tabLayout = (TabLayout) findViewById(R.id.user_profile_tabs);
-            tabLayout.setupWithViewPager(viewPager);*/
-
-            /*int tab_position = tabLayout.getSelectedTabPosition();
-            if (tab_position == 0) {
-                addVehicle.hide(true);
-                mCreateStore.hide(true);
-                mCreateGroup.hide(true);
-            }
-
-            tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-                @Override
-                public void onTabSelected(TabLayout.Tab tab) {
-                    viewPager.setCurrentItem(tab.getPosition());
-                    animateFab(tab.getPosition());
-                    Log.i("Position", "->" + tab.getPosition());
-                }
-
-                @Override
-                public void onTabUnselected(TabLayout.Tab tab) {
-
-                }
-
-                @Override
-                public void onTabReselected(TabLayout.Tab tab) {
-
-                }
-            });*/
-
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        /*EDIT USER NAME AND PROFILE PIC*/
-        /*mfab_edit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(final View view) {
-                *//*Snackbar.make(view, "Edit enable", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-                mProfilePicture.setEnabled(true);
-                mfab_done.setVisibility(View.VISIBLE);
-                mfab_edit.setVisibility(View.GONE);*//*
-                String dp_path = getString(R.string.base_image_url) + dp;
-                LayoutInflater layoutInflater = LayoutInflater.from(UserProfile.this);
-                View mViewDialogOtp = layoutInflater.inflate(R.layout.custom_alert_my_profile_edit, null);
-                img = (ImageView) mViewDialogOtp.findViewById(R.id.img);
-                final EditText name = (EditText) mViewDialogOtp.findViewById(R.id.editPersonName);
-                name.setText(mUserName);
-                final AlertDialog.Builder builder1 = new AlertDialog.Builder(UserProfile.this);
-                builder1.setTitle("EDIT PROFILE");
-                builder1.setIcon(R.drawable.hdlogo);
-                builder1.setView(mViewDialogOtp);
-
-                if (dp==null || dp=="null") {
-                    img.setBackgroundResource(R.drawable.hdlogo);
-
-                } else {
-                    Glide.with(UserProfile.this)
-                            .load(dp_path)
-                            .centerCrop()
-                            .diskCacheStrategy(DiskCacheStrategy.ALL)
-                            .into(img);
-                }
-                img.setOnClickListener(new OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        onPickImage(view);
-                    }
-                });
-
-                builder1.setCancelable(false)
-                        .setPositiveButton("SUBMIT", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                updatedUsername = name.getText().toString();
-                                if (updatedUsername.equals("") || updatedUsername.startsWith(" ") && updatedUsername.endsWith(" ")) {
-                                    CustomToast.customToast(getApplicationContext(), "Please Enter Your Name");
-                                    *//*Snackbar.make(view, "Please Enter Your Name", Snackbar.LENGTH_LONG)
-                                            .setAction("Action", null).show();*//*
-                                } else {
-                                    updateProfile();
-                                    uploadImage(mediaPath);
-                                    dialogInterface.cancel();
-                                }
-                            }
-                        }).setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.cancel();
-                    }
-                });
-
-                AlertDialog alertDialogBox = builder1.create();
-                alertDialogBox.show();
-
-            }
-        });*/
-       /* mProfilePicture.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                onPickImage(v);
-            }
-        });
-
-        mfab_done.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Edit disable", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-                // mUserName = mUserName.toString();
-                updateProfile();
-                uploadImage(mediaPath);
-                mfab_done.setVisibility(View.GONE);
-                mfab_edit.setVisibility(View.VISIBLE);
-                mProfilePicture.setEnabled(false);
-            }
-        });
-        mfab_done.setVisibility(View.GONE);
-        mfab_edit.setVisibility(View.VISIBLE);*/
     }
-
-    /*private void animateFab(int position) {
-        switch (position) {
-            case 0:
-                addVehicle.hide(true);
-                mCreateStore.hide(true);
-                mCreateGroup.hide(true);
-                break;
-
-            case 1:
-                mCreateGroup.show(true);
-                addVehicle.hide(true);
-                mCreateStore.hide(true);
-                break;
-
-            case 2:
-                mCreateStore.show(true);
-                addVehicle.hide(true);
-                mCreateGroup.hide(true);
-                break;
-
-            *//*case 3:
-                addVehicle.hide(true);
-                mCreateStore.hide(true);
-                mCreateGroup.hide(true);
-                break;
-
-            case 4:
-                addVehicle.hide(true);
-                mCreateStore.hide(true);
-                mCreateGroup.hide(true);
-                break;*//*
-
-          *//*  case 3:
-                addVehicle.hide(true);
-                mCreateStore.hide(true);
-                mCreateGroup.hide(true);
-                break;*//*
-
-            case 4:
-                addVehicle.hide(true);
-                mCreateStore.hide(true);
-                mCreateGroup.hide(true);
-                break;
-
-            case 5:
-                addVehicle.show(true);
-                mCreateStore.hide(true);
-                mCreateGroup.hide(true);
-                break;
-
-            default:
-                addVehicle.hide(true);
-                mCreateStore.hide(true);
-                mCreateGroup.hide(true);
-                break;
-        }
-    }*/
-   /* @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.profile_edit, menu);
-
-        return true;
-    }*/
 
     /*
     API Call for get profile data...
@@ -378,26 +156,6 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
             mApiCall.updateUsername(RegID, dp, updatedUsername);
     }
 
-    /*
-    SETUP TABS INTO VIEWPAGER...
-     */
-    private void setupViewPager(ViewPager viewPager) {
-        TabAdapterName adapter = new TabAdapterName(getSupportFragmentManager());
-        adapter.addFragment(new About(), "ABOUT");
-        adapter.addFragment(new Groups(), "GROUP");
-        adapter.addFragment(new AboutStore(), "STORE");
-        //adapter.addFragment(new Event(), "EVENT");
-        //adapter.addFragment(new Katta(), "KATTA");
-        adapter.addFragment(new Modules(), "MODULE");
-        adapter.addFragment(new Follow(), "FOLLOW");
-        //   adapter.addFragment(new MyVehicles(), "MY VEHICLES");
-        /*adapter.addFragment(new MyVideos(), "MY VIDEO");
-        adapter.addFragment(new Blog(), "BLOG");
-        adapter.addFragment(new Post(), "POST");
-        adapter.addFragment(new Images(), "IMAGES");*/
-        viewPager.setAdapter(adapter);
-    }
-
     @Override
     public void notifySuccess(Response<?> response) {
         if (dialog.isShowing()) {
@@ -414,7 +172,6 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
                     mWorkedAt.setText(mProfileAboutResponse.getSuccess().get(0).getCompanyName());
                     RegID = mProfileAboutResponse.getSuccess().get(0).getRegId();
                     String dp_path = getString(R.string.base_image_url) + dp;
-                    final ProgressBar progressBar = (ProgressBar) findViewById(R.id.progress);
 
                     Glide.with(this)
                             .load(dp_path)
@@ -448,7 +205,6 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
 
     @Override
     public void notifyError(Throwable error) {
-        //hud.dismiss();
         if (dialog.isShowing()) {
             dialog.dismiss();
         }
@@ -505,10 +261,7 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
                     uploadImage(mediaPath);
                 getProfileData();
                 mProfilePicture.setEnabled(false);
-                //collapsingToolbar.setCollapsedTitleTextColor(Color.WHITE);
-                // mfab_done.setVisibility(View.GONE);
             }
-
         }
     }
 
@@ -726,13 +479,11 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
                 break;
 
             case R.id.post:
-               // startActivity(new Intent(getApplicationContext(), MyPostContainer.class));
                 CustomToast.customToast(getApplicationContext(), "Coming soon... be connected for update");
                 break;
 
             case R.id.blog:
                 CustomToast.customToast(getApplicationContext(), "Coming soon... be connected for update");
-                // startActivity(new Intent(getApplicationContext(), MyBlogsContainer.class));
                 break;
 
             case R.id.edit:
@@ -786,33 +537,6 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
                 AlertDialog alertDialogBox = builder1.create();
                 alertDialogBox.show();
                 break;
-            /*case R.id.create_group:
-                ActivityOptions option1 = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.ok_left_to_right,
-                        R.anim.ok_right_to_left);
-                Intent intent = new Intent(getApplicationContext(), GroupTabs.class);
-                intent.putExtra("ClassName", "Groups");
-                startActivity(intent, option1.toBundle());
-                break;
-
-            case R.id.create_store:
-                Bundle bundle = new Bundle();
-                // bundle.putString("store_id", Store_id);
-                bundle.putString("className", "AboutStore");
-                ActivityOptions options = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.ok_left_to_right,
-                        R.anim.ok_right_to_left);
-                Intent intents = new Intent(getApplicationContext(), MyStoreListActivity.class);
-                intents.putExtras(bundle);
-                startActivity(intents, options.toBundle());
-                break;*/
-
-            /*case R.id.add_vehicle:
-                *//*ActivityOptions option = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.ok_left_to_right,
-                        R.anim.ok_right_to_left);
-                Intent i = new Intent(getApplicationContext(), NextRegistrationContinue.class);
-                i.putExtra("action", "profile");
-                i.putExtra("className", "profile");
-                startActivity(i, option.toBundle());*//*
-                break;*/
 
             case R.id.user_image:
                 String image;
@@ -830,126 +554,6 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
         }
     }
 
-
-    public String compressImage(String imageUri) {
-
-        String filePath = getRealPathFromURI(imageUri);
-        Bitmap scaledBitmap = null;
-
-        BitmapFactory.Options options = new BitmapFactory.Options();
-
-//      by setting this field as true, the actual bitmap pixels are not loaded in the memory. Just the bounds are loaded. If
-//      you try the use the bitmap here, you will get null.
-        options.inJustDecodeBounds = true;
-        Bitmap bmp = BitmapFactory.decodeFile(filePath, options);
-
-        int actualHeight = options.outHeight;
-        int actualWidth = options.outWidth;
-
-//      max Height and width values of the compressed image is taken as 816x612
-
-        float maxHeight = 816.0f;
-        float maxWidth = 612.0f;
-        float imgRatio = actualWidth / actualHeight;
-        float maxRatio = maxWidth / maxHeight;
-
-//      width and height values are set maintaining the aspect ratio of the image
-
-        if (actualHeight > maxHeight || actualWidth > maxWidth) {
-            if (imgRatio < maxRatio) {
-                imgRatio = maxHeight / actualHeight;
-                actualWidth = (int) (imgRatio * actualWidth);
-                actualHeight = (int) maxHeight;
-            } else if (imgRatio > maxRatio) {
-                imgRatio = maxWidth / actualWidth;
-                actualHeight = (int) (imgRatio * actualHeight);
-                actualWidth = (int) maxWidth;
-            } else {
-                actualHeight = (int) maxHeight;
-                actualWidth = (int) maxWidth;
-
-            }
-        }
-
-//      setting inSampleSize value allows to load a scaled down version of the original image
-
-        options.inSampleSize = calculateInSampleSize(options, actualWidth, actualHeight);
-
-//      inJustDecodeBounds set to false to load the actual bitmap
-        options.inJustDecodeBounds = false;
-
-//      this options allow android to claim the bitmap memory if it runs low on memory
-        options.inPurgeable = true;
-        options.inInputShareable = true;
-        options.inTempStorage = new byte[16 * 1024];
-
-        try {
-//          load the bitmap from its path
-            bmp = BitmapFactory.decodeFile(filePath, options);
-        } catch (OutOfMemoryError exception) {
-            exception.printStackTrace();
-
-        }
-        try {
-            scaledBitmap = Bitmap.createBitmap(actualWidth, actualHeight, Bitmap.Config.ARGB_8888);
-        } catch (OutOfMemoryError exception) {
-            exception.printStackTrace();
-        }
-
-        float ratioX = actualWidth / (float) options.outWidth;
-        float ratioY = actualHeight / (float) options.outHeight;
-        float middleX = actualWidth / 2.0f;
-        float middleY = actualHeight / 2.0f;
-
-        Matrix scaleMatrix = new Matrix();
-        scaleMatrix.setScale(ratioX, ratioY, middleX, middleY);
-
-        Canvas canvas = new Canvas(scaledBitmap);
-        canvas.setMatrix(scaleMatrix);
-        canvas.drawBitmap(bmp, middleX - bmp.getWidth() / 2, middleY - bmp.getHeight() / 2, new Paint(Paint.FILTER_BITMAP_FLAG));
-
-//      check the rotation of the image and display it properly
-        ExifInterface exif;
-        try {
-            exif = new ExifInterface(filePath);
-
-            int orientation = exif.getAttributeInt(
-                    ExifInterface.TAG_ORIENTATION, 0);
-            Log.d("EXIF", "Exif: " + orientation);
-            Matrix matrix = new Matrix();
-            if (orientation == 6) {
-                matrix.postRotate(90);
-                Log.d("EXIF", "Exif: " + orientation);
-            } else if (orientation == 3) {
-                matrix.postRotate(180);
-                Log.d("EXIF", "Exif: " + orientation);
-            } else if (orientation == 8) {
-                matrix.postRotate(270);
-                Log.d("EXIF", "Exif: " + orientation);
-            }
-            scaledBitmap = Bitmap.createBitmap(scaledBitmap, 0, 0,
-                    scaledBitmap.getWidth(), scaledBitmap.getHeight(), matrix,
-                    true);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        FileOutputStream out = null;
-        String filename = getFilename();
-        try {
-            out = new FileOutputStream(filename);
-
-//          write the compressed bitmap at the destination specified by filename.
-            scaledBitmap.compress(Bitmap.CompressFormat.JPEG, 80, out);
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        return filename;
-
-    }
-
     public String getFilename() {
         File file = new File(Environment.getExternalStorageDirectory().getPath(), "MyFolder/Images");
         if (!file.exists()) {
@@ -960,41 +564,11 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
 
     }
 
-    private String getRealPathFromURI(String contentURI) {
-        Uri contentUri = Uri.parse(contentURI);
-        Cursor cursor = getContentResolver().query(contentUri, null, null, null, null);
-        if (cursor == null) {
-            return contentUri.getPath();
-        } else {
-            cursor.moveToFirst();
-            int index = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
-            return cursor.getString(index);
-        }
-    }
-
-    public int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {
-        final int height = options.outHeight;
-        final int width = options.outWidth;
-        int inSampleSize = 1;
-
-        if (height > reqHeight || width > reqWidth) {
-            final int heightRatio = Math.round((float) height / (float) reqHeight);
-            final int widthRatio = Math.round((float) width / (float) reqWidth);
-            inSampleSize = heightRatio < widthRatio ? heightRatio : widthRatio;
-        }
-        final float totalPixels = width * height;
-        final float totalReqPixelsCap = reqWidth * reqHeight * 2;
-        while (totalPixels / (inSampleSize * inSampleSize) > totalReqPixelsCap) {
-            inSampleSize++;
-        }
-
-        return inSampleSize;
-    }
-
     @Override
     protected void onResume() {
         super.onResume();
-        expandToolbar();
+        getProfileData();
+        // expandToolbar();
     }
 
     public void expandToolbar() {

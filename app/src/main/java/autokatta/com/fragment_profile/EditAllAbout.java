@@ -51,7 +51,7 @@ public class EditAllAbout extends AppCompatActivity implements RequestNotifier, 
     ApiCall mApiCall;
     String[] parts;
     String mUpdatedSkills1;
-    String newcompanyname, newdesignation, newskills, strCompany, strDesignation, strskills;
+    String newskills, strskills;
     String email, contact, strprofession, company, designation, subProfession, websitestr, city, skills, interest, brand, strIndustry;
     int RegId;
     GenericFunctions mGenericFunctions;
@@ -124,7 +124,6 @@ public class EditAllAbout extends AppCompatActivity implements RequestNotifier, 
         mDoneSkills = (ImageView) findViewById(R.id.doneskills);
         mDoneAddress = (ImageView) findViewById(R.id.doneaddress);
         mDoneworkat = (ImageView) findViewById(R.id.doneworkat);
-
 
         usertypeSpinner = (Spinner) findViewById(spinnerUsertype);
         industrySpinner = (Spinner) findViewById(spinnerindustry);
@@ -364,8 +363,6 @@ public class EditAllAbout extends AppCompatActivity implements RequestNotifier, 
                 CustomToast.customToast(getApplicationContext(), "Profile Updated");
                 mApiCall.profileAbout(getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""),
                         getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""));
-
-
             } else if (str.equals("success_update_About")) {
                 CustomToast.customToast(getApplicationContext(), "About Updated");
                 mApiCall.profileAbout(getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""),
@@ -400,7 +397,6 @@ public class EditAllAbout extends AppCompatActivity implements RequestNotifier, 
             }
         }else {
             CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
-
         }
     }
 
@@ -433,21 +429,6 @@ public class EditAllAbout extends AppCompatActivity implements RequestNotifier, 
                 mSkills.setEnabled(true);
                 mSkills.setFocusableInTouchMode(true);
                 mSkills.setFocusable(true);
-/*
-                mSkills.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
-                mSkills.setOnKeyListener(new View.OnKeyListener() {
-                    @Override
-                    public boolean onKey(View view, int i, KeyEvent keyEvent) {
-                        if ((keyEvent.getAction() == KeyEvent.ACTION_DOWN) &&
-                                (i == KeyEvent.KEYCODE_ENTER)) {
-                            mSkills.setText("" + mSkills.getText().toString() + ",");
-                            mSkills.setSelection(mSkills.getText().toString().length());
-                            checkSkills();
-                            return true;
-                        }
-                        return false;
-                    }
-                });*/
                 break;
 
             case R.id.editcompany:
@@ -694,7 +675,7 @@ public class EditAllAbout extends AppCompatActivity implements RequestNotifier, 
     }
 
 
-    /*For user typew spinner*/
+    /*For user type spinner*/
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
         switch (adapterView.getId()) {
@@ -764,5 +745,16 @@ public class EditAllAbout extends AppCompatActivity implements RequestNotifier, 
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mApiCall.profileAbout(getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""),
+                getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""));
+        mApiCall.getUserCategories();
+        mApiCall.Industries();
+        mApiCall.getSkills();
+        mApiCall.getBrandTags("both");
     }
 }

@@ -8,7 +8,6 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -42,12 +41,12 @@ import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.other.CustomToast;
+import autokatta.com.other.VerticalLineDecorator;
 import autokatta.com.response.GetFinancerNameResponse;
 import autokatta.com.response.GetPersonDataResponse;
 import retrofit2.Response;
 
 public class EnquiredPersonsActivity extends AppCompatActivity implements RequestNotifier, SwipeRefreshLayout.OnRefreshListener {
-
     SwipeRefreshLayout mSwipeRefreshLayout;
     RecyclerView mPersonRecyclerView;
     List<GetPersonDataResponse.Success> mList = new ArrayList<>();
@@ -76,13 +75,12 @@ public class EnquiredPersonsActivity extends AppCompatActivity implements Reques
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
         setTitle("Enquired Person's List");
-
+        dialog = new ProgressDialog(EnquiredPersonsActivity.this);
+        dialog.setMessage("Loading...");
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-
                 mConnectionDetector = new ConnectionDetector(EnquiredPersonsActivity.this);
-
                 strId = getIntent().getExtras().getString("id");
                 strKeyword = getIntent().getExtras().getString("keyword");
                 strTitle = getIntent().getExtras().getString("name");
@@ -93,7 +91,6 @@ public class EnquiredPersonsActivity extends AppCompatActivity implements Reques
                 mEnquiryId = getIntent().getExtras().getInt("enquiryid", 0);
 
                 mNoData = (TextView) findViewById(R.id.no_category);
-
                 mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.person_swipeRefreshLayout);
                 mPersonRecyclerView = (RecyclerView) findViewById(R.id.person_recycler_view);
                 mFrameLayout = (FrameLayout) findViewById(R.id.person_enquiry_frame);
@@ -114,6 +111,7 @@ public class EnquiredPersonsActivity extends AppCompatActivity implements Reques
                 mLoanPer.setText(String.valueOf(strLoanPercent));
                 mFinancer.setText(strFinancername);
                 getFinancernames();
+                getPersonData(strId, strKeyword);
                 mFinancer.setEnabled(false);
                 mLoanAmt.setEnabled(false);
                 mLoanPer.setEnabled(false);
@@ -122,23 +120,11 @@ public class EnquiredPersonsActivity extends AppCompatActivity implements Reques
                     mRelFinancerDetails.setVisibility(View.VISIBLE);
                 }
 
-                dialog = new ProgressDialog(EnquiredPersonsActivity.this);
-                dialog.setMessage("Loading...");
-
                 mPersonRecyclerView.setHasFixedSize(true);
-
                 LinearLayoutManager mLinearLayout = new LinearLayoutManager(getApplicationContext());
-                mLinearLayout.setReverseLayout(true);
-                mLinearLayout.setStackFromEnd(true);
-
-                mPersonRecyclerView.setLayoutManager(mLinearLayout);
                 mPersonRecyclerView.setItemAnimator(new DefaultItemAnimator());
-                mPersonRecyclerView.addItemDecoration(new DividerItemDecoration(getApplicationContext(), LinearLayoutManager.VERTICAL));
-
-                getPersonData(strId, strKeyword);
-
-                mSwipeRefreshLayout.setOnRefreshListener(EnquiredPersonsActivity.this);
-
+                mPersonRecyclerView.addItemDecoration(new VerticalLineDecorator(2));
+                mPersonRecyclerView.setLayoutManager(mLinearLayout);
                 mSwipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
                         android.R.color.holo_green_light,
                         android.R.color.holo_orange_light,
@@ -152,9 +138,9 @@ public class EnquiredPersonsActivity extends AppCompatActivity implements Reques
                         getFinancernames();
                     }
                 });
-
             }
         });
+        mSwipeRefreshLayout.setOnRefreshListener(this);
 
         filterLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -177,9 +163,8 @@ public class EnquiredPersonsActivity extends AppCompatActivity implements Reques
         mDone.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 if (mFinancer.getText().toString().equalsIgnoreCase("")) {
-                    mFinancer.setError("Please provide financer Name");
+                    mFinancer.setError("Please provide financier Name");
                 } else if (mLoanAmt.getText().toString().equalsIgnoreCase("0") || mLoanAmt.getText().toString().equalsIgnoreCase("")) {
                     mLoanAmt.setError("Please provide Loan Amount");
                 } else if (mLoanPer.getText().toString().equalsIgnoreCase("0") || mLoanPer.getText().toString().equalsIgnoreCase("")) {
@@ -198,20 +183,18 @@ public class EnquiredPersonsActivity extends AppCompatActivity implements Reques
                 }
             }
         });
-
-
     }
 
     @Override
     public void onRefresh() {
         getPersonData(strId, strKeyword);
+        getFinancernames();
     }
 
     /*
     Get Person Data...
      */
     private void getPersonData(String id, String keyword) {
-
         if (mConnectionDetector.isConnectedToInternet()) {
             dialog.show();
             ApiCall mApiCall = new ApiCall(this, this);
@@ -225,7 +208,6 @@ public class EnquiredPersonsActivity extends AppCompatActivity implements Reques
        Get Financer Data...
         */
     private void getFinancernames() {
-
         if (mConnectionDetector.isConnectedToInternet()) {
             ApiCall mApiCall = new ApiCall(this, this);
             mApiCall.getFinancerName();
@@ -238,7 +220,6 @@ public class EnquiredPersonsActivity extends AppCompatActivity implements Reques
     Add Financer Data...
      */
     private void addNewFinancerName(String newfinancer) {
-
         if (mConnectionDetector.isConnectedToInternet()) {
             ApiCall mApiCall = new ApiCall(this, this);
             mApiCall.addFinancerName(newfinancer);
@@ -251,7 +232,6 @@ public class EnquiredPersonsActivity extends AppCompatActivity implements Reques
     Update Manual enquiry Data...
      */
     private void updateManualEnquiry(float fper, int famt) {
-
         if (mConnectionDetector.isConnectedToInternet()) {
             ApiCall mApiCall = new ApiCall(this, this);
             mApiCall.updateManualEnquiry(getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""), mFinancer.getText().toString(), fper, famt, strKeyword, strId,mEnquiryId);
@@ -268,21 +248,15 @@ public class EnquiredPersonsActivity extends AppCompatActivity implements Reques
         }
         if (response != null) {
             if (response.isSuccessful()) {
-
                 mSwipeRefreshLayout.setRefreshing(false);
                 mList.clear();
-
                 /*Person's information */
                 if (response.body() instanceof GetPersonDataResponse) {
                     GetPersonDataResponse mPersonDataResponse = (GetPersonDataResponse) response.body();
                     if (mPersonDataResponse.getSuccess() != null) {
-
                         if (!mPersonDataResponse.getSuccess().isEmpty()) {
-
                             mNoData.setVisibility(View.GONE);
                             for (GetPersonDataResponse.Success success : mPersonDataResponse.getSuccess()) {
-                                //success.setUsername(success.getUsername());
-
                                 if (success.getUsername().equals("") || success.getUsername().isEmpty())
                                     success.setUsername("Unknown");
                                 else
@@ -347,8 +321,6 @@ public class EnquiredPersonsActivity extends AppCompatActivity implements Reques
                         ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(getApplicationContext(),
                                 R.layout.registration_spinner, mFinancerList);
                         mFinancer.setAdapter(dataAdapter);
-
-
                     } else {
                         CustomToast.customToast(getApplicationContext(), getString(R.string._404));
                     }
