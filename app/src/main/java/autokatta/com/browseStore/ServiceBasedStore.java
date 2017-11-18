@@ -51,16 +51,17 @@ public class ServiceBasedStore extends Fragment implements RequestNotifier, Swip
     SwipeRefreshLayout mSwipeRefreshLayout;
     List<BrowseStoreResponse.Success> mSuccesses;
     List<BrowseStoreResponse.Success> mSuccesses_new;
-    ArrayList<String> categoryList = new ArrayList<>();
+    List<String> categoryList = new ArrayList<>();
     HashSet<String> categoryHashSet;
     CheckedCategoryAdapter categoryAdapter;
-    ArrayList<String> finalcategory = new ArrayList<>();
+    List<String> finalcategory = new ArrayList<>();
     BrowseStoreAdapter adapter;
     boolean hasViewCreated = false;
     TextView mNoData;
     Activity mActivity;
 
     int counter = 0;
+
     public ServiceBasedStore() {
         //Empty Constructor
     }
@@ -84,16 +85,6 @@ public class ServiceBasedStore extends Fragment implements RequestNotifier, Swip
             }
         }
     }
-
-    /*@Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof Activity) {
-            if (mActivity != null)
-                mActivity = (Activity) context;
-        }
-    }*/
-
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -163,8 +154,8 @@ public class ServiceBasedStore extends Fragment implements RequestNotifier, Swip
 
                         if (success.getCategory().trim().contains(",")) {
                             String arr[] = success.getCategory().trim().split(",");
-                            for (int l = 0; l < arr.length; l++) {
-                                String part = arr[l].trim();
+                            for (String anArr : arr) {
+                                String part = anArr.trim();
                                 if (!part.equals(" ") && !part.equals(""))
                                     categoryList.add(part);
                             }
@@ -175,22 +166,18 @@ public class ServiceBasedStore extends Fragment implements RequestNotifier, Swip
                     categoryHashSet = new HashSet<>(categoryList);
                     filterResult(categoryHashSet.toArray(new String[categoryHashSet.size()]));
                     mSwipeRefreshLayout.setRefreshing(false);
-//                adapter = new BrowseStoreAdapter(getActivity(), mSuccesses);
-//                mRecyclerView.setAdapter(adapter);
-//                adapter.notifyDataSetChanged();
                 } else {
                     mSwipeRefreshLayout.setRefreshing(false);
                     mNoData.setVisibility(View.VISIBLE);
                 }
             } else {
                 mSwipeRefreshLayout.setRefreshing(false);
-                // CustomToast.customToast(mActivity,getString(R.string._404_));
-                // showMessage(mActivity, getString(R.string._404_));
+                mNoData.setVisibility(View.VISIBLE);
             }
         } else {
             if (isAdded())
-            CustomToast.customToast(mActivity,getString(R.string.no_response));
-            //showMessage(mActivity, getString(R.string.no_response));
+                CustomToast.customToast(mActivity, getString(R.string.no_response));
+            mNoData.setVisibility(View.VISIBLE);
         }
     }
 
@@ -199,7 +186,7 @@ public class ServiceBasedStore extends Fragment implements RequestNotifier, Swip
         mSwipeRefreshLayout.setRefreshing(false);
         if (error instanceof SocketTimeoutException) {
             if (isAdded())
-            CustomToast.customToast(mActivity,getString(R.string._404_));
+                CustomToast.customToast(mActivity, getString(R.string._404_));
             // showMessage(mActivity, getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
             //CustomToast.customToast(mActivity,getString(R.string.no_response));
@@ -210,11 +197,11 @@ public class ServiceBasedStore extends Fragment implements RequestNotifier, Swip
             //  showMessage(mActivity, getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
             if (isAdded())
-            CustomToast.customToast(mActivity,getString(R.string.no_internet));
+                CustomToast.customToast(mActivity, getString(R.string.no_internet));
             // errorMessage(mActivity, getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
             if (isAdded())
-            CustomToast.customToast(mActivity,getString(R.string.no_internet));
+                CustomToast.customToast(mActivity, getString(R.string.no_internet));
             //  errorMessage(mActivity, getString(R.string.no_internet));
         } else {
             Log.i("Check Class-", "ServiceBasedStore Fragment");
@@ -272,57 +259,57 @@ public class ServiceBasedStore extends Fragment implements RequestNotifier, Swip
             public void onClick(View v) {
                 mRecyclerView.setAdapter(null);
                 if (counter != 0 && counter <= 5) {
-                for (int i = 0; i < mSuccesses.size(); i++) {
-                    //If Category contains ","
-                    if (mSuccesses.get(i).getCategory().trim().contains(",")) {
-                        boolean flag = false;
+                    for (int i = 0; i < mSuccesses.size(); i++) {
+                        //If Category contains ","
+                        if (mSuccesses.get(i).getCategory().trim().contains(",")) {
+                            boolean flag = false;
 
-                        String arr[] = mSuccesses.get(i).getCategory().trim().split(",");
-                        for (int r = 0; r < arr.length; r++) {
+                            String arr[] = mSuccesses.get(i).getCategory().trim().split(",");
+                            for (String anArr : arr) {
 
-                            if (finalcategory.contains(arr[r].trim()))
-                                flag = true;
+                                if (finalcategory.contains(anArr.trim()))
+                                    flag = true;
+                            }
+
+                            if (flag)
+                                mSuccesses.get(i).setVisibility(true);
+                            else {
+                                mSuccesses.get(i).setVisibility(false);
+                            }
                         }
-
-                        if (flag)
-                            mSuccesses.get(i).setVisibility(true);
+                        //If Category not contains ","
                         else {
-                            mSuccesses.get(i).setVisibility(false);
+                            if (finalcategory.contains(mSuccesses.get(i).getCategory().trim()))
+                                mSuccesses.get(i).setVisibility(true);
+                            else {
+                                mSuccesses.get(i).setVisibility(false);
+                            }
                         }
                     }
-                    //If Category not contains ","
-                    else {
-                        if (finalcategory.contains(mSuccesses.get(i).getCategory().trim()))
-                            mSuccesses.get(i).setVisibility(true);
-                        else {
-                            mSuccesses.get(i).setVisibility(false);
+
+                    mSuccesses_new = new ArrayList<>();
+                    mSuccesses_new.clear();
+
+                    for (int w = 0; w < mSuccesses.size(); w++) {
+                        if (mSuccesses.get(w).isVisibility()) {
+                            mSuccesses_new.add(mSuccesses.get(w));
                         }
                     }
-                }
+                    alert.dismiss();
 
-                mSuccesses_new = new ArrayList<>();
-                mSuccesses_new.clear();
-
-                for (int w = 0; w < mSuccesses.size(); w++) {
-                    if (mSuccesses.get(w).isVisibility()) {
-                        mSuccesses_new.add(mSuccesses.get(w));
-                    }
-                }
-                alert.dismiss();
-
-                adapter = new BrowseStoreAdapter(getActivity(), mSuccesses_new);
-                mRecyclerView.setAdapter(adapter);
-                adapter.notifyDataSetChanged();
+                    adapter = new BrowseStoreAdapter(getActivity(), mSuccesses_new);
+                    mRecyclerView.setAdapter(adapter);
+                    adapter.notifyDataSetChanged();
                 } else {
                     if (counter == 0) {
                         if (isAdded())
-                        CustomToast.customToast(getActivity(), "Please Select Atleast One Category");
+                            CustomToast.customToast(getActivity(), "Please Select Atleast One Category");
 //                        AlertDialog alert = alertDialog.create();
 //                        alert.show();
                     }
                     if (counter > 5) {
                         if (isAdded())
-                        CustomToast.customToast(getActivity(), "Please Select Only 5 Category");
+                            CustomToast.customToast(getActivity(), "Please Select Only 5 Category");
 //                        AlertDialog alert = alertDialog.create();
 //                        alert.show();
                     }
@@ -356,9 +343,9 @@ public class ServiceBasedStore extends Fragment implements RequestNotifier, Swip
     public class CheckedCategoryAdapter extends BaseAdapter {
         private LayoutInflater mInflater;
         Activity activity;
-        ArrayList<String> titles = new ArrayList<>();
+        List<String> titles = new ArrayList<>();
 
-        public CheckedCategoryAdapter(Activity a, String titles[]) {
+        CheckedCategoryAdapter(Activity a, String titles[]) {
             this.activity = a;
             this.titles = new ArrayList<>(Arrays.asList(titles));
 

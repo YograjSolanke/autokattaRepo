@@ -273,7 +273,13 @@ public class AutokattaContactAdapter extends RecyclerView.Adapter<AutokattaConta
 
 
                         }
-                    }).show();
+                    })
+                            .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            }).show();
                 } else
                     CustomToast.customToast(mActivity, "No common groups available");
             }

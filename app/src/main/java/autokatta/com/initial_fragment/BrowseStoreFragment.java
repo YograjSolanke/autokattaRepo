@@ -58,8 +58,8 @@ public class BrowseStoreFragment extends Fragment implements GoogleApiClient.Con
         if (mTestConnection.isConnectedToInternet()) {
             buildGoogleApiClient();
         } else {
-            CustomToast.customToast(getActivity(),getString(R.string.no_internet));
-            //errorMessage(getActivity(), getString(R.string.no_internet));
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         }
         return view;
     }
@@ -148,30 +148,4 @@ public class BrowseStoreFragment extends Fragment implements GoogleApiClient.Con
         tabAdapterName.addFragment(new ServiceBasedStore(), "Service Based");
         viewPager.setAdapter(tabAdapterName);
     }
-
-    /*public void showMessage(Activity activity, String message) {
-        Snackbar snackbar = Snackbar.make(activity.findViewById(android.R.id.content),
-                message, Snackbar.LENGTH_LONG);
-        TextView textView = (TextView) snackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
-        textView.setTextColor(Color.RED);
-        snackbar.show();
-    }
-
-    public void errorMessage(Activity activity, String message) {
-        Snackbar snackbar = Snackbar.make(activity.findViewById(android.R.id.content),
-                message, Snackbar.LENGTH_INDEFINITE)
-                .setAction("Retry", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        buildGoogleApiClient();
-                    }
-                });
-        // Changing message text color
-        snackbar.setActionTextColor(Color.BLUE);
-        // Changing action button text color
-        View sbView = snackbar.getView();
-        TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
-        textView.setTextColor(Color.WHITE);
-        snackbar.show();
-    }*/
 }

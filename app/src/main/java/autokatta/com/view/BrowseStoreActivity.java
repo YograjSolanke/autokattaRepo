@@ -55,22 +55,4 @@ public class BrowseStoreActivity extends AppCompatActivity {
         finish();
         overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
     }
-
-    /*@Override
-    protected void onResume() {
-        super.onResume();
-        if (sharedPreferences.getBoolean("browseStoreFirstRun", true)) {
-            startActivity(new Intent(getApplicationContext(), BrowseStoreAppIntro.class));
-            editor = sharedPreferences.edit();
-            editor.putBoolean("browseStoreFirstRun", false);
-            editor.apply();
-        }
-    }*/
-   /* @Override
-    protected void onResume() {
-        super.onResume();
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.browseStoreFrame, new BrowseStoreFragment(), "browseStoreFragment")
-                .commit();
-    }*/
 }

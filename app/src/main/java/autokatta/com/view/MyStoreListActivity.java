@@ -17,6 +17,7 @@ public class MyStoreListActivity extends AppCompatActivity {
 
     SharedPreferences sharedPreferences = null;
     SharedPreferences.Editor editor;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,26 +35,11 @@ public class MyStoreListActivity extends AppCompatActivity {
             @Override
             public void run() {
                 try {
-//                    if (getIntent().getExtras() != null) {
-//                        Bundle bundle = new Bundle();
-//                        bundle.putString("className", getIntent().getExtras().getString("className"));
-//                        bundle.putInt("store_id", getIntent().getExtras().getInt("store_id"));
-//                        CreateStoreFragment fragment = new CreateStoreFragment();
-//                        fragment.setArguments(bundle);
-//
-//                        FragmentManager mFragmentManager = getSupportFragmentManager();
-//                        FragmentTransaction mFragmentTransaction = mFragmentManager.beginTransaction();
-//                        mFragmentTransaction.replace(R.id.myStoreListFrame, fragment, "createStoreFragment")
-//                                .addToBackStack("createStoreFragment")
-//                                .commit();
-//
-//                    } else {
-                        FragmentManager mFragmentManager = getSupportFragmentManager();
-                        FragmentTransaction mFragmentTransaction = mFragmentManager.beginTransaction();
-                        mFragmentTransaction.replace(R.id.myStoreListFrame, new MyStoreListFragment(), "myStoreListFragment")
-                                .addToBackStack("myStoreListFragment")
-                                .commit();
-//                    }
+                    FragmentManager mFragmentManager = getSupportFragmentManager();
+                    FragmentTransaction mFragmentTransaction = mFragmentManager.beginTransaction();
+                    mFragmentTransaction.replace(R.id.myStoreListFrame, new MyStoreListFragment(), "myStoreListFragment")
+                            .addToBackStack("myStoreListFragment")
+                            .commit();
 
                 } catch (Exception e) {
                     e.printStackTrace();
