@@ -245,7 +245,7 @@ public class TodaysFollowUp extends AppCompatActivity implements SwipeRefreshLay
                             ManualEnquiryRequest request = new ManualEnquiryRequest();
                             if (service.getNextFollowupDate().equals(formattedDate)) {
                                 request.setLayoutNo(3);
-                                request.setServiceId(service.getId());
+                                request.setServiceId(String.valueOf(service.getService_id()));
                                 request.setServiceName(service.getName());
                                 request.setServiceCategory(service.getCategory());
                                 request.setServiceType(service.getType());

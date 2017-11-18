@@ -175,11 +175,11 @@ public class TransferEnquiryAdapter extends BaseAdapter implements RequestNotifi
     public void notifyString(String str) {
         if (str != null) {
             if (str.equalsIgnoreCase("transfer_accept_success")) {
-                CustomToast.customToast(mActivity, "Enquiry Transfered successfully");
+                CustomToast.customToast(mActivity, "Enquiry Accepted successfully");
             }else
             if (str.equalsIgnoreCase("transfer_reject_success"))
             {
-                CustomToast.customToast(mActivity, "Enquiry Transfered Rejected");
+                CustomToast.customToast(mActivity, "Enquiry Transfer Rejected");
             }
         }
     }

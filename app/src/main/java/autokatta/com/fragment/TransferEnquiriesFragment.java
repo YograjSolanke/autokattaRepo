@@ -218,46 +218,9 @@ public class TransferEnquiriesFragment extends Fragment implements SwipeRefreshL
      */
     private void getManualData() {
         ApiCall mApiCall = new ApiCall(getActivity(), this);
-        mApiCall.getManualEnquiry(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
-                .getString("loginContact", ""));
+       // mApiCall.getManualEnquiry(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
+        //        .getString("loginContact", ""));
     }
-
-/*
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.manual_add, menu);
-     //   getActivity().getMenuInflater().inflate(R.menu.manual_add, menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                if (mRecyclerView.getVisibility() == View.GONE) {
-                    mRecyclerView.setVisibility(View.VISIBLE);
-                    getManualData();
-                } else {
-                    onBackPressed();
-                }
-                return true;
-
-            case R.id.add_manual:
-                ActivityOptions options = ActivityOptions.makeCustomAnimation(getActivity(), R.anim.ok_left_to_right, R.anim.ok_right_to_left);
-                startActivity(new Intent(getActivity(), AddManualEnquiry.class), options.toBundle());
-                return true;
-
-            case R.id.today_follow_up:
-                startActivity(new Intent(getActivity(), TodaysFollowUp.class));
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-*/
 
 
     //@Override
@@ -414,7 +377,7 @@ public class TransferEnquiriesFragment extends Fragment implements SwipeRefreshL
                         for (ManualEnquiryResponse.Success.Service service : manualEnquiry.getSuccess().getServices()) {
                             ManualEnquiryRequest request = new ManualEnquiryRequest();
                             request.setLayoutNo(3);
-                            request.setServiceId(service.getService_id());
+                            request.setServiceId(String.valueOf(service.getService_id()));
                             request.setServiceName(service.getName());
                             request.setServiceCategory(service.getCategory());
                             request.setServiceType(service.getType());

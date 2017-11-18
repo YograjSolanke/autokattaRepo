@@ -66,7 +66,14 @@ public class TransferEnquiryRequestActivity extends AppCompatActivity implements
                 if (!getTransferVehicleNotificationResponse.getSuccess().getEmployee().isEmpty()) {
                     mGetTransferEnquryList.clear();
                     for (GetTransferEnquiryRequestResponse.Success.Employee vehicles : getTransferVehicleNotificationResponse.getSuccess().getEmployee()) {
-
+                               vehicles.setDate(vehicles.getDate());
+                               vehicles.setDescription(vehicles.getDescription());
+                               vehicles.setEnquiryContact(vehicles.getEnquiryContact());
+                               vehicles.setEnquiryID(vehicles.getEnquiryID());
+                               vehicles.setPSVNID(vehicles.getPSVNID());
+                               vehicles.setReasonForTransfer(vehicles.getReasonForTransfer());
+                               vehicles.setTransferToName(vehicles.getTransferToName());
+                               vehicles.setTransferEnquiryID(vehicles.getTransferEnquiryID());
 
 
                         mGetTransferEnquryList.add(vehicles);

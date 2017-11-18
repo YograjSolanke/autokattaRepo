@@ -408,7 +408,7 @@ View mManualEnquiry;
                         for (ManualEnquiryResponse.Success.Service service : manualEnquiry.getSuccess().getServices()) {
                             ManualEnquiryRequest request = new ManualEnquiryRequest();
                             request.setLayoutNo(3);
-                            request.setServiceId(service.getService_id());
+                            request.setServiceId(String.valueOf(service.getService_id()));
                             request.setServiceName(service.getName());
                             request.setServiceCategory(service.getCategory());
                             request.setServiceType(service.getType());
@@ -652,6 +652,7 @@ View mManualEnquiry;
                 break;
             case "New Vehicle":
                 intent.putExtra("id", request.getVehicleId());
+                String a=request.getVehicleId();
                 intent.putExtra("name", request.getVehicleName());
                 intent.putExtra("financername", request.getFinancerName());
                 intent.putExtra("loanamount", request.getLoanamount());

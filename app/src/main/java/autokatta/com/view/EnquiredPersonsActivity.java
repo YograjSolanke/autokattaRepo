@@ -76,6 +76,7 @@ public class EnquiredPersonsActivity extends AppCompatActivity implements Reques
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
         setTitle("Enquired Person's List");
+
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
