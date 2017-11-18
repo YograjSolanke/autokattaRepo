@@ -18,7 +18,7 @@ import autokatta.com.R;
 import autokatta.com.database.DbConstants;
 import autokatta.com.database.DbOperation;
 import autokatta.com.view.BussinessChatActivity;
-import autokatta.com.view.ManualEnquiry;
+import autokatta.com.view.ManualEnquiryMainActivity;
 
 /**
  * Created by ak-003 on 24/4/17.
@@ -82,7 +82,7 @@ public class AllEnquiryTabFragment extends Fragment implements View.OnClickListe
 
             case R.id.relME:
                 ActivityOptions options = ActivityOptions.makeCustomAnimation(getActivity(), R.anim.ok_left_to_right, R.anim.ok_right_to_left);
-                startActivity(new Intent(getActivity(), ManualEnquiry.class), options.toBundle());
+                startActivity(new Intent(getActivity(), ManualEnquiryMainActivity.class), options.toBundle());
                 break;
             case R.id.rel5:
                 Toast.makeText(getActivity(), "Coming Soon", Toast.LENGTH_SHORT).show();
