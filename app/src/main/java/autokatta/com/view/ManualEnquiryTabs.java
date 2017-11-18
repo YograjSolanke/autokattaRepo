@@ -19,7 +19,8 @@ import autokatta.com.fragment.TransferEnquiriesFragment;
 public class ManualEnquiryTabs extends android.support.v4.app.Fragment {
 
     View manualenquirytabs;
-
+    ManualEnquiry manualEnquiry = new ManualEnquiry();
+    TransferEnquiriesFragment transferEnquiriesFragment = new TransferEnquiriesFragment();
 
     @Nullable
     @Override
@@ -33,16 +34,24 @@ public class ManualEnquiryTabs extends android.support.v4.app.Fragment {
         TabLayout tabLayout = (TabLayout) manualenquirytabs.findViewById(R.id.manualenquiry_tabs);
         tabLayout.setupWithViewPager(mviewPager);
 
+        Bundle bundle = getArguments();
+        Bundle putBundle = new Bundle();
+        putBundle.putInt("bundle_storeId", bundle.getInt("bundle_storeId", 0));
+        putBundle.putString("bundle_contact", bundle.getString("bundle_contact", ""));
+
+        manualEnquiry.setArguments(putBundle);
+        transferEnquiriesFragment.setArguments(putBundle);
+
+
         //showMessage();
         return manualenquirytabs;
     }
 
 
-
     private void setupViewPager(ViewPager viewPager) {
         TabAdapterName tabAdapterName = new TabAdapterName(getChildFragmentManager());
-        tabAdapterName.addFragment(new ManualEnquiry(), "Manual Enquiry");
-        tabAdapterName.addFragment(new TransferEnquiriesFragment(), "Transfered Enquiries");
+        tabAdapterName.addFragment(manualEnquiry, "Manual Enquiry");
+        tabAdapterName.addFragment(transferEnquiriesFragment, "Transfered Enquiries");
         viewPager.setAdapter(tabAdapterName);
     }
 }

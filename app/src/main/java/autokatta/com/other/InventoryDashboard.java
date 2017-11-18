@@ -97,7 +97,7 @@ public class InventoryDashboard extends AppCompatActivity {
                         startActivity(new Intent(getApplicationContext(), BuyerNotificationContainer.class));
                         break;
                     case "Manual Enquiry":
-                        startActivity(new Intent(getApplicationContext(), ManualEnquiryMainActivity.class));
+                        startActivity(new Intent(getApplicationContext(), ManualEnquiryMainActivity.class).putExtras(mBundle));
                         break;
                     case "Business Chat":
                         startActivity(new Intent(getApplicationContext(), BussinessChatActivity.class));

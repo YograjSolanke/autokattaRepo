@@ -13,26 +13,56 @@ import autokatta.com.enquiries.TodaysFollowUp;
 
 public class ManualEnquiryMainActivity extends AppCompatActivity {
 
-    ManualEnquiryTabs manualEnquiryTabs=new ManualEnquiryTabs();
+    Bundle mBundle;
+    String Sharedcontact;
+
+
+    ManualEnquiryTabs manualEnquiryTabs = new ManualEnquiryTabs();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manual_enquiry_main);
-       // Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-      //  setSupportActionBar(toolbar);
+        // Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        //  setSupportActionBar(toolbar);
         setTitle("Manual Enquiry");
         startActivity(new Intent(getApplicationContext(), ManualAppIntro.class));
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setHomeButtonEnabled(true);
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            //    getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
-        }
 
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.manual_enquiry_container,manualEnquiryTabs , "manualenquiry")
-                .addToBackStack("manualenquiry")
-                .commit();
+
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+
+                if (getSupportActionBar() != null) {
+                    getSupportActionBar().setHomeButtonEnabled(true);
+                    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+                    //    getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
+                }
+
+                try {
+
+
+                    Sharedcontact = getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "");
+                    if (getIntent().getExtras() != null) {
+                        mBundle = new Bundle();
+                        mBundle.putInt("bundle_storeId", getIntent().getExtras().getInt("bundle_storeId", 0));
+                        mBundle.putString("bundle_contact", getIntent().getExtras().getString("bundle_contact", Sharedcontact));
+                        manualEnquiryTabs.setArguments(mBundle);
+                    }
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.manual_enquiry_container, manualEnquiryTabs, "manualenquiry")
+                            .addToBackStack("manualenquiry")
+                            .commit();
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.

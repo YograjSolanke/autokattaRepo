@@ -55,8 +55,6 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import org.json.JSONException;
-
 import java.io.File;
 import java.io.IOException;
 import java.net.ConnectException;
@@ -183,7 +181,6 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
         RatingBar mStoreRating;
         TextView mStoreActionName, mActionTime, mStoreName, mStoreCategory, mStoreType, mStoreWebSite, mStoreTiming,
                 mStoreWorkingDay, mStoreLocation, mFollowCount, mLikes, mShares;
-        RelativeLayout mRelativeLike;
 
         private StoreNotifications(View storeView) {
             super(storeView);
@@ -256,7 +253,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
         Button mVehicleLike, mVehicleUnlike, mVehicleFollow, mVehicleUnfollow, mVehicleShare;
         TextView mActionName, mActionTime, mVehicleRegistration, mVehicleName, mVehiclePrice, mVehicleBrand,
                 mVehicleModel, mVehicleYearOfMfg, mVehicleKmsHrs, mVehicleLocation, mRtoCity, mLikes, mShares, mFollowCount;
-        RelativeLayout mRelativeLike;
+
 
         private VehicleNotifications(View upVehicleView) {
             super(upVehicleView);
@@ -679,7 +676,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
 
         Suggestions(View imageView) {
             super(imageView);
-            txtSuggestion = (TextView) imageView.findViewById(R.id.moreImages);
+            txtSuggestion = (TextView) imageView.findViewById(R.id.textProfile);
             mSuggestionRecycler = (RecyclerView) imageView.findViewById(R.id.profileRecyclerView);
             mLinearLayout = (LinearLayout) imageView.findViewById(R.id.mainLayout);
         }
@@ -772,6 +769,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
         Log.i("Wall", "Adapter-LayoutNo ->" + holder.getItemViewType());
+        System.out.println("Adapter-LayoutNo " + holder.getItemViewType());
         if (position >= getItemCount() - 1 && isMoreDataAvailable && !isLoading && loadMoreListener != null) {
             isLoading = true;
             loadMoreListener.onLoadMore();
@@ -5568,17 +5566,16 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                 //mSuggestions.mSuggestionRecycler.addItemDecoration(new VerticalLineDecorator(2));
                 mSuggestions.mSuggestionRecycler.setItemAnimator(new DefaultItemAnimator());
 
-                try {
-                    getSuggestionData(notificationList.get(position).getSuggestionURL());
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+
+                getSuggestionData(notificationList.get(position).getSuggestionURL());
+
 
                 break;
         }
     }
 
-    private void getSuggestionData(String mUrl) throws JSONException {
+    private void getSuggestionData(String mUrl) {
+
 
         try {
             final Retrofit retrofit = new Retrofit.Builder()

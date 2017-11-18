@@ -238,18 +238,26 @@ public class WallNotificationFragment extends Fragment implements SwipeRefreshLa
                             mNoData.setVisibility(View.GONE);
                             layout.setVisibility(View.GONE);
                             //notificationList.clear();
+
+                            aa:
                             for (WallResponse.Success.WallNotification notification : wallResponse.getSuccess().getWallNotifications()) {
                                 WallResponseModel responseModel = new WallResponseModel();
 
                                 try {
-                                    if (getSuggestionData(notification.getSuggestionURL()) && notification.getLayout().equals("0")) {
-                                        responseModel.setLayout(notification.getLayout());
-                                        Log.i("Wall URL", "->" + notification.getSuggestionURL());
-                                        responseModel.setSuggestionURL(notification.getSuggestionURL());
-                                    } else if (!notification.getLayout().equals("0")) {
-                                        Log.i("Wall URLelse", "->" + notification.getSuggestionURL());
+                                    if (notification.getLayout().equals("0") && !getSuggestionData(notification.getSuggestionURL())) {
+//                                        responseModel.setLayout(notification.getLayout());
+//                                        Log.i("Wall URL", "->" + notification.getSuggestionURL());
+//                                        responseModel.setSuggestionURL(notification.getSuggestionURL());
+                                        Log.i("Restricted Wall If ", "->" + notification.getSuggestionURL());
+                                        System.out.println("Restricted Wall If");
+                                        continue aa;
+
+                                    } else {
+                                        Log.i("Restricted Wall else", "->" + notification.getSuggestionURL());
+                                        System.out.println("Restricted Wall else");
                                         responseModel.setActionID(notification.getActionID());
                                         responseModel.setLayout(notification.getLayout());
+                                        responseModel.setSuggestionURL(notification.getSuggestionURL());
 
                                         responseModel.setSender(notification.getSender());
                                         responseModel.setAction(notification.getAction());
@@ -501,6 +509,7 @@ public class WallNotificationFragment extends Fragment implements SwipeRefreshLa
     }
 
     private boolean getSuggestionData(String mUrl) throws JSONException {
+        result = false;
         try {
             final Retrofit retrofit = new Retrofit.Builder()
                     .baseUrl(getString(R.string.base_url))
@@ -515,11 +524,9 @@ public class WallNotificationFragment extends Fragment implements SwipeRefreshLa
                 public void onResponse(Call<SuggestionsResponse> call, Response<SuggestionsResponse> response) {
                     if (response.isSuccessful()) {
                         SuggestionsResponse suggestion = response.body();
-                        if (!suggestion.getSuccess().isEmpty()) {
-                            result = true;
-                        } else {
-                            result = false;
-                        }
+
+                        result = suggestion.getSuccess() != null || !suggestion.getSuccess().isEmpty();
+                        System.out.println("Suggestion Result=" + String.valueOf(result));
                     }
                 }
 

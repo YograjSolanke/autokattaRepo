@@ -64,8 +64,11 @@ public class ManualEnquiry extends Fragment implements SwipeRefreshLayout.OnRefr
     SharedPreferences sharedPreferences = null;
     SharedPreferences.Editor editor;
     ManualEnquiryAdapter adapter;
+    Bundle bundle;
+    int store_id;
+    String bundle_contact;
 
-View mManualEnquiry;
+    View mManualEnquiry;
 
     @Nullable
     @Override
@@ -74,12 +77,19 @@ View mManualEnquiry;
         getActivity().setTitle("Enquiry's");
 
         showDatePicker();
-     //   getActivity().startActivity(new Intent(getActivity(), ManualAppIntro.class));
+        //   getActivity().startActivity(new Intent(getActivity(), ManualAppIntro.class));
         sharedPreferences = getActivity().getSharedPreferences(getString(R.string.firstRun), MODE_PRIVATE);
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 getManualData();
+
+                bundle = getArguments();
+                store_id = bundle.getInt("bundle_storeId", 0);
+                bundle_contact = bundle.getString("bundle_contact", "");
+                System.out.println("bundle store_id=" + store_id);
+                System.out.println("bundle contact=" + bundle_contact);
+
                 mSwipeRefreshLayout = (SwipeRefreshLayout) mManualEnquiry.findViewById(R.id.manual_swipeRefreshLayout);
                 //mPersonSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.person_swipeRefreshLayout);
 
@@ -356,7 +366,6 @@ View mManualEnquiry;
                             request.setEnquiryID(success.getId());
 
 
-
                             request.setCustomerName("name");
                             request.setCustomerContact("contact");
                             request.setCreatedDate(success.getCreatedDate());
@@ -418,7 +427,6 @@ View mManualEnquiry;
                             request.setLoanpercent(service.getLoanPercent());
                             request.setFinancerstatus(service.getFinancerStatus());
                             request.setEnquiryID(service.getId());
-
 
 
                             request.setCustomerName("name");
@@ -652,7 +660,7 @@ View mManualEnquiry;
                 break;
             case "New Vehicle":
                 intent.putExtra("id", request.getVehicleId());
-                String a=request.getVehicleId();
+                String a = request.getVehicleId();
                 intent.putExtra("name", request.getVehicleName());
                 intent.putExtra("financername", request.getFinancerName());
                 intent.putExtra("loanamount", request.getLoanamount());
