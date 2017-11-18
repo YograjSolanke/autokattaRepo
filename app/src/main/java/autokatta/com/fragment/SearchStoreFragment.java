@@ -190,9 +190,13 @@ public class SearchStoreFragment extends Fragment implements SwipeRefreshLayout.
                     mNoData.setVisibility(View.VISIBLE);
                 }
             } else {
+                mSwipeRefreshLayout.setRefreshing(false);
+                mNoData.setVisibility(View.VISIBLE);
                 CustomToast.customToast(getActivity(), getString(R.string._404));
             }
         } else {
+            mSwipeRefreshLayout.setRefreshing(false);
+            mNoData.setVisibility(View.VISIBLE);
             CustomToast.customToast(getActivity(), getString(R.string.no_response));
         }
     }

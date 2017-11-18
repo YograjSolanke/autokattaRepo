@@ -635,7 +635,7 @@
 
     <string name="store_services">Store Services</string>
     <string name="uploaded_on">Uploaded On</string>
-    <string name="year_dash">Year  -</string>
+    <string name="year_dash">Year-</string>
     <string name="no_of_leads">No of leads</string>
     <string name="leads">Leads</string>
     <string name="enquiries">Enquiries</string>
@@ -877,10 +877,10 @@
     <string name="axelconfiguration">AxeConfiguration</string>
 
     <!--Search new vehicle-->
-    <string name="compulsory_category">Category<font color="#FF0000">\\u002A</font></string>
-    <string name="compulsory_SubCategory">Sub Category: <font color='#FF0000'>\u002A</font></string>
-    <string name="compulsory_brand">Brand<font color="#FF0000">\\u002A</font></string>
-    <string name="compulsory_model">Model<font color="#FF0000">\\u002A</font></string>
+    <string name="compulsory_category">Category<font color="#FF0000">\u002A</font></string>
+    <string name="compulsory_SubCategory">Sub Category:<font color='#FF0000'>\u002A</font></string>
+    <string name="compulsory_brand">Brand<font color="#FF0000">\u002A</font></string>
+    <string name="compulsory_model">Model<font color="#FF0000">\u002A</font></string>
     <string name="title_activity_single_video" translatable="false">SingleVideoActivity</string>
     <string name="title_activity_android_grid_view_display_images" translatable="false">AndroidGridViewDisplayImages</string>
 
@@ -1010,7 +1010,7 @@
     <string name="MarketPlace" translatable="false">Market Place</string>
     <string name="carrequirements" translatable="false">car requirements</string>
 
-    <string name="groupType">Group Type?<font color="#FF0000">\\u002A</font></string>
+    <string name="groupType">Group Type?<font color="#FF0000">\u002A</font></string>
     <string name="groupPublic">Public</string>
     <string name="groupPrivate">Private</string>
     <string name="title_activity_inventory_notes" translatable="false">InventoryNotesActivity</string>

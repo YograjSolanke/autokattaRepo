@@ -68,18 +68,27 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/website"
+                android:drawableStart="@mipmap/web"
+                android:drawablePadding="@dimen/margin_small"
+                android:gravity="center_vertical"
                 android:textColor="@color/background" />
 
             <TextView
                 android:id="@+id/location"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:drawableStart="@mipmap/map"
+                android:drawablePadding="@dimen/margin_small"
+                android:gravity="center_vertical"
                 android:text="@string/location" />
 
             <TextView
                 android:id="@+id/storeType"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:drawableStart="@mipmap/ic_wrench"
+                android:drawablePadding="@dimen/margin_small"
+                android:gravity="center_vertical"
                 android:text="@string/store_type" />
 
             <LinearLayout
@@ -192,7 +201,6 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_below="@+id/actionLayout"
-        android:layout_marginTop="1dp"
         android:background="#cccccc" />
 
     <GridView

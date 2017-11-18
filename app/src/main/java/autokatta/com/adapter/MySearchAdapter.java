@@ -252,9 +252,6 @@ public class MySearchAdapter extends RecyclerView.Adapter<MySearchAdapter.Search
 
         //Share my search
         holder.share.setOnClickListener(new View.OnClickListener() {
-            String imageFilePath = "", imagename;
-            Intent intent = new Intent(Intent.ACTION_SEND);
-
             @Override
             public void onClick(View v) {
                 PopupMenu mPopupMenu = new PopupMenu(activity, holder.share);
@@ -272,9 +269,6 @@ public class MySearchAdapter extends RecyclerView.Adapter<MySearchAdapter.Search
                                         holder.textsearchdate.getText().toString() + "=" +
                                         holder.BuyerLeads.getText().toString();
 
-
-                                System.out.println("all search detailssss======Auto " + allSearchDetails);
-
                                 activity.getSharedPreferences(activity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
                                         putString("Share_sharedata", allSearchDetails).apply();
                                 activity.getSharedPreferences(activity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
@@ -282,14 +276,12 @@ public class MySearchAdapter extends RecyclerView.Adapter<MySearchAdapter.Search
                                 activity.getSharedPreferences(activity.getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
                                         putString("Share_keyword", "mysearch").apply();
 
-
                                 Intent i = new Intent(activity, ShareWithinAppActivity.class);
                                 activity.startActivity(i);
                                 break;
 
                             case R.id.other:
                                 Intent intent = new Intent(Intent.ACTION_SEND);
-
                                 String allSearchDetailss = "Search Category : " + holder.textcategory.getText().toString() + "\n" +
                                         "Search Brand : " + holder.textbrand.getText().toString() + "\n" +
                                         "Search Model : " + holder.textmodel.getText().toString() + "\n" +
@@ -297,8 +289,6 @@ public class MySearchAdapter extends RecyclerView.Adapter<MySearchAdapter.Search
                                         "Price : " + holder.textprice.getText().toString() + "\n" +
                                         "Leads : " + holder.BuyerLeads.getText().toString() + "\n" +
                                         "Date : " + holder.textsearchdate.getText().toString();
-
-                                System.out.println("all search detailssss======Other " + allSearchDetailss);
 
                                 intent.setType("text/plain");
                                 /*intent.putExtra(Intent.EXTRA_TEXT, "Please visit and Follow my vehicle on Autokatta. Stay connected for Product and Service updates and enquiries"
@@ -314,7 +304,6 @@ public class MySearchAdapter extends RecyclerView.Adapter<MySearchAdapter.Search
                                 intent.putExtra(Intent.EXTRA_TEXT, allSearchDetails);
                                 intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
                                 mActivity.startActivity(intent);*/
-
                                 break;
                         }
                         return false;
@@ -350,15 +339,12 @@ public class MySearchAdapter extends RecyclerView.Adapter<MySearchAdapter.Search
                 }
             }
         });
-
-
     }
 
     @Override
     public int getItemCount() {
         return mMainlist.size();
     }
-
 
     static class SearchHolder extends RecyclerView.ViewHolder {
 
@@ -370,7 +356,6 @@ public class MySearchAdapter extends RecyclerView.Adapter<MySearchAdapter.Search
 
         SearchHolder(View itemView) {
             super(itemView);
-
             textcategory = (TextView) itemView.findViewById(R.id.mysearch_category);
             textbrand = (TextView) itemView.findViewById(R.id.mysearch_brand);
             textmodel = (TextView) itemView.findViewById(R.id.mysearch_model);
@@ -421,9 +406,7 @@ public class MySearchAdapter extends RecyclerView.Adapter<MySearchAdapter.Search
 
     @Override
     public void notifyString(String str) {
-
         if (str != null) {
-
             switch (str) {
                 case "successdelete":
                     CustomToast.customToast(activity, "Search deleted");
@@ -441,8 +424,6 @@ public class MySearchAdapter extends RecyclerView.Adapter<MySearchAdapter.Search
                     CustomToast.customToast(activity, "Unfavorite");
                     break;
             }
-
         }
-
     }
 }
