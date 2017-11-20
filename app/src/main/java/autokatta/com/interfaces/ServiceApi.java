@@ -1329,13 +1329,14 @@ public interface ServiceApi {
                                             @Query("MyContact") String MyContact, @Query("Keyword") String keyword,
                                             @Query("Discussion") String Discussion, @Query("NextFollowUpDate") String NextFollowUpDate,
                                             @Query("Idslist") String Idslist);
-//transfer enquiry..
+
+    //transfer enquiry..
     @POST("Addtransferenquiry")
     Call<String> addtransferenquiry(@Query("enquiryid") int enquiryid, @Query("transfercontact") String transfercontact,
-                                            @Query("enquirycontact") String enquirycontact, @Query("mycontact") String mycontact,
-                                            @Query("transfertoname") String transfertoname, @Query("description") String description,
-                                            @Query("reasonfortransfer") String reasonfortransfer, @Query("monitorstatus") String monitorstatus,
-                                            @Query("Keyword") String Keyword, @Query("AcceptStatus") String AcceptStatus, @Query("PSVN_ID") String ID);
+                                    @Query("enquirycontact") String enquirycontact, @Query("mycontact") String mycontact,
+                                    @Query("transfertoname") String transfertoname, @Query("description") String description,
+                                    @Query("reasonfortransfer") String reasonfortransfer, @Query("monitorstatus") String monitorstatus,
+                                    @Query("Keyword") String Keyword, @Query("AcceptStatus") String AcceptStatus, @Query("PSVN_ID") String ID);
 
     //Get Group Quotation
     @GET("GetGroupQuotation")
@@ -1599,4 +1600,7 @@ public interface ServiceApi {
                                       @Query("Keyword") String Keyword);
 
 
+    // get Suggestion based data
+    @GET("GetSuggestions")
+    Call<SuggestionsResponse> _autokattaGetSuggestionData(@Query("Contact") String mLoginContact, @Query("Type") String Type);
 }

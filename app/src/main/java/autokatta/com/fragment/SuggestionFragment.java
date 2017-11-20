@@ -102,6 +102,7 @@ public class SuggestionFragment extends Fragment implements SwipeRefreshLayout.O
 
     private void getSuggestionData() {
         ApiCall mApiCall = new ApiCall(getActivity(), this);
+        //mApiCall.getSuggestionData(mLoginContact,"");
     }
 
     @Override

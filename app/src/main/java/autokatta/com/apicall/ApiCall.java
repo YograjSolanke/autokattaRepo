@@ -8663,7 +8663,7 @@ get ExchangeMela Analytics Data
      Add trnasfer enquiry ...
     */
 
-    public void addtransferenquiry(int enquiryid, String transfercontact, String enquirycontact, String mycontact, String tranfertoname, String description, String reasonfortransfer,String monitorstatus,String keyword,String acceptstatus,String ids) {
+    public void addtransferenquiry(int enquiryid, String transfercontact, String enquirycontact, String mycontact, String tranfertoname, String description, String reasonfortransfer, String monitorstatus, String keyword, String acceptstatus, String ids) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 //JSON to Gson conversion
@@ -8679,7 +8679,7 @@ get ExchangeMela Analytics Data
 
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<String> mServiceMelaResponse = serviceApi.addtransferenquiry(enquiryid,transfercontact,enquirycontact,mycontact,tranfertoname,description,reasonfortransfer,monitorstatus,keyword,acceptstatus,ids);
+                Call<String> mServiceMelaResponse = serviceApi.addtransferenquiry(enquiryid, transfercontact, enquirycontact, mycontact, tranfertoname, description, reasonfortransfer, monitorstatus, keyword, acceptstatus, ids);
                 mServiceMelaResponse.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
@@ -8868,6 +8868,7 @@ get ExchangeMela Analytics Data
             e.printStackTrace();
         }
     }
+
     /*
   Sold Vehicle...
 */
@@ -9900,12 +9901,7 @@ get ExchangeMela Analytics Data
         }
     }
 
-
-
-
-     /*
-        Delete an Employee
-     */
+     /* Delete an Employee */
 
     public void updateDeleteEmployee(int StoreEmplyeeID,
                                      String Name,
@@ -9950,6 +9946,36 @@ get ExchangeMela Analytics Data
         }
     }
 
+    public void getSuggestionData(String mLoginContact, String Type) {
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<SuggestionsResponse> responseCall = serviceApi._autokattaGetSuggestionData(mLoginContact, Type);
+                responseCall.enqueue(new Callback<SuggestionsResponse>() {
+                    @Override
+                    public void onResponse(Call<SuggestionsResponse> call, Response<SuggestionsResponse> response) {
+                        mNotifier.notifySuccess(response);
+                    }
+
+                    @Override
+                    public void onFailure(Call<SuggestionsResponse> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+            } else
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
     /***
      * Retrofit Logs
@@ -9981,6 +10007,4 @@ get ExchangeMela Analytics Data
         httpClient.addInterceptor(logging).build();
         return httpClient;
     }
-
-
 }
