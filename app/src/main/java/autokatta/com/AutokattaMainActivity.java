@@ -27,7 +27,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -57,12 +56,12 @@ import autokatta.com.broadcastreceiver.BackgroundService;
 import autokatta.com.broadcastreceiver.Receiver;
 import autokatta.com.fragment.FavoriteNotificationFragment;
 import autokatta.com.fragment.GroupNotification;
+import autokatta.com.fragment.NotificationFragment;
 import autokatta.com.fragment.StoreNotification;
-import autokatta.com.fragment.SuggestionFragment;
+import autokatta.com.fragment.WallMoreFragment;
 import autokatta.com.fragment.WallNotificationFragment;
 import autokatta.com.generic.Base64;
 import autokatta.com.interfaces.RequestNotifier;
-import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.notifications.NotificationAddEmployeeActivity;
 import autokatta.com.other.CustomToast;
 import autokatta.com.other.EnquiryActivity;
@@ -103,7 +102,6 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
     SessionManagement session;
     SharedPreferences sharedPreferences = null;
     SharedPreferences.Editor editor;
-    private SearchView mSearchView;
     //qr code scanner object
     private IntentIntegrator qrScan;
     private ViewPager viewPager;
@@ -112,10 +110,9 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
     Locale myLocale;
     String mLanguage;
     AlertDialog alertDialog;
-    ConnectionDetector mTestConnection;
     private static final String VERSION_KEY = "android_latest_version_code";
     private static final String NAME_KEY = "android_latest_version_name";
-    private FirebaseRemoteConfig mFirebaseRemoteConfig;
+    FirebaseRemoteConfig mFirebaseRemoteConfig;
 
     private boolean isBackgroundServiceRunning(Class<?> serviceClass) {
         ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
@@ -390,7 +387,8 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
         tabLayout.getTabAt(1).setIcon(R.mipmap.ic_cart);
         tabLayout.getTabAt(2).setIcon(R.mipmap.ic_account_multiple);
         tabLayout.getTabAt(3).setIcon(R.mipmap.ic_heart);
-        tabLayout.getTabAt(4).setIcon(R.mipmap.ic_heart);
+        tabLayout.getTabAt(4).setIcon(R.mipmap.view_more);
+        tabLayout.getTabAt(5).setIcon(R.mipmap.ic_notification);
 
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -421,7 +419,7 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
             tabLayout.getTabAt(2).getIcon().setAlpha(128);
             tabLayout.getTabAt(3).getIcon().setAlpha(128);
             tabLayout.getTabAt(4).getIcon().setAlpha(128);
-            //tabLayout.getTabAt(5).getIcon().setAlpha(128);
+            tabLayout.getTabAt(5).getIcon().setAlpha(128);
 
             viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
                 @Override
@@ -438,15 +436,15 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
                             tabLayout.getTabAt(2).getIcon().setAlpha(128);
                             tabLayout.getTabAt(3).getIcon().setAlpha(128);
                             tabLayout.getTabAt(4).getIcon().setAlpha(128);
-                            //tabLayout.getTabAt(5).getIcon().setAlpha(128);
+                            tabLayout.getTabAt(5).getIcon().setAlpha(128);
                             break;
                         case 1:
                             tabLayout.getTabAt(0).getIcon().setAlpha(128);
                             tabLayout.getTabAt(1).getIcon().setAlpha(255);
                             tabLayout.getTabAt(2).getIcon().setAlpha(128);
                             tabLayout.getTabAt(3).getIcon().setAlpha(128);
-                            //tabLayout.getTabAt(4).getIcon().setAlpha(128);
-                            //tabLayout.getTabAt(5).getIcon().setAlpha(128);
+                            tabLayout.getTabAt(4).getIcon().setAlpha(128);
+                            tabLayout.getTabAt(5).getIcon().setAlpha(128);
                             break;
                         case 2:
                             tabLayout.getTabAt(0).getIcon().setAlpha(128);
@@ -454,7 +452,7 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
                             tabLayout.getTabAt(2).getIcon().setAlpha(255);
                             tabLayout.getTabAt(3).getIcon().setAlpha(128);
                             tabLayout.getTabAt(4).getIcon().setAlpha(128);
-                            //tabLayout.getTabAt(5).getIcon().setAlpha(128);
+                            tabLayout.getTabAt(5).getIcon().setAlpha(128);
                             break;
                         case 3:
                             tabLayout.getTabAt(0).getIcon().setAlpha(128);
@@ -462,7 +460,7 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
                             tabLayout.getTabAt(2).getIcon().setAlpha(128);
                             tabLayout.getTabAt(3).getIcon().setAlpha(255);
                             tabLayout.getTabAt(4).getIcon().setAlpha(128);
-                            //tabLayout.getTabAt(5).getIcon().setAlpha(128);
+                            tabLayout.getTabAt(5).getIcon().setAlpha(128);
                             break;
                         case 4:
                             tabLayout.getTabAt(0).getIcon().setAlpha(128);
@@ -470,15 +468,15 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
                             tabLayout.getTabAt(2).getIcon().setAlpha(128);
                             tabLayout.getTabAt(3).getIcon().setAlpha(128);
                             tabLayout.getTabAt(4).getIcon().setAlpha(255);
-                            //tabLayout.getTabAt(5).getIcon().setAlpha(128);
+                            tabLayout.getTabAt(5).getIcon().setAlpha(128);
                             break;
                         case 5:
                             tabLayout.getTabAt(0).getIcon().setAlpha(128);
                             tabLayout.getTabAt(1).getIcon().setAlpha(128);
                             tabLayout.getTabAt(2).getIcon().setAlpha(128);
                             tabLayout.getTabAt(3).getIcon().setAlpha(128);
-                            //tabLayout.getTabAt(4).getIcon().setAlpha(128);
-                            //tabLayout.getTabAt(5).getIcon().setAlpha(255);
+                            tabLayout.getTabAt(4).getIcon().setAlpha(128);
+                            tabLayout.getTabAt(5).getIcon().setAlpha(255);
                             break;
                     }
                 }
@@ -627,7 +625,8 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
         adapter.addFragment(new StoreNotification());
         adapter.addFragment(new GroupNotification());
         adapter.addFragment(new FavoriteNotificationFragment());
-        adapter.addFragment(new SuggestionFragment());
+        adapter.addFragment(new WallMoreFragment());
+        adapter.addFragment(new NotificationFragment());
         viewPager.setAdapter(adapter);
     }
 
@@ -735,14 +734,6 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_autokatta_main, menu);
-        mSearchView = (SearchView) menu.findItem(R.id.action_searchs).getActionView();
-        /*mSearchView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setupSearchView();
-            }
-        });*/
-
         return true;
     }
 
