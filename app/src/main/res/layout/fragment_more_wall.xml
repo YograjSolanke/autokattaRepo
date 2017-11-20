@@ -15,11 +15,12 @@
 
             <ImageView
                 android:id="@+id/profile_image"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
                 android:contentDescription="@string/app_name"
+                android:padding="@dimen/margin_small"
                 android:scaleType="fitXY"
-                android:src="@mipmap/demo" />
+                android:src="@drawable/demo_group" />
 
             <TextView
                 android:id="@+id/name1"
@@ -27,29 +28,24 @@
                 android:layout_height="wrap_content"
                 android:layout_toEndOf="@+id/profile_image"
                 android:padding="@dimen/text_layout"
-                android:text="@string/store"
+                android:text="Store Notification"
                 android:textStyle="bold" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_below="@+id/profile_image"
-                android:layout_toEndOf="@+id/profile_image"
-                android:background="#cccccc" />
 
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/relative2"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <ImageView
                 android:id="@+id/image2"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
                 android:contentDescription="@string/app_name"
+                android:padding="@dimen/margin_small"
                 android:scaleType="fitXY"
-                android:src="@mipmap/demo" />
+                android:src="@drawable/demo_group" />
 
             <TextView
                 android:id="@+id/name2"
@@ -57,29 +53,24 @@
                 android:layout_height="wrap_content"
                 android:layout_toEndOf="@+id/image2"
                 android:padding="@dimen/text_layout"
-                android:text="@string/groups"
+                android:text="Group Notification"
                 android:textStyle="bold" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_below="@+id/image2"
-                android:layout_toEndOf="@+id/image2"
-                android:background="#cccccc" />
 
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/relative3"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <ImageView
                 android:id="@+id/image3"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
                 android:contentDescription="@string/app_name"
+                android:padding="@dimen/margin_small"
                 android:scaleType="fitXY"
-                android:src="@mipmap/demo" />
+                android:src="@drawable/demo_group" />
 
             <TextView
                 android:id="@+id/name3"
@@ -87,15 +78,8 @@
                 android:layout_height="wrap_content"
                 android:layout_toEndOf="@+id/image3"
                 android:padding="@dimen/text_layout"
-                android:text="@string/suggested_price"
+                android:text="My Favourite"
                 android:textStyle="bold" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_below="@+id/image3"
-                android:layout_toEndOf="@+id/image3"
-                android:background="#cccccc" />
 
         </RelativeLayout>
 

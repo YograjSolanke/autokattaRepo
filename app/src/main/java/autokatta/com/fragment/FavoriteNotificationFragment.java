@@ -3,14 +3,13 @@ package autokatta.com.fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.net.ConnectException;
@@ -37,41 +36,33 @@ import retrofit2.Response;
  * Created by ak-003 on 20/4/17.
  */
 
-public class FavoriteNotificationFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, RequestNotifier {
+public class FavoriteNotificationFragment extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener, RequestNotifier {
     RecyclerView mRecyclerView;
     SwipeRefreshLayout mSwipeRefreshLayout;
-    View mFavNotify;
     TextView mNoData;
     private String mLoginContact = "";
-    boolean _hasLoadedOnce = false;
-
-
-    public FavoriteNotificationFragment() {
-        //Empty Constructor...
-    }
-
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mFavNotify = inflater.inflate(R.layout.fragment_simple_listview, container, false);
-        return mFavNotify;
-    }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        getActivity().runOnUiThread(new Runnable() {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.fragment_simple_listview);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setHomeButtonEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+        setTitle("My Favourite");
+        runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                mLoginContact = getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).
+                mLoginContact = getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).
                         getString("loginContact", "");
-                mNoData = (TextView) mFavNotify.findViewById(R.id.no_category);
+                mNoData = (TextView) findViewById(R.id.no_category);
                 mNoData.setVisibility(View.GONE);
 
-                mRecyclerView = (RecyclerView) mFavNotify.findViewById(R.id.recyclerMain);
-                mSwipeRefreshLayout = (SwipeRefreshLayout) mFavNotify.findViewById(R.id.swipeRefreshLayoutMain);
+                mRecyclerView = (RecyclerView) findViewById(R.id.recyclerMain);
+                mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayoutMain);
                 mRecyclerView.setHasFixedSize(true);
-                LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
+                LinearLayoutManager mLayoutManager = new LinearLayoutManager(FavoriteNotificationFragment.this);
                 mLayoutManager.setReverseLayout(true);
                 mLayoutManager.setStackFromEnd(true);
                 mRecyclerView.setLayoutManager(mLayoutManager);
@@ -91,35 +82,32 @@ public class FavoriteNotificationFragment extends Fragment implements SwipeRefre
             }
         });
         mSwipeRefreshLayout.setOnRefreshListener(this);
-        /*adapter = new WallNotificationAdapter();
-        adapter.setOnLoadMoreListener(new OnLoadMoreListener() {
-            @Override
-            public void onLoadMore() {
-                Log.i("Loaded", "->");
-            }
-        });*/
     }
 
     private void getFavouriteData() {
-        ApiCall mApiCall = new ApiCall(getActivity(), this);
+        ApiCall mApiCall = new ApiCall(this, this);
         mApiCall.FavouriteNotification(mLoginContact);
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
 
     @Override
     public void onRefresh() {
         getFavouriteData();
-    }
-
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        if (this.isVisible()) {
-            if (isVisibleToUser && !_hasLoadedOnce) {
-                getFavouriteData();
-                _hasLoadedOnce = true;
-            }
-        }
     }
 
     @Override
@@ -129,28 +117,22 @@ public class FavoriteNotificationFragment extends Fragment implements SwipeRefre
                 mNoData.setVisibility(View.GONE);
                 List<FavouriteAllResponse> mainList = new ArrayList<>();
                 mainList.clear();
-
                 FavouriteResponse favouriteResponse = (FavouriteResponse) response.body();
 
                 //Wall Notification
                 if (!favouriteResponse.getSuccess().getNotification().isEmpty()) {
                     for (FavouriteResponse.Success.Notification successNotification : favouriteResponse.getSuccess().getNotification()) {
-
                         FavouriteAllResponse favouriteAllResponse = new FavouriteAllResponse();
-
                         favouriteAllResponse.setId(successNotification.getId());
-
                         favouriteAllResponse.setLayoutNo(successNotification.getLayout());
                         favouriteAllResponse.setSender(successNotification.getSender());
                         favouriteAllResponse.setAction(successNotification.getAction());
                         favouriteAllResponse.setReceiver(successNotification.getReceiver());
-
                         favouriteAllResponse.setVehicleId(successNotification.getVehicleId());
                         favouriteAllResponse.setProductId(successNotification.getProductId());
                         favouriteAllResponse.setServiceId(successNotification.getServiceId());
                         favouriteAllResponse.setStoreId(successNotification.getStoreId());
                         favouriteAllResponse.setGroupId(successNotification.getGroupId());
-
                         favouriteAllResponse.setSendername(successNotification.getSendername());
                         favouriteAllResponse.setSenderprofession(successNotification.getSenderprofession());
                         favouriteAllResponse.setSenderwebsite(successNotification.getSenderwebsite());
@@ -159,7 +141,6 @@ public class FavoriteNotificationFragment extends Fragment implements SwipeRefre
                         favouriteAllResponse.setSenderfollowcount(successNotification.getSenderfollowcount());
                         favouriteAllResponse.setSenderlikestatus(successNotification.getSenderlikestatus());
                         favouriteAllResponse.setSenderfollowstatus(successNotification.getSenderfollowstatus());
-
                         favouriteAllResponse.setReceivername(successNotification.getReceivername());
                         favouriteAllResponse.setReceiverPic(successNotification.getReceiverPic());
                         favouriteAllResponse.setReceiverprofession(successNotification.getReceiverprofession());
@@ -169,7 +150,6 @@ public class FavoriteNotificationFragment extends Fragment implements SwipeRefre
                         favouriteAllResponse.setReceiverfollowcount(successNotification.getReceiverfollowcount());
                         favouriteAllResponse.setReceiverlikestatus(successNotification.getReceiverlikestatus());
                         favouriteAllResponse.setReceiverfollowstatus(successNotification.getReceiverfollowstatus());
-
                         favouriteAllResponse.setStorelikestatus(successNotification.getStorelikestatus());
                         favouriteAllResponse.setStorefollowstatus(successNotification.getStorefollowstatus());
                         favouriteAllResponse.setStorerating(successNotification.getStorerating());
@@ -185,14 +165,12 @@ public class FavoriteNotificationFragment extends Fragment implements SwipeRefre
                         favouriteAllResponse.setStoreLocation(successNotification.getStoreLocation());
                         favouriteAllResponse.setStoreShareCount(successNotification.getStoreShareCount());
                         favouriteAllResponse.setStoreCategory(successNotification.getStoreCategory());
-
                         favouriteAllResponse.setGroupVehicles(successNotification.getGroupVehicles());
                         favouriteAllResponse.setGroupName(successNotification.getGroupName());
                         favouriteAllResponse.setGroupMembers(successNotification.getGroupMembers());
                         favouriteAllResponse.setGroupImage(successNotification.getGroupImage());
                         favouriteAllResponse.setGroupProductCount(successNotification.getGroupProductCount());
                         favouriteAllResponse.setGroupServiceCount(successNotification.getGroupServiceCount());
-
                         favouriteAllResponse.setProductlikestatus(successNotification.getProductlikestatus());
                         favouriteAllResponse.setProductfollowstatus(successNotification.getProductfollowstatus());
                         favouriteAllResponse.setProductlikecount(successNotification.getProductlikecount());
@@ -212,7 +190,6 @@ public class FavoriteNotificationFragment extends Fragment implements SwipeRefre
                         } else {
                             favouriteAllResponse.setProductimages(proImage);
                         }
-
                         favouriteAllResponse.setServicelikestatus(successNotification.getServicelikestatus());
                         favouriteAllResponse.setServicefollowstatus(successNotification.getServicefollowstatus());
                         favouriteAllResponse.setServicelikecount(successNotification.getServicelikecount());
@@ -260,7 +237,6 @@ public class FavoriteNotificationFragment extends Fragment implements SwipeRefre
                             favouriteAllResponse.setUpVehicleImage(vehicleImage);
                         }
 
-
                         favouriteAllResponse.setSearchId(successNotification.getSearchID());
                         favouriteAllResponse.setSearchLikeStatus(successNotification.getSearchLikeStatus());
                         favouriteAllResponse.setSearchCategory(successNotification.getSearchCategory());
@@ -298,8 +274,6 @@ public class FavoriteNotificationFragment extends Fragment implements SwipeRefre
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
-
-
                         mainList.add(favouriteAllResponse);
                     }
                 }
@@ -307,7 +281,6 @@ public class FavoriteNotificationFragment extends Fragment implements SwipeRefre
                 //BuyerSearch
                 if (!favouriteResponse.getSuccess().getBuyerSearch().isEmpty()) {
                     for (FavouriteResponse.Success.BuyerSearch successBuyerSearch : favouriteResponse.getSuccess().getBuyerSearch()) {
-
                         FavouriteAllResponse favouriteAllResponse = new FavouriteAllResponse();
                         favouriteAllResponse.setLayoutNo("111");
                         favouriteAllResponse.setFavid(successBuyerSearch.getFavid());
@@ -370,7 +343,6 @@ public class FavoriteNotificationFragment extends Fragment implements SwipeRefre
                         favouriteAllResponse.setSendername(successBuyerSearch.getSendername());
                         favouriteAllResponse.setSenderPic(successBuyerSearch.getSenderPic());
                         favouriteAllResponse.setVhpcapacity(successBuyerSearch.getVhpCapacity());
-
                         favouriteAllResponse.setSsearchId(successBuyerSearch.getSsearchId());
                         favouriteAllResponse.setScontactNo(successBuyerSearch.getScontactNo());
                         favouriteAllResponse.setSstatus(successBuyerSearch.getSstatus());
@@ -423,19 +395,15 @@ public class FavoriteNotificationFragment extends Fragment implements SwipeRefre
                         favouriteAllResponse.setSfinanceReq(successBuyerSearch.getSfinanceReq());
                         favouriteAllResponse.setSinvoice(successBuyerSearch.getSinvoice());
                         favouriteAllResponse.setShpcapacity(successBuyerSearch.getShpCapacity());
-
                         mainList.add(favouriteAllResponse);
-
                     }
                 }
 
                 //Seller
                 if (!favouriteResponse.getSuccess().getSellerVehicle().isEmpty()) {
                     for (FavouriteResponse.Success.SellerVehicle successSellerVehicle : favouriteResponse.getSuccess().getSellerVehicle()) {
-
                         FavouriteAllResponse favouriteAllResponse = new FavouriteAllResponse();
                         favouriteAllResponse.setLayoutNo("112");
-
                         favouriteAllResponse.setFavid(successSellerVehicle.getFavid());
                         favouriteAllResponse.setVvehicleId(successSellerVehicle.getVvehicleId());
                         favouriteAllResponse.setVtitle(successSellerVehicle.getVtitle());
@@ -496,7 +464,6 @@ public class FavoriteNotificationFragment extends Fragment implements SwipeRefre
                         favouriteAllResponse.setSendername(successSellerVehicle.getSendername());
                         favouriteAllResponse.setSenderPic(successSellerVehicle.getSenderPic());
                         favouriteAllResponse.setVhpcapacity(successSellerVehicle.getVhpCapacity());
-
                         favouriteAllResponse.setSsearchId(successSellerVehicle.getSsearchId());
                         favouriteAllResponse.setScontactNo(successSellerVehicle.getScontactNo());
                         favouriteAllResponse.setSstatus(successSellerVehicle.getSstatus());
@@ -549,7 +516,6 @@ public class FavoriteNotificationFragment extends Fragment implements SwipeRefre
                         favouriteAllResponse.setSfinanceReq(successSellerVehicle.getSfinanceReq());
                         favouriteAllResponse.setSinvoice(successSellerVehicle.getSinvoice());
                         favouriteAllResponse.setShpcapacity(successSellerVehicle.getShpCapacity());
-
                         mainList.add(favouriteAllResponse);
                     }
                 }
@@ -557,10 +523,8 @@ public class FavoriteNotificationFragment extends Fragment implements SwipeRefre
                 //Search
                 if (!favouriteResponse.getSuccess().getSearch().isEmpty()) {
                     for (FavouriteResponse.Success.Search successSearch : favouriteResponse.getSuccess().getSearch()) {
-
                         FavouriteAllResponse favouriteAllResponse = new FavouriteAllResponse();
                         favouriteAllResponse.setLayoutNo("113");
-
                         favouriteAllResponse.setSearchId(successSearch.getSearchID());
                         favouriteAllResponse.setSearchLikeStatus(successSearch.getSearchLikeStatus());
                         favouriteAllResponse.setSearchCategory(successSearch.getSearchCategory());
@@ -578,10 +542,9 @@ public class FavoriteNotificationFragment extends Fragment implements SwipeRefre
                         mainList.add(favouriteAllResponse);
                     }
                 }
-
                 Log.i("FavList", "Count->" + mainList.size());
                 mSwipeRefreshLayout.setRefreshing(false);
-                FavouriteNotificationAdapter adapter = new FavouriteNotificationAdapter(getActivity(), mainList);
+                FavouriteNotificationAdapter adapter = new FavouriteNotificationAdapter(FavoriteNotificationFragment.this, mainList);
                 mRecyclerView.setAdapter(adapter);
                 adapter.notifyDataSetChanged();
             } else {
@@ -590,31 +553,23 @@ public class FavoriteNotificationFragment extends Fragment implements SwipeRefre
                 //CustomToast.customToast(getActivity(), getString(R.string._404));
             }
         } else {
-            if (isAdded())
-                CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            CustomToast.customToast(FavoriteNotificationFragment.this, getString(R.string.no_response));
         }
-
-
     }
 
     @Override
     public void notifyError(Throwable error) {
         mSwipeRefreshLayout.setRefreshing(false);
         if (error instanceof SocketTimeoutException) {
-            if (isAdded())
-                CustomToast.customToast(getActivity(), getString(R.string._404_));
+            CustomToast.customToast(FavoriteNotificationFragment.this, getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
-            if (isAdded())
-                CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            CustomToast.customToast(FavoriteNotificationFragment.this, getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            if (isAdded())
-                CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            CustomToast.customToast(FavoriteNotificationFragment.this, getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
-            if (isAdded())
-                CustomToast.customToast(getActivity(), getString(R.string.no_internet));
+            CustomToast.customToast(FavoriteNotificationFragment.this, getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
-            if (isAdded())
-                CustomToast.customToast(getActivity(), getString(R.string.no_internet));
+            CustomToast.customToast(FavoriteNotificationFragment.this, getString(R.string.no_internet));
         } else {
             Log.i("Check Class", "Favourite Notification");
             error.printStackTrace();

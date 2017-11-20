@@ -880,6 +880,12 @@
             android:name=".view.MyStoreEmployeeActivity"
             android:label="@string/title_activity_my_store_employee"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".fragment.FavoriteNotificationFragment"
+            android:label="@string/title_activity_my_store_employee" />
+        <activity
+            android:name=".fragment.GroupNotification"
+            android:label="@string/title_activity_my_store_employee" />
         <activity android:name=".view.ManualEnquiryMainActivity"></activity>
         <activity android:name=".view.ShareEnquiryActivity"></activity>
         <activity android:name=".groups.ReplyGroupQuot"></activity>

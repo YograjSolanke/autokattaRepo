@@ -3,14 +3,13 @@ package autokatta.com.fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.net.ConnectException;
@@ -37,55 +36,45 @@ import retrofit2.Response;
  * Created by ak-003 on 7/7/17.
  */
 
-public class GroupNotification extends Fragment implements SwipeRefreshLayout.OnRefreshListener, RequestNotifier {
+public class GroupNotification extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener, RequestNotifier {
 
-    View mGroupView;
     SwipeRefreshLayout mSwipeRefreshLayout;
     RecyclerView mRecyclerView;
-    boolean hasViewCreated = false;
     TextView mNoData;
     ConnectionDetector mTestConnection;
     String mLoginContact;
     GroupNotificationAdapter mAdapter;
     List<WallResponse.Success.WallNotification> groupNotiList = new ArrayList<>();
 
-    public GroupNotification() {
-    }
-
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        //mGroupView = inflater.inflate(R.layout.fragment_store_layout, container, false);
-        mGroupView = inflater.inflate(R.layout.fragment_simple_listview, container, false);
-        return mGroupView;
-    }
-
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        mNoData = (TextView) view.findViewById(R.id.no_category);
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.fragment_simple_listview);
+        setTitle("Group Notification");
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setHomeButtonEnabled(true);
+        }
+        mNoData = (TextView) findViewById(R.id.no_category);
         mNoData.setVisibility(View.GONE);
-
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerMain);
-        mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeRefreshLayoutMain);
+        mRecyclerView = (RecyclerView) findViewById(R.id.recyclerMain);
+        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayoutMain);
 
         mRecyclerView.setHasFixedSize(true);
-
-        LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(getActivity());
+        LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(GroupNotification.this);
         mLinearLayoutManager.setReverseLayout(true);
         mLinearLayoutManager.setStackFromEnd(true);
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
 
         mSwipeRefreshLayout.setOnRefreshListener(this);
 
-        getActivity().runOnUiThread(new Runnable() {
+        runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    mTestConnection = new ConnectionDetector(getActivity());
-                    mLoginContact = getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).
+                    mTestConnection = new ConnectionDetector(GroupNotification.this);
+                    mLoginContact = getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).
                             getString("loginContact", "");
-
                     mSwipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
                             android.R.color.holo_green_light,
                             android.R.color.holo_orange_light,
@@ -94,7 +83,6 @@ public class GroupNotification extends Fragment implements SwipeRefreshLayout.On
                         @Override
                         public void run() {
                             mSwipeRefreshLayout.setRefreshing(true);
-
                             groupNotification();
                         }
                     });
@@ -106,7 +94,7 @@ public class GroupNotification extends Fragment implements SwipeRefreshLayout.On
     }
 
     private void groupNotification() {
-        ApiCall apiCall = new ApiCall(getActivity(), this);
+        ApiCall apiCall = new ApiCall(GroupNotification.this, this);
         //apiCall.wallNotifications(mLoginContact, mLoginContact, "3");
 
     }
@@ -114,19 +102,22 @@ public class GroupNotification extends Fragment implements SwipeRefreshLayout.On
     @Override
     public void onRefresh() {
         groupNotification();
-        //mSwipeRefreshLayout.setRefreshing(false);
     }
 
     @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        if (this.isVisible()) {
-            if (isVisibleToUser && !hasViewCreated) {
-
-                groupNotification();
-                hasViewCreated = true;
-            }
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                break;
         }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
     }
 
     @Override
@@ -332,7 +323,7 @@ public class GroupNotification extends Fragment implements SwipeRefreshLayout.On
                             groupNotiList.add(notification);
                         }
                     }
-                    mAdapter = new GroupNotificationAdapter(getActivity(), groupNotiList, mLoginContact);
+                    mAdapter = new GroupNotificationAdapter(GroupNotification.this, groupNotiList, mLoginContact);
                     mRecyclerView.setAdapter(mAdapter);
                     mAdapter.notifyDataSetChanged();
                 } else {
@@ -352,20 +343,15 @@ public class GroupNotification extends Fragment implements SwipeRefreshLayout.On
     public void notifyError(Throwable error) {
         mSwipeRefreshLayout.setRefreshing(false);
         if (error instanceof SocketTimeoutException) {
-            if (isAdded())
-                CustomToast.customToast(getActivity(), getString(R.string._404_));
+            CustomToast.customToast(GroupNotification.this, getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
-            if (isAdded())
-                CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            CustomToast.customToast(GroupNotification.this, getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            if (isAdded())
-                CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            CustomToast.customToast(GroupNotification.this, getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
-            if (isAdded())
-                CustomToast.customToast(getActivity(), getString(R.string.no_internet));
+            CustomToast.customToast(GroupNotification.this, getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
-            if (isAdded())
-                CustomToast.customToast(getActivity(), getString(R.string.no_internet));
+            CustomToast.customToast(GroupNotification.this, getString(R.string.no_internet));
         } else {
             Log.i("Check Class-", "Group Notification Fragment");
             error.printStackTrace();
