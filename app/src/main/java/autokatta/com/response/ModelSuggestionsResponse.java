@@ -8,6 +8,7 @@ public class ModelSuggestionsResponse {
 
     private int groupId;
     private int storeId;
+    private int product_id, service_id;
     private int uploadVehicleID;
     private int layoutId;
     private String userContact;
@@ -41,6 +42,22 @@ public class ModelSuggestionsResponse {
 
     public int getLayoutId() {
         return layoutId;
+    }
+
+    public int getProduct_id() {
+        return product_id;
+    }
+
+    public void setProduct_id(int product_id) {
+        this.product_id = product_id;
+    }
+
+    public int getService_id() {
+        return service_id;
+    }
+
+    public void setService_id(int service_id) {
+        this.service_id = service_id;
     }
 
     public void setLayoutId(int layoutId) {
