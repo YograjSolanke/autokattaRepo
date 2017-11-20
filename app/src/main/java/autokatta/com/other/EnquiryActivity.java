@@ -9,6 +9,11 @@ import autokatta.com.enquiries.AllEnquiryTabFragment;
 
 public class EnquiryActivity extends AppCompatActivity {
 
+    int mStoreID;
+    String mBundleContact;
+    Bundle mBundle;
+    AllEnquiryTabFragment allEnquiryTabFragment = new AllEnquiryTabFragment();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,8 +25,19 @@ public class EnquiryActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
+        if (getIntent().getExtras() != null) {
+            mStoreID = getIntent().getExtras().getInt("bundle_storeId", 0);
+            mBundleContact = getIntent().getExtras().getString("bundle_contact", "");
+        }
+
+        mBundle = new Bundle();
+        mBundle.putInt("bundle_storeId", mStoreID);
+        mBundle.putString("bundle_contact", mBundleContact);
+        allEnquiryTabFragment.setArguments(mBundle);
+
+
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.enquiriesFrame, new AllEnquiryTabFragment(), "enquiriesFrame")
+                .replace(R.id.enquiriesFrame, allEnquiryTabFragment, "enquiriesFrame")
                 .commit();
     }
 

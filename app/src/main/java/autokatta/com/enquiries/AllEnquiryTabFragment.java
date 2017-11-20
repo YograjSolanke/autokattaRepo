@@ -29,6 +29,7 @@ public class AllEnquiryTabFragment extends Fragment implements View.OnClickListe
     View mEnquiryTab;
     RelativeLayout relativeBC, relativeTestDrive, relativeNewDealer, relativeManualEnquiry;
     TextView mManualCount;
+    Bundle putBundle;
 
     public AllEnquiryTabFragment() {
         //Empty Fragment...
@@ -49,6 +50,11 @@ public class AllEnquiryTabFragment extends Fragment implements View.OnClickListe
         relativeTestDrive.setOnClickListener(this);
         relativeNewDealer.setOnClickListener(this);
         relativeManualEnquiry.setOnClickListener(this);
+
+        Bundle bundle = getArguments();
+        putBundle = new Bundle();
+        putBundle.putInt("bundle_storeId", bundle.getInt("bundle_storeId", 0));
+        putBundle.putString("bundle_contact", bundle.getString("bundle_contact", ""));
 
         DbOperation operation;
         operation = new DbOperation(getActivity().getApplicationContext());
@@ -82,7 +88,7 @@ public class AllEnquiryTabFragment extends Fragment implements View.OnClickListe
 
             case R.id.relME:
                 ActivityOptions options = ActivityOptions.makeCustomAnimation(getActivity(), R.anim.ok_left_to_right, R.anim.ok_right_to_left);
-                startActivity(new Intent(getActivity(), ManualEnquiryMainActivity.class), options.toBundle());
+                startActivity(new Intent(getActivity(), ManualEnquiryMainActivity.class).putExtras(putBundle), options.toBundle());
                 break;
             case R.id.rel5:
                 Toast.makeText(getActivity(), "Coming Soon", Toast.LENGTH_SHORT).show();
