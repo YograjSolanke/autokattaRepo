@@ -37,7 +37,7 @@ public class CustomSuggestionAdapter extends RecyclerView.Adapter<RecyclerView.V
     private String mLoginContact;
 
     /*Constructor*/
-    CustomSuggestionAdapter(Activity mActivity1, List<ModelSuggestionsResponse> storeResponseArrayList1, TextView txtSuggestion, String mLoginContact) {
+    public CustomSuggestionAdapter(Activity mActivity1, List<ModelSuggestionsResponse> storeResponseArrayList1, TextView txtSuggestion, String mLoginContact) {
         mActivity = mActivity1;
         mSuggestionList = storeResponseArrayList1;
         mSuggestionAbout = txtSuggestion;

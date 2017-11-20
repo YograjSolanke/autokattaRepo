@@ -58,6 +58,7 @@ import autokatta.com.broadcastreceiver.Receiver;
 import autokatta.com.fragment.FavoriteNotificationFragment;
 import autokatta.com.fragment.GroupNotification;
 import autokatta.com.fragment.StoreNotification;
+import autokatta.com.fragment.SuggestionFragment;
 import autokatta.com.fragment.WallNotificationFragment;
 import autokatta.com.generic.Base64;
 import autokatta.com.interfaces.RequestNotifier;
@@ -389,6 +390,7 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
         tabLayout.getTabAt(1).setIcon(R.mipmap.ic_cart);
         tabLayout.getTabAt(2).setIcon(R.mipmap.ic_account_multiple);
         tabLayout.getTabAt(3).setIcon(R.mipmap.ic_heart);
+        tabLayout.getTabAt(4).setIcon(R.mipmap.ic_heart);
 
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -418,7 +420,7 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
             tabLayout.getTabAt(1).getIcon().setAlpha(128);
             tabLayout.getTabAt(2).getIcon().setAlpha(128);
             tabLayout.getTabAt(3).getIcon().setAlpha(128);
-            //tabLayout.getTabAt(4).getIcon().setAlpha(128);
+            tabLayout.getTabAt(4).getIcon().setAlpha(128);
             //tabLayout.getTabAt(5).getIcon().setAlpha(128);
 
             viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -435,7 +437,7 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
                             tabLayout.getTabAt(1).getIcon().setAlpha(128);
                             tabLayout.getTabAt(2).getIcon().setAlpha(128);
                             tabLayout.getTabAt(3).getIcon().setAlpha(128);
-                            //tabLayout.getTabAt(4).getIcon().setAlpha(128);
+                            tabLayout.getTabAt(4).getIcon().setAlpha(128);
                             //tabLayout.getTabAt(5).getIcon().setAlpha(128);
                             break;
                         case 1:
@@ -451,7 +453,7 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
                             tabLayout.getTabAt(1).getIcon().setAlpha(128);
                             tabLayout.getTabAt(2).getIcon().setAlpha(255);
                             tabLayout.getTabAt(3).getIcon().setAlpha(128);
-                            //tabLayout.getTabAt(4).getIcon().setAlpha(128);
+                            tabLayout.getTabAt(4).getIcon().setAlpha(128);
                             //tabLayout.getTabAt(5).getIcon().setAlpha(128);
                             break;
                         case 3:
@@ -459,7 +461,7 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
                             tabLayout.getTabAt(1).getIcon().setAlpha(128);
                             tabLayout.getTabAt(2).getIcon().setAlpha(128);
                             tabLayout.getTabAt(3).getIcon().setAlpha(255);
-                            //tabLayout.getTabAt(4).getIcon().setAlpha(128);
+                            tabLayout.getTabAt(4).getIcon().setAlpha(128);
                             //tabLayout.getTabAt(5).getIcon().setAlpha(128);
                             break;
                         case 4:
@@ -467,7 +469,7 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
                             tabLayout.getTabAt(1).getIcon().setAlpha(128);
                             tabLayout.getTabAt(2).getIcon().setAlpha(128);
                             tabLayout.getTabAt(3).getIcon().setAlpha(128);
-                            //tabLayout.getTabAt(4).getIcon().setAlpha(255);
+                            tabLayout.getTabAt(4).getIcon().setAlpha(255);
                             //tabLayout.getTabAt(5).getIcon().setAlpha(128);
                             break;
                         case 5:
@@ -625,6 +627,7 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
         adapter.addFragment(new StoreNotification());
         adapter.addFragment(new GroupNotification());
         adapter.addFragment(new FavoriteNotificationFragment());
+        adapter.addFragment(new SuggestionFragment());
         viewPager.setAdapter(adapter);
     }
 
