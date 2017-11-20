@@ -102,7 +102,7 @@ public class SuggestionFragment extends Fragment implements SwipeRefreshLayout.O
 
     private void getSuggestionData() {
         ApiCall mApiCall = new ApiCall(getActivity(), this);
-        //mApiCall.getSuggestionData(mLoginContact,"");
+        mApiCall.getSuggestionData("1122334455", "Vehicles");
     }
 
     @Override
@@ -127,17 +127,24 @@ public class SuggestionFragment extends Fragment implements SwipeRefreshLayout.O
         if (response != null) {
             if (response.isSuccessful()) {
                 SuggestionsResponse suggestionsResponse = (SuggestionsResponse) response.body();
-                if (!suggestionsResponse.getSuccess().isEmpty()) {
+                if (!suggestionsResponse.getSuccess().getWallSuggestions().isEmpty()) {
                     mSwipeRefreshLayout.setRefreshing(false);
                     mNoData.setVisibility(View.GONE);
                     suggestionResponseList.clear();
-                    for (SuggestionsResponse.Success notification : suggestionsResponse.getSuccess()) {
+                    for (SuggestionsResponse.Success.WallSuggestion notification : suggestionsResponse.getSuccess().getWallSuggestions()) {
 
                         ModelSuggestionsResponse modelsuggestionsResponse = new ModelSuggestionsResponse();
-                        modelsuggestionsResponse.setName(notification.getUsername());
+                        modelsuggestionsResponse.setName("Vehicle Suggestion");
                         modelsuggestionsResponse.setImage(notification.getProfilePic());
                         modelsuggestionsResponse.setLayoutId(notification.getLayout());
                         modelsuggestionsResponse.setUserContact(notification.getContact());
+
+
+                        modelsuggestionsResponse.setVehicleId(notification.getUploadVehicleID());
+                        modelsuggestionsResponse.setUserContact(notification.getContactNo());
+                        modelsuggestionsResponse.setImage(notification.getImage());
+
+                        modelsuggestionsResponse.setLocation(notification.getLocationCity());
 
                         suggestionResponseList.add(modelsuggestionsResponse);
 

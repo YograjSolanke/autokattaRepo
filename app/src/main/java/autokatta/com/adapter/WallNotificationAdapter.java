@@ -78,7 +78,6 @@ import autokatta.com.model.WallResponseModel;
 import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.ModelSuggestionsResponse;
-import autokatta.com.response.SuggestionsResponse;
 import autokatta.com.view.BrowserView;
 import autokatta.com.view.GroupsActivity;
 import autokatta.com.view.OtherProfile;
@@ -5567,14 +5566,14 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                 mSuggestions.mSuggestionRecycler.setItemAnimator(new DefaultItemAnimator());
 
 
-                getSuggestionData(notificationList.get(position).getSuggestionURL());
+                //getSuggestionData(notificationList.get(position).getSuggestionURL());
 
 
                 break;
         }
     }
 
-    private void getSuggestionData(String mUrl) {
+    /*private void getSuggestionData(String mUrl) {
 
 
         try {
@@ -5674,14 +5673,14 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
 //        }) {
 //            @Override
 //            protected Map<String, String> getParams() throws AuthFailureError {
-//                /*params.put("contact", contact);
+//                *//*params.put("contact", contact);
 //                params.put("timestamp", TimeStampConstants.storetimeId);
-//                System.out.println("+++++++++going timestamp" + storetimeId);*/
+//                System.out.println("+++++++++going timestamp" + storetimeId);*//*
 //                return new HashMap<>();
 //            }
 //        };
 //        requestQueue.add(request);
-    }
+    }*/
 
 
     @Override

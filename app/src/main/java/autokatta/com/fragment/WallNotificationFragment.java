@@ -19,8 +19,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.json.JSONException;
-
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
@@ -38,20 +36,14 @@ import autokatta.com.adapter.WallNotificationAdapter;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.OnLoadMoreListener;
 import autokatta.com.interfaces.RequestNotifier;
-import autokatta.com.interfaces.ServiceApi;
 import autokatta.com.model.WallResponseModel;
 import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.other.CustomToast;
 import autokatta.com.other.VerticalLineDecorator;
-import autokatta.com.response.SuggestionsResponse;
 import autokatta.com.response.WallResponse;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
-import retrofit2.Call;
-import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -244,7 +236,7 @@ public class WallNotificationFragment extends Fragment implements SwipeRefreshLa
                                 WallResponseModel responseModel = new WallResponseModel();
 
                                 try {
-                                    if (notification.getLayout().equals("0") && !getSuggestionData(notification.getSuggestionURL())) {
+                                    /*if (notification.getLayout().equals("0") && !getSuggestionData(notification.getSuggestionURL())) {
 //                                        responseModel.setLayout(notification.getLayout());
 //                                        Log.i("Wall URL", "->" + notification.getSuggestionURL());
 //                                        responseModel.setSuggestionURL(notification.getSuggestionURL());
@@ -252,7 +244,8 @@ public class WallNotificationFragment extends Fragment implements SwipeRefreshLa
                                         System.out.println("Restricted Wall If");
                                         continue aa;
 
-                                    } else {
+                                    } else {*/
+                                    if (!notification.getLayout().equals("0")) {
                                         Log.i("Restricted Wall else", "->" + notification.getSuggestionURL());
                                         System.out.println("Restricted Wall else");
                                         responseModel.setActionID(notification.getActionID());
@@ -508,7 +501,7 @@ public class WallNotificationFragment extends Fragment implements SwipeRefreshLa
 
     }
 
-    private boolean getSuggestionData(String mUrl) throws JSONException {
+    /*private boolean getSuggestionData(String mUrl) throws JSONException {
         result = false;
         try {
             final Retrofit retrofit = new Retrofit.Builder()
@@ -535,7 +528,7 @@ public class WallNotificationFragment extends Fragment implements SwipeRefreshLa
 
                 }
             });
-        /*RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
+        *//*RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
         StringRequest request = new StringRequest(Request.Method.GET, mUrl,
                 new com.android.volley.Response.Listener<String>() {
                     @Override
@@ -568,19 +561,19 @@ public class WallNotificationFragment extends Fragment implements SwipeRefreshLa
         }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
-                *//*params.put("contact", contact);
+                *//**//*params.put("contact", contact);
                 params.put("timestamp", TimeStampConstants.storetimeId);
-                System.out.println("+++++++++going timestamp" + storetimeId);*//*
+                System.out.println("+++++++++going timestamp" + storetimeId);*//**//*
                 return new HashMap<>();
             }
         };
-        requestQueue.add(request);*/
+        requestQueue.add(request);*//*
 
         } catch (Exception e) {
             e.printStackTrace();
         }
         return result;
-    }
+    }*/
 
     /***
      * Retrofit Logs
