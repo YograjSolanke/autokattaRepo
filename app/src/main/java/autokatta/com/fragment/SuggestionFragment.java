@@ -134,7 +134,7 @@ public class SuggestionFragment extends Fragment implements SwipeRefreshLayout.O
                     for (SuggestionsResponse.Success.WallSuggestion notification : suggestionsResponse.getSuccess().getWallSuggestions()) {
 
                         ModelSuggestionsResponse modelsuggestionsResponse = new ModelSuggestionsResponse();
-                        modelsuggestionsResponse.setName("Vehicle Suggestion");
+                        modelsuggestionsResponse.setName(notification.getUsername());
                         modelsuggestionsResponse.setImage(notification.getProfilePic());
                         modelsuggestionsResponse.setLayoutId(notification.getLayout());
                         modelsuggestionsResponse.setUserContact(notification.getContact());
@@ -143,7 +143,6 @@ public class SuggestionFragment extends Fragment implements SwipeRefreshLayout.O
                         modelsuggestionsResponse.setVehicleId(notification.getUploadVehicleID());
                         modelsuggestionsResponse.setUserContact(notification.getContactNo());
                         modelsuggestionsResponse.setImage(notification.getImage());
-
                         modelsuggestionsResponse.setLocation(notification.getLocationCity());
 
                         suggestionResponseList.add(modelsuggestionsResponse);
