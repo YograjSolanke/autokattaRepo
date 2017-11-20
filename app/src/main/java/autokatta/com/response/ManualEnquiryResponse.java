@@ -188,6 +188,28 @@ public class ManualEnquiryResponse {
             @Expose
             private Float LoanPercent;
 
+            @SerializedName("TransferContact")
+            @Expose
+            private String TransferContact;
+
+
+            @SerializedName("FinancerStatus")
+            @Expose
+            private String FinancerStatus;
+
+            @SerializedName("OwnerName")
+            @Expose
+            private String OwnerName;
+
+            public String getOwnerName() {
+                return OwnerName;
+            }
+
+            public void setOwnerName(String ownerName) {
+                OwnerName = ownerName;
+            }
+
+
             public String getFinancerStatus() {
                 return FinancerStatus;
             }
@@ -196,9 +218,13 @@ public class ManualEnquiryResponse {
                 FinancerStatus = financerStatus;
             }
 
-            @SerializedName("FinancerStatus")
-            @Expose
-            private String FinancerStatus;
+            public String getTransferContact() {
+                return TransferContact;
+            }
+
+            public void setTransferContact(String transferContact) {
+                TransferContact = transferContact;
+            }
 
             public Integer getLoanAmount() {
                 return LoanAmount;
@@ -559,6 +585,17 @@ public class ManualEnquiryResponse {
             @SerializedName("LoanPercent")
             @Expose
             private Float LoanPercent;
+            @SerializedName("TransferContact")
+            @Expose
+            private String TransferContact;
+
+            public String getTransferContact() {
+                return TransferContact;
+            }
+
+            public void setTransferContact(String transferContact) {
+                TransferContact = transferContact;
+            }
 
             public String getFinancerStatus() {
                 return FinancerStatus;
@@ -571,6 +608,19 @@ public class ManualEnquiryResponse {
             @SerializedName("FinancerStatus")
             @Expose
             private String FinancerStatus;
+
+            @SerializedName("OwnerName")
+            @Expose
+            private String OwnerName;
+
+            public String getOwnerName() {
+                return OwnerName;
+            }
+
+            public void setOwnerName(String ownerName) {
+                OwnerName = ownerName;
+            }
+
 
             public int getService_id() {
                 return service_id;
@@ -1064,6 +1114,17 @@ public class ManualEnquiryResponse {
             @SerializedName("createdDate")
             @Expose
             private String createdDate;
+  @SerializedName("TransferContact")
+            @Expose
+            private String TransferContact;
+
+            public String getTransferContact() {
+                return TransferContact;
+            }
+
+            public void setTransferContact(String transferContact) {
+                TransferContact = transferContact;
+            }
 
             public String getCreatedDate() {
                 return createdDate;
@@ -1080,6 +1141,19 @@ public class ManualEnquiryResponse {
  @SerializedName("FinancerStatus")
             @Expose
             private String FinancerStatus;
+
+            @SerializedName("OwnerName")
+            @Expose
+            private String OwnerName;
+
+            public String getOwnerName() {
+                return OwnerName;
+            }
+
+            public void setOwnerName(String ownerName) {
+                OwnerName = ownerName;
+            }
+
 
             public String getFinancerStatus() {
                 return FinancerStatus;
@@ -2221,6 +2295,30 @@ public class ManualEnquiryResponse {
             @SerializedName("createdDate")
             @Expose
             private String createdDate;
+ @SerializedName("OwnerName")
+            @Expose
+            private String OwnerName;
+
+            public String getOwnerName() {
+                return OwnerName;
+            }
+
+            public void setOwnerName(String ownerName) {
+                OwnerName = ownerName;
+            }
+
+            public String getTransferContact() {
+                return TransferContact;
+            }
+
+            public void setTransferContact(String transferContact) {
+                TransferContact = transferContact;
+            }
+
+            @SerializedName("TransferContact")
+            @Expose
+
+            private String TransferContact;
 
             public String getCreatedDate() {
                 return createdDate;

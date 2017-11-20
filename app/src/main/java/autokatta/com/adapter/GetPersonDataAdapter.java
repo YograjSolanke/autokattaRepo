@@ -34,16 +34,18 @@ import autokatta.com.view.EnquiredPersonsListActivity;
 public class GetPersonDataAdapter extends RecyclerView.Adapter<GetPersonDataAdapter.PersonData> {
     Activity mActivity;
     List<GetPersonDataResponse.Success> list = new ArrayList<>();
-    private String strId, strKeyword, strTitle;
+    private String strId, strKeyword, strTitle,mCallFrom,mOwnerContact;
     int mEnquiryID;
 
-    public GetPersonDataAdapter(Activity mActivity, List<GetPersonDataResponse.Success> list, String strId, String strKeyword, String strTitle,int enquiryid) {
+    public GetPersonDataAdapter(Activity mActivity, List<GetPersonDataResponse.Success> list, String strId, String strKeyword, String strTitle,int enquiryid,String callfrom,String ownercontact) {
         this.mActivity = mActivity;
         this.list = list;
         this.strId = strId;
         this.strKeyword = strKeyword;
         this.strTitle = strTitle;
         this.mEnquiryID = enquiryid;
+        this.mCallFrom = callfrom;
+        this.mOwnerContact = ownercontact;
     }
 
 
@@ -142,6 +144,8 @@ public class GetPersonDataAdapter extends RecyclerView.Adapter<GetPersonDataAdap
                 intent.putExtra("custname", holder.mPersonName.getText().toString());
                 intent.putExtra("address", holder.mAddress.getText().toString());
                 intent.putExtra("enquiryid", mEnquiryID);
+                intent.putExtra("callfrom", mCallFrom);
+                intent.putExtra("ownercontact", mOwnerContact);
 
                 mActivity.startActivity(intent);
             }

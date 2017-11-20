@@ -41,7 +41,7 @@ import java.util.Locale;
 import java.util.TimeZone;
 
 import autokatta.com.R;
-import autokatta.com.adapter.ManualEnquiryAdapter;
+import autokatta.com.adapter.TransferEnquiriesAdapter;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.ItemClickListener;
 import autokatta.com.interfaces.RequestNotifier;
@@ -69,7 +69,7 @@ public class TransferEnquiriesFragment extends Fragment implements SwipeRefreshL
     DatePickerDialog datePickerDialog;
     SharedPreferences sharedPreferences = null;
     SharedPreferences.Editor editor;
-    ManualEnquiryAdapter adapter;
+    TransferEnquiriesAdapter adapter;
 
     View mManualEnquiry;
 
@@ -218,8 +218,8 @@ public class TransferEnquiriesFragment extends Fragment implements SwipeRefreshL
      */
     private void getManualData() {
         ApiCall mApiCall = new ApiCall(getActivity(), this);
-       // mApiCall.getManualEnquiry(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
-        //        .getString("loginContact", ""));
+        mApiCall.getTransferedManualEnquiry(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
+                .getString("loginContact", ""));
     }
 
 
@@ -260,6 +260,8 @@ public class TransferEnquiriesFragment extends Fragment implements SwipeRefreshL
                             request.setLoanpercent(success.getLoanPercent());
                             request.setFinancerstatus(success.getFinancerStatus());
                             request.setEnquiryID(success.getId());
+                            request.setOwnerContact(success.getMyContact());
+                            request.setOwnerName(success.getOwnerName());
 
 
                             request.setCustomerName("name");
@@ -323,6 +325,10 @@ public class TransferEnquiriesFragment extends Fragment implements SwipeRefreshL
                             request.setLoanpercent(success.getLoanPercent());
                             request.setFinancerstatus(success.getFinancerStatus());
                             request.setEnquiryID(success.getId());
+                            request.setOwnerContact(success.getMyContact());
+                            request.setOwnerName(success.getOwnerName());
+
+
 
 
 
@@ -387,6 +393,9 @@ public class TransferEnquiriesFragment extends Fragment implements SwipeRefreshL
                             request.setLoanpercent(service.getLoanPercent());
                             request.setFinancerstatus(service.getFinancerStatus());
                             request.setEnquiryID(service.getId());
+                            request.setOwnerContact(service.getMyContact());
+
+                            request.setOwnerName(service.getOwnerName());
 
 
 
@@ -451,7 +460,10 @@ public class TransferEnquiriesFragment extends Fragment implements SwipeRefreshL
                             request.setLoanpercent(success.getLoanPercent());
                             request.setFinancerstatus(success.getFinancerStatus());
                             request.setEnquiryID(success.getId());
+                            request.setOwnerContact(success.getMyContact());
 
+
+                            request.setOwnerName(success.getOwnerName());
 
                             request.setCustomerName("name");
                             request.setCustomerContact("contact");
@@ -498,7 +510,7 @@ public class TransferEnquiriesFragment extends Fragment implements SwipeRefreshL
                             mMyGroupsList.add(request);
                         }
 
-                        adapter = new ManualEnquiryAdapter(getActivity(), mMyGroupsList);
+                        adapter = new TransferEnquiriesAdapter(getActivity(), mMyGroupsList);
                         mRecyclerView.setAdapter(adapter);
                         adapter.setClickListener(this);
                         adapter.notifyDataSetChanged();
@@ -598,6 +610,8 @@ public class TransferEnquiriesFragment extends Fragment implements SwipeRefreshL
                 intent.putExtra("financestatus", request.getFinancerstatus());
                 intent.putExtra("financestatus", request.getFinancerstatus());
                 intent.putExtra("enquiryid", request.getEnquiryID());
+                intent.putExtra("callfrom", "transferenquiry");
+                intent.putExtra("ownercontact", request.getOwnerContact());
                 break;
             case "Services":
                 intent.putExtra("id", request.getServiceId());
@@ -607,6 +621,9 @@ public class TransferEnquiriesFragment extends Fragment implements SwipeRefreshL
                 intent.putExtra("loanpercent", request.getLoanpercent());
                 intent.putExtra("financestatus", request.getFinancerstatus());
                 intent.putExtra("enquiryid", request.getEnquiryID());
+                intent.putExtra("callfrom", "transferenquiry");
+                intent.putExtra("ownercontact", request.getOwnerContact());
+
 
                 break;
             case "Used Vehicle":
@@ -617,6 +634,8 @@ public class TransferEnquiriesFragment extends Fragment implements SwipeRefreshL
                 intent.putExtra("loanpercent", request.getLoanpercent());
                 intent.putExtra("financestatus", request.getFinancerstatus());
                 intent.putExtra("enquiryid", request.getEnquiryID());
+                intent.putExtra("callfrom", "transferenquiry");
+                intent.putExtra("ownercontact", request.getOwnerContact());
 
                 break;
             case "New Vehicle":
@@ -627,6 +646,8 @@ public class TransferEnquiriesFragment extends Fragment implements SwipeRefreshL
                 intent.putExtra("loanpercent", request.getLoanpercent());
                 intent.putExtra("financestatus", request.getFinancerstatus());
                 intent.putExtra("enquiryid", request.getEnquiryID());
+                intent.putExtra("callfrom", "transferenquiry");
+                intent.putExtra("ownercontact", request.getOwnerContact());
 
                 break;
         }

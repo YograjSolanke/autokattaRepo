@@ -61,7 +61,7 @@ public class EnquiredPersonsActivity extends AppCompatActivity implements Reques
     private ProgressDialog dialog;
     int strLoanAmount,mEnquiryId;
     float strLoanPercent;
-    String strFinancername, strFinancestatus;
+    String strFinancername, strFinancestatus,mCallFrom,mOwnerContact;
     RelativeLayout mRelFinancerDetails;
     List<String> mFinancerList = new ArrayList<>();
 
@@ -89,6 +89,9 @@ public class EnquiredPersonsActivity extends AppCompatActivity implements Reques
                 strLoanAmount = getIntent().getExtras().getInt("loanamount");
                 strFinancestatus = getIntent().getExtras().getString("financestatus", "");
                 mEnquiryId = getIntent().getExtras().getInt("enquiryid", 0);
+                mCallFrom = getIntent().getExtras().getString("callfrom", "");
+                mOwnerContact = getIntent().getExtras().getString("ownercontact", "");
+
 
                 mNoData = (TextView) findViewById(R.id.no_category);
                 mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.person_swipeRefreshLayout);
@@ -298,7 +301,7 @@ public class EnquiredPersonsActivity extends AppCompatActivity implements Reques
                                 }
                                 mList.add(success);
                             }
-                            GetPersonDataAdapter adapter = new GetPersonDataAdapter(this, mList, strId, strKeyword, strTitle,mEnquiryId);
+                            GetPersonDataAdapter adapter = new GetPersonDataAdapter(this, mList, strId, strKeyword, strTitle,mEnquiryId,mCallFrom,mOwnerContact);
                             mPersonRecyclerView.setAdapter(adapter);
                             adapter.notifyDataSetChanged();
                         } else {

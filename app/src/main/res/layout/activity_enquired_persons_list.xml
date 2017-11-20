@@ -204,6 +204,7 @@
             fab:fab_colorPressed="#5176C9"
             fab:fab_colorRipple="#5176C9"
             android:src="@mipmap/new_share"
+            android:visibility="gone"
             fab:fab_size="mini" />
 
         <com.github.clans.fab.FloatingActionButton

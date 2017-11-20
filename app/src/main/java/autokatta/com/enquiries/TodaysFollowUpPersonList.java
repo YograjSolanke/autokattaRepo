@@ -181,7 +181,7 @@ public class TodaysFollowUpPersonList extends AppCompatActivity implements Reque
                                     mList.add(success);
                                 }
                             }
-                            GetPersonDataAdapter adapter = new GetPersonDataAdapter(this, mList, strId, strKeyword, strTitle,mEnquiryID);
+                            GetPersonDataAdapter adapter = new GetPersonDataAdapter(this, mList, strId, strKeyword, strTitle,mEnquiryID,"","");
                             mPersonRecyclerView.setAdapter(adapter);
                             adapter.notifyDataSetChanged();
                         } else {

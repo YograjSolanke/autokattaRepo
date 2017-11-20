@@ -301,6 +301,7 @@ public class ManualEnquiry extends Fragment implements SwipeRefreshLayout.OnRefr
                             request.setLoanpercent(success.getLoanPercent());
                             request.setFinancerstatus(success.getFinancerStatus());
                             request.setEnquiryID(success.getId());
+                            request.setTransferContact(success.getTransferContact());
 
 
                             request.setCustomerName("name");
@@ -364,6 +365,8 @@ public class ManualEnquiry extends Fragment implements SwipeRefreshLayout.OnRefr
                             request.setLoanpercent(success.getLoanPercent());
                             request.setFinancerstatus(success.getFinancerStatus());
                             request.setEnquiryID(success.getId());
+                            request.setTransferContact(success.getTransferContact());
+
 
 
                             request.setCustomerName("name");
@@ -427,6 +430,8 @@ public class ManualEnquiry extends Fragment implements SwipeRefreshLayout.OnRefr
                             request.setLoanpercent(service.getLoanPercent());
                             request.setFinancerstatus(service.getFinancerStatus());
                             request.setEnquiryID(service.getId());
+                            request.setTransferContact(service.getTransferContact());
+
 
 
                             request.setCustomerName("name");
@@ -490,6 +495,8 @@ public class ManualEnquiry extends Fragment implements SwipeRefreshLayout.OnRefr
                             request.setLoanpercent(success.getLoanPercent());
                             request.setFinancerstatus(success.getFinancerStatus());
                             request.setEnquiryID(success.getId());
+                            request.setTransferContact(success.getTransferContact());
+
 
 
                             request.setCustomerName("name");
@@ -637,6 +644,8 @@ public class ManualEnquiry extends Fragment implements SwipeRefreshLayout.OnRefr
                 intent.putExtra("financestatus", request.getFinancerstatus());
                 intent.putExtra("financestatus", request.getFinancerstatus());
                 intent.putExtra("enquiryid", request.getEnquiryID());
+                intent.putExtra("callfrom", "manualenquiry");
+
                 break;
             case "Services":
                 intent.putExtra("id", request.getServiceId());
@@ -646,6 +655,7 @@ public class ManualEnquiry extends Fragment implements SwipeRefreshLayout.OnRefr
                 intent.putExtra("loanpercent", request.getLoanpercent());
                 intent.putExtra("financestatus", request.getFinancerstatus());
                 intent.putExtra("enquiryid", request.getEnquiryID());
+                intent.putExtra("callfrom", "manualenquiry");
 
                 break;
             case "Used Vehicle":
@@ -656,6 +666,7 @@ public class ManualEnquiry extends Fragment implements SwipeRefreshLayout.OnRefr
                 intent.putExtra("loanpercent", request.getLoanpercent());
                 intent.putExtra("financestatus", request.getFinancerstatus());
                 intent.putExtra("enquiryid", request.getEnquiryID());
+                intent.putExtra("callfrom", "manualenquiry");
 
                 break;
             case "New Vehicle":
@@ -667,6 +678,7 @@ public class ManualEnquiry extends Fragment implements SwipeRefreshLayout.OnRefr
                 intent.putExtra("loanpercent", request.getLoanpercent());
                 intent.putExtra("financestatus", request.getFinancerstatus());
                 intent.putExtra("enquiryid", request.getEnquiryID());
+                intent.putExtra("callfrom", "manualenquiry");
 
                 break;
         }

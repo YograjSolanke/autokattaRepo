@@ -25,6 +25,22 @@ public class ManualEnquiryRequest {
     public String productId;
     public String FinancerName;
 
+    public String getOwnerName() {
+        return OwnerName;
+    }
+
+    public void setOwnerName(String ownerName) {
+        OwnerName = ownerName;
+    }
+
+    public String OwnerName;
+
+
+
+    public String TransferContact;
+
+    public String OwnerContact;
+
     public int getEnquiryID() {
         return enquiryID;
     }
@@ -59,6 +75,14 @@ public class ManualEnquiryRequest {
 
     public void setServiceId(String serviceId) {
         this.serviceId = serviceId;
+    }
+
+    public String getTransferContact() {
+        return TransferContact;
+    }
+
+    public void setTransferContact(String transferContact) {
+        TransferContact = transferContact;
     }
 
     public String serviceName;
@@ -299,5 +323,13 @@ public class ManualEnquiryRequest {
 
     public void setVehicleInventory(String vehicleInventory) {
         this.vehicleInventory = vehicleInventory;
+    }
+
+    public String getOwnerContact() {
+        return OwnerContact;
+    }
+
+    public void setOwnerContact(String ownerContact) {
+        OwnerContact = ownerContact;
     }
 }
