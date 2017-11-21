@@ -734,10 +734,16 @@ public class AddProductActivity extends AppCompatActivity implements RequestNoti
                     }
                 })
 
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                .setNegativeButton("Skip", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
                         // removes the AlertDialog in the screen
+
+                        hud = KProgressHUD.create(AddProductActivity.this)
+                                .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                                .setLabel("Please wait")
+                                .setMaxProgress(100)
+                                .show();
 
                         stringgroupids = "";
                         System.out.println("newwwwwwwwwwwwwwwwwwwwwwwww id=" + stringgroupids);
