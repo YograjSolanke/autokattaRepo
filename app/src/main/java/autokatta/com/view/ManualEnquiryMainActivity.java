@@ -48,6 +48,8 @@ public class ManualEnquiryMainActivity extends AppCompatActivity {
                         mBundle.putInt("bundle_storeId", getIntent().getExtras().getInt("bundle_storeId", 0));
                         mBundle.putString("bundle_contact", getIntent().getExtras().getString("bundle_contact", Sharedcontact));
                         manualEnquiryTabs.setArguments(mBundle);
+
+
                     }
                     getSupportFragmentManager().beginTransaction()
                             .replace(R.id.manual_enquiry_container, manualEnquiryTabs, "manualenquiry")
@@ -67,6 +69,14 @@ public class ManualEnquiryMainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.manual_add, menu);
+
+
+        if (getIntent().getExtras().getInt("bundle_storeId", 0) != 0) {
+
+            MenuItem item = menu.findItem(R.id.add_manual);
+            item.setVisible(false);
+        }
+
         return true;
     }
 

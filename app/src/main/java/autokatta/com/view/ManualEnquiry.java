@@ -222,8 +222,7 @@ public class ManualEnquiry extends Fragment implements SwipeRefreshLayout.OnRefr
      */
     private void getManualData() {
         ApiCall mApiCall = new ApiCall(getActivity(), this);
-        mApiCall.getManualEnquiry(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
-                .getString("loginContact", ""));
+        mApiCall.getManualEnquiry(bundle_contact, store_id);
     }
 
 /*

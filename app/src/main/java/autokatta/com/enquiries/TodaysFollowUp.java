@@ -85,7 +85,7 @@ public class TodaysFollowUp extends AppCompatActivity implements SwipeRefreshLay
     private void getManualData() {
         ApiCall mApiCall = new ApiCall(TodaysFollowUp.this, this);
         mApiCall.getManualEnquiry(getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
-                .getString("loginContact", ""));
+                .getString("loginContact", ""), 0);
     }
 
     @Override

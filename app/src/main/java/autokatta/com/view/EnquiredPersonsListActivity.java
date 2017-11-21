@@ -72,6 +72,8 @@ public class EnquiredPersonsListActivity extends AppCompatActivity implements Re
     String strNewDiscussion = "", strNewFollowDate = "", strNewStatus = "", mCallFrom, mOwnerContact;
     int bundleEnquiryID;
     ApiCall mApiCall;
+    GetPersonsEnquiriesAdapter adapter;
+    LinearLayoutManager mLinearLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,6 +97,7 @@ public class EnquiredPersonsListActivity extends AppCompatActivity implements Re
                 bundleCustname = getIntent().getExtras().getString("custname");
                 bundleEnquiryID = getIntent().getExtras().getInt("enquiryid");
                 mCallFrom = getIntent().getExtras().getString("callfrom");
+                System.out.println("call from=" + mCallFrom);
                 mOwnerContact = getIntent().getExtras().getString("ownercontact");
 
 
@@ -113,15 +116,15 @@ public class EnquiredPersonsListActivity extends AppCompatActivity implements Re
                 mFloatingMenu = (FloatingActionMenu) findViewById(R.id.menu_red);
                 mRequests = (FloatingActionButton) findViewById(R.id.requests);
                 mTransfer = (FloatingActionButton) findViewById(R.id.shareenquiry);
-
+                mSwipeRefreshLayout.setOnRefreshListener(EnquiredPersonsListActivity.this);
                 mTypetxt.setText(strKeyword);
                 mTitletxt.setText(strTitle);
                 mAddress.setText(bundleAddress);
                 mContact.setText(bundlecontact);
                 mCustname.setText(bundleCustname);
 
-                if (!mCallFrom.equalsIgnoreCase("transferenquiry")) {
-                    mTransfer.show(true);
+                if (mCallFrom.equalsIgnoreCase("manualenquiry")) {
+                    mTransfer.setVisibility(View.VISIBLE);
                 }
 
                 dialog = new ProgressDialog(EnquiredPersonsListActivity.this);
@@ -130,16 +133,13 @@ public class EnquiredPersonsListActivity extends AppCompatActivity implements Re
 
                 mPersonRecyclerView.setHasFixedSize(true);
 
-                LinearLayoutManager mLinearLayout = new LinearLayoutManager(getApplicationContext());
+                mLinearLayout = new LinearLayoutManager(EnquiredPersonsListActivity.this);
                 mLinearLayout.setReverseLayout(true);
                 mLinearLayout.setStackFromEnd(true);
 
                 mPersonRecyclerView.setLayoutManager(mLinearLayout);
                 mPersonRecyclerView.setItemAnimator(new DefaultItemAnimator());
-                mPersonRecyclerView.addItemDecoration(new DividerItemDecoration(getApplicationContext(), LinearLayoutManager.VERTICAL));
-
-
-                mSwipeRefreshLayout.setOnRefreshListener(EnquiredPersonsListActivity.this);
+                mPersonRecyclerView.addItemDecoration(new DividerItemDecoration(EnquiredPersonsListActivity.this, LinearLayoutManager.VERTICAL));
 
                 mSwipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
                         android.R.color.holo_green_light,
@@ -150,7 +150,7 @@ public class EnquiredPersonsListActivity extends AppCompatActivity implements Re
                     @Override
                     public void run() {
                         mSwipeRefreshLayout.setRefreshing(true);
-                        if (!mCallFrom.equalsIgnoreCase("transferenquiry")) {
+                        if (mCallFrom.equalsIgnoreCase("manualenquiry")) {
                             getPersonData(strId, strKeyword);
                         } else {
                             getPersonDatafortransfer(strId, strKeyword);
@@ -212,11 +212,13 @@ public class EnquiredPersonsListActivity extends AppCompatActivity implements Re
 
             }
         });
+
+
     }
 
     @Override
     public void onRefresh() {
-        if (!mCallFrom.equalsIgnoreCase("transferenquiry")) {
+        if (mCallFrom.equalsIgnoreCase("manualenquiry")) {
             getPersonData(strId, strKeyword);
         } else {
             getPersonDatafortransfer(strId, strKeyword);
@@ -312,7 +314,7 @@ public class EnquiredPersonsListActivity extends AppCompatActivity implements Re
                                 }
                                 mList.add(success);
                             }
-                            GetPersonsEnquiriesAdapter adapter = new GetPersonsEnquiriesAdapter(this, mList, strId, strKeyword, strTitle, bundlecontact);
+                            adapter = new GetPersonsEnquiriesAdapter(this, mList, strId, strKeyword, strTitle, bundlecontact);
                             mPersonRecyclerView.setAdapter(adapter);
                             adapter.notifyDataSetChanged();
                         } else {

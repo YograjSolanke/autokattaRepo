@@ -8177,7 +8177,7 @@ get ExchangeMela Analytics Data
       Get Manual Enquiry Details...
     */
 
-    public void getManualEnquiry(String myContact) {
+    public void getManualEnquiry(String myContact, int store_id) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 Retrofit retrofit = new Retrofit.Builder()
@@ -8186,7 +8186,7 @@ get ExchangeMela Analytics Data
                         .client(initLog().build())
                         .build();
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<ManualEnquiryResponse> mServiceMelaResponse = serviceApi.getManualEnquiry(myContact, "null", "null", "null", "null", "null", "null", "null", "null", "null", "null", "null", 0, 0, "null", 0,0);
+                Call<ManualEnquiryResponse> mServiceMelaResponse = serviceApi.getManualEnquiry(myContact, "null", "null", "null", "null", "null", "null", "null", "null", "null", "null", "null", 0, 0, "null", 0, store_id);
                 mServiceMelaResponse.enqueue(new Callback<ManualEnquiryResponse>() {
                     @Override
                     public void onResponse(Call<ManualEnquiryResponse> call, Response<ManualEnquiryResponse> response) {

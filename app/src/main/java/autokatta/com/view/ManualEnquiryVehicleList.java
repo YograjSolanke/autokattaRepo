@@ -110,6 +110,7 @@ public class ManualEnquiryVehicleList extends AppCompatActivity implements Reque
                                     dialog.cancel();
                                     ActivityOptions options = ActivityOptions.makeCustomAnimation(ManualEnquiryVehicleList.this, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
                                     Intent intent = new Intent(getApplicationContext(), ManualEnquiryMainActivity.class);
+                                    intent.putExtra("bundle_storeId", 0);
                                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                     startActivity(intent, options.toBundle());
                                     finish();
@@ -182,7 +183,7 @@ public class ManualEnquiryVehicleList extends AppCompatActivity implements Reque
                     } else {
                         //Snackbar.make(mRelative, getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
                         try {
-                            if (getIntent().getExtras().getString("spinnerValue") != null) {
+                            if (getIntent().getExtras() != null) {
                                 if (getIntent().getExtras().getString("spinnerValue", "").equals("New Vehicle")) {
                                     AlertDialog.Builder alertDialog = new AlertDialog.Builder(ManualEnquiryVehicleList.this);
                                     alertDialog.setTitle("No New Vehicle Found");

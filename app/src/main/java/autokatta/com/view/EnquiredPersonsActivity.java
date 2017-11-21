@@ -81,22 +81,25 @@ public class EnquiredPersonsActivity extends AppCompatActivity implements Reques
             @Override
             public void run() {
                 mConnectionDetector = new ConnectionDetector(EnquiredPersonsActivity.this);
-                strId = getIntent().getExtras().getString("id");
-                strKeyword = getIntent().getExtras().getString("keyword");
-                strTitle = getIntent().getExtras().getString("name");
-                strFinancername = getIntent().getExtras().getString("financername");
-                strLoanPercent = getIntent().getExtras().getFloat("loanpercent");
-                strLoanAmount = getIntent().getExtras().getInt("loanamount");
-                strFinancestatus = getIntent().getExtras().getString("financestatus", "");
-                mEnquiryId = getIntent().getExtras().getInt("enquiryid", 0);
-                mCallFrom = getIntent().getExtras().getString("callfrom", "");
-                mOwnerContact = getIntent().getExtras().getString("ownercontact", "");
+                if (getIntent().getExtras() != null) {
+                    strId = getIntent().getExtras().getString("id");
+                    strKeyword = getIntent().getExtras().getString("keyword");
+                    strTitle = getIntent().getExtras().getString("name");
+                    strFinancername = getIntent().getExtras().getString("financername");
+                    strLoanPercent = getIntent().getExtras().getFloat("loanpercent");
+                    strLoanAmount = getIntent().getExtras().getInt("loanamount");
+                    strFinancestatus = getIntent().getExtras().getString("financestatus", "");
+                    mEnquiryId = getIntent().getExtras().getInt("enquiryid", 0);
+                    mCallFrom = getIntent().getExtras().getString("callfrom", "");
+                    mOwnerContact = getIntent().getExtras().getString("ownercontact", "");
+                }
 
 
                 mNoData = (TextView) findViewById(R.id.no_category);
                 mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.person_swipeRefreshLayout);
                 mPersonRecyclerView = (RecyclerView) findViewById(R.id.person_recycler_view);
                 mFrameLayout = (FrameLayout) findViewById(R.id.person_enquiry_frame);
+                mSwipeRefreshLayout.setOnRefreshListener(EnquiredPersonsActivity.this);
                 mTypetxt = (TextView) findViewById(R.id.type);
                 mTitletxt = (TextView) findViewById(R.id.title);
                 mLoanAmt = (EditText) findViewById(R.id.edtloanamt);
@@ -113,13 +116,14 @@ public class EnquiredPersonsActivity extends AppCompatActivity implements Reques
                 mLoanAmt.setText(String.valueOf(strLoanAmount));
                 mLoanPer.setText(String.valueOf(strLoanPercent));
                 mFinancer.setText(strFinancername);
-                getFinancernames();
-                getPersonData(strId, strKeyword);
+//                getFinancernames();
+//                getPersonData(strId, strKeyword);
                 mFinancer.setEnabled(false);
                 mLoanAmt.setEnabled(false);
                 mLoanPer.setEnabled(false);
 
                 if (strFinancestatus.equalsIgnoreCase("yes")) {
+                    getFinancernames();
                     mRelFinancerDetails.setVisibility(View.VISIBLE);
                 }
 
@@ -138,12 +142,12 @@ public class EnquiredPersonsActivity extends AppCompatActivity implements Reques
                     public void run() {
                         mSwipeRefreshLayout.setRefreshing(true);
                         getPersonData(strId, strKeyword);
-                        getFinancernames();
+                        // getFinancernames();
                     }
                 });
             }
         });
-        mSwipeRefreshLayout.setOnRefreshListener(this);
+
 
         filterLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -191,7 +195,7 @@ public class EnquiredPersonsActivity extends AppCompatActivity implements Reques
     @Override
     public void onRefresh() {
         getPersonData(strId, strKeyword);
-        getFinancernames();
+        // getFinancernames();
     }
 
     /*
@@ -321,7 +325,7 @@ public class EnquiredPersonsActivity extends AppCompatActivity implements Reques
                             //  mFinancerList1.put(success.getFinancierName(), success.getFinancierID());
                         }
                         // parsedDataFinancer.addAll(mFinancerList);
-                        ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(getApplicationContext(),
+                        ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(this,
                                 R.layout.registration_spinner, mFinancerList);
                         mFinancer.setAdapter(dataAdapter);
                     } else {
