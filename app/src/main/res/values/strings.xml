@@ -1008,7 +1008,10 @@
     <string name="Scrap" translatable="false">Scrap</string>
     <string name="Inventory" translatable="false">Inventory</string>
     <string name="MarketPlace" translatable="false">Market Place</string>
-    <string name="carrequirements" translatable="false">car requirements</string>
+    <string name="carrequirements" translatable="false">Car requirements</string>
+    <string name="You" translatable="false">You</string>
+    <string name="Leave" translatable="false">Leave</string>
+    <string name="Options" translatable="false">Options</string>
 
     <string name="groupType">Group Type?<font color="#FF0000">\u002A</font></string>
     <string name="groupPublic">Public</string>

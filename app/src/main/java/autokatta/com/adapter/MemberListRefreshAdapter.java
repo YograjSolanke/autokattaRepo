@@ -35,11 +35,11 @@ import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.groups.MemberDetailTabs;
 import autokatta.com.groups.RequestedMembersList;
+import autokatta.com.groups_container.MemberContainer;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.GetGroupContactsResponse;
-import autokatta.com.view.GroupsActivity;
 import autokatta.com.view.OtherProfile;
 import autokatta.com.view.UserProfile;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
@@ -148,7 +148,7 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
                 //if MyGroups
                 if (mCallFrom.equalsIgnoreCase("MyGroups") && mItemList.get(position).getContact()
                         .equalsIgnoreCase(myContact)) {
-                    holder.mName.setText("You");
+                    holder.mName.setText(mActivity.getString(R.string.You));
                     holder.mContact.setVisibility(View.GONE);
                     holder.mOption.setVisibility(View.VISIBLE);
                 }
@@ -156,14 +156,14 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
                 else if (!mCallFrom.equalsIgnoreCase("MyGroups")) {
                     if (mItemList.get(position).getContact()
                             .equalsIgnoreCase(myContact)) {
-                        holder.mName.setText("You");
+                        holder.mName.setText(mActivity.getString(R.string.You));
                         holder.mContact.setVisibility(View.GONE);
                     } else
                         holder.mName.setText(mItemList.get(position).getUsername());
                 }
             }
             if (mItemList.get(position).getContact().equalsIgnoreCase(myContact)) {
-                holder.mName.setText("You");
+                holder.mName.setText(mActivity.getString(R.string.You));
                 holder.mContact.setVisibility(View.GONE);
 
             }
@@ -172,14 +172,14 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
                 //If MyGroups
                 if (mCallFrom.equalsIgnoreCase("MyGroups") && mItemList.get(position).getContact()
                         .equalsIgnoreCase(myContact)) {
-                    holder.mName.setText("You");
+                    holder.mName.setText(mActivity.getString(R.string.You));
                     holder.mContact.setVisibility(View.GONE);
                     holder.mOption.setVisibility(View.VISIBLE);
                 }
                 //If OtherGroup
                 else if (!mCallFrom.equalsIgnoreCase("MyGroups")) {
                     if (mItemList.get(position).getContact().equalsIgnoreCase(myContact)) {
-                        holder.mName.setText("You");
+                        holder.mName.setText(mActivity.getString(R.string.You));
                         holder.mContact.setVisibility(View.GONE);
                     } else
                         holder.mName.setText(mItemList.get(position).getUsername());
@@ -188,7 +188,7 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
                 holder.mAdmin.setVisibility(View.GONE);
 
             if (mItemList.get(position).getContact().equalsIgnoreCase(myContact)) {
-                holder.mName.setText("You");
+                holder.mName.setText(mActivity.getString(R.string.You));
                 holder.mContact.setVisibility(View.GONE);
             }
         }
@@ -196,18 +196,18 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
         if (mCallFrom != null) {
             if (!mCallFrom.equals("MyGroups")) {
                 if (holder.mName.getText().toString().equals("You") && mItemList.get(position).getMember().equals("member")) {
-                    holder.mOption.setText("Leave");
+                    holder.mOption.setText(mActivity.getString(R.string.Leave));
                 } else {
                     holder.mOption.setVisibility(View.GONE);
                 }
             }
             if (mCallFrom.equals("MyGroups")) {
                 if (holder.mName.getText().toString().equals("You")) {
-                    holder.mOption.setText("Leave");
+                    holder.mOption.setText(mActivity.getString(R.string.Leave));
                 } else if (!holder.mName.getText().toString().equals("You") && mItemList.get(position).getMember().equals("Admin")) {
                     holder.mOption.setVisibility(View.GONE);
                 } else {
-                    holder.mOption.setText("Options");
+                    holder.mOption.setText(mActivity.getString(R.string.Options));
                 }
             }
         }
@@ -355,9 +355,23 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
                                     .show();
 
                         } else if (options[item].equals("Make an admin") || options[item].equals("Remove from Admin")) {
-                            rmContact = holder.mContact.getText().toString();
-                            makeAdmin(rmContact, finalAction);
-                            holder.mAdmin.setText("Admin");
+                            new AlertDialog.Builder(mActivity)
+                                    //.setTitle(alertText)
+                                    .setMessage("Are you sure want to make admin?")
+                                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            rmContact = holder.mContact.getText().toString();
+                                            makeAdmin(rmContact, finalAction);
+                                            holder.mAdmin.setText(mActivity.getString(R.string.admin));
+                                        }
+                                    })
+                                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            dialog.cancel();
+                                        }
+                                    })
+                                    .setIcon(android.R.drawable.ic_dialog_alert)
+                                    .show();
                         } else if (options[item].equals("Cancel")) {
                             dialog.dismiss();
                         }
@@ -397,7 +411,6 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
         Intent in = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + contact));
         try {
             if (ActivityCompat.checkSelfPermission(mActivity, permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-                // TODO: Consider calling
                 //    ActivityCompat#requestPermissions
                 // here to request the missing permissions, and then overriding
                 //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
@@ -446,29 +459,25 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
     public void notifyString(String str) {
         if (str != null) {
             if (str.equals("success_admin")) {
-                CustomToast.customToast(mActivity, "Admin Successful");
-                Intent intent = new Intent(mActivity, GroupsActivity.class);
+                CustomToast.customToast(mActivity, "Admin Created");
+                Intent intent = new Intent(mActivity, MemberContainer.class);
                 intent.putExtra("grouptype", "MyGroups");
                 intent.putExtra("className", "MyAdapter");
                 intent.putExtra("bundle_GroupId", mGroupId);
                 intent.putExtra("bundle_GroupName", bundle_GroupName);
-                intent.putExtra("tabIndex", "1");
 
                 mActivity.startActivity(intent);
                 mActivity.finish();
                 //notifyDataSetChanged();
             } else if (str.startsWith("success_1")) {
-                CustomToast.customToast(mActivity, "removed successfully");
+                CustomToast.customToast(mActivity, "Removed");
             } else {
-                CustomToast.customToast(mActivity, "left successfully");
+                CustomToast.customToast(mActivity, "Left");
                 /*Intent intent = new Intent(mActivity, GroupTabs.class);
                 mActivity.startActivity(intent);*/
                 mActivity.finish();
             }
-
-
         } else
             CustomToast.customToast(mActivity, mActivity.getString(R.string.no_internet));
     }
-
 }

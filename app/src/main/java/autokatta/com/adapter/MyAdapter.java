@@ -41,7 +41,7 @@ import static android.content.Context.MODE_PRIVATE;
 
 
 /**
- * Created by ak-001 on 24/3/17.
+ * Created by ak-001 on 24/3/17
  */
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> implements RequestNotifier {
@@ -199,7 +199,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> impl
                     .bitmapTransform(new CropSquareTransformation(mActivity)) //To display image in Circular form.
                     .diskCacheStrategy(DiskCacheStrategy.ALL) //For caching diff versions of image.
                     //.placeholder(R.drawable.logo) //To show image before loading an original image.
-                    //.error(R.drawable.blocked) //To show error image if problem in loading.
+                    .error(R.drawable.workers) //To show error image if problem in loading.
                     .into(holder.mGroupIcon);
         } else {
             String dppath = mActivity.getString(R.string.base_image_url) + mItemList.get(position).getImage();
@@ -208,7 +208,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> impl
                     .bitmapTransform(new CropSquareTransformation(mActivity)) //To display image in Circular form.
                     .diskCacheStrategy(DiskCacheStrategy.ALL) //For caching diff versions of image.
                     //.placeholder(R.drawable.logo) //To show image before loading an original image.
-                    //.error(R.drawable.blocked) //To show error image if problem in loading.
+                    .error(R.drawable.workers) //To show error image if problem in loading.
                     .into(holder.mGroupIcon);
         }
     }
