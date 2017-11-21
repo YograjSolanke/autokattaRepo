@@ -50,7 +50,7 @@ public class StoreProductActivity extends AppCompatActivity implements SwipeRefr
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         mTestConnection = new ConnectionDetector(this);
-        setTitle("Store Product's");
+        setTitle("Store Products");
         if (getSupportActionBar() != null) {
             getSupportActionBar().setHomeButtonEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);

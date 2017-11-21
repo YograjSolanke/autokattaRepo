@@ -68,7 +68,6 @@ public class AutokattaContactAdapter extends RecyclerView.Adapter<AutokattaConta
     private String[] strGroupIds;
     private String[] groupTitleArray;
 
-
     static class YoHolder extends RecyclerView.ViewHolder {
 
         CardView mCardView;
@@ -113,6 +112,7 @@ public class AutokattaContactAdapter extends RecyclerView.Adapter<AutokattaConta
         myContact = mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).getString("loginContact", "");
         holder.mTextName.setText(contactdata.get(position).getUsername());
         holder.mTextNumber.setText(contactdata.get(position).getContact());
+        holder.setIsRecyclable(false);
         if (contactdata.get(position).getMystatus() != null && !contactdata.get(position).getMystatus().equals("null")) {
 
             /*decode string code (Getting)*/

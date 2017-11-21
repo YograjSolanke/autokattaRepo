@@ -1,6 +1,5 @@
 package autokatta.com.view;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
@@ -10,7 +9,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import autokatta.com.R;
-import autokatta.com.app_info.CreateStoreAppIntro;
 import autokatta.com.initial_fragment.MyStoreListFragment;
 
 public class MyStoreListActivity extends AppCompatActivity {
@@ -26,7 +24,7 @@ public class MyStoreListActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         setTitle("My Store");
         sharedPreferences = getSharedPreferences(getString(R.string.firstRun), MODE_PRIVATE);
-        startActivity(new Intent(getApplicationContext(), CreateStoreAppIntro.class));
+       // startActivity(new Intent(getApplicationContext(), CreateStoreAppIntro.class));
         if (getSupportActionBar() != null) {
             getSupportActionBar().setHomeButtonEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);

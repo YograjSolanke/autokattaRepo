@@ -49,7 +49,7 @@ public class StoreVehicleActivity extends AppCompatActivity implements SwipeRefr
         setContentView(R.layout.activity_store_vehicle);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        setTitle("Store Vehicle's");
+        setTitle("Store Vehicles");
         mTestConnection = new ConnectionDetector(this);
         mLayoutManager = new LinearLayoutManager(this);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);

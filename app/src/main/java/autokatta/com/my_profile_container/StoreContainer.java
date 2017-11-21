@@ -11,7 +11,7 @@ import com.github.clans.fab.FloatingActionButton;
 
 import autokatta.com.R;
 import autokatta.com.fragment_profile.AboutStore;
-import autokatta.com.view.MyStoreListActivity;
+import autokatta.com.view.CreateStoreActivity;
 
 public class StoreContainer extends AppCompatActivity implements View.OnClickListener {
 
@@ -80,7 +80,7 @@ public class StoreContainer extends AppCompatActivity implements View.OnClickLis
                 bundle.putString("className", "AboutStore");
                 ActivityOptions options = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.ok_left_to_right,
                         R.anim.ok_right_to_left);
-                Intent intents = new Intent(getApplicationContext(), MyStoreListActivity.class);
+                Intent intents = new Intent(getApplicationContext(), CreateStoreActivity.class);
                 intents.putExtras(bundle);
                 startActivity(intents, options.toBundle());
                 break;

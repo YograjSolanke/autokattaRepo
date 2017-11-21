@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import autokatta.com.R;
 import autokatta.com.adapter.MyStoreListAdapter;
 import autokatta.com.apicall.ApiCall;
+import autokatta.com.app_info.CreateStoreAppIntro;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.other.CustomToast;
@@ -55,13 +56,13 @@ public class MyStoreListFragment extends Fragment implements View.OnClickListene
 
 
     public MyStoreListFragment() {
-        //empty fragment
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mMyStoreList = inflater.inflate(R.layout.fragment_mystorelist, container, false);
+        startActivity(new Intent(getActivity(), CreateStoreAppIntro.class));
         return mMyStoreList;
     }
 
@@ -103,7 +104,6 @@ public class MyStoreListFragment extends Fragment implements View.OnClickListene
 
                     Bundle bundle = new Bundle();
                     bundle.putString("className", "MyStoreListFragment");
-
                     ActivityOptions options = ActivityOptions.makeCustomAnimation(getActivity(), R.anim.ok_left_to_right, R.anim.ok_right_to_left);
                     Intent intent = new Intent(getActivity(), CreateStoreActivity.class);
                     intent.putExtras(bundle);

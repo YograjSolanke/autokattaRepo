@@ -93,8 +93,8 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
     private Menu mMenu;
 
     String[] gridViewString = {
-            "About", "Product", "Service", "Used Vehicle", "New Vehicle", "Video's",
-            "Image's", "My Employees",};
+            "About", "Product", "Service", "Used Vehicle", "New Vehicle", "Videos",
+            "Images", "My Employees",};
 
     int[] gridViewImageId = {
             R.mipmap.communication, R.mipmap.store_product, R.mipmap.store_service, R.mipmap.store_used_vehicle, R.mipmap.new_vehicle, R.mipmap.videos, R.mipmap.images,
@@ -781,7 +781,7 @@ Call Intent...
         final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(StoreViewActivity.this, android.R.layout.select_dialog_singlechoice);
         arrayAdapter.add("Add Product");
         arrayAdapter.add("Add Service");
-        arrayAdapter.add("Add Vehicle");
+        arrayAdapter.add("Add Used Vehicle");//Add Vehicle Changed to used vehicle
         arrayAdapter.add("Add New Vehicle");
 
         builderSingle.setNegativeButton("cancel", new DialogInterface.OnClickListener() {

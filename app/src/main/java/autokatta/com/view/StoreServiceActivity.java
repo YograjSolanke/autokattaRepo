@@ -50,7 +50,7 @@ public class StoreServiceActivity extends AppCompatActivity implements SwipeRefr
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        setTitle("Store Service's");
+        setTitle("Store Services");
         mTestConnection = new ConnectionDetector(this);
         mLayoutManager = new LinearLayoutManager(this);
 

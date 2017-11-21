@@ -74,8 +74,8 @@ public class ProfileMyStoreAdapter extends BaseAdapter {
         }
 
         GetStoreProfileInfoResponse.Success success = mItemList.get(position);
-        mViewHolder.mStoreName.setText(mItemList.get(position).getStoreName());
-        mViewHolder.mStoreLocation.setText(mItemList.get(position).getLocation());
+        mViewHolder.mStoreName.setText(" -"+mItemList.get(position).getStoreName());
+        mViewHolder.mStoreLocation.setText(" -"+mItemList.get(position).getLocation());
 
         if (!mItemList.get(position).getStoreLogo().equals("") || !mItemList.get(position).getStoreLogo().equals("null")
                 || mItemList.get(position).getStoreLogo() != null) {
