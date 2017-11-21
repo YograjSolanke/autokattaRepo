@@ -827,8 +827,6 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                 sb1.setSpan(new ClickableSpan() {
                                 @Override
                                 public void onClick(View widget) {
-                                    mActivity.startActivity(new Intent(mActivity, UserProfile.class));
-
                                     if (notificationList.get(mProfileHolder.getAdapterPosition()).getLayoutType().equalsIgnoreCase("MyAction")) {
                                         mActivity.startActivity(new Intent(mActivity, UserProfile.class));
                                     } else if (notificationList.get(mProfileHolder.getAdapterPosition()).getLayoutType().equalsIgnoreCase("MyNotification")) {
