@@ -69,7 +69,7 @@ public class EnquiredPersonsListActivity extends AppCompatActivity implements Re
     ImageView mCall;
     FloatingActionButton mRequests, mTransfer;
     FloatingActionMenu mFloatingMenu;
-    String strNewDiscussion = "", strNewFollowDate = "", strNewStatus = "",mCallFrom,mOwnerContact;
+    String strNewDiscussion = "", strNewFollowDate = "", strNewStatus = "", mCallFrom, mOwnerContact;
     int bundleEnquiryID;
     ApiCall mApiCall;
 
@@ -120,8 +120,7 @@ public class EnquiredPersonsListActivity extends AppCompatActivity implements Re
                 mContact.setText(bundlecontact);
                 mCustname.setText(bundleCustname);
 
-                if (!mCallFrom.equalsIgnoreCase("transferenquiry"))
-                {
+                if (!mCallFrom.equalsIgnoreCase("transferenquiry")) {
                     mTransfer.show(true);
                 }
 
@@ -151,7 +150,11 @@ public class EnquiredPersonsListActivity extends AppCompatActivity implements Re
                     @Override
                     public void run() {
                         mSwipeRefreshLayout.setRefreshing(true);
-                        getPersonData(strId, strKeyword);
+                        if (!mCallFrom.equalsIgnoreCase("transferenquiry")) {
+                            getPersonData(strId, strKeyword);
+                        } else {
+                            getPersonDatafortransfer(strId, strKeyword);
+                        }
                     }
                 });
 
@@ -192,10 +195,10 @@ public class EnquiredPersonsListActivity extends AppCompatActivity implements Re
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(EnquiredPersonsListActivity.this, ShareEnquiryActivity.class);
-                     i.putExtra("enquiryid",bundleEnquiryID);
-                     i.putExtra("Ids",strId);
-                     i.putExtra("keyword",strKeyword);
-                     i.putExtra("enqcontact",bundlecontact);
+                i.putExtra("enquiryid", bundleEnquiryID);
+                i.putExtra("Ids", strId);
+                i.putExtra("keyword", strKeyword);
+                i.putExtra("enqcontact", bundlecontact);
                 startActivity(i);
             }
         });
@@ -213,7 +216,11 @@ public class EnquiredPersonsListActivity extends AppCompatActivity implements Re
 
     @Override
     public void onRefresh() {
-        getPersonData(strId, strKeyword);
+        if (!mCallFrom.equalsIgnoreCase("transferenquiry")) {
+            getPersonData(strId, strKeyword);
+        } else {
+            getPersonDatafortransfer(strId, strKeyword);
+        }
     }
 
     /*
@@ -225,6 +232,20 @@ public class EnquiredPersonsListActivity extends AppCompatActivity implements Re
             dialog.show();
             ApiCall mApiCall = new ApiCall(this, this);
             mApiCall.getManualEnquiryPersonData(bundlecontact, id, getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""), keyword);
+        } else {
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
+        }
+    }
+
+    /*
+       Get Person Transfer Data...
+        */
+    private void getPersonDatafortransfer(String id, String keyword) {
+
+        if (mConnectionDetector.isConnectedToInternet()) {
+            dialog.show();
+            ApiCall mApiCall = new ApiCall(this, this);
+            mApiCall.getManualEnquiryPersonData(bundlecontact, id, mOwnerContact, keyword);
         } else {
             CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
         }
@@ -367,7 +388,11 @@ public class EnquiredPersonsListActivity extends AppCompatActivity implements Re
         if (str != null) {
             if (str.equalsIgnoreCase("success")) {
                 Snackbar.make(mRelativeLayout, "Enquiry Added Successfully", Snackbar.LENGTH_SHORT).show();
-                getPersonData(strId, strKeyword);
+                if (!mCallFrom.equalsIgnoreCase("transferenquiry")) {
+                    getPersonData(strId, strKeyword);
+                } else {
+                    getPersonDatafortransfer(strId, strKeyword);
+                }
             } else {
                 Snackbar.make(mRelativeLayout, getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
             }
@@ -430,12 +455,10 @@ public class EnquiredPersonsListActivity extends AppCompatActivity implements Re
                 } else {
                     strNewStatus = spnStatus.getSelectedItem().toString();
                     Log.i("Result", "-" + strNewDiscussion + "\n" + strNewFollowDate + "\n" + strNewStatus);
-                    if (mCallFrom.equalsIgnoreCase("transferenquiry"))
-                    {
+                    if (mCallFrom.equalsIgnoreCase("transferenquiry")) {
                         addPersonsenquiryfromtransfer();
                         openDialog.dismiss();
-                    }else
-                    {
+                    } else {
                         addPersonsenquiry();
                         openDialog.dismiss();
                     }
@@ -467,24 +490,22 @@ public class EnquiredPersonsListActivity extends AppCompatActivity implements Re
     }
 
 
-    public void addPersonsenquiry()
-    {
+    public void addPersonsenquiry() {
         if (mConnectionDetector.isConnectedToInternet()) {
             dialog.show();
             ApiCall mApiCall = new ApiCall(this, this);
-            mApiCall.addManualEnquiryPersonData(bundlecontact,strNewStatus,getSharedPreferences(getString(R.string.my_preference),MODE_PRIVATE).getString("loginContact", ""), strKeyword,strNewDiscussion,strNewFollowDate,strId,"");
+            mApiCall.addManualEnquiryPersonData(bundlecontact, strNewStatus, getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""), strKeyword, strNewDiscussion, strNewFollowDate, strId, "");
         } else {
             CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
         }
     }
 
 
-    public void addPersonsenquiryfromtransfer()
-    {
+    public void addPersonsenquiryfromtransfer() {
         if (mConnectionDetector.isConnectedToInternet()) {
             dialog.show();
             ApiCall mApiCall = new ApiCall(this, this);
-            mApiCall.addManualEnquiryPersonData(bundlecontact,strNewStatus,mOwnerContact, strKeyword,strNewDiscussion,strNewFollowDate,strId,getSharedPreferences(getString(R.string.my_preference),MODE_PRIVATE).getString("loginContact", ""));
+            mApiCall.addManualEnquiryPersonData(bundlecontact, strNewStatus, mOwnerContact, strKeyword, strNewDiscussion, strNewFollowDate, strId, getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""));
         } else {
             CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
         }
