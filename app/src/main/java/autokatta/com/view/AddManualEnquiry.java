@@ -14,10 +14,10 @@ import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
-import android.telephony.gsm.SmsManager;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -34,12 +34,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -50,7 +50,6 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import autokatta.com.R;
-import autokatta.com.Registration.InviteFriends;
 import autokatta.com.adapter.GooglePlacesAdapter;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.generic.SetMyDateAndTime;
@@ -80,7 +79,7 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
     ImageView imgContact;
     private ConnectionDetector mConnectionDetector;
     RelativeLayout mRelative;
-    android.support.v4.widget.NestedScrollView scrollView;
+    NestedScrollView scrollView;
     TextView mNoData;
     TextView Title, Category, Brand, Model, Keyword, price;
     RelativeLayout relCategory, relBrand, relModel, relPrice, mDetails;
@@ -91,18 +90,17 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
     float strLoanPer;
     String fullpath = "";
     Dialog mBottomSheetDialog;
-    //int mSId,mVId,mPId;
-    String mId, mKeyword, mTitle, mPrice, mCategory, mBrand, mModel, mClassname, mImage;
+    String mId, mKeyword, mClassname, mImage;
     private final int REQUEST_CODE = 99;
     Button mSubmit;
-    String mFinancestatus="";
+    String mFinancestatus = "";
     EditText othersource;
     TextInputLayout othersourcelayout;
     String SOURCE[] = null;
     final List<String> mFinancerList = new ArrayList<>();
     final HashMap<String, Integer> mFinancerList1 = new HashMap<>();
-    List<String> parsedDataFinancer= new ArrayList<>();
-
+    List<String> parsedDataFinancer = new ArrayList<>();
+    RadioButton financeyes, financeno, exchangeyes, exchangeno;
 
 
     @Override
@@ -140,6 +138,12 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
                 txtInvite = (LinearLayout) findViewById(R.id.txtInvite);
                 mInventory = (LinearLayout) findViewById(R.id.selctinventory);
                 mSubmit = (Button) findViewById(R.id.sub);
+
+                financeyes = (RadioButton) findViewById(R.id.financeyes);
+                financeno = (RadioButton) findViewById(R.id.financeno);
+                exchangeyes = (RadioButton) findViewById(R.id.exchangeYes);
+                exchangeno = (RadioButton) findViewById(R.id.exchangeNo);
+
                 mConnectionDetector = new ConnectionDetector(AddManualEnquiry.this);
 
                 getSourceofenquiry();
@@ -149,30 +153,6 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
                     @Override
                     public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
                         if (checkedId == R.id.exchangeYes) {
-                            /*View view = getLayoutInflater().inflate(R.layout.custom_enquiry_exchange_info, null);
-                            ImageView mClose = (ImageView) view.findViewById(R.id.close);
-                            Button mAdd = (Button) view.findViewById(R.id.submit);
-
-                            mBottomSheetDialog = new Dialog(AddManualEnquiry.this, R.style.MaterialDialogSheet);
-                            mBottomSheetDialog.setContentView(view);
-                            mBottomSheetDialog.setCancelable(true);
-                            mBottomSheetDialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-                            mBottomSheetDialog.getWindow().setGravity(Gravity.BOTTOM);
-                            mBottomSheetDialog.show();
-
-                            mClose.setOnClickListener(new OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    mBottomSheetDialog.dismiss();
-                                }
-                            });
-
-                            mAdd.setOnClickListener(new OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-
-                                }
-                            });*/
                         }
                     }
                 });
@@ -181,7 +161,8 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
                     public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
                         if (checkedId == R.id.financeyes) {
                             mBottomSheetDialog = new Dialog(AddManualEnquiry.this, R.style.MaterialDialogSheet);
-                            LayoutInflater layoutInflater=(LayoutInflater) AddManualEnquiry.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                            LayoutInflater layoutInflater = (LayoutInflater) AddManualEnquiry.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                            assert layoutInflater != null;
                             final View view = layoutInflater.inflate(R.layout.custom_enquiry_finance_info, null);
                             ImageView mClose = (ImageView) view.findViewById(R.id.close);
                             Button mAdd = (Button) view.findViewById(R.id.submit);
@@ -189,14 +170,14 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
                             final EditText mLoanPer = (EditText) view.findViewById(R.id.loanpercent);
                             final AutoCompleteTextView mFinancerName = (AutoCompleteTextView) view.findViewById(R.id.financername);
 
-                            mFinancestatus="yes";
+                            mFinancestatus = "yes";
                             mClose.setOnClickListener(new OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
                                     mBottomSheetDialog.dismiss();
+                                    financeno.setChecked(true);
                                 }
                             });
-
 
                             try {
                                 if (mConnectionDetector.isConnectedToInternet()) {
@@ -218,9 +199,7 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
                                                     success.setFinancierID(success.getFinancierID());
                                                     success.setFinancierName(success.getFinancierName());
                                                     mFinancerList.add(success.getFinancierName());
-                                                    //  mFinancerList1.put(success.getFinancierName(), success.getFinancierID());
                                                 }
-                                                // parsedDataFinancer.addAll(mFinancerList);
                                                 ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(mBottomSheetDialog.getContext(),
                                                         R.layout.registration_spinner, mFinancerList);
                                                 mFinancerName.setAdapter(dataAdapter);
@@ -266,15 +245,15 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
                                 }
                             });
 
-                        mBottomSheetDialog.setContentView(view);
-                        mBottomSheetDialog.setCancelable(true);
-                        mBottomSheetDialog.getWindow().setTitle("Finance Info");
-                        mBottomSheetDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
-                        mBottomSheetDialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-                        mBottomSheetDialog.getWindow().setGravity(Gravity.TOP);
-                        mBottomSheetDialog.show();
+                            mBottomSheetDialog.setContentView(view);
+                            mBottomSheetDialog.setCancelable(true);
+                            mBottomSheetDialog.getWindow().setTitle("Finance Info");
+                            mBottomSheetDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+                            mBottomSheetDialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                            mBottomSheetDialog.getWindow().setGravity(Gravity.TOP);
+                            mBottomSheetDialog.show();
+                        }
                     }
-                }
 
 
                 });
@@ -421,13 +400,7 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
                             String custAddress = autoAddress.getText().toString();
                             String custFullAddress = edtAddress.getText().toString();
                             custInventoryType = mKeyword;
-/*
-                            if (strPos != 0) {
-                                custInventoryType = spnInventory.getSelectedItem().toString();
-                            }else
-                            {
-                                custInventoryType=mKeyword;
-                            }*/
+
                             if (strPos1 != 0)
                                 custEnquiryStatus = spnStatus.getSelectedItem().toString();
 
@@ -462,10 +435,7 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
                             } else if (custFullAddress.equals("")) {
                                 edtAddress.setError("Enter Detailed address");
                                 edtAddress.requestFocus();
-                            } /*else if (spnInventory.getSelectedItemPosition() == 0 && custInventoryType.equalsIgnoreCase("")) {
-                                CustomToast.customToast(getApplicationContext(), "Please provide inventory");
-                                spnInventory.requestFocus();
-                            } */ else if (spnStatus.getSelectedItem().toString().equalsIgnoreCase("select enquiry status")) {
+                            } else if (spnStatus.getSelectedItem().toString().equalsIgnoreCase("select enquiry status")) {
                                 CustomToast.customToast(getApplicationContext(), "Please provide status");
                                 spnStatus.requestFocus();
                             } else if (spnStatus.getSelectedItem().toString().equalsIgnoreCase("other") && othersource.getText().toString().equalsIgnoreCase("")) {
@@ -510,7 +480,7 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
                 txtInvite.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        //sendSMSMessage(edtContact.getText().toString(),"hhhh");
+                        sendSMSMessage(edtContact.getText().toString());
                     }
                 });
 
@@ -554,16 +524,15 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
         mApiCall.getSourceOfEnquiry();
     }
 
-    private void sendSMSMessage(String con, String msg) {
+    private void sendSMSMessage(String con) {
+        Log.i("Send SMS", "");
+
         try {
-            SmsManager smsManager = SmsManager.getDefault();
-            smsManager.sendTextMessage(con, null, "hi..." + msg, null, null);
-            Toast.makeText(getApplicationContext(), "SMS sent.", Toast.LENGTH_LONG).show();
-            Intent i = new Intent(getApplicationContext(), InviteFriends.class);
-            startActivity(i);
-            finish();
+            android.telephony.SmsManager smsManager = android.telephony.SmsManager.getDefault();
+            smsManager.sendTextMessage(con, null, "Hi I am using Autokatta\n Please click below link to download and connect with me for more https://play.google.com/store/apps/details?id=autokatta.com", null, null);
+            CustomToast.customToast(this, "SMS sent.");
         } catch (Exception e) {
-            Toast.makeText(getApplicationContext(), "SMS failed, please try again.", Toast.LENGTH_LONG).show();
+            CustomToast.customToast(this, "SMS failed, please try again.");
             e.printStackTrace();
         }
     }
@@ -638,20 +607,6 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
                         }
                     }
                 }
-/*
-                if (arrayList != null) {
-                    arrayList = adapter.getInventoryList();
-                    for (int i = 0; i < arrayList.size(); i++) {
-                        if (!arrayList.get(i).equals("0")) {
-                            if (addArray.equals("")) {
-                                addArray = arrayList.get(i);
-                            } else {
-                                addArray = addArray + "," + arrayList.get(i);
-                                Log.i("addArray", "->" + addArray);
-                            }
-                        }
-                    }
-                }*/
 
                 if (custName.equalsIgnoreCase("") || custName.startsWith(" ") && custName.startsWith(" ")) {
                     edtName.setError("Please provide customer name");
@@ -674,23 +629,19 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
                 } else if (spnStatus.getSelectedItemPosition() == 0) {
                     CustomToast.customToast(getApplicationContext(), "Please provide status");
                     spnStatus.requestFocus();
-                } /*else if (discussion.equals("")) {
-                    edtDiscussion.setError("Enter discussion data");
-                    edtDiscussion.requestFocus();
-                }*/ else if (nextFollowupDate.equals("") || nextFollowupDate.startsWith(" ")) {
+                } else if (nextFollowupDate.equals("") || nextFollowupDate.startsWith(" ")) {
                     edtDate.setError("Enter Date");
                     edtDate.requestFocus();
                 } else if (spnSource.getSelectedItem().toString().equalsIgnoreCase("select source of enquiry")) {
                     CustomToast.customToast(getApplicationContext(), "Please provide source");
                     spnStatus.requestFocus();
-                } else  if (spnSource.getSelectedItem().toString().equalsIgnoreCase("other") && othersource.getText().toString().equalsIgnoreCase("")) {
+                } else if (spnSource.getSelectedItem().toString().equalsIgnoreCase("other") && othersource.getText().toString().equalsIgnoreCase("")) {
                     othersource.setError("Please enter source");
                     othersource.setFocusable(true);
-                }  else {
+                } else {
                     if (!spnSource.getSelectedItem().toString().equalsIgnoreCase("select source of enquiry") && !spnSource.getSelectedItem().toString().equalsIgnoreCase("other")) {
                         mSource = spnSource.getSelectedItem().toString();
-                    }
-                    else if (spnSource.getSelectedItem().toString().equalsIgnoreCase("other")) {
+                    } else if (spnSource.getSelectedItem().toString().equalsIgnoreCase("other")) {
                         addsource(othersource.getText().toString());
                         mSource = othersource.getText().toString();
                     }
@@ -730,7 +681,7 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
                                 String nextFollowupDate, String addArray) {
         ApiCall mApiCall = new ApiCall(this, this);
         mApiCall.addManualEnquiryData(myContact, custName, custContact, custAddress, custFullAddress, custInventoryType,
-                custEnquiryStatus, discussion, nextFollowupDate, addArray, mSource,strFinancername,strLoanAmt,strLoanPer,mFinancestatus);
+                custEnquiryStatus, discussion, nextFollowupDate, addArray, mSource, strFinancername, strLoanAmt, strLoanPer, mFinancestatus);
     }
 
     private void addFinancername(String fName) {
@@ -753,7 +704,6 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
                 break;
 
             case (R.id.edtTime):
-
                 if (action == MotionEvent.ACTION_DOWN) {
                     edtTime.setInputType(InputType.TYPE_NULL);
                     edtTime.setError(null);
@@ -770,14 +720,6 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
         super.onBackPressed();
         finish();
         overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
-        /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            ActivityOptions options = ActivityOptions.makeCustomAnimation(AddManualEnquiry.this, R.anim.left_to_right, R.anim.right_to_left);
-            startActivity(new Intent(getApplicationContext(), ManualEnquiry.class), options.toBundle());
-            finish();
-        } else {
-            finish();
-            startActivity(new Intent(getApplicationContext(), ManualEnquiry.class));
-        }*/
     }
 
     @Override
@@ -788,13 +730,6 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
                     AddManualEnquiryResponse enquiryResponse = (AddManualEnquiryResponse) response.body();
                     if (enquiryResponse.getSuccess() != null) {
                         if (enquiryResponse.getSuccess().getSuccess().equalsIgnoreCase("Data successfully Inserted.")) {
-                            //Snackbar.make(mRelative, enquiryResponse.getSuccess().getSuccess(), Snackbar.LENGTH_SHORT).show();
-                         /*   Bundle bundle = new Bundle();
-                            bundle.putString("spinnerValue",spnInventory.getSelectedItem().toString());
-                            ActivityOptions options = ActivityOptions.makeCustomAnimation(AddManualEnquiry.this, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
-                            Intent intent = new Intent(getApplicationContext(), ManualEnquiryVehicleList.class);
-                            intent.putExtras(bundle);
-                            startActivity(intent, options.toBundle());*/
                             CustomToast.customToast(AddManualEnquiry.this, "Data Inserted Successfully");
                             finish();
                         }
@@ -830,65 +765,7 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
                         });
                     } else
                         CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
-                }  /*else if (response.body() instanceof GetInventoryResponse) {
-                    GetInventoryResponse mInventoryResponse = (GetInventoryResponse) response.body();
-                    if (mInventoryResponse.getSuccess() != null) {
-                        mItemList.clear();
-                        scrollView.setVisibility(View.GONE);
-                       // mListView.setVisibility(View.VISIBLE);
-                        for (GetInventoryResponse.Success success : mInventoryResponse.getSuccess()) {
-                            mNoData.setVisibility(View.GONE);
-                            if (success.getInventoryType().equals("UsedVehicle")) {
-                                success.setVehicleId(success.getVehicleId());
-                                success.setTitle(success.getTitle());
-                                success.setCategory(success.getCategory());
-                                success.setSubCategory(success.getSubCategory());
-                                success.setModel(success.getModel());
-                                mInventoryType = success.getInventoryType();
-                                Log.i("used", "->" + mInventoryType);
-                                mItemList.add(success);
-                            } else if (success.getInventoryType().equals("New Vehicle")) {
-                            } else if (success.getInventoryType().equals("Products")) {
-                                success.setId(success.getId());
-                                success.setProductName(success.getProductName());
-                                success.setProductType(success.getProductType());
-                                success.setCategory(success.getCategory());
-                                mInventoryType = success.getInventoryType();
-                                Log.i("product", "->" + mInventoryType);
-                                mItemList.add(success);
-                            } else if (success.getInventoryType().equals("Services")) {
-                                success.setId(success.getId());
-                                success.setName(success.getName());
-                                success.setType(success.getType());
-                                success.setCategory(success.getCategory());
-                                mInventoryType = success.getInventoryType();
-                                Log.i("service", "->" + mInventoryType);
-                                mItemList.add(success);
-                            }
-                        }
-                        Log.i("Inventory", "->" + mInventoryType);
-
-                        if (mItemList.size() != 0) {
-                            mNoData.setVisibility(View.GONE);
-                            adapter = new InventoryAdapter(AddManualEnquiry.this, mItemList, mInventoryType);
-                           // mListView.setAdapter(adapter);
-                            adapter.notifyDataSetChanged();
-                            menu.findItem(R.id.ok_manual).setVisible(true);
-
-                        } else {
-                            mNoData.setVisibility(View.VISIBLE);
-                            menu.findItem(R.id.ok_manual).setVisible(false);
-                        }
-                    } else {
-                        Snackbar.make(mRelative, getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
-                    }
-                }*//*
-            } else {
-                Snackbar.make(mRelative, getString(R.string._404_), Snackbar.LENGTH_SHORT).show();
-            }
-        } else {
-            Snackbar.make(mRelative, getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
-        }*/
+                }
             }
             {
                 Snackbar.make(mRelative, getString(R.string._404_), Snackbar.LENGTH_SHORT).show();
@@ -942,13 +819,16 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
                 if (resultCode == Activity.RESULT_OK) {
                     try {
                         Uri contactData = data.getData();
+                        assert contactData != null;
                         Cursor c = getContentResolver().query(contactData, null, null, null, null);
+                        assert c != null;
                         if (c.moveToFirst()) {
                             String contactId = c.getString(c.getColumnIndex(ContactsContract.Contacts._ID));
                             String hasNumber = c.getString(c.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER));
                             String num = "";
                             if (Integer.valueOf(hasNumber) == 1) {
                                 Cursor numbers = getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = " + contactId, null, null);
+                                assert numbers != null;
                                 while (numbers.moveToNext()) {
                                     num = numbers.getString(numbers.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
                                     num = num.replaceAll("-", "");
@@ -956,11 +836,13 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
 
                                     if (num.length() > 10)
                                         num = num.substring(num.length() - 10);
-                                    Toast.makeText(AddManualEnquiry.this, "Number=" + num, Toast.LENGTH_LONG).show();
+                                    Log.i("Number", "AddManualEnquiry" + num);
                                     edtContact.setText(num);
                                 }
+                                numbers.close();
                             }
                         }
+                        c.close();
                         break;
                     } catch (Exception e) {
                         e.printStackTrace();
