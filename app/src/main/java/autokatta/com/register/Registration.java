@@ -23,6 +23,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -84,6 +85,7 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
     SharedPreferences.Editor editor;
     private DatePickerDialog datePicker;
     TextView termsOfAgreement;
+    CheckBox mCheckBox;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -130,6 +132,7 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
         rbtmale = (RadioButton) findViewById(R.id.rbtmale);
         rbtfemale = (RadioButton) findViewById(R.id.rbtfemale);
         clearDate = (ImageView) findViewById(R.id.clearDate);
+        mCheckBox = (CheckBox) findViewById(R.id.checkBox);
 
         mRegistration = (RelativeLayout) findViewById(R.id.registration);
         mLinear = (LinearLayout) findViewById(R.id.linear);
@@ -316,10 +319,13 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
                     brand = "";
                 } else if (strIndustry.equalsIgnoreCase("Select Industry")) {
                     strIndustry = "";
-                } else {
+                } else if (!mCheckBox.isChecked()) {
+                CustomToast.customToast(getApplicationContext(),"Please accept terms and conditions");
+                }else{
 
-                    apiCall.registrationAfterOtp(namestr, contactstr, emailstr, DOBstr, genderstr, pincodestr, addressstr, profession, passwordstr, sub_profession, strIndustry,brand);
-                }
+                        apiCall.registrationAfterOtp(namestr, contactstr, emailstr, DOBstr, genderstr, pincodestr, addressstr, profession, passwordstr, sub_profession, strIndustry,brand);
+                    }
+
 
                 break;
 
@@ -542,7 +548,7 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
         mSuccess = str;
         if (str != null) {
             if (str.equalsIgnoreCase("Success")) {
-                getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("loginregistrationid", str).apply();
+              //  getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("loginregistrationid", str).apply();
                 CustomToast.customToast(getApplicationContext(), "Already Registered Please Login");
                 Intent i = new Intent(Registration.this, LoginActivity.class);
                 startActivity(i);
@@ -552,7 +558,7 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
                 mLinear.setVisibility(View.GONE);
                 mButton.setVisibility(View.VISIBLE);
             } else {
-                getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("loginregistrationid", str).apply();
+                getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putInt("loginregistrationid", Integer.parseInt(str)).apply();
                 CustomToast.customToast(getApplicationContext(), " Registered Successfully");
                 Intent i = new Intent(Registration.this, LoginActivity.class);
                 startActivity(i);

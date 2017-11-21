@@ -28,7 +28,7 @@
                 android:drawablePadding="@dimen/card_margin"
                 android:drawableStart="@mipmap/ic_contacts"
                 android:hint="@string/enter_register"
-                android:inputType="phone"
+                android:inputType="number"
                 android:maxLength="10"
                 android:maxLines="1"
                 android:paddingEnd="@dimen/margin_heading_top"

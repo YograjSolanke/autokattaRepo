@@ -156,6 +156,7 @@ public class EditAllAbout extends AppCompatActivity implements RequestNotifier, 
         mEdtIntrest.setOnClickListener(EditAllAbout.this);
         mDoneAbout.setOnClickListener(EditAllAbout.this);
         mDoneMail.setOnClickListener(EditAllAbout.this);
+        mEdtEmail.setOnClickListener(EditAllAbout.this);
         mDoneWebsite.setOnClickListener(EditAllAbout.this);
         mDoneSkills.setOnClickListener(EditAllAbout.this);
         mDoneAddress.setOnClickListener(EditAllAbout.this);
