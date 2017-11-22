@@ -33,14 +33,9 @@ public class InventoryDashboard extends AppCompatActivity {
     String mBundleContact;
     Bundle mBundle;
 
-    String[] gridViewString = {
-            "Product", "Service", "Used Vehicle", "New Vehicle", "Sold Vehicle", "My Vehicle",
-            "Transfer Stock", "Manual Enquiry", "Business Chat", "Search Leads",};
+    String[] gridViewString;
 
-    int[] gridViewImageId = {
-            R.mipmap.product, R.mipmap.services, R.mipmap.used_vehicle, R.mipmap.new_vehicle, R.mipmap.sold_vehicle,
-            R.mipmap.my_vehicle, R.mipmap.transfer_stock, R.mipmap.manual_enquiry, R.mipmap.business_chat, R.mipmap.search_leads,
-    };
+    int[] gridViewImageId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +53,24 @@ public class InventoryDashboard extends AppCompatActivity {
             mBundleContact = getIntent().getExtras().getString("bundle_contact", "");
         }
 
+        if (mStoreID == 0) {
+            gridViewString = new String[]{
+                    "Product", "Service", "Used Vehicle", "New Vehicle", "Sold Vehicle", "My Vehicle",
+                    "Transfer Stock", "Manual Enquiry", "Business Chat", "Search Leads",};
+
+            gridViewImageId = new int[]{
+                    R.mipmap.product, R.mipmap.services, R.mipmap.used_vehicle, R.mipmap.new_vehicle, R.mipmap.sold_vehicle,
+                    R.mipmap.my_vehicle, R.mipmap.transfer_stock, R.mipmap.manual_enquiry, R.mipmap.business_chat, R.mipmap.search_leads,};
+        } else {
+            gridViewString = new String[]{
+                    "Product", "Service", "Used Vehicle", "New Vehicle", "Sold Vehicle",
+                    "Transfer Stock", "Manual Enquiry",};
+
+            gridViewImageId = new int[]{
+                    R.mipmap.product, R.mipmap.services, R.mipmap.used_vehicle, R.mipmap.new_vehicle, R.mipmap.sold_vehicle,
+                    R.mipmap.transfer_stock, R.mipmap.manual_enquiry,};
+        }
+
         mBundle = new Bundle();
         mBundle.putInt("bundle_storeId", mStoreID);
         mBundle.putString("bundle_contact", mBundleContact);
@@ -71,37 +84,65 @@ public class InventoryDashboard extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int i, long id) {
-                switch (gridViewString[+i]) {
-                    case "Product":
-                        startActivity(new Intent(getApplicationContext(), ProductContainer.class).putExtras(mBundle));
-                        break;
-                    case "Service":
-                        startActivity(new Intent(getApplicationContext(), ServiceContainer.class).putExtras(mBundle));
-                        break;
-                    case "Used Vehicle":
-                        startActivity(new Intent(getApplicationContext(), UsedVehicleContainer.class).putExtras(mBundle));
-                        break;
-                    case "New Vehicle":
-                        startActivity(new Intent(getApplicationContext(), NewVehicleContainer.class).putExtras(mBundle));
-                        break;
-                    case "Sold Vehicle":
-                        startActivity(new Intent(getApplicationContext(), SoldVehicleContainer.class).putExtras(mBundle));
-                        break;
-                    case "My Vehicle":
-                        startActivity(new Intent(getApplicationContext(), MyVehicleContainer.class));
-                        break;
-                    case "Transfer Stock":
-                        startActivity(new Intent(getApplicationContext(), TransferStock.class).putExtras(mBundle));
-                        break;
-                    case "Search Leads":
-                        startActivity(new Intent(getApplicationContext(), BuyerNotificationContainer.class));
-                        break;
-                    case "Manual Enquiry":
-                        startActivity(new Intent(getApplicationContext(), ManualEnquiryMainActivity.class).putExtras(mBundle));
-                        break;
-                    case "Business Chat":
-                        startActivity(new Intent(getApplicationContext(), BussinessChatActivity.class));
-                        break;
+                if (mStoreID == 0) {
+                    switch (gridViewString[+i]) {
+
+                        case "Product":
+                            startActivity(new Intent(getApplicationContext(), ProductContainer.class).putExtras(mBundle));
+                            break;
+                        case "Service":
+                            startActivity(new Intent(getApplicationContext(), ServiceContainer.class).putExtras(mBundle));
+                            break;
+                        case "Used Vehicle":
+                            startActivity(new Intent(getApplicationContext(), UsedVehicleContainer.class).putExtras(mBundle));
+                            break;
+                        case "New Vehicle":
+                            startActivity(new Intent(getApplicationContext(), NewVehicleContainer.class).putExtras(mBundle));
+                            break;
+                        case "Sold Vehicle":
+                            startActivity(new Intent(getApplicationContext(), SoldVehicleContainer.class).putExtras(mBundle));
+                            break;
+                        case "My Vehicle":
+                            startActivity(new Intent(getApplicationContext(), MyVehicleContainer.class));
+                            break;
+                        case "Transfer Stock":
+                            startActivity(new Intent(getApplicationContext(), TransferStock.class).putExtras(mBundle));
+                            break;
+                        case "Search Leads":
+                            startActivity(new Intent(getApplicationContext(), BuyerNotificationContainer.class));
+                            break;
+                        case "Manual Enquiry":
+                            startActivity(new Intent(getApplicationContext(), ManualEnquiryMainActivity.class).putExtras(mBundle));
+                            break;
+                        case "Business Chat":
+                            startActivity(new Intent(getApplicationContext(), BussinessChatActivity.class));
+                            break;
+                    }
+                } else {
+                    switch (gridViewString[+i]) {
+
+                        case "Product":
+                            startActivity(new Intent(getApplicationContext(), ProductContainer.class).putExtras(mBundle));
+                            break;
+                        case "Service":
+                            startActivity(new Intent(getApplicationContext(), ServiceContainer.class).putExtras(mBundle));
+                            break;
+                        case "Used Vehicle":
+                            startActivity(new Intent(getApplicationContext(), UsedVehicleContainer.class).putExtras(mBundle));
+                            break;
+                        case "New Vehicle":
+                            startActivity(new Intent(getApplicationContext(), NewVehicleContainer.class).putExtras(mBundle));
+                            break;
+                        case "Sold Vehicle":
+                            startActivity(new Intent(getApplicationContext(), SoldVehicleContainer.class).putExtras(mBundle));
+                            break;
+                        case "Transfer Stock":
+                            startActivity(new Intent(getApplicationContext(), TransferStock.class).putExtras(mBundle));
+                            break;
+                        case "Manual Enquiry":
+                            startActivity(new Intent(getApplicationContext(), ManualEnquiryMainActivity.class).putExtras(mBundle));
+                            break;
+                    }
                 }
             }
         });
