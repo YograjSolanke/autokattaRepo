@@ -122,23 +122,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 }
             }
         });
-        /*mMarathi.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mMarathiStr = mMarathi.getText().toString();
-                mMarathi.setBackgroundColor(Color.parseColor("#f7f7f7"));
-                setLocale("mr");
-            }
-        });
-
-        mEnglish.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mEnglishStr = mEnglish.getText().toString();
-                mEnglish.setBackgroundColor(Color.parseColor("#f7f7f7"));
-                setLocale("en");
-            }
-        });*/
 
         builder.setCancelable(false)
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -234,7 +217,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 if (!mLoginResponse.getSuccess().isEmpty()) {
                     int id = mLoginResponse.getSuccess().get(0).getRegID();
                     Snackbar.make(mLogin, "Success", Snackbar.LENGTH_SHORT).show();
-                    if (getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginregistrationid", null) == null) {
+                    if (getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getInt("loginregistrationid", 0) == 0) {
                         getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putInt("loginregistrationid", id).apply();
                     }
 
