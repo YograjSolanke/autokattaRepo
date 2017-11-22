@@ -101,6 +101,17 @@ public class MyStoreResponse {
         @SerializedName("followcount")
         @Expose
         private Integer followcount;
+        @SerializedName("Role")
+        @Expose
+        private String Role;
+
+        public String getRole() {
+            return Role;
+        }
+
+        public void setRole(String role) {
+            Role = role;
+        }
 
         public Integer getId() {
             return id;

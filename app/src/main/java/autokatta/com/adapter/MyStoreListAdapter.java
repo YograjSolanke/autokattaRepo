@@ -61,7 +61,7 @@ public class MyStoreListAdapter extends RecyclerView.Adapter<MyStoreListAdapter.
     // you provide access to all the views for a data item in a view holder
     static class YoHolder extends RecyclerView.ViewHolder {
         CardView mCardView;
-        TextView stname, stlocation, stwebsite, storetiming, stlike, stshare, stfollow, stworkdays, serviceOffered;
+        TextView stname, stlocation, userRole, stwebsite, storetiming, stlike, stshare, stfollow, stworkdays, serviceOffered;
         ImageView img, storedelete, storeShare;
         RatingBar storerating;
         LinearLayout linearlike, linearunlike, linearshare, linearshare1, linearfollow, linearunfollow;
@@ -73,6 +73,7 @@ public class MyStoreListAdapter extends RecyclerView.Adapter<MyStoreListAdapter.
             stname = (TextView) itemView.findViewById(R.id.editstname);
             stlocation = (TextView) itemView.findViewById(R.id.autolocation);
             stwebsite = (TextView) itemView.findViewById(R.id.editwebsite);
+            userRole = (TextView) itemView.findViewById(R.id.userRole);
             storetiming = (TextView) itemView.findViewById(R.id.edittiming);
             serviceOffered = (TextView) itemView.findViewById(R.id.servicesOffered);
             stworkdays = (TextView) itemView.findViewById(R.id.editworkingdays);
@@ -133,6 +134,7 @@ public class MyStoreListAdapter extends RecyclerView.Adapter<MyStoreListAdapter.
         holder.stfollow.setText("Follow(" + mStoreList.get(position).getFollowcount() + ")");
         //   holder.stshare.setText("share "+sshare);
         holder.stworkdays.setText(mStoreList.get(position).getWorkingDays());
+        holder.userRole.setText("Role :" + mStoreList.get(position).getRole());
         holder.storerating.setEnabled(false);
         if (mStoreList.get(position).getRating() != 0)
             holder.storerating.setRating(mStoreList.get(position).getRating());

@@ -133,6 +133,18 @@ public class StoreResponse {
         @Expose
         private String dealingWith;
 
+        @SerializedName("Role")
+        @Expose
+        private String Role;
+
+        public String getRole() {
+            return Role;
+        }
+
+        public void setRole(String role) {
+            Role = role;
+        }
+
 
         public String getOwnerName() {
             return ownerName;

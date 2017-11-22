@@ -104,7 +104,7 @@ public class StoreProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             holder.productrating.setEnabled(false);
 
 
-            if (myContact.equals(product.getStorecontact())) {
+            if (myContact.equals(product.getAddedBy())) {
                 holder.deleteproduct.setVisibility(View.VISIBLE);
                 holder.mNote.setVisibility(View.VISIBLE);
             } else {

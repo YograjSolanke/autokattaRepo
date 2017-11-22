@@ -149,6 +149,7 @@ public class StoreVehicleActivity extends AppCompatActivity implements SwipeRefr
                             success.setRegno(success.getRegno());
                         success.setYear(success.getYear());
                         success.setLocation(success.getLocation());
+                        success.setStorecontact(success.getStorecontact());
                         success.setRto(success.getRto());
                         success.setKms(success.getKms());
                         success.setImages(success.getImages());

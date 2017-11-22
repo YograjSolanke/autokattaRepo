@@ -100,7 +100,7 @@ public class StoreServiceAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             holder.productrating.setEnabled(false);
 
 
-            if (myContact.equals(service.getStorecontact())) {
+            if (myContact.equals(service.getAddedBy())) {
                 holder.deleteproduct.setVisibility(View.VISIBLE);
                 holder.mNote.setVisibility(View.VISIBLE);
             } else {

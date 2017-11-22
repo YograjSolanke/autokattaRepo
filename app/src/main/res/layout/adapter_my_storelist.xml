@@ -108,11 +108,22 @@
                         android:textSize="@dimen/article_subheading"
                         android:textStyle="bold" />
 
+
+                    <TextView
+                        android:id="@+id/userRole"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/editstname"
+                        android:fontFamily="sans-serif"
+                        android:paddingStart="5dp"
+                        android:text="@string/user_role"
+                        android:visibility="visible" />
+
                     <TextView
                         android:id="@+id/storetype"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/editstname"
+                        android:layout_below="@+id/userRole"
                         android:fontFamily="sans-serif"
                         android:text="@string/store_type"
                         android:visibility="gone" />

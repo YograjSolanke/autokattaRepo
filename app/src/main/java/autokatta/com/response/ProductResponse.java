@@ -124,6 +124,18 @@ public class ProductResponse {
         @Expose
         private String productTagNames;
 
+        @SerializedName("AddedBy")
+        @Expose
+        private String AddedBy;
+
+        public String getAddedBy() {
+            return AddedBy;
+        }
+
+        public void setAddedBy(String addedBy) {
+            AddedBy = addedBy;
+        }
+
         public String getBrandtags() {
             return brandtags;
         }
