@@ -1,6 +1,7 @@
 package autokatta.com.view;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -26,21 +27,28 @@ import retrofit2.Response;
 
 import static com.google.zxing.integration.android.IntentIntegrator.REQUEST_CODE;
 
-public class ShareEnquiryActivity extends AppCompatActivity implements RequestNotifier,View.OnClickListener{
+public class ShareEnquiryActivity extends AppCompatActivity implements RequestNotifier, View.OnClickListener {
     EditText mContact, owner_name, full_address, reason_for_transfer, description;
     Button submit;
     String myContact;
     int mEnquiryId;
     LinearLayout txtUser, txtInvite, linear_transfer;
-    String mEnquContact,mKeyword,mIds;
+    String mEnquContact, mKeyword, mIds;
     ConnectionDetector mConnectionDetector;
-ApiCall mApiCall;
+    ApiCall mApiCall;
+    private ProgressDialog dialog;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.share_enquiry);
+        setTitle("Share Enquiry");
+
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setHomeButtonEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
         mContact = (EditText) findViewById(R.id.contact_no);
         owner_name = (EditText) findViewById(R.id.owner_name);
@@ -51,16 +59,19 @@ ApiCall mApiCall;
         txtInvite = (LinearLayout) findViewById(R.id.txtInvite);
         linear_transfer = (LinearLayout) findViewById(R.id.linear_transfer);
         mConnectionDetector = new ConnectionDetector(this);
-        mApiCall=new ApiCall(this,this);
+        mApiCall = new ApiCall(this, this);
 
         submit.setOnClickListener(this);
 
-        Intent i=getIntent();
-      mEnquiryId=  i.getIntExtra("enquiryid",0);
-        mEnquContact=  i.getStringExtra("enqcontact");
-        mKeyword=  i.getStringExtra("keyword");
-        mIds=  i.getStringExtra("Ids");
-      //  vehicleId = bundle.getInt("bundle_VehicleId");
+        dialog = new ProgressDialog(ShareEnquiryActivity.this);
+        dialog.setMessage("Checking Contact in Autokatta...");
+
+        Intent i = getIntent();
+        mEnquiryId = i.getIntExtra("enquiryid", 0);
+        mEnquContact = i.getStringExtra("enqcontact");
+        mKeyword = i.getStringExtra("keyword");
+        mIds = i.getStringExtra("Ids");
+        //  vehicleId = bundle.getInt("bundle_VehicleId");
         myContact = getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "");
         ImageView mContactList = (ImageView) findViewById(R.id.contact_list);
         mContactList.setOnClickListener(new View.OnClickListener() {
@@ -117,23 +128,23 @@ ApiCall mApiCall;
 
     private void checkUser(String contact) {
         if (mConnectionDetector.isConnectedToInternet()) {
+            dialog.show();
             //ApiCall mApiCall = new ApiCall(getApplicationContext(), this);
             mApiCall.registrationContactValidation(contact);
-        }else
-        {
-            CustomToast.customToast(getApplicationContext(),getString(R.string.no_internet));
+        } else {
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
         }
     }
 
-  private void addTransferrequest() {
-      if (mConnectionDetector.isConnectedToInternet()) {
-        //  ApiCall mApiCall = new ApiCall(getApplicationContext(), this);
-          mApiCall.addtransferenquiry(mEnquiryId, mContact.getText().toString(), mEnquContact, myContact, owner_name.getText().toString(), description.getText().toString(), reason_for_transfer.getText().toString(), "yes",mKeyword,"",mIds);
-      } else {
-          CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
+    private void addTransferrequest() {
+        if (mConnectionDetector.isConnectedToInternet()) {
+            //  ApiCall mApiCall = new ApiCall(getApplicationContext(), this);
+            mApiCall.addtransferenquiry(mEnquiryId, mContact.getText().toString(), mEnquContact, myContact, owner_name.getText().toString(), description.getText().toString(), reason_for_transfer.getText().toString(), "yes", mKeyword, "", mIds);
+        } else {
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
 
-      }
-  }
+        }
+    }
 
     @Override
     public void notifySuccess(Response<?> response) {
@@ -150,6 +161,7 @@ ApiCall mApiCall;
     public void notifyString(String str) {
         if (str != null) {
             if (str.equalsIgnoreCase("Success")) {
+                dialog.dismiss();
                 txtUser.setVisibility(View.VISIBLE);
                 linear_transfer.setVisibility(View.VISIBLE);
                 txtInvite.setVisibility(View.GONE);
@@ -158,6 +170,7 @@ ApiCall mApiCall;
                 finish();
 
             } else {
+                dialog.dismiss();
                 txtInvite.setVisibility(View.VISIBLE);
                 txtUser.setVisibility(View.GONE);
                 linear_transfer.setVisibility(View.GONE);
@@ -244,5 +257,12 @@ ApiCall mApiCall;
             CustomToast.customToast(getApplicationContext(), "SMS failed, please try again.");
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+        overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
     }
 }

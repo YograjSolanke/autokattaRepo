@@ -409,10 +409,10 @@ public class EditAllAbout extends AppCompatActivity implements RequestNotifier, 
                 mDoneworkat.setVisibility(View.VISIBLE);
                 mEdtWorkedat.setVisibility(View.GONE);
 
-                mUsertypelay.setVisibility(View.GONE);
-                mIndustrylay.setVisibility(View.GONE);
-                mCategorylay.setVisibility(View.GONE);
-                mBrandlay.setVisibility(View.GONE);
+                mUsertypelay.setVisibility(View.VISIBLE);
+                mIndustrylay.setVisibility(View.VISIBLE);
+                mCategorylay.setVisibility(View.VISIBLE);
+                mBrandlay.setVisibility(View.VISIBLE);
                 break;
 
             case R.id.editaddress:

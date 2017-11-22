@@ -423,7 +423,7 @@ public class CreateStoreActivity extends AppCompatActivity implements Multispinn
                 } else if (opentime.getText().toString().contains("PM") && closetime.getText().toString().contains("AM")) {
                     CustomToast.customToast(getApplicationContext(), "Enter Valid Time");
                 } else if (flagtime) {
-                    CustomToast.customToast(getApplicationContext(), "Close time & open time should not same");
+                    CustomToast.customToast(getApplicationContext(), "Enter Valid Time");
                 } else if (workdays.equals("-Select Working Days-") || workdays.equals("")) {
                     CustomToast.customToast(getApplicationContext(), "Please select Working Days");
                 } else if (storetype.equalsIgnoreCase("")) {

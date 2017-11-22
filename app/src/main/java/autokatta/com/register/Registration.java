@@ -442,12 +442,11 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
                    brandSpinner.setVisibility(View.VISIBLE);
                    otherbrandlayout.setVisibility(View.GONE);
                }else
-                if (moduleSpinner.getSelectedItem().toString().equalsIgnoreCase("Other")) {
-                    otherCategoryLayout.setVisibility(View.VISIBLE);
-                } else {
-                    otherCategoryLayout.setVisibility(View.GONE);
-                }
-
+                   if (moduleSpinner.getSelectedItem().toString().equalsIgnoreCase("Other")) {
+                       otherCategoryLayout.setVisibility(View.VISIBLE);
+                   } else {
+                       otherCategoryLayout.setVisibility(View.GONE);
+                   }
                 break;
             case (R.id.spinnerbrand):
 

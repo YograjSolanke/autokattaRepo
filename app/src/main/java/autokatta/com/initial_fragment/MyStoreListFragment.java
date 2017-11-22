@@ -62,7 +62,6 @@ public class MyStoreListFragment extends Fragment implements View.OnClickListene
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mMyStoreList = inflater.inflate(R.layout.fragment_mystorelist, container, false);
-        startActivity(new Intent(getActivity(), CreateStoreAppIntro.class));
         return mMyStoreList;
     }
 
@@ -75,6 +74,7 @@ public class MyStoreListFragment extends Fragment implements View.OnClickListene
                 MyStoreResponse myStoreResponse = (MyStoreResponse) response.body();
                 if (!myStoreResponse.getSuccess().isEmpty()) {
                     mNoData.setVisibility(View.GONE);
+                    startActivity(new Intent(getActivity(), CreateStoreAppIntro.class));
                     for (MyStoreResponse.Success Sresponse : myStoreResponse.getSuccess()) {
                         Sresponse.setId(Sresponse.getId());
                         Sresponse.setName(Sresponse.getName());
@@ -101,6 +101,7 @@ public class MyStoreListFragment extends Fragment implements View.OnClickListene
                     mSwipeRefreshLayout.setRefreshing(false);
                     mNoData.setVisibility(View.VISIBLE);
 
+                    startActivity(new Intent(getActivity(), CreateStoreAppIntro.class));
 
                     Bundle bundle = new Bundle();
                     bundle.putString("className", "MyStoreListFragment");
