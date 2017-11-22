@@ -8894,6 +8894,45 @@ get ExchangeMela Analytics Data
     }
 
     /*
+      Quotation Reply
+    */
+    public void quotationReply(int QuotationID, String keyword, String Contact, String Message, double VehicleID,
+                               String GroupID, String type) {
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+                //JSON to Gson conversion
+                Gson gson = new GsonBuilder()
+                        .setLenient()
+                        .create();
+
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create(gson))
+                        .client(initLog().build())
+                        .build();
+
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<String> mServiceMelaResponse = serviceApi.quotationReply(QuotationID, keyword, Contact, Message,
+                        VehicleID, GroupID, type);
+                mServiceMelaResponse.enqueue(new Callback<String>() {
+                    @Override
+                    public void onResponse(Call<String> call, Response<String> response) {
+                        mNotifier.notifyString(response.body());
+                    }
+
+                    @Override
+                    public void onFailure(Call<String> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+            } else
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /*
  transfer Enquiry Accept Status
 */
     public void transferEnquiryAcceptStatus(int TransferID, String Status) {

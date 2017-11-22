@@ -1267,7 +1267,8 @@ public interface ServiceApi {
                                                  @Query("nextFollowupDate") String nextFollowupDate, @Query("idsList") String idsList, @Query("Source") String Source, @Query("financerName") String financerName,
                                                  @Query("LoanAmount") int LoanAmount, @Query("LoanPercent") float LoanPercent, @Query("FinancerStatus") String FinancerStatus, @Query("ManualEnquiryID") int ManualEnquiryID,
                                                  @Query("StoreID") int StoreID);
- //Get transfered Manual enquiry to me
+
+    //Get transfered Manual enquiry to me
     @GET("GetEnquiryTransferedToMe")
     Call<ManualEnquiryResponse> getTransferManualEnquiryToMe(@Query("MyContact") String myContact);
 
@@ -1334,7 +1335,7 @@ public interface ServiceApi {
     Call<String> AddManualEnquiryPersonData(@Query("Contact") String Contact, @Query("EnquiryStatus") String EnquiryStatus,
                                             @Query("MyContact") String MyContact, @Query("Keyword") String keyword,
                                             @Query("Discussion") String Discussion, @Query("NextFollowUpDate") String NextFollowUpDate,
-                                            @Query("Idslist") String Idslist,@Query("TransferContact") String TransferContact);
+                                            @Query("Idslist") String Idslist, @Query("TransferContact") String TransferContact);
 
     //transfer enquiry..
     @POST("Addtransferenquiry")
@@ -1374,6 +1375,14 @@ public interface ServiceApi {
                                         @Query("custcontact") String custContact, @Query("price") double price,
                                         @Query("type") String type,
                                         @Query("query") String query);
+
+    //Quotation Reply
+    @POST("ReviewQuot")
+    Call<String> quotationReply(@Query("QuotationID") int QuotationID, @Query("keyword") String keyword,
+                                @Query("Contact") String Contact, @Query("Message") String Message,
+                                @Query("VehicleID") double VehicleID,
+                                @Query("GroupID") String GroupID, @Query("type") String type
+    );
 
     ///enquiry accept reject...data...
     @POST("TransferEnquiry")

@@ -5,10 +5,15 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -44,6 +49,9 @@ public class ReplyGroupQuot extends AppCompatActivity implements RequestNotifier
     boolean isFirstViewClick[];
     LinearLayout mLinearScrollSecond[];
     String myContact;
+    AlertDialog alert;
+    TextView addimagetext;
+    ImageView uploadImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,14 +109,15 @@ public class ReplyGroupQuot extends AppCompatActivity implements RequestNotifier
                 if (response.body() instanceof QuotReviewReply) {
                     QuotReviewReply quotReviewReply = (QuotReviewReply) response.body();
                     mainList.clear();
-                    for (QuotReviewReply.Success.ReviewMessage message : quotReviewReply.getSuccess().getReviewMessage()) {
+                    QuotReviewReply.Success object = quotReviewReply.getSuccess();
+                    for (QuotReviewReply.Success.ReviewMessage message : object.getReviewMessage()) {
                         childlist = new ArrayList<>();
                         message.setReviewId(message.getReviewId());
                         message.setReviewString(message.getReviewString());
                         message.setSenderContact(message.getSenderContact());
                         message.setCreatedDate1(message.getCreatedDate1());
 
-                        for (QuotReviewReply.Success.ReplayMessage objectmatch : quotReviewReply.getSuccess().getReplayMessage()) {
+                        for (QuotReviewReply.Success.ReplayMessage objectmatch : object.getReplayMessage()) {
                             if (message.getReviewId().equals(objectmatch.getReviewId())) {
                                 objectmatch.setCreatedDate1(objectmatch.getCreatedDate1());
                                 objectmatch.setReplayId(objectmatch.getReplayId());
@@ -183,7 +192,7 @@ public class ReplyGroupQuot extends AppCompatActivity implements RequestNotifier
                         replyImage.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                //sendmessage(mainList.get(finalI).getReviewId(), "Reply");
+                                sendmessage(mainList.get(finalI).getReviewId(), "Reply");
                             }
                         });
 
@@ -264,6 +273,62 @@ public class ReplyGroupQuot extends AppCompatActivity implements RequestNotifier
                 CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
             }
         }
+    }
+
+    /*
+    send message
+     */
+
+    public void sendmessage(final int QuotationID, final String keyword) {
+        final AlertDialog.Builder alertDialog = new AlertDialog.Builder(ReplyGroupQuot.this);
+        LayoutInflater inflater = getLayoutInflater();
+        View convertView = inflater.inflate(R.layout.custom_broadmessage_layout, null);
+        final EditText message = (EditText) convertView.findViewById(R.id.statustext);
+        Button send = (Button) convertView.findViewById(R.id.btnsend);
+        Button cancel = (Button) convertView.findViewById(R.id.btncancel);
+        addimagetext = (TextView) convertView.findViewById(R.id.addimagetext);
+        uploadImage = (ImageView) convertView.findViewById(R.id.upadateimg);
+        addimagetext.setVisibility(View.GONE);
+        uploadImage.setVisibility(View.GONE);
+        final TextView wordCount = (TextView) convertView.findViewById(R.id.counttxt);
+        alertDialog.setView(convertView);
+        alert = alertDialog.show();
+        //alertDialog.setTitle("Send Message");
+        message.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                wordCount.setText(String.valueOf(200 - s.length()));
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        send.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ///postQuotReview(QuotationID, keyword, myContact, message.getText().toString(), vehicleId, GroupID, type);
+                alert.dismiss();
+                //Start with this please compete tomorrow
+            }
+        });
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alert.dismiss();
+            }
+        });
+    }
+
+    private void postQuotReview() {
+        // quotationReply
     }
 
     @Override
