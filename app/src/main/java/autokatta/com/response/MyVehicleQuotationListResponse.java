@@ -53,6 +53,7 @@ public class MyVehicleQuotationListResponse {
         @SerializedName("Query")
         @Expose
         private String query;
+        private int vehicleID;
 
         public String getCustContact() {
             return custContact;
@@ -102,5 +103,12 @@ public class MyVehicleQuotationListResponse {
             this.query = query;
         }
 
+        public int getVehicleID() {
+            return vehicleID;
+        }
+
+        public void setVehicleID(int vehicleID) {
+            this.vehicleID = vehicleID;
+        }
     }
 }

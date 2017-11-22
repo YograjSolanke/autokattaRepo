@@ -19,7 +19,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -51,11 +50,9 @@ public class ReviewActivity extends AppCompatActivity implements RequestNotifier
     ConnectionDetector mConnectionDetector;
     ApiCall mApiCall;
     String myContact, inComingContact;
-    public List<ReviewAndReplyResponse.Success.ReviewMessage> topList = new ArrayList<>();
     public List<ReviewAndReplyResponse.Success.ReviewMessage> mainList = new ArrayList<>();
     public List<ReviewAndReplyResponse.Success.ReplayMessage> childlist;
     AlertDialog alert;
-    ListView listView;
     ReviewAdapter adapter;
     int store_id, product_id, service_id, vehicle_id;
     ImageView uploadImage;
@@ -63,7 +60,6 @@ public class ReviewActivity extends AppCompatActivity implements RequestNotifier
     private LinearLayout mLinearListView;
     boolean isFirstViewClick[];
     LinearLayout mLinearScrollSecond[];
-    RelativeLayout relativeLayout;
     FloatingActionButton fab;
     private ProgressDialog dialog;
 
@@ -80,12 +76,10 @@ public class ReviewActivity extends AppCompatActivity implements RequestNotifier
         myContact = getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
                 .getString("loginContact", "");
 
-
         mConnectionDetector = new ConnectionDetector(this);
         fab = (FloatingActionButton) findViewById(R.id.fab);
         // listView = (ListView) findViewById(R.id.msgview);
         mLinearListView = (LinearLayout) findViewById(R.id.linear_ListView);
-
         fab.setOnClickListener(this);
 
         runOnUiThread(new Runnable() {
@@ -96,7 +90,6 @@ public class ReviewActivity extends AppCompatActivity implements RequestNotifier
                         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
                         getSupportActionBar().setDisplayShowHomeEnabled(true);
                     }
-
                     if (getIntent().getExtras() != null) {
                         store_id = getIntent().getExtras().getInt("store_id", 0);
                         product_id = getIntent().getExtras().getInt("product_id", 0);
@@ -105,7 +98,6 @@ public class ReviewActivity extends AppCompatActivity implements RequestNotifier
                         inComingContact = getIntent().getExtras().getString("contact");
 
                     }
-
                     if (inComingContact.equals(myContact))
                         fab.setVisibility(View.GONE);
 
@@ -135,11 +127,8 @@ public class ReviewActivity extends AppCompatActivity implements RequestNotifier
                 //write review here
                 sendmessage(0, "Review");
                 break;
-
         }
-
     }
-
     //alert dialog box method to show pop up to send message and image in broadcast group
 
     public void sendmessage(final int review_id, final String keyword) {
@@ -165,12 +154,12 @@ public class ReviewActivity extends AppCompatActivity implements RequestNotifier
 
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                // TODO Auto-generated method stub
+
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-                // TODO Auto-generated method stub
+
             }
         });
 
@@ -239,19 +228,15 @@ public class ReviewActivity extends AppCompatActivity implements RequestNotifier
                                 objectmatch.setProfilePic(objectmatch.getProfilePic());
                                 childlist.add(objectmatch);
                             }
-
                         }
-
                         obj.setReplayMessage(childlist);
                         mainList.add(obj);
                     }
 
                     //here is code??????????????????????????????????????????????????
-
                     System.out.println("main list size=" + mainList.size());
                     mLinearScrollSecond = new LinearLayout[mainList.size()];
                     // isFirstViewClick = new boolean[mainList.size()];
-
                     //Adds data into first row
                     for (int i = 0; i < mainList.size(); i++) {
                         LayoutInflater inflater = null;
@@ -269,7 +254,6 @@ public class ReviewActivity extends AppCompatActivity implements RequestNotifier
                         final int finalI2 = i;
                         profile.setOnClickListener(new View.OnClickListener() {
                             Bundle bundle = new Bundle();
-
                             @Override
                             public void onClick(View view) {
                                 bundle.putString("contactOtherProfile", mainList.get(finalI2).getContact());
@@ -284,12 +268,9 @@ public class ReviewActivity extends AppCompatActivity implements RequestNotifier
                                     Intent i = new Intent(getApplicationContext(), OtherProfile.class);
                                     i.putExtras(bundle);
                                     startActivity(i, options.toBundle());
-
                                 }
                             }
                         });
-
-
 
                         if (!mainList.get(i).getProfilePic().equals("")) {
                             String dp_path = getString(R.string.base_image_url) + mainList.get(i).getProfilePic();
@@ -331,7 +312,6 @@ public class ReviewActivity extends AppCompatActivity implements RequestNotifier
                                 sendmessage(mainList.get(finalI).getReviewId(), "Reply");
                             }
                         });
-
 
                         //Adds data into second row
                         for (int j = 0; j < mainList.get(i).getReplayMessage().size(); j++) {
@@ -403,15 +383,10 @@ public class ReviewActivity extends AppCompatActivity implements RequestNotifier
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
-
                             mLinearScrollSecond[i].addView(mLinearView2);
                         }
                         mLinearListView.addView(mLinearView);
                     }
-
-
-                    //????????????????????????????????????????????????????????????
-
                 } else {
                     if (dialog.isShowing()) {
                         dialog.dismiss();
@@ -483,7 +458,6 @@ public class ReviewActivity extends AppCompatActivity implements RequestNotifier
         }
         return super.onOptionsItemSelected(item);
     }
-
 
     @Override
     public void onBackPressed() {

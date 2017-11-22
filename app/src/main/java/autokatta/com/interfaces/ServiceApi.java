@@ -1353,7 +1353,12 @@ public interface ServiceApi {
     @GET("GetViewQuotation")
     Call<MyVehicleQuotationListResponse> _autokattaGetVehicleQuotationList(@Query("vehicleid") int vehicleid,
                                                                            @Query("groupid") int groupid,
-                                                                           @Query("type") String type);
+                                                                           @Query("type") String type,
+                                                                           @Query("Quotationid") int Quotationid);
+
+    //Get review quot
+    @GET("GetReviewQuot")
+    Call<QuotReviewReply> quotReviewReply(@Query("VehicleID") int VehicleID);
 
 
     //Get vehicle qoutation list
