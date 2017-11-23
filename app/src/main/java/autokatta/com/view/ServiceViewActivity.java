@@ -711,7 +711,7 @@ Get Admin data...
                             name = success.getStoreName();
                             web = success.getStoreWebsite();
                             rating = success.getStoreRating();
-                            receiver_contact = success.getStoreContact();
+                            receiver_contact = success.getAddedBy();
                             sname = success.getName();
                             sprice = success.getPrice();
                             sdetails = success.getDetails();
@@ -733,7 +733,7 @@ Get Admin data...
                             srate3 = success.getSrate3();
                             store_id = success.getStoreId();
                             getStoreAdmins(store_id);
-                            storecontact = success.getStoreContact();
+                            storecontact = success.getAddedBy();
                             storeowner = success.getStoreOwner();
                             brandtags_list = success.getBrandtags();
                             prevGroupIds = success.getGroupId().replaceAll(" ", "");
@@ -883,7 +883,7 @@ Get Admin data...
                             //like code
                             lcnt = slikecnt;
                         }
-                        if (storecontact.contains(contact))
+                        if (!storecontact.equals(contact))
                             AddSuggestionData(service_id);
                     }
                 } else if (response.body() instanceof EnquiryCountResponse) {

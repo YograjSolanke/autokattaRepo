@@ -528,7 +528,7 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                             name = success.getStoreName();
                             web = success.getStoreWebsite();
                             rating = success.getStoreRating();
-                            receiver_contact = success.getStoreContact();
+                            receiver_contact = success.getAddedBy();
                             pname = success.getProductName();
                             pprice = success.getPrice();
                             pdetails = success.getProductDetails();
@@ -550,7 +550,7 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                             store_id = success.getStoreId();
 
                             getStoreAdmins(store_id);
-                            storecontact = success.getStoreContact();
+                            storecontact = success.getAddedBy();
                             //  storecontact = "3030303030";
                             storeowner = success.getStoreOwner();
                             brandtags_list = success.getBrandtags();
@@ -715,7 +715,7 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
 
 
                         }
-                        if (storecontact.contains(contact))
+                        if (!storecontact.equals(contact))
                             AddSuggestionData(product_id);
                     }
                 } else if (response.body() instanceof EnquiryCountResponse) {
