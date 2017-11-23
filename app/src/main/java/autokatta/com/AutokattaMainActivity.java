@@ -194,15 +194,19 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
                     break;
                 }
                 case "Group": {
+                    break;
 
                 }
                 case "Store": {
+                    break;
 
                 }
                 case "UploadVehicle": {
+                    break;
 
                 }
                 case "New": {
+                    break;
 
                 }
 
@@ -215,6 +219,7 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
                     Intent intent = new Intent(getApplicationContext(), NotificationAddEmployeeActivity.class);
                     intent.putExtras(mBundle);
                     startActivity(intent);
+                    break;
                 }
 
             }
