@@ -15,6 +15,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -36,7 +39,7 @@ import autokatta.com.response.GetGroupContactsResponse;
 import retrofit2.Response;
 
 /**
- * Created by ak-001 on 25/3/17.
+ * Created by ak-001 on 25/3/17
  */
 
 public class MemberListFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, RequestNotifier, ItemClickListener {
@@ -48,16 +51,17 @@ public class MemberListFragment extends Fragment implements SwipeRefreshLayout.O
     List<GetGroupContactsResponse.Success> mSuccesses = new ArrayList<>();
     List<String> ContactNoList;
     MemberListRefreshAdapter mMemberListAdapter;
-    String call;
+    String call, myContact;
     Bundle bundle = new Bundle();
     //String group_id;
     String mCallfrom = "", bundle_GroupName = "";
     int mGroupId;
     TextView mNoData;
     ConnectionDetector mTestConnection;
-    com.github.clans.fab.FloatingActionButton mRequestedContacts;
+    //com.github.clans.fab.FloatingActionButton mRequestedContacts;
     boolean _hasLoadedOnce = false;
     Activity activity;
+    Menu menu;
 
     public MemberListFragment() {
         //empty constructor...
@@ -67,6 +71,7 @@ public class MemberListFragment extends Fragment implements SwipeRefreshLayout.O
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mMemberList = inflater.inflate(R.layout.fragment_member_list, container, false);
+        setHasOptionsMenu(true);
         return mMemberList;
     }
 
@@ -103,6 +108,12 @@ public class MemberListFragment extends Fragment implements SwipeRefreshLayout.O
                     for (GetGroupContactsResponse.Success success : mGetGroupContactsResponse.getSuccess()) {
                         success.setUsername(success.getUsername());
                         success.setContact(success.getContact());
+                        if (menu == null)
+                            return;
+                        else if (success.getContact().equals(myContact))
+                            menu.setGroupVisible(R.id.main_menu_group, true);
+                        else
+                            menu.setGroupVisible(R.id.main_menu_group, false);
                         success.setStatus(success.getStatus());
                         success.setDp(success.getDp());
                         success.setMember(success.getMember());
@@ -157,7 +168,7 @@ public class MemberListFragment extends Fragment implements SwipeRefreshLayout.O
                         }
                         mSuccesses.add(success);
                     }
-                    mMemberListAdapter = new MemberListRefreshAdapter(getActivity(), mGroupId, mSuccesses, mCallfrom, bundle_GroupName,mRequestedContacts);
+                    mMemberListAdapter = new MemberListRefreshAdapter(getActivity(), mGroupId, mSuccesses, mCallfrom, bundle_GroupName);//,mRequestedContacts);
                     mRecyclerView.setAdapter(mMemberListAdapter);
                     mMemberListAdapter.notifyDataSetChanged();
                 } else {
@@ -215,6 +226,29 @@ public class MemberListFragment extends Fragment implements SwipeRefreshLayout.O
         }
     }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        this.menu = menu;
+        inflater.inflate(R.menu.group_action_bar_menu, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.requesttoadd:
+                Bundle b = new Bundle();
+                b.putInt("bundle_GroupId", mGroupId);
+                RequestedMembersList mRequestedMembersList = new RequestedMembersList();
+                mRequestedMembersList.setArguments(b);
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.memberFrame, mRequestedMembersList, "requestedMemberList")
+                        .addToBackStack("MemberList")
+                        .commit();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     @Override
     public void notifyString(String str) {
@@ -246,12 +280,14 @@ public class MemberListFragment extends Fragment implements SwipeRefreshLayout.O
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                myContact = getActivity().getSharedPreferences(getString(R.string.my_preference),
+                        Context.MODE_PRIVATE).getString("loginContact", "");
                 mTestConnection = new ConnectionDetector(getActivity());
                 mRecyclerView = (RecyclerView) mMemberList.findViewById(R.id.rv_recycler_view);
                 floatCreateGroup = (com.github.clans.fab.FloatingActionButton) mMemberList.findViewById(R.id.fab);
                 floatingActionMenu = (com.github.clans.fab.FloatingActionMenu) mMemberList.findViewById(R.id.menu_red);
                 mSwipeRefreshLayout = (SwipeRefreshLayout) mMemberList.findViewById(R.id.swipeRefreshLayout);
-                mRequestedContacts = (com.github.clans.fab.FloatingActionButton) mMemberList.findViewById(R.id.requesttoadd);
+                //mRequestedContacts = (com.github.clans.fab.FloatingActionButton) mMemberList.findViewById(R.id.requesttoadd);
                 mNoData = (TextView) mMemberList.findViewById(R.id.no_category);
                 mRecyclerView.setHasFixedSize(true);
                 //group_id = getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).getString("group_id", "");
@@ -368,30 +404,6 @@ public class MemberListFragment extends Fragment implements SwipeRefreshLayout.O
         mSwipeRefreshLayout.setOnRefreshListener(this);
     }
 
- /*   @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.requests, menu);
-
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        switch (item.getItemId()) {
-            case R.id.add:
-                Bundle b=new Bundle();
-                b.putInt("bundle_GroupId", mGroupId);
-                RequestedMembersList mRequestedMembersList = new RequestedMembersList();
-                mRequestedMembersList.setArguments(b);
-                ((FragmentActivity) getActivity()).getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.memberFrame, mRequestedMembersList, "requestedMemberList")
-                        .addToBackStack("MemberList")
-                        .commit();
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }*/
 
     @Override
     public void onResume() {

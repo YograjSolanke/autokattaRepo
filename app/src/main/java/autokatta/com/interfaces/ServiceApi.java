@@ -1380,8 +1380,8 @@ public interface ServiceApi {
     @POST("ReviewQuot")
     Call<String> quotationReply(@Query("QuotationID") int QuotationID, @Query("keyword") String keyword,
                                 @Query("Contact") String Contact, @Query("Message") String Message,
-                                @Query("VehicleID") double VehicleID,
-                                @Query("GroupID") String GroupID, @Query("type") String type
+                                @Query("VehicleID") int VehicleID,
+                                @Query("GroupID") int GroupID, @Query("type") String type
     );
 
     ///enquiry accept reject...data...

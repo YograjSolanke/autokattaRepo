@@ -24,15 +24,21 @@
         android:layout_alignParentBottom="true">
 
         <EditText
+            android:id="@+id/review_enter"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_toStartOf="@id/send"
+            android:background="@android:color/transparent"
             android:hint="Add text here" />
 
         <Button
             android:id="@+id/send"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true" />
+            android:layout_alignParentEnd="true"
+            android:text="Send"
+            android:background="@color/background"
+            android:textColor="@color/white"
+            android:textStyle="bold" />
     </RelativeLayout>
 </RelativeLayout>

@@ -8896,8 +8896,8 @@ get ExchangeMela Analytics Data
     /*
       Quotation Reply
     */
-    public void quotationReply(int QuotationID, String keyword, String Contact, String Message, double VehicleID,
-                               String GroupID, String type) {
+    public void quotationReply(int QuotationID, String keyword, String Contact, String Message, int VehicleID,
+                               int GroupID, String type) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 //JSON to Gson conversion

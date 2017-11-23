@@ -54,6 +54,8 @@ public class MyVehicleQuotationListResponse {
         @Expose
         private String query;
         private int vehicleID;
+        private int groupID;
+        private String type;
 
         public String getCustContact() {
             return custContact;
@@ -109,6 +111,22 @@ public class MyVehicleQuotationListResponse {
 
         public void setVehicleID(int vehicleID) {
             this.vehicleID = vehicleID;
+        }
+
+        public int getGroupID() {
+            return groupID;
+        }
+
+        public void setGroupID(int groupID) {
+            this.groupID = groupID;
+        }
+
+        public String getType() {
+            return type;
+        }
+
+        public void setType(String type) {
+            this.type = type;
         }
     }
 }

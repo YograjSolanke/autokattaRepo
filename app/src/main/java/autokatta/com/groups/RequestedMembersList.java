@@ -234,13 +234,14 @@ public class RequestedMembersList extends Fragment implements SwipeRefreshLayout
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                getActivity().setTitle("Add Member's");
                 mTestConnection = new ConnectionDetector(getActivity());
                 mRecyclerView = (RecyclerView) mMemberList.findViewById(R.id.rv_recycler_view);
                 mSwipeRefreshLayout = (SwipeRefreshLayout) mMemberList.findViewById(R.id.swipeRefreshLayout);
                 mNoData = (TextView) mMemberList.findViewById(R.id.no_category);
                 mRecyclerView.setHasFixedSize(true);
                 Bundle b=getArguments();
-               mGroupId= b.getInt("bundle_GroupId");
+                mGroupId = b.getInt("bundle_GroupId");
                 //group_id = getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).getString("group_id", "");
 
 

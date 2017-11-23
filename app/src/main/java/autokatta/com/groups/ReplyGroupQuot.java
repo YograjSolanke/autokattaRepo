@@ -9,6 +9,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,6 +21,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.net.SocketTimeoutException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -44,14 +46,16 @@ public class ReplyGroupQuot extends AppCompatActivity implements RequestNotifier
     public List<QuotReviewReply.Success.ReviewMessage> mainList = new ArrayList<>();
     public List<QuotReviewReply.Success.ReplayMessage> childlist;
     private ProgressDialog dialog;
-    int vehicleId;
+    int vehicleId, groupId, sendQuotID;
     private LinearLayout mLinearListView;
     boolean isFirstViewClick[];
     LinearLayout mLinearScrollSecond[];
-    String myContact;
+    String myContact, mType;
     AlertDialog alert;
     TextView addimagetext;
     ImageView uploadImage;
+    EditText mReviewEnter;
+    Button mSend;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,11 +70,22 @@ public class ReplyGroupQuot extends AppCompatActivity implements RequestNotifier
         mConnectionDetector = new ConnectionDetector(this);
         if (getIntent().getExtras() != null) {
             vehicleId = getIntent().getExtras().getInt("VehicleId");
+            groupId = getIntent().getExtras().getInt("GroupId");
+            mType = getIntent().getExtras().getString("type");
             getQuotReviewReply(vehicleId);
         }
         mLinearListView = (LinearLayout) findViewById(R.id.linear_ListView);
+        mReviewEnter = (EditText) findViewById(R.id.review_enter);
+        mSend = (Button) findViewById(R.id.send);
         myContact = getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
                 .getString("loginContact", "");
+        mSend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                postQuotReview(0, "Review", myContact, mReviewEnter.getText().toString(), vehicleId, groupId, mType);
+            }
+        });
+
     }
 
     public void getQuotReviewReply(int vehicleId) {
@@ -189,6 +204,7 @@ public class ReplyGroupQuot extends AppCompatActivity implements RequestNotifier
                         }
 
                         final int finalI = i;
+                        sendQuotID = mainList.get(finalI).getReviewId();
                         replyImage.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
@@ -198,9 +214,7 @@ public class ReplyGroupQuot extends AppCompatActivity implements RequestNotifier
 
                         //Adds data into second row
                         for (int j = 0; j < mainList.get(i).getReplayMessage().size(); j++) {
-                            LayoutInflater inflater2 = null;
-                            int showcheckboc = 0;
-                            inflater2 = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                            LayoutInflater inflater2 = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                             View mLinearView2 = inflater2.inflate(R.layout.reply_layout, null);
 
                             TextView reply = (TextView) mLinearView2.findViewById(R.id.msgr);
@@ -314,9 +328,8 @@ public class ReplyGroupQuot extends AppCompatActivity implements RequestNotifier
         send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ///postQuotReview(QuotationID, keyword, myContact, message.getText().toString(), vehicleId, GroupID, type);
+                postQuotReview(QuotationID, keyword, myContact, message.getText().toString(), vehicleId, groupId, mType);
                 alert.dismiss();
-                //Start with this please compete tomorrow
             }
         });
         cancel.setOnClickListener(new View.OnClickListener() {
@@ -327,17 +340,44 @@ public class ReplyGroupQuot extends AppCompatActivity implements RequestNotifier
         });
     }
 
-    private void postQuotReview() {
-        // quotationReply
+    private void postQuotReview(int quotationID, String keyword, String myContact, String message, int vehicleId, int groupId,
+                                String type) {
+        if (mConnectionDetector.isConnectedToInternet()) {
+            dialog.show();
+            // quotationReply
+            ApiCall apiCall = new ApiCall(ReplyGroupQuot.this, this);
+            apiCall.quotationReply(quotationID, keyword, myContact, message, vehicleId, groupId, type);
+        } else {
+            Toast.makeText(getApplicationContext(), "No Internet connection", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
     public void notifyError(Throwable error) {
-
+        if (dialog.isShowing()) {
+            dialog.dismiss();
+        }
+        if (error instanceof SocketTimeoutException) {
+            CustomToast.customToast(getApplicationContext(), getString(R.string._404));
+        } else if (error instanceof NullPointerException) {
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
+        } else if (error instanceof ClassCastException) {
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
+        } else {
+            Log.i("Check Class-", "ReplyGroupQuot");
+            error.printStackTrace();
+        }
     }
 
     @Override
     public void notifyString(String str) {
-
+        if (dialog.isShowing()) {
+            dialog.dismiss();
+        }
+        if (str != null) {
+            if (str.equals("sent_reply")) {
+                Log.i("str", "->" + str);
+            }
+        }
     }
 }

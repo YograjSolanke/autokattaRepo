@@ -34,7 +34,6 @@ import java.util.List;
 import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.groups.MemberDetailTabs;
-import autokatta.com.groups.RequestedMembersList;
 import autokatta.com.groups_container.MemberContainer;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.networkreceiver.ConnectionDetector;
@@ -60,7 +59,7 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
     private ApiCall mApiCall;
     private MyViewHolder mView;
     private ConnectionDetector mTestConnection;
-    private com.github.clans.fab.FloatingActionButton mRequestedCntacts;
+    //private com.github.clans.fab.FloatingActionButton mRequestedCntacts;
 
     static class MyViewHolder extends RecyclerView.ViewHolder {
         TextView mName, mContact, mVehicleCount, mAdmin, mproductcnt, mServicecnt;
@@ -83,8 +82,8 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
         }
     }
 
-    public MemberListRefreshAdapter(Activity mActivity1, int GroupId,
-                                    List<GetGroupContactsResponse.Success> mItemList, String mCallfrom, String bundle_GroupName, com.github.clans.fab.FloatingActionButton btnRequestedcontacts) {
+    public MemberListRefreshAdapter(Activity mActivity1, int GroupId, List<GetGroupContactsResponse.Success> mItemList,
+                                    String mCallfrom, String bundle_GroupName) {
         this.mActivity = mActivity1;
         mGroupId = GroupId;
         this.mItemList = mItemList;
@@ -92,7 +91,7 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
         this.bundle_GroupName = bundle_GroupName;
         mApiCall = new ApiCall(mActivity, this);
         mTestConnection = new ConnectionDetector(mActivity);
-        this.mRequestedCntacts = btnRequestedcontacts;
+        //this.mRequestedCntacts = btnRequestedcontacts;
         mCheckList.clear();
     }
 
@@ -218,7 +217,7 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
             mCheckList.add(false);
         }
 
-        if (mCheckList.contains(true)) {
+        /*if (mCheckList.contains(true)) {
             mRequestedCntacts.setVisibility(View.VISIBLE);
         } else {
             mRequestedCntacts.setVisibility(View.GONE);
@@ -235,7 +234,7 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
                         .addToBackStack("MemberList")
                         .commit();
             }
-        });
+        });*/
         holder.mCall.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {

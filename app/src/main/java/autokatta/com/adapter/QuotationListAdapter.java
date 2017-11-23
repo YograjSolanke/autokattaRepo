@@ -88,6 +88,8 @@ public class QuotationListAdapter extends RecyclerView.Adapter<RecyclerView.View
             public void onClick(View v) {
                 Intent i = new Intent(mActivity, ReplyGroupQuot.class);
                 i.putExtra("VehicleId", QuotationList.get(holder.getAdapterPosition()).getVehicleID());
+                i.putExtra("GroupId", QuotationList.get(holder.getAdapterPosition()).getGroupID());
+                i.putExtra("type", QuotationList.get(holder.getAdapterPosition()).getType());
                 mActivity.startActivity(i);
             }
         });

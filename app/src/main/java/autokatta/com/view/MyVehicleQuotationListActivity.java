@@ -233,6 +233,8 @@ public class MyVehicleQuotationListActivity extends AppCompatActivity implements
                         success.setReservePrice(success.getReservePrice());
                         success.setQuery(success.getQuery());
                         success.setVehicleID(bundle_VehicleId);
+                        success.setGroupID(bundle_GroupId);
+                        success.setType(bundle_Type);
                         try {
                             TimeZone utc = TimeZone.getTimeZone("etc/UTC");
                             //format of date coming from services
