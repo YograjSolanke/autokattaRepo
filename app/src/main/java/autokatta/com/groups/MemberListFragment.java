@@ -108,12 +108,17 @@ public class MemberListFragment extends Fragment implements SwipeRefreshLayout.O
                     for (GetGroupContactsResponse.Success success : mGetGroupContactsResponse.getSuccess()) {
                         success.setUsername(success.getUsername());
                         success.setContact(success.getContact());
-                        if (menu == null)
+                        /*
+                        visible gone add member request employee's
+                         */
+                        if (menu == null) {
                             return;
-                        else if (success.getContact().equals(myContact))
-                            menu.setGroupVisible(R.id.main_menu_group, true);
-                        else
-                            menu.setGroupVisible(R.id.main_menu_group, false);
+                        } else {
+                            if (success.getContact().equals(myContact) && success.getMember().equalsIgnoreCase("Admin"))
+                                menu.setGroupVisible(R.id.main_menu_group, true);
+                            else
+                                menu.setGroupVisible(R.id.main_menu_group, false);
+                        }
                         success.setStatus(success.getStatus());
                         success.setDp(success.getDp());
                         success.setMember(success.getMember());
@@ -302,8 +307,7 @@ public class MemberListFragment extends Fragment implements SwipeRefreshLayout.O
                     mCallfrom = bundle.getString("grouptype");
                     mGroupId = bundle.getInt("bundle_GroupId");
                     bundle_GroupName = bundle.getString("bundle_GroupName");
-                    Log.i("Other", "->" + mCallfrom);
-                    Log.i("GroupId", "MemberList->" + mGroupId);
+                    getActivity().setTitle(bundle.getString("bundle_GroupName") + " " + "Member's");
                 }
 
                 LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
