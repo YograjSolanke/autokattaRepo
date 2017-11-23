@@ -143,7 +143,21 @@ public class StoreInventoryResponse {
                 this.storecontact = storecontact;
             }
 
+
+            @SerializedName("AddedBy")
+            @Expose
+            private String AddedBy;
+
+            public String getAddedBy() {
+                return AddedBy;
+            }
+
+            public void setAddedBy(String addedBy) {
+                AddedBy = addedBy;
+            }
+
             @SerializedName("storecontact")
+
             @Expose
 
             private String storecontact;
@@ -444,6 +458,19 @@ public class StoreInventoryResponse {
             @SerializedName("servicetags")
             @Expose
             private String servicetags;
+
+
+            @SerializedName("AddedBy")
+            @Expose
+            private String AddedBy;
+
+            public String getAddedBy() {
+                return AddedBy;
+            }
+
+            public void setAddedBy(String addedBy) {
+                AddedBy = addedBy;
+            }
 
             public String getServiceName() {
                 return serviceName;

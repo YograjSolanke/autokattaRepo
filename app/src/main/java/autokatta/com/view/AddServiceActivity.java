@@ -53,7 +53,6 @@ import retrofit2.Response;
  */
 
 public class AddServiceActivity extends AppCompatActivity implements RequestNotifier, View.OnClickListener {
-
     KProgressHUD hud;
     String myContact;
     int store_id;
@@ -74,7 +73,7 @@ public class AddServiceActivity extends AppCompatActivity implements RequestNoti
     Integer[] stringIds = new Integer[0];
     AlertDialog alertDialog;
     String allimgpath = "";
-    ArrayList<Image> mImages = new ArrayList<>();
+    List<Image> mImages = new ArrayList<>();
     int REQUEST_CODE_PICKER = 2000;
     String stringgroupids = "";
     String str_groupids;
@@ -89,7 +88,8 @@ public class AddServiceActivity extends AppCompatActivity implements RequestNoti
         setTitle("Add Service");
         myContact = getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
                 .getString("loginContact", "");
-        store_id = getIntent().getExtras().getInt("store_id");
+        if (getIntent().getExtras() != null)
+            store_id = getIntent().getExtras().getInt("store_id");
 
 
         if (getSupportActionBar() != null) {
@@ -140,14 +140,9 @@ public class AddServiceActivity extends AppCompatActivity implements RequestNoti
         multiautotext.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
-
                 check();
-//
             }
         });
-
-
     }
 
 
@@ -163,8 +158,6 @@ public class AddServiceActivity extends AppCompatActivity implements RequestNoti
             return true;
         } else
             return false;
-
-
     }
 
 
@@ -220,8 +213,8 @@ public class AddServiceActivity extends AppCompatActivity implements RequestNoti
 
 
                     String text = multiautotext.getText().toString();
-                    ArrayList<String> images = new ArrayList<String>();
-                    ArrayList<String> othertag = new ArrayList<String>();
+                    List<String> images = new ArrayList<String>();
+                    List<String> othertag = new ArrayList<String>();
                     text = text.trim();
                     text = text.replaceAll(",$", "");
                     System.out.println("txttttt=" + text);
@@ -229,9 +222,9 @@ public class AddServiceActivity extends AppCompatActivity implements RequestNoti
 
                     String[] parts = text.split(",");
 
-                    for (int l = 0; l < parts.length; l++) {
-                        System.out.println(parts[l]);
-                        tagpart = parts[l].trim();
+                    for (String part : parts) {
+                        System.out.println(part);
+                        tagpart = part.trim();
                         if (!tagpart.equalsIgnoreCase("") && !tagpart.equalsIgnoreCase(" "))
                             images.add(tagpart);
                         if (!tagname.contains(tagpart) && !tagpart.equalsIgnoreCase("") && !tagpart.equalsIgnoreCase(" ")) {
@@ -253,10 +246,9 @@ public class AddServiceActivity extends AppCompatActivity implements RequestNoti
                     for (int i = 0; i < images.size(); i++) {
 
                         for (int j = 0; j < tagname.size(); j++) {
-                            if (images.get(i).toString().equalsIgnoreCase(tagname.get(j).toString()))
-                                idlist = idlist + "," + id.get(j).toString();
+                            if (images.get(i).equalsIgnoreCase(tagname.get(j)))
+                                idlist = idlist + "," + id.get(j);
                         }
-
                     }
 
 
@@ -278,11 +270,8 @@ public class AddServiceActivity extends AppCompatActivity implements RequestNoti
                     }*/
 
 
-                    ArrayList<String> tempbrands = new ArrayList<String>();
-
-
+                    List<String> tempbrands = new ArrayList<String>();
                     String textbrand = multiautobrand.getText().toString();
-
                     textbrand = textbrand.trim();
                     textbrand = textbrand.replaceAll(",$", "");
                     System.out.println("txttttt=" + textbrand);
@@ -295,8 +284,8 @@ public class AddServiceActivity extends AppCompatActivity implements RequestNoti
                     if (!textbrand.equals("")) {
 
                         String[] bparts = textbrand.split(",");
-                        for (int o = 0; o < bparts.length; o++) {
-                            brandtagpart = bparts[o].trim();
+                        for (String bpart : bparts) {
+                            brandtagpart = bpart.trim();
                             if (!brandtagpart.equals("") && !brandtagpart.equalsIgnoreCase(" "))
                                 tempbrands.add(brandtagpart);
                             if (!brandTags.contains(brandtagpart) && !brandtagpart.equals("") && !brandtagpart.equalsIgnoreCase(" ")) {
@@ -306,10 +295,7 @@ public class AddServiceActivity extends AppCompatActivity implements RequestNoti
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
-
-
                             }
-
                         }
                     }
 
@@ -319,7 +305,6 @@ public class AddServiceActivity extends AppCompatActivity implements RequestNoti
                             finalbrandtags = tempbrands.get(n);
                         else
                             finalbrandtags = finalbrandtags + "," + tempbrands.get(n);
-
                     }
 
 
@@ -353,10 +338,6 @@ public class AddServiceActivity extends AppCompatActivity implements RequestNoti
                                 .show();
                     } else
                         alertBoxToSelectExcelSheet(stringTitles);
-
-
-                    // createService(store_id, name, price, details, "", type, allimg, category, finalbrandtags,"");
-
                 }
 
 
@@ -381,9 +362,7 @@ public class AddServiceActivity extends AppCompatActivity implements RequestNoti
                 alertDialog = builder1.create();
                 alertDialog.show();
                 break;
-
         }
-
     }
 
     private void createService(int store_id,
@@ -496,16 +475,14 @@ public class AddServiceActivity extends AppCompatActivity implements RequestNoti
     public void notifyString(String str) {
 
         if (str != null) {
-
             if (str.equals("success")) {
                 CustomToast.customToast(AddServiceActivity.this, "Tags sent");
             }
-
         }
-
     }
 
     private void start() {
+        mImages.clear();
         ImagePicker.create(this)
                 .folderMode(true) // set folder mode (false by default)
                 .folderTitle("Folder") // folder selection title
@@ -515,7 +492,7 @@ public class AddServiceActivity extends AppCompatActivity implements RequestNoti
                 .limit(10) // max images can be selected (999 by default)
                 .showCamera(true) // show camera or not (true by default)
                 .imageDirectory("Camera")   // captured image directory name ("Camera" folder by default)
-                .origin(mImages) // original selected images, used in multi mode
+                .origin((ArrayList<Image>) mImages) // original selected images, used in multi mode
                 .start(REQUEST_CODE_PICKER); // start image picker activity with request code
     }
 
@@ -524,13 +501,13 @@ public class AddServiceActivity extends AppCompatActivity implements RequestNoti
         if (requestCode == REQUEST_CODE_PICKER && resultCode == RESULT_OK && data != null) {
             mImages = data.getParcelableArrayListExtra(ImagePickerActivity.INTENT_EXTRA_SELECTED_IMAGES);
             StringBuilder sb = new StringBuilder();
-            ArrayList<String> addData = new ArrayList<>();
-            ArrayList<String> mPath = new ArrayList<>();
+            List<String> addData = new ArrayList<>();
+            List<String> mPath = new ArrayList<>();
             for (int i = 0; i < mImages.size(); i++) {
                 sb.append(mImages.get(i).getPath());
                 mPath.add(mImages.get(i).getPath());
             }
-            ArrayList<String> mPath1 = new ArrayList<>();
+            List<String> mPath1 = new ArrayList<>();
             int cnt = 0;
             String selectImages = "";
             String selectedimg = "";
@@ -571,15 +548,12 @@ public class AddServiceActivity extends AppCompatActivity implements RequestNoti
                 Log.d("SelectedImages", selectImages);
 
                 getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("images", allimgpath).apply();
-
-
                 alertDialog.dismiss();
 
             }
             System.out.println("all selected images=" + allimg);
             System.out.println(selectedimg);
         }
-        //textView.setText(sb.toString());
     }
 
 
@@ -594,7 +568,7 @@ public class AddServiceActivity extends AppCompatActivity implements RequestNoti
     private void addOtherBrandTags(String brandtagpart) {
         ApiCall mApiCall = new ApiCall(this, this);
         mApiCall.addOtherBrandTags(brandtagpart, "service");
-      //  mApiCall.addOtherBrandTags(brandtagpart, "2");
+        //  mApiCall.addOtherBrandTags(brandtagpart, "2");
     }
 
     /*
@@ -619,7 +593,7 @@ public class AddServiceActivity extends AppCompatActivity implements RequestNoti
     private void getBrandTags() {
         ApiCall mApiCall = new ApiCall(this, this);
         mApiCall.getBrandTags("service");
-       // mApiCall.getBrandTags("2");
+        // mApiCall.getBrandTags("2");
     }
 
     private void getGroupData() {
@@ -669,7 +643,7 @@ public class AddServiceActivity extends AppCompatActivity implements RequestNoti
     ///////////////////////////////////////////////
     public void alertBoxToSelectExcelSheet(final String[] choices) {
 
-        final ArrayList<String> mSelectedItems = new ArrayList<>();
+        final List<String> mSelectedItems = new ArrayList<>();
         mSelectedItems.clear();
         stringgroupids = "";
 

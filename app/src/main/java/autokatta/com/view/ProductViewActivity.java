@@ -43,7 +43,6 @@ import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.daimajia.slider.library.Tricks.ViewPagerEx;
-import com.kaopiz.kprogresshud.KProgressHUD;
 
 import java.io.File;
 import java.net.ConnectException;
@@ -156,7 +155,6 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
     ApiCall mApiCall;
     SliderLayout sliderLayout;
     HashMap<String, String> Hash_file_maps;
-    KProgressHUD hud;
     String prevGroupIds = "";
     LinearLayout mLinearLayout;
     Button mUploadGroup;
@@ -270,77 +268,78 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                 }
 
 
-                hud = KProgressHUD.create(ProductViewActivity.this)
-                        .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
-                        .setLabel("Please wait")
-                        .setMaxProgress(100)
-                        .show();
+                if (!mConnectionDetector.isConnectedToInternet()) {
+                    Toast.makeText(ProductViewActivity.this, "Please check your internet connection", Toast.LENGTH_SHORT).show();
+                } else {
+                    dialog.show();
+                    getCategory();
+                    getProductData(product_id, contact);
+                    getNoOfEnquiryCount(product_id, contact);
 
-                getCategory();
-                getProductData(product_id, contact);
-                getNoOfEnquiryCount(product_id, contact);
-
-
-                producttags.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
-                multiautobrand.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
-
-
-                producttags.setOnKeyListener(new View.OnKeyListener() {
-                    @Override
-                    public boolean onKey(View view, int i, KeyEvent keyEvent) {
-                        if ((keyEvent.getAction() == KeyEvent.ACTION_DOWN) &&
-                                (i == KeyEvent.KEYCODE_ENTER)) {
-                            // Perform action on key press
-                            producttags.setText("" + producttags.getText().toString() + ",");
-                            producttags.setSelection(producttags.getText().toString().length());
-                            check();
-                            return true;
-                        }
-                        return false;
-                    }
-                });
-
-                producttags.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                        check();
-                    }
-                });
-                producttags.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-                    @Override
-                    public void onFocusChange(View view, boolean b) {
-                        if (!b && !producttags.getText().toString().equalsIgnoreCase("")) {
-                            check();
-                        }
-                    }
-                });
-
-                pricebar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
-                    @Override
-                    public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
-                        pricerate = v;
-                        calculate(pricerate, qualityrate, stockrate);
-                    }
-                });
-
-                qualitybar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
-                    @Override
-                    public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
-                        qualityrate = v;
-                        calculate(pricerate, qualityrate, stockrate);
-                    }
-                });
-
-                stockbar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
-                    @Override
-                    public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
-                        stockrate = v;
-                        calculate(pricerate, qualityrate, stockrate);
-                    }
-                });
+                }
 
             }
         });
+
+
+        producttags.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
+        multiautobrand.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
+
+
+        producttags.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View view, int i, KeyEvent keyEvent) {
+                if ((keyEvent.getAction() == KeyEvent.ACTION_DOWN) &&
+                        (i == KeyEvent.KEYCODE_ENTER)) {
+                    // Perform action on key press
+                    producttags.setText("" + producttags.getText().toString() + ",");
+                    producttags.setSelection(producttags.getText().toString().length());
+                    check();
+                    return true;
+                }
+                return false;
+            }
+        });
+
+        producttags.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                check();
+            }
+        });
+        producttags.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if (!b && !producttags.getText().toString().equalsIgnoreCase("")) {
+                    check();
+                }
+            }
+        });
+
+        pricebar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
+                pricerate = v;
+                calculate(pricerate, qualityrate, stockrate);
+            }
+        });
+
+        qualitybar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
+                qualityrate = v;
+                calculate(pricerate, qualityrate, stockrate);
+            }
+        });
+
+        stockbar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
+                stockrate = v;
+                calculate(pricerate, qualityrate, stockrate);
+            }
+        });
+
 
     }
 
@@ -353,7 +352,6 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
     private void getChatEnquiryStatus(String contact, String receiver_contact, int product_id) {
 
         ApiCall mApicall = new ApiCall(this, this);
-        dialog.show();
         mApicall.getChatEnquiryStatus(contact, receiver_contact, product_id, 0, 0);
     }
 
@@ -466,8 +464,6 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
     public void notifySuccess(Response<?> response) {
         if (response != null) {
             if (response.isSuccessful()) {
-                mainlayout.setVisibility(View.VISIBLE);
-                hud.dismiss();
                 if (response.body() instanceof CategoryResponse) {
                     CategoryResponse moduleResponse = (CategoryResponse) response.body();
                     final List<String> module = new ArrayList<String>();
@@ -525,6 +521,8 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                 } else if (response.body() instanceof ProductResponse) {
                     ProductResponse productresponse = (ProductResponse) response.body();
                     if (!productresponse.getSuccess().isEmpty()) {
+                        dialog.dismiss();
+                        mainlayout.setVisibility(View.VISIBLE);
                         for (ProductResponse.Success success : productresponse.getSuccess()) {
                             product_id = success.getProductId();
                             name = success.getStoreName();
@@ -563,7 +561,7 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                             getChatEnquiryStatus(contact, receiver_contact, product_id);
                             txtlike.setText("Like(" + plikecnt + ")");
 
-                            if (storecontact.contains(contact)) {
+                            if (contact.equals(success.getAddedBy())) {
                                 btnchat.setVisibility(View.GONE);
                                 no_of_enquiries.setVisibility(View.VISIBLE);
                                 edit.setVisibility(View.VISIBLE);
@@ -663,8 +661,11 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                         }
 
                         sliderLayout = (SliderLayout) findViewById(R.id.slider);
-                        if (!pimages.equals("") || !pimages.equals("null") || pimages != null) {
+                        if (pimages == null || pimages.equalsIgnoreCase("") || pimages.equalsIgnoreCase("null")) {
+                            sliderLayout.setBackgroundResource(R.drawable.logo);
+                            photocount.setText("0 Photos");
 
+                        } else {
                             Hash_file_maps = new HashMap<>();
                             String dp_path = getString(R.string.base_image_url);
 
@@ -679,7 +680,7 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                                 }
                             } else {
                                 Hash_file_maps.put("Image-" + pimages, dp_path + pimages.replaceAll(" ", ""));
-                               singleimage=pimages;
+                                singleimage = pimages;
                             }
 
 
@@ -711,9 +712,8 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                             //sliderLayout.setCustomAnimation(new DescriptionAnimation());
                             sliderLayout.setDuration(3000);
                             sliderLayout.addOnPageChangeListener(this);
-                        } else {
-                            sliderLayout.setBackgroundResource(R.drawable.logo);
-                            photocount.setText("0 Photos");
+
+
                         }
                         if (storecontact.contains(contact))
                             AddSuggestionData(product_id);
@@ -727,11 +727,11 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                 }
 
             } else {
-                hud.dismiss();
+                dialog.dismiss();
                 CustomToast.customToast(ProductViewActivity.this, getString(R.string._404));
             }
         } else {
-            hud.dismiss();
+            dialog.dismiss();
             CustomToast.customToast(ProductViewActivity.this, getString(R.string.no_response));
         }
     }
@@ -743,6 +743,9 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
 
     @Override
     public void notifyError(Throwable error) {
+
+        if (dialog.isShowing())
+            dialog.dismiss();
         if (error instanceof SocketTimeoutException) {
             CustomToast.customToast(ProductViewActivity.this, getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
@@ -765,7 +768,7 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
     public void notifyString(String str) {
         if (str != null) {
             if (str.equals("Product_updated_successfully")) {
-                hud.dismiss();
+                dialog.dismiss();
                 CustomToast.customToast(ProductViewActivity.this, "Product Updated");
                 updatetagids();
 //                Intent intent = new Intent(ProductViewActivity.this, ProductViewActivity.class);
@@ -994,12 +997,7 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                     producttype.clearFocus();
                     spinCategory.clearFocus();
 
-
-                    hud = KProgressHUD.create(ProductViewActivity.this)
-                            .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
-                            .setLabel("Please wait")
-                            .setMaxProgress(100)
-                            .show();
+                    dialog.show();
 
                     updateProduct(product_id, upname, upprice, updetails, uptags, uptype, upimgs, upcat, finalbrandtags, stringgroupids);
                 }
@@ -1284,11 +1282,7 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
             Call<ProfileGroupResponse> add = serviceApi._autokattaProfileGroup(getSharedPreferences(getString(R.string.my_preference),
                     MODE_PRIVATE).getString("loginContact", null), 1, 10);
 
-            hud = KProgressHUD.create(ProductViewActivity.this)
-                    .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
-                    .setLabel("loading groups...")
-                    .setMaxProgress(100)
-                    .show();
+            dialog.show();
 
             add.enqueue(new Callback<ProfileGroupResponse>() {
                 @Override
@@ -1297,7 +1291,7 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                         groupIdList.clear();
                         groupIdList.clear();
                         groupTitleList.clear();
-                        hud.dismiss();
+                        dialog.dismiss();
                         ProfileGroupResponse mProfileGroupResponse = response.body();
                         for (ProfileGroupResponse.MyGroup success : mProfileGroupResponse.getSuccess().getMyGroups()) {
                             Log.i("previousGrpIds--", "in loop" + String.valueOf(success.getId()));
@@ -1348,7 +1342,7 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                             alertBoxGroups(groupTitleArray);
                         }
                     } else {
-                        hud.dismiss();
+                        dialog.dismiss();
                         CustomToast.customToast(getApplicationContext(), getString(R.string._404));
                     }
                 }

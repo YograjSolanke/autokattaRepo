@@ -69,6 +69,7 @@ public class MyVehicleQuotationListActivity extends AppCompatActivity implements
     int bundle_VehicleId;
     FloatingActionButton fab;
     String bundle_Type, bundle_Contact;
+    int quotationID;
     String image;
     List<MyVehicleQuotationListResponse.Success> quotationList = new ArrayList<>();
     LinearLayout linearButton;
@@ -132,6 +133,7 @@ public class MyVehicleQuotationListActivity extends AppCompatActivity implements
                 bundle_VehicleId = i.getIntExtra("bundle_VehicleId", 0);
                 bundle_Type = i.getStringExtra("bundle_Type");
                 bundle_Contact = i.getStringExtra("bundle_Contact");
+                quotationID = i.getIntExtra("bundle_quotationID", 0);
                 image = i.getStringExtra("Image");
 
                 if (image.equalsIgnoreCase("") || image == null) {
@@ -152,7 +154,6 @@ public class MyVehicleQuotationListActivity extends AppCompatActivity implements
                         @Override
                         public void run() {
                             mSwipeRefreshLayout.setRefreshing(true);
-
                             if (bundle_Contact.equals(myContact)) {
                                 fab.setVisibility(View.GONE);
                                 getOtherQuotationList(bundle_GroupId, bundle_VehicleId, bundle_Type);
@@ -165,7 +166,6 @@ public class MyVehicleQuotationListActivity extends AppCompatActivity implements
 
                     });
                 }
-
             }
         });
 
@@ -186,9 +186,6 @@ public class MyVehicleQuotationListActivity extends AppCompatActivity implements
                 startActivity(intent);
             }
         });
-
-
-
     }
 
     private void getMyQuotationList(int bundle_groupId, int bundle_vehicleId, String bundle_type) {
@@ -206,14 +203,13 @@ public class MyVehicleQuotationListActivity extends AppCompatActivity implements
 
         if (mTestConnection.isConnectedToInternet()) {
             ApiCall mApiCall = new ApiCall(this, this);
-            mApiCall.GetVehicleQuotationList(bundle_groupId, bundle_vehicleId, bundle_type);
+            mApiCall.GetVehicleQuotationList(bundle_groupId, bundle_vehicleId, bundle_type, quotationID);
         } else
             CustomToast.customToast(this, getString(R.string.no_internet));
     }
 
     @Override
     public void onRefresh() {
-
         if (bundle_Contact.equals(myContact)) {
             fab.setVisibility(View.GONE);
             getOtherQuotationList(bundle_GroupId, bundle_VehicleId, bundle_Type);
@@ -224,7 +220,6 @@ public class MyVehicleQuotationListActivity extends AppCompatActivity implements
 
     @Override
     public void notifySuccess(Response<?> response) {
-
         if (response != null) {
             if (response.isSuccessful()) {
                 MyVehicleQuotationListResponse quotationResponse = (MyVehicleQuotationListResponse) response.body();
@@ -237,8 +232,7 @@ public class MyVehicleQuotationListActivity extends AppCompatActivity implements
                         success.setCustomerName(success.getCustomerName());
                         success.setReservePrice(success.getReservePrice());
                         success.setQuery(success.getQuery());
-
-
+                        success.setVehicleID(bundle_VehicleId);
                         try {
                             TimeZone utc = TimeZone.getTimeZone("etc/UTC");
                             //format of date coming from services
@@ -261,9 +255,7 @@ public class MyVehicleQuotationListActivity extends AppCompatActivity implements
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
-
                         quotationList.add(success);
-
                     }
                     QuotationListAdapter mAdapter = new QuotationListAdapter(this, quotationList, myContact);
                     quotationRecycler.setAdapter(mAdapter);
@@ -296,25 +288,16 @@ public class MyVehicleQuotationListActivity extends AppCompatActivity implements
         android.support.v7.app.AlertDialog.Builder alertDialog = new android.support.v7.app.AlertDialog.Builder(this);
         alertDialog.setTitle("Quotation for vehicle");
         alertDialog.setMessage("Enter amount");
-
         final EditText input = new EditText(this);
         input.setHint("Amount");
         input.setInputType(InputType.TYPE_CLASS_NUMBER);
-
         final EditText inputQuery = new EditText(this);
         inputQuery.setHint("Enter Query If Any..");
-
         LinearLayout ll = new LinearLayout(this);
         ll.setOrientation(LinearLayout.VERTICAL);
         ll.addView(input);
         ll.addView(inputQuery);
-
-//        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
-//                LinearLayout.LayoutParams.MATCH_PARENT,
-//                LinearLayout.LayoutParams.MATCH_PARENT);
-//        input.setLayoutParams(lp);
         alertDialog.setView(ll);
-        // alertDialog.setIcon(R.drawable.key);
 
         alertDialog.setPositiveButton("Ok",
                 new DialogInterface.OnClickListener() {
@@ -326,7 +309,6 @@ public class MyVehicleQuotationListActivity extends AppCompatActivity implements
                                 input.setError("Please Enter Amount");
                                 Toast.makeText(MyVehicleQuotationListActivity.this, "Price should not be empty", Toast.LENGTH_LONG).show();
                             } else {
-
                                 try {
                                     if (mTestConnection.isConnectedToInternet()) {
                                         //JSON to Gson conversion
@@ -348,12 +330,10 @@ public class MyVehicleQuotationListActivity extends AppCompatActivity implements
                                                 if (response.isSuccessful()) {
                                                     String result;
                                                     result = response.body();
-
                                                     if (result.equals("success")) {
                                                         CustomToast.customToast(MyVehicleQuotationListActivity.this, "Price Sent");
                                                         getMyQuotationList(bundle_GroupId, bundle_VehicleId, bundle_Type);
                                                     }
-
                                                 } else {
                                                     Log.e("No", "Response");
                                                 }
@@ -369,7 +349,6 @@ public class MyVehicleQuotationListActivity extends AppCompatActivity implements
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
-
                             }
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -412,7 +391,6 @@ public class MyVehicleQuotationListActivity extends AppCompatActivity implements
         }
         return super.onOptionsItemSelected(item);
     }
-
 
     @Override
     public void onBackPressed() {

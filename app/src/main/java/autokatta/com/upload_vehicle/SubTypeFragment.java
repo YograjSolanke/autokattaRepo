@@ -62,7 +62,7 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
     View mSubtype;
     Button mUploadVehicle;
     String allimgpath = "";
-    ArrayList<Image> mImages = new ArrayList<>();
+    List<Image> mImages = new ArrayList<>();
     int REQUEST_CODE_PICKER = 2000;
     List<String> mRtoCity = new ArrayList<>();
     List<String> mVehicleColor = new ArrayList<>();
@@ -798,6 +798,7 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
     }
 
     private void start() {
+        mImages.clear();
         ImagePicker.create(this)
                 .folderMode(true) // set folder mode (false by default)
                 .folderTitle("Folder") // folder selection title
@@ -807,7 +808,7 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
                 .limit(10) // max images can be selected (999 by default)
                 .showCamera(true) // show camera or not (true by default)
                 .imageDirectory("Camera")   // captured image directory name ("Camera" folder by default)
-                .origin(mImages) // original selected images, used in multi mode
+                .origin((ArrayList<Image>) mImages) // original selected images, used in multi mode
                 .start(REQUEST_CODE_PICKER); // start image picker activity with request code
     }
 

@@ -1,6 +1,8 @@
 package autokatta.com.initial_fragment;
 
 import android.app.ActivityOptions;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -24,7 +26,6 @@ import java.util.ArrayList;
 import autokatta.com.R;
 import autokatta.com.adapter.MyStoreListAdapter;
 import autokatta.com.apicall.ApiCall;
-import autokatta.com.app_info.CreateStoreAppIntro;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.other.CustomToast;
@@ -56,6 +57,7 @@ public class MyStoreListFragment extends Fragment implements View.OnClickListene
 
 
     public MyStoreListFragment() {
+        //empty constructor
     }
 
     @Nullable
@@ -74,7 +76,6 @@ public class MyStoreListFragment extends Fragment implements View.OnClickListene
                 MyStoreResponse myStoreResponse = (MyStoreResponse) response.body();
                 if (!myStoreResponse.getSuccess().isEmpty()) {
                     mNoData.setVisibility(View.GONE);
-                    startActivity(new Intent(getActivity(), CreateStoreAppIntro.class));
                     for (MyStoreResponse.Success Sresponse : myStoreResponse.getSuccess()) {
                         Sresponse.setId(Sresponse.getId());
                         Sresponse.setName(Sresponse.getName());
@@ -100,23 +101,26 @@ public class MyStoreListFragment extends Fragment implements View.OnClickListene
                 } else {
                     mSwipeRefreshLayout.setRefreshing(false);
                     mNoData.setVisibility(View.VISIBLE);
-
-                    startActivity(new Intent(getActivity(), CreateStoreAppIntro.class));
-
-                    Bundle bundle = new Bundle();
-                    bundle.putString("className", "MyStoreListFragment");
-                    ActivityOptions options = ActivityOptions.makeCustomAnimation(getActivity(), R.anim.ok_left_to_right, R.anim.ok_right_to_left);
-                    Intent intent = new Intent(getActivity(), CreateStoreActivity.class);
-                    intent.putExtras(bundle);
-                    getActivity().startActivity(intent, options.toBundle());
-//                    CreateStoreFragment createStoreFragment = new CreateStoreFragment();
-//                    createStoreFragment.setArguments(bundle);
-//
-//                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-//                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//                    fragmentTransaction.replace(R.id.myStoreListFrame, createStoreFragment, "createStoreFragment")
-//                            .addToBackStack("createStoreFragment")
-//                            .commitAllowingStateLoss();
+                    new AlertDialog.Builder(getActivity())
+                            .setTitle("No Store Found")
+                            .setMessage("No store found please create store first do you want to create store")
+                            .setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    Bundle bundle = new Bundle();
+                                    bundle.putString("className", "MyStoreListFragment");
+                                    ActivityOptions options = ActivityOptions.makeCustomAnimation(getActivity(), R.anim.ok_left_to_right, R.anim.ok_right_to_left);
+                                    Intent intent = new Intent(getActivity(), CreateStoreActivity.class);
+                                    intent.putExtras(bundle);
+                                    getActivity().startActivity(intent, options.toBundle());
+                                }
+                            }).setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                            getActivity().finish();
+                        }
+                    }).setIcon(android.R.drawable.ic_dialog_alert).show();
                 }
             } else {
                 mSwipeRefreshLayout.setRefreshing(false);
@@ -127,6 +131,11 @@ public class MyStoreListFragment extends Fragment implements View.OnClickListene
             CustomToast.customToast(getActivity(), getString(R.string.no_response));
         }
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
     }
 
     @Override
@@ -149,12 +158,10 @@ public class MyStoreListFragment extends Fragment implements View.OnClickListene
         }
     }
 
-
     @Override
     public void notifyString(String str) {
 
     }
-
 
     @Override
     public void onClick(View v) {
@@ -162,21 +169,10 @@ public class MyStoreListFragment extends Fragment implements View.OnClickListene
             case R.id.fabCreateStore:
                 Bundle bundle = new Bundle();
                 bundle.putString("className", "MyStoreListFragment");
-
                 ActivityOptions options = ActivityOptions.makeCustomAnimation(getActivity(), R.anim.ok_left_to_right, R.anim.ok_right_to_left);
                 Intent intent = new Intent(getActivity(), CreateStoreActivity.class);
                 intent.putExtras(bundle);
                 getActivity().startActivity(intent, options.toBundle());
-//                CreateStoreFragment createStoreFragment = new CreateStoreFragment();
-//                createStoreFragment.setArguments(bundle);
-//
-//                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-//                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//                fragmentTransaction.replace(R.id.myStoreListFrame, createStoreFragment, "createStoreFragment")
-//                        .addToBackStack("createStoreFragment")
-//                        .commit();
-
-
         }
     }
 
@@ -250,7 +246,5 @@ public class MyStoreListFragment extends Fragment implements View.OnClickListene
                 }
             }
         });
-
-
     }
 }

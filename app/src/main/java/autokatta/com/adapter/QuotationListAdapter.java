@@ -33,13 +33,11 @@ public class QuotationListAdapter extends RecyclerView.Adapter<RecyclerView.View
     private List<MyVehicleQuotationListResponse.Success> QuotationList;
     private String mLoginContact;
 
-
     public QuotationListAdapter(Activity activity1, List<MyVehicleQuotationListResponse.Success> QuotationList1,
                                 String mLoginContact1) {
         mActivity = activity1;
         QuotationList = QuotationList1;
         mLoginContact = mLoginContact1;
-
     }
 
 
@@ -59,13 +57,11 @@ public class QuotationListAdapter extends RecyclerView.Adapter<RecyclerView.View
         } else {
             holder.callMe.setVisibility(View.VISIBLE);
             holder.name.setText(QuotationList.get(position).getCustomerName());
-
         }
         holder.contact.setText(QuotationList.get(position).getCustContact());
         holder.reservedPrice.setText(String.valueOf(QuotationList.get(position).getReservePrice()));
         holder.date.setText(QuotationList.get(position).getCreatedDate());
         holder.query.setText(QuotationList.get(position).getQuery());
-
 
         holder.callMe.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,10 +86,11 @@ public class QuotationListAdapter extends RecyclerView.Adapter<RecyclerView.View
         holder.reply.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mActivity.startActivity(new Intent(mActivity, ReplyGroupQuot.class));
+                Intent i = new Intent(mActivity, ReplyGroupQuot.class);
+                i.putExtra("VehicleId", QuotationList.get(holder.getAdapterPosition()).getVehicleID());
+                mActivity.startActivity(i);
             }
         });
-
     }
 
     private void call(String custContact) {

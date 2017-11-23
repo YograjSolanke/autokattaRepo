@@ -130,6 +130,8 @@ public class StoreProductActivity extends AppCompatActivity implements SwipeRefr
                     for (StoreInventoryResponse.Success.Product success : storeResponse.getSuccess().getProduct()) {
                         success.setProductId(success.getProductId());
                         success.setName(success.getName());
+                        success.setAddedBy(success.getAddedBy());
+                        success.setStorecontact(success.getStorecontact());
                         success.setBrandtags(success.getBrandtags());
                         success.setPrice(success.getPrice());
                         success.setProductType(success.getProductType());

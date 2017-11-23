@@ -139,6 +139,8 @@ public class StoreServiceActivity extends AppCompatActivity implements SwipeRefr
                     for (StoreInventoryResponse.Success.Service success : storeResponse.getSuccess().getService()) {
                         success.setServiceId(success.getServiceId());
                         success.setServiceName(success.getServiceName());
+                        success.setAddedBy(success.getAddedBy());
+                        success.setStorecontact(success.getStorecontact());
                         success.setBrandtags(success.getBrandtags());
                         success.setServicePrice(success.getServicePrice());
                         success.setServiceType(success.getServiceType());

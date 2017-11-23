@@ -76,14 +76,14 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
 
     ApiCall mApiCall;
     CoordinatorLayout mLayout;
-    String storeName = "", storeImage = "", storeCoverImage = "", storeType = "", storeWebsite = "",
+    String storeName = "", userRole = "", storeImage = "", storeCoverImage = "", storeType = "", storeWebsite = "",
             storeTiming = "", storeLocation = "", storeWorkingDays = "", strDetailsShare = "", myContact, isDealing = "", storelattitude, storelongitude, storeOtherContact, mFolllowstr, mLikestr, str;
     int storeLikeCount, storeFollowCount, preqwrate = 0, prefrrate = 0, preprrate = 0, pretmrate = 0, precsrate = 0, preoverall = 0, store_id, storeRating;
     private ProgressDialog dialog;
     AdminCallContactAdapter adapter;
     LinearLayout mLinear, mAbout, mProducts, mService, mVehicle, mNewVehicle, mVideos, mImages;
     ImageView mBannerImage, mStoreImage;
-    TextView mStoreName, mWebSite, mLocation, mLikeCount, mFollowCount, mStoreType;
+    TextView mStoreName, mWebSite, mLocation, mLikeCount, mFollowCount, mStoreType, mUserRole;
     //ImageView mCall;
     LinearLayout otherViewLayout;
     ImageView mLike, mUnlike, mRating, mFollow, mUnFollow, mMap, mAddReview;
@@ -144,6 +144,7 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
                     mUnFollow = (ImageView) findViewById(R.id.follow);
                     mMap = (ImageView) findViewById(R.id.map);
                     mAddReview = (ImageView) findViewById(R.id.add_review);
+                    mUserRole = (TextView) findViewById(R.id.userRole);
                     otherViewLayout = (LinearLayout) findViewById(R.id.actionLayout);
                     /*mAbout = (LinearLayout) findViewById(R.id.about);
                     mProducts = (LinearLayout) findViewById(R.id.product);
@@ -858,7 +859,6 @@ Call Intent...
         if (response != null) {
             if (response.isSuccessful()) {
                 if (response.body() instanceof StoreResponse) {
-                    dialog.dismiss();
                     StoreResponse storeResponse = (StoreResponse) response.body();
                     for (StoreResponse.Success success : storeResponse.getSuccess()) {
                         storeName = success.getName();
@@ -877,6 +877,9 @@ Call Intent...
                         likeUnlike.setCount(success.getLikecount());
                         storeFollowCount = success.getFollowcount();
                         likeUnlike.setFollowCount(success.getFollowcount());
+                        userRole = success.getRole();
+                        if (userRole.equalsIgnoreCase("Other"))
+                            mUserRole.setVisibility(View.GONE);
 
                         mOtherContact = success.getContact();
                         Log.i("dsafdsafdas", "->" + mOtherContact);
@@ -895,11 +898,25 @@ Call Intent...
                         isDealing = success.getDealingWith();
                     }
 
-                    if (mOtherContact.equals(myContact)) {
+                    if (userRole.equalsIgnoreCase("Owner")) {
                         mAdd.setVisibility(View.VISIBLE);
                         otherViewLayout.setVisibility(View.GONE);
                         //mCall.setVisibility(View.GONE);
                         mViewReview.setVisibility(View.VISIBLE);
+                        //AddSuggestionData(store_id);
+                    } else if (userRole.equalsIgnoreCase("Employee")) {
+
+                        mAdd.setVisibility(View.VISIBLE);
+                        otherViewLayout.setVisibility(View.VISIBLE);
+                        //mCall.setVisibility(View.GONE);
+                        mViewReview.setVisibility(View.GONE);
+                        AddSuggestionData(store_id);
+                    } else if (userRole.equalsIgnoreCase("Other")) {
+
+                        mAdd.setVisibility(View.GONE);
+                        otherViewLayout.setVisibility(View.VISIBLE);
+                        //mCall.setVisibility(View.GONE);
+                        mViewReview.setVisibility(View.GONE);
                         AddSuggestionData(store_id);
                     }
 
@@ -930,6 +947,7 @@ Call Intent...
                     mStoreName.setText(storeName);
                     mLocation.setText(storeLocation);
                     mWebSite.setText(storeWebsite);
+                    mUserRole.setText("Role :" + userRole);
                     mStoreType.setText("Type:" + storeType);
                     mFollowCount.setText("Followers(" + String.valueOf(storeFollowCount) + ")");
                     mLikeCount.setText("Likes(" + String.valueOf(storeLikeCount) + ")");
@@ -961,6 +979,7 @@ Call Intent...
                     }
                 }
 
+                dialog.dismiss();
             } else {
                 dialog.dismiss();
                 //  CustomToast.customToast(getApplicationContext(), getString(R.string._404_));

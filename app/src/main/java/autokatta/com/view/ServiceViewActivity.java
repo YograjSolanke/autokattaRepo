@@ -43,7 +43,6 @@ import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.daimajia.slider.library.Tricks.ViewPagerEx;
-import com.kaopiz.kprogresshud.KProgressHUD;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -149,7 +148,6 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
     String simagename = "";
     TextView photocount, no_of_enquiries;
     final List<String> brandTags = new ArrayList<>();
-    KProgressHUD hud;
     String tagpart = "", tagid = "";
     String idlist = "", editMode = "";
     int service_id;
@@ -259,80 +257,77 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
                         getSupportActionBar().setDisplayShowHomeEnabled(true);
                     }
 
-
-                    hud = KProgressHUD.create(ServiceViewActivity.this)
-                            .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
-                            .setLabel("Please wait")
-                            .setMaxProgress(100)
-                            .show();
                     if (!mConnectionDetector.isConnectedToInternet()) {
                         Toast.makeText(ServiceViewActivity.this, "Please check your internet connection", Toast.LENGTH_SHORT).show();
                     } else {
+
+                        dialog.show();
                         getCategory();
                         getServiceData(service_id, contact);
                         getNoOfEnquiryCount(service_id, contact);
 
-
-                        servicetags.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
-                        multiautobrand.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
-
-                        servicetags.setOnKeyListener(new View.OnKeyListener() {
-                            @Override
-                            public boolean onKey(View view, int i, KeyEvent keyEvent) {
-                                if ((keyEvent.getAction() == KeyEvent.ACTION_DOWN) &&
-                                        (i == KeyEvent.KEYCODE_ENTER)) {
-                                    servicetags.setText(servicetags.getText().toString() + ",");
-                                    servicetags.setSelection(servicetags.getText().toString().length());
-                                    check();
-                                    return true;
-                                }
-                                return false;
-                            }
-                        });
-
-                        servicetags.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                            @Override
-                            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                                check();
-                            }
-                        });
-                        servicetags.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-                            @Override
-                            public void onFocusChange(View view, boolean b) {
-                                if (!b && !servicetags.getText().toString().equalsIgnoreCase("")) {
-                                    check();
-                                }
-                            }
-                        });
-
-                        overallbar.setEnabled(false);
-                        pricebar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
-                            @Override
-                            public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
-                                pricerate = v;
-                                calculate(pricerate, qualityrate, tmrate);
-                            }
-                        });
-
-                        qualitybar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
-                            @Override
-                            public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
-                                qualityrate = v;
-                                calculate(pricerate, qualityrate, tmrate);
-                            }
-                        });
-
-                        tmbar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
-                            @Override
-                            public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
-                                tmrate = v;
-                                calculate(pricerate, qualityrate, tmrate);
-                            }
-                        });
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+            }
+        });
+
+
+        servicetags.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
+        multiautobrand.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
+
+        servicetags.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View view, int i, KeyEvent keyEvent) {
+                if ((keyEvent.getAction() == KeyEvent.ACTION_DOWN) &&
+                        (i == KeyEvent.KEYCODE_ENTER)) {
+                    servicetags.setText(servicetags.getText().toString() + ",");
+                    servicetags.setSelection(servicetags.getText().toString().length());
+                    check();
+                    return true;
+                }
+                return false;
+            }
+        });
+
+        servicetags.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                check();
+            }
+        });
+        servicetags.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if (!b && !servicetags.getText().toString().equalsIgnoreCase("")) {
+                    check();
+                }
+            }
+        });
+
+        overallbar.setEnabled(false);
+        pricebar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
+                pricerate = v;
+                calculate(pricerate, qualityrate, tmrate);
+            }
+        });
+
+        qualitybar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
+                qualityrate = v;
+                calculate(pricerate, qualityrate, tmrate);
+            }
+        });
+
+        tmbar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
+                tmrate = v;
+                calculate(pricerate, qualityrate, tmrate);
             }
         });
 
@@ -353,11 +348,7 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
             Call<ProfileGroupResponse> add = serviceApi._autokattaProfileGroup(getSharedPreferences(getString(R.string.my_preference),
                     MODE_PRIVATE).getString("loginContact", null), 1, 10);
 
-            hud = KProgressHUD.create(ServiceViewActivity.this)
-                    .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
-                    .setLabel("loading groups...")
-                    .setMaxProgress(100)
-                    .show();
+            dialog.show();
 
             add.enqueue(new Callback<ProfileGroupResponse>() {
                 @Override
@@ -366,7 +357,7 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
                         groupIdList.clear();
                         groupIdList.clear();
                         groupTitleList.clear();
-                        hud.dismiss();
+                        dialog.dismiss();
                         ProfileGroupResponse mProfileGroupResponse = response.body();
                         for (ProfileGroupResponse.MyGroup success : mProfileGroupResponse.getSuccess().getMyGroups()) {
                             Log.i("previousGrpIds--", "in loop" + String.valueOf(success.getId()));
@@ -414,7 +405,7 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
                             alertBoxGroups(groupTitleArray);
                         }
                     } else {
-                        hud.dismiss();
+                        dialog.dismiss();
                         CustomToast.customToast(getApplicationContext(), getString(R.string._404));
                     }
                 }
@@ -662,8 +653,7 @@ Get Admin data...
     public void notifySuccess(Response<?> response) {
         if (response != null) {
             if (response.isSuccessful()) {
-                mainlayout.setVisibility(View.VISIBLE);
-                hud.dismiss();
+
                 if (response.body() instanceof CategoryResponse) {
                     CategoryResponse moduleResponse = (CategoryResponse) response.body();
                     final List<String> module = new ArrayList<String>();
@@ -715,6 +705,8 @@ Get Admin data...
                 } else if (response.body() instanceof ServiceResponse) {
                     ServiceResponse serviceresponse = (ServiceResponse) response.body();
                     if (!serviceresponse.getSuccess().isEmpty()) {
+                        mainlayout.setVisibility(View.VISIBLE);
+                        dialog.dismiss();
                         for (ServiceResponse.Success success : serviceresponse.getSuccess()) {
                             name = success.getStoreName();
                             web = success.getStoreWebsite();
@@ -748,7 +740,7 @@ Get Admin data...
 
                             getChatEnquiryStatus(contact, receiver_contact, service_id);
                             textlike.setText("like(" + slikecnt + ")");
-                            if (storecontact.contains(contact)) {
+                            if (contact.equals(success.getAddedBy())) {
                                 btnchat.setVisibility(View.GONE);
                                 no_of_enquiries.setVisibility(View.VISIBLE);
                                 edit.setVisibility(View.VISIBLE);
@@ -811,8 +803,13 @@ Get Admin data...
                             }
 
                             sliderLayout = (SliderLayout) findViewById(R.id.slider);
-                            if (!simages.equals("") || !simages.equals("null") || simages != null) {
+                            if (simages == null || simages.equals("") || simages.equals("null")) {
                                 //silder code?????????????????????????????????????????????????????????????????
+                                sliderLayout.setBackgroundResource(R.drawable.logo);
+                                photocount.setText("0 Photos");
+
+                            } else {
+
                                 Hash_file_maps = new HashMap<String, String>();
 
                                 String dp_path = getString(R.string.base_image_url);
@@ -827,7 +824,7 @@ Get Admin data...
                                     }
                                 } else {
                                     Hash_file_maps.put("Image-" + simages, dp_path + simages.replaceAll(" ", ""));
-                                singleimage=simages;
+                                    singleimage = simages;
                                 }
 
                                 for (final String name : Hash_file_maps.keySet()) {
@@ -856,9 +853,6 @@ Get Admin data...
                                 //sliderLayout.setCustomAnimation(new DescriptionAnimation());
                                 sliderLayout.setDuration(3000);
                                 sliderLayout.addOnPageChangeListener(this);
-                            } else {
-                                sliderLayout.setBackgroundResource(R.drawable.logo);
-                                photocount.setText("0 Photos");
                             }
 
                             //***************************setting previous rating*******************************
@@ -921,7 +915,7 @@ Get Admin data...
     public void notifyString(String str) {
         if (str != null) {
             if (str.equals("Service_updated_successfully")) {
-                hud.dismiss();
+                dialog.dismiss();
                 CustomToast.customToast(ServiceViewActivity.this, "Service Updated");
                 updatetagids();
             } else if (str.equals("success_tag_updation")) {
@@ -978,7 +972,6 @@ Get Admin data...
     private void getChatEnquiryStatus(String contact, String receiver_contact, int service_id) {
 
         ApiCall mApicall = new ApiCall(this, this);
-        dialog.show();
         mApicall.getChatEnquiryStatus(contact, receiver_contact, 0, service_id, 0);
     }
 
@@ -1124,11 +1117,7 @@ Get Admin data...
                     servicetype.clearFocus();
                     spinCategory.clearFocus();
 
-                    hud = KProgressHUD.create(ServiceViewActivity.this)
-                            .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
-                            .setLabel("Please wait")
-                            .setMaxProgress(100)
-                            .show();
+                    dialog.show();
                     updateService(service_id, upname, upprice, updetails, "", uptype, "", upcat, finalbrandtags, stringgroupids);
                 }
                 break;
