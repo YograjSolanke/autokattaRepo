@@ -52,7 +52,7 @@
                     android:layout_height="@dimen/card_title_height"
                     android:layout_weight="1.6"
                     android:background="@color/edit_background"
-                    android:hint="@string/name"
+                    android:hint="@string/names"
                     android:paddingEnd="@dimen/card_margin"
                     android:paddingStart="@dimen/card_margin"
                     android:textColor="#708090" />

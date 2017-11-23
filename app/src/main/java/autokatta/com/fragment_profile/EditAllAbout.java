@@ -392,9 +392,9 @@ public class EditAllAbout extends AppCompatActivity implements RequestNotifier, 
                         getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""));
 
                // usertypeSpinner.setAdapter(null);
-                industrySpinner.setAdapter(null);
-                moduleSpinner.setAdapter(null);
-                brandSpinner.setAdapter(null);
+             //   industrySpinner.setAdapter(null);
+              //  moduleSpinner.setAdapter(null);
+               // brandSpinner.setAdapter(null);
             }
         }else {
             CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));

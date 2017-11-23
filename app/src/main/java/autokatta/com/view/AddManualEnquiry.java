@@ -85,7 +85,7 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
     RelativeLayout relCategory, relBrand, relModel, relPrice, mDetails;
     ImageView Image;
     Menu menu;
-    String strFinancername;
+    String strFinancername="";
     int strLoanAmt;
     float strLoanPer;
     String fullpath = "";
@@ -414,7 +414,6 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
                                         flag = true;
                                         break;
                                     } else {
-                                        CustomToast.customToast(AddManualEnquiry.this, "Please Select Valid Address ");
                                         flag = false;
                                     }
                                 }
@@ -429,7 +428,7 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
                             } else if (custAddress.equals("") || custAddress.startsWith(" ") && custAddress.startsWith(" ")) {
                                 autoAddress.setError("Enter Address");
                                 autoAddress.requestFocus();
-                            } else if (flag) {
+                            } else if (!flag) {
                                 autoAddress.setError("Please provide proper address");
                                 autoAddress.requestFocus();
                             } else if (custFullAddress.equals("")) {
@@ -444,18 +443,19 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
                             } else if (spnSource.getSelectedItem().toString().equalsIgnoreCase("select source of enquiry")) {
                                 CustomToast.customToast(getApplicationContext(), "Please provide source");
                                 spnStatus.requestFocus();
-                            } else if (!spnSource.getSelectedItem().toString().equalsIgnoreCase("select source of enquiry") && !spnSource.getSelectedItem().toString().equalsIgnoreCase("other")) {
-                                mSource = spnSource.getSelectedItem().toString();
                             } else if (spnSource.getSelectedItem().toString().equalsIgnoreCase("other") && othersource.getText().toString().equalsIgnoreCase("")) {
                                 othersource.setError("Please enter source");
                                 othersource.setFocusable(true);
-                            } else if (spnSource.getSelectedItem().toString().equalsIgnoreCase("other")) {
-                                addsource(othersource.getText().toString());
-                                mSource = othersource.getText().toString();
                             } else if (nextFollowupDate.equals("") || nextFollowupDate.startsWith(" ")) {
                                 edtDate.setError("Enter Date");
                                 edtDate.requestFocus();
                             } else {
+                                if (!spnSource.getSelectedItem().toString().equalsIgnoreCase("select source of enquiry") && !spnSource.getSelectedItem().toString().equalsIgnoreCase("other")) {
+                                    mSource = spnSource.getSelectedItem().toString();
+                                }else if (spnSource.getSelectedItem().toString().equalsIgnoreCase("other")) {
+                                    addsource(othersource.getText().toString());
+                                    mSource = othersource.getText().toString();
+                                }
                                 AddEnquiryData(custName, custContact, custAddress, custFullAddress, custInventoryType, custEnquiryStatus,
                                         discussion, nextFollowupDate, mId);
                             }

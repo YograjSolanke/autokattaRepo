@@ -255,14 +255,19 @@ public class StoreSearchFragment extends Fragment implements View.OnClickListene
 
                         ArrayAdapter<String> dataadapter = new ArrayAdapter<>(getActivity(), R.layout.registration_spinner, brandTagsList);
                         multiautobrand.setAdapter(dataadapter);
-                    } else
+                    } else{
+                        if (isAdded())
+                            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+                    }
                         CustomToast.customToast(getActivity(), getString(R.string.no_response));
                 }
 
             } else {
+                if (isAdded())
                 CustomToast.customToast(getActivity(), getString(R.string._404));
             }
         } else {
+            if (isAdded())
             CustomToast.customToast(getActivity(), getString(R.string.no_response));
         }
     }
@@ -270,18 +275,23 @@ public class StoreSearchFragment extends Fragment implements View.OnClickListene
     @Override
     public void notifyError(Throwable error) {
         if (error instanceof SocketTimeoutException) {
+            if (isAdded())
             CustomToast.customToast(getActivity(),getString(R.string._404_));
             //   showMessage(getActivity(), getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
+            if (isAdded())
             CustomToast.customToast(getActivity(),getString(R.string.no_response));
             // showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
+            if (isAdded())
             CustomToast.customToast(getActivity(),getString(R.string.no_response));
             //   showMessage(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
-            CustomToast.customToast(getActivity(),getString(R.string.no_internet));
+            if (isAdded())
+                CustomToast.customToast(getActivity(),getString(R.string.no_internet));
             //   errorMessage(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
+if (isAdded())
             CustomToast.customToast(getActivity(),getString(R.string.no_internet));
             //   errorMessage(getActivity(), getString(R.string.no_internet));
         } else {

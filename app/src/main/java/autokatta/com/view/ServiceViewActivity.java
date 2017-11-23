@@ -9,6 +9,9 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.LayerDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -243,6 +246,39 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
             service_id = getIntent().getExtras().getInt("service_id");
             editMode = getIntent().getExtras().getString("editmode", "");
         }
+
+    /*set color to rating bar*/
+
+        LayerDrawable stars = (LayerDrawable) pricebar.getProgressDrawable();
+        stars.getDrawable(2).setColorFilter(Color.RED, PorterDuff.Mode.SRC_ATOP);//After filled
+        stars.getDrawable(0).setColorFilter(Color.YELLOW, PorterDuff.Mode.SRC_ATOP);//empty
+        stars.getDrawable(1).setColorFilter(Color.BLUE, PorterDuff.Mode.SRC_ATOP);//
+
+        LayerDrawable stars1 = (LayerDrawable) qualitybar.getProgressDrawable();
+        stars1.getDrawable(2).setColorFilter(Color.RED, PorterDuff.Mode.SRC_ATOP);//
+        stars1.getDrawable(0).setColorFilter(Color.YELLOW, PorterDuff.Mode.SRC_ATOP);//empty
+        stars1.getDrawable(1).setColorFilter(Color.BLUE, PorterDuff.Mode.SRC_ATOP);//
+
+        LayerDrawable stars2 = (LayerDrawable) tmbar.getProgressDrawable();
+        stars2.getDrawable(2).setColorFilter(Color.RED, PorterDuff.Mode.SRC_ATOP);//
+        stars2.getDrawable(0).setColorFilter(Color.YELLOW, PorterDuff.Mode.SRC_ATOP);//empty
+        stars2.getDrawable(1).setColorFilter(Color.BLUE, PorterDuff.Mode.SRC_ATOP);//
+
+        LayerDrawable stars3 = (LayerDrawable) servicerating.getProgressDrawable();
+        stars3.getDrawable(2).setColorFilter(Color.RED, PorterDuff.Mode.SRC_ATOP);//
+        stars3.getDrawable(0).setColorFilter(Color.YELLOW, PorterDuff.Mode.SRC_ATOP);//empty
+        stars3.getDrawable(1).setColorFilter(Color.BLUE, PorterDuff.Mode.SRC_ATOP);//
+
+        LayerDrawable stars4 = (LayerDrawable) storerating.getProgressDrawable();
+        stars4.getDrawable(2).setColorFilter(Color.RED, PorterDuff.Mode.SRC_ATOP);//
+        stars4.getDrawable(0).setColorFilter(Color.YELLOW, PorterDuff.Mode.SRC_ATOP);//empty
+        stars4.getDrawable(1).setColorFilter(Color.BLUE, PorterDuff.Mode.SRC_ATOP);//
+
+        LayerDrawable stars5 = (LayerDrawable) overallbar.getProgressDrawable();
+        stars5.getDrawable(2).setColorFilter(Color.RED, PorterDuff.Mode.SRC_ATOP);//
+        stars5.getDrawable(0).setColorFilter(Color.YELLOW, PorterDuff.Mode.SRC_ATOP);//empty
+        stars5.getDrawable(1).setColorFilter(Color.BLUE, PorterDuff.Mode.SRC_ATOP);//
+
 
 
         //service_id="115";
