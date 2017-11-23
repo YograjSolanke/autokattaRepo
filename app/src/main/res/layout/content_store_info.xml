@@ -465,7 +465,7 @@
                     android:id="@+id/txtAdminContact"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/admin_contact"
+                    android:text="Admins and Roles"
                     android:textColor="@color/textColor"
                     android:textSize="15sp"
                     android:textStyle="bold" />
@@ -476,7 +476,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/txtAdminContact"
                     android:layout_marginTop="5dp"
-                    android:hint="@string/admin_contact"
+                    android:hint="Admins with roles"
                     android:textColor="@color/textColor"
                     android:textColorHint="#848484"
                     android:textSize="15sp" />

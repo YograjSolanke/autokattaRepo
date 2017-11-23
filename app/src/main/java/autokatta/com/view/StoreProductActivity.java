@@ -214,4 +214,11 @@ public class StoreProductActivity extends AppCompatActivity implements SwipeRefr
         overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mSwipeRefreshLayout.setRefreshing(true);
+        getStoreProducts(store_id, Sharedcontact);
+
+    }
 }

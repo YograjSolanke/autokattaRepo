@@ -797,6 +797,8 @@ Get Admin data...
                                 check.setVisibility(View.VISIBLE);
                                 edit.setVisibility(View.GONE);
                                 deleteservice.setVisibility(View.GONE);
+                                mNote.setVisibility(View.GONE);
+
                             } else {
                                 storename.setEnabled(false);
                                 website.setEnabled(false);
@@ -1007,6 +1009,8 @@ Get Admin data...
                 check.setVisibility(View.VISIBLE);
                 edit.setVisibility(View.GONE);
                 deleteservice.setVisibility(View.GONE);
+                mNote.setVisibility(View.GONE);
+
                 break;
 
             case R.id.checkservice:
@@ -1112,6 +1116,7 @@ Get Admin data...
                     check.setVisibility(View.GONE);
                     edit.setVisibility(View.VISIBLE);
                     deleteservice.setVisibility(View.VISIBLE);
+                    mNote.setVisibility(View.VISIBLE);
                     servicename.clearFocus();
                     serviceprice.clearFocus();
                     servicedetails.clearFocus();

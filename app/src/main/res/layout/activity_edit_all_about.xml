@@ -118,7 +118,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@android:color/transparent"
-                    android:hint="Category"
+                    android:hint="NA"
                     android:textColor="#708090"
                     android:textStyle="bold" />
             </LinearLayout>
@@ -141,7 +141,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@android:color/transparent"
-                    android:hint="Brand"
+                    android:hint="NA"
                     android:textColor="#708090"
                     android:textStyle="bold" />
             </LinearLayout>

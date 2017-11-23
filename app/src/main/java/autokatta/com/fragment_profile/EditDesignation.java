@@ -166,7 +166,7 @@ public class EditDesignation extends AppCompatActivity implements SwipeRefreshLa
                 //fillter(s.toString());
                 Log.i("Strings", "-->" + s.toString());
                 //  getSearchAuction(s.toString());
-                mAdapter.getFilter().filter(s.toString());
+               // mAdapter.getFilter().filter(s.toString());
             }
         });
 

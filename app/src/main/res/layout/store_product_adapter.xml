@@ -46,7 +46,7 @@
                 android:layout_height="30dp"
                 android:layout_toLeftOf="@+id/deleteproduct"
                 android:contentDescription="@string/app_name"
-                android:src="@mipmap/note"
+                android:src="@mipmap/ic_note_icon_blue"
                 android:visibility="gone"/>
 
             <ImageView

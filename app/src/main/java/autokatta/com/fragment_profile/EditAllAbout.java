@@ -391,7 +391,7 @@ public class EditAllAbout extends AppCompatActivity implements RequestNotifier, 
                 mApiCall.profileAbout(getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""),
                         getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""));
 
-                usertypeSpinner.setAdapter(null);
+               // usertypeSpinner.setAdapter(null);
                 industrySpinner.setAdapter(null);
                 moduleSpinner.setAdapter(null);
                 brandSpinner.setAdapter(null);
@@ -408,11 +408,25 @@ public class EditAllAbout extends AppCompatActivity implements RequestNotifier, 
                 usertypeSpinner.setVisibility(View.VISIBLE);
                 mDoneworkat.setVisibility(View.VISIBLE);
                 mEdtWorkedat.setVisibility(View.GONE);
-
                 mUsertypelay.setVisibility(View.VISIBLE);
-                mIndustrylay.setVisibility(View.VISIBLE);
-                mCategorylay.setVisibility(View.VISIBLE);
-                mBrandlay.setVisibility(View.VISIBLE);
+
+
+                if (strIndustry.equalsIgnoreCase(""))
+                {
+                    mIndustrylay.setVisibility(View.GONE);
+                    mCategorylay.setVisibility(View.GONE);
+                    mBrandlay.setVisibility(View.GONE);
+                }else {
+                    mIndustrylay.setVisibility(View.VISIBLE);
+                }
+
+                if (brand.equalsIgnoreCase(""))
+                {
+                    mBrandlay.setVisibility(View.GONE);
+
+                }else {
+                    mBrandlay.setVisibility(View.VISIBLE);
+                }
                 break;
 
             case R.id.editaddress:

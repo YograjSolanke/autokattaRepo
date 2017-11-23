@@ -647,6 +647,8 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                                 check.setVisibility(View.VISIBLE);
                                 edit.setVisibility(View.GONE);
                                 deleteproduct.setVisibility(View.GONE);
+                                mNote.setVisibility(View.GONE);
+
 
                             } else {
                                 productname.setEnabled(false);
@@ -877,6 +879,7 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                 check.setVisibility(View.VISIBLE);
                 edit.setVisibility(View.GONE);
                 deleteproduct.setVisibility(View.GONE);
+                mNote.setVisibility(View.GONE);
                 break;
 
             case R.id.checkproduct:
@@ -983,6 +986,7 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                     check.setVisibility(View.GONE);
                     edit.setVisibility(View.VISIBLE);
                     deleteproduct.setVisibility(View.VISIBLE);
+                    mNote.setVisibility(View.VISIBLE);
                     productname.clearFocus();
                     productprice.clearFocus();
                     productdetails.clearFocus();

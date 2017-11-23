@@ -78,7 +78,7 @@
             android:enabled="false"
             android:text="@string/no_of_enquiries"
             android:textColor="@color/textColor"
-            android:textSize="12sp"
+            android:textSize="15sp"
             android:textStyle="bold"
             android:visibility="gone"/>
 
@@ -322,8 +322,8 @@
 
                     <ImageView
                         android:id="@+id/checkproduct"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
                         android:layout_alignParentEnd="true"
                         android:layout_below="@+id/v3"
                         android:layout_marginEnd="5dp"
@@ -334,8 +334,8 @@
 
                     <ImageView
                         android:id="@+id/editproduct"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
                         android:layout_alignParentEnd="true"
                         android:layout_below="@+id/v3"
                         android:layout_marginEnd="5dp"
@@ -346,8 +346,8 @@
 
                     <ImageView
                         android:id="@+id/deleteproduct"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
                         android:layout_below="@+id/v3"
                         android:layout_marginEnd="5dp"
                         android:layout_marginTop="5dp"
@@ -358,14 +358,14 @@
 
                     <ImageView
                         android:id="@+id/note"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
                         android:layout_below="@+id/v3"
                         android:layout_marginEnd="5dp"
                         android:layout_marginTop="5dp"
                         android:layout_toStartOf="@+id/deleteproduct"
                         android:contentDescription="@string/app_name"
-                        android:src="@mipmap/note"
+                        android:src="@mipmap/ic_note_icon_blue"
                         android:visibility="gone"/>
 
                     <RelativeLayout

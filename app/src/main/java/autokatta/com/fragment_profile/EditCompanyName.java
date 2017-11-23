@@ -160,7 +160,7 @@ public class EditCompanyName extends AppCompatActivity implements SwipeRefreshLa
 
             @Override
             public void afterTextChanged(Editable s) {
-
+             //   mAdapter.getFilter().filter(s.toString());
             }
         });
         return true;
