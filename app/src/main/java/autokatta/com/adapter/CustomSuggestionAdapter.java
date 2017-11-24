@@ -24,6 +24,7 @@ import autokatta.com.response.ModelSuggestionsResponse;
 import autokatta.com.view.OtherProfile;
 import autokatta.com.view.ProductViewActivity;
 import autokatta.com.view.ServiceViewActivity;
+import autokatta.com.view.StoreViewActivity;
 import autokatta.com.view.UserProfile;
 import autokatta.com.view.VehicleDetails;
 import jp.wasabeef.glide.transformations.CropSquareTransformation;
@@ -61,24 +62,6 @@ public class CustomSuggestionAdapter extends RecyclerView.Adapter<RecyclerView.V
 
     /*View Holders Class List*/
 
-    /*Product Suggestions Class...*/
-    private static class ProductSuggestions extends RecyclerView.ViewHolder {
-        CardView mProductCardView;
-        ImageView mProductPic;
-        Button mView;
-        TextView mProductname, mProductType;
-
-        private ProductSuggestions(View profileView) {
-            super(profileView);
-            mProductCardView = (CardView) profileView.findViewById(R.id.product_card_view);
-            mProductPic = (ImageView) profileView.findViewById(R.id.productPic);
-            mView = (Button) profileView.findViewById(R.id.btnView);
-            mProductname = (TextView) profileView.findViewById(R.id.productName);
-            mProductType = (TextView) profileView.findViewById(R.id.productType);
-        }
-    }
-
-
 
     /*Profile Suggestions Class...*/
     private static class ProfileSuggestions extends RecyclerView.ViewHolder {
@@ -96,6 +79,56 @@ public class CustomSuggestionAdapter extends RecyclerView.Adapter<RecyclerView.V
         }
     }
 
+    /*Store Suggestions Class...*/
+    private static class StoreSuggestions extends RecyclerView.ViewHolder {
+        CardView mStoreCardView;
+        ImageView mStorePic;
+        Button mView;
+        TextView mStoreName;
+
+        private StoreSuggestions(View profileView) {
+            super(profileView);
+            mStoreCardView = (CardView) profileView.findViewById(R.id.profile_card_view);
+            mStorePic = (ImageView) profileView.findViewById(R.id.profilePic);
+            mView = (Button) profileView.findViewById(R.id.btnView);
+            mStoreName = (TextView) profileView.findViewById(R.id.userName);
+        }
+    }
+
+    /*Vehicle Suggestions Class...*/
+    private static class VehicleSuggestions extends RecyclerView.ViewHolder {
+        CardView mVehicleCardView;
+        ImageView mVehiclePic;
+        Button mView;
+        TextView mVehicleName, mVehicleCategory, mVehicleBrand;
+
+        private VehicleSuggestions(View vehicleView) {
+            super(vehicleView);
+            mVehicleCardView = (CardView) vehicleView.findViewById(R.id.store_card_view);
+            mVehiclePic = (ImageView) vehicleView.findViewById(R.id.vehiclePic);
+            mView = (Button) vehicleView.findViewById(R.id.btnView);
+            mVehicleName = (TextView) vehicleView.findViewById(R.id.vehicleName);
+            mVehicleCategory = (TextView) vehicleView.findViewById(R.id.vehicleCategory);
+            mVehicleBrand = (TextView) vehicleView.findViewById(R.id.vehicleBrand);
+        }
+    }
+
+    /*Product Suggestions Class...*/
+    private static class ProductSuggestions extends RecyclerView.ViewHolder {
+        CardView mProductCardView;
+        ImageView mProductPic;
+        Button mView;
+        TextView mProductname, mProductType;
+
+        private ProductSuggestions(View profileView) {
+            super(profileView);
+            mProductCardView = (CardView) profileView.findViewById(R.id.product_card_view);
+            mProductPic = (ImageView) profileView.findViewById(R.id.productPic);
+            mView = (Button) profileView.findViewById(R.id.btnView);
+            mProductname = (TextView) profileView.findViewById(R.id.productName);
+            mProductType = (TextView) profileView.findViewById(R.id.productType);
+        }
+    }
 
     /*Serviece Suggestions Class...*/
     private static class ServiceSuggestions extends RecyclerView.ViewHolder {
@@ -114,40 +147,6 @@ public class CustomSuggestionAdapter extends RecyclerView.Adapter<RecyclerView.V
         }
     }
 
-
-    /*Store Suggestions Class...*/
-    private static class StoreSuggestions extends RecyclerView.ViewHolder {
-        CardView mProfileCardView;
-        ImageView mProfilePic;
-        Button mView;
-        TextView mUserName;
-
-        private StoreSuggestions(View profileView) {
-            super(profileView);
-            mProfileCardView = (CardView) profileView.findViewById(R.id.profile_card_view);
-            mProfilePic = (ImageView) profileView.findViewById(R.id.profilePic);
-            mView = (Button) profileView.findViewById(R.id.btnView);
-            mUserName = (TextView) profileView.findViewById(R.id.userName);
-        }
-    }
-
-    /*Vehicle Suggestions Class...*/
-    private static class VehicleSuggestions extends RecyclerView.ViewHolder {
-        CardView mVehicleCardView;
-        ImageView mVehiclePic;
-        Button mView;
-        TextView mVehicleName, mVehicleCategory, mBrand;
-
-        private VehicleSuggestions(View vehicleView) {
-            super(vehicleView);
-            mVehicleCardView = (CardView) vehicleView.findViewById(R.id.store_card_view);
-            mVehiclePic = (ImageView) vehicleView.findViewById(R.id.vehiclePic);
-            mView = (Button) vehicleView.findViewById(R.id.btnView);
-            mVehicleName = (TextView) vehicleView.findViewById(R.id.vehicleName);
-            mVehicleCategory = (TextView) vehicleView.findViewById(R.id.vehicleCategory);
-            mVehicleCategory = (TextView) vehicleView.findViewById(R.id.vehicleBrand);
-        }
-    }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -220,7 +219,7 @@ public class CustomSuggestionAdapter extends RecyclerView.Adapter<RecyclerView.V
 
             case -2:
                 final StoreSuggestions mStoreSuggestions = (StoreSuggestions) holder;
-                mStoreSuggestions.mUserName.setText(mSuggestionList.get(position).getName());
+                mStoreSuggestions.mStoreName.setText(mSuggestionList.get(position).getName());
                 //mStoreSuggestions.mStoreLocation.setText(mSuggestionList.get(position).getLocation());
                 mSuggestionAbout.setText("Suggestion Based On Store");
 
@@ -230,29 +229,21 @@ public class CustomSuggestionAdapter extends RecyclerView.Adapter<RecyclerView.V
                             .load(mActivity.getString(R.string.base_image_url) + mSuggestionList.get(position).getImage())
                             .bitmapTransform(new CropSquareTransformation(mActivity))
                             .diskCacheStrategy(DiskCacheStrategy.ALL)
-                            .into(mStoreSuggestions.mProfilePic);
+                            .into(mStoreSuggestions.mStorePic);
                 } else {
-                    mStoreSuggestions.mProfilePic.setBackgroundResource(R.drawable.profile);
+                    mStoreSuggestions.mStorePic.setBackgroundResource(R.drawable.profile);
                 }
 
                 mStoreSuggestions.mView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Bundle bundle = new Bundle();
-                        bundle.putString("contactOtherProfile", mSuggestionList.get(mStoreSuggestions.getAdapterPosition()).getUserContact());
-                        if (mLoginContact.equalsIgnoreCase(mSuggestionList.get(mStoreSuggestions.getAdapterPosition()).getUserContact())) {
-                            ActivityOptions options = ActivityOptions.makeCustomAnimation(mActivity, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
-                            Intent i = new Intent(mActivity, UserProfile.class);
-                            i.putExtras(bundle);
-                            mActivity.startActivity(i, options.toBundle());
+                        Bundle b = new Bundle();
 
-                        } else {
-                            ActivityOptions options = ActivityOptions.makeCustomAnimation(mActivity, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
-                            Intent i = new Intent(mActivity, OtherProfile.class);
-                            i.putExtras(bundle);
-                            mActivity.startActivity(i, options.toBundle());
-
-                        }
+                        b.putInt("store_id", mSuggestionList.get(mStoreSuggestions.getAdapterPosition()).getStoreId());
+                        ActivityOptions options = ActivityOptions.makeCustomAnimation(mActivity, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
+                        Intent intent = new Intent(mActivity, StoreViewActivity.class);
+                        intent.putExtras(b);
+                        mActivity.startActivity(intent, options.toBundle());
                     }
                 });
                 break;
@@ -310,7 +301,7 @@ public class CustomSuggestionAdapter extends RecyclerView.Adapter<RecyclerView.V
                     @Override
                     public void onClick(View v) {
                         ActivityOptions options = ActivityOptions.makeCustomAnimation(mActivity, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
-                        int proId = mSuggestionList.get(mProductVSuggestions.getAdapterPosition()).getVehicleId();
+                        int proId = mSuggestionList.get(mProductVSuggestions.getAdapterPosition()).getProductId();
                         Intent intent = new Intent(mActivity, ProductViewActivity.class);
                         intent.putExtra("product_id", proId);
                         mActivity.startActivity(intent, options.toBundle());
@@ -340,7 +331,7 @@ public class CustomSuggestionAdapter extends RecyclerView.Adapter<RecyclerView.V
                     @Override
                     public void onClick(View v) {
                         ActivityOptions options = ActivityOptions.makeCustomAnimation(mActivity, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
-                        int servId = mSuggestionList.get(mServiceVSuggestions.getAdapterPosition()).getVehicleId();
+                        int servId = mSuggestionList.get(mServiceVSuggestions.getAdapterPosition()).getServiceId();
                         Intent intent = new Intent(mActivity, ServiceViewActivity.class);
                         intent.putExtra("service_id", servId);
                         mActivity.startActivity(intent, options.toBundle());

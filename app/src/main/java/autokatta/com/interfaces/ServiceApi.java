@@ -1621,6 +1621,6 @@ public interface ServiceApi {
 
 
     // get Suggestion based data
-    @GET("GetSuggestions")
-    Call<SuggestionsResponse> _autokattaGetSuggestionData(@Query("Contact") String mLoginContact, @Query("Type") String Type);
+    @GET("GetAllSuggestionBasedOnUserWatched")
+    Call<SuggestionsResponse> _autokattaGetSuggestionData(@Query("MyContact") String mLoginContact);
 }

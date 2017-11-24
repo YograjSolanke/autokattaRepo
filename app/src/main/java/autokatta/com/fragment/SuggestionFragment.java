@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -34,11 +33,10 @@ import retrofit2.Response;
  * Created by ak-003 on 20/11/17.
  */
 
-public class SuggestionFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, RequestNotifier {
+public class SuggestionFragment extends Fragment implements RequestNotifier {
 
     View mSuggestionView;
-    SwipeRefreshLayout mSwipeRefreshLayout;
-    RecyclerView mRecyclerView;
+    RecyclerView mProfileRecyclerView, mStoreView, mVehicleView;
     boolean hasViewCreated = false;
     TextView mNoData, txtSuggestion;
     ConnectionDetector mTestConnection;
@@ -63,15 +61,25 @@ public class SuggestionFragment extends Fragment implements SwipeRefreshLayout.O
         mNoData = (TextView) view.findViewById(R.id.no_category);
         mNoData.setVisibility(View.GONE);
 
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.profileRecyclerView);
+        mProfileRecyclerView = (RecyclerView) view.findViewById(R.id.profileRecyclerView);
+        mStoreView = (RecyclerView) view.findViewById(R.id.storeRecyclerView);
+        mVehicleView = (RecyclerView) view.findViewById(R.id.vehicleRecyclerView);
         txtSuggestion = (TextView) view.findViewById(R.id.textProfile);
-        mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeRefreshLayoutMain);
 
-        mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+        mProfileRecyclerView.setHasFixedSize(true);
+        mProfileRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
         //mSuggestions.mSuggestionRecycler.addItemDecoration(new VerticalLineDecorator(2));
-        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        mSwipeRefreshLayout.setOnRefreshListener(this);
+        mProfileRecyclerView.setItemAnimator(new DefaultItemAnimator());
+
+        mStoreView.setHasFixedSize(true);
+        mStoreView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+        //mSuggestions.mSuggestionRecycler.addItemDecoration(new VerticalLineDecorator(2));
+        mStoreView.setItemAnimator(new DefaultItemAnimator());
+
+        mVehicleView.setHasFixedSize(true);
+        mVehicleView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+        //mSuggestions.mSuggestionRecycler.addItemDecoration(new VerticalLineDecorator(2));
+        mVehicleView.setItemAnimator(new DefaultItemAnimator());
 
         getActivity().runOnUiThread(new Runnable() {
             @Override
@@ -80,19 +88,8 @@ public class SuggestionFragment extends Fragment implements SwipeRefreshLayout.O
                     mTestConnection = new ConnectionDetector(getActivity());
                     mLoginContact = getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).
                             getString("loginContact", "");
+                    getSuggestionData();
 
-                    mSwipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
-                            android.R.color.holo_green_light,
-                            android.R.color.holo_orange_light,
-                            android.R.color.holo_red_light);
-                    mSwipeRefreshLayout.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            mSwipeRefreshLayout.setRefreshing(true);
-
-                            getSuggestionData();
-                        }
-                    });
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -102,13 +99,9 @@ public class SuggestionFragment extends Fragment implements SwipeRefreshLayout.O
 
     private void getSuggestionData() {
         ApiCall mApiCall = new ApiCall(getActivity(), this);
-        mApiCall.getSuggestionData("1122334455", "Vehicles");
+        mApiCall.getSuggestionData(mLoginContact);
     }
 
-    @Override
-    public void onRefresh() {
-        getSuggestionData();
-    }
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
@@ -127,47 +120,129 @@ public class SuggestionFragment extends Fragment implements SwipeRefreshLayout.O
         if (response != null) {
             if (response.isSuccessful()) {
                 SuggestionsResponse suggestionsResponse = (SuggestionsResponse) response.body();
-                if (!suggestionsResponse.getSuccess().getWallSuggestions().isEmpty()) {
-                    mSwipeRefreshLayout.setRefreshing(false);
-                    mNoData.setVisibility(View.GONE);
-                    suggestionResponseList.clear();
-                    for (SuggestionsResponse.Success.WallSuggestion notification : suggestionsResponse.getSuccess().getWallSuggestions()) {
+                mNoData.setVisibility(View.GONE);
+                suggestionResponseList.clear();
+
+                /*UsedVehicle Array*/
+                if (!suggestionsResponse.getSuccess().getUsedVehicle().isEmpty()) {
+                    for (SuggestionsResponse.Success.UsedVehicle notification : suggestionsResponse.getSuccess().getUsedVehicle()) {
 
                         ModelSuggestionsResponse modelsuggestionsResponse = new ModelSuggestionsResponse();
-                        modelsuggestionsResponse.setName(notification.getUsername());
-                        modelsuggestionsResponse.setImage(notification.getProfilePic());
-                        modelsuggestionsResponse.setLayoutId(notification.getLayout());
-                        modelsuggestionsResponse.setUserContact(notification.getContact());
-
-
-                        modelsuggestionsResponse.setVehicleId(notification.getUploadVehicleID());
-                        modelsuggestionsResponse.setUserContact(notification.getContactNo());
+                        modelsuggestionsResponse.setLayoutId(-4);
+                        modelsuggestionsResponse.setName(notification.getTitile());
                         modelsuggestionsResponse.setImage(notification.getImage());
+                        modelsuggestionsResponse.setUserContact(notification.getContactNo());
+                        modelsuggestionsResponse.setVehicleId(notification.getUploadVehicleID());
                         modelsuggestionsResponse.setLocation(notification.getLocationCity());
 
                         suggestionResponseList.add(modelsuggestionsResponse);
 
                     }
+
                     CustomSuggestionAdapter adapter = new CustomSuggestionAdapter(getActivity(), suggestionResponseList, txtSuggestion, mLoginContact);
-                    mRecyclerView.setAdapter(adapter);
+                    mVehicleView.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
-                } else {
-                    mSwipeRefreshLayout.setRefreshing(false);
-                    mNoData.setVisibility(View.VISIBLE);
                 }
+                /*NewVehicle Array*/
+                else if (!suggestionsResponse.getSuccess().getNewvehicle().isEmpty()) {
+                    for (SuggestionsResponse.Success.Newvehicle notification : suggestionsResponse.getSuccess().getNewvehicle()) {
+
+                        ModelSuggestionsResponse modelsuggestionsResponse = new ModelSuggestionsResponse();
+                        modelsuggestionsResponse.setLayoutId(-2);
+                        modelsuggestionsResponse.setName(notification.getName());
+                        modelsuggestionsResponse.setImage(notification.getStoreImage());
+                        modelsuggestionsResponse.setUserContact(notification.getContactNo());
+
+                        modelsuggestionsResponse.setStoreId(notification.getStoreID());
+                        modelsuggestionsResponse.setUserContact(notification.getContactNo());
+                        modelsuggestionsResponse.setLocation(notification.getLocation());
+
+                        suggestionResponseList.add(modelsuggestionsResponse);
+                    }
+
+                    CustomSuggestionAdapter adapter = new CustomSuggestionAdapter(getActivity(), suggestionResponseList, txtSuggestion, mLoginContact);
+                    mStoreView.setAdapter(adapter);
+                    adapter.notifyDataSetChanged();
+
+                }
+
+                /*Store Array*/
+                else if (!suggestionsResponse.getSuccess().getStore().isEmpty()) {
+                    for (SuggestionsResponse.Success.Store notification : suggestionsResponse.getSuccess().getStore()) {
+
+                        ModelSuggestionsResponse modelsuggestionsResponse = new ModelSuggestionsResponse();
+                        modelsuggestionsResponse.setLayoutId(-2);
+                        modelsuggestionsResponse.setName(notification.getName());
+                        modelsuggestionsResponse.setImage(notification.getStoreImage());
+                        modelsuggestionsResponse.setUserContact(notification.getContactNo());
+
+                        modelsuggestionsResponse.setStoreId(notification.getStoreID());
+                        modelsuggestionsResponse.setUserContact(notification.getContactNo());
+                        modelsuggestionsResponse.setLocation(notification.getLocation());
+
+                        suggestionResponseList.add(modelsuggestionsResponse);
+                    }
+
+                    CustomSuggestionAdapter adapter = new CustomSuggestionAdapter(getActivity(), suggestionResponseList, txtSuggestion, mLoginContact);
+                    mStoreView.setAdapter(adapter);
+                    adapter.notifyDataSetChanged();
+                }
+
+                /*Product Array*/
+                else if (!suggestionsResponse.getSuccess().getProduct().isEmpty()) {
+                    for (SuggestionsResponse.Success.Product notification : suggestionsResponse.getSuccess().getProduct()) {
+
+                        ModelSuggestionsResponse modelsuggestionsResponse = new ModelSuggestionsResponse();
+                        modelsuggestionsResponse.setLayoutId(-5);
+                        modelsuggestionsResponse.setName(notification.getName());
+                        modelsuggestionsResponse.setImage(notification.getImage());
+                        modelsuggestionsResponse.setUserContact(notification.getAddedBy());
+
+                        modelsuggestionsResponse.setProductId(notification.getProductID());
+                        modelsuggestionsResponse.setLocation("");
+
+                        suggestionResponseList.add(modelsuggestionsResponse);
+                    }
+
+                    CustomSuggestionAdapter adapter = new CustomSuggestionAdapter(getActivity(), suggestionResponseList, txtSuggestion, mLoginContact);
+                    mProfileRecyclerView.setAdapter(adapter);
+                    adapter.notifyDataSetChanged();
+                }
+
+                /*Service Array*/
+                else if (!suggestionsResponse.getSuccess().getService().isEmpty()) {
+                    for (SuggestionsResponse.Success.Service notification : suggestionsResponse.getSuccess().getService()) {
+
+                        ModelSuggestionsResponse modelsuggestionsResponse = new ModelSuggestionsResponse();
+                        modelsuggestionsResponse.setLayoutId(-6);
+                        modelsuggestionsResponse.setName(notification.getName());
+                        modelsuggestionsResponse.setImage(notification.getImage());
+                        modelsuggestionsResponse.setUserContact(notification.getAddedBy());
+
+                        modelsuggestionsResponse.setServiceId(notification.getStoreServiceID());
+                        modelsuggestionsResponse.setLocation("");
+
+                        suggestionResponseList.add(modelsuggestionsResponse);
+                    }
+
+                    CustomSuggestionAdapter adapter = new CustomSuggestionAdapter(getActivity(), suggestionResponseList, txtSuggestion, mLoginContact);
+                    mProfileRecyclerView.setAdapter(adapter);
+                    adapter.notifyDataSetChanged();
+                }
+                /*CustomSuggestionAdapter adapter = new CustomSuggestionAdapter(getActivity(), suggestionResponseList, txtSuggestion, mLoginContact);
+                mProfileRecyclerView.setAdapter(adapter);
+                adapter.notifyDataSetChanged();*/
+
             } else {
                 mNoData.setVisibility(View.VISIBLE);
-                mSwipeRefreshLayout.setRefreshing(false);
             }
         } else {
             mNoData.setVisibility(View.VISIBLE);
-            mSwipeRefreshLayout.setRefreshing(false);
         }
     }
 
     @Override
     public void notifyError(Throwable error) {
-        mSwipeRefreshLayout.setRefreshing(false);
         mNoData.setVisibility(View.VISIBLE);
         if (error instanceof SocketTimeoutException) {
             if (isAdded())

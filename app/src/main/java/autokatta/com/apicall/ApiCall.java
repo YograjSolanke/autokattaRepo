@@ -10044,7 +10044,7 @@ get ExchangeMela Analytics Data
         }
     }
 
-    public void getSuggestionData(String mLoginContact, String Type) {
+    public void getSuggestionData(String mLoginContact) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
 
@@ -10055,7 +10055,7 @@ get ExchangeMela Analytics Data
                         .build();
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<SuggestionsResponse> responseCall = serviceApi._autokattaGetSuggestionData(mLoginContact, Type);
+                Call<SuggestionsResponse> responseCall = serviceApi._autokattaGetSuggestionData(mLoginContact);
                 responseCall.enqueue(new Callback<SuggestionsResponse>() {
                     @Override
                     public void onResponse(Call<SuggestionsResponse> call, Response<SuggestionsResponse> response) {

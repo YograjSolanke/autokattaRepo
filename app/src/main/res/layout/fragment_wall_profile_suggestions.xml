@@ -15,20 +15,60 @@
         android:text="People you may know"
         android:textSize="16sp" />
 
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/swipeRefreshLayoutMain"
+    <LinearLayout
+        android:id="@+id/linearProfile"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/profileRecyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#E6E6E6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:scrollbars="vertical"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-    </android.support.v4.widget.SwipeRefreshLayout>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:background="#0000" />
+
+    <LinearLayout
+        android:id="@+id/linearStore"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/storeRecyclerView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scrollbars="vertical"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:background="#0000" />
+
+    <LinearLayout
+        android:id="@+id/linearVehicle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/vehicleRecyclerView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scrollbars="vertical"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+    </LinearLayout>
 
     <include layout="@layout/error_view" />
 

@@ -34,372 +34,169 @@ public class SuggestionsResponse {
         this.error = error;
     }
 
-
     public class Success {
 
-        @SerializedName("WallSuggestions")
+        @SerializedName("UsedVehicle")
         @Expose
-        private List<WallSuggestion> wallSuggestions = null;
+        private List<UsedVehicle> usedVehicle = null;
+        @SerializedName("Newvehicle")
+        @Expose
+        private List<Newvehicle> newvehicle = null;
+        @SerializedName("Store")
+        @Expose
+        private List<Store> store = null;
+        @SerializedName("Product")
+        @Expose
+        private List<Product> product = null;
+        @SerializedName("Service")
+        @Expose
+        private List<Service> service = null;
 
-        public List<WallSuggestion> getWallSuggestions() {
-            return wallSuggestions;
+        public List<UsedVehicle> getUsedVehicle() {
+            return usedVehicle;
         }
 
-        public void setWallSuggestions(List<WallSuggestion> wallSuggestions) {
-            this.wallSuggestions = wallSuggestions;
+        public void setUsedVehicle(List<UsedVehicle> usedVehicle) {
+            this.usedVehicle = usedVehicle;
+        }
+
+        public List<Newvehicle> getNewvehicle() {
+            return newvehicle;
+        }
+
+        public void setNewvehicle(List<Newvehicle> newvehicle) {
+            this.newvehicle = newvehicle;
+        }
+
+        public List<Store> getStore() {
+            return store;
+        }
+
+        public void setStore(List<Store> store) {
+            this.store = store;
+        }
+
+        public List<Product> getProduct() {
+            return product;
+        }
+
+        public void setProduct(List<Product> product) {
+            this.product = product;
+        }
+
+        public List<Service> getService() {
+            return service;
+        }
+
+        public void setService(List<Service> service) {
+            this.service = service;
         }
 
 
-        public class WallSuggestion {
+        public class Newvehicle {
 
-            @SerializedName("Layout")
+            @SerializedName("StoreID")
             @Expose
-            private Integer layout;
-            //*************************************************************
-            /* Vehicle Based Suggestions*/
-            @SerializedName("UploadVehicleID")
+            private Integer storeID;
+            @SerializedName("Description")
             @Expose
-            private Integer uploadVehicleID;
-            @SerializedName("AirCondition")
+            private String description;
+            @SerializedName("Address")
             @Expose
-            private String airCondition;
-            @SerializedName("Application")
+            private String address;
+            @SerializedName("Brands")
             @Expose
-            private String application;
-            @SerializedName("BoatType")
+            private String brands;
+            @SerializedName("BrandTags")
             @Expose
-            private String boatType;
-            @SerializedName("BodyManufacturer")
-            @Expose
-            private String bodyManufacturer;
-            @SerializedName("BodyType")
-            @Expose
-            private String bodyType;
-            @SerializedName("Boon")
-            @Expose
-            private String boon;
-            @SerializedName("Brakes")
-            @Expose
-            private String brakes;
-            @SerializedName("BusType")
-            @Expose
-            private String busType;
-            @SerializedName("CallCount")
-            @Expose
-            private String callCount;
-            @SerializedName("Category")
-            @Expose
-            private String category;
-            @SerializedName("ChassisNo")
-            @Expose
-            private String chassisNo;
-            @SerializedName("Color")
-            @Expose
-            private String color;
+            private String brandTags;
             @SerializedName("ContactNo")
             @Expose
             private String contactNo;
-            @SerializedName("Date")
+            @SerializedName("CoverImage")
             @Expose
-            private String date;
-            @SerializedName("date_1")
+            private String coverImage;
+            @SerializedName("CreationDate")
             @Expose
-            private String date1;
-            @SerializedName("Drive")
-            @Expose
-            private String drive;
-            @SerializedName("EmissionVersion")
-            @Expose
-            private String emissionVersion;
-            @SerializedName("EngineNo")
-            @Expose
-            private String engineNo;
-            @SerializedName("ExchangeStatus")
-            @Expose
-            private String exchangeStatus;
-            @SerializedName("FinanceExchange")
-            @Expose
-            private String financeExchange;
-            @SerializedName("FinanceStatus")
-            @Expose
-            private String financeStatus;
-            @SerializedName("FinanceRequest")
-            @Expose
-            private String financeRequest;
-            @SerializedName("FitnessValidity")
-            @Expose
-            private String fitnessValidity;
-            @SerializedName("FitnessValidity_1")
-            @Expose
-            private String fitnessValidity1;
-            @SerializedName("FitnessYesNo")
-            @Expose
-            private String fitnessYesNo;
-            @SerializedName("FuelType")
-            @Expose
-            private String fuelType;
-            @SerializedName("HPCapacity")
-            @Expose
-            private String hPCapacity;
-            @SerializedName("HrsRunning")
-            @Expose
-            private String hrsRunning;
-            @SerializedName("Hypothication")
-            @Expose
-            private String hypothication;
-            @SerializedName("Image")
-            @Expose
-            private String image;
-            @SerializedName("Implements")
-            @Expose
-            private String _implements;
-            @SerializedName("InsuranceDate")
-            @Expose
-            private String insuranceDate;
-            @SerializedName("InsuranceIdv")
-            @Expose
-            private String insuranceIdv;
-            @SerializedName("InsuranceValid")
-            @Expose
-            private String insuranceValid;
-            @SerializedName("Invoice")
-            @Expose
-            private String invoice;
-            @SerializedName("JIB")
-            @Expose
-            private String jIB;
-            @SerializedName("KmsRunning")
-            @Expose
-            private Integer kmsRunning;
-            @SerializedName("LocationCity")
-            @Expose
-            private String locationCity;
-            @SerializedName("LocationCountry")
-            @Expose
-            private String locationCountry;
-            @SerializedName("LocationState")
-            @Expose
-            private String locationState;
-            @SerializedName("LocationAddress")
-            @Expose
-            private String locationAddress;
-            @SerializedName("Manufacturer")
-            @Expose
-            private String manufacturer;
-            @SerializedName("Model")
-            @Expose
-            private String model;
-            @SerializedName("MonthOfManufacturer")
-            @Expose
-            private String monthOfManufacturer;
-            @SerializedName("MonthOfRegistration")
-            @Expose
-            private String monthOfRegistration;
-            @SerializedName("NoOfOwners")
-            @Expose
-            private Integer noOfOwners;
-            @SerializedName("Permit")
-            @Expose
-            private String permit;
-            @SerializedName("PermitValidity")
-            @Expose
-            private String permitValidity;
-            @SerializedName("PermitValidity_1")
-            @Expose
-            private String permitValidity1;
-            @SerializedName("PermitYesNo")
-            @Expose
-            private String permitYesNo;
-            @SerializedName("Price")
-            @Expose
-            private String price;
-            @SerializedName("Privacy")
-            @Expose
-            private String privacy;
-            @SerializedName("Pump")
-            @Expose
-            private String pump;
-            @SerializedName("RCAvailable")
-            @Expose
-            private String rCAvailable;
-            @SerializedName("RegistrationNumber")
-            @Expose
-            private String registrationNumber;
-            @SerializedName("ReservePrice")
-            @Expose
-            private String reservePrice;
-            @SerializedName("RTOCity")
-            @Expose
-            private String rTOCity;
-            @SerializedName("RVType")
-            @Expose
-            private String rVType;
-            @SerializedName("SeatingCapacity")
-            @Expose
-            private String seatingCapacity;
-            @SerializedName("SeatManufacturer")
-            @Expose
-            private String seatManufacturer;
-            @SerializedName("StartPrice")
-            @Expose
-            private String startPrice;
-            @SerializedName("Status")
-            @Expose
-            private String status;
-            @SerializedName("Steering")
-            @Expose
-            private String steering;
-            @SerializedName("SubCategory")
-            @Expose
-            private String subCategory;
-            @SerializedName("TaxPaidUpto")
-            @Expose
-            private String taxPaidUpto;
-            @SerializedName("TaxValidity")
-            @Expose
-            private String taxValidity;
-            @SerializedName("TaxValidity_1")
-            @Expose
-            private String taxValidity1;
-            @SerializedName("Titile")
-            @Expose
-            private String titile;
-            @SerializedName("Transmission")
-            @Expose
-            private String transmission;
-            @SerializedName("TyreCondition")
-            @Expose
-            private String tyreCondition;
-            @SerializedName("Version")
-            @Expose
-            private String version;
-            @SerializedName("ViewCount")
-            @Expose
-            private String viewCount;
-            @SerializedName("YearOfManufaturer")
-            @Expose
-            private String yearOfManufaturer;
-            @SerializedName("YearOfRegistration")
-            @Expose
-            private String yearOfRegistration;
-            @SerializedName("StockType")
-            @Expose
-            private String stockType;
+            private String creationDate;
             @SerializedName("Latitude")
             @Expose
-            private Double latitude;
+            private String latitude;
+            @SerializedName("Location")
+            @Expose
+            private String location;
             @SerializedName("Longitude")
             @Expose
-            private Double longitude;
-            @SerializedName("CloneID")
+            private String longitude;
+            @SerializedName("ModifiedDate")
             @Expose
-            private String cloneID;
-            @SerializedName("Distance")
+            private String modifiedDate;
+            @SerializedName("RatingStatus")
             @Expose
-            private Integer distance;
+            private String ratingStatus;
+            @SerializedName("StoreImage")
+            @Expose
+            private String storeImage;
+            @SerializedName("Name")
+            @Expose
+            private String name;
+            @SerializedName("OpenTime")
+            @Expose
+            private String openTime;
+            @SerializedName("CloseTime")
+            @Expose
+            private String closeTime;
+            @SerializedName("StoreType")
+            @Expose
+            private String storeType;
+            @SerializedName("VehicleID")
+            @Expose
+            private Integer vehicleID;
+            @SerializedName("WebSite")
+            @Expose
+            private String webSite;
+            @SerializedName("WorkingDays")
+            @Expose
+            private String workingDays;
 
-            public Integer getUploadVehicleID() {
-                return uploadVehicleID;
+            public Integer getStoreID() {
+                return storeID;
             }
 
-            public void setUploadVehicleID(Integer uploadVehicleID) {
-                this.uploadVehicleID = uploadVehicleID;
+            public void setStoreID(Integer storeID) {
+                this.storeID = storeID;
             }
 
-            public String getAirCondition() {
-                return airCondition;
+            public String getDescription() {
+                return description;
             }
 
-            public void setAirCondition(String airCondition) {
-                this.airCondition = airCondition;
+            public void setDescription(String description) {
+                this.description = description;
             }
 
-            public String getApplication() {
-                return application;
+            public String getAddress() {
+                return address;
             }
 
-            public void setApplication(String application) {
-                this.application = application;
+            public void setAddress(String address) {
+                this.address = address;
             }
 
-            public String getBoatType() {
-                return boatType;
+            public String getBrands() {
+                return brands;
             }
 
-            public void setBoatType(String boatType) {
-                this.boatType = boatType;
+            public void setBrands(String brands) {
+                this.brands = brands;
             }
 
-            public String getBodyManufacturer() {
-                return bodyManufacturer;
+            public String getBrandTags() {
+                return brandTags;
             }
 
-            public void setBodyManufacturer(String bodyManufacturer) {
-                this.bodyManufacturer = bodyManufacturer;
-            }
-
-            public String getBodyType() {
-                return bodyType;
-            }
-
-            public void setBodyType(String bodyType) {
-                this.bodyType = bodyType;
-            }
-
-            public String getBoon() {
-                return boon;
-            }
-
-            public void setBoon(String boon) {
-                this.boon = boon;
-            }
-
-            public String getBrakes() {
-                return brakes;
-            }
-
-            public void setBrakes(String brakes) {
-                this.brakes = brakes;
-            }
-
-            public String getBusType() {
-                return busType;
-            }
-
-            public void setBusType(String busType) {
-                this.busType = busType;
-            }
-
-            public String getCallCount() {
-                return callCount;
-            }
-
-            public void setCallCount(String callCount) {
-                this.callCount = callCount;
-            }
-
-            public String getCategory() {
-                return category;
-            }
-
-            public void setCategory(String category) {
-                this.category = category;
-            }
-
-            public String getChassisNo() {
-                return chassisNo;
-            }
-
-            public void setChassisNo(String chassisNo) {
-                this.chassisNo = chassisNo;
-            }
-
-            public String getColor() {
-                return color;
-            }
-
-            public void setColor(String color) {
-                this.color = color;
+            public void setBrandTags(String brandTags) {
+                this.brandTags = brandTags;
             }
 
             public String getContactNo() {
@@ -410,132 +207,256 @@ public class SuggestionsResponse {
                 this.contactNo = contactNo;
             }
 
-            public String getDate() {
-                return date;
+            public String getCoverImage() {
+                return coverImage;
             }
 
-            public void setDate(String date) {
-                this.date = date;
+            public void setCoverImage(String coverImage) {
+                this.coverImage = coverImage;
             }
 
-            public String getDate1() {
-                return date1;
+            public String getCreationDate() {
+                return creationDate;
             }
 
-            public void setDate1(String date1) {
-                this.date1 = date1;
+            public void setCreationDate(String creationDate) {
+                this.creationDate = creationDate;
             }
 
-            public String getDrive() {
-                return drive;
+            public String getLatitude() {
+                return latitude;
             }
 
-            public void setDrive(String drive) {
-                this.drive = drive;
+            public void setLatitude(String latitude) {
+                this.latitude = latitude;
             }
 
-            public String getEmissionVersion() {
-                return emissionVersion;
+            public String getLocation() {
+                return location;
             }
 
-            public void setEmissionVersion(String emissionVersion) {
-                this.emissionVersion = emissionVersion;
+            public void setLocation(String location) {
+                this.location = location;
             }
 
-            public String getEngineNo() {
-                return engineNo;
+            public String getLongitude() {
+                return longitude;
             }
 
-            public void setEngineNo(String engineNo) {
-                this.engineNo = engineNo;
+            public void setLongitude(String longitude) {
+                this.longitude = longitude;
             }
 
-            public String getExchangeStatus() {
-                return exchangeStatus;
+            public String getModifiedDate() {
+                return modifiedDate;
             }
 
-            public void setExchangeStatus(String exchangeStatus) {
-                this.exchangeStatus = exchangeStatus;
+            public void setModifiedDate(String modifiedDate) {
+                this.modifiedDate = modifiedDate;
             }
 
-            public String getFinanceExchange() {
-                return financeExchange;
+            public String getRatingStatus() {
+                return ratingStatus;
             }
 
-            public void setFinanceExchange(String financeExchange) {
-                this.financeExchange = financeExchange;
+            public void setRatingStatus(String ratingStatus) {
+                this.ratingStatus = ratingStatus;
             }
 
-            public String getFinanceStatus() {
-                return financeStatus;
+            public String getStoreImage() {
+                return storeImage;
             }
 
-            public void setFinanceStatus(String financeStatus) {
-                this.financeStatus = financeStatus;
+            public void setStoreImage(String storeImage) {
+                this.storeImage = storeImage;
             }
 
-            public String getFinanceRequest() {
-                return financeRequest;
+            public String getName() {
+                return name;
             }
 
-            public void setFinanceRequest(String financeRequest) {
-                this.financeRequest = financeRequest;
+            public void setName(String name) {
+                this.name = name;
             }
 
-            public String getFitnessValidity() {
-                return fitnessValidity;
+            public String getOpenTime() {
+                return openTime;
             }
 
-            public void setFitnessValidity(String fitnessValidity) {
-                this.fitnessValidity = fitnessValidity;
+            public void setOpenTime(String openTime) {
+                this.openTime = openTime;
             }
 
-            public String getFitnessValidity1() {
-                return fitnessValidity1;
+            public String getCloseTime() {
+                return closeTime;
             }
 
-            public void setFitnessValidity1(String fitnessValidity1) {
-                this.fitnessValidity1 = fitnessValidity1;
+            public void setCloseTime(String closeTime) {
+                this.closeTime = closeTime;
             }
 
-            public String getFitnessYesNo() {
-                return fitnessYesNo;
+            public String getStoreType() {
+                return storeType;
             }
 
-            public void setFitnessYesNo(String fitnessYesNo) {
-                this.fitnessYesNo = fitnessYesNo;
+            public void setStoreType(String storeType) {
+                this.storeType = storeType;
             }
 
-            public String getFuelType() {
-                return fuelType;
+            public Integer getVehicleID() {
+                return vehicleID;
             }
 
-            public void setFuelType(String fuelType) {
-                this.fuelType = fuelType;
+            public void setVehicleID(Integer vehicleID) {
+                this.vehicleID = vehicleID;
             }
 
-            public String getHPCapacity() {
-                return hPCapacity;
+            public String getWebSite() {
+                return webSite;
             }
 
-            public void setHPCapacity(String hPCapacity) {
-                this.hPCapacity = hPCapacity;
+            public void setWebSite(String webSite) {
+                this.webSite = webSite;
             }
 
-            public String getHrsRunning() {
-                return hrsRunning;
+            public String getWorkingDays() {
+                return workingDays;
             }
 
-            public void setHrsRunning(String hrsRunning) {
-                this.hrsRunning = hrsRunning;
+            public void setWorkingDays(String workingDays) {
+                this.workingDays = workingDays;
             }
 
-            public String getHypothication() {
-                return hypothication;
+        }
+
+
+        public class Product {
+
+            @SerializedName("ProductID")
+            @Expose
+            private Integer productID;
+            @SerializedName("Name")
+            @Expose
+            private String name;
+            @SerializedName("Type")
+            @Expose
+            private String type;
+            @SerializedName("Details")
+            @Expose
+            private String details;
+            @SerializedName("ProductTags")
+            @Expose
+            private String productTags;
+            @SerializedName("BrandTags")
+            @Expose
+            private String brandTags;
+            @SerializedName("Category")
+            @Expose
+            private String category;
+            @SerializedName("CreatedDate")
+            @Expose
+            private String createdDate;
+            @SerializedName("GroupID")
+            @Expose
+            private Integer groupID;
+            @SerializedName("Image")
+            @Expose
+            private String image;
+            @SerializedName("ModifiedDate")
+            @Expose
+            private String modifiedDate;
+            @SerializedName("Price")
+            @Expose
+            private String price;
+            @SerializedName("PriceRating")
+            @Expose
+            private String priceRating;
+            @SerializedName("QuantityRating")
+            @Expose
+            private String quantityRating;
+            @SerializedName("Status")
+            @Expose
+            private String status;
+            @SerializedName("StockRating")
+            @Expose
+            private String stockRating;
+            @SerializedName("StoreID")
+            @Expose
+            private Integer storeID;
+            @SerializedName("AddedBy")
+            @Expose
+            private String addedBy;
+
+            public Integer getProductID() {
+                return productID;
             }
 
-            public void setHypothication(String hypothication) {
-                this.hypothication = hypothication;
+            public void setProductID(Integer productID) {
+                this.productID = productID;
+            }
+
+            public String getName() {
+                return name;
+            }
+
+            public void setName(String name) {
+                this.name = name;
+            }
+
+            public String getType() {
+                return type;
+            }
+
+            public void setType(String type) {
+                this.type = type;
+            }
+
+            public String getDetails() {
+                return details;
+            }
+
+            public void setDetails(String details) {
+                this.details = details;
+            }
+
+            public String getProductTags() {
+                return productTags;
+            }
+
+            public void setProductTags(String productTags) {
+                this.productTags = productTags;
+            }
+
+            public String getBrandTags() {
+                return brandTags;
+            }
+
+            public void setBrandTags(String brandTags) {
+                this.brandTags = brandTags;
+            }
+
+            public String getCategory() {
+                return category;
+            }
+
+            public void setCategory(String category) {
+                this.category = category;
+            }
+
+            public String getCreatedDate() {
+                return createdDate;
+            }
+
+            public void setCreatedDate(String createdDate) {
+                this.createdDate = createdDate;
+            }
+
+            public Integer getGroupID() {
+                return groupID;
+            }
+
+            public void setGroupID(Integer groupID) {
+                this.groupID = groupID;
             }
 
             public String getImage() {
@@ -546,12 +467,818 @@ public class SuggestionsResponse {
                 this.image = image;
             }
 
-            public String getImplements() {
-                return _implements;
+            public String getModifiedDate() {
+                return modifiedDate;
             }
 
-            public void setImplements(String _implements) {
-                this._implements = _implements;
+            public void setModifiedDate(String modifiedDate) {
+                this.modifiedDate = modifiedDate;
+            }
+
+            public String getPrice() {
+                return price;
+            }
+
+            public void setPrice(String price) {
+                this.price = price;
+            }
+
+            public String getPriceRating() {
+                return priceRating;
+            }
+
+            public void setPriceRating(String priceRating) {
+                this.priceRating = priceRating;
+            }
+
+            public String getQuantityRating() {
+                return quantityRating;
+            }
+
+            public void setQuantityRating(String quantityRating) {
+                this.quantityRating = quantityRating;
+            }
+
+            public String getStatus() {
+                return status;
+            }
+
+            public void setStatus(String status) {
+                this.status = status;
+            }
+
+            public String getStockRating() {
+                return stockRating;
+            }
+
+            public void setStockRating(String stockRating) {
+                this.stockRating = stockRating;
+            }
+
+            public Integer getStoreID() {
+                return storeID;
+            }
+
+            public void setStoreID(Integer storeID) {
+                this.storeID = storeID;
+            }
+
+            public String getAddedBy() {
+                return addedBy;
+            }
+
+            public void setAddedBy(String addedBy) {
+                this.addedBy = addedBy;
+            }
+
+        }
+
+
+        public class Service {
+
+            @SerializedName("StoreServiceID")
+            @Expose
+            private Integer storeServiceID;
+            @SerializedName("Name")
+            @Expose
+            private String name;
+            @SerializedName("BrandTags")
+            @Expose
+            private String brandTags;
+            @SerializedName("Category")
+            @Expose
+            private String category;
+            @SerializedName("CreateDate")
+            @Expose
+            private String createDate;
+            @SerializedName("GroupID")
+            @Expose
+            private Integer groupID;
+            @SerializedName("Image")
+            @Expose
+            private String image;
+            @SerializedName("Price")
+            @Expose
+            private String price;
+            @SerializedName("Status")
+            @Expose
+            private String status;
+            @SerializedName("StoreID")
+            @Expose
+            private Integer storeID;
+            @SerializedName("Tags")
+            @Expose
+            private String tags;
+            @SerializedName("Type")
+            @Expose
+            private String type;
+            @SerializedName("AddedBy")
+            @Expose
+            private String addedBy;
+
+            public Integer getStoreServiceID() {
+                return storeServiceID;
+            }
+
+            public void setStoreServiceID(Integer storeServiceID) {
+                this.storeServiceID = storeServiceID;
+            }
+
+            public String getName() {
+                return name;
+            }
+
+            public void setName(String name) {
+                this.name = name;
+            }
+
+            public String getBrandTags() {
+                return brandTags;
+            }
+
+            public void setBrandTags(String brandTags) {
+                this.brandTags = brandTags;
+            }
+
+            public String getCategory() {
+                return category;
+            }
+
+            public void setCategory(String category) {
+                this.category = category;
+            }
+
+            public String getCreateDate() {
+                return createDate;
+            }
+
+            public void setCreateDate(String createDate) {
+                this.createDate = createDate;
+            }
+
+            public Integer getGroupID() {
+                return groupID;
+            }
+
+            public void setGroupID(Integer groupID) {
+                this.groupID = groupID;
+            }
+
+            public String getImage() {
+                return image;
+            }
+
+            public void setImage(String image) {
+                this.image = image;
+            }
+
+            public String getPrice() {
+                return price;
+            }
+
+            public void setPrice(String price) {
+                this.price = price;
+            }
+
+            public String getStatus() {
+                return status;
+            }
+
+            public void setStatus(String status) {
+                this.status = status;
+            }
+
+            public Integer getStoreID() {
+                return storeID;
+            }
+
+            public void setStoreID(Integer storeID) {
+                this.storeID = storeID;
+            }
+
+            public String getTags() {
+                return tags;
+            }
+
+            public void setTags(String tags) {
+                this.tags = tags;
+            }
+
+            public String getType() {
+                return type;
+            }
+
+            public void setType(String type) {
+                this.type = type;
+            }
+
+            public String getAddedBy() {
+                return addedBy;
+            }
+
+            public void setAddedBy(String addedBy) {
+                this.addedBy = addedBy;
+            }
+
+        }
+
+
+        public class Store {
+
+            @SerializedName("StoreID")
+            @Expose
+            private Integer storeID;
+            @SerializedName("Description")
+            @Expose
+            private String description;
+            @SerializedName("Address")
+            @Expose
+            private String address;
+            @SerializedName("Brands")
+            @Expose
+            private String brands;
+            @SerializedName("BrandTags")
+            @Expose
+            private String brandTags;
+            @SerializedName("ContactNo")
+            @Expose
+            private String contactNo;
+            @SerializedName("CoverImage")
+            @Expose
+            private String coverImage;
+            @SerializedName("CreationDate")
+            @Expose
+            private String creationDate;
+            @SerializedName("Latitude")
+            @Expose
+            private String latitude;
+            @SerializedName("Location")
+            @Expose
+            private String location;
+            @SerializedName("Longitude")
+            @Expose
+            private String longitude;
+            @SerializedName("ModifiedDate")
+            @Expose
+            private String modifiedDate;
+            @SerializedName("RatingStatus")
+            @Expose
+            private String ratingStatus;
+            @SerializedName("StoreImage")
+            @Expose
+            private String storeImage;
+            @SerializedName("Name")
+            @Expose
+            private String name;
+            @SerializedName("OpenTime")
+            @Expose
+            private String openTime;
+            @SerializedName("CloseTime")
+            @Expose
+            private String closeTime;
+            @SerializedName("StoreType")
+            @Expose
+            private String storeType;
+            @SerializedName("VehicleID")
+            @Expose
+            private Integer vehicleID;
+            @SerializedName("WebSite")
+            @Expose
+            private String webSite;
+            @SerializedName("WorkingDays")
+            @Expose
+            private String workingDays;
+
+            public Integer getStoreID() {
+                return storeID;
+            }
+
+            public void setStoreID(Integer storeID) {
+                this.storeID = storeID;
+            }
+
+            public String getDescription() {
+                return description;
+            }
+
+            public void setDescription(String description) {
+                this.description = description;
+            }
+
+            public String getAddress() {
+                return address;
+            }
+
+            public void setAddress(String address) {
+                this.address = address;
+            }
+
+            public String getBrands() {
+                return brands;
+            }
+
+            public void setBrands(String brands) {
+                this.brands = brands;
+            }
+
+            public String getBrandTags() {
+                return brandTags;
+            }
+
+            public void setBrandTags(String brandTags) {
+                this.brandTags = brandTags;
+            }
+
+            public String getContactNo() {
+                return contactNo;
+            }
+
+            public void setContactNo(String contactNo) {
+                this.contactNo = contactNo;
+            }
+
+            public String getCoverImage() {
+                return coverImage;
+            }
+
+            public void setCoverImage(String coverImage) {
+                this.coverImage = coverImage;
+            }
+
+            public String getCreationDate() {
+                return creationDate;
+            }
+
+            public void setCreationDate(String creationDate) {
+                this.creationDate = creationDate;
+            }
+
+            public String getLatitude() {
+                return latitude;
+            }
+
+            public void setLatitude(String latitude) {
+                this.latitude = latitude;
+            }
+
+            public String getLocation() {
+                return location;
+            }
+
+            public void setLocation(String location) {
+                this.location = location;
+            }
+
+            public String getLongitude() {
+                return longitude;
+            }
+
+            public void setLongitude(String longitude) {
+                this.longitude = longitude;
+            }
+
+            public String getModifiedDate() {
+                return modifiedDate;
+            }
+
+            public void setModifiedDate(String modifiedDate) {
+                this.modifiedDate = modifiedDate;
+            }
+
+            public String getRatingStatus() {
+                return ratingStatus;
+            }
+
+            public void setRatingStatus(String ratingStatus) {
+                this.ratingStatus = ratingStatus;
+            }
+
+            public String getStoreImage() {
+                return storeImage;
+            }
+
+            public void setStoreImage(String storeImage) {
+                this.storeImage = storeImage;
+            }
+
+            public String getName() {
+                return name;
+            }
+
+            public void setName(String name) {
+                this.name = name;
+            }
+
+            public String getOpenTime() {
+                return openTime;
+            }
+
+            public void setOpenTime(String openTime) {
+                this.openTime = openTime;
+            }
+
+            public String getCloseTime() {
+                return closeTime;
+            }
+
+            public void setCloseTime(String closeTime) {
+                this.closeTime = closeTime;
+            }
+
+            public String getStoreType() {
+                return storeType;
+            }
+
+            public void setStoreType(String storeType) {
+                this.storeType = storeType;
+            }
+
+            public Integer getVehicleID() {
+                return vehicleID;
+            }
+
+            public void setVehicleID(Integer vehicleID) {
+                this.vehicleID = vehicleID;
+            }
+
+            public String getWebSite() {
+                return webSite;
+            }
+
+            public void setWebSite(String webSite) {
+                this.webSite = webSite;
+            }
+
+            public String getWorkingDays() {
+                return workingDays;
+            }
+
+            public void setWorkingDays(String workingDays) {
+                this.workingDays = workingDays;
+            }
+
+        }
+
+        public class UsedVehicle {
+
+            @SerializedName("UploadVehicleID")
+            @Expose
+            private Integer uploadVehicleID;
+            @SerializedName("Titile")
+            @Expose
+            private String titile;
+            @SerializedName("ContactNo")
+            @Expose
+            private String contactNo;
+            @SerializedName("Category")
+            @Expose
+            private String category;
+            @SerializedName("SubCategory")
+            @Expose
+            private String subCategory;
+            @SerializedName("Model")
+            @Expose
+            private String model;
+            @SerializedName("Manufacturer")
+            @Expose
+            private String manufacturer;
+            @SerializedName("Version")
+            @Expose
+            private String version;
+            @SerializedName("RTOCity")
+            @Expose
+            private String rTOCity;
+            @SerializedName("LocationCity")
+            @Expose
+            private String locationCity;
+            @SerializedName("LocationState")
+            @Expose
+            private String locationState;
+            @SerializedName("LocationCountry")
+            @Expose
+            private String locationCountry;
+            @SerializedName("MonthOfManufacturer")
+            @Expose
+            private String monthOfManufacturer;
+            @SerializedName("YearOfRegistration")
+            @Expose
+            private String yearOfRegistration;
+            @SerializedName("YearOfManufaturer")
+            @Expose
+            private String yearOfManufaturer;
+            @SerializedName("Color")
+            @Expose
+            private String color;
+            @SerializedName("RegistrationNumber")
+            @Expose
+            private String registrationNumber;
+            @SerializedName("RCAvailable")
+            @Expose
+            private String rCAvailable;
+            @SerializedName("InsuranceValid")
+            @Expose
+            private String insuranceValid;
+            @SerializedName("InsuranceDate")
+            @Expose
+            private String insuranceDate;
+            @SerializedName("InsuranceIdv")
+            @Expose
+            private String insuranceIdv;
+            @SerializedName("EmissionVersion")
+            @Expose
+            private String emissionVersion;
+            @SerializedName("FinanceStatus")
+            @Expose
+            private String financeStatus;
+            @SerializedName("ExchangeStatus")
+            @Expose
+            private String exchangeStatus;
+            @SerializedName("TaxValidity")
+            @Expose
+            private String taxValidity;
+            @SerializedName("TaxPaidUpto")
+            @Expose
+            private String taxPaidUpto;
+            @SerializedName("FitnessValidity")
+            @Expose
+            private String fitnessValidity;
+            @SerializedName("PermitValidity")
+            @Expose
+            private String permitValidity;
+            @SerializedName("PermitYesNo")
+            @Expose
+            private String permitYesNo;
+            @SerializedName("FitnessYesNo")
+            @Expose
+            private String fitnessYesNo;
+            @SerializedName("FuelType")
+            @Expose
+            private String fuelType;
+            @SerializedName("SeatingCapacity")
+            @Expose
+            private String seatingCapacity;
+            @SerializedName("Permit")
+            @Expose
+            private String permit;
+            @SerializedName("FinanceExchange")
+            @Expose
+            private Object financeExchange;
+            @SerializedName("KmsRunning")
+            @Expose
+            private String kmsRunning;
+            @SerializedName("HrsRunning")
+            @Expose
+            private String hrsRunning;
+            @SerializedName("NoOfOwners")
+            @Expose
+            private String noOfOwners;
+            @SerializedName("BodyManufacturer")
+            @Expose
+            private String bodyManufacturer;
+            @SerializedName("SeatManufacturer")
+            @Expose
+            private String seatManufacturer;
+            @SerializedName("Hypothication")
+            @Expose
+            private String hypothication;
+            @SerializedName("EngineNo")
+            @Expose
+            private String engineNo;
+            @SerializedName("ChassisNo")
+            @Expose
+            private String chassisNo;
+            @SerializedName("Price")
+            @Expose
+            private String price;
+            @SerializedName("Image")
+            @Expose
+            private String image;
+            @SerializedName("Drive")
+            @Expose
+            private String drive;
+            @SerializedName("Transmission")
+            @Expose
+            private String transmission;
+            @SerializedName("BodyType")
+            @Expose
+            private String bodyType;
+            @SerializedName("BoatType")
+            @Expose
+            private String boatType;
+            @SerializedName("RVType")
+            @Expose
+            private String rVType;
+            @SerializedName("Application")
+            @Expose
+            private String application;
+            @SerializedName("TyreCondition")
+            @Expose
+            private String tyreCondition;
+            @SerializedName("BusType")
+            @Expose
+            private String busType;
+            @SerializedName("AirCondition")
+            @Expose
+            private String airCondition;
+            @SerializedName("Invoice")
+            @Expose
+            private String invoice;
+            @SerializedName("Implements")
+            @Expose
+            private String _implements;
+            @SerializedName("FinanceRequest")
+            @Expose
+            private String financeRequest;
+            @SerializedName("Privacy")
+            @Expose
+            private String privacy;
+            @SerializedName("HPCapacity")
+            @Expose
+            private String hPCapacity;
+            @SerializedName("JIB")
+            @Expose
+            private String jIB;
+            @SerializedName("Boon")
+            @Expose
+            private String boon;
+            @SerializedName("ViewCount")
+            @Expose
+            private String viewCount;
+            @SerializedName("CallCount")
+            @Expose
+            private String callCount;
+            @SerializedName("Date")
+            @Expose
+            private String date;
+            @SerializedName("StartPrice")
+            @Expose
+            private String startPrice;
+            @SerializedName("ReservePrice")
+            @Expose
+            private String reservePrice;
+            @SerializedName("Status")
+            @Expose
+            private String status;
+            @SerializedName("Brakes")
+            @Expose
+            private String brakes;
+            @SerializedName("Pump")
+            @Expose
+            private String pump;
+            @SerializedName("Steering")
+            @Expose
+            private String steering;
+
+            public Integer getUploadVehicleID() {
+                return uploadVehicleID;
+            }
+
+            public void setUploadVehicleID(Integer uploadVehicleID) {
+                this.uploadVehicleID = uploadVehicleID;
+            }
+
+            public String getTitile() {
+                return titile;
+            }
+
+            public void setTitile(String titile) {
+                this.titile = titile;
+            }
+
+            public String getContactNo() {
+                return contactNo;
+            }
+
+            public void setContactNo(String contactNo) {
+                this.contactNo = contactNo;
+            }
+
+            public String getCategory() {
+                return category;
+            }
+
+            public void setCategory(String category) {
+                this.category = category;
+            }
+
+            public String getSubCategory() {
+                return subCategory;
+            }
+
+            public void setSubCategory(String subCategory) {
+                this.subCategory = subCategory;
+            }
+
+            public String getModel() {
+                return model;
+            }
+
+            public void setModel(String model) {
+                this.model = model;
+            }
+
+            public String getManufacturer() {
+                return manufacturer;
+            }
+
+            public void setManufacturer(String manufacturer) {
+                this.manufacturer = manufacturer;
+            }
+
+            public String getVersion() {
+                return version;
+            }
+
+            public void setVersion(String version) {
+                this.version = version;
+            }
+
+            public String getRTOCity() {
+                return rTOCity;
+            }
+
+            public void setRTOCity(String rTOCity) {
+                this.rTOCity = rTOCity;
+            }
+
+            public String getLocationCity() {
+                return locationCity;
+            }
+
+            public void setLocationCity(String locationCity) {
+                this.locationCity = locationCity;
+            }
+
+            public String getLocationState() {
+                return locationState;
+            }
+
+            public void setLocationState(String locationState) {
+                this.locationState = locationState;
+            }
+
+            public String getLocationCountry() {
+                return locationCountry;
+            }
+
+            public void setLocationCountry(String locationCountry) {
+                this.locationCountry = locationCountry;
+            }
+
+            public String getMonthOfManufacturer() {
+                return monthOfManufacturer;
+            }
+
+            public void setMonthOfManufacturer(String monthOfManufacturer) {
+                this.monthOfManufacturer = monthOfManufacturer;
+            }
+
+            public String getYearOfRegistration() {
+                return yearOfRegistration;
+            }
+
+            public void setYearOfRegistration(String yearOfRegistration) {
+                this.yearOfRegistration = yearOfRegistration;
+            }
+
+            public String getYearOfManufaturer() {
+                return yearOfManufaturer;
+            }
+
+            public void setYearOfManufaturer(String yearOfManufaturer) {
+                this.yearOfManufaturer = yearOfManufaturer;
+            }
+
+            public String getColor() {
+                return color;
+            }
+
+            public void setColor(String color) {
+                this.color = color;
+            }
+
+            public String getRegistrationNumber() {
+                return registrationNumber;
+            }
+
+            public void setRegistrationNumber(String registrationNumber) {
+                this.registrationNumber = registrationNumber;
+            }
+
+            public String getRCAvailable() {
+                return rCAvailable;
+            }
+
+            public void setRCAvailable(String rCAvailable) {
+                this.rCAvailable = rCAvailable;
+            }
+
+            public String getInsuranceValid() {
+                return insuranceValid;
+            }
+
+            public void setInsuranceValid(String insuranceValid) {
+                this.insuranceValid = insuranceValid;
             }
 
             public String getInsuranceDate() {
@@ -570,260 +1297,28 @@ public class SuggestionsResponse {
                 this.insuranceIdv = insuranceIdv;
             }
 
-            public String getInsuranceValid() {
-                return insuranceValid;
+            public String getEmissionVersion() {
+                return emissionVersion;
             }
 
-            public void setInsuranceValid(String insuranceValid) {
-                this.insuranceValid = insuranceValid;
+            public void setEmissionVersion(String emissionVersion) {
+                this.emissionVersion = emissionVersion;
             }
 
-            public String getInvoice() {
-                return invoice;
+            public String getFinanceStatus() {
+                return financeStatus;
             }
 
-            public void setInvoice(String invoice) {
-                this.invoice = invoice;
+            public void setFinanceStatus(String financeStatus) {
+                this.financeStatus = financeStatus;
             }
 
-            public String getJIB() {
-                return jIB;
+            public String getExchangeStatus() {
+                return exchangeStatus;
             }
 
-            public void setJIB(String jIB) {
-                this.jIB = jIB;
-            }
-
-            public Integer getKmsRunning() {
-                return kmsRunning;
-            }
-
-            public void setKmsRunning(Integer kmsRunning) {
-                this.kmsRunning = kmsRunning;
-            }
-
-            public String getLocationCity() {
-                return locationCity;
-            }
-
-            public void setLocationCity(String locationCity) {
-                this.locationCity = locationCity;
-            }
-
-            public String getLocationCountry() {
-                return locationCountry;
-            }
-
-            public void setLocationCountry(String locationCountry) {
-                this.locationCountry = locationCountry;
-            }
-
-            public String getLocationState() {
-                return locationState;
-            }
-
-            public void setLocationState(String locationState) {
-                this.locationState = locationState;
-            }
-
-            public String getLocationAddress() {
-                return locationAddress;
-            }
-
-            public void setLocationAddress(String locationAddress) {
-                this.locationAddress = locationAddress;
-            }
-
-            public String getManufacturer() {
-                return manufacturer;
-            }
-
-            public void setManufacturer(String manufacturer) {
-                this.manufacturer = manufacturer;
-            }
-
-            public String getModel() {
-                return model;
-            }
-
-            public void setModel(String model) {
-                this.model = model;
-            }
-
-            public String getMonthOfManufacturer() {
-                return monthOfManufacturer;
-            }
-
-            public void setMonthOfManufacturer(String monthOfManufacturer) {
-                this.monthOfManufacturer = monthOfManufacturer;
-            }
-
-            public String getMonthOfRegistration() {
-                return monthOfRegistration;
-            }
-
-            public void setMonthOfRegistration(String monthOfRegistration) {
-                this.monthOfRegistration = monthOfRegistration;
-            }
-
-            public Integer getNoOfOwners() {
-                return noOfOwners;
-            }
-
-            public void setNoOfOwners(Integer noOfOwners) {
-                this.noOfOwners = noOfOwners;
-            }
-
-            public String getPermit() {
-                return permit;
-            }
-
-            public void setPermit(String permit) {
-                this.permit = permit;
-            }
-
-            public String getPermitValidity() {
-                return permitValidity;
-            }
-
-            public void setPermitValidity(String permitValidity) {
-                this.permitValidity = permitValidity;
-            }
-
-            public String getPermitValidity1() {
-                return permitValidity1;
-            }
-
-            public void setPermitValidity1(String permitValidity1) {
-                this.permitValidity1 = permitValidity1;
-            }
-
-            public String getPermitYesNo() {
-                return permitYesNo;
-            }
-
-            public void setPermitYesNo(String permitYesNo) {
-                this.permitYesNo = permitYesNo;
-            }
-
-            public String getPrice() {
-                return price;
-            }
-
-            public void setPrice(String price) {
-                this.price = price;
-            }
-
-            public String getPrivacy() {
-                return privacy;
-            }
-
-            public void setPrivacy(String privacy) {
-                this.privacy = privacy;
-            }
-
-            public String getPump() {
-                return pump;
-            }
-
-            public void setPump(String pump) {
-                this.pump = pump;
-            }
-
-            public String getRCAvailable() {
-                return rCAvailable;
-            }
-
-            public void setRCAvailable(String rCAvailable) {
-                this.rCAvailable = rCAvailable;
-            }
-
-            public String getRegistrationNumber() {
-                return registrationNumber;
-            }
-
-            public void setRegistrationNumber(String registrationNumber) {
-                this.registrationNumber = registrationNumber;
-            }
-
-            public String getReservePrice() {
-                return reservePrice;
-            }
-
-            public void setReservePrice(String reservePrice) {
-                this.reservePrice = reservePrice;
-            }
-
-            public String getRTOCity() {
-                return rTOCity;
-            }
-
-            public void setRTOCity(String rTOCity) {
-                this.rTOCity = rTOCity;
-            }
-
-            public String getRVType() {
-                return rVType;
-            }
-
-            public void setRVType(String rVType) {
-                this.rVType = rVType;
-            }
-
-            public String getSeatingCapacity() {
-                return seatingCapacity;
-            }
-
-            public void setSeatingCapacity(String seatingCapacity) {
-                this.seatingCapacity = seatingCapacity;
-            }
-
-            public String getSeatManufacturer() {
-                return seatManufacturer;
-            }
-
-            public void setSeatManufacturer(String seatManufacturer) {
-                this.seatManufacturer = seatManufacturer;
-            }
-
-            public String getStartPrice() {
-                return startPrice;
-            }
-
-            public void setStartPrice(String startPrice) {
-                this.startPrice = startPrice;
-            }
-
-            public String getStatus() {
-                return status;
-            }
-
-            public void setStatus(String status) {
-                this.status = status;
-            }
-
-            public String getSteering() {
-                return steering;
-            }
-
-            public void setSteering(String steering) {
-                this.steering = steering;
-            }
-
-            public String getSubCategory() {
-                return subCategory;
-            }
-
-            public void setSubCategory(String subCategory) {
-                this.subCategory = subCategory;
-            }
-
-            public String getTaxPaidUpto() {
-                return taxPaidUpto;
-            }
-
-            public void setTaxPaidUpto(String taxPaidUpto) {
-                this.taxPaidUpto = taxPaidUpto;
+            public void setExchangeStatus(String exchangeStatus) {
+                this.exchangeStatus = exchangeStatus;
             }
 
             public String getTaxValidity() {
@@ -834,20 +1329,164 @@ public class SuggestionsResponse {
                 this.taxValidity = taxValidity;
             }
 
-            public String getTaxValidity1() {
-                return taxValidity1;
+            public String getTaxPaidUpto() {
+                return taxPaidUpto;
             }
 
-            public void setTaxValidity1(String taxValidity1) {
-                this.taxValidity1 = taxValidity1;
+            public void setTaxPaidUpto(String taxPaidUpto) {
+                this.taxPaidUpto = taxPaidUpto;
             }
 
-            public String getTitile() {
-                return titile;
+            public String getFitnessValidity() {
+                return fitnessValidity;
             }
 
-            public void setTitile(String titile) {
-                this.titile = titile;
+            public void setFitnessValidity(String fitnessValidity) {
+                this.fitnessValidity = fitnessValidity;
+            }
+
+            public String getPermitValidity() {
+                return permitValidity;
+            }
+
+            public void setPermitValidity(String permitValidity) {
+                this.permitValidity = permitValidity;
+            }
+
+            public String getPermitYesNo() {
+                return permitYesNo;
+            }
+
+            public void setPermitYesNo(String permitYesNo) {
+                this.permitYesNo = permitYesNo;
+            }
+
+            public String getFitnessYesNo() {
+                return fitnessYesNo;
+            }
+
+            public void setFitnessYesNo(String fitnessYesNo) {
+                this.fitnessYesNo = fitnessYesNo;
+            }
+
+            public String getFuelType() {
+                return fuelType;
+            }
+
+            public void setFuelType(String fuelType) {
+                this.fuelType = fuelType;
+            }
+
+            public String getSeatingCapacity() {
+                return seatingCapacity;
+            }
+
+            public void setSeatingCapacity(String seatingCapacity) {
+                this.seatingCapacity = seatingCapacity;
+            }
+
+            public String getPermit() {
+                return permit;
+            }
+
+            public void setPermit(String permit) {
+                this.permit = permit;
+            }
+
+            public Object getFinanceExchange() {
+                return financeExchange;
+            }
+
+            public void setFinanceExchange(Object financeExchange) {
+                this.financeExchange = financeExchange;
+            }
+
+            public String getKmsRunning() {
+                return kmsRunning;
+            }
+
+            public void setKmsRunning(String kmsRunning) {
+                this.kmsRunning = kmsRunning;
+            }
+
+            public String getHrsRunning() {
+                return hrsRunning;
+            }
+
+            public void setHrsRunning(String hrsRunning) {
+                this.hrsRunning = hrsRunning;
+            }
+
+            public String getNoOfOwners() {
+                return noOfOwners;
+            }
+
+            public void setNoOfOwners(String noOfOwners) {
+                this.noOfOwners = noOfOwners;
+            }
+
+            public String getBodyManufacturer() {
+                return bodyManufacturer;
+            }
+
+            public void setBodyManufacturer(String bodyManufacturer) {
+                this.bodyManufacturer = bodyManufacturer;
+            }
+
+            public String getSeatManufacturer() {
+                return seatManufacturer;
+            }
+
+            public void setSeatManufacturer(String seatManufacturer) {
+                this.seatManufacturer = seatManufacturer;
+            }
+
+            public String getHypothication() {
+                return hypothication;
+            }
+
+            public void setHypothication(String hypothication) {
+                this.hypothication = hypothication;
+            }
+
+            public String getEngineNo() {
+                return engineNo;
+            }
+
+            public void setEngineNo(String engineNo) {
+                this.engineNo = engineNo;
+            }
+
+            public String getChassisNo() {
+                return chassisNo;
+            }
+
+            public void setChassisNo(String chassisNo) {
+                this.chassisNo = chassisNo;
+            }
+
+            public String getPrice() {
+                return price;
+            }
+
+            public void setPrice(String price) {
+                this.price = price;
+            }
+
+            public String getImage() {
+                return image;
+            }
+
+            public void setImage(String image) {
+                this.image = image;
+            }
+
+            public String getDrive() {
+                return drive;
+            }
+
+            public void setDrive(String drive) {
+                this.drive = drive;
             }
 
             public String getTransmission() {
@@ -858,6 +1497,38 @@ public class SuggestionsResponse {
                 this.transmission = transmission;
             }
 
+            public String getBodyType() {
+                return bodyType;
+            }
+
+            public void setBodyType(String bodyType) {
+                this.bodyType = bodyType;
+            }
+
+            public String getBoatType() {
+                return boatType;
+            }
+
+            public void setBoatType(String boatType) {
+                this.boatType = boatType;
+            }
+
+            public String getRVType() {
+                return rVType;
+            }
+
+            public void setRVType(String rVType) {
+                this.rVType = rVType;
+            }
+
+            public String getApplication() {
+                return application;
+            }
+
+            public void setApplication(String application) {
+                this.application = application;
+            }
+
             public String getTyreCondition() {
                 return tyreCondition;
             }
@@ -866,12 +1537,76 @@ public class SuggestionsResponse {
                 this.tyreCondition = tyreCondition;
             }
 
-            public String getVersion() {
-                return version;
+            public String getBusType() {
+                return busType;
             }
 
-            public void setVersion(String version) {
-                this.version = version;
+            public void setBusType(String busType) {
+                this.busType = busType;
+            }
+
+            public String getAirCondition() {
+                return airCondition;
+            }
+
+            public void setAirCondition(String airCondition) {
+                this.airCondition = airCondition;
+            }
+
+            public String getInvoice() {
+                return invoice;
+            }
+
+            public void setInvoice(String invoice) {
+                this.invoice = invoice;
+            }
+
+            public String getImplements() {
+                return _implements;
+            }
+
+            public void setImplements(String _implements) {
+                this._implements = _implements;
+            }
+
+            public String getFinanceRequest() {
+                return financeRequest;
+            }
+
+            public void setFinanceRequest(String financeRequest) {
+                this.financeRequest = financeRequest;
+            }
+
+            public String getPrivacy() {
+                return privacy;
+            }
+
+            public void setPrivacy(String privacy) {
+                this.privacy = privacy;
+            }
+
+            public String getHPCapacity() {
+                return hPCapacity;
+            }
+
+            public void setHPCapacity(String hPCapacity) {
+                this.hPCapacity = hPCapacity;
+            }
+
+            public String getJIB() {
+                return jIB;
+            }
+
+            public void setJIB(String jIB) {
+                this.jIB = jIB;
+            }
+
+            public String getBoon() {
+                return boon;
+            }
+
+            public void setBoon(String boon) {
+                this.boon = boon;
             }
 
             public String getViewCount() {
@@ -882,105 +1617,68 @@ public class SuggestionsResponse {
                 this.viewCount = viewCount;
             }
 
-            public String getYearOfManufaturer() {
-                return yearOfManufaturer;
+            public String getCallCount() {
+                return callCount;
             }
 
-            public void setYearOfManufaturer(String yearOfManufaturer) {
-                this.yearOfManufaturer = yearOfManufaturer;
+            public void setCallCount(String callCount) {
+                this.callCount = callCount;
             }
 
-            public String getYearOfRegistration() {
-                return yearOfRegistration;
+            public String getDate() {
+                return date;
             }
 
-            public void setYearOfRegistration(String yearOfRegistration) {
-                this.yearOfRegistration = yearOfRegistration;
+            public void setDate(String date) {
+                this.date = date;
             }
 
-            public String getStockType() {
-                return stockType;
+            public String getStartPrice() {
+                return startPrice;
             }
 
-            public void setStockType(String stockType) {
-                this.stockType = stockType;
+            public void setStartPrice(String startPrice) {
+                this.startPrice = startPrice;
             }
 
-            public Double getLatitude() {
-                return latitude;
+            public String getReservePrice() {
+                return reservePrice;
             }
 
-            public void setLatitude(Double latitude) {
-                this.latitude = latitude;
+            public void setReservePrice(String reservePrice) {
+                this.reservePrice = reservePrice;
             }
 
-            public Double getLongitude() {
-                return longitude;
+            public String getStatus() {
+                return status;
             }
 
-            public void setLongitude(Double longitude) {
-                this.longitude = longitude;
+            public void setStatus(String status) {
+                this.status = status;
             }
 
-            public String getCloneID() {
-                return cloneID;
+            public String getBrakes() {
+                return brakes;
             }
 
-            public void setCloneID(String cloneID) {
-                this.cloneID = cloneID;
+            public void setBrakes(String brakes) {
+                this.brakes = brakes;
             }
 
-            public Integer getDistance() {
-                return distance;
+            public String getPump() {
+                return pump;
             }
 
-            public void setDistance(Integer distance) {
-                this.distance = distance;
+            public void setPump(String pump) {
+                this.pump = pump;
             }
 
-            //*************************************************************
-    /*Profile Based Suggestions*/
-
-            @SerializedName("contact")
-            @Expose
-            private String contact;
-            @SerializedName("profile_pic")
-            @Expose
-            private String profilePic;
-            @SerializedName("username")
-            @Expose
-            private String username;
-
-            public Integer getLayout() {
-                return layout;
+            public String getSteering() {
+                return steering;
             }
 
-            public void setLayout(Integer layout) {
-                this.layout = layout;
-            }
-
-            public String getContact() {
-                return contact;
-            }
-
-            public void setContact(String contact) {
-                this.contact = contact;
-            }
-
-            public String getProfilePic() {
-                return profilePic;
-            }
-
-            public void setProfilePic(String profilePic) {
-                this.profilePic = profilePic;
-            }
-
-            public String getUsername() {
-                return username;
-            }
-
-            public void setUsername(String username) {
-                this.username = username;
+            public void setSteering(String steering) {
+                this.steering = steering;
             }
         }
     }
