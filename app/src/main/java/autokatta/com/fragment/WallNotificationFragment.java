@@ -48,7 +48,7 @@ import retrofit2.Response;
 import static android.content.Context.MODE_PRIVATE;
 
 /**
- * Created by ak-001 on 17/3/17.
+ * Created by ak-001 on 17/3/17
  */
 
 public class WallNotificationFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, RequestNotifier {
@@ -66,10 +66,7 @@ public class WallNotificationFragment extends Fragment implements SwipeRefreshLa
     Button mRetry;
     Locale myLocale;
     String mLanguage;
-    String mMarathiStr, mEnglishStr;
     int index = 1;
-    boolean result = false;
-    //ProgressDialog dialog;
 
     public WallNotificationFragment() {
         //Empty Constructor...
@@ -231,7 +228,6 @@ public class WallNotificationFragment extends Fragment implements SwipeRefreshLa
                             layout.setVisibility(View.GONE);
                             //notificationList.clear();
 
-                            aa:
                             for (WallResponse.Success.WallNotification notification : wallResponse.getSuccess().getWallNotifications()) {
                                 WallResponseModel responseModel = new WallResponseModel();
 
@@ -294,7 +290,6 @@ public class WallNotificationFragment extends Fragment implements SwipeRefreshLa
 
                                         responseModel.setMyFavStatus(notification.getMyFavStatus());
 
-
                                         responseModel.setUpVehicleLikeStatus(notification.getUpVehicleLikeStatus());
                                         responseModel.setUpVehicleFollowStatus(notification.getUpVehicleFollowStatus());
                                         responseModel.setUploadVehicleID(notification.getUploadVehicleID());
@@ -330,7 +325,8 @@ public class WallNotificationFragment extends Fragment implements SwipeRefreshLa
                                         responseModel.setSearchRtoCity(notification.getSearchRtoCity());
                                         responseModel.setSearchLocationCity(notification.getSearchLocationCity());
                                         responseModel.setSearchColor(notification.getSearchColor());
-                                        responseModel.setSearchPrice(notification.getSearchPrice());
+
+                                        responseModel.setSearchPrice(notification.getSearchPrice() == null ? "" : notification.getSearchPrice());
                                         responseModel.setSearchManfYear(notification.getSearchManfYear());
                                         responseModel.setSearchDate(notification.getSearchDate());
                                         responseModel.setSearchLeads(notification.getSearchLeads());

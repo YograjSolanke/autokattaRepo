@@ -2882,7 +2882,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
 
 
                 ///This is Main Case 7
-
+                Log.i("ActionId", "->" + notificationList.get(position).getActionID());
                 final PostNotifications mPostHolder = (PostNotifications) holder;
 
                 Log.i("Wall", "Post-LayType ->" + notificationList.get(position).getLayoutType());
@@ -3101,235 +3101,237 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
 
 
                 final String keyword = notificationList.get(position).getStatusType();
-                if (keyword.equalsIgnoreCase("Video")) {
-                    mPostHolder.videoView.setVisibility(View.VISIBLE);
-                    mPostHolder.linearImages.setVisibility(View.GONE);
-                    mPostHolder.mStatusText.setVisibility(View.GONE);
-                    // mPostHolder.moreImages.setVisibility(View.GONE);
+                if (keyword.equals("")) {
+                    if (keyword.equalsIgnoreCase("Video")) {
+                        mPostHolder.videoView.setVisibility(View.VISIBLE);
+                        mPostHolder.linearImages.setVisibility(View.GONE);
+                        mPostHolder.mStatusText.setVisibility(View.GONE);
+                        // mPostHolder.moreImages.setVisibility(View.GONE);
 
                     /*decode string code (Getting)*/
-                    String decodedString = null;
-                    byte[] data = new byte[0];
-                    try {
-                        data = Base64.decode(notificationList.get(position).getStatus());
-                        decodedString = new String(data, "UTF-8");
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    mPostHolder.captionText.setText(decodedString);
-                    try {
-                        // Start the MediaController
-                        MediaController mediacontroller = new MediaController(
-                                mActivity);
-                        mediacontroller.setAnchorView(mPostHolder.videoView);
+                        String decodedString = null;
+                        byte[] data = new byte[0];
+                        try {
+                            data = Base64.decode(notificationList.get(position).getStatus());
+                            decodedString = new String(data, "UTF-8");
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        mPostHolder.captionText.setText(decodedString);
+                        try {
+                            // Start the MediaController
+                            MediaController mediacontroller = new MediaController(
+                                    mActivity);
+                            mediacontroller.setAnchorView(mPostHolder.videoView);
 
-                        Uri video = Uri.parse(notificationList.get(position).getStatusVideos());
+                            Uri video = Uri.parse(notificationList.get(position).getStatusVideos());
 
-                        Bitmap thumb = createVideoThumbnail(mActivity, video);
+                            Bitmap thumb = createVideoThumbnail(mActivity, video);
 
-                        BitmapDrawable bitmapDrawable = new BitmapDrawable(thumb);
-                        mPostHolder.videoView.setBackground(bitmapDrawable);
+                            BitmapDrawable bitmapDrawable = new BitmapDrawable(thumb);
+                            mPostHolder.videoView.setBackground(bitmapDrawable);
 
-                    } catch (Exception e) {
-                        Log.e("Error", e.getMessage());
-                        e.printStackTrace();
-                    }
+                        } catch (Exception e) {
+                            Log.e("Error", e.getMessage());
+                            e.printStackTrace();
+                        }
 
-                } else if (keyword.equalsIgnoreCase("Image")) {
-                    mPostHolder.linearImages.setVisibility(View.VISIBLE);
-                    mPostHolder.videoView.setVisibility(View.GONE);
-                    mPostHolder.mStatusText.setVisibility(View.GONE);
+                    } else if (keyword.equalsIgnoreCase("Image")) {
+                        mPostHolder.linearImages.setVisibility(View.VISIBLE);
+                        mPostHolder.videoView.setVisibility(View.GONE);
+                        mPostHolder.mStatusText.setVisibility(View.GONE);
 
                    /*decode string code (Getting)*/
-                    String decodedString = null;
-                    byte[] data = new byte[0];
-                    try {
-                        data = Base64.decode(notificationList.get(position).getStatus());
-                        decodedString = new String(data, "UTF-8");
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    mPostHolder.captionText.setText(decodedString);
-                    //mPostHolder.moreImages.setVisibility(View.VISIBLE);
-                    if (notificationList.get(position).getStatusImages().contains(",")) {
-                        String[] imageArray = notificationList.get(position).getStatusImages().split(",");
-
-                        if (imageArray.length >= 4) {
-                            Glide.with(mActivity)
-                                    .load("http://autokatta.acquiscent.com/UploadedFiles/" + imageArray[0])
-                                    .centerCrop()
-                                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                                    .placeholder(R.drawable.logo)
-                                    .into(mPostHolder.image1);
-
-                            Glide.with(mActivity)
-                                    .load("http://autokatta.acquiscent.com/UploadedFiles/" + imageArray[1])
-                                    .centerCrop()
-                                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                                    .placeholder(R.drawable.logo)
-                                    .into(mPostHolder.image2);
-
-                            Glide.with(mActivity)
-                                    .load("http://autokatta.acquiscent.com/UploadedFiles/" + imageArray[2])
-                                    .centerCrop()
-                                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                                    .placeholder(R.drawable.logo)
-                                    .into(mPostHolder.image3);
-
-                            Glide.with(mActivity)
-                                    .load("http://autokatta.acquiscent.com/UploadedFiles/" + imageArray[3])
-                                    .centerCrop()
-                                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                                    .placeholder(R.drawable.logo)
-                                    .into(mPostHolder.image4);
-                        } else if (imageArray.length == 3) {
-                            Glide.with(mActivity)
-                                    .load("http://autokatta.acquiscent.com/UploadedFiles/" + imageArray[0])
-                                    .centerCrop()
-                                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                                    .placeholder(R.drawable.logo)
-                                    .into(mPostHolder.image1);
-
-                            Glide.with(mActivity)
-                                    .load("http://autokatta.acquiscent.com/UploadedFiles/" + imageArray[1])
-                                    .centerCrop()
-                                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                                    .placeholder(R.drawable.logo)
-                                    .into(mPostHolder.image2);
-
-                            Glide.with(mActivity)
-                                    .load("http://autokatta.acquiscent.com/UploadedFiles/" + imageArray[2])
-                                    .centerCrop()
-                                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                                    .placeholder(R.drawable.logo)
-                                    .into(mPostHolder.image3);
-
-                            mPostHolder.image4.setVisibility(View.GONE);
-                        } else if (imageArray.length == 2) {
-                            Glide.with(mActivity)
-                                    .load("http://autokatta.acquiscent.com/UploadedFiles/" + imageArray[0])
-                                    .centerCrop()
-                                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                                    .placeholder(R.drawable.logo)
-                                    .into(mPostHolder.image1);
-
-                            Glide.with(mActivity)
-                                    .load("http://autokatta.acquiscent.com/UploadedFiles/" + imageArray[1])
-                                    .centerCrop()
-                                    .diskCacheStrategy(DiskCacheStrategy.ALL)
-                                    .placeholder(R.drawable.logo)
-                                    .into(mPostHolder.image2);
-
-                            mPostHolder.linearImagelayout2.setVisibility(View.GONE);
-
+                        String decodedString = null;
+                        byte[] data = new byte[0];
+                        try {
+                            data = Base64.decode(notificationList.get(position).getStatus());
+                            decodedString = new String(data, "UTF-8");
+                        } catch (IOException e) {
+                            e.printStackTrace();
                         }
-                    } else {
+                        mPostHolder.captionText.setText(decodedString);
+                        //mPostHolder.moreImages.setVisibility(View.VISIBLE);
+                        if (notificationList.get(position).getStatusImages().contains(",")) {
+                            String[] imageArray = notificationList.get(position).getStatusImages().split(",");
 
-                        Glide.with(mActivity)
-                                .load("http://autokatta.acquiscent.com/UploadedFiles/" + notificationList.get(position).getStatusImages())
-                                .centerCrop()
-                                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                                .placeholder(R.drawable.logo)
-                                .into(mPostHolder.image1);
-                        mPostHolder.linearImagelayout2.setVisibility(View.GONE);
-                        mPostHolder.image2.setVisibility(View.GONE);
-                    }
+                            if (imageArray.length >= 4) {
+                                Glide.with(mActivity)
+                                        .load("http://autokatta.acquiscent.com/UploadedFiles/" + imageArray[0])
+                                        .centerCrop()
+                                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                        .placeholder(R.drawable.logo)
+                                        .into(mPostHolder.image1);
 
-                } else if (keyword.equalsIgnoreCase("Status")) {
+                                Glide.with(mActivity)
+                                        .load("http://autokatta.acquiscent.com/UploadedFiles/" + imageArray[1])
+                                        .centerCrop()
+                                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                        .placeholder(R.drawable.logo)
+                                        .into(mPostHolder.image2);
+
+                                Glide.with(mActivity)
+                                        .load("http://autokatta.acquiscent.com/UploadedFiles/" + imageArray[2])
+                                        .centerCrop()
+                                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                        .placeholder(R.drawable.logo)
+                                        .into(mPostHolder.image3);
+
+                                Glide.with(mActivity)
+                                        .load("http://autokatta.acquiscent.com/UploadedFiles/" + imageArray[3])
+                                        .centerCrop()
+                                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                        .placeholder(R.drawable.logo)
+                                        .into(mPostHolder.image4);
+                            } else if (imageArray.length == 3) {
+                                Glide.with(mActivity)
+                                        .load("http://autokatta.acquiscent.com/UploadedFiles/" + imageArray[0])
+                                        .centerCrop()
+                                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                        .placeholder(R.drawable.logo)
+                                        .into(mPostHolder.image1);
+
+                                Glide.with(mActivity)
+                                        .load("http://autokatta.acquiscent.com/UploadedFiles/" + imageArray[1])
+                                        .centerCrop()
+                                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                        .placeholder(R.drawable.logo)
+                                        .into(mPostHolder.image2);
+
+                                Glide.with(mActivity)
+                                        .load("http://autokatta.acquiscent.com/UploadedFiles/" + imageArray[2])
+                                        .centerCrop()
+                                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                        .placeholder(R.drawable.logo)
+                                        .into(mPostHolder.image3);
+
+                                mPostHolder.image4.setVisibility(View.GONE);
+                            } else if (imageArray.length == 2) {
+                                Glide.with(mActivity)
+                                        .load("http://autokatta.acquiscent.com/UploadedFiles/" + imageArray[0])
+                                        .centerCrop()
+                                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                        .placeholder(R.drawable.logo)
+                                        .into(mPostHolder.image1);
+
+                                Glide.with(mActivity)
+                                        .load("http://autokatta.acquiscent.com/UploadedFiles/" + imageArray[1])
+                                        .centerCrop()
+                                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                        .placeholder(R.drawable.logo)
+                                        .into(mPostHolder.image2);
+
+                                mPostHolder.linearImagelayout2.setVisibility(View.GONE);
+
+                            }
+                        } else {
+
+                            Glide.with(mActivity)
+                                    .load("http://autokatta.acquiscent.com/UploadedFiles/" + notificationList.get(position).getStatusImages())
+                                    .centerCrop()
+                                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                    .placeholder(R.drawable.logo)
+                                    .into(mPostHolder.image1);
+                            mPostHolder.linearImagelayout2.setVisibility(View.GONE);
+                            mPostHolder.image2.setVisibility(View.GONE);
+                        }
+
+                    } else if (keyword.equalsIgnoreCase("Status")) {
 
                     /*decode string code (Getting)*/
-                    String decodedString = "";
-                    byte[] data = new byte[0];
-                    try {
-                        data = Base64.decode(notificationList.get(position).getStatus());
-                        decodedString = new String(data, "UTF-8");
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    mPostHolder.captionText.setVisibility(View.GONE);
-                    mPostHolder.linearImages.setVisibility(View.GONE);
-                    mPostHolder.videoView.setVisibility(View.GONE);
+                        String decodedString = "";
+                        byte[] data = new byte[0];
+                        try {
+                            data = Base64.decode(notificationList.get(position).getStatus());
+                            decodedString = new String(data, "UTF-8");
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        mPostHolder.captionText.setVisibility(View.GONE);
+                        mPostHolder.linearImages.setVisibility(View.GONE);
+                        mPostHolder.videoView.setVisibility(View.GONE);
 
-                    if (decodedString.startsWith("www")) {
-                        final String newStr = "http://" + decodedString;
-                        mPostHolder.webView.setVisibility(View.VISIBLE);
-                        mPostHolder.mStatusText.setVisibility(View.GONE);
-                        mPostHolder.mStatusText.setText(newStr);
-                        mPostHolder.webUrl.loadUrl(newStr);
-                        mPostHolder.viewClick.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                Intent intent = new Intent(mActivity, BrowserView.class);
-                                intent.putExtra("url", newStr);
-                                mActivity.startActivity(intent);
-                            }
-                        });
+                        if (decodedString.startsWith("www")) {
+                            final String newStr = "http://" + decodedString;
+                            mPostHolder.webView.setVisibility(View.VISIBLE);
+                            mPostHolder.mStatusText.setVisibility(View.GONE);
+                            mPostHolder.mStatusText.setText(newStr);
+                            mPostHolder.webUrl.loadUrl(newStr);
+                            mPostHolder.viewClick.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    Intent intent = new Intent(mActivity, BrowserView.class);
+                                    intent.putExtra("url", newStr);
+                                    mActivity.startActivity(intent);
+                                }
+                            });
                         /*
                         Web View
                          */
 
-                        mPostHolder.webUrl.setWebChromeClient(new MyWebChromeClient(mActivity));
-                        mPostHolder.webUrl.setWebViewClient(new WebViewClient() {
-                            @Override
-                            public void onPageStarted(WebView view, String url, Bitmap favicon) {
-                                super.onPageStarted(view, url, favicon);
-                                //invalidateOptionsMenu();
-                            }
+                            mPostHolder.webUrl.setWebChromeClient(new MyWebChromeClient(mActivity));
+                            mPostHolder.webUrl.setWebViewClient(new WebViewClient() {
+                                @Override
+                                public void onPageStarted(WebView view, String url, Bitmap favicon) {
+                                    super.onPageStarted(view, url, favicon);
+                                    //invalidateOptionsMenu();
+                                }
 
-                            @Override
-                            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                                mPostHolder.webUrl.loadUrl(url);
-                                return true;
-                            }
-
-                            @Override
-                            public void onPageFinished(WebView view, String url) {
-                                super.onPageFinished(view, url);
-                                //invalidateOptionsMenu();
-                            }
-
-                            @Override
-                            public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
-                                super.onReceivedError(view, request, error);
-                                //invalidateOptionsMenu();
-                            }
-                        });
-                        mPostHolder.webUrl.clearCache(true);
-                        mPostHolder.webUrl.clearHistory();
-                        mPostHolder.webUrl.getSettings().setJavaScriptEnabled(true);
-                        mPostHolder.webUrl.setHorizontalScrollBarEnabled(false);
-                        mPostHolder.webUrl.setOnTouchListener(new View.OnTouchListener() {
-                            public boolean onTouch(View v, MotionEvent event) {
-                                if (event.getPointerCount() > 1) {
-                                    //Multi touch detected
+                                @Override
+                                public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                                    mPostHolder.webUrl.loadUrl(url);
                                     return true;
                                 }
 
-                                switch (event.getAction()) {
-                                    case MotionEvent.ACTION_DOWN: {
-                                        // save the x
-                                        m_downX = event.getX();
-                                    }
-                                    break;
-
-                                    case MotionEvent.ACTION_MOVE:
-                                    case MotionEvent.ACTION_CANCEL:
-                                    case MotionEvent.ACTION_UP: {
-                                        // set x so that it doesn't move
-                                        event.setLocation(m_downX, event.getY());
-                                    }
-                                    break;
+                                @Override
+                                public void onPageFinished(WebView view, String url) {
+                                    super.onPageFinished(view, url);
+                                    //invalidateOptionsMenu();
                                 }
 
-                                return false;
-                            }
-                        });
+                                @Override
+                                public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
+                                    super.onReceivedError(view, request, error);
+                                    //invalidateOptionsMenu();
+                                }
+                            });
+                            mPostHolder.webUrl.clearCache(true);
+                            mPostHolder.webUrl.clearHistory();
+                            mPostHolder.webUrl.getSettings().setJavaScriptEnabled(true);
+                            mPostHolder.webUrl.setHorizontalScrollBarEnabled(false);
+                            mPostHolder.webUrl.setOnTouchListener(new View.OnTouchListener() {
+                                public boolean onTouch(View v, MotionEvent event) {
+                                    if (event.getPointerCount() > 1) {
+                                        //Multi touch detected
+                                        return true;
+                                    }
 
-                        //End webView...
-                    } else {
-                        mPostHolder.webView.setVisibility(View.GONE);
-                        mPostHolder.mStatusText.setVisibility(View.VISIBLE);
-                        mPostHolder.mStatusText.setText(decodedString);
+                                    switch (event.getAction()) {
+                                        case MotionEvent.ACTION_DOWN: {
+                                            // save the x
+                                            m_downX = event.getX();
+                                        }
+                                        break;
+
+                                        case MotionEvent.ACTION_MOVE:
+                                        case MotionEvent.ACTION_CANCEL:
+                                        case MotionEvent.ACTION_UP: {
+                                            // set x so that it doesn't move
+                                            event.setLocation(m_downX, event.getY());
+                                        }
+                                        break;
+                                    }
+
+                                    return false;
+                                }
+                            });
+
+                            //End webView...
+                        } else {
+                            mPostHolder.webView.setVisibility(View.GONE);
+                            mPostHolder.mStatusText.setVisibility(View.VISIBLE);
+                            mPostHolder.mStatusText.setText(decodedString);
+                        }
                     }
                 }
 

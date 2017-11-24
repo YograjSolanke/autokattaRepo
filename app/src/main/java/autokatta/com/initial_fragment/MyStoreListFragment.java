@@ -231,7 +231,7 @@ public class MyStoreListFragment extends Fragment implements View.OnClickListene
         fabCreateStore.setOnClickListener(this);
         mSwipeRefreshLayout.setOnRefreshListener(this);
 
-        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+        /*mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
@@ -245,6 +245,6 @@ public class MyStoreListFragment extends Fragment implements View.OnClickListene
                     fabCreateStore.show(true);
                 }
             }
-        });
+        });*/
     }
 }
