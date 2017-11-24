@@ -34,7 +34,7 @@
 
     <ScrollView
         android:id="@+id/scrollView1"
-        android:layout_width="368dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/relativename"
         tools:layout_editor_absoluteY="0dp"
@@ -98,8 +98,8 @@
                         android:id="@+id/editstorename"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginLeft="10dip"
-                        android:layout_marginRight="10dip"
+                        android:layout_marginLeft="2dp"
+                        android:layout_marginRight="2dp"
                         android:layout_weight="2"
                         android:digits="1234567890QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnm- "
                         android:ems="10"
@@ -129,10 +129,11 @@
                         android:id="@+id/editstoreloc"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dip"
-                        android:layout_marginRight="10dip"
+                        android:layout_marginLeft="2dp"
+                        android:layout_marginRight="2dp"
                         android:layout_weight="2"
                         android:drawableStart="@mipmap/map"
+                        android:drawablePadding="@dimen/margin_small"
                         android:hint="@string/location"
                         android:textColor="#2C3343"
                         android:textColorHint="#848484" />
@@ -156,8 +157,8 @@
                         android:id="@+id/editstoreadd"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginLeft="10dip"
-                        android:layout_marginRight="10dip"
+                        android:layout_marginLeft="2dp"
+                        android:layout_marginRight="2dp"
                         android:layout_weight="2"
                         android:hint="@string/address"
                         android:inputType="textPostalAddress"
@@ -183,8 +184,8 @@
                         android:id="@+id/editstorecontact"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginLeft="10dip"
-                        android:layout_marginRight="10dip"
+                        android:layout_marginLeft="2dp"
+                        android:layout_marginRight="2dp"
                         android:layout_weight="2"
                         android:ems="10"
                         android:hint="@string/contact_no"
@@ -212,8 +213,8 @@
                         android:id="@+id/editstorewebsite"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginLeft="10dip"
-                        android:layout_marginRight="10dip"
+                        android:layout_marginLeft="2dp"
+                        android:layout_marginRight="2dp"
                         android:layout_weight="2"
                         android:ems="10"
                         android:hint="@string/website"
@@ -229,8 +230,8 @@
                 android:layout_height="60dp"
                 android:layout_below="@+id/linear6"
                 android:layout_centerHorizontal="true"
-                android:layout_marginLeft="10dip"
-                android:layout_marginRight="10dip"
+                android:layout_marginLeft="2dp"
+                android:layout_marginRight="2dp"
                 android:layout_marginTop="5dp"
                 android:orientation="horizontal"
                 android:visibility="visible">
@@ -302,8 +303,8 @@
                         android:id="@+id/multiweekdays"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginLeft="10dip"
-                        android:layout_marginRight="10dip"
+                        android:layout_marginLeft="2dp"
+                        android:layout_marginRight="2dp"
                         android:layout_weight="2"
                         android:textColorHint="#848484">
 
@@ -406,8 +407,8 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/store_description"
                         android:maxLength="200"
-                        android:paddingEnd="10dip"
-                        android:paddingStart="10dip"
+                        android:layout_marginLeft="2dp"
+                        android:layout_marginRight="2dp"
                         android:textColor="#2C3343"
                         android:textColorHint="#848484" />
                 </android.support.design.widget.TextInputLayout>
@@ -421,7 +422,8 @@
                 android:layout_marginEnd="5dp"
                 android:layout_marginTop="@dimen/card_margin"
                 android:orientation="horizontal"
-                android:paddingEnd="@dimen/card_margin"
+                android:paddingEnd="@dimen/cardview_default_elevation"
+                android:paddingStart="@dimen/cardview_default_elevation"
                 android:visibility="gone">
 
                 <autokatta.com.my_store.MultiSelectionSpinnerForBrands
@@ -470,8 +472,8 @@
                 android:layout_height="wrap_content"
                 android:layout_alignStart="@+id/linear9"
                 android:layout_below="@+id/linearautobrand"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
+                android:layout_marginLeft="2dp"
+                android:layout_marginRight="2dp"
                 android:layout_marginTop="10dp">
 
                 <Button
@@ -485,5 +487,4 @@
             </LinearLayout>
         </RelativeLayout>
     </ScrollView>
-
 </RelativeLayout>

@@ -34,16 +34,17 @@ import autokatta.com.view.AddEmployeeActivity;
 import retrofit2.Response;
 
 /**
- * Created by ak-004 on 14/11/17.
+ * Created by ak-004 on 14/11/17
  */
 
 public class MyStoreEmployeeAdapter extends RecyclerView.Adapter<MyStoreEmployeeAdapter.YoHolder> implements RequestNotifier {
     private Activity mActivity;
     private List<StoreEmployeeResponse.Success.Employee> mEmpList = new ArrayList<>();
-    private ConnectionDetector mConnectionDetector;
-    private String strDetailsShare = "", myContact;
+    ConnectionDetector mConnectionDetector;
+    String myContact;
 
-    YoHolder yoHolder;
+    private YoHolder yoHolder;
+
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
 // you provide access to all the views for a data item in a view holder
@@ -51,8 +52,7 @@ public class MyStoreEmployeeAdapter extends RecyclerView.Adapter<MyStoreEmployee
         CardView mCardView;
         TextView mEmpName, mEmpContact;
         ImageView mCall, mEdit;
-        Button mRemove, mInventory, mEnquiries;
-
+        Button mRemove, mInventory;
 
         YoHolder(View itemView) {
             super(itemView);
@@ -62,10 +62,8 @@ public class MyStoreEmployeeAdapter extends RecyclerView.Adapter<MyStoreEmployee
             mCall = (ImageView) itemView.findViewById(R.id.call);
             mRemove = (Button) itemView.findViewById(R.id.btnRemove);
             mInventory = (Button) itemView.findViewById(R.id.btnInventory);
-            mEnquiries = (Button) itemView.findViewById(R.id.btnEnquiries);
+            //mEnquiries = (Button) itemView.findViewById(R.id.btnEnquiries);
             mEdit = (ImageView) itemView.findViewById(R.id.edit);
-
-
         }
     }
 
@@ -98,55 +96,42 @@ public class MyStoreEmployeeAdapter extends RecyclerView.Adapter<MyStoreEmployee
         myContact = mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).
                 getString("loginContact", "");
         yoHolder = holder;
-
         holder.mEmpName.setText(mEmpList.get(position).getName());
         holder.mEmpContact.setText(mEmpList.get(position).getContactNo());
-
         holder.mInventory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Bundle mBundle = new Bundle();
                 mBundle.putString("bundle_contact", holder.mEmpContact.getText().toString());
                 mBundle.putInt("bundle_storeId", mEmpList.get(holder.getAdapterPosition()).getStoreID());
-
                 Intent mIntent = new Intent(mActivity, InventoryDashboard.class);
                 mIntent.putExtras(mBundle);
                 mActivity.startActivity(mIntent);
             }
         });
 
-
         holder.mCall.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String contact = holder.mEmpContact.getText().toString();
-
                 call(contact);
             }
         });
+
         holder.mRemove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 int emp_id = mEmpList.get(holder.getAdapterPosition()).getStoreEmplyeeID();
-
                 deleteEmployee(emp_id);
-
-
             }
         });
 
-
         holder.mEdit.setOnClickListener(new View.OnClickListener() {
-
             ActivityOptions options = ActivityOptions.makeCustomAnimation(mActivity, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
 
             @Override
             public void onClick(View view) {
-
-                StoreEmployeeResponse.Success.Employee employee = mEmpList.get(holder.getAdapterPosition());
                 Bundle bundle = new Bundle();
-
                 Intent intentAddEmp = new Intent(mActivity, AddEmployeeActivity.class);
                 bundle.putInt("id", mEmpList.get(holder.getAdapterPosition()).getStoreEmplyeeID());
                 bundle.putString("name", mEmpList.get(holder.getAdapterPosition()).getName());
@@ -159,7 +144,6 @@ public class MyStoreEmployeeAdapter extends RecyclerView.Adapter<MyStoreEmployee
                 bundle.putString("keyword", "update");
                 intentAddEmp.putExtras(bundle);
                 mActivity.startActivity(intentAddEmp, options.toBundle());
-
             }
         });
     }
@@ -178,7 +162,6 @@ public class MyStoreEmployeeAdapter extends RecyclerView.Adapter<MyStoreEmployee
 
     @Override
     public void notifyError(Throwable error) {
-
         if (error instanceof SocketTimeoutException) {
             CustomToast.customToast(mActivity, mActivity.getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
@@ -192,16 +175,12 @@ public class MyStoreEmployeeAdapter extends RecyclerView.Adapter<MyStoreEmployee
 
     @Override
     public void notifyString(String str) {
-
         if (str != null) {
             if (str.startsWith("Success_Deleted")) {
                 CustomToast.customToast(mActivity, "Employee deleted");
                 yoHolder.mRemove.setText("Removed");
                 yoHolder.mRemove.setClickable(false);
-
-                //mStoreList.remove(getAdapterPosition());
             }
-
         }
     }
 
@@ -224,6 +203,4 @@ public class MyStoreEmployeeAdapter extends RecyclerView.Adapter<MyStoreEmployee
             System.out.println("No Activity Found For Call in Group contact adapter \n");
         }
     }
-
-
 }
