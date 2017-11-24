@@ -291,6 +291,7 @@ public class CreateStoreActivity extends AppCompatActivity implements Multispinn
                 onPickImage(v, "addCover");
                 break;
             case R.id.btncreatestore:
+                finalbrandtags = "";
                 Boolean flag = false;
                 Boolean flagtime = false;
                 String address = "", name = "", contact = "", location = "", website = "", storeDescription = "", workdays = "",
@@ -308,9 +309,8 @@ public class CreateStoreActivity extends AppCompatActivity implements Multispinn
                 strclose = closetime.getText().toString();
                 category = multiautotext.getText().toString();
 
-//                strBrandSpinner = brandSpinner.getSelectedItem().toString().replaceAll(" ", "");
 
-                ArrayList<String> tempbrands = new ArrayList<String>();
+                List<String> tempbrands = new ArrayList<String>();
                 String textbrand = multiautobrand.getText().toString();
 
                 if (textbrand.endsWith(","))
@@ -319,9 +319,10 @@ public class CreateStoreActivity extends AppCompatActivity implements Multispinn
                 textbrand = textbrand.trim();
 
                 if (!textbrand.equals("")) {
+
                     String[] bparts = textbrand.split(",");
-                    for (int o = 0; o < bparts.length; o++) {
-                        brandtagpart = bparts[o].trim();
+                    for (String bpart : bparts) {
+                        brandtagpart = bpart.trim();
                         if (!brandtagpart.equals("") && !brandtagpart.equalsIgnoreCase(" "))
                             tempbrands.add(brandtagpart);
                         if (!brandTags.contains(brandtagpart) && !brandtagpart.equals("") && !brandtagpart.equalsIgnoreCase(" ")) {
@@ -341,6 +342,41 @@ public class CreateStoreActivity extends AppCompatActivity implements Multispinn
                     else
                         finalbrandtags = finalbrandtags + "," + tempbrands.get(n);
                 }
+
+                System.out.println("finalbrandtags=" + finalbrandtags);
+
+
+//                ArrayList<String> tempbrands = new ArrayList<String>();
+//                String textbrand = multiautobrand.getText().toString();
+//
+//                if (textbrand.endsWith(","))
+//                    textbrand = textbrand.substring(0, textbrand.length() - 1);
+//
+//                textbrand = textbrand.trim();
+//
+//                if (!textbrand.equals("")) {
+//                    String[] bparts = textbrand.split(",");
+//                    for (int o = 0; o < bparts.length; o++) {
+//                        brandtagpart = bparts[o].trim();
+//                        if (!brandtagpart.equals("") && !brandtagpart.equalsIgnoreCase(" "))
+//                            tempbrands.add(brandtagpart);
+//                        if (!brandTags.contains(brandtagpart) && !brandtagpart.equals("") && !brandtagpart.equalsIgnoreCase(" ")) {
+//                            System.out.println("brand tag going to add=" + brandtagpart);
+//                            try {
+//                                addOtherBrandTags(brandtagpart);
+//                            } catch (Exception e) {
+//                                e.printStackTrace();
+//                            }
+//                        }
+//                    }
+//                }
+//
+//                for (int n = 0; n < tempbrands.size(); n++) {
+//                    if (finalbrandtags.equals(""))
+//                        finalbrandtags = tempbrands.get(n);
+//                    else
+//                        finalbrandtags = finalbrandtags + "," + tempbrands.get(n);
+//                }
 
                 if (rbtstoreproduct.isChecked() && !rbtstoreservice.isChecked() && !rbtstorevehicle.isChecked()) {
                     storetype = "product";
@@ -847,6 +883,7 @@ public class CreateStoreActivity extends AppCompatActivity implements Multispinn
                         Intent intent = new Intent(CreateStoreActivity.this, AddAdminsForStoreActivity.class);
                         intent.putExtras(bundle);
                         startActivity(intent, options.toBundle());
+                        finish();
 
 //                        if (callFrom.equals("interestbased") || callFrom.equals("VehicleList")) {
 //                            AddMoreAdminsForStoreFrag addAdmin = new AddMoreAdminsForStoreFrag();

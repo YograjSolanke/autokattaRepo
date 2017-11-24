@@ -163,6 +163,7 @@ public class UpdateStoreRequest {
     public void setCoverImage(String coverImage) {
         this.coverImage = coverImage;
     }
+
 public UpdateStoreRequest(String storename, int store_id, String location, String website, String open, String close,
                           String profile, String category, String working_days, String storeDescription, String storetype,
                           String address, String coverImage, String brandTags, String strBrandSpinner) {

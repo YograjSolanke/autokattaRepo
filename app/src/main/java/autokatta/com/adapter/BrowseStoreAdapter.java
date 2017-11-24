@@ -1,13 +1,16 @@
 package autokatta.com.adapter;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
@@ -474,6 +477,16 @@ public class BrowseStoreAdapter extends RecyclerView.Adapter<BrowseStoreAdapter.
     private void call(String StoreContact) {
         Intent in = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + StoreContact));
         try {
+            if (ActivityCompat.checkSelfPermission(activity, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
+                return;
+            }
             activity.startActivity(in);
         } catch (android.content.ActivityNotFoundException ex) {
             System.out.println("No Activity Found For Call in Group contact adapter \n");
