@@ -1,5 +1,6 @@
 package autokatta.com.fragment_profile;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
@@ -20,6 +21,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.net.ConnectException;
+import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -62,37 +66,34 @@ public class EditAllAbout extends AppCompatActivity implements RequestNotifier, 
     TextView mUsertypetxt, mIndusttxt, mCattxt, mBrandtxt, mCount, mCompany, mDesignation;
     ImageView mEdtWorkedat, mEdtAddress, mEdtCompany, mEdtDesignation, mEdtSkills,
             mEdtAbout, mEdtEmail, mEdtWebsite, mEdtIntrest, mDoneAbout, mDoneMail, mDoneWebsite, mDoneSkills, mDoneworkat, mDoneAddress;
-
     List<String> parsedDataSkills = new ArrayList<>();
     final List<String> mSkillList = new ArrayList<>();
     final HashMap<String, String> mSkillList1 = new HashMap<>();
-
     EditText otherIndustry;
     EditText otherCategory;
     EditText otherbrand;
-
     Spinner moduleSpinner, usertypeSpinner, industrySpinner, brandSpinner;
     String[] MODULE = null;
     String[] INDUSTRY = null;
     String[] BRAND = null;
     TextInputLayout otherIndustryLayout, otherCategoryLayout, otherbrandlayout;
-
+    ProgressDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_all_about);
+        dialog = new ProgressDialog(this);
+        dialog.setMessage("Loading...");
         if (getSupportActionBar() != null) {
             getSupportActionBar().setHomeButtonEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
         mApiCall = new ApiCall(this, EditAllAbout.this);
         mGenericFunctions = new GenericFunctions();
-
         setTitle("Edit Details");
         mApiCall.profileAbout(getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""),
                 getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""));
-
         mEmail = (EditText) findViewById(R.id.email);
         mWebsite = (EditText) findViewById(R.id.website);
         mCity = (AutoCompleteTextView) findViewById(R.id.address);
@@ -124,7 +125,6 @@ public class EditAllAbout extends AppCompatActivity implements RequestNotifier, 
         mDoneSkills = (ImageView) findViewById(R.id.doneskills);
         mDoneAddress = (ImageView) findViewById(R.id.doneaddress);
         mDoneworkat = (ImageView) findViewById(R.id.doneworkat);
-
         usertypeSpinner = (Spinner) findViewById(spinnerUsertype);
         industrySpinner = (Spinner) findViewById(spinnerindustry);
         moduleSpinner = (Spinner) findViewById(spinnerCategory);
@@ -132,12 +132,11 @@ public class EditAllAbout extends AppCompatActivity implements RequestNotifier, 
         otherIndustryLayout = (TextInputLayout) findViewById(R.id.otherIndustryLayout);
         otherCategoryLayout = (TextInputLayout) findViewById(R.id.otherCategoryLayout);
         otherbrandlayout = (TextInputLayout) findViewById(R.id.otherbrand);
-
         usertypeSpinner.setOnItemSelectedListener(EditAllAbout.this);
         industrySpinner.setOnItemSelectedListener(EditAllAbout.this);
         moduleSpinner.setOnItemSelectedListener(EditAllAbout.this);
         brandSpinner.setOnItemSelectedListener(EditAllAbout.this);
-
+        dialog.show();
         mApiCall.getUserCategories();
         mApiCall.Industries();
         mApiCall.getSkills();
@@ -145,7 +144,6 @@ public class EditAllAbout extends AppCompatActivity implements RequestNotifier, 
 
         mCity.setEnabled(false);
         mCity.setFocusable(false);
-
         mEdtWorkedat.setOnClickListener(EditAllAbout.this);
         mEdtAddress.setOnClickListener(EditAllAbout.this);
         mEdtCompany.setOnClickListener(EditAllAbout.this);
@@ -210,6 +208,9 @@ public class EditAllAbout extends AppCompatActivity implements RequestNotifier, 
     public void notifySuccess(Response<?> response) {
         if (response != null) {
             if (response.isSuccessful()) {
+                if (dialog.isShowing()) {
+                    dialog.dismiss();
+                }
                 if (response.body() instanceof ProfileAboutResponse) {
                     ProfileAboutResponse mProfileAboutResponse = (ProfileAboutResponse) response.body();
                     if (!mProfileAboutResponse.getSuccess().isEmpty()) {
@@ -346,19 +347,44 @@ public class EditAllAbout extends AppCompatActivity implements RequestNotifier, 
                 } else {
                     CustomToast.customToast(getApplicationContext(), getString(R.string._404_));
                 }
+            } else {
+                if (dialog.isShowing()) {
+                    dialog.dismiss();
+                }
             }
         } else {
+            if (dialog.isShowing()) {
+                dialog.dismiss();
+            }
             CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
         }
     }
 
     @Override
     public void notifyError(Throwable error) {
-
+        if (dialog.isShowing()) {
+            dialog.dismiss();
+        }
+        if (error instanceof SocketTimeoutException) {
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
+        } else if (error instanceof NullPointerException) {
+//                CustomToast.customToast(getActivity(), getString(R.string.no_response));
+        } else if (error instanceof ClassCastException) {
+//                CustomToast.customToast(getActivity(), getString(R.string.no_response));
+        } else if (error instanceof ConnectException) {
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
+        } else if (error instanceof UnknownHostException) {
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
+        } else {
+            Log.i("Check Class-", "About Activity");
+        }
     }
 
     @Override
     public void notifyString(String str) {
+        if (dialog.isShowing()) {
+            dialog.dismiss();
+        }
         if (!str.equals("")) {
             if (str.equals("success_update")) {
                 CustomToast.customToast(getApplicationContext(), "Profile Updated");
@@ -409,10 +435,7 @@ public class EditAllAbout extends AppCompatActivity implements RequestNotifier, 
                 mDoneworkat.setVisibility(View.VISIBLE);
                 mEdtWorkedat.setVisibility(View.GONE);
                 mUsertypelay.setVisibility(View.VISIBLE);
-
-
-                if (strIndustry.equalsIgnoreCase(""))
-                {
+                if (strIndustry.equalsIgnoreCase("")) {
                     mIndustrylay.setVisibility(View.GONE);
                     mCategorylay.setVisibility(View.GONE);
                     mBrandlay.setVisibility(View.GONE);
@@ -420,10 +443,8 @@ public class EditAllAbout extends AppCompatActivity implements RequestNotifier, 
                     mIndustrylay.setVisibility(View.VISIBLE);
                 }
 
-                if (brand.equalsIgnoreCase(""))
-                {
+                if (brand.equalsIgnoreCase("")) {
                     mBrandlay.setVisibility(View.GONE);
-
                 }else {
                     mBrandlay.setVisibility(View.VISIBLE);
                 }
@@ -462,7 +483,6 @@ public class EditAllAbout extends AppCompatActivity implements RequestNotifier, 
                 mAbouttxt.setEnabled(true);
                 mAbouttxt.setFocusableInTouchMode(true);
                 mAbouttxt.setFocusable(true);
-
                 break;
 
             case R.id.editwebsite:
@@ -471,7 +491,6 @@ public class EditAllAbout extends AppCompatActivity implements RequestNotifier, 
                 mWebsite.setEnabled(true);
                 mWebsite.setFocusableInTouchMode(true);
                 mWebsite.setFocusable(true);
-
                 break;
 
             case R.id.editmail:
@@ -489,7 +508,6 @@ public class EditAllAbout extends AppCompatActivity implements RequestNotifier, 
                 break;
 
             case R.id.doneabout:
-
                 if (mAbouttxt.getText().toString().equalsIgnoreCase("") || mAbouttxt.getText().toString().equalsIgnoreCase(null)) {
                     mAbouttxt.setError("Enter About ");
                     mAbouttxt.requestFocus();
@@ -502,7 +520,6 @@ public class EditAllAbout extends AppCompatActivity implements RequestNotifier, 
                 break;
 
             case R.id.donemail:
-
                 if (!mGenericFunctions.isValidEmail(mEmail.getText().toString())) {
                     mEmail.setError("Invalid Email");
                     mEmail.requestFocus();
@@ -518,7 +535,6 @@ public class EditAllAbout extends AppCompatActivity implements RequestNotifier, 
                 break;
 
             case R.id.donewebsite:
-
                 if (!isValidUrl(mWebsite.getText().toString())) {
                     mWebsite.setError("Invalid Website");
                     mWebsite.requestFocus();
@@ -530,13 +546,11 @@ public class EditAllAbout extends AppCompatActivity implements RequestNotifier, 
                     mDoneWebsite.setVisibility(View.GONE);
                     mEdtWebsite.setVisibility(View.VISIBLE);
                     mWebsite.setEnabled(false);
-
                 }
                 break;
 
             case R.id.doneskills:
                 String mUpdatedSkills = mSkills.getText().toString().trim();
-
                  /*Skills*/
                 mSkills.clearFocus();
                 newskills = mSkills.getText().toString().trim();
@@ -576,11 +590,9 @@ public class EditAllAbout extends AppCompatActivity implements RequestNotifier, 
                     mSkills.setEnabled(false);
 
                 }
-
                 break;
 
             case R.id.doneaddress:
-
                 Boolean flag = false;
                 try {
                     for (int i = 0; i < resultList.size(); i++) {
@@ -603,7 +615,6 @@ public class EditAllAbout extends AppCompatActivity implements RequestNotifier, 
                     mEdtAddress.setVisibility(View.VISIBLE);
                     mCity.setEnabled(false);
                     mCity.setFocusable(false);
-
                 } else {
                     mCity.setError("Please Select Address From Dropdown Only");
                     mCity.requestFocus();
@@ -613,31 +624,24 @@ public class EditAllAbout extends AppCompatActivity implements RequestNotifier, 
                 break;
 
             case R.id.doneworkat:
-
                 mUsertypelay.setVisibility(View.VISIBLE);
                 mIndustrylay.setVisibility(View.VISIBLE);
                 mCategorylay.setVisibility(View.VISIBLE);
                 mBrandlay.setVisibility(View.VISIBLE);
-
-
        /*         usertypeSpinner.setAdapter(null);
                 industrySpinner.setAdapter(null);
                 moduleSpinner.setAdapter(null);
                 brandSpinner.setAdapter(null);*/
 
                 strprofession = usertypeSpinner.getSelectedItem().toString().trim();
-
                 if (!strprofession.equalsIgnoreCase("Student")) {
                     strIndustry = industrySpinner.getSelectedItem().toString().trim();
-
                 }
                 if (moduleSpinner.getVisibility() == View.VISIBLE)
                     subProfession = moduleSpinner.getSelectedItem().toString().trim();
 
-
                 if (brandSpinner.getVisibility() == View.VISIBLE)
                     brand = brandSpinner.getSelectedItem().toString().trim();
-
                 if (strprofession.equalsIgnoreCase("Select User Type")) {
                     Toast.makeText(getApplicationContext(), "Please select User type", Toast.LENGTH_LONG).show();
                 } else if ((!strprofession.equalsIgnoreCase("Student") && (strIndustry.equalsIgnoreCase("") || strIndustry.equalsIgnoreCase("Select Industry")))) {
@@ -676,10 +680,8 @@ public class EditAllAbout extends AppCompatActivity implements RequestNotifier, 
                     strIndustry = "";
                 } else {
                     mApiCall.updateProfile(RegId, "", "", strprofession, subProfession, "", "", "", "", strIndustry, brand, "", "", "UserType");
-
                     mDoneworkat.setVisibility(View.GONE);
                     mEdtWorkedat.setVisibility(View.VISIBLE);
-
                     usertypeSpinner.setVisibility(View.GONE);
                     industrySpinner.setVisibility(View.GONE);
                     moduleSpinner.setVisibility(View.GONE);
@@ -695,7 +697,6 @@ public class EditAllAbout extends AppCompatActivity implements RequestNotifier, 
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
         switch (adapterView.getId()) {
             case (spinnerUsertype):
-
                 // profession = usertypeSpinner.getSelectedItem().toString();
                 if (!usertypeSpinner.getSelectedItem().toString().equalsIgnoreCase("Student")
                         && !usertypeSpinner.getSelectedItem().toString().equalsIgnoreCase("Select User Type")) {
@@ -704,7 +705,6 @@ public class EditAllAbout extends AppCompatActivity implements RequestNotifier, 
                 } else {
 //                        otherCategorylayout.setVisibility(View.GONE);
                     industrySpinner.setVisibility(View.GONE);
-
                     if (otherCategoryLayout.getVisibility() == View.VISIBLE) {
                         otherCategoryLayout.setVisibility(View.GONE);
                     }

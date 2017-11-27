@@ -52,9 +52,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/profile"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="2dp"
                         android:layout_toEndOf="@+id/rating_count"
                         android:numStars="5"
-                        android:stepSize="1.0"
+                        android:stepSize="1"
                         android:theme="@style/RatingBar" />
 
                     <TextView
@@ -145,8 +147,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/autolocation"
-                        android:drawableStart="@mipmap/web"
                         android:layout_toLeftOf="@+id/storeShare"
+                        android:drawableStart="@mipmap/web"
                         android:fontFamily="sans-serif"
                         android:gravity="start"
                         android:text="@string/website" />
@@ -203,8 +205,8 @@
                         android:id="@+id/storeShare"
                         android:layout_width="35dp"
                         android:layout_height="35dp"
-                        android:layout_below="@+id/storedelete"
                         android:layout_alignParentEnd="true"
+                        android:layout_below="@+id/storedelete"
                         android:layout_marginEnd="5dp"
                         android:contentDescription="@string/app_name"
                         android:src="@mipmap/new_share" />
@@ -230,8 +232,8 @@
                 android:layout_marginTop="@dimen/margin_small"
                 android:baselineAligned="false"
                 android:gravity="center"
-                android:visibility="gone"
                 android:orientation="horizontal"
+                android:visibility="gone"
                 android:weightSum="4">
 
                 <LinearLayout

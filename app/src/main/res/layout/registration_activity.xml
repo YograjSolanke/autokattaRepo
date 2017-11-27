@@ -52,6 +52,57 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/otp_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginEnd="@dimen/fab_margin"
+        android:layout_marginStart="@dimen/fab_margin"
+        android:layout_below="@+id/linear"
+        android:visibility="gone"
+        android:orientation="vertical">
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/edtotp1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_horizontal"
+                android:ems="10"
+                android:gravity="center"
+                android:hint="Enter OTP for Contact"
+                android:inputType="phone"
+                android:textColor="#2C3343"
+                android:textColorHint="#848484" />
+        </android.support.design.widget.TextInputLayout>
+
+        <Button
+            android:id="@+id/submit_otp"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="15dp"
+            android:background="@color/background"
+            android:text="Submit"
+            android:textColor="#ffffff"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:text="Click Here To Resend OTP"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/text_color" />
+
+    </LinearLayout>
+
     <ScrollView
         android:id="@+id/scroll_view"
         android:layout_width="match_parent"

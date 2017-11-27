@@ -36,7 +36,7 @@ import retrofit2.Response;
 import static android.content.Context.MODE_PRIVATE;
 
 /**
- * Created by ak-003 on 28/3/17.
+ * Created by ak-003 on 28/3/17
  */
 
 public class MyStoreListFragment extends Fragment implements View.OnClickListener, RequestNotifier, SwipeRefreshLayout.OnRefreshListener {
@@ -52,9 +52,6 @@ public class MyStoreListFragment extends Fragment implements View.OnClickListene
     LinearLayoutManager mLinearLayoutManager;
     TextView mNoData;
     MyStoreListAdapter adapter;
-
-    private static int firstVisibleInListview;
-
 
     public MyStoreListFragment() {
         //empty constructor
@@ -97,7 +94,6 @@ public class MyStoreListFragment extends Fragment implements View.OnClickListene
                     adapter = new MyStoreListAdapter(getActivity(), storeResponseArrayList);
                     mRecyclerView.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
-
                 } else {
                     mSwipeRefreshLayout.setRefreshing(false);
                     mNoData.setVisibility(View.VISIBLE);
@@ -124,13 +120,14 @@ public class MyStoreListFragment extends Fragment implements View.OnClickListene
                 }
             } else {
                 mSwipeRefreshLayout.setRefreshing(false);
-                // CustomToast.customToast(getActivity(), getString(R.string._404));
+                if (isAdded())
+                    CustomToast.customToast(getActivity(), getString(R.string._404));
             }
         } else {
             mSwipeRefreshLayout.setRefreshing(false);
-            CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string.no_response));
         }
-
     }
 
     @Override
@@ -142,15 +139,20 @@ public class MyStoreListFragment extends Fragment implements View.OnClickListene
     public void notifyError(Throwable error) {
         mSwipeRefreshLayout.setRefreshing(false);
         if (error instanceof SocketTimeoutException) {
-            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof NullPointerException) {
-            //CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            // CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
-            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
-            CustomToast.customToast(getActivity(), getString(R.string.no_internet));
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         } else {
             Log.i("Check Class-"
                     , "MyStoreListFragment");
@@ -214,7 +216,6 @@ public class MyStoreListFragment extends Fragment implements View.OnClickListene
                 mLinearLayoutManager.setReverseLayout(true);
                 mLinearLayoutManager.setStackFromEnd(true);
                 mRecyclerView.setLayoutManager(mLinearLayoutManager);
-                firstVisibleInListview = mLinearLayoutManager.findFirstVisibleItemPosition();
                 mSwipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
                         android.R.color.holo_green_light,
                         android.R.color.holo_orange_light,
@@ -230,21 +231,5 @@ public class MyStoreListFragment extends Fragment implements View.OnClickListene
         });
         fabCreateStore.setOnClickListener(this);
         mSwipeRefreshLayout.setOnRefreshListener(this);
-
-        /*mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-
-                if (dy > 0) {
-                    // Scrolling up
-                    fabCreateStore.hide(true);
-
-                } else {
-                    // Scrolling down
-                    fabCreateStore.show(true);
-                }
-            }
-        });*/
     }
 }

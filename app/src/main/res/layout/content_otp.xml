@@ -55,7 +55,6 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp">
 
-
                 <EditText
                     android:id="@+id/otpemail"
                     android:layout_width="match_parent"
@@ -66,6 +65,7 @@
                     android:layout_marginTop="10dp"
                     android:ems="10"
                     android:gravity="center"
+                    android:inputType="textEmailAddress"
                     android:hint="Enter OTP for Email Validation"
                     android:paddingEnd="10dp"
                     android:paddingStart="10dp"
@@ -74,7 +74,6 @@
                     android:textColorHint="#848484"
                     android:visibility="gone" />
             </android.support.design.widget.TextInputLayout>
-
 
             <Button
                 android:id="@+id/submit_otp"
@@ -93,24 +92,11 @@
                 android:id="@+id/textView4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignStart="@+id/otp1"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="20dp"
                 android:text="Click Here To Resend OTP"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@color/text_color" />
-
-            <!--<TextView
-                android:id="@+id/otp2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:text="Medium Text"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="#2C3343"
-                android:visibility="visible" />-->
 
             <TextView
                 android:id="@+id/emailOtpText"
@@ -123,11 +109,6 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="#2C3343"
                 android:visibility="gone" />
-
-
         </LinearLayout>
-
     </ScrollView>
-
-
 </RelativeLayout>

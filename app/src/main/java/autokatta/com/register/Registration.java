@@ -60,16 +60,16 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
         AdapterView.OnItemSelectedListener, android.location.LocationListener, RequestNotifier, View.OnTouchListener {
 
     EditText personName, mobileNo, email, dateOfBirth, pincode, otherIndustry, otherCategory, otherbrand, password, confirmPassword;
-    Spinner moduleSpinner, usertypeSpinner, industrySpinner,brandSpinner;
+    Spinner moduleSpinner, usertypeSpinner, industrySpinner, brandSpinner;
     Button btnSubmit, btnClear;
     AutoCompleteTextView address;
-    TextInputLayout otherIndustryLayout, otherCategoryLayout,otherbrandlayout;
+    TextInputLayout otherIndustryLayout, otherCategoryLayout, otherbrandlayout;
     ImageView clearDate;
     String namestr, contactstr, emailstr, DOBstr, pincodestr, passwordstr, confirmpassstr, addressstr, genderstr,
-            profession="", sub_profession="", strIndustry="",brand="";
+            profession = "", sub_profession = "", strIndustry = "", brand = "";
 
     RelativeLayout mRegistration;
-    LinearLayout mLinear, mButton;
+    LinearLayout mLinear, mButton, mOtpLayout;
     ScrollView mScrollView;
     Button mNext;
     String mSuccess = "";
@@ -137,6 +137,7 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
         mRegistration = (RelativeLayout) findViewById(R.id.registration);
         mLinear = (LinearLayout) findViewById(R.id.linear);
         mButton = (LinearLayout) findViewById(R.id.button);
+        mOtpLayout = (LinearLayout) findViewById(R.id.otp_layout);
         mNext = (Button) findViewById(R.id.next);
         mScrollView = (ScrollView) findViewById(R.id.scroll_view);
         rg1 = (RadioGroup) findViewById(R.id.radiogp1);
@@ -160,7 +161,6 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
         apiCall.getUserCategories();
         apiCall.Industries();
         apiCall.getBrandTags("both");
-
     }
 
     @Override
@@ -175,9 +175,7 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View view) {
-
         switch (view.getId()) {
-
             case R.id.next:
                 contactstr = mobileNo.getText().toString().trim();
                 if (TextUtils.isEmpty(mobileNo.getText().toString().trim())) {
@@ -203,19 +201,15 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
                 passwordstr = password.getText().toString().trim();
                 confirmpassstr = confirmPassword.getText().toString().trim();
                 genderstr = ((RadioButton) findViewById(rg1.getCheckedRadioButtonId())).getText().toString().trim();
-
                 profession = usertypeSpinner.getSelectedItem().toString().trim();
-
                 if (!profession.equalsIgnoreCase("Student")) {
                     strIndustry = industrySpinner.getSelectedItem().toString().trim();
-
                 }
-                if (moduleSpinner.getVisibility()==View.VISIBLE)
+                if (moduleSpinner.getVisibility() == View.VISIBLE)
                     sub_profession = moduleSpinner.getSelectedItem().toString().trim();
 
-                if (brandSpinner.getVisibility()==View.VISIBLE)
+                if (brandSpinner.getVisibility() == View.VISIBLE)
                     brand = brandSpinner.getSelectedItem().toString().trim();
-
 
                 if (!addressstr.isEmpty()) {
                     resultList = GooglePlacesAdapter.getResultList();
@@ -274,7 +268,7 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
                     confirmPassword.requestFocus();
                 } else if (profession.equalsIgnoreCase("Select User Type")) {
                     Toast.makeText(getApplicationContext(), "Please select User type", Toast.LENGTH_LONG).show();
-                } else if ((!profession.equalsIgnoreCase("Student") && (strIndustry.equalsIgnoreCase("")||strIndustry.equalsIgnoreCase("Select Industry")))) {
+                } else if ((!profession.equalsIgnoreCase("Student") && (strIndustry.equalsIgnoreCase("") || strIndustry.equalsIgnoreCase("Select Industry")))) {
                     Toast.makeText(Registration.this, "Please select industry", Toast.LENGTH_LONG).show();
                 } else if (strIndustry.equalsIgnoreCase("Other") && otherIndustry.getText().toString().trim().equalsIgnoreCase("")) {
                     otherIndustry.setError("Enter Industry");
@@ -287,9 +281,9 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
                     otherCategory.setError("Enter Profession");
                 } else if (sub_profession.equalsIgnoreCase("other") && !otherCategory.getText().toString().matches("[a-zA-Z ]*")) {
                     otherCategory.setError("Enter  Valid Profession");
-                } else if ((sub_profession.startsWith("New vehicle") ||sub_profession.startsWith("Used vehicle"))&& brand.equalsIgnoreCase("-Select Brand-")) {
+                } else if ((sub_profession.startsWith("New vehicle") || sub_profession.startsWith("Used vehicle")) && brand.equalsIgnoreCase("-Select Brand-")) {
                     Toast.makeText(Registration.this, "Please select Brand", Toast.LENGTH_LONG).show();
-                }else if (brand.equalsIgnoreCase("other") && otherbrand.getText().toString().equalsIgnoreCase("")) {
+                } else if (brand.equalsIgnoreCase("other") && otherbrand.getText().toString().equalsIgnoreCase("")) {
                     otherbrand.setError("Enter Brand");
                 } else if (brand.equalsIgnoreCase("other") && !otherbrand.getText().toString().matches("[a-zA-Z ]*")) {
                     otherbrand.setError("Enter  Valid Brand");
@@ -309,7 +303,7 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
                     apiCall.addOtheruserCategory(sub_profession);
                 } else if (brand.equalsIgnoreCase("Other")) {
                     brand = otherbrand.getText().toString().trim();
-                    apiCall.addOtherBrandTags(brand,"both");
+                    apiCall.addOtherBrandTags(brand, "both");
                 } else if (strIndustry.equalsIgnoreCase("Other")) {
                     strIndustry = otherIndustry.getText().toString().trim();
                     apiCall.addOtherIndustry(strIndustry);
@@ -320,13 +314,10 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
                 } else if (strIndustry.equalsIgnoreCase("Select Industry")) {
                     strIndustry = "";
                 } else if (!mCheckBox.isChecked()) {
-                CustomToast.customToast(getApplicationContext(),"Please accept terms and conditions");
-                }else{
-
-                        apiCall.registrationAfterOtp(namestr, contactstr, emailstr, DOBstr, genderstr, pincodestr, addressstr, profession, passwordstr, sub_profession, strIndustry,brand);
-                    }
-
-
+                    CustomToast.customToast(getApplicationContext(), "Please accept terms and conditions");
+                } else {
+                    apiCall.registrationAfterOtp(namestr, contactstr, emailstr, DOBstr, genderstr, pincodestr, addressstr, profession, passwordstr, sub_profession, strIndustry, brand);
+                }
                 break;
 
             case R.id.btnclear:
@@ -349,12 +340,10 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
                 confirmPassword.clearFocus();
                 industrySpinner.clearFocus();
                 usertypeSpinner.clearFocus();
-
                 usertypeSpinner.setSelection(0);
                 industrySpinner.setSelection(0);
                 moduleSpinner.setSelection(0);
                 brandSpinner.setSelection(0);
-
                 personName.setError(null);
                 mobileNo.setError(null);
                 email.setError(null);
@@ -369,7 +358,6 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
                 break;
 
             case R.id.clearDate:
-
                 dateOfBirth.setText(null);
                 dateOfBirth.clearFocus();
                 dateOfBirth.setError(null);
@@ -410,7 +398,6 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
                 } else {
 //                        otherCategorylayout.setVisibility(View.GONE);
                     industrySpinner.setVisibility(View.GONE);
-
                     if (otherCategoryLayout.getVisibility() == View.VISIBLE) {
                         otherCategoryLayout.setVisibility(View.GONE);
                     }
@@ -437,16 +424,14 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
                 break;
             case (R.id.spinnerCategory):
                 // sub_profession = moduleSpinner.getSelectedItem().toString();
-               if (moduleSpinner.getSelectedItem().toString().startsWith("Used vehicle")||moduleSpinner.getSelectedItem().toString().startsWith("New vehicle"))
-               {
-                   brandSpinner.setVisibility(View.VISIBLE);
-                   otherbrandlayout.setVisibility(View.GONE);
-               }else
-                   if (moduleSpinner.getSelectedItem().toString().equalsIgnoreCase("Other")) {
-                       otherCategoryLayout.setVisibility(View.VISIBLE);
-                   } else {
-                       otherCategoryLayout.setVisibility(View.GONE);
-                   }
+                if (moduleSpinner.getSelectedItem().toString().startsWith("Used vehicle") || moduleSpinner.getSelectedItem().toString().startsWith("New vehicle")) {
+                    brandSpinner.setVisibility(View.VISIBLE);
+                    otherbrandlayout.setVisibility(View.GONE);
+                } else if (moduleSpinner.getSelectedItem().toString().equalsIgnoreCase("Other")) {
+                    otherCategoryLayout.setVisibility(View.VISIBLE);
+                } else {
+                    otherCategoryLayout.setVisibility(View.GONE);
+                }
                 break;
             case (R.id.spinnerbrand):
 
@@ -457,7 +442,6 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
                 }
                 break;
         }
-
     }
 
     @Override
@@ -484,7 +468,6 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
                         moduleSpinner.setAdapter(dataadapter);
                     } else
                         CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
-
                 } else if (response.body() instanceof IndustryResponse) {
                     IndustryResponse moduleResponse = (IndustryResponse) response.body();
                     final List<String> module = new ArrayList<>();
@@ -547,15 +530,17 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
         mSuccess = str;
         if (str != null) {
             if (str.equalsIgnoreCase("Success")) {
-              //  getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("loginregistrationid", str).apply();
+                //  getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("loginregistrationid", str).apply();
                 CustomToast.customToast(getApplicationContext(), "Already Registered Please Login");
                 Intent i = new Intent(Registration.this, LoginActivity.class);
                 startActivity(i);
                 finish();
             } else if (str.equalsIgnoreCase("Fail")) {
-                mScrollView.setVisibility(View.VISIBLE);
+                mOtpLayout.setVisibility(View.VISIBLE);
                 mLinear.setVisibility(View.GONE);
-                mButton.setVisibility(View.VISIBLE);
+                sendOtp(contactstr);
+                //mButton.setVisibility(View.VISIBLE);
+                //mScrollView.setVisibility(View.VISIBLE);
             } else {
                 getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putInt("loginregistrationid", Integer.parseInt(str)).apply();
                 CustomToast.customToast(getApplicationContext(), " Registered Successfully");
@@ -566,7 +551,14 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
         } else {
             CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
         }
+    }
 
+    /*
+    Send OTP...
+     */
+    public void sendOtp(String contactstr) {
+        ApiCall mApiCall = new ApiCall(Registration.this, this);
+        mApiCall.getOTP(contactstr);
     }
 
     @Override

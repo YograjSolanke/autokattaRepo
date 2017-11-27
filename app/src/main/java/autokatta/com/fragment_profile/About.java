@@ -1,6 +1,7 @@
 package autokatta.com.fragment_profile;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -62,7 +63,7 @@ import static autokatta.com.R.id.spinnerindustry;
 import static autokatta.com.adapter.GooglePlacesAdapter.resultList;
 
 /**
- * Created by ak-001 on 18/3/17.
+ * Created by ak-001 on 18/3/17
  */
 
 public class About extends Fragment implements RequestNotifier, MaterialIntroListener, AdapterView.OnItemSelectedListener {
@@ -76,19 +77,14 @@ public class About extends Fragment implements RequestNotifier, MaterialIntroLis
     String newcompanyname, newdesignation, newskills, strCompany, strDesignation, strskills;
     Bundle b = getArguments();
     LinearLayout mUsertypelay, mIndustrylay, mCategorylay, mBrandlay;
-
     String userName, email, contact, company, designation, subProfession, websitestr, city, skills, interest;
     String mUpdatedEmail, mUpdateAbout, mUpdatedCompany, mUpdatedDesignation, mUpdatedSkills, mUpdatedSkills1, mUpdatedCity, mUpdatedWebsite;
-
     final List<String> mSkillList = new ArrayList<>();
     final HashMap<String, String> mSkillList1 = new HashMap<>();
-
     final List<String> mCompanyList = new ArrayList<>();
     final HashMap<String, Integer> mCompanyList1 = new HashMap<>();
-
     final List<String> mDesignationList = new ArrayList<>();
     final HashMap<String, String> mDesignationList1 = new HashMap<>();
-
     List<String> parsedDataCompany = new ArrayList<>();
     List<String> parsedDataDesignation = new ArrayList<>();
     List<String> parsedDataSkills = new ArrayList<>();
@@ -109,6 +105,7 @@ public class About extends Fragment implements RequestNotifier, MaterialIntroLis
     LinearLayout mLinear;
     GenericFunctions mGenericFunctions;
     private static final String INTRO_FOCUS_1 = "intro_focus_1";
+    ProgressDialog dialog;
 
     @Override
     public void onAttach(Context context) {
@@ -147,6 +144,9 @@ public class About extends Fragment implements RequestNotifier, MaterialIntroLis
     public void notifySuccess(Response<?> response) {
         if (response != null) {
             if (response.isSuccessful()) {
+                if (dialog.isShowing()) {
+                    dialog.dismiss();
+                }
                 if (response.body() instanceof ProfileAboutResponse) {
                     mLinear.setVisibility(View.VISIBLE);
                     ProfileAboutResponse mProfileAboutResponse = (ProfileAboutResponse) response.body();
@@ -165,11 +165,7 @@ public class About extends Fragment implements RequestNotifier, MaterialIntroLis
                         interest = mProfileAboutResponse.getSuccess().get(0).getInterests();
                         brand = mProfileAboutResponse.getSuccess().get(0).getBrandName();
                         strIndustry = mProfileAboutResponse.getSuccess().get(0).getIndustry();
-
                         mContact.setText(contact);
-                        Log.i("RegId-->", "   --->" + RegId);
-                        Log.i("SUBProfession-->", "   --->" + subProfession);
-
                         mEmail.setText(email);
                         mAbouttxt.setText(mProfileAboutResponse.getSuccess().get(0).getAbout());
                         mWebsite.setText(websitestr);
@@ -178,17 +174,13 @@ public class About extends Fragment implements RequestNotifier, MaterialIntroLis
                         mCompany.setText(company);
                         mDesignation.setText(designation);
                         mSkills.setText(skills);
-
                         mUsertypetxt.setText(strprofession);
-
-
                         mIndusttxt.setText(mProfileAboutResponse.getSuccess().get(0).getIndustry());
                         if (strprofession.equalsIgnoreCase("Student")) {
                             mBrandlay.setVisibility(View.GONE);
                             mIndustrylay.setVisibility(View.GONE);
                             mCategorylay.setVisibility(View.GONE);
                         }
-
                         if (!mProfileAboutResponse.getSuccess().get(0).getIndustry().equalsIgnoreCase("Automotive")) {
                             mBrandlay.setVisibility(View.GONE);
                             mCategorylay.setVisibility(View.GONE);
@@ -314,8 +306,15 @@ public class About extends Fragment implements RequestNotifier, MaterialIntroLis
                     if (isAdded())
                         CustomToast.customToast(getActivity(), getString(R.string._404_));
                 }
+            } else {
+                if (dialog.isShowing()) {
+                    dialog.dismiss();
+                }
             }
         } else {
+            if (dialog.isShowing()) {
+                dialog.dismiss();
+            }
             if (isAdded())
                 CustomToast.customToast(getActivity(), getString(R.string.no_response));
         }
@@ -323,6 +322,9 @@ public class About extends Fragment implements RequestNotifier, MaterialIntroLis
 
     @Override
     public void notifyError(Throwable error) {
+        if (dialog.isShowing()) {
+            dialog.dismiss();
+        }
         if (error instanceof SocketTimeoutException) {
             if (isAdded())
                 CustomToast.customToast(getActivity(), getString(R.string.no_internet));
@@ -345,6 +347,9 @@ public class About extends Fragment implements RequestNotifier, MaterialIntroLis
 
     @Override
     public void notifyString(String str) {
+        if (dialog.isShowing()) {
+            dialog.dismiss();
+        }
         if (!str.equals("")) {
             if (str.equals("success_update")) {
                 if (isAdded())
@@ -388,7 +393,8 @@ public class About extends Fragment implements RequestNotifier, MaterialIntroLis
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mApiCall = new ApiCall(getActivity(), this);
-
+        dialog = new ProgressDialog(getActivity());
+        dialog.setMessage("Loading...");
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -416,7 +422,6 @@ public class About extends Fragment implements RequestNotifier, MaterialIntroLis
                 mBrandtxt = (TextView) mAbout.findViewById(R.id.brandtxt);
                 mAbouttxt = (EditText) mAbout.findViewById(R.id.about);
                 mLinear = (LinearLayout) mAbout.findViewById(R.id.profileAbout);
-
                 usertypeSpinner = (Spinner) mAbout.findViewById(spinnerUsertype);
                 industrySpinner = (Spinner) mAbout.findViewById(spinnerindustry);
                 moduleSpinner = (Spinner) mAbout.findViewById(spinnerCategory);
@@ -437,6 +442,7 @@ public class About extends Fragment implements RequestNotifier, MaterialIntroLis
                 } else {
                     mApiCall.profileAbout(Sharedcontact, Sharedcontact);
                 }
+                dialog.show();
                 mApiCall.getSkills();
                 mApiCall.getDesignation();
                 mApiCall.getCompany();

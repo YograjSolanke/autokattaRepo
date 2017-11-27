@@ -1,6 +1,7 @@
 package autokatta.com.view;
 
 import android.app.ActivityOptions;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -37,8 +38,6 @@ import android.widget.MultiAutoCompleteTextView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.kaopiz.kprogresshud.KProgressHUD;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -87,7 +86,6 @@ public class CreateStoreActivity extends AppCompatActivity implements Multispinn
     String myContact, callFrom, lastWord = "", coverlastWord = "",
             storetype = "", preLastWord = "", preCoverLastWord, brandtagpart = "", finalbrandtags = "";
     int store_id;
-    //  MultiSelectionSpinnerForBrands brandSpinner;
     MultiSelectionSpinner weekspn;
     MultiAutoCompleteTextView multiautotext, multiautobrand;
     EditText storename, storecontact, storewebsite, opentime, closetime, storeaddress, edtStoreDesc;
@@ -108,7 +106,7 @@ public class CreateStoreActivity extends AppCompatActivity implements Multispinn
     Bitmap bitmap, bitmapRotate;
     List<String> weekdays = new ArrayList<>();
     ConnectionDetector mTestConnection;
-    KProgressHUD hud;
+    private ProgressDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,8 +114,11 @@ public class CreateStoreActivity extends AppCompatActivity implements Multispinn
         setContentView(R.layout.activity_create_store);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        /*Create store in registration and also MY store (create store)*/
+        dialog = new ProgressDialog(this);
+        dialog.setMessage("Loading...");
+        /*
+          Create store in registration and also MY store (create store)
+        */
         if (getSupportActionBar() != null) {
             getSupportActionBar().setHomeButtonEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -125,7 +126,6 @@ public class CreateStoreActivity extends AppCompatActivity implements Multispinn
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setVisibility(View.GONE);
-
         setTitle("Create Store");
         mTestConnection = new ConnectionDetector(this);
         storename = (EditText) findViewById(R.id.editstorename);
@@ -151,7 +151,6 @@ public class CreateStoreActivity extends AppCompatActivity implements Multispinn
         mRelativeBrand = (RelativeLayout) findViewById(R.id.rell);
         mParent = (RelativeLayout) findViewById(R.id.relativeparent);
         //  brandSpinner = (MultiSelectionSpinnerForBrands) mCreateStore.findViewById(R.id.brandSpinner);
-
         btnaddprofile.setOnClickListener(this);
         btnaddcover.setOnClickListener(this);
         create.setOnClickListener(this);
@@ -168,32 +167,19 @@ public class CreateStoreActivity extends AppCompatActivity implements Multispinn
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         OkHttpClient client = new OkHttpClient.Builder().addInterceptor(interceptor).build();
-
         // Change base URL to your upload server URL.
         mImageUpload = new Retrofit.Builder().baseUrl(getString(R.string.base_url)).client(client).build().create(ImageUpload.class);
-
         if (getIntent().getExtras() != null) {
             callFrom = getIntent().getExtras().getString("className");
-
-            System.out.println("Call from in Store Fragment" + callFrom);
         }
         myContact = getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).getString("loginContact", "");
         if (callFrom.equals("StoreViewActivity")) {
             store_id = getIntent().getExtras().getInt("store_id");
-            //create.setText("update");
             setTitle("Update Store");
-            // textstore.setText("Update Store");
             getBrandTags();
-
-            hud = KProgressHUD.create(this)
-                    .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
-                    .setLabel("Please wait")
-                    .setMaxProgress(100)
-                    .show();
+            dialog.show();
             mApiCall.getStoreData(myContact, store_id);
         }
-
-
         storelocation.setAdapter(new GooglePlacesAdapter(this, R.layout.simple));
         weekdays.add("Mon");
         weekdays.add("Tue");
@@ -204,18 +190,14 @@ public class CreateStoreActivity extends AppCompatActivity implements Multispinn
         weekdays.add("Sun");
         weekspn.setItems(weekdays, "-Select Working Days-", this);
 
-
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 try {
                     storecontact.setText(myContact);
                     storecontact.setEnabled(false);
-
-
                     multiautotext.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
                     multiautobrand.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
-
                     rbtstoreproduct.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                         @Override
                         public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -234,19 +216,14 @@ public class CreateStoreActivity extends AppCompatActivity implements Multispinn
                             typevehicle = b;
                         }
                     });
-
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         });
-
-
         multiautobrand.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View view, int i, KeyEvent keyEvent) {
-
-
                 if ((keyEvent.getAction() == KeyEvent.ACTION_DOWN) &&
                         (i == KeyEvent.KEYCODE_ENTER)) {
                     // Perform action on key press
@@ -259,7 +236,6 @@ public class CreateStoreActivity extends AppCompatActivity implements Multispinn
                 return false;
             }
         });
-
         multiautobrand.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -273,7 +249,7 @@ public class CreateStoreActivity extends AppCompatActivity implements Multispinn
         if (text.endsWith(","))
             text = text.substring(0, text.length() - 1);
         String[] parts = text.split(",");
-        if (parts.length > 5) {
+        if (parts.length > 6) {
             multiautobrand.setError("You can add maximum five tags only");
             return true;
         } else
@@ -308,18 +284,13 @@ public class CreateStoreActivity extends AppCompatActivity implements Multispinn
                 stropen = opentime.getText().toString();
                 strclose = closetime.getText().toString();
                 category = multiautotext.getText().toString();
-
-
                 List<String> tempbrands = new ArrayList<String>();
                 String textbrand = multiautobrand.getText().toString();
-
                 if (textbrand.endsWith(","))
                     textbrand = textbrand.substring(0, textbrand.length() - 1);
-
                 textbrand = textbrand.trim();
 
                 if (!textbrand.equals("")) {
-
                     String[] bparts = textbrand.split(",");
                     for (String bpart : bparts) {
                         brandtagpart = bpart.trim();
@@ -335,48 +306,12 @@ public class CreateStoreActivity extends AppCompatActivity implements Multispinn
                         }
                     }
                 }
-
                 for (int n = 0; n < tempbrands.size(); n++) {
                     if (finalbrandtags.equals(""))
                         finalbrandtags = tempbrands.get(n);
                     else
                         finalbrandtags = finalbrandtags + "," + tempbrands.get(n);
                 }
-
-                System.out.println("finalbrandtags=" + finalbrandtags);
-
-
-//                ArrayList<String> tempbrands = new ArrayList<String>();
-//                String textbrand = multiautobrand.getText().toString();
-//
-//                if (textbrand.endsWith(","))
-//                    textbrand = textbrand.substring(0, textbrand.length() - 1);
-//
-//                textbrand = textbrand.trim();
-//
-//                if (!textbrand.equals("")) {
-//                    String[] bparts = textbrand.split(",");
-//                    for (int o = 0; o < bparts.length; o++) {
-//                        brandtagpart = bparts[o].trim();
-//                        if (!brandtagpart.equals("") && !brandtagpart.equalsIgnoreCase(" "))
-//                            tempbrands.add(brandtagpart);
-//                        if (!brandTags.contains(brandtagpart) && !brandtagpart.equals("") && !brandtagpart.equalsIgnoreCase(" ")) {
-//                            System.out.println("brand tag going to add=" + brandtagpart);
-//                            try {
-//                                addOtherBrandTags(brandtagpart);
-//                            } catch (Exception e) {
-//                                e.printStackTrace();
-//                            }
-//                        }
-//                    }
-//                }
-//
-//                for (int n = 0; n < tempbrands.size(); n++) {
-//                    if (finalbrandtags.equals(""))
-//                        finalbrandtags = tempbrands.get(n);
-//                    else
-//                        finalbrandtags = finalbrandtags + "," + tempbrands.get(n);
-//                }
 
                 if (rbtstoreproduct.isChecked() && !rbtstoreservice.isChecked() && !rbtstorevehicle.isChecked()) {
                     storetype = "product";
@@ -398,7 +333,6 @@ public class CreateStoreActivity extends AppCompatActivity implements Multispinn
                 if (category.endsWith(","))
                     category = category.substring(0, category.length() - 1);
                 category = category.trim();
-
                 if (!location.isEmpty()) {
                     resultList = GooglePlacesAdapter.getResultList();
                     for (int i = 0; i < resultList.size(); i++) {
@@ -429,7 +363,6 @@ public class CreateStoreActivity extends AppCompatActivity implements Multispinn
                 if (opentime.getText().toString().contains("AM") && closetime.getText().toString().contains("PM")) {
                     flagtime = false;
                 }
-
                 if (name.equals("") || name.startsWith(" ") && name.endsWith(" ")) {
                     storename.setError("Enter Valid Name");
                     storename.requestFocus();
@@ -473,18 +406,9 @@ public class CreateStoreActivity extends AppCompatActivity implements Multispinn
                     multiautobrand.setError("You can add maximum five tags only");
                     multiautobrand.requestFocus();
                 }
-//                else if (rbtstorevehicle.isChecked() && (strBrandSpinner.equalsIgnoreCase("-SelectBrands-") || strBrandSpinner.isEmpty())) {
-//                    CustomToast.customToast(getActivity(), "Select brands");
-//                    brandSpinner.requestFocus();
-//                }
                 else {
                     if (!callFrom.equals("StoreViewActivity")) {
-
-                        hud = KProgressHUD.create(this)
-                                .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
-                                .setLabel("Please wait")
-                                .setMaxProgress(100)
-                                .show();
+                        dialog.show();
                         createStore(name, contact, location, website, storetype, lastWord, workdays, stropen, strclose, category, address, coverlastWord, storeDescription
                                 , finalbrandtags, "");
                     } else {
@@ -492,13 +416,7 @@ public class CreateStoreActivity extends AppCompatActivity implements Multispinn
                             lastWord = preLastWord;
                         if (coverlastWord.equals(""))
                             coverlastWord = preCoverLastWord;
-
-
-                        hud = KProgressHUD.create(this)
-                                .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
-                                .setLabel("Please wait")
-                                .setMaxProgress(100)
-                                .show();
+                        dialog.show();
                         updateStore(name, store_id, location, website, stropen, strclose, lastWord, category, workdays, storeDescription, storetype, address,
                                 coverlastWord, finalbrandtags, "");
                     }
@@ -574,7 +492,6 @@ public class CreateStoreActivity extends AppCompatActivity implements Multispinn
                                 bitmap.recycle();
                             }
                             //mProfilePic.setImageBitmap(bitmapRotate);
-
 //                            Saving image to mobile internal memory for sometime
                             String root = getFilesDir().toString();
                             File myDir = new File(root + "/androidlift");
@@ -583,10 +500,8 @@ public class CreateStoreActivity extends AppCompatActivity implements Multispinn
                             Random generator = new Random();
                             int n = 10000;
                             n = generator.nextInt(n);
-
 //                            Give the file name that u want
                             fname = "Autokatta" + n + ".jpg";
-
                             mediaPath = root + "/androidlift/" + fname;
                             File file = new File(myDir, fname);
                             saveFile(bitmapRotate, file);
@@ -628,7 +543,6 @@ public class CreateStoreActivity extends AppCompatActivity implements Multispinn
                                 bitmap.recycle();
                             }
                             //mProfilePic.setImageBitmap(bitmapRotate);
-
 //                            Saving image to mobile internal memory for sometime
                             String root = getFilesDir().toString();
                             File myDir = new File(root + "/androidlift");
@@ -637,7 +551,6 @@ public class CreateStoreActivity extends AppCompatActivity implements Multispinn
                             Random generator = new Random();
                             int n = 10000;
                             n = generator.nextInt(n);
-
 //                            Give the file name that u want
                             fname = "Autokatta" + n + ".jpg";
 
@@ -769,12 +682,10 @@ public class CreateStoreActivity extends AppCompatActivity implements Multispinn
         String type = "";
         if (typeproduct && !typeservice)
             type = "Product";
-
         else if (typeservice && !typeproduct)
             type = "Service";
         else
             type = "both";
-
         mApiCall.Categories(type);
     }
 
@@ -783,14 +694,12 @@ public class CreateStoreActivity extends AppCompatActivity implements Multispinn
         if (typeproduct && !typeservice)
             // type = "1";
             type = "product";
-
         else if (typeservice && !typeproduct)
             //  type = "2";
             type = "service";
         else
             // type = "1,2";
             type = "both";
-
         mApiCall.getBrandTags(type);
     }
 
@@ -799,19 +708,16 @@ public class CreateStoreActivity extends AppCompatActivity implements Multispinn
         if (typeproduct && !typeservice)
             //type = "1";
             type = "product";
-
         else if (typeservice && !typeproduct)
             type = "service";
         else
             type = "both";
         mApiCall.addOtherBrandTags(brandtagpart, type);
-
     }
 
     private void createStore(String name, String contact, String location, String website, String storetype, String lastWord,
                              String workdays, String open, String close, String category, String address,
                              String coverlastWord, String storeDescription, String textbrand, String strBrandSpinner) {
-
         mApiCall.CreateStore(name, contact, location, website, storetype, lastWord, workdays, open, close, category, address, coverlastWord,
                 storeDescription, textbrand, strBrandSpinner);
     }
@@ -819,7 +725,6 @@ public class CreateStoreActivity extends AppCompatActivity implements Multispinn
     private void updateStore(String name, int store_id, String location, String website, String stropen, String strclose,
                              String lastWord, String category, String workdays, String storeDescription, String storetype,
                              String address, String coverlastWord, String finalbrandtags, String strBrandSpinner) {
-
         mApiCall.updateStore(name, store_id, location, website, stropen, strclose, lastWord, category, workdays, storeDescription,
                 storetype, address, coverlastWord, finalbrandtags, strBrandSpinner);
     }
@@ -869,7 +774,9 @@ public class CreateStoreActivity extends AppCompatActivity implements Multispinn
                     CreateStoreResponse createStoreResponse = (CreateStoreResponse) response.body();
                     if (createStoreResponse.getSuccess() != null) {
                         int id = createStoreResponse.getSuccess().getStoreID();
-                        hud.dismiss();
+                        if (dialog.isShowing()) {
+                            dialog.dismiss();
+                        }
                         Toast.makeText(getApplicationContext(), "Store created", Toast.LENGTH_SHORT).show();
                         if (!lastWord.equals(""))
                             uploadImage(mediaPath);
@@ -884,22 +791,6 @@ public class CreateStoreActivity extends AppCompatActivity implements Multispinn
                         intent.putExtras(bundle);
                         startActivity(intent, options.toBundle());
                         finish();
-
-//                        if (callFrom.equals("interestbased") || callFrom.equals("VehicleList")) {
-//                            AddMoreAdminsForStoreFrag addAdmin = new AddMoreAdminsForStoreFrag();
-//                            addAdmin.setArguments(bundle);
-//                            FragmentManager fragmentManager = getSupportFragmentManager();
-//                            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//                            fragmentTransaction.replace(R.id.create_store_container, addAdmin).commit();
-//                        } else {
-//                            AddMoreAdminsForStoreFrag addAdmin = new AddMoreAdminsForStoreFrag();
-//                            addAdmin.setArguments(bundle);
-//                            FragmentManager fragmentManager = getSupportFragmentManager();
-//                            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//                            fragmentTransaction.replace(R.id.myStoreListFrame, addAdmin).commit();
-//                        }
-                        //getActivity().finish();
-
                     } else {
                         CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
                     }
@@ -908,7 +799,9 @@ public class CreateStoreActivity extends AppCompatActivity implements Multispinn
                 if (response.body() instanceof StoreResponse) {
                     StoreResponse storeResponse = (StoreResponse) response.body();
                     if (!storeResponse.getSuccess().isEmpty()) {
-                        hud.dismiss();
+                        if (dialog.isShowing()) {
+                            dialog.dismiss();
+                        }
                         for (StoreResponse.Success success : storeResponse.getSuccess()) {
                             storename.setText(success.getName());
                             storelocation.setText(success.getLocation());
@@ -923,7 +816,6 @@ public class CreateStoreActivity extends AppCompatActivity implements Multispinn
                             preLastWord = success.getStoreImage();
                             preCoverLastWord = success.getCoverImage();
                             String storeType = success.getStoreType();
-
                             if (storeType.equalsIgnoreCase("product")) {
                                 rbtstoreproduct.setChecked(true);
                             } else if (storeType.equalsIgnoreCase("service")) {
@@ -946,22 +838,31 @@ public class CreateStoreActivity extends AppCompatActivity implements Multispinn
                             }
                         }
                     } else {
-                        hud.dismiss();
+                        if (dialog.isShowing()) {
+                            dialog.dismiss();
+                        }
                         CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
                     }
                 }
             } else {
+                if (dialog.isShowing()) {
+                    dialog.dismiss();
+                }
                 CustomToast.customToast(getApplicationContext(), getString(R.string._404));
             }
         } else {
-            hud.dismiss();
+            if (dialog.isShowing()) {
+                dialog.dismiss();
+            }
             CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
         }
     }
 
     @Override
     public void notifyError(Throwable error) {
-        hud.dismiss();
+        if (dialog.isShowing()) {
+            dialog.dismiss();
+        }
         if (error instanceof SocketTimeoutException) {
             CustomToast.customToast(getApplicationContext(), getString(R.string._404));
         } else if (error instanceof NullPointerException) {
@@ -969,13 +870,9 @@ public class CreateStoreActivity extends AppCompatActivity implements Multispinn
         } else if (error instanceof ClassCastException) {
             // CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
-
             CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
-
         } else if (error instanceof UnknownHostException) {
-
             CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
-
         } else {
             Log.i("Check Class-", "Create Store Fragment");
             error.printStackTrace();
@@ -986,66 +883,50 @@ public class CreateStoreActivity extends AppCompatActivity implements Multispinn
     public void notifyString(String str) {
         if (str != null) {
             if (str.equalsIgnoreCase("brand_tag_added")) {
-
                 CustomToast.customToast(getApplicationContext(), "Brand Tags Added");
-
             } else if (str.equals("store_updated")) {
-
-                hud.dismiss();
+                if (dialog.isShowing()) {
+                    dialog.dismiss();
+                }
                 CustomToast.customToast(getApplicationContext(), "Store updated");
                 if (!lastWord.equals(preLastWord) && !lastWord.equals(""))
                     uploadImage(mediaPath);
                 if (!coverlastWord.equals(preCoverLastWord) && !coverlastWord.equals(""))
                     uploadImage(mediaPath1);
-
-
                 bundle = new Bundle();
                 bundle.putInt("store_id", store_id);
                 bundle.putString("call", callFrom);
-
                 ActivityOptions options = ActivityOptions.makeCustomAnimation(this, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
                 Intent intent = new Intent(CreateStoreActivity.this, AddAdminsForStoreActivity.class);
                 intent.putExtras(bundle);
                 startActivity(intent, options.toBundle());
-
-
             }
         } else
             CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
-
     }
 
     @Override
     public void onItemsSelected(boolean[] selected) {
 
-
     }
 
 
     public String compressImage(String imageUri) {
-
         String filePath = getRealPathFromURI(imageUri);
         Bitmap scaledBitmap = null;
-
         BitmapFactory.Options options = new BitmapFactory.Options();
-
 //      by setting this field as true, the actual bitmap pixels are not loaded in the memory. Just the bounds are loaded. If
 //      you try the use the bitmap here, you will get null.
         options.inJustDecodeBounds = true;
         Bitmap bmp = BitmapFactory.decodeFile(filePath, options);
-
         int actualHeight = options.outHeight;
         int actualWidth = options.outWidth;
-
 //      max Height and width values of the compressed image is taken as 816x612
-
         float maxHeight = 816.0f;
         float maxWidth = 612.0f;
         float imgRatio = actualWidth / actualHeight;
         float maxRatio = maxWidth / maxHeight;
-
 //      width and height values are set maintaining the aspect ratio of the image
-
         if (actualHeight > maxHeight || actualWidth > maxWidth) {
             if (imgRatio < maxRatio) {
                 imgRatio = maxHeight / actualHeight;
@@ -1058,52 +939,41 @@ public class CreateStoreActivity extends AppCompatActivity implements Multispinn
             } else {
                 actualHeight = (int) maxHeight;
                 actualWidth = (int) maxWidth;
-
             }
         }
 
 //      setting inSampleSize value allows to load a scaled down version of the original image
-
         options.inSampleSize = calculateInSampleSize(options, actualWidth, actualHeight);
-
 //      inJustDecodeBounds set to false to load the actual bitmap
         options.inJustDecodeBounds = false;
-
 //      this options allow android to claim the bitmap memory if it runs low on memory
         options.inPurgeable = true;
         options.inInputShareable = true;
         options.inTempStorage = new byte[16 * 1024];
-
         try {
 //          load the bitmap from its path
             bmp = BitmapFactory.decodeFile(filePath, options);
         } catch (OutOfMemoryError exception) {
             exception.printStackTrace();
-
         }
         try {
             scaledBitmap = Bitmap.createBitmap(actualWidth, actualHeight, Bitmap.Config.ARGB_8888);
         } catch (OutOfMemoryError exception) {
             exception.printStackTrace();
         }
-
         float ratioX = actualWidth / (float) options.outWidth;
         float ratioY = actualHeight / (float) options.outHeight;
         float middleX = actualWidth / 2.0f;
         float middleY = actualHeight / 2.0f;
-
         Matrix scaleMatrix = new Matrix();
         scaleMatrix.setScale(ratioX, ratioY, middleX, middleY);
-
         Canvas canvas = new Canvas(scaledBitmap);
         canvas.setMatrix(scaleMatrix);
         canvas.drawBitmap(bmp, middleX - bmp.getWidth() / 2, middleY - bmp.getHeight() / 2, new Paint(Paint.FILTER_BITMAP_FLAG));
-
 //      check the rotation of the image and display it properly
         ExifInterface exif;
         try {
             exif = new ExifInterface(filePath);
-
             int orientation = exif.getAttributeInt(
                     ExifInterface.TAG_ORIENTATION, 0);
             Log.d("EXIF", "Exif: " + orientation);
@@ -1129,16 +999,12 @@ public class CreateStoreActivity extends AppCompatActivity implements Multispinn
         String filename = getFilename();
         try {
             out = new FileOutputStream(filename);
-
 //          write the compressed bitmap at the destination specified by filename.
             scaledBitmap.compress(Bitmap.CompressFormat.JPEG, 80, out);
-
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-
         return filename;
-
     }
 
     public String getFilename() {
@@ -1167,7 +1033,6 @@ public class CreateStoreActivity extends AppCompatActivity implements Multispinn
         final int height = options.outHeight;
         final int width = options.outWidth;
         int inSampleSize = 1;
-
         if (height > reqHeight || width > reqWidth) {
             final int heightRatio = Math.round((float) height / (float) reqHeight);
             final int widthRatio = Math.round((float) width / (float) reqWidth);
@@ -1178,7 +1043,6 @@ public class CreateStoreActivity extends AppCompatActivity implements Multispinn
         while (totalPixels / (inSampleSize * inSampleSize) > totalReqPixelsCap) {
             inSampleSize++;
         }
-
         return inSampleSize;
     }
 
@@ -1200,5 +1064,4 @@ public class CreateStoreActivity extends AppCompatActivity implements Multispinn
         finish();
         overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
     }
-
 }

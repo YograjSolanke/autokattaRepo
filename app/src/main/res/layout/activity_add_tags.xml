@@ -1,37 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="autokatta.com.other.AddTags">
-<ScrollView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:layout_above="@+id/ok">
 
-        <com.google.android.flexbox.FlexboxLayout
-            android:id="@+id/flexbox"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:alignContent="space_around"
-            app:alignItems="flex_start"
-            app:dividerDrawable="@drawable/div"
-            app:flexWrap="wrap"
-            app:showDivider="middle" />
+            android:orientation="vertical">
 
-    </LinearLayout>
-</ScrollView>
+            <com.google.android.flexbox.FlexboxLayout
+                android:id="@+id/flexbox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:alignContent="space_around"
+                app:alignItems="flex_start"
+                app:dividerDrawable="@drawable/div"
+                app:flexWrap="wrap"
+                app:showDivider="middle" />
+
+        </LinearLayout>
+    </ScrollView>
+
     <Button
         android:id="@+id/ok"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerInParent="true"
-        android:text="@string/ok" />
+        android:background="@color/background"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:text="@string/done" />
 </RelativeLayout>

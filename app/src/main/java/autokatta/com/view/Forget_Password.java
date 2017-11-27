@@ -33,10 +33,8 @@ public class Forget_Password extends AppCompatActivity implements View.OnClickLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forget__password);
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -44,7 +42,6 @@ public class Forget_Password extends AppCompatActivity implements View.OnClickLi
 
         edtContact = (EditText) findViewById(R.id.edit_contact);
         clear = (Button) findViewById(R.id.clear);
-
         submit = (Button) findViewById(R.id.submit);
         submit.setOnClickListener(this);
         clear.setOnClickListener(this);
@@ -80,7 +77,6 @@ public class Forget_Password extends AppCompatActivity implements View.OnClickLi
                 Toast.makeText(getApplicationContext(), "S" + response.body(), Toast.LENGTH_SHORT).show();
             }
         }
-
     }
 
     @Override
@@ -126,13 +122,10 @@ public class Forget_Password extends AppCompatActivity implements View.OnClickLi
                         startActivity(i);
                         finish();
                         dialog.cancel();
-
                     }
                 });
                 alertDialog.show();
-
             }
-
         } else {
             CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
         }
@@ -155,5 +148,4 @@ public class Forget_Password extends AppCompatActivity implements View.OnClickLi
         finish();
         overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
     }
-
 }
