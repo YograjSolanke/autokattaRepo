@@ -15,6 +15,10 @@ public class ModelSuggestionsResponse {
     private String Location;
     private String Name;
     private String Image;
+    private String VehicleBrand;
+    private String VehicleModel;
+    private String VehicleMfgYear;
+    private String VehicleCategory;
 
     public int getGroupId() {
         return groupId;
@@ -94,5 +98,37 @@ public class ModelSuggestionsResponse {
 
     public void setImage(String image) {
         Image = image;
+    }
+
+    public String getVehicleBrand() {
+        return VehicleBrand;
+    }
+
+    public void setVehicleBrand(String vehicleBrand) {
+        VehicleBrand = vehicleBrand;
+    }
+
+    public String getVehicleModel() {
+        return VehicleModel;
+    }
+
+    public void setVehicleModel(String vehicleModel) {
+        VehicleModel = vehicleModel;
+    }
+
+    public String getVehicleMfgYear() {
+        return VehicleMfgYear;
+    }
+
+    public void setVehicleMfgYear(String vehicleMfgYear) {
+        VehicleMfgYear = vehicleMfgYear;
+    }
+
+    public String getVehicleCategory() {
+        return VehicleCategory;
+    }
+
+    public void setVehicleCategory(String vehicleCategory) {
+        VehicleCategory = vehicleCategory;
     }
 }

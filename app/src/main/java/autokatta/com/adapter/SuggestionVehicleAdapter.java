@@ -22,7 +22,6 @@ import java.util.List;
 import autokatta.com.R;
 import autokatta.com.response.ModelSuggestionsResponse;
 import autokatta.com.view.VehicleDetails;
-import jp.wasabeef.glide.transformations.CropSquareTransformation;
 
 /**
  * Created by ak-003 on 27/11/17.
@@ -71,6 +70,9 @@ public class SuggestionVehicleAdapter extends RecyclerView.Adapter<RecyclerView.
             mVehicleName = (TextView) vehicleView.findViewById(R.id.vehicleName);
             mVehicleCategory = (TextView) vehicleView.findViewById(R.id.vehicleCategory);
             mVehicleBrand = (TextView) vehicleView.findViewById(R.id.vehicleBrand);
+            mVehicleModel = (TextView) vehicleView.findViewById(R.id.vehicleModel);
+            mVehicleYear = (TextView) vehicleView.findViewById(R.id.vehicleYear);
+            mVehicleLocation = (TextView) vehicleView.findViewById(R.id.vehicleLocation);
         }
     }
 
@@ -90,14 +92,18 @@ public class SuggestionVehicleAdapter extends RecyclerView.Adapter<RecyclerView.
 
         final VehicleSuggestions mVehicleVSuggestions = (VehicleSuggestions) holder;
         mVehicleVSuggestions.mVehicleName.setText(mSuggestionList.get(position).getName());
-        //mStoreSuggestions.mStoreLocation.setText(mSuggestionList.get(position).getLocation());
+        mVehicleVSuggestions.mVehicleCategory.setText(mSuggestionList.get(position).getVehicleCategory());
+        mVehicleVSuggestions.mVehicleYear.setText(mSuggestionList.get(position).getVehicleMfgYear());
+        mVehicleVSuggestions.mVehicleBrand.setText(mSuggestionList.get(position).getVehicleBrand());
+        mVehicleVSuggestions.mVehicleModel.setText(mSuggestionList.get(position).getVehicleModel());
+        mVehicleVSuggestions.mVehicleLocation.setText(mSuggestionList.get(position).getLocation());
+
         mSuggestionAbout.setText("Suggestion Based On Vehicle");
 
         if (mSuggestionList.get(position).getImage().equals("")) {
 
             Glide.with(mActivity)
                     .load(mActivity.getString(R.string.base_image_url) + mSuggestionList.get(position).getImage())
-                    .bitmapTransform(new CropSquareTransformation(mActivity))
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(mVehicleVSuggestions.mVehiclePic);
         } else {

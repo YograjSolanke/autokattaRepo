@@ -1,5 +1,6 @@
 package autokatta.com.fragment;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -47,6 +48,7 @@ public class SuggestionFragment extends Fragment implements RequestNotifier {
     String mLoginContact;
     private List<ModelSuggestionsResponse> suggestionResponseList = new ArrayList<>();
     LinearLayout mProfileLinear, mStoreLinear, mVehicleLinear, mProductLinear, mServiceLinear;
+    private ProgressDialog dialog;
 
     public SuggestionFragment() {
         // empty fragment
@@ -62,6 +64,9 @@ public class SuggestionFragment extends Fragment implements RequestNotifier {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        dialog = new ProgressDialog(getActivity());
+        dialog.setMessage("Loading Suggestions...");
 
         mNoData = (TextView) view.findViewById(R.id.no_category);
         mNoData.setVisibility(View.GONE);
@@ -125,6 +130,7 @@ public class SuggestionFragment extends Fragment implements RequestNotifier {
 
     private void getSuggestionData() {
         ApiCall mApiCall = new ApiCall(getActivity(), this);
+        dialog.show();
         mApiCall.getSuggestionData(mLoginContact);
     }
 
@@ -149,7 +155,9 @@ public class SuggestionFragment extends Fragment implements RequestNotifier {
                 mNoData.setVisibility(View.GONE);
                 suggestionResponseList.clear();
 
-
+                if (dialog.isShowing()) {
+                    dialog.dismiss();
+                }
 
                 /*UsedVehicle Array*/
                 if (!suggestionsResponse.getSuccess().getUsedVehicle().isEmpty()) {
@@ -163,6 +171,10 @@ public class SuggestionFragment extends Fragment implements RequestNotifier {
                         modelsuggestionsResponse.setUserContact(notification.getContactNo());
                         modelsuggestionsResponse.setVehicleId(notification.getUploadVehicleID());
                         modelsuggestionsResponse.setLocation(notification.getLocationCity());
+                        modelsuggestionsResponse.setVehicleBrand(notification.getManufacturer());
+                        modelsuggestionsResponse.setVehicleModel(notification.getModel());
+                        modelsuggestionsResponse.setVehicleMfgYear(notification.getYearOfManufaturer());
+                        modelsuggestionsResponse.setVehicleCategory(notification.getCategory());
 
                         suggestionResponseList.add(modelsuggestionsResponse);
 
@@ -276,6 +288,9 @@ public class SuggestionFragment extends Fragment implements RequestNotifier {
 
     @Override
     public void notifyError(Throwable error) {
+        if (dialog.isShowing()) {
+            dialog.dismiss();
+        }
         mNoData.setVisibility(View.VISIBLE);
         if (error instanceof SocketTimeoutException) {
             if (isAdded())
