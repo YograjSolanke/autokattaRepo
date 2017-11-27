@@ -109,6 +109,7 @@ public class SuggestionStoreAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                 Bundle b = new Bundle();
 
                 b.putInt("store_id", mSuggestionList.get(mStoreSuggestions.getAdapterPosition()).getStoreId());
+                b.putString("StoreContact", mSuggestionList.get(mStoreSuggestions.getAdapterPosition()).getUserContact());
                 ActivityOptions options = ActivityOptions.makeCustomAnimation(mActivity, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
                 Intent intent = new Intent(mActivity, StoreViewActivity.class);
                 intent.putExtras(b);

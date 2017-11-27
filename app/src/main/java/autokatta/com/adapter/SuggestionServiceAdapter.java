@@ -106,6 +106,7 @@ public class SuggestionServiceAdapter extends RecyclerView.Adapter<RecyclerView.
                 int servId = mSuggestionList.get(mServiceVSuggestions.getAdapterPosition()).getServiceId();
                 Intent intent = new Intent(mActivity, ServiceViewActivity.class);
                 intent.putExtra("service_id", servId);
+                intent.putExtra("editmode", "no");
                 mActivity.startActivity(intent, options.toBundle());
             }
         });

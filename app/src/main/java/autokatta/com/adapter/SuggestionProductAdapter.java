@@ -108,6 +108,7 @@ public class SuggestionProductAdapter extends RecyclerView.Adapter<RecyclerView.
                 int proId = mSuggestionList.get(mProductVSuggestions.getAdapterPosition()).getProductId();
                 Intent intent = new Intent(mActivity, ProductViewActivity.class);
                 intent.putExtra("product_id", proId);
+                intent.putExtra("editmode", "no");
                 mActivity.startActivity(intent, options.toBundle());
             }
         });

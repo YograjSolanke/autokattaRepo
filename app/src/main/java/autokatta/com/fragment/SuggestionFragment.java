@@ -140,7 +140,6 @@ public class SuggestionFragment extends Fragment implements RequestNotifier {
         super.setUserVisibleHint(isVisibleToUser);
         if (this.isVisible()) {
             if (isVisibleToUser && !hasViewCreated) {
-
                 getSuggestionData();
                 hasViewCreated = true;
             }
@@ -167,7 +166,7 @@ public class SuggestionFragment extends Fragment implements RequestNotifier {
                         ModelSuggestionsResponse modelsuggestionsResponse = new ModelSuggestionsResponse();
                         modelsuggestionsResponse.setLayoutId(-4);
                         modelsuggestionsResponse.setName(notification.getTitile());
-                        modelsuggestionsResponse.setImage(notification.getImage());
+                        //modelsuggestionsResponse.setImage(notification.getImage());
                         modelsuggestionsResponse.setUserContact(notification.getContactNo());
                         modelsuggestionsResponse.setVehicleId(notification.getUploadVehicleID());
                         modelsuggestionsResponse.setLocation(notification.getLocationCity());
@@ -175,6 +174,14 @@ public class SuggestionFragment extends Fragment implements RequestNotifier {
                         modelsuggestionsResponse.setVehicleModel(notification.getModel());
                         modelsuggestionsResponse.setVehicleMfgYear(notification.getYearOfManufaturer());
                         modelsuggestionsResponse.setVehicleCategory(notification.getCategory());
+
+                        String vehicleImage = notification.getImage();
+                        if (vehicleImage.contains(",")) {
+                            String[] items = vehicleImage.split(",");
+                            modelsuggestionsResponse.setImage(items[0]);
+                        } else {
+                            modelsuggestionsResponse.setImage(vehicleImage);
+                        }
 
                         suggestionResponseList.add(modelsuggestionsResponse);
 
@@ -196,7 +203,6 @@ public class SuggestionFragment extends Fragment implements RequestNotifier {
                         modelsuggestionsResponse.setUserContact(notification.getContactNo());
 
                         modelsuggestionsResponse.setStoreId(notification.getStoreID());
-                        modelsuggestionsResponse.setUserContact(notification.getContactNo());
                         modelsuggestionsResponse.setLocation(notification.getLocation());
 
                         suggestionResponseList.add(modelsuggestionsResponse);
@@ -220,7 +226,6 @@ public class SuggestionFragment extends Fragment implements RequestNotifier {
                         modelsuggestionsResponse.setUserContact(notification.getContactNo());
 
                         modelsuggestionsResponse.setStoreId(notification.getStoreID());
-                        modelsuggestionsResponse.setUserContact(notification.getContactNo());
                         modelsuggestionsResponse.setLocation(notification.getLocation());
 
                         suggestionResponseList.add(modelsuggestionsResponse);
@@ -239,11 +244,19 @@ public class SuggestionFragment extends Fragment implements RequestNotifier {
                         ModelSuggestionsResponse modelsuggestionsResponse = new ModelSuggestionsResponse();
                         modelsuggestionsResponse.setLayoutId(-5);
                         modelsuggestionsResponse.setName(notification.getName());
-                        modelsuggestionsResponse.setImage(notification.getImage());
+                        //modelsuggestionsResponse.setImage(notification.getImage());
                         modelsuggestionsResponse.setUserContact(notification.getAddedBy());
 
                         modelsuggestionsResponse.setProductId(notification.getProductID());
                         modelsuggestionsResponse.setLocation("");
+
+                        String productImage = notification.getImage();
+                        if (productImage.contains(",")) {
+                            String[] items = productImage.split(",");
+                            modelsuggestionsResponse.setImage(items[0]);
+                        } else {
+                            modelsuggestionsResponse.setImage(productImage);
+                        }
 
                         suggestionResponseList.add(modelsuggestionsResponse);
                     }
@@ -261,11 +274,19 @@ public class SuggestionFragment extends Fragment implements RequestNotifier {
                         ModelSuggestionsResponse modelsuggestionsResponse = new ModelSuggestionsResponse();
                         modelsuggestionsResponse.setLayoutId(-6);
                         modelsuggestionsResponse.setName(notification.getName());
-                        modelsuggestionsResponse.setImage(notification.getImage());
+                        //modelsuggestionsResponse.setImage(notification.getImage());
                         modelsuggestionsResponse.setUserContact(notification.getAddedBy());
 
                         modelsuggestionsResponse.setServiceId(notification.getStoreServiceID());
                         modelsuggestionsResponse.setLocation("");
+
+                        String serviceImage = notification.getImage();
+                        if (serviceImage.contains(",")) {
+                            String[] items = serviceImage.split(",");
+                            modelsuggestionsResponse.setImage(items[0]);
+                        } else {
+                            modelsuggestionsResponse.setImage(serviceImage);
+                        }
 
                         suggestionResponseList.add(modelsuggestionsResponse);
                     }
@@ -274,14 +295,17 @@ public class SuggestionFragment extends Fragment implements RequestNotifier {
                     mServiceView.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
                 }
-                /*SuggestionStoreAdapter adapter = new SuggestionStoreAdapter(getActivity(), suggestionResponseList, txtSuggestion, mLoginContact);
-                mProfileView.setAdapter(adapter);
-                adapter.notifyDataSetChanged();*/
 
             } else {
+                if (dialog.isShowing()) {
+                    dialog.dismiss();
+                }
                 mNoData.setVisibility(View.VISIBLE);
             }
         } else {
+            if (dialog.isShowing()) {
+                dialog.dismiss();
+            }
             mNoData.setVisibility(View.VISIBLE);
         }
     }
