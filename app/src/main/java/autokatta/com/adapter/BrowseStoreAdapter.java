@@ -6,11 +6,14 @@ import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.PorterDuff;
 import android.graphics.Typeface;
+import android.graphics.drawable.LayerDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
@@ -133,6 +136,12 @@ public class BrowseStoreAdapter extends RecyclerView.Adapter<BrowseStoreAdapter.
         } else if (!success.getRating().equals("0")) {
             holder.storerating.setRating(Float.parseFloat(String.valueOf(success.getRating())));
         }
+
+        LayerDrawable stars = (LayerDrawable) holder.storerating.getProgressDrawable();
+        stars.getDrawable(2).setColorFilter(ContextCompat.getColor(activity,R.color.medium_sea_green), PorterDuff.Mode.SRC_ATOP);//After filled
+        stars.getDrawable(0).setColorFilter(ContextCompat.getColor(activity,R.color.grey), PorterDuff.Mode.SRC_ATOP);//empty
+        stars.getDrawable(1).setColorFilter(ContextCompat.getColor(activity,R.color.textColor), PorterDuff.Mode.SRC_ATOP);//
+
 
         image = activity.getString(R.string.base_image_url) + success.getStoreImage();
 

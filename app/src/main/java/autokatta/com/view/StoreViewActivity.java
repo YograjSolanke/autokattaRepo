@@ -9,11 +9,14 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.LayerDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -214,6 +217,11 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
         mImages.setOnClickListener(this);*/
         mViewReview.setOnClickListener(this);
 
+        LayerDrawable stars = (LayerDrawable) storerating.getProgressDrawable();
+        stars.getDrawable(2).setColorFilter(ContextCompat.getColor(getApplicationContext(),R.color.medium_sea_green), PorterDuff.Mode.SRC_ATOP);//After filled
+        stars.getDrawable(0).setColorFilter(ContextCompat.getColor(getApplicationContext(),R.color.common_google_signin_btn_text_light_default), PorterDuff.Mode.SRC_ATOP);//empty
+        stars.getDrawable(1).setColorFilter(ContextCompat.getColor(getApplicationContext(),R.color.textColor), PorterDuff.Mode.SRC_ATOP);//
+
 
         CustomGridViewActivity adapterViewAndroid = new CustomGridViewActivity(this, gridViewString, gridViewImageId);
         androidGridView.setAdapter(adapterViewAndroid);
@@ -256,13 +264,13 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
                         intentnewvehicle.putExtras(b);
                         startActivity(intentnewvehicle, options.toBundle());
                         break;
-                    case "Video's":
+                    case "Videos":
                         b.putInt("store_id", store_id);
                         Intent intentVideos = new Intent(StoreViewActivity.this, VideosViewActivity.class);
                         intentVideos.putExtras(b);
                         startActivity(intentVideos, options.toBundle());
                         break;
-                    case "Image's":
+                    case "Images":
                         b.putInt("store_id", store_id);
                         Intent intentImages = new Intent(StoreViewActivity.this, ImagesViewActivity.class);
                         intentImages.putExtras(b);
@@ -336,6 +344,36 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
         if (preoverall != 0) {
             overallbar.setRating(preoverall);
         }
+
+        LayerDrawable stars = (LayerDrawable) csbar.getProgressDrawable();
+        stars.getDrawable(2).setColorFilter(ContextCompat.getColor(getApplicationContext(),R.color.medium_sea_green), PorterDuff.Mode.SRC_ATOP);//After filled
+        stars.getDrawable(0).setColorFilter(ContextCompat.getColor(getApplicationContext(),R.color.grey), PorterDuff.Mode.SRC_ATOP);//empty
+        stars.getDrawable(1).setColorFilter(ContextCompat.getColor(getApplicationContext(),R.color.textColor), PorterDuff.Mode.SRC_ATOP);//
+
+        LayerDrawable stars1 = (LayerDrawable) qwbar.getProgressDrawable();
+        stars1.getDrawable(2).setColorFilter(ContextCompat.getColor(getApplicationContext(),R.color.medium_sea_green), PorterDuff.Mode.SRC_ATOP);//After filled
+        stars1.getDrawable(0).setColorFilter(ContextCompat.getColor(getApplicationContext(),R.color.grey), PorterDuff.Mode.SRC_ATOP);//empty
+        stars1.getDrawable(1).setColorFilter(ContextCompat.getColor(getApplicationContext(),R.color.textColor), PorterDuff.Mode.SRC_ATOP);//
+
+        LayerDrawable stars2 = (LayerDrawable) frbar.getProgressDrawable();
+        stars2.getDrawable(2).setColorFilter(ContextCompat.getColor(getApplicationContext(),R.color.medium_sea_green), PorterDuff.Mode.SRC_ATOP);//After filled
+        stars2.getDrawable(0).setColorFilter(ContextCompat.getColor(getApplicationContext(),R.color.grey), PorterDuff.Mode.SRC_ATOP);//empty
+        stars2.getDrawable(1).setColorFilter(ContextCompat.getColor(getApplicationContext(),R.color.textColor), PorterDuff.Mode.SRC_ATOP);//
+
+        LayerDrawable stars3 = (LayerDrawable) prbar.getProgressDrawable();
+        stars3.getDrawable(2).setColorFilter(ContextCompat.getColor(getApplicationContext(),R.color.medium_sea_green), PorterDuff.Mode.SRC_ATOP);//After filled
+        stars3.getDrawable(0).setColorFilter(ContextCompat.getColor(getApplicationContext(),R.color.grey), PorterDuff.Mode.SRC_ATOP);//empty
+        stars3.getDrawable(1).setColorFilter(ContextCompat.getColor(getApplicationContext(),R.color.textColor), PorterDuff.Mode.SRC_ATOP);//
+
+        LayerDrawable stars4 = (LayerDrawable) tmbar.getProgressDrawable();
+        stars4.getDrawable(2).setColorFilter(ContextCompat.getColor(getApplicationContext(),R.color.medium_sea_green), PorterDuff.Mode.SRC_ATOP);//After filled
+        stars4.getDrawable(0).setColorFilter(ContextCompat.getColor(getApplicationContext(),R.color.grey), PorterDuff.Mode.SRC_ATOP);//empty
+        stars4.getDrawable(1).setColorFilter(ContextCompat.getColor(getApplicationContext(),R.color.textColor), PorterDuff.Mode.SRC_ATOP);//
+
+        LayerDrawable stars5 = (LayerDrawable) overallbar.getProgressDrawable();
+        stars5.getDrawable(2).setColorFilter(ContextCompat.getColor(getApplicationContext(),R.color.medium_sea_green), PorterDuff.Mode.SRC_ATOP);//After filled
+        stars5.getDrawable(0).setColorFilter(ContextCompat.getColor(getApplicationContext(),R.color.grey), PorterDuff.Mode.SRC_ATOP);//empty
+        stars5.getDrawable(1).setColorFilter(ContextCompat.getColor(getApplicationContext(),R.color.textColor), PorterDuff.Mode.SRC_ATOP);//
 
 
         csbar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {

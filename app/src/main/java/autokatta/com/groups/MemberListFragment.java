@@ -307,7 +307,7 @@ public class MemberListFragment extends Fragment implements SwipeRefreshLayout.O
                     mCallfrom = bundle.getString("grouptype");
                     mGroupId = bundle.getInt("bundle_GroupId");
                     bundle_GroupName = bundle.getString("bundle_GroupName");
-                    getActivity().setTitle(bundle.getString("bundle_GroupName") + " " + "Member's");
+                    getActivity().setTitle(bundle.getString("bundle_GroupName") + " " + "Members");
                 }
 
                 LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());

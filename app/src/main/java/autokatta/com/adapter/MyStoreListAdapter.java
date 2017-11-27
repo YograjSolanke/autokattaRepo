@@ -6,10 +6,13 @@ import android.app.DownloadManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.PorterDuff;
 import android.graphics.Typeface;
+import android.graphics.drawable.LayerDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.PopupMenu;
@@ -138,6 +141,12 @@ public class MyStoreListAdapter extends RecyclerView.Adapter<MyStoreListAdapter.
         holder.storerating.setEnabled(false);
         if (mStoreList.get(position).getRating() != 0)
             holder.storerating.setRating(mStoreList.get(position).getRating());
+
+        LayerDrawable stars = (LayerDrawable) holder.storerating.getProgressDrawable();
+        stars.getDrawable(2).setColorFilter(ContextCompat.getColor(mActivity,R.color.medium_sea_green), PorterDuff.Mode.SRC_ATOP);//After filled
+        stars.getDrawable(0).setColorFilter(ContextCompat.getColor(mActivity,R.color.black), PorterDuff.Mode.SRC_ATOP);//empty
+        stars.getDrawable(1).setColorFilter(ContextCompat.getColor(mActivity,R.color.textColor), PorterDuff.Mode.SRC_ATOP);//
+
 
 
         if (mStoreList.get(position).getWebsite() == null || mStoreList.get(position).getWebsite().isEmpty() ||

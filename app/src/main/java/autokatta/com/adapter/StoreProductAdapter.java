@@ -4,7 +4,10 @@ import android.app.Activity;
 import android.app.ActivityOptions;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -102,6 +105,12 @@ public class StoreProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             holder.ptype.setText(product.getProductType());
             holder.pCategoey.setText(product.getCategory());
             holder.productrating.setEnabled(false);
+
+            LayerDrawable stars = (LayerDrawable) holder.productrating.getProgressDrawable();
+            stars.getDrawable(2).setColorFilter(ContextCompat.getColor(activity,R.color.medium_sea_green), PorterDuff.Mode.SRC_ATOP);//After filled
+            stars.getDrawable(0).setColorFilter(ContextCompat.getColor(activity,R.color.grey), PorterDuff.Mode.SRC_ATOP);//empty
+            stars.getDrawable(1).setColorFilter(ContextCompat.getColor(activity,R.color.textColor), PorterDuff.Mode.SRC_ATOP);//
+
 
 
             if (myContact.equals(product.getAddedBy())) {

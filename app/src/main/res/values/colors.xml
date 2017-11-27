@@ -35,6 +35,7 @@
     <color name="primary_text">#DE000000</color>
     <color name="mid_gray">#757575</color>
     <color name="text_like_counter">#2b5a83</color>
+    <color name="grey">#616161</color>
 
     <color name="btn_context_menu_normal">#ffffff</color>
     <color name="btn_context_menu_pressed">#40000000</color>
