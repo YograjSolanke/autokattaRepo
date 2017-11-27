@@ -496,7 +496,7 @@
 
     <string name="store_category">Store Category</string>
     <string name="store_type">Store Type</string>
-    <string name="user_role">User Role</string>
+    <string name="user_role" translatable="false">User Role</string>
     <string name="timing">Timing</string>
     <string name="working_day">Working Day</string>
     <string name="service_actions">Service Actions</string>
