@@ -63,8 +63,8 @@ public class SuggestionServiceAdapter extends RecyclerView.Adapter<RecyclerView.
 
         private ServiceSuggestions(View serviceView) {
             super(serviceView);
-            mServiceCardView = (CardView) serviceView.findViewById(R.id.profile_card_view);
-            mServicePic = (ImageView) serviceView.findViewById(R.id.profilePic);
+            mServiceCardView = (CardView) serviceView.findViewById(R.id.service_card_view);
+            mServicePic = (ImageView) serviceView.findViewById(R.id.servicePic);
             mView = (Button) serviceView.findViewById(R.id.btnView);
             mServiceName = (TextView) serviceView.findViewById(R.id.serviceName);
             mServiceType = (TextView) serviceView.findViewById(R.id.serviceType);
