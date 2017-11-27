@@ -31,7 +31,7 @@ public class GroupServiceContainer extends AppCompatActivity {
             b.putString("bundle_GroupName", b1.getString("bundle_GroupName"));
             b.putString("bundle_Contact", b1.getString("bundle_Contact"));
             fragment.setArguments(b);
-            setTitle(b1.getString("bundle_GroupName") + " " + "Service's");
+            setTitle(b1.getString("bundle_GroupName") + " " + "Services");
         }
 
         runOnUiThread(new Runnable() {

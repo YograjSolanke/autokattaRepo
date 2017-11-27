@@ -31,7 +31,7 @@ public class VehicleContainer extends AppCompatActivity {
             b.putString("bundle_GroupName", b1.getString("bundle_GroupName"));
             b.putString("bundle_Contact", b1.getString("bundle_Contact"));
             fragment.setArguments(b);
-            setTitle(b1.getString("bundle_GroupName") + " " + "Vehicle's");
+            setTitle(b1.getString("bundle_GroupName") + " " + "Vehicles");
         }
 
         runOnUiThread(new Runnable() {

@@ -125,7 +125,7 @@
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
                         android:maxLines="1"
-                        android:text="@string/Rs"
+                        android:text="@string/price"
                         android:textColor="@color/button_default"
                         android:textSize="@dimen/text_size"
                         android:textStyle="bold" />

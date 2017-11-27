@@ -156,6 +156,7 @@ public class EditDesignationAdapter extends RecyclerView.Adapter<EditDesignation
             if (filterResults.count > 0) {
                 mList = (List<GetDesignationResponse.Success>) filterResults.values;
                 EditDesignationAdapter.this.notifyDataSetChanged();
+                mAdd.setVisibility(View.GONE);
             } else {
                 Toast.makeText(mActivity, "No record found", Toast.LENGTH_SHORT).show();
                 Log.i("Error", "->");

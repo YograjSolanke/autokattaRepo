@@ -54,7 +54,7 @@ public class ImagesViewActivity extends AppCompatActivity implements RequestNoti
         setContentView(R.layout.activity_images_view);
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        setTitle("Image's");
+        setTitle("Images");
 
         mNoData = (TextView) findViewById(R.id.no_category);
 

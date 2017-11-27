@@ -45,8 +45,8 @@ public class GroupsActivity extends AppCompatActivity implements RequestNotifier
     private String mLoginContact;
     private ProgressDialog pDialog;
     String[] gridViewString = {
-            "Communication", "Members", "Vehicle", "Product", "Service", "Video's",
-            "Image's",};
+            "Communication", "Members", "Vehicle", "Product", "Service", "Videos",
+            "Images",};
 
     int[] gridViewImageId = {
             R.mipmap.communication, R.mipmap.members, R.mipmap.group_vehicles, R.mipmap.product, R.mipmap.services,
@@ -129,12 +129,12 @@ public class GroupsActivity extends AppCompatActivity implements RequestNotifier
                         service.putExtras(b);
                         startActivity(service);
                         break;
-                    case "Video's":
+                    case "Videos":
                         Intent videos = new Intent(getApplicationContext(), VideosViewActivity.class);
                         videos.putExtras(b);
                         startActivity(videos);
                         break;
-                    case "Image's":
+                    case "Images":
                         Intent images = new Intent(getApplicationContext(), ImagesViewActivity.class);
                         images.putExtras(b);
                         startActivity(images);
