@@ -5603,7 +5603,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                                 suggestionResponseList.add(modelsuggestionsResponse);
                             }
                             if (suggestionResponseList.size() != 0) {
-                                CustomSuggestionAdapter adapter = new CustomSuggestionAdapter(mActivity, suggestionResponseList, mCustomView.txtSuggestion, mLoginContact);
+                                SuggestionStoreAdapter adapter = new SuggestionStoreAdapter(mActivity, suggestionResponseList, mCustomView.txtSuggestion, mLoginContact);
                                 mCustomView.mSuggestionRecycler.setAdapter(adapter);
                             } else {
                                 // mCustomView.mLinearLayout.setVisibility(View.GONE);
@@ -5655,7 +5655,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
 //                                suggestionResponseList.add(suggestionsResponse);
 //                            }
 //                            if (suggestionResponseList.size() != 0) {
-//                                CustomSuggestionAdapter adapter = new CustomSuggestionAdapter(mActivity, suggestionResponseList, mCustomView.txtSuggestion, mLoginContact);
+//                                SuggestionStoreAdapter adapter = new SuggestionStoreAdapter(mActivity, suggestionResponseList, mCustomView.txtSuggestion, mLoginContact);
 //                                mCustomView.mSuggestionRecycler.setAdapter(adapter);
 //                            } else {
 //                                mCustomView.mLinearLayout.setVisibility(View.GONE);

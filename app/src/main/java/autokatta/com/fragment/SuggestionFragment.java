@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.net.ConnectException;
@@ -20,7 +21,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import autokatta.com.R;
-import autokatta.com.adapter.CustomSuggestionAdapter;
+import autokatta.com.adapter.SuggestionProductAdapter;
+import autokatta.com.adapter.SuggestionServiceAdapter;
+import autokatta.com.adapter.SuggestionStoreAdapter;
+import autokatta.com.adapter.SuggestionVehicleAdapter;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.networkreceiver.ConnectionDetector;
@@ -36,12 +40,13 @@ import retrofit2.Response;
 public class SuggestionFragment extends Fragment implements RequestNotifier {
 
     View mSuggestionView;
-    RecyclerView mProfileRecyclerView, mStoreView, mVehicleView;
+    RecyclerView mProfileView, mStoreView, mVehicleView, mProductView, mServiceView;
     boolean hasViewCreated = false;
-    TextView mNoData, txtSuggestion;
+    TextView mNoData, txtProfile, txtStore, txtVehicle, txtProduct, txtService;
     ConnectionDetector mTestConnection;
     String mLoginContact;
     private List<ModelSuggestionsResponse> suggestionResponseList = new ArrayList<>();
+    LinearLayout mProfileLinear, mStoreLinear, mVehicleLinear, mProductLinear, mServiceLinear;
 
     public SuggestionFragment() {
         // empty fragment
@@ -61,15 +66,26 @@ public class SuggestionFragment extends Fragment implements RequestNotifier {
         mNoData = (TextView) view.findViewById(R.id.no_category);
         mNoData.setVisibility(View.GONE);
 
-        mProfileRecyclerView = (RecyclerView) view.findViewById(R.id.profileRecyclerView);
+        mProfileView = (RecyclerView) view.findViewById(R.id.profileRecyclerView);
         mStoreView = (RecyclerView) view.findViewById(R.id.storeRecyclerView);
         mVehicleView = (RecyclerView) view.findViewById(R.id.vehicleRecyclerView);
-        txtSuggestion = (TextView) view.findViewById(R.id.textProfile);
+        mProductView = (RecyclerView) view.findViewById(R.id.productRecyclerView);
+        mServiceView = (RecyclerView) view.findViewById(R.id.serviceRecyclerView);
+        txtProfile = (TextView) view.findViewById(R.id.textProfile);
+        txtStore = (TextView) view.findViewById(R.id.textStore);
+        txtVehicle = (TextView) view.findViewById(R.id.textVehicle);
+        txtProduct = (TextView) view.findViewById(R.id.textProduct);
+        txtService = (TextView) view.findViewById(R.id.textService);
+        mProfileLinear = (LinearLayout) view.findViewById(R.id.linearProfile);
+        mStoreLinear = (LinearLayout) view.findViewById(R.id.linearStore);
+        mVehicleLinear = (LinearLayout) view.findViewById(R.id.linearVehicle);
+        mProductLinear = (LinearLayout) view.findViewById(R.id.linearProduct);
+        mServiceLinear = (LinearLayout) view.findViewById(R.id.linearService);
 
-        mProfileRecyclerView.setHasFixedSize(true);
-        mProfileRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+        mProfileView.setHasFixedSize(true);
+        mProfileView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
         //mSuggestions.mSuggestionRecycler.addItemDecoration(new VerticalLineDecorator(2));
-        mProfileRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        mProfileView.setItemAnimator(new DefaultItemAnimator());
 
         mStoreView.setHasFixedSize(true);
         mStoreView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
@@ -80,6 +96,16 @@ public class SuggestionFragment extends Fragment implements RequestNotifier {
         mVehicleView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
         //mSuggestions.mSuggestionRecycler.addItemDecoration(new VerticalLineDecorator(2));
         mVehicleView.setItemAnimator(new DefaultItemAnimator());
+
+        mProductView.setHasFixedSize(true);
+        mProductView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+        //mSuggestions.mSuggestionRecycler.addItemDecoration(new VerticalLineDecorator(2));
+        mProductView.setItemAnimator(new DefaultItemAnimator());
+
+        mServiceView.setHasFixedSize(true);
+        mServiceView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
+        //mSuggestions.mSuggestionRecycler.addItemDecoration(new VerticalLineDecorator(2));
+        mServiceView.setItemAnimator(new DefaultItemAnimator());
 
         getActivity().runOnUiThread(new Runnable() {
             @Override
@@ -123,8 +149,11 @@ public class SuggestionFragment extends Fragment implements RequestNotifier {
                 mNoData.setVisibility(View.GONE);
                 suggestionResponseList.clear();
 
+
+
                 /*UsedVehicle Array*/
                 if (!suggestionsResponse.getSuccess().getUsedVehicle().isEmpty()) {
+                    mVehicleLinear.setVisibility(View.VISIBLE);
                     for (SuggestionsResponse.Success.UsedVehicle notification : suggestionsResponse.getSuccess().getUsedVehicle()) {
 
                         ModelSuggestionsResponse modelsuggestionsResponse = new ModelSuggestionsResponse();
@@ -139,12 +168,13 @@ public class SuggestionFragment extends Fragment implements RequestNotifier {
 
                     }
 
-                    CustomSuggestionAdapter adapter = new CustomSuggestionAdapter(getActivity(), suggestionResponseList, txtSuggestion, mLoginContact);
+                    SuggestionVehicleAdapter adapter = new SuggestionVehicleAdapter(getActivity(), suggestionResponseList, txtVehicle, mLoginContact);
                     mVehicleView.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
                 }
                 /*NewVehicle Array*/
-                else if (!suggestionsResponse.getSuccess().getNewvehicle().isEmpty()) {
+                if (!suggestionsResponse.getSuccess().getNewvehicle().isEmpty()) {
+                    mStoreLinear.setVisibility(View.VISIBLE);
                     for (SuggestionsResponse.Success.Newvehicle notification : suggestionsResponse.getSuccess().getNewvehicle()) {
 
                         ModelSuggestionsResponse modelsuggestionsResponse = new ModelSuggestionsResponse();
@@ -160,14 +190,15 @@ public class SuggestionFragment extends Fragment implements RequestNotifier {
                         suggestionResponseList.add(modelsuggestionsResponse);
                     }
 
-                    CustomSuggestionAdapter adapter = new CustomSuggestionAdapter(getActivity(), suggestionResponseList, txtSuggestion, mLoginContact);
+                    SuggestionStoreAdapter adapter = new SuggestionStoreAdapter(getActivity(), suggestionResponseList, txtStore, mLoginContact);
                     mStoreView.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
 
                 }
 
                 /*Store Array*/
-                else if (!suggestionsResponse.getSuccess().getStore().isEmpty()) {
+                if (!suggestionsResponse.getSuccess().getStore().isEmpty()) {
+                    mStoreLinear.setVisibility(View.VISIBLE);
                     for (SuggestionsResponse.Success.Store notification : suggestionsResponse.getSuccess().getStore()) {
 
                         ModelSuggestionsResponse modelsuggestionsResponse = new ModelSuggestionsResponse();
@@ -183,13 +214,14 @@ public class SuggestionFragment extends Fragment implements RequestNotifier {
                         suggestionResponseList.add(modelsuggestionsResponse);
                     }
 
-                    CustomSuggestionAdapter adapter = new CustomSuggestionAdapter(getActivity(), suggestionResponseList, txtSuggestion, mLoginContact);
+                    SuggestionStoreAdapter adapter = new SuggestionStoreAdapter(getActivity(), suggestionResponseList, txtStore, mLoginContact);
                     mStoreView.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
                 }
 
                 /*Product Array*/
-                else if (!suggestionsResponse.getSuccess().getProduct().isEmpty()) {
+                if (!suggestionsResponse.getSuccess().getProduct().isEmpty()) {
+                    mProductLinear.setVisibility(View.VISIBLE);
                     for (SuggestionsResponse.Success.Product notification : suggestionsResponse.getSuccess().getProduct()) {
 
                         ModelSuggestionsResponse modelsuggestionsResponse = new ModelSuggestionsResponse();
@@ -204,13 +236,14 @@ public class SuggestionFragment extends Fragment implements RequestNotifier {
                         suggestionResponseList.add(modelsuggestionsResponse);
                     }
 
-                    CustomSuggestionAdapter adapter = new CustomSuggestionAdapter(getActivity(), suggestionResponseList, txtSuggestion, mLoginContact);
-                    mProfileRecyclerView.setAdapter(adapter);
+                    SuggestionProductAdapter adapter = new SuggestionProductAdapter(getActivity(), suggestionResponseList, txtProduct, mLoginContact);
+                    mProductView.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
                 }
 
                 /*Service Array*/
-                else if (!suggestionsResponse.getSuccess().getService().isEmpty()) {
+                if (!suggestionsResponse.getSuccess().getService().isEmpty()) {
+                    mServiceLinear.setVisibility(View.VISIBLE);
                     for (SuggestionsResponse.Success.Service notification : suggestionsResponse.getSuccess().getService()) {
 
                         ModelSuggestionsResponse modelsuggestionsResponse = new ModelSuggestionsResponse();
@@ -225,12 +258,12 @@ public class SuggestionFragment extends Fragment implements RequestNotifier {
                         suggestionResponseList.add(modelsuggestionsResponse);
                     }
 
-                    CustomSuggestionAdapter adapter = new CustomSuggestionAdapter(getActivity(), suggestionResponseList, txtSuggestion, mLoginContact);
-                    mProfileRecyclerView.setAdapter(adapter);
+                    SuggestionServiceAdapter adapter = new SuggestionServiceAdapter(getActivity(), suggestionResponseList, txtService, mLoginContact);
+                    mServiceView.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
                 }
-                /*CustomSuggestionAdapter adapter = new CustomSuggestionAdapter(getActivity(), suggestionResponseList, txtSuggestion, mLoginContact);
-                mProfileRecyclerView.setAdapter(adapter);
+                /*SuggestionStoreAdapter adapter = new SuggestionStoreAdapter(getActivity(), suggestionResponseList, txtSuggestion, mLoginContact);
+                mProfileView.setAdapter(adapter);
                 adapter.notifyDataSetChanged();*/
 
             } else {

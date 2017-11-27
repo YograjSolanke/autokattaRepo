@@ -60,6 +60,39 @@
                 android:textSize="15sp"
                 android:textStyle="bold" />
 
+            <TextView
+                android:id="@+id/vehicleModel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity=""
+                android:layout_margin="5dp"
+                android:text="@string/model"
+                android:layout_below="@+id/vehicleBrand"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/vehicleYear"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity=""
+                android:layout_margin="5dp"
+                android:text="@string/year_of_mfg"
+                android:layout_below="@+id/vehicleModel"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/vehicleLocation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity=""
+                android:layout_margin="5dp"
+                android:text="@string/location"
+                android:layout_below="@+id/vehicleYear"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
 
             <Button
                 android:id="@+id/btnView"
@@ -68,7 +101,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/buttonback"
                 android:padding="5dp"
-                android:layout_below="@+id/vehicleBrand"
+                android:layout_below="@+id/vehicleLocation"
                 android:layout_centerHorizontal="true"
                 android:text="@string/view_details"
                 android:textAllCaps="false"
