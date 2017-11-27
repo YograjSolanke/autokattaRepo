@@ -21,7 +21,6 @@ import java.util.List;
 import autokatta.com.R;
 import autokatta.com.response.ModelSuggestionsResponse;
 import autokatta.com.view.ServiceViewActivity;
-import jp.wasabeef.glide.transformations.CropSquareTransformation;
 
 /**
  * Created by ak-004 on 27/11/17.
@@ -49,8 +48,8 @@ public class SuggestionServiceAdapter extends RecyclerView.Adapter<RecyclerView.
 
     @Override
     public int getItemViewType(int position) {
-        //return super.getItemViewType(position);
-        return mSuggestionList.get(position).getLayoutId();
+        return super.getItemViewType(position);
+        //return mSuggestionList.get(position).getLayoutId();
         //return Integer.parseInt("-2");
     }
 
@@ -87,13 +86,13 @@ public class SuggestionServiceAdapter extends RecyclerView.Adapter<RecyclerView.
         final ServiceSuggestions mServiceVSuggestions = (ServiceSuggestions) holder;
         mServiceVSuggestions.mServiceName.setText(mSuggestionList.get(position).getName());
         //mStoreSuggestions.mStoreLocation.setText(mSuggestionList.get(position).getLocation());
-        mSuggestionAbout.setText("Suggestion Based On Store");
+        mSuggestionAbout.setText("Suggestion Based On Services");
 
         if (mSuggestionList.get(position).getImage().equals("")) {
 
             Glide.with(mActivity)
                     .load(mActivity.getString(R.string.base_image_url) + mSuggestionList.get(position).getImage())
-                    .bitmapTransform(new CropSquareTransformation(mActivity))
+                    // .bitmapTransform(new CropSquareTransformation(mActivity))
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(mServiceVSuggestions.mServicePic);
         } else {

@@ -23,7 +23,6 @@ import autokatta.com.R;
 import autokatta.com.response.ModelSuggestionsResponse;
 import autokatta.com.view.OtherProfile;
 import autokatta.com.view.UserProfile;
-import jp.wasabeef.glide.transformations.CropSquareTransformation;
 
 /**
  * Created by ak-004 on 27/11/17.
@@ -51,8 +50,8 @@ public class SuggestionProfileAdapter extends RecyclerView.Adapter<RecyclerView.
 
     @Override
     public int getItemViewType(int position) {
-        //return super.getItemViewType(position);
-        return mSuggestionList.get(position).getLayoutId();
+        return super.getItemViewType(position);
+        //return mSuggestionList.get(position).getLayoutId();
         //return Integer.parseInt("-2");
     }
 
@@ -98,7 +97,7 @@ public class SuggestionProfileAdapter extends RecyclerView.Adapter<RecyclerView.
 
             Glide.with(mActivity)
                     .load(mActivity.getString(R.string.base_image_url) + mSuggestionList.get(position).getImage())
-                    .bitmapTransform(new CropSquareTransformation(mActivity))
+                    // .bitmapTransform(new CropSquareTransformation(mActivity))
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(mProfileSuggestions.mProfilePic);
         } else {

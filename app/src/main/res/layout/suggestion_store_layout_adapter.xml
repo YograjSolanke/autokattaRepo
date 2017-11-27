@@ -24,31 +24,97 @@
                 android:layout_height="150dp"
                 android:layout_margin="5dp"
                 android:layout_centerHorizontal="true"
-                android:contentDescription="@string/app_name"
-                android:src="@drawable/logo48x48" />
+                android:contentDescription="@string/app_name" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/layout1"
+                android:layout_below="@+id/storePic">
+
+                <TextView
+                    android:id="@+id/storeNameText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:text="@string/store_name"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/storeName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:layout_below="@+id/storePic"
-                android:text="@string/username"
+                android:layout_toEndOf="@+id/storeNameText"
+                android:text="@string/store_name"
                 android:textSize="15sp"
                 android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/storeAddress"
-                android:layout_width="wrap_content"
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity=""
-                android:layout_margin="5dp"
-                android:text="@string/location"
-                android:layout_below="@+id/storeName"
-                android:textSize="15sp"
-                android:textStyle="bold" />
+                android:layout_below="@+id/layout1"
+                android:id="@+id/layout2">
 
 
+                <TextView
+                    android:id="@+id/storeAddressText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity=""
+                    android:layout_margin="5dp"
+                    android:text="@string/location"
+
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+
+                <TextView
+                    android:id="@+id/storeAddress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity=""
+                    android:layout_margin="5dp"
+                    android:text="@string/location"
+                    android:layout_toEndOf="@+id/storeAddressText"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/layout3"
+                android:layout_below="@+id/layout2">
+
+
+                <TextView
+                    android:id="@+id/storeCategoryText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity=""
+                    android:layout_margin="5dp"
+                    android:text="@string/store_category"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/storeCategory"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity=""
+                    android:layout_margin="5dp"
+                    android:text="@string/store_category"
+                    android:layout_toEndOf="@+id/storeCategoryText"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+            </RelativeLayout>
 
                 <Button
                     android:id="@+id/btnView"
@@ -57,7 +123,8 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/buttonback"
                     android:padding="5dp"
-                    android:layout_below="@+id/storeAddress"
+                    android:layout_marginBottom="5dp"
+                    android:layout_below="@+id/layout3"
                     android:layout_centerHorizontal="true"
                     android:text="@string/view_details"
                     android:textAllCaps="false"
