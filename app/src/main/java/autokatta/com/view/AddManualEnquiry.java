@@ -44,14 +44,19 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 import autokatta.com.R;
 import autokatta.com.adapter.GooglePlacesAdapter;
 import autokatta.com.apicall.ApiCall;
+import autokatta.com.generic.GenericFunctions;
 import autokatta.com.generic.SetMyDateAndTime;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.interfaces.ServiceApi;
@@ -101,6 +106,8 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
     final HashMap<String, Integer> mFinancerList1 = new HashMap<>();
     List<String> parsedDataFinancer = new ArrayList<>();
     RadioButton financeyes, financeno, exchangeyes, exchangeno;
+    GenericFunctions validObj;
+
 
 
     @Override
@@ -145,6 +152,7 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
                 exchangeno = (RadioButton) findViewById(R.id.exchangeNo);
 
                 mConnectionDetector = new ConnectionDetector(AddManualEnquiry.this);
+                validObj = new GenericFunctions();
 
                 getSourceofenquiry();
                 RadioGroup mRadioGroup = (RadioGroup) findViewById(R.id.exchange);
@@ -295,6 +303,10 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
                                 edtContact.requestFocus();
                                 edtContact.setError("admin not allowed");
                             }
+                        }else
+                        {
+                            edtContact.requestFocus();
+                            edtContact.setError("Enter Valid Number");
                         }
                     }
 
@@ -419,6 +431,15 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
                                 }
                             }
 
+                            //current date
+                            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                            Date now = new Date();
+                            String dateString = sdf.format(now);
+                            SimpleDateFormat tm = new SimpleDateFormat("hh:mm a", Locale.getDefault());
+                            String time = tm.format(Calendar.getInstance().getTime());
+
+
+
                             if (custName.equalsIgnoreCase("") || custName.startsWith(" ") && custName.startsWith(" ")) {
                                 edtName.setError("Please provide customer name");
                                 edtName.requestFocus();
@@ -439,13 +460,21 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
                                 spnStatus.requestFocus();
                             } else if (spnStatus.getSelectedItem().toString().equalsIgnoreCase("other") && othersource.getText().toString().equalsIgnoreCase("")) {
                                 othersource.setError("Please enter status");
-                                othersource.setFocusable(true);
+                                othersource.requestFocus();
                             } else if (spnSource.getSelectedItem().toString().equalsIgnoreCase("select source of enquiry")) {
                                 CustomToast.customToast(getApplicationContext(), "Please provide source");
                                 spnStatus.requestFocus();
                             } else if (spnSource.getSelectedItem().toString().equalsIgnoreCase("other") && othersource.getText().toString().equalsIgnoreCase("")) {
                                 othersource.setError("Please enter source");
-                                othersource.setFocusable(true);
+                                othersource.requestFocus();
+                            }else if (!validObj.startDateValidatioon(edtDate.getText().toString())) {
+                                edtDate.setError("Enter valid Date");
+                                edtDate.requestFocus();
+
+                            }else if (edtTime.equals(dateString) && !validObj.startTimeEndTimeValidation(time, edtTime.getText().toString())) {
+                                edtTime.setError("time is invalid");
+                                edtTime.requestFocus();
+
                             } else if (nextFollowupDate.equals("") || nextFollowupDate.startsWith(" ")) {
                                 edtDate.setError("Enter Date");
                                 edtDate.requestFocus();
@@ -587,6 +616,14 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
                 String custAddress = autoAddress.getText().toString();
                 String custFullAddress = edtAddress.getText().toString();
 
+                //current date
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                Date now = new Date();
+                String dateString = sdf.format(now);
+                SimpleDateFormat tm = new SimpleDateFormat("hh:mm a", Locale.getDefault());
+                String time = tm.format(Calendar.getInstance().getTime());
+
+
                 if (strPos != 0) {
                     custInventoryType = spnInventory.getSelectedItem().toString();
                 }
@@ -638,6 +675,14 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
                 } else if (spnSource.getSelectedItem().toString().equalsIgnoreCase("other") && othersource.getText().toString().equalsIgnoreCase("")) {
                     othersource.setError("Please enter source");
                     othersource.setFocusable(true);
+                }else if (!validObj.startDateValidatioon(edtDate.getText().toString())) {
+                    edtDate.setError("Enter valid Date");
+                    edtDate.requestFocus();
+
+                }else if (edtTime.equals(dateString) && !validObj.startTimeEndTimeValidation(time, edtTime.getText().toString())) {
+                    edtTime.setError("time is invalid");
+                    edtTime.requestFocus();
+
                 } else {
                     if (!spnSource.getSelectedItem().toString().equalsIgnoreCase("select source of enquiry") && !spnSource.getSelectedItem().toString().equalsIgnoreCase("other")) {
                         mSource = spnSource.getSelectedItem().toString();

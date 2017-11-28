@@ -167,8 +167,14 @@ public class ReviewActivity extends AppCompatActivity implements RequestNotifier
         send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mApiCall.postReviewOrReply(review_id, keyword, myContact, message.getText().toString(), store_id, product_id, service_id, vehicle_id);
-                alert.dismiss();
+                if (message.getText().toString().equalsIgnoreCase("")||(message.getText().toString().startsWith(" ")&&message.getText().toString().endsWith(" ")))
+                {
+                    message.setError("Please Enter Message");
+                    message.setFocusable(true);
+                }else {
+                    mApiCall.postReviewOrReply(review_id, keyword, myContact, message.getText().toString(), store_id, product_id, service_id, vehicle_id);
+                    alert.dismiss();
+                }
             }
         });
         cancel.setOnClickListener(new View.OnClickListener() {

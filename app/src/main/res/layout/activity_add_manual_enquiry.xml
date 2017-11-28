@@ -53,6 +53,7 @@
                     android:layout_weight="1.6"
                     android:background="@color/edit_background"
                     android:hint="@string/names"
+                    android:digits="qwertyuioplkjhgfdsazxcvbnmMNBVCXZASDFGHJKLPOIUYTREWQ "
                     android:paddingEnd="@dimen/card_margin"
                     android:paddingStart="@dimen/card_margin"
                     android:textColor="#708090" />
@@ -80,7 +81,7 @@
                     android:background="@color/edit_background"
                     android:ems="10"
                     android:hint="@string/contact_no"
-                    android:inputType="phone"
+                    android:inputType="number"
                     android:maxLength="10"
                     android:maxLines="1"
                     android:paddingEnd="@dimen/card_margin"

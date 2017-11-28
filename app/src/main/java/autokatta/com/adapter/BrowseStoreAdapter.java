@@ -146,7 +146,7 @@ public class BrowseStoreAdapter extends RecyclerView.Adapter<BrowseStoreAdapter.
         image = activity.getString(R.string.base_image_url) + success.getStoreImage();
 
         if (success.getStoreImage() == null || success.getStoreImage().isEmpty() || success.getStoreImage().equals("null")) {
-            holder.store_image.setBackgroundResource(R.mipmap.ic_launcher);
+            holder.store_image.setBackgroundResource(R.drawable.logo48x48);
         } else {
             /****************
              Glide code for image uploading
@@ -156,7 +156,7 @@ public class BrowseStoreAdapter extends RecyclerView.Adapter<BrowseStoreAdapter.
                     .load(image)
                     .bitmapTransform(new CropSquareTransformation(activity)) //To display image in Circular form.
                     .diskCacheStrategy(DiskCacheStrategy.ALL) //For caching diff versions of image.
-                    .placeholder(R.drawable.logo) //To show image before loading an original image.
+                    .placeholder(R.drawable.logo48x48) //To show image before loading an original image.
                     //.error(R.drawable.blocked) //To show error image if problem in loading.
                     .into(holder.store_image);
         }
