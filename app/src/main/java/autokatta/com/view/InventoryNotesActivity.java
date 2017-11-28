@@ -179,8 +179,15 @@ public class InventoryNotesActivity extends AppCompatActivity implements Request
         send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mApiCall.AddInventoryNote(myContact, keyword, review_id, message.getText().toString(), service_id, product_id, newvehicleid, vehicle_id);
-                alert.dismiss();
+                if(message.getText().toString().equalsIgnoreCase("")|| message.getText().toString().startsWith(" ")&&message.getText().toString().endsWith(" "))
+                {
+                    message.setError("Please Enter Note");
+                }else
+                {
+                    mApiCall.AddInventoryNote(myContact, keyword, review_id, message.getText().toString(), service_id, product_id, newvehicleid, vehicle_id);
+                    alert.dismiss();
+                }
+
             }
         });
         cancel.setOnClickListener(new View.OnClickListener() {

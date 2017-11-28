@@ -41,6 +41,7 @@ public class AddEmployeeActivity extends AppCompatActivity implements RequestNot
     String name, contact, designation, description, permission, status;
     int store_id, emp_id;
     String keyword = "";
+    String AutoUser;
     StoreEmployeeResponse.Success.Employee employee;
 
 
@@ -187,8 +188,10 @@ public class AddEmployeeActivity extends AppCompatActivity implements RequestNot
                     empDesignation.setError("Please Enter Designation");
                 } else if (empDescription.getText().toString().isEmpty()) {
                     empDescription.setError("Please Enter Short Description");
+                }else if (!AutoUser.equalsIgnoreCase("") && AutoUser.equalsIgnoreCase("No")) {
+                    empContact.setError("Not Autokatta User");
+                    empContact.setFocusable(true);
                 } else {
-
                     if (getIntent().getExtras().getString("keyword", "").equalsIgnoreCase("Add")) {
                         mApiCall.AddEmloyeeInStore(name, contact, myContact, designation, store_id, description,
                                 status, permission);
@@ -198,15 +201,9 @@ public class AddEmployeeActivity extends AppCompatActivity implements RequestNot
 
                         mApiCall.updateDeleteEmployee(emp_id, name, contact, designation, description,
                                 permission, "Edit");
-
                     }
-
                 }
-
-
                 break;
-
-
         }
     }
 
@@ -263,6 +260,7 @@ public class AddEmployeeActivity extends AppCompatActivity implements RequestNot
             System.out.println("output=" + str);
             if (str.equalsIgnoreCase("Success")) {
                 txtUser.setVisibility(View.VISIBLE);
+                AutoUser="yes";
                 //txtInvite.setVisibility(View.GONE);
 
             } else if (str.equals("success_request_sent")) {
@@ -274,6 +272,7 @@ public class AddEmployeeActivity extends AppCompatActivity implements RequestNot
             } else {
                 empContact.setError("Not Autokatta User");
                 txtUser.setVisibility(View.GONE);
+                AutoUser="No";
             }
 
 
