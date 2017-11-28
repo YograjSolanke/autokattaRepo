@@ -9,10 +9,13 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.LayerDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -232,44 +235,23 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
 
         mainlayout.setVisibility(View.GONE);
         overallbar.setEnabled(false);
-        storerating.setEnabled(false);
+        //storerating.setEnabled(false);
         productrating.setEnabled(false);
 
 
- /*set color to rating bar*/
+        /*LayerDrawable layerDrawable = (LayerDrawable) storerating.getProgressDrawable();
 
-        /*LayerDrawable stars = (LayerDrawable) pricebar.getProgressDrawable();
-        stars.getDrawable(2).setColorFilter(ContextCompat.getColor(getApplicationContext(),R.color.medium_sea_green), PorterDuff.Mode.SRC_ATOP);//After filled
-        stars.getDrawable(0).setColorFilter(ContextCompat.getColor(getApplicationContext(),R.color.grey), PorterDuff.Mode.SRC_ATOP);//empty
-        stars.getDrawable(1).setColorFilter(ContextCompat.getColor(getApplicationContext(),R.color.textColor), PorterDuff.Mode.SRC_ATOP);//
-
-
-        LayerDrawable stars1 = (LayerDrawable) qualitybar.getProgressDrawable();
-        stars1.getDrawable(2).setColorFilter(ContextCompat.getColor(getApplicationContext(),R.color.medium_sea_green), PorterDuff.Mode.SRC_ATOP);//After filled
-        stars1.getDrawable(0).setColorFilter(ContextCompat.getColor(getApplicationContext(),R.color.grey), PorterDuff.Mode.SRC_ATOP);//empty
-        stars1.getDrawable(1).setColorFilter(ContextCompat.getColor(getApplicationContext(),R.color.textColor), PorterDuff.Mode.SRC_ATOP);//
-
-        LayerDrawable stars2 = (LayerDrawable) stockbar.getProgressDrawable();
-        stars2.getDrawable(2).setColorFilter(ContextCompat.getColor(getApplicationContext(),R.color.medium_sea_green), PorterDuff.Mode.SRC_ATOP);//After filled
-        stars2.getDrawable(0).setColorFilter(ContextCompat.getColor(getApplicationContext(),R.color.grey), PorterDuff.Mode.SRC_ATOP);//empty
-        stars2.getDrawable(1).setColorFilter(ContextCompat.getColor(getApplicationContext(),R.color.textColor), PorterDuff.Mode.SRC_ATOP);//
-
-
-        LayerDrawable stars3 = (LayerDrawable) productrating.getProgressDrawable();
-        stars3.getDrawable(2).setColorFilter(ContextCompat.getColor(getApplicationContext(),R.color.medium_sea_green), PorterDuff.Mode.SRC_ATOP);//After filled
-        stars3.getDrawable(0).setColorFilter(ContextCompat.getColor(getApplicationContext(),R.color.grey), PorterDuff.Mode.SRC_ATOP);//empty
-        stars3.getDrawable(1).setColorFilter(ContextCompat.getColor(getApplicationContext(),R.color.textColor), PorterDuff.Mode.SRC_ATOP);//
-
-        LayerDrawable stars4 = (LayerDrawable) storerating.getProgressDrawable();
-        stars4.getDrawable(2).setColorFilter(ContextCompat.getColor(getApplicationContext(),R.color.medium_sea_green), PorterDuff.Mode.SRC_ATOP);//After filled
-        stars4.getDrawable(0).setColorFilter(ContextCompat.getColor(getApplicationContext(),R.color.grey), PorterDuff.Mode.SRC_ATOP);//empty
-        stars4.getDrawable(1).setColorFilter(ContextCompat.getColor(getApplicationContext(),R.color.textColor), PorterDuff.Mode.SRC_ATOP);//
-
-        LayerDrawable stars5 = (LayerDrawable) overallbar.getProgressDrawable();
-        stars5.getDrawable(2).setColorFilter(ContextCompat.getColor(getApplicationContext(),R.color.medium_sea_green), PorterDuff.Mode.SRC_ATOP);//After filled
-        stars5.getDrawable(0).setColorFilter(ContextCompat.getColor(getApplicationContext(),R.color.grey), PorterDuff.Mode.SRC_ATOP);//empty
-        stars5.getDrawable(1).setColorFilter(ContextCompat.getColor(getApplicationContext(),R.color.textColor), PorterDuff.Mode.SRC_ATOP);//
-*/
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            DrawableCompat.setTint(DrawableCompat.wrap(layerDrawable.getDrawable(1)), ContextCompat.getColor(ProductViewActivity.this, R.color.medium_sea_green)); // Partial star
+            DrawableCompat.setTint(DrawableCompat.wrap(layerDrawable.getDrawable(2)), ContextCompat.getColor(ProductViewActivity.this, R.color.medium_sea_green));
+            DrawableCompat.setTint(DrawableCompat.wrap(layerDrawable.getDrawable(0)), ContextCompat.getColor(ProductViewActivity.this, R.color.mid_gray));
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            layerDrawable.getDrawable(1).setTint(ContextCompat.getColor(ProductViewActivity.this, R.color.medium_sea_green));
+            layerDrawable.getDrawable(2).setTint(ContextCompat.getColor(ProductViewActivity.this, R.color.medium_sea_green));
+            layerDrawable.getDrawable(0).setTint(ContextCompat.getColor(ProductViewActivity.this, R.color.mid_gray));
+        } else {
+            layerDrawable.getDrawable(2).setColorFilter(ContextCompat.getColor(ProductViewActivity.this, R.color.medium_sea_green), PorterDuff.Mode.SRC);
+        }*/
 
         edit.setOnClickListener(this);
         check.setOnClickListener(this);
@@ -375,6 +357,10 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
             }
         });
 
+        LayerDrawable stars = (LayerDrawable) storerating.getProgressDrawable();
+        stars.getDrawable(2).setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.medium_sea_green), PorterDuff.Mode.SRC_ATOP);//After filled
+        stars.getDrawable(0).setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.common_google_signin_btn_text_light_default), PorterDuff.Mode.SRC_ATOP);//empty
+        stars.getDrawable(1).setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.textColor), PorterDuff.Mode.SRC_ATOP);//
 
     }
 
