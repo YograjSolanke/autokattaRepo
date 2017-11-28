@@ -24,18 +24,18 @@ import autokatta.com.response.SuggestionsResponse;
 import autokatta.com.view.StoreViewActivity;
 
 /**
- * Created by ak-003 on 3/11/17.
+ * Created by ak-003 on 28/11/17.
  */
 
-public class SuggestionStoreAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class SuggestionNewVehicleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     Activity mActivity;
-    private List<SuggestionsResponse.Success.Store> mSuggestionList;
+    private List<SuggestionsResponse.Success.Newvehicle> mSuggestionList;
     private TextView mSuggestionAbout;
     private String mLoginContact;
 
     /*Constructor*/
-    public SuggestionStoreAdapter(Activity mActivity1, List<SuggestionsResponse.Success.Store> storeResponseArrayList1, TextView txtSuggestion, String mLoginContact) {
+    public SuggestionNewVehicleAdapter(Activity mActivity1, List<SuggestionsResponse.Success.Newvehicle> storeResponseArrayList1, TextView txtSuggestion, String mLoginContact) {
         mActivity = mActivity1;
         mSuggestionList = storeResponseArrayList1;
         mSuggestionAbout = txtSuggestion;
@@ -89,7 +89,7 @@ public class SuggestionStoreAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         final StoreSuggestions mStoreSuggestions = (StoreSuggestions) holder;
         mStoreSuggestions.mStoreName.setText(mSuggestionList.get(position).getName());
         mStoreSuggestions.mStoreLocation.setText(mSuggestionList.get(position).getLocation());
-        mSuggestionAbout.setText("Suggestion Based On Store");
+        //mSuggestionAbout.setText("Suggestion Based On Store");
 
         if (mSuggestionList.get(position).getStoreImage().equals("")) {
 
@@ -98,7 +98,7 @@ public class SuggestionStoreAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(mStoreSuggestions.mStorePic);
         } else {
-            mStoreSuggestions.mStorePic.setBackgroundResource(R.drawable.profile);
+            mStoreSuggestions.mStorePic.setBackgroundResource(R.drawable.store);
         }
 
         mStoreSuggestions.mView.setOnClickListener(new View.OnClickListener() {

@@ -78,6 +78,7 @@
             android:id="@+id/linearVehicle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="5dp"
             android:orientation="vertical"
             android:visibility="gone">
 
@@ -109,6 +110,7 @@
             android:id="@+id/linearProduct"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="5dp"
             android:orientation="vertical"
             android:visibility="gone">
 
@@ -142,6 +144,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:layout_margin="5dp"
             android:visibility="gone">
 
             <TextView
@@ -156,6 +159,38 @@
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/serviceRecyclerView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scrollbars="vertical"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:background="#0000" />
+
+        <LinearLayout
+            android:id="@+id/linearNewVehicle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_margin="5dp"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/textNewVehicle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="Stores near by you"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/newVehicleRecyclerView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:scrollbars="vertical"

@@ -17,10 +17,11 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import autokatta.com.R;
-import autokatta.com.response.ModelSuggestionsResponse;
+import autokatta.com.response.SuggestionsResponse;
 import autokatta.com.view.VehicleDetails;
 
 /**
@@ -30,12 +31,12 @@ import autokatta.com.view.VehicleDetails;
 public class SuggestionVehicleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     Activity mActivity;
-    private List<ModelSuggestionsResponse> mSuggestionList;
+    private List<SuggestionsResponse.Success.UsedVehicle> mSuggestionList = new ArrayList<>();
     private TextView mSuggestionAbout;
     private String mLoginContact;
 
     /*Constructor*/
-    public SuggestionVehicleAdapter(Activity mActivity1, List<ModelSuggestionsResponse> storeResponseArrayList1, TextView txtSuggestion, String mLoginContact) {
+    public SuggestionVehicleAdapter(Activity mActivity1, List<SuggestionsResponse.Success.UsedVehicle> storeResponseArrayList1, TextView txtSuggestion, String mLoginContact) {
         mActivity = mActivity1;
         mSuggestionList = storeResponseArrayList1;
         mSuggestionAbout = txtSuggestion;
@@ -91,12 +92,12 @@ public class SuggestionVehicleAdapter extends RecyclerView.Adapter<RecyclerView.
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
         final VehicleSuggestions mVehicleVSuggestions = (VehicleSuggestions) holder;
-        mVehicleVSuggestions.mVehicleName.setText(mSuggestionList.get(position).getName());
-        mVehicleVSuggestions.mVehicleCategory.setText(mSuggestionList.get(position).getVehicleCategory());
-        mVehicleVSuggestions.mVehicleYear.setText(mSuggestionList.get(position).getVehicleMfgYear());
-        mVehicleVSuggestions.mVehicleBrand.setText(mSuggestionList.get(position).getVehicleBrand());
-        mVehicleVSuggestions.mVehicleModel.setText(mSuggestionList.get(position).getVehicleModel());
-        mVehicleVSuggestions.mVehicleLocation.setText(mSuggestionList.get(position).getLocation());
+        mVehicleVSuggestions.mVehicleName.setText(mSuggestionList.get(position).getTitile());
+        mVehicleVSuggestions.mVehicleCategory.setText(mSuggestionList.get(position).getCategory());
+        mVehicleVSuggestions.mVehicleYear.setText(mSuggestionList.get(position).getYearOfManufaturer());
+        mVehicleVSuggestions.mVehicleBrand.setText(mSuggestionList.get(position).getManufacturer());
+        mVehicleVSuggestions.mVehicleModel.setText(mSuggestionList.get(position).getModel());
+        mVehicleVSuggestions.mVehicleLocation.setText(mSuggestionList.get(position).getLocationCity());
 
         mSuggestionAbout.setText("Suggestion Based On Vehicle");
 
@@ -114,7 +115,7 @@ public class SuggestionVehicleAdapter extends RecyclerView.Adapter<RecyclerView.
             @Override
             public void onClick(View v) {
                 Bundle mBundle = new Bundle();
-                mBundle.putInt("vehicle_id", mSuggestionList.get(mVehicleVSuggestions.getAdapterPosition()).getVehicleId());
+                mBundle.putInt("vehicle_id", mSuggestionList.get(mVehicleVSuggestions.getAdapterPosition()).getUploadVehicleID());
                 ActivityOptions options = ActivityOptions.makeCustomAnimation(mActivity, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
                 Intent mVehicleDetails = new Intent(mActivity, VehicleDetails.class);
                 mVehicleDetails.putExtras(mBundle);

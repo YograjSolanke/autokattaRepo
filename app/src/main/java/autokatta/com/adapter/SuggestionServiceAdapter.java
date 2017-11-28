@@ -19,7 +19,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import java.util.List;
 
 import autokatta.com.R;
-import autokatta.com.response.ModelSuggestionsResponse;
+import autokatta.com.response.SuggestionsResponse;
 import autokatta.com.view.ServiceViewActivity;
 
 /**
@@ -29,12 +29,12 @@ import autokatta.com.view.ServiceViewActivity;
 public class SuggestionServiceAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     Activity mActivity;
-    private List<ModelSuggestionsResponse> mSuggestionList;
+    private List<SuggestionsResponse.Success.Service> mSuggestionList;
     private TextView mSuggestionAbout;
     private String mLoginContact;
 
     /*Constructor*/
-    public SuggestionServiceAdapter(Activity mActivity1, List<ModelSuggestionsResponse> storeResponseArrayList1, TextView txtSuggestion, String mLoginContact) {
+    public SuggestionServiceAdapter(Activity mActivity1, List<SuggestionsResponse.Success.Service> storeResponseArrayList1, TextView txtSuggestion, String mLoginContact) {
         mActivity = mActivity1;
         mSuggestionList = storeResponseArrayList1;
         mSuggestionAbout = txtSuggestion;
@@ -103,7 +103,7 @@ public class SuggestionServiceAdapter extends RecyclerView.Adapter<RecyclerView.
             @Override
             public void onClick(View v) {
                 ActivityOptions options = ActivityOptions.makeCustomAnimation(mActivity, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
-                int servId = mSuggestionList.get(mServiceVSuggestions.getAdapterPosition()).getServiceId();
+                int servId = mSuggestionList.get(mServiceVSuggestions.getAdapterPosition()).getStoreServiceID();
                 Intent intent = new Intent(mActivity, ServiceViewActivity.class);
                 intent.putExtra("service_id", servId);
                 intent.putExtra("editmode", "no");

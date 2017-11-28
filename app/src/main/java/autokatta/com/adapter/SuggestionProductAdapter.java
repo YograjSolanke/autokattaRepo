@@ -19,7 +19,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import java.util.List;
 
 import autokatta.com.R;
-import autokatta.com.response.ModelSuggestionsResponse;
+import autokatta.com.response.SuggestionsResponse;
 import autokatta.com.view.ProductViewActivity;
 
 /**
@@ -29,12 +29,12 @@ import autokatta.com.view.ProductViewActivity;
 public class SuggestionProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     Activity mActivity;
-    private List<ModelSuggestionsResponse> mSuggestionList;
+    private List<SuggestionsResponse.Success.Product> mSuggestionList;
     private TextView mSuggestionAbout;
     private String mLoginContact;
 
     /*Constructor*/
-    public SuggestionProductAdapter(Activity mActivity1, List<ModelSuggestionsResponse> storeResponseArrayList1, TextView txtSuggestion, String mLoginContact) {
+    public SuggestionProductAdapter(Activity mActivity1, List<SuggestionsResponse.Success.Product> storeResponseArrayList1, TextView txtSuggestion, String mLoginContact) {
         mActivity = mActivity1;
         mSuggestionList = storeResponseArrayList1;
         mSuggestionAbout = txtSuggestion;
@@ -105,7 +105,7 @@ public class SuggestionProductAdapter extends RecyclerView.Adapter<RecyclerView.
             public void onClick(View v) {
 
                 ActivityOptions options = ActivityOptions.makeCustomAnimation(mActivity, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
-                int proId = mSuggestionList.get(mProductVSuggestions.getAdapterPosition()).getProductId();
+                int proId = mSuggestionList.get(mProductVSuggestions.getAdapterPosition()).getProductID();
                 Intent intent = new Intent(mActivity, ProductViewActivity.class);
                 intent.putExtra("product_id", proId);
                 intent.putExtra("editmode", "no");
