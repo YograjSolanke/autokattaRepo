@@ -26,26 +26,63 @@
                 android:layout_centerHorizontal="true"
                 android:contentDescription="@string/app_name" />
 
-            <TextView
-                android:id="@+id/productType"
-                android:layout_width="wrap_content"
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
                 android:layout_below="@+id/productPic"
-                android:text="@string/product_type"
-                android:textSize="15sp"
-                android:textStyle="bold" />
+                android:id="@+id/layout1">
 
-            <TextView
-                android:id="@+id/productName"
-                android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/productTypeText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:text="@string/product_type"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+
+                <TextView
+                    android:id="@+id/productType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_toEndOf="@+id/productTypeText"
+                    android:text="@string/product_type"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity=""
-                android:layout_margin="5dp"
-                android:text="@string/product_name"
-                android:layout_below="@+id/productType"
-                android:textSize="15sp"
-                android:textStyle="bold" />
+                android:id="@+id/layout2"
+                android:layout_below="@+id/layout1">
+
+                <TextView
+                    android:id="@+id/productNameText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity=""
+                    android:layout_margin="5dp"
+                    android:text="@string/product_name"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+
+                <TextView
+                    android:id="@+id/productName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity=""
+                    android:layout_margin="5dp"
+                    android:text="@string/product_name"
+                    android:layout_toEndOf="@+id/productNameText"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+            </RelativeLayout>
 
 
             <Button
@@ -55,9 +92,10 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/buttonback"
                 android:padding="5dp"
-                android:layout_below="@+id/productName"
+                android:layout_below="@+id/layout2"
                 android:layout_centerHorizontal="true"
                 android:text="@string/view_details"
+                android:layout_marginBottom="5dp"
                 android:textAllCaps="false"
                 android:textColor="@color/white" />
 

@@ -26,26 +26,62 @@
                 android:layout_centerHorizontal="true"
                 android:contentDescription="@string/app_name" />
 
-            <TextView
-                android:id="@+id/serviceType"
-                android:layout_width="wrap_content"
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
                 android:layout_below="@+id/servicePic"
-                android:text="@string/service_type"
-                android:textSize="15sp"
-                android:textStyle="bold" />
+                android:id="@+id/layout1">
 
-            <TextView
-                android:id="@+id/serviceName"
-                android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/serviceTypeText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:text="@string/service_type"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/serviceType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_toEndOf="@+id/serviceTypeText"
+                    android:text="@string/service_type"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity=""
-                android:layout_margin="5dp"
-                android:text="@string/service_name"
-                android:layout_below="@+id/serviceType"
-                android:textSize="15sp"
-                android:textStyle="bold" />
+                android:id="@+id/layout2"
+                android:layout_below="@+id/layout1">
+
+                <TextView
+                    android:id="@+id/serviceNameText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity=""
+                    android:layout_margin="5dp"
+                    android:text="@string/service_name"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+
+                <TextView
+                    android:id="@+id/serviceName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity=""
+                    android:layout_margin="5dp"
+                    android:layout_toEndOf="@+id/serviceNameText"
+                    android:text="@string/service_name"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+            </RelativeLayout>
 
 
             <Button
@@ -55,7 +91,8 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/buttonback"
                 android:padding="5dp"
-                android:layout_below="@+id/serviceName"
+                android:layout_below="@+id/layout2"
+                android:layout_marginBottom="5dp"
                 android:layout_centerHorizontal="true"
                 android:text="@string/view_details"
                 android:textAllCaps="false"

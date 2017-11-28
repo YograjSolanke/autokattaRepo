@@ -112,6 +112,7 @@
     <string name="enquiry_form">Enquiry Form</string>
     <string name="first_name">First Name</string>
     <string name="name">Name<font color='#FF0000'>\u002A</font></string>
+    <string name="userName">Name</string>
     <string name="last_name">Last Name</string>
     <string name="surname">Surname</string>
     <string name="go_profile">Go Profile</string>

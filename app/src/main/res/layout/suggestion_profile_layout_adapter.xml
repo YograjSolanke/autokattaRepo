@@ -26,15 +26,62 @@
                 android:layout_centerHorizontal="true"
                 android:contentDescription="@string/app_name" />
 
-            <TextView
-                android:id="@+id/userName"
-                android:layout_width="wrap_content"
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
                 android:layout_below="@+id/profilePic"
-                android:text="@string/username"
-                android:textSize="15sp"
-                android:textStyle="bold" />
+                android:id="@+id/layout1">
+
+                <TextView
+                    android:id="@+id/userNameText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:text="@string/userName"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/userName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_toEndOf="@+id/userNameText"
+                    android:text="@string/userName"
+                    android:layout_marginStart="5dp"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/layout1"
+                android:id="@+id/layout2">
+
+
+                <TextView
+                    android:id="@+id/userLocationText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:text="@string/location"
+                    android:layout_marginStart="5dp"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/userLocation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_toEndOf="@+id/userLocationText"
+                    android:text="@string/location"
+                    android:layout_marginStart="5dp"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+            </RelativeLayout>
 
 
             <Button
@@ -44,9 +91,10 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/buttonback"
                 android:padding="5dp"
-                android:layout_below="@+id/userName"
+                android:layout_below="@+id/layout2"
                 android:layout_centerHorizontal="true"
                 android:text="@string/view_details"
+                android:layout_marginBottom="5dp"
                 android:textAllCaps="false"
                 android:textColor="@color/white" />
 

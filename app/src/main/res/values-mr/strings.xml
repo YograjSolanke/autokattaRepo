@@ -809,6 +809,7 @@
     <string name="client_name">क्लायंट नाव </string>
     <string name="joinGroup">जॉईन गट</string>
     <string name="add_notes">"ऍड नोट "</string>
+    <string name="userName">नाव</string>
 
 
     <!-- Array Tags -->

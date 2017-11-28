@@ -810,6 +810,7 @@
     <string name="client_name">क्लाइंट नाम </string>
     <string name="joinGroup">जॉईन समूह</string>
     <string name="add_notes">"ऐड नोट "</string>
+    <string name="userName">नाम</string>
 
     <!-- Array Tags -->
 </resources>

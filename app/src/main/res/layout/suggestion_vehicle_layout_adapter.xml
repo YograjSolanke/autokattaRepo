@@ -27,47 +27,137 @@
                 android:contentDescription="@string/app_name"
                 android:src="@drawable/logo48x48" />
 
-            <TextView
-                android:id="@+id/vehicleName"
-                android:layout_width="wrap_content"
+
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
                 android:layout_below="@+id/vehiclePic"
-                android:text="@string/vehicle_title"
-                android:textSize="15sp"
-                android:textStyle="bold" />
+                android:id="@+id/layout1">
 
-            <TextView
-                android:id="@+id/vehicleCategory"
-                android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/vehicleNameText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:text="@string/vehicle_title"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+
+                <TextView
+                    android:id="@+id/vehicleName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_toEndOf="@+id/vehicleNameText"
+                    android:text="@string/vehicle_title"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity=""
-                android:layout_margin="5dp"
-                android:text="@string/category"
-                android:layout_below="@+id/vehicleName"
-                android:textSize="15sp"
-                android:textStyle="bold" />
+                android:layout_below="@+id/layout1"
+                android:id="@+id/layout2">
+
+                <TextView
+                    android:id="@+id/vehicleCategoryText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity=""
+                    android:layout_margin="5dp"
+                    android:text="@string/category"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
 
 
-            <TextView
-                android:id="@+id/vehicleBrand"
-                android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/vehicleCategory"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity=""
+                    android:layout_toEndOf="@+id/vehicleCategoryText"
+                    android:layout_margin="5dp"
+                    android:text="@string/category"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity=""
-                android:layout_margin="5dp"
-                android:text="@string/brand"
-                android:layout_below="@+id/vehicleCategory"
-                android:textSize="15sp"
-                android:textStyle="bold" />
+                android:layout_below="@+id/layout2"
+                android:id="@+id/layout3">
 
-            <TextView
-                android:id="@+id/vehicleModel"
-                android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/vehicleBrandText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity=""
+                    android:layout_margin="5dp"
+                    android:text="@string/brand"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/vehicleBrand"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity=""
+                    android:layout_margin="5dp"
+                    android:layout_toEndOf="@+id/vehicleBrandText"
+                    android:text="@string/brand"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity=""
-                android:layout_margin="5dp"
-                android:text="@string/model"
-                android:layout_below="@+id/vehicleBrand"
+                android:layout_below="@+id/layout3"
+                android:id="@+id/layout4">
+
+                <TextView
+                    android:id="@+id/vehicleModelText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity=""
+                    android:layout_margin="5dp"
+                    android:text="@string/model"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+
+                <TextView
+                    android:id="@+id/vehicleModel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity=""
+                    android:layout_toEndOf="@+id/vehicleModelText"
+                    android:layout_margin="5dp"
+                    android:text="@string/model"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/layout4"
+                android:id="@+id/layout5">
+
+                <TextView
+                    android:id="@+id/vehicleYearText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity=""
+                    android:layout_margin="5dp"
+                    android:text="@string/year_of_mfg"
                 android:textSize="15sp"
                 android:textStyle="bold" />
 
@@ -77,8 +167,26 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity=""
                 android:layout_margin="5dp"
+                android:layout_toEndOf="@+id/vehicleYearText"
                 android:text="@string/year_of_mfg"
-                android:layout_below="@+id/vehicleModel"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/layout5"
+                android:id="@+id/layout6">
+
+                <TextView
+                    android:id="@+id/vehicleLocationText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity=""
+                    android:layout_margin="5dp"
+                    android:text="@string/location"
                 android:textSize="15sp"
                 android:textStyle="bold" />
 
@@ -88,10 +196,12 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity=""
                 android:layout_margin="5dp"
+                android:layout_toEndOf="@+id/vehicleLocationText"
                 android:text="@string/location"
-                android:layout_below="@+id/vehicleYear"
                 android:textSize="15sp"
                 android:textStyle="bold" />
+
+            </RelativeLayout>
 
 
             <Button
@@ -101,7 +211,8 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/buttonback"
                 android:padding="5dp"
-                android:layout_below="@+id/vehicleLocation"
+                android:layout_below="@+id/layout6"
+                android:layout_marginBottom="5dp"
                 android:layout_centerHorizontal="true"
                 android:text="@string/view_details"
                 android:textAllCaps="false"
