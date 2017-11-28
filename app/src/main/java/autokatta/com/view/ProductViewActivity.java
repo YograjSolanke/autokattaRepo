@@ -9,13 +9,10 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.LayerDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -241,7 +238,7 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
 
  /*set color to rating bar*/
 
-        LayerDrawable stars = (LayerDrawable) pricebar.getProgressDrawable();
+        /*LayerDrawable stars = (LayerDrawable) pricebar.getProgressDrawable();
         stars.getDrawable(2).setColorFilter(ContextCompat.getColor(getApplicationContext(),R.color.medium_sea_green), PorterDuff.Mode.SRC_ATOP);//After filled
         stars.getDrawable(0).setColorFilter(ContextCompat.getColor(getApplicationContext(),R.color.grey), PorterDuff.Mode.SRC_ATOP);//empty
         stars.getDrawable(1).setColorFilter(ContextCompat.getColor(getApplicationContext(),R.color.textColor), PorterDuff.Mode.SRC_ATOP);//
@@ -272,7 +269,7 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
         stars5.getDrawable(2).setColorFilter(ContextCompat.getColor(getApplicationContext(),R.color.medium_sea_green), PorterDuff.Mode.SRC_ATOP);//After filled
         stars5.getDrawable(0).setColorFilter(ContextCompat.getColor(getApplicationContext(),R.color.grey), PorterDuff.Mode.SRC_ATOP);//empty
         stars5.getDrawable(1).setColorFilter(ContextCompat.getColor(getApplicationContext(),R.color.textColor), PorterDuff.Mode.SRC_ATOP);//
-
+*/
 
         edit.setOnClickListener(this);
         check.setOnClickListener(this);

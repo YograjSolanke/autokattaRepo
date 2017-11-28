@@ -59,7 +59,8 @@ import retrofit2.Response;
 public class Registration extends AppCompatActivity implements View.OnClickListener,
         AdapterView.OnItemSelectedListener, android.location.LocationListener, RequestNotifier, View.OnTouchListener {
 
-    EditText personName, mobileNo, email, dateOfBirth, pincode, otherIndustry, otherCategory, otherbrand, password, confirmPassword;
+    EditText personName, mobileNo, email, dateOfBirth, pincode, otherIndustry, otherCategory, otherbrand, password,
+            confirmPassword, edtotp1;
     Spinner moduleSpinner, usertypeSpinner, industrySpinner, brandSpinner;
     Button btnSubmit, btnClear;
     AutoCompleteTextView address;
@@ -71,7 +72,7 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
     RelativeLayout mRegistration;
     LinearLayout mLinear, mButton, mOtpLayout;
     ScrollView mScrollView;
-    Button mNext;
+    Button mNext, submit_otp;
     String mSuccess = "";
     RadioButton rbtmale, rbtfemale;
     RadioGroup rg1;
@@ -86,6 +87,7 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
     private DatePickerDialog datePicker;
     TextView termsOfAgreement;
     CheckBox mCheckBox;
+    String otpstr2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,6 +123,7 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
         otherCategory = (EditText) findViewById(R.id.editOtherTypeCategory);
         otherbrand = (EditText) findViewById(R.id.editOtherBrand);
         password = (EditText) findViewById(R.id.editPassword);
+        edtotp1 = (EditText) findViewById(R.id.edtotp1);
         confirmPassword = (EditText) findViewById(R.id.editConfirmPassword);
         usertypeSpinner = (Spinner) findViewById(R.id.spinnerUsertype);
         industrySpinner = (Spinner) findViewById(R.id.spinnerindustry);
@@ -144,9 +147,11 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
         functions = new GenericFunctions();
 
         btnSubmit = (Button) findViewById(R.id.btnsubmit);
+        submit_otp = (Button) findViewById(R.id.submit_otp);
         btnClear = (Button) findViewById(R.id.btnclear);
         btnClear.setOnClickListener(this);
         btnSubmit.setOnClickListener(this);
+        submit_otp.setOnClickListener(this);
         clearDate.setOnClickListener(this);
         mNext.setOnClickListener(this);
         dateOfBirth.setInputType(InputType.TYPE_NULL);
@@ -363,6 +368,14 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
                 dateOfBirth.setError(null);
                 clearDate.setVisibility(View.GONE);
                 break;
+
+            case R.id.submit_otp:
+                String otpstr1 = edtotp1.getText().toString();
+                if (otpstr1.equals(otpstr2)) {
+                    mButton.setVisibility(View.VISIBLE);
+                    mScrollView.setVisibility(View.VISIBLE);
+                }
+                break;
         }
     }
 
@@ -541,6 +554,8 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
                 sendOtp(contactstr);
                 //mButton.setVisibility(View.VISIBLE);
                 //mScrollView.setVisibility(View.VISIBLE);
+            } else if (str.length() == 6) {
+                otpstr2 = "" + str;
             } else {
                 getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putInt("loginregistrationid", Integer.parseInt(str)).apply();
                 CustomToast.customToast(getApplicationContext(), " Registered Successfully");
