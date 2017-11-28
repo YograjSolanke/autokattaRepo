@@ -96,6 +96,7 @@ public class AutokattaContactAdapter extends RecyclerView.Adapter<AutokattaConta
             this.contactdata = contactdata;
             contactdata_copy = contactdata;
             apicall = new ApiCall(this.mActivity, this);
+            setHasStableIds(true);
         } catch (ClassCastException e) {
             e.printStackTrace();
         }
@@ -358,6 +359,16 @@ public class AutokattaContactAdapter extends RecyclerView.Adapter<AutokattaConta
         } catch (android.content.ActivityNotFoundException ex) {
             System.out.println("No Activity Found For Call in Car Details Fragment\n");
         }
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position;
     }
 
     @Override
