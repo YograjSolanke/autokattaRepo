@@ -103,7 +103,7 @@
                 android:layout_alignParentEnd="true"
                 android:background="@drawable/buttonback"
                 android:gravity="center"
-                android:text="Follow+"
+                android:text="@string/follow"
                 android:textColor="@android:color/white"
                 android:textSize="12sp"
                 android:visibility="visible" />

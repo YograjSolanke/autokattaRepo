@@ -67,6 +67,7 @@ public class AutokattaContactAdapter extends RecyclerView.Adapter<AutokattaConta
     private String Rcontact = "";
     private String[] strGroupIds;
     private String[] groupTitleArray;
+    private YoHolder yoHolder;
 
     static class YoHolder extends RecyclerView.ViewHolder {
 
@@ -110,6 +111,7 @@ public class AutokattaContactAdapter extends RecyclerView.Adapter<AutokattaConta
 
     @Override
     public void onBindViewHolder(final AutokattaContactAdapter.YoHolder holder, final int position) {
+        yoHolder = holder;
         myContact = mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).getString("loginContact", "");
         holder.mTextName.setText(contactdata.get(position).getUsername());
         holder.mTextNumber.setText(contactdata.get(position).getContact());
@@ -141,12 +143,11 @@ public class AutokattaContactAdapter extends RecyclerView.Adapter<AutokattaConta
             holder.mTextStatus.setText("No Status");
 
 
-        if (contactdata.get(position).getFollowstatus().equals("yes")) {
+        if (contactdata.get(position).getFollowstatus().equalsIgnoreCase("yes")) {
             holder.btnUnfollow.setVisibility(VISIBLE);
             holder.btnFollow.setVisibility(GONE);
 
-        }
-        if (contactdata.get(position).getFollowstatus().equals("no")) {
+        } else if (contactdata.get(position).getFollowstatus().equalsIgnoreCase("no")) {
             holder.btnUnfollow.setVisibility(GONE);
             holder.btnFollow.setVisibility(VISIBLE);
         }
@@ -215,8 +216,8 @@ public class AutokattaContactAdapter extends RecyclerView.Adapter<AutokattaConta
             @Override
             public void onClick(View v) {
 
-                holder.btnUnfollow.setVisibility(VISIBLE);
-                holder.btnFollow.setVisibility(GONE);
+                /*holder.btnUnfollow.setVisibility(VISIBLE);
+                holder.btnFollow.setVisibility(GONE);*/
                 Rcontact = contactdata.get(holder.getAdapterPosition()).getContact();
                 sendFollowerUnfollower(Rcontact, "follow");
 
@@ -227,8 +228,8 @@ public class AutokattaContactAdapter extends RecyclerView.Adapter<AutokattaConta
             @Override
             public void onClick(View v) {
 
-                holder.btnUnfollow.setVisibility(GONE);
-                holder.btnFollow.setVisibility(VISIBLE);
+                /*holder.btnUnfollow.setVisibility(GONE);
+                holder.btnFollow.setVisibility(VISIBLE);*/
                 Rcontact = contactdata.get(holder.getAdapterPosition()).getContact();
                 sendFollowerUnfollower(Rcontact, "unfollow");
 
@@ -330,12 +331,22 @@ public class AutokattaContactAdapter extends RecyclerView.Adapter<AutokattaConta
                 dbAdpter.OPEN();
                 dbAdpter.updateAutoContacts(Rcontact, "yes");
                 dbAdpter.CLOSE();
+                yoHolder.btnUnfollow.setVisibility(VISIBLE);
+                yoHolder.btnFollow.setVisibility(GONE);
+                contactdata.get(yoHolder.getAdapterPosition()).setFollowstatus("yes");
+                notifyDataSetChanged();
+
             } else if (str.equalsIgnoreCase("success_unfollow")) {
                 CustomToast.customToast(mActivity, "Un follow profile");
                 DbOperation dbAdpter = new DbOperation(mActivity);
                 dbAdpter.OPEN();
                 dbAdpter.updateAutoContacts(Rcontact, "no");
                 dbAdpter.CLOSE();
+                yoHolder.btnUnfollow.setVisibility(GONE);
+                yoHolder.btnFollow.setVisibility(VISIBLE);
+                contactdata.get(yoHolder.getAdapterPosition()).setFollowstatus("no");
+                notifyDataSetChanged();
+
             }
         } else
             CustomToast.customToast(mActivity, mActivity.getString(R.string.no_response));
@@ -357,7 +368,7 @@ public class AutokattaContactAdapter extends RecyclerView.Adapter<AutokattaConta
             }
             mActivity.startActivity(in);
         } catch (android.content.ActivityNotFoundException ex) {
-            System.out.println("No Activity Found For Call in Car Details Fragment\n");
+            ex.printStackTrace();
         }
     }
 
