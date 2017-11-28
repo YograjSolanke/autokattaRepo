@@ -95,14 +95,9 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
     GridView androidGridView;
     private Menu mMenu;
 
-    String[] gridViewString = {
-            "About", "Product", "Service", "Used Vehicle", "New Vehicle", "Videos",
-            "Images", "My Employees",};
+    String[] gridViewString;
 
-    int[] gridViewImageId = {
-            R.mipmap.communication, R.mipmap.store_product, R.mipmap.store_service, R.mipmap.store_used_vehicle, R.mipmap.new_vehicle, R.mipmap.videos, R.mipmap.images,
-            R.mipmap.members
-    };
+    int[] gridViewImageId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -221,10 +216,6 @@ public class StoreViewActivity extends AppCompatActivity implements RequestNotif
         stars.getDrawable(2).setColorFilter(ContextCompat.getColor(getApplicationContext(),R.color.medium_sea_green), PorterDuff.Mode.SRC_ATOP);//After filled
         stars.getDrawable(0).setColorFilter(ContextCompat.getColor(getApplicationContext(),R.color.common_google_signin_btn_text_light_default), PorterDuff.Mode.SRC_ATOP);//empty
         stars.getDrawable(1).setColorFilter(ContextCompat.getColor(getApplicationContext(),R.color.textColor), PorterDuff.Mode.SRC_ATOP);//
-
-
-        CustomGridViewActivity adapterViewAndroid = new CustomGridViewActivity(this, gridViewString, gridViewImageId);
-        androidGridView.setAdapter(adapterViewAndroid);
 
         androidGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -942,6 +933,19 @@ Call Intent...
                         //mCall.setVisibility(View.GONE);
                         mViewReview.setVisibility(View.VISIBLE);
                         //AddSuggestionData(store_id);
+
+                        gridViewString = new String[]{
+                                "About", "Product", "Service", "Used Vehicle", "New Vehicle", "Videos",
+                                "Images", "My Employees",};
+
+                        gridViewImageId = new int[]{
+                                R.mipmap.communication, R.mipmap.store_product, R.mipmap.store_service, R.mipmap.store_used_vehicle, R.mipmap.new_vehicle, R.mipmap.videos, R.mipmap.images,
+                                R.mipmap.members
+                        };
+
+                        CustomGridViewActivity adapterViewAndroid = new CustomGridViewActivity(this, gridViewString, gridViewImageId);
+                        androidGridView.setAdapter(adapterViewAndroid);
+
                     } else if (userRole.equalsIgnoreCase("Employee")) {
 
                         mAdd.setVisibility(View.VISIBLE);
@@ -949,6 +953,17 @@ Call Intent...
                         //mCall.setVisibility(View.GONE);
                         mViewReview.setVisibility(View.GONE);
                         AddSuggestionData(store_id);
+
+                        gridViewString = new String[]{
+                                "About", "Product", "Service", "Used Vehicle", "New Vehicle", "Videos",
+                                "Images"};
+
+                        gridViewImageId = new int[]{
+                                R.mipmap.communication, R.mipmap.store_product, R.mipmap.store_service, R.mipmap.store_used_vehicle, R.mipmap.new_vehicle, R.mipmap.videos, R.mipmap.images
+                        };
+
+                        CustomGridViewActivity adapterViewAndroid = new CustomGridViewActivity(this, gridViewString, gridViewImageId);
+                        androidGridView.setAdapter(adapterViewAndroid);
                     } else if (userRole.equalsIgnoreCase("Other")) {
 
                         mAdd.setVisibility(View.GONE);
@@ -956,6 +971,17 @@ Call Intent...
                         //mCall.setVisibility(View.GONE);
                         mViewReview.setVisibility(View.GONE);
                         AddSuggestionData(store_id);
+
+                        gridViewString = new String[]{
+                                "About", "Product", "Service", "Used Vehicle", "New Vehicle", "Videos",
+                                "Images"};
+
+                        gridViewImageId = new int[]{
+                                R.mipmap.communication, R.mipmap.store_product, R.mipmap.store_service, R.mipmap.store_used_vehicle, R.mipmap.new_vehicle, R.mipmap.videos, R.mipmap.images
+                        };
+
+                        CustomGridViewActivity adapterViewAndroid = new CustomGridViewActivity(this, gridViewString, gridViewImageId);
+                        androidGridView.setAdapter(adapterViewAndroid);
                     }
 
                     storerating.setRating(storeRating);

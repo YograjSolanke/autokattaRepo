@@ -170,6 +170,7 @@ public class AddEmployeeActivity extends AppCompatActivity implements RequestNot
 
                 name = empName.getText().toString();
                 contact = empContact.getText().toString();
+                checkUser(contact);
                 designation = empDesignation.getText().toString();
                 description = empDescription.getText().toString();
                 if (permissionCheck.isChecked())
@@ -190,7 +191,7 @@ public class AddEmployeeActivity extends AppCompatActivity implements RequestNot
                     empDescription.setError("Please Enter Short Description");
                 }else if (!AutoUser.equalsIgnoreCase("") && AutoUser.equalsIgnoreCase("No")) {
                     empContact.setError("Not Autokatta User");
-                    empContact.setFocusable(true);
+                    empContact.requestFocus();
                 } else {
                     if (getIntent().getExtras().getString("keyword", "").equalsIgnoreCase("Add")) {
                         mApiCall.AddEmloyeeInStore(name, contact, myContact, designation, store_id, description,
@@ -266,6 +267,9 @@ public class AddEmployeeActivity extends AppCompatActivity implements RequestNot
             } else if (str.equals("success_request_sent")) {
                 CustomToast.customToast(getApplicationContext(), "Request Sent");
                 finish();
+            } else if (str.equals("already_request_sent")) {
+                CustomToast.customToast(getApplicationContext(), "Already Employee");
+                //finish();
             } else if (str.equals("Success_Updated")) {
                 CustomToast.customToast(getApplicationContext(), " Data Updated");
                 finish();

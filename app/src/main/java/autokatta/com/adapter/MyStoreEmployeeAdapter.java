@@ -98,6 +98,11 @@ public class MyStoreEmployeeAdapter extends RecyclerView.Adapter<MyStoreEmployee
         yoHolder = holder;
         holder.mEmpName.setText(mEmpList.get(position).getName());
         holder.mEmpContact.setText(mEmpList.get(position).getContactNo());
+
+        if (mEmpList.get(holder.getAdapterPosition()).getDeleteStatus().equalsIgnoreCase("Yes")) {
+
+            holder.mRemove.setText("Removed");
+        }
         holder.mInventory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -121,8 +126,12 @@ public class MyStoreEmployeeAdapter extends RecyclerView.Adapter<MyStoreEmployee
         holder.mRemove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int emp_id = mEmpList.get(holder.getAdapterPosition()).getStoreEmplyeeID();
-                deleteEmployee(emp_id);
+                if (holder.mRemove.getText().equals("Removed"))
+                    CustomToast.customToast(mActivity, "Already Deleted");
+                else {
+                    int emp_id = mEmpList.get(holder.getAdapterPosition()).getStoreEmplyeeID();
+                    deleteEmployee(emp_id);
+                }
             }
         });
 
@@ -179,7 +188,9 @@ public class MyStoreEmployeeAdapter extends RecyclerView.Adapter<MyStoreEmployee
             if (str.startsWith("Success_Deleted")) {
                 CustomToast.customToast(mActivity, "Employee deleted");
                 yoHolder.mRemove.setText("Removed");
-                yoHolder.mRemove.setClickable(false);
+                mEmpList.get(yoHolder.getAdapterPosition()).setDeleteStatus("Yes");
+                notifyDataSetChanged();
+                //  yoHolder.mRemove.setClickable(false);
             }
         }
     }
