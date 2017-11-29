@@ -52,6 +52,18 @@ public class SuggestionsResponse {
         @Expose
         private List<Service> service = null;
 
+        @SerializedName("Profile")
+        @Expose
+        private List<Profile> profile = null;
+
+        public List<Profile> getProfile() {
+            return profile;
+        }
+
+        public void setProfile(List<Profile> profile) {
+            this.profile = profile;
+        }
+
         public List<UsedVehicle> getUsedVehicle() {
             return usedVehicle;
         }
@@ -1680,6 +1692,572 @@ public class SuggestionsResponse {
             public void setSteering(String steering) {
                 this.steering = steering;
             }
+        }
+
+        public class Profile {
+
+            @SerializedName("ProfileID")
+            @Expose
+            private Integer profileID;
+            @SerializedName("About")
+            @Expose
+            private String about;
+            @SerializedName("AreaOfOperation")
+            @Expose
+            private String areaOfOperation;
+            @SerializedName("ByDistrict")
+            @Expose
+            private String byDistrict;
+            @SerializedName("ByKMS")
+            @Expose
+            private Object byKMS;
+            @SerializedName("ByState")
+            @Expose
+            private String byState;
+            @SerializedName("CategoryName")
+            @Expose
+            private String categoryName;
+            @SerializedName("City")
+            @Expose
+            private String city;
+            @SerializedName("CompanyName")
+            @Expose
+            private String companyName;
+            @SerializedName("ContactNo")
+            @Expose
+            private String contactNo;
+            @SerializedName("Country")
+            @Expose
+            private String country;
+            @SerializedName("DealingWith")
+            @Expose
+            private String dealingWith;
+            @SerializedName("Designation")
+            @Expose
+            private Object designation;
+            @SerializedName("DOB")
+            @Expose
+            private String dOB;
+            @SerializedName("Email")
+            @Expose
+            private String email;
+            @SerializedName("EstimatedNextServiceDate")
+            @Expose
+            private String estimatedNextServiceDate;
+            @SerializedName("FitnessValidity")
+            @Expose
+            private String fitnessValidity;
+            @SerializedName("FollowID")
+            @Expose
+            private Integer followID;
+            @SerializedName("Gender")
+            @Expose
+            private String gender;
+            @SerializedName("Industry")
+            @Expose
+            private String industry;
+            @SerializedName("InsuranceValidityDate_1")
+            @Expose
+            private Object insuranceValidityDate1;
+            @SerializedName("InsuranceValidityDate")
+            @Expose
+            private String insuranceValidityDate;
+            @SerializedName("IsExchange")
+            @Expose
+            private String isExchange;
+            @SerializedName("IsFinance")
+            @Expose
+            private String isFinance;
+            @SerializedName("IsOneTimeBuyer")
+            @Expose
+            private String isOneTimeBuyer;
+            @SerializedName("IsOneTimeSeller")
+            @Expose
+            private String isOneTimeSeller;
+            @SerializedName("IsRegularBuyer")
+            @Expose
+            private String isRegularBuyer;
+            @SerializedName("IsRegularSeller")
+            @Expose
+            private String isRegularSeller;
+            @SerializedName("LastServiceDate_2")
+            @Expose
+            private Object lastServiceDate2;
+            @SerializedName("LastServiceDate")
+            @Expose
+            private String lastServiceDate;
+            @SerializedName("LikeID")
+            @Expose
+            private Integer likeID;
+            @SerializedName("Password")
+            @Expose
+            private String password;
+            @SerializedName("PermitValidity")
+            @Expose
+            private String permitValidity;
+            @SerializedName("Profession")
+            @Expose
+            private String profession;
+            @SerializedName("ProfilePicture")
+            @Expose
+            private String profilePicture;
+            @SerializedName("PUCValidityDate_1")
+            @Expose
+            private Object pUCValidityDate1;
+            @SerializedName("PUCValidityDate")
+            @Expose
+            private String pUCValidityDate;
+            @SerializedName("Rating")
+            @Expose
+            private String rating;
+            @SerializedName("RegistrationID")
+            @Expose
+            private Integer registrationID;
+            @SerializedName("Skills")
+            @Expose
+            private String skills;
+            @SerializedName("State")
+            @Expose
+            private String state;
+            @SerializedName("SubCategoryName")
+            @Expose
+            private String subCategoryName;
+            @SerializedName("SubProfession")
+            @Expose
+            private String subProfession;
+            @SerializedName("TaxValidity")
+            @Expose
+            private String taxValidity;
+            @SerializedName("UserName")
+            @Expose
+            private String userName;
+            @SerializedName("VehicleNo")
+            @Expose
+            private String vehicleNo;
+            @SerializedName("VehicleType")
+            @Expose
+            private String vehicleType;
+            @SerializedName("WebSite")
+            @Expose
+            private String webSite;
+            @SerializedName("Interest")
+            @Expose
+            private String interest;
+            @SerializedName("Latitude")
+            @Expose
+            private String latitude;
+            @SerializedName("Longitude")
+            @Expose
+            private String longitude;
+
+            public Integer getProfileID() {
+                return profileID;
+            }
+
+            public void setProfileID(Integer profileID) {
+                this.profileID = profileID;
+            }
+
+            public String getAbout() {
+                return about;
+            }
+
+            public void setAbout(String about) {
+                this.about = about;
+            }
+
+            public String getAreaOfOperation() {
+                return areaOfOperation;
+            }
+
+            public void setAreaOfOperation(String areaOfOperation) {
+                this.areaOfOperation = areaOfOperation;
+            }
+
+            public String getByDistrict() {
+                return byDistrict;
+            }
+
+            public void setByDistrict(String byDistrict) {
+                this.byDistrict = byDistrict;
+            }
+
+            public Object getByKMS() {
+                return byKMS;
+            }
+
+            public void setByKMS(Object byKMS) {
+                this.byKMS = byKMS;
+            }
+
+            public String getByState() {
+                return byState;
+            }
+
+            public void setByState(String byState) {
+                this.byState = byState;
+            }
+
+            public String getCategoryName() {
+                return categoryName;
+            }
+
+            public void setCategoryName(String categoryName) {
+                this.categoryName = categoryName;
+            }
+
+            public String getCity() {
+                return city;
+            }
+
+            public void setCity(String city) {
+                this.city = city;
+            }
+
+            public String getCompanyName() {
+                return companyName;
+            }
+
+            public void setCompanyName(String companyName) {
+                this.companyName = companyName;
+            }
+
+            public String getContactNo() {
+                return contactNo;
+            }
+
+            public void setContactNo(String contactNo) {
+                this.contactNo = contactNo;
+            }
+
+            public String getCountry() {
+                return country;
+            }
+
+            public void setCountry(String country) {
+                this.country = country;
+            }
+
+            public String getDealingWith() {
+                return dealingWith;
+            }
+
+            public void setDealingWith(String dealingWith) {
+                this.dealingWith = dealingWith;
+            }
+
+            public Object getDesignation() {
+                return designation;
+            }
+
+            public void setDesignation(Object designation) {
+                this.designation = designation;
+            }
+
+            public String getDOB() {
+                return dOB;
+            }
+
+            public void setDOB(String dOB) {
+                this.dOB = dOB;
+            }
+
+            public String getEmail() {
+                return email;
+            }
+
+            public void setEmail(String email) {
+                this.email = email;
+            }
+
+            public String getEstimatedNextServiceDate() {
+                return estimatedNextServiceDate;
+            }
+
+            public void setEstimatedNextServiceDate(String estimatedNextServiceDate) {
+                this.estimatedNextServiceDate = estimatedNextServiceDate;
+            }
+
+            public String getFitnessValidity() {
+                return fitnessValidity;
+            }
+
+            public void setFitnessValidity(String fitnessValidity) {
+                this.fitnessValidity = fitnessValidity;
+            }
+
+            public Integer getFollowID() {
+                return followID;
+            }
+
+            public void setFollowID(Integer followID) {
+                this.followID = followID;
+            }
+
+            public String getGender() {
+                return gender;
+            }
+
+            public void setGender(String gender) {
+                this.gender = gender;
+            }
+
+            public String getIndustry() {
+                return industry;
+            }
+
+            public void setIndustry(String industry) {
+                this.industry = industry;
+            }
+
+            public Object getInsuranceValidityDate1() {
+                return insuranceValidityDate1;
+            }
+
+            public void setInsuranceValidityDate1(Object insuranceValidityDate1) {
+                this.insuranceValidityDate1 = insuranceValidityDate1;
+            }
+
+            public String getInsuranceValidityDate() {
+                return insuranceValidityDate;
+            }
+
+            public void setInsuranceValidityDate(String insuranceValidityDate) {
+                this.insuranceValidityDate = insuranceValidityDate;
+            }
+
+            public String getIsExchange() {
+                return isExchange;
+            }
+
+            public void setIsExchange(String isExchange) {
+                this.isExchange = isExchange;
+            }
+
+            public String getIsFinance() {
+                return isFinance;
+            }
+
+            public void setIsFinance(String isFinance) {
+                this.isFinance = isFinance;
+            }
+
+            public String getIsOneTimeBuyer() {
+                return isOneTimeBuyer;
+            }
+
+            public void setIsOneTimeBuyer(String isOneTimeBuyer) {
+                this.isOneTimeBuyer = isOneTimeBuyer;
+            }
+
+            public String getIsOneTimeSeller() {
+                return isOneTimeSeller;
+            }
+
+            public void setIsOneTimeSeller(String isOneTimeSeller) {
+                this.isOneTimeSeller = isOneTimeSeller;
+            }
+
+            public String getIsRegularBuyer() {
+                return isRegularBuyer;
+            }
+
+            public void setIsRegularBuyer(String isRegularBuyer) {
+                this.isRegularBuyer = isRegularBuyer;
+            }
+
+            public String getIsRegularSeller() {
+                return isRegularSeller;
+            }
+
+            public void setIsRegularSeller(String isRegularSeller) {
+                this.isRegularSeller = isRegularSeller;
+            }
+
+            public Object getLastServiceDate2() {
+                return lastServiceDate2;
+            }
+
+            public void setLastServiceDate2(Object lastServiceDate2) {
+                this.lastServiceDate2 = lastServiceDate2;
+            }
+
+            public String getLastServiceDate() {
+                return lastServiceDate;
+            }
+
+            public void setLastServiceDate(String lastServiceDate) {
+                this.lastServiceDate = lastServiceDate;
+            }
+
+            public Integer getLikeID() {
+                return likeID;
+            }
+
+            public void setLikeID(Integer likeID) {
+                this.likeID = likeID;
+            }
+
+            public String getPassword() {
+                return password;
+            }
+
+            public void setPassword(String password) {
+                this.password = password;
+            }
+
+            public String getPermitValidity() {
+                return permitValidity;
+            }
+
+            public void setPermitValidity(String permitValidity) {
+                this.permitValidity = permitValidity;
+            }
+
+            public String getProfession() {
+                return profession;
+            }
+
+            public void setProfession(String profession) {
+                this.profession = profession;
+            }
+
+            public String getProfilePicture() {
+                return profilePicture;
+            }
+
+            public void setProfilePicture(String profilePicture) {
+                this.profilePicture = profilePicture;
+            }
+
+            public Object getPUCValidityDate1() {
+                return pUCValidityDate1;
+            }
+
+            public void setPUCValidityDate1(Object pUCValidityDate1) {
+                this.pUCValidityDate1 = pUCValidityDate1;
+            }
+
+            public String getPUCValidityDate() {
+                return pUCValidityDate;
+            }
+
+            public void setPUCValidityDate(String pUCValidityDate) {
+                this.pUCValidityDate = pUCValidityDate;
+            }
+
+            public String getRating() {
+                return rating;
+            }
+
+            public void setRating(String rating) {
+                this.rating = rating;
+            }
+
+            public Integer getRegistrationID() {
+                return registrationID;
+            }
+
+            public void setRegistrationID(Integer registrationID) {
+                this.registrationID = registrationID;
+            }
+
+            public String getSkills() {
+                return skills;
+            }
+
+            public void setSkills(String skills) {
+                this.skills = skills;
+            }
+
+            public String getState() {
+                return state;
+            }
+
+            public void setState(String state) {
+                this.state = state;
+            }
+
+            public String getSubCategoryName() {
+                return subCategoryName;
+            }
+
+            public void setSubCategoryName(String subCategoryName) {
+                this.subCategoryName = subCategoryName;
+            }
+
+            public String getSubProfession() {
+                return subProfession;
+            }
+
+            public void setSubProfession(String subProfession) {
+                this.subProfession = subProfession;
+            }
+
+            public String getTaxValidity() {
+                return taxValidity;
+            }
+
+            public void setTaxValidity(String taxValidity) {
+                this.taxValidity = taxValidity;
+            }
+
+            public String getUserName() {
+                return userName;
+            }
+
+            public void setUserName(String userName) {
+                this.userName = userName;
+            }
+
+            public String getVehicleNo() {
+                return vehicleNo;
+            }
+
+            public void setVehicleNo(String vehicleNo) {
+                this.vehicleNo = vehicleNo;
+            }
+
+            public String getVehicleType() {
+                return vehicleType;
+            }
+
+            public void setVehicleType(String vehicleType) {
+                this.vehicleType = vehicleType;
+            }
+
+            public String getWebSite() {
+                return webSite;
+            }
+
+            public void setWebSite(String webSite) {
+                this.webSite = webSite;
+            }
+
+            public String getInterest() {
+                return interest;
+            }
+
+            public void setInterest(String interest) {
+                this.interest = interest;
+            }
+
+            public String getLatitude() {
+                return latitude;
+            }
+
+            public void setLatitude(String latitude) {
+                this.latitude = latitude;
+            }
+
+            public String getLongitude() {
+                return longitude;
+            }
+
+            public void setLongitude(String longitude) {
+                this.longitude = longitude;
+            }
+
         }
     }
 }

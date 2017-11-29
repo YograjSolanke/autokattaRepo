@@ -25,18 +25,16 @@ import retrofit2.Response;
 import static android.content.Context.MODE_PRIVATE;
 
 /**
- * Created by ak-005 on 26/10/17.
+ * Created by ak-005 on 26/10/17
  */
 
 public class EditCompanyNameAdapter extends RecyclerView.Adapter<EditCompanyNameAdapter.MyViewHolder> implements RequestNotifier, Filterable {
-
     Activity mActivity;
     private List<GetCompaniesResponse.Success> mList = new ArrayList<>();
     private List<GetCompaniesResponse.Success> filteredData = new ArrayList<>();
     CustomFilter filter;
     private Button mAdd;
     private String mNewCompany;
-
     ApiCall mApiCall;
 
     public EditCompanyNameAdapter(Activity activity, List<GetCompaniesResponse.Success> list, Button add) {
@@ -47,16 +45,13 @@ public class EditCompanyNameAdapter extends RecyclerView.Adapter<EditCompanyName
         mApiCall = new ApiCall(mActivity, this);
     }
 
-
     class MyViewHolder extends RecyclerView.ViewHolder {
         TextView Name;
-
         public MyViewHolder(View itemView) {
             super(itemView);
             Name = (TextView) itemView.findViewById(R.id.names);
         }
     }
-
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -72,7 +67,10 @@ public class EditCompanyNameAdapter extends RecyclerView.Adapter<EditCompanyName
         holder.Name.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                mApiCall.updateProfile(mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), MODE_PRIVATE).getInt("loginregistrationid", 0), "", "", "", "", "", mList.get(position).getCompanyName(), "", "", "", "", "", "", "Company");
+                mApiCall.updateProfile(mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), MODE_PRIVATE)
+                                .getInt("loginregistrationid", 0), "", "", "", "",
+                        "", mList.get(position).getCompanyName(), "", "", "", "",
+                        "", "", "Company");
             }
         });
     }

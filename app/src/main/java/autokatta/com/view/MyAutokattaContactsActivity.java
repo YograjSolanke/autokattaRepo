@@ -1,14 +1,16 @@
 package autokatta.com.view;
 
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import autokatta.com.R;
-import autokatta.com.initial_fragment.MyAutokattaContactFragmentTab;
+import autokatta.com.adapter.TabAdapterName;
+import autokatta.com.fragment.AutokattaContactFragment;
+import autokatta.com.fragment.InviteContactFragment;
 
 public class MyAutokattaContactsActivity extends AppCompatActivity {
 
@@ -26,10 +28,21 @@ public class MyAutokattaContactsActivity extends AppCompatActivity {
             //getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
         }
 
-        FragmentManager mFragmentManager = getSupportFragmentManager();
-        FragmentTransaction mFragmentTransaction = mFragmentManager.beginTransaction();
-        mFragmentTransaction.replace(R.id.my_autokattaContact_container, new MyAutokattaContactFragmentTab(), "MyAutokattaContactFragmentTab")
-                .commit();
+        ViewPager mViewPager = (ViewPager) findViewById(R.id.autokatta_contact_viewpager);
+        if (mViewPager != null) {
+            setupViewPager(mViewPager);
+        }
+
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.autokatta_contact_tabs);
+        tabLayout.setupWithViewPager(mViewPager);
+
+    }
+
+    private void setupViewPager(ViewPager mViewPager) {
+        TabAdapterName tabAdapterName = new TabAdapterName(getSupportFragmentManager());
+        tabAdapterName.addFragment(new AutokattaContactFragment(), "My Autokatta Contact");
+        tabAdapterName.addFragment(new InviteContactFragment(), "Invite Contact");
+        mViewPager.setAdapter(tabAdapterName);
     }
 
     @Override

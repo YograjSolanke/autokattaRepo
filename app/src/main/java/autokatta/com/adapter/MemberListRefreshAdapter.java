@@ -48,7 +48,7 @@ import retrofit2.Response;
  * Created by ak-001 on 25/3/17.
  */
 
-public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRefreshAdapter.MyViewHolder> implements RequestNotifier {
+public class MemberListRefreshAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements RequestNotifier {
     private Activity mActivity;
     private List<GetGroupContactsResponse.Success> mItemList = new ArrayList<>();
     private List<Boolean> mCheckList = new ArrayList<>();
@@ -57,9 +57,7 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
     private String myContact;
     private int mGroupId;
     private ApiCall mApiCall;
-    private MyViewHolder mView;
     private ConnectionDetector mTestConnection;
-    //private com.github.clans.fab.FloatingActionButton mRequestedCntacts;
 
     static class MyViewHolder extends RecyclerView.ViewHolder {
         TextView mName, mContact, mVehicleCount, mAdmin, mproductcnt, mServicecnt;
@@ -91,12 +89,12 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
         this.bundle_GroupName = bundle_GroupName;
         mApiCall = new ApiCall(mActivity, this);
         mTestConnection = new ConnectionDetector(mActivity);
-        //this.mRequestedCntacts = btnRequestedcontacts;
+        setHasStableIds(true);
         mCheckList.clear();
     }
 
     @Override
-    public MemberListRefreshAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // create a new view
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.custom_group_member_list, parent, false);
@@ -105,8 +103,9 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
     }
 
     @Override
-    public void onBindViewHolder(final MemberListRefreshAdapter.MyViewHolder holder, int position) {
-        mView = holder;
+    public void onBindViewHolder(RecyclerView.ViewHolder holder1, int position) {
+        final MyViewHolder holder = (MyViewHolder) holder1;
+
         myContact = mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference),
                 Context.MODE_PRIVATE).getString("loginContact", "");
         holder.mName.setText(mItemList.get(position).getUsername());
@@ -139,7 +138,7 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
 
         /*String groupName = mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE)
                 .getString("group_type", "");*/
-        if (!mItemList.get(position).getMember().equals("Unknown")) {
+        if (!mItemList.get(position).getUsername().equals("Unknown")) {
             //If no is in mobile contact, number is invisible
             holder.mContact.setVisibility(View.GONE);
             //If type is admin
@@ -217,24 +216,6 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
             mCheckList.add(false);
         }
 
-        /*if (mCheckList.contains(true)) {
-            mRequestedCntacts.setVisibility(View.VISIBLE);
-        } else {
-            mRequestedCntacts.setVisibility(View.GONE);
-        }
-        mRequestedCntacts.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Bundle b = new Bundle();
-                b.putInt("bundle_GroupId", mGroupId);
-                RequestedMembersList mRequestedMembersList = new RequestedMembersList();
-                mRequestedMembersList.setArguments(b);
-                ((FragmentActivity) mActivity).getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.memberFrame, mRequestedMembersList, "requestedMemberList")
-                        .addToBackStack("MemberList")
-                        .commit();
-            }
-        });*/
         holder.mCall.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -242,9 +223,6 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
             }
         });
 
-        /*if (mCallFrom != "profile") {
-            mCallFrom = "groups";
-        }*/
         holder.mRelativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -326,19 +304,28 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
                                             rmContact = holder.mContact.getText().toString();
                                             if (mCallFrom.equals("MyGroups")) {
                                                 if (rmContact.equals(myContact)) {
-                                                    if (mItemList.size() != 1)
-                                                        nextContact = mItemList.get(holder.getAdapterPosition() + 1).getContact();
-                                                    //nextContact = next[1];
-                                                    //}
+                                                    if (mItemList.size() > 1) {
+                                                        if (holder.getAdapterPosition() == mItemList.size() - 1) {
+                                                            nextContact = mItemList.get(holder.getAdapterPosition() - 1).getContact();
+                                                            System.out.println("nextcontact-" + nextContact);
+                                                        } else if (holder.getAdapterPosition() < mItemList.size() - 1) {
+                                                            nextContact = mItemList.get(holder.getAdapterPosition() + 1).getContact();
+                                                            System.out.println("nextcontact+" + nextContact);
+                                                        }
+                                                    }
+
+
+
                                                 }
                                             }
 
                                             // if(!nextContact.equals("")||!nextContact.equals("null")||!nextContact.equals(null))
                                             //new DeleteMembers().execute();
                                             DeleteMembers(holder.getAdapterPosition(), nextContact, rmContact);
-                                            mItemList.remove(holder.getAdapterPosition());
-                                            notifyItemRemoved(holder.getAdapterPosition());
-                                            notifyItemRangeChanged(holder.getAdapterPosition(), mItemList.size());
+//                                            mItemList.remove(holder.getAdapterPosition());
+//                                            notifyItemRemoved(holder.getAdapterPosition());
+//                                            notifyItemRangeChanged(holder.getAdapterPosition(), mItemList.size());
+//                                            notifyDataSetChanged();
 //                                else
 //                                    Snackbar.make(v,"please delete group",Snackbar.LENGTH_SHORT).show();
 
@@ -361,6 +348,7 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
                                         public void onClick(DialogInterface dialog, int which) {
                                             rmContact = holder.mContact.getText().toString();
                                             makeAdmin(rmContact, finalAction);
+                                            holder.mOption.setVisibility(View.GONE);
                                             holder.mAdmin.setText(mActivity.getString(R.string.admin));
                                         }
                                     })
@@ -387,8 +375,8 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
         if (mTestConnection.isConnectedToInternet()) {
             Log.i("next", "->" + nextContact);
             mApiCall.DeleteGroupMembers(mGroupId, mCallFrom, rmContact, myContact, nextContact, String.valueOf(mItemList.size()));
-            /*mItemList.remove(position);
-            notifyDataSetChanged();*/
+            mItemList.remove(position);
+            notifyDataSetChanged();
 
         } else {
             CustomToast.customToast(mActivity, mActivity.getString(R.string.no_internet));
@@ -397,7 +385,7 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<MemberListRef
 
     private void makeAdmin(String contact, String action) {
         if (mTestConnection.isConnectedToInternet()) {
-            mView.mOption.setVisibility(View.GONE);
+            // mView.mOption.setVisibility(View.GONE);
             mApiCall.makeGroupAdmin(mGroupId, contact, action);
         } else {
             CustomToast.customToast(mActivity, mActivity.getString(R.string.no_internet));

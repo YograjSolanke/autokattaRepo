@@ -37,7 +37,7 @@ import retrofit2.Response;
  * Created by ak-004 on 14/11/17
  */
 
-public class MyStoreEmployeeAdapter extends RecyclerView.Adapter<MyStoreEmployeeAdapter.YoHolder> implements RequestNotifier {
+public class MyStoreEmployeeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements RequestNotifier {
     private Activity mActivity;
     private List<StoreEmployeeResponse.Success.Employee> mEmpList = new ArrayList<>();
     ConnectionDetector mConnectionDetector;
@@ -83,7 +83,7 @@ public class MyStoreEmployeeAdapter extends RecyclerView.Adapter<MyStoreEmployee
     }
 
     @Override
-    public MyStoreEmployeeAdapter.YoHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // create a new view
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.my_store_employee_adapter, parent, false);
@@ -92,22 +92,24 @@ public class MyStoreEmployeeAdapter extends RecyclerView.Adapter<MyStoreEmployee
     }
 
     @Override
-    public void onBindViewHolder(final MyStoreEmployeeAdapter.YoHolder holder, int position) {
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
+
+        final YoHolder yoHolder = (YoHolder) holder;
         myContact = mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).
                 getString("loginContact", "");
-        yoHolder = holder;
-        holder.mEmpName.setText(mEmpList.get(position).getName());
-        holder.mEmpContact.setText(mEmpList.get(position).getContactNo());
+
+        yoHolder.mEmpName.setText(mEmpList.get(position).getName());
+        yoHolder.mEmpContact.setText(mEmpList.get(position).getContactNo());
 
         if (mEmpList.get(holder.getAdapterPosition()).getDeleteStatus().equalsIgnoreCase("Yes")) {
 
-            holder.mRemove.setText("Removed");
+            yoHolder.mRemove.setText("Removed");
         }
-        holder.mInventory.setOnClickListener(new View.OnClickListener() {
+        yoHolder.mInventory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Bundle mBundle = new Bundle();
-                mBundle.putString("bundle_contact", holder.mEmpContact.getText().toString());
+                mBundle.putString("bundle_contact", yoHolder.mEmpContact.getText().toString());
                 mBundle.putInt("bundle_storeId", mEmpList.get(holder.getAdapterPosition()).getStoreID());
                 Intent mIntent = new Intent(mActivity, InventoryDashboard.class);
                 mIntent.putExtras(mBundle);
@@ -115,41 +117,45 @@ public class MyStoreEmployeeAdapter extends RecyclerView.Adapter<MyStoreEmployee
             }
         });
 
-        holder.mCall.setOnClickListener(new View.OnClickListener() {
+        yoHolder.mCall.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String contact = holder.mEmpContact.getText().toString();
+                String contact = yoHolder.mEmpContact.getText().toString();
                 call(contact);
             }
         });
 
-        holder.mRemove.setOnClickListener(new View.OnClickListener() {
+        yoHolder.mRemove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (holder.mRemove.getText().equals("Removed"))
+                if (yoHolder.mRemove.getText().equals("Removed"))
                     CustomToast.customToast(mActivity, "Already Deleted");
                 else {
                     int emp_id = mEmpList.get(holder.getAdapterPosition()).getStoreEmplyeeID();
                     deleteEmployee(emp_id);
+
+                    yoHolder.mRemove.setText("Removed");
+                    mEmpList.get(yoHolder.getAdapterPosition()).setDeleteStatus("Yes");
+                    notifyDataSetChanged();
                 }
             }
         });
 
-        holder.mEdit.setOnClickListener(new View.OnClickListener() {
+        yoHolder.mEdit.setOnClickListener(new View.OnClickListener() {
             ActivityOptions options = ActivityOptions.makeCustomAnimation(mActivity, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
 
             @Override
             public void onClick(View view) {
                 Bundle bundle = new Bundle();
                 Intent intentAddEmp = new Intent(mActivity, AddEmployeeActivity.class);
-                bundle.putInt("id", mEmpList.get(holder.getAdapterPosition()).getStoreEmplyeeID());
-                bundle.putString("name", mEmpList.get(holder.getAdapterPosition()).getName());
-                bundle.putString("contact", mEmpList.get(holder.getAdapterPosition()).getContactNo());
-                bundle.putString("designation", mEmpList.get(holder.getAdapterPosition()).getDesignation());
-                bundle.putString("description", mEmpList.get(holder.getAdapterPosition()).getDescription());
-                bundle.putInt("store_id", mEmpList.get(holder.getAdapterPosition()).getStoreID());
-                bundle.putString("permission", mEmpList.get(holder.getAdapterPosition()).getPermission());
-                bundle.putString("deletstatus", mEmpList.get(holder.getAdapterPosition()).getDeleteStatus());
+                bundle.putInt("id", mEmpList.get(yoHolder.getAdapterPosition()).getStoreEmplyeeID());
+                bundle.putString("name", mEmpList.get(yoHolder.getAdapterPosition()).getName());
+                bundle.putString("contact", mEmpList.get(yoHolder.getAdapterPosition()).getContactNo());
+                bundle.putString("designation", mEmpList.get(yoHolder.getAdapterPosition()).getDesignation());
+                bundle.putString("description", mEmpList.get(yoHolder.getAdapterPosition()).getDescription());
+                bundle.putInt("store_id", mEmpList.get(yoHolder.getAdapterPosition()).getStoreID());
+                bundle.putString("permission", mEmpList.get(yoHolder.getAdapterPosition()).getPermission());
+                bundle.putString("deletstatus", mEmpList.get(yoHolder.getAdapterPosition()).getDeleteStatus());
                 bundle.putString("keyword", "update");
                 intentAddEmp.putExtras(bundle);
                 mActivity.startActivity(intentAddEmp, options.toBundle());
@@ -187,9 +193,7 @@ public class MyStoreEmployeeAdapter extends RecyclerView.Adapter<MyStoreEmployee
         if (str != null) {
             if (str.startsWith("Success_Deleted")) {
                 CustomToast.customToast(mActivity, "Employee deleted");
-                yoHolder.mRemove.setText("Removed");
-                mEmpList.get(yoHolder.getAdapterPosition()).setDeleteStatus("Yes");
-                notifyDataSetChanged();
+
                 //  yoHolder.mRemove.setClickable(false);
             }
         }

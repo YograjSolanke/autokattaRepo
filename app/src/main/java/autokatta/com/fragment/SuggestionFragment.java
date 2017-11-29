@@ -24,6 +24,7 @@ import java.util.List;
 import autokatta.com.R;
 import autokatta.com.adapter.SuggestionNewVehicleAdapter;
 import autokatta.com.adapter.SuggestionProductAdapter;
+import autokatta.com.adapter.SuggestionProfileAdapter;
 import autokatta.com.adapter.SuggestionServiceAdapter;
 import autokatta.com.adapter.SuggestionStoreAdapter;
 import autokatta.com.adapter.SuggestionVehicleAdapter;
@@ -51,6 +52,7 @@ public class SuggestionFragment extends Fragment implements RequestNotifier {
     private List<SuggestionsResponse.Success.Store> storeResponseList = new ArrayList<>();
     private List<SuggestionsResponse.Success.Product> productResponseList = new ArrayList<>();
     private List<SuggestionsResponse.Success.Service> serviceResponseList = new ArrayList<>();
+    private List<SuggestionsResponse.Success.Profile> profileResponseList = new ArrayList<>();
     LinearLayout mProfileLinear, mStoreLinear, mVehicleLinear, mProductLinear, mServiceLinear,
             mNwVehicleLinear;
     private ProgressDialog dialog;
@@ -169,6 +171,25 @@ public class SuggestionFragment extends Fragment implements RequestNotifier {
 
                 if (dialog.isShowing()) {
                     dialog.dismiss();
+                }
+            /*Profile Array*/
+                if (!suggestionsResponse.getSuccess().getProfile().isEmpty()) {
+                    profileResponseList.clear();
+                    mProfileLinear.setVisibility(View.VISIBLE);
+                    for (SuggestionsResponse.Success.Profile notification : suggestionsResponse.getSuccess().getProfile()) {
+
+                        notification.setUserName(notification.getUserName());
+                        notification.setProfilePicture(notification.getProfilePicture());
+                        notification.setContactNo(notification.getContactNo());
+                        notification.setCity(notification.getCity());
+
+                        profileResponseList.add(notification);
+
+                    }
+
+                    SuggestionProfileAdapter adapter = new SuggestionProfileAdapter(getActivity(), profileResponseList, txtProfile, mLoginContact);
+                    mProfileView.setAdapter(adapter);
+                    adapter.notifyDataSetChanged();
                 }
 
                 /*UsedVehicle Array*/

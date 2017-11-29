@@ -69,9 +69,7 @@ public class BackgroundService extends Service {
 
             if (people != null) {
                 int indexName = people.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME);
-
                 int indexNumber = people.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
-
                 people.moveToFirst();
                 do {
                     Log.i("cursor", "countBackground- " + people.getCount());
@@ -80,8 +78,15 @@ public class BackgroundService extends Service {
                         String number = people.getString(indexNumber);
 
                         //number = number.replaceAll("-", "");
-                        number = number.replace("-", "").replace("(", "").replace(")", "").replaceAll(" ", "").
-                                replaceAll("[\\D]", "");
+                        try {
+                            number = number.replace("-", "")
+                                    .replace("(", "")
+                                    .replace(")", "")
+                                    .replaceAll(" ", "")
+                                    .replaceAll("[\\D]", "");
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
 
                         if (number.length() > 10)
                             number = number.substring(number.length() - 10);
@@ -249,8 +254,15 @@ public class BackgroundService extends Service {
                                         String name = people.getString(indexName);
                                         String number = people.getString(indexNumber);
 
-                                        number = number.replace("-", "").replace("(", "").replace(")", "").replaceAll(" ", "").
-                                                replaceAll("[\\D]", "");
+                                        try {
+                                            number = number.replace("-", "")
+                                                    .replace("(", "")
+                                                    .replace(")", "")
+                                                    .replaceAll(" ", "")
+                                                    .replaceAll("[\\D]", "");
+                                        } catch (Exception e) {
+                                            e.printStackTrace();
+                                        }
 
                                         if (number.length() > 10)
                                             number = number.substring(number.length() - 10);
@@ -265,7 +277,6 @@ public class BackgroundService extends Service {
                                             success.setGroupNames(success.getGroupNames());
                                         }
                                     } while (people.moveToNext());
-
 
                                     result = operation.addMyAutokattaContact(success.getUserName(), success.getProfilePic(),
                                             success.getContact(), success.getFollowStatus(), success.getMystatus(),
@@ -308,7 +319,7 @@ public class BackgroundService extends Service {
                     .build();
             ServiceApi serviceApi = retrofit.create(ServiceApi.class);
             Call<ManualEnquiryResponse> mServiceMelaResponse = serviceApi.getManualEnquiry(getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
-                    .getString("loginContact", ""), "null", "null", "null", "null", "null", "null", "null", "null", "null", "null","null",0,0,"null",0,0);
+                    .getString("loginContact", ""), "null", "null", "null", "null", "null", "null", "null", "null", "null", "null", "null", 0, 0, "null", 0, 0);
             mServiceMelaResponse.enqueue(new Callback<ManualEnquiryResponse>() {
                 @Override
                 public void onResponse(Call<ManualEnquiryResponse> call, Response<ManualEnquiryResponse> response) {
