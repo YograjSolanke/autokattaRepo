@@ -213,7 +213,7 @@ public class AddTags extends AppCompatActivity implements RequestNotifier {
     public void notifyString(String str) {
         if (!str.equals("")) {
             if (str.equals("success_update_Interest")) {
-CustomToast.customToast(getApplicationContext(),"Intrest Added");
+CustomToast.customToast(getApplicationContext(),"Interest Added");
             }
         }
     }
