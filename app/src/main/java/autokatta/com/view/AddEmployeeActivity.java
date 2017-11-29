@@ -18,7 +18,6 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
@@ -41,7 +40,8 @@ public class AddEmployeeActivity extends AppCompatActivity implements RequestNot
     String name, contact, designation, description, permission, status;
     int store_id, emp_id;
     String keyword = "";
-    String AutoUser;
+    String position;
+    String contactFetched = "";
     StoreEmployeeResponse.Success.Employee employee;
 
 
@@ -118,10 +118,11 @@ public class AddEmployeeActivity extends AppCompatActivity implements RequestNot
 
                 if (s.length() == 10) {
                     if (!myContact.equalsIgnoreCase(s.toString())) {
-                        checkUser(s.toString());
-                    } else if (empContact.equals(myContact)) {
-                        empContact.requestFocus();
+                        checkUser(s.toString(), "begin");
+                    } else if (empContact.getText().toString().equals(myContact)) {
+
                         empContact.setError("admin not allowed");
+                        empContact.requestFocus();
                     }
                 }
             }
@@ -147,6 +148,7 @@ public class AddEmployeeActivity extends AppCompatActivity implements RequestNot
         imgContact.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                contactFetched = "";
                 Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
                 startActivityForResult(intent, REQUEST_CODE);
             }
@@ -155,7 +157,8 @@ public class AddEmployeeActivity extends AppCompatActivity implements RequestNot
 
     }
 
-    private void checkUser(String contact) {
+    private void checkUser(String contact, String keyword) {
+        position = keyword;
         ApiCall mApiCall = new ApiCall(this, this);
         mApiCall.registrationContactValidation(contact);
     }
@@ -170,7 +173,6 @@ public class AddEmployeeActivity extends AppCompatActivity implements RequestNot
 
                 name = empName.getText().toString();
                 contact = empContact.getText().toString();
-                checkUser(contact);
                 designation = empDesignation.getText().toString();
                 description = empDescription.getText().toString();
                 if (permissionCheck.isChecked())
@@ -179,6 +181,10 @@ public class AddEmployeeActivity extends AppCompatActivity implements RequestNot
                     permission = "no";
                 status = "";
 
+                empName.setError(null);
+                empContact.setError(null);
+                empDescription.setError(null);
+                empDescription.setError(null);
 
 
                 if (empName.getText().toString().isEmpty()) {
@@ -189,20 +195,22 @@ public class AddEmployeeActivity extends AppCompatActivity implements RequestNot
                     empDesignation.setError("Please Enter Designation");
                 } else if (empDescription.getText().toString().isEmpty()) {
                     empDescription.setError("Please Enter Short Description");
-                }else if (!AutoUser.equalsIgnoreCase("") && AutoUser.equalsIgnoreCase("No")) {
-                    empContact.setError("Not Autokatta User");
+                } else if (!contactFetched.equalsIgnoreCase("") && contactFetched.equals("Admin")) {
+                    empContact.setError("Admin Not Allowed");
                     empContact.requestFocus();
                 } else {
-                    if (getIntent().getExtras().getString("keyword", "").equalsIgnoreCase("Add")) {
-                        mApiCall.AddEmloyeeInStore(name, contact, myContact, designation, store_id, description,
-                                status, permission);
-                    } else if (getIntent().getExtras().getString("keyword", "").equalsIgnoreCase("update")) {
 
-                        emp_id = getIntent().getExtras().getInt("id", 0);
-
-                        mApiCall.updateDeleteEmployee(emp_id, name, contact, designation, description,
-                                permission, "Edit");
-                    }
+                    checkUser(contact, "end");
+//                    if (getIntent().getExtras().getString("keyword", "").equalsIgnoreCase("Add")) {
+//                        mApiCall.AddEmloyeeInStore(name, contact, myContact, designation, store_id, description,
+//                                status, permission);
+//                    } else if (getIntent().getExtras().getString("keyword", "").equalsIgnoreCase("update")) {
+//
+//                        emp_id = getIntent().getExtras().getInt("id", 0);
+//
+//                        mApiCall.updateDeleteEmployee(emp_id, name, contact, designation, description,
+//                                permission, "Edit");
+//                    }
                 }
                 break;
         }
@@ -230,9 +238,16 @@ public class AddEmployeeActivity extends AppCompatActivity implements RequestNot
 
                                     if (num.length() > 10)
                                         num = num.substring(num.length() - 10);
-                                    Toast.makeText(AddEmployeeActivity.this, "Number=" + num, Toast.LENGTH_LONG).show();
+                                    // Toast.makeText(AddEmployeeActivity.this, "Number=" + num, Toast.LENGTH_LONG).show();
                                     empContact.setText(num);
-                                    checkUser(num);
+                                    if (num.equals(myContact)) {
+                                        empContact.setError("Admin Not Allowed");
+                                        contactFetched = "Admin";
+                                        empContact.requestFocus();
+                                    } else {
+                                        contactFetched = "other";
+                                        checkUser(num, "begin");
+                                    }
                                 }
                             }
                         }
@@ -260,10 +275,25 @@ public class AddEmployeeActivity extends AppCompatActivity implements RequestNot
 
             System.out.println("output=" + str);
             if (str.equalsIgnoreCase("Success")) {
-                txtUser.setVisibility(View.VISIBLE);
-                AutoUser="yes";
-                //txtInvite.setVisibility(View.GONE);
 
+                if (position.equalsIgnoreCase("begin"))
+                    txtUser.setVisibility(View.VISIBLE);
+                else {
+                    if (getIntent().getExtras() != null) {
+                        if (getIntent().getExtras().getString("keyword", "").equalsIgnoreCase("Add")) {
+                            mApiCall.AddEmloyeeInStore(name, contact, myContact, designation, store_id, description,
+                                    status, permission);
+                        } else if (getIntent().getExtras().getString("keyword", "").equalsIgnoreCase("update")) {
+
+                            emp_id = getIntent().getExtras().getInt("id", 0);
+
+                            mApiCall.updateDeleteEmployee(emp_id, name, contact, designation, description,
+                                    permission, "Edit");
+                        }
+                    }
+                }
+
+                //txtInvite.setVisibility(View.GONE);
             } else if (str.equals("success_request_sent")) {
                 CustomToast.customToast(getApplicationContext(), "Request Sent");
                 finish();
@@ -275,8 +305,9 @@ public class AddEmployeeActivity extends AppCompatActivity implements RequestNot
                 finish();
             } else {
                 empContact.setError("Not Autokatta User");
+                empContact.requestFocus();
                 txtUser.setVisibility(View.GONE);
-                AutoUser="No";
+
             }
 
 
