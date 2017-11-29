@@ -120,7 +120,6 @@ public class AddEmployeeActivity extends AppCompatActivity implements RequestNot
                     if (!myContact.equalsIgnoreCase(s.toString())) {
                         checkUser(s.toString(), "begin");
                     } else if (empContact.getText().toString().equals(myContact)) {
-
                         empContact.setError("admin not allowed");
                         empContact.requestFocus();
                     }
@@ -191,6 +190,9 @@ public class AddEmployeeActivity extends AppCompatActivity implements RequestNot
                     empName.setError("Please Enter Name");
                 } else if (empContact.getText().toString().isEmpty()) {
                     empContact.setError("Please Enter Contact");
+                } else if (empContact.getText().toString().equals(myContact)) {
+                    empContact.setError("Admin Not Allowed");
+                    empContact.requestFocus();
                 } else if (empDesignation.getText().toString().isEmpty()) {
                     empDesignation.setError("Please Enter Designation");
                 } else if (empDescription.getText().toString().isEmpty()) {
@@ -247,6 +249,7 @@ public class AddEmployeeActivity extends AppCompatActivity implements RequestNot
                                     } else {
                                         contactFetched = "other";
                                         checkUser(num, "begin");
+                                        empContact.setError(null);
                                     }
                                 }
                             }
