@@ -29,18 +29,17 @@ import retrofit2.Response;
 import static android.content.Context.MODE_PRIVATE;
 
 /**
- * Created by ak-005 on 26/10/17.
+ * Created by ak-005 on 26/10/17
  */
 
 public class EditDesignationAdapter extends RecyclerView.Adapter<EditDesignationAdapter.MyViewHolder> implements RequestNotifier, Filterable {
     Activity mActivity;
-    List<GetDesignationResponse.Success> mList = new ArrayList<>();
+    private List<GetDesignationResponse.Success> mList = new ArrayList<>();
     ApiCall mApiCall;
     private List<GetDesignationResponse.Success> filteredData = new ArrayList<>();
     CustomFilter filter;
-    String mNewDesignation;
-    Button mAdd;
-
+    private String mNewDesignation;
+    private Button mAdd;
 
     public EditDesignationAdapter(Activity Activity, List<Success> mList,Button add) {
         this.mActivity = Activity;
@@ -52,8 +51,6 @@ public class EditDesignationAdapter extends RecyclerView.Adapter<EditDesignation
 
     class MyViewHolder extends RecyclerView.ViewHolder {
         TextView mNames;
-
-
         public MyViewHolder(View itemView) {
             super(itemView);
             mNames = (TextView) itemView.findViewById(R.id.names);
@@ -66,7 +63,6 @@ public class EditDesignationAdapter extends RecyclerView.Adapter<EditDesignation
         MyViewHolder vh = new MyViewHolder(v);
         return vh;
     }
-
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, final int position) {
@@ -103,8 +99,7 @@ public class EditDesignationAdapter extends RecyclerView.Adapter<EditDesignation
             if (str.equals("success_update_Designation")) {
                 CustomToast.customToast(mActivity, "Designation Added");
                 mActivity.finish();
-            }else
-            {
+            } else {
                 CustomToast.customToast(mActivity, "New Designation Added");
                 mActivity.finish();
             }
@@ -122,11 +117,10 @@ public class EditDesignationAdapter extends RecyclerView.Adapter<EditDesignation
         return filter;
     }
 
-    /* **
+    /***
        * Filter Class
        **/
     private class CustomFilter extends Filter {
-
         @Override
         protected FilterResults performFiltering(CharSequence charSequence) {
             FilterResults results = new FilterResults();
@@ -171,6 +165,4 @@ public class EditDesignationAdapter extends RecyclerView.Adapter<EditDesignation
             }
         }
     }
-
-
 }

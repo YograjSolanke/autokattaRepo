@@ -9,12 +9,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:hint="Search"
+        android:hint="@string/search_hint"
         android:imeOptions="actionSearch"
+        android:textColorHint="@color/white"
         android:layout_centerVertical="true"
+        android:backgroundTint="@color/white"
+        android:drawableStart="@android:drawable/ic_menu_search"
         style="@style/title_bar_style"
-        android:maxLines="1"
-        />
+        android:maxLines="1" />
 </RelativeLayout>
 
 
