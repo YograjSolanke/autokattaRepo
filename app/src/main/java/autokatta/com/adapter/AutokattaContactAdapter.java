@@ -50,13 +50,12 @@ import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import retrofit2.Response;
 
 import static android.view.View.GONE;
-import static android.view.View.VISIBLE;
 
 /**
  * Created by ak-003 on 28/3/17.
  */
 
-public class AutokattaContactAdapter extends RecyclerView.Adapter<AutokattaContactAdapter.YoHolder> implements Filterable, RequestNotifier {
+public class AutokattaContactAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements Filterable, RequestNotifier {
 
     private Activity mActivity;
     private List<Db_AutokattaContactResponse> contactdata = new ArrayList<>();
@@ -67,9 +66,8 @@ public class AutokattaContactAdapter extends RecyclerView.Adapter<AutokattaConta
     private String Rcontact = "";
     private String[] strGroupIds;
     private String[] groupTitleArray;
-    private YoHolder yoHolder;
 
-    static class YoHolder extends RecyclerView.ViewHolder {
+    class YoHolder extends RecyclerView.ViewHolder {
 
         CardView mCardView;
         ImageView imgProfile;
@@ -85,6 +83,7 @@ public class AutokattaContactAdapter extends RecyclerView.Adapter<AutokattaConta
             mTextStatus = (TextView) itemView.findViewById(R.id.txtstatus);
             btnFollow = (Button) itemView.findViewById(R.id.btnfollow);
             btnUnfollow = (Button) itemView.findViewById(R.id.btnunfollow);
+            btnUnfollow.setVisibility(GONE);
             btnsendmsg = (Button) itemView.findViewById(R.id.btnsendmsg);
             btnGroups = (Button) itemView.findViewById(R.id.btnGroups);
         }
@@ -104,19 +103,20 @@ public class AutokattaContactAdapter extends RecyclerView.Adapter<AutokattaConta
     }
 
     @Override
-    public AutokattaContactAdapter.YoHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_autokatta_contact, parent, false);
         return new YoHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(final AutokattaContactAdapter.YoHolder holder, final int position) {
-        yoHolder = holder;
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
+        final YoHolder yoHolder = (YoHolder) holder;
+
         myContact = mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).getString("loginContact", "");
-        holder.mTextName.setText(contactdata.get(position).getUsername());
-        holder.mTextNumber.setText(contactdata.get(position).getContact());
-        holder.setIsRecyclable(false);
-        if (contactdata.get(position).getMystatus() != null && !contactdata.get(position).getMystatus().equals("null")) {
+        yoHolder.mTextName.setText(contactdata.get(yoHolder.getAdapterPosition()).getUsername());
+        yoHolder.mTextNumber.setText(contactdata.get(yoHolder.getAdapterPosition()).getContact());
+        yoHolder.setIsRecyclable(false);
+        if (contactdata.get(yoHolder.getAdapterPosition()).getMystatus() != null && !contactdata.get(yoHolder.getAdapterPosition()).getMystatus().equals("null")) {
 
             /*decode string code (Getting)*/
 
@@ -131,53 +131,55 @@ public class AutokattaContactAdapter extends RecyclerView.Adapter<AutokattaConta
             String decodedString = null;
             byte[] data = new byte[0];
             try {
-                data = Base64.decode(contactdata.get(position).getMystatus());
+                data = Base64.decode(contactdata.get(yoHolder.getAdapterPosition()).getMystatus());
                 decodedString = new String(data, "UTF-8");
             } catch (IOException e) {
                 e.printStackTrace();
             }
 
-            holder.mTextStatus.setText(decodedString);
+            yoHolder.mTextStatus.setText(decodedString);
 
         } else
-            holder.mTextStatus.setText("No Status");
+            yoHolder.mTextStatus.setText("No Status");
 
 
-        if (contactdata.get(position).getFollowstatus().equalsIgnoreCase("yes")) {
-            holder.btnUnfollow.setVisibility(VISIBLE);
-            holder.btnFollow.setVisibility(GONE);
+        if (contactdata.get(yoHolder.getAdapterPosition()).getFollowstatus().equalsIgnoreCase("yes")) {
+            /*yoHolder.btnUnfollow.setVisibility(VISIBLE);
+            yoHolder.btnFollow.setVisibility(GONE);*/
+            yoHolder.btnFollow.setText(mActivity.getString(R.string.unfollow));
 
-        } else if (contactdata.get(position).getFollowstatus().equalsIgnoreCase("no")) {
-            holder.btnUnfollow.setVisibility(GONE);
-            holder.btnFollow.setVisibility(VISIBLE);
+        } else if (contactdata.get(yoHolder.getAdapterPosition()).getFollowstatus().equalsIgnoreCase("no")) {
+            /*yoHolder.btnUnfollow.setVisibility(GONE);
+            yoHolder.btnFollow.setVisibility(VISIBLE);*/
+            yoHolder.btnFollow.setText(mActivity.getString(R.string.follow));
         }
 
 
-        if (contactdata.get(position).getUserprofile() == null || contactdata.get(position).getUserprofile().equals("") ||
-                contactdata.get(position).getUserprofile().equals("null"))
-            holder.imgProfile.setBackgroundResource(R.drawable.profile);
+        if (contactdata.get(yoHolder.getAdapterPosition()).getUserprofile() == null || contactdata.get(yoHolder.getAdapterPosition()).getUserprofile().equals("") ||
+                contactdata.get(yoHolder.getAdapterPosition()).getUserprofile().equals("null"))
+            yoHolder.imgProfile.setBackgroundResource(R.drawable.profile);
         else {
             /*
              Glide code for image uploading
 
              */
             Glide.with(mActivity)
-                    .load(mActivity.getString(R.string.base_image_url) + contactdata.get(position).getUserprofile())
+                    .load(mActivity.getString(R.string.base_image_url) + contactdata.get(yoHolder.getAdapterPosition()).getUserprofile())
                     .bitmapTransform(new CropCircleTransformation(mActivity)) //To display image in Circular form.
                     .diskCacheStrategy(DiskCacheStrategy.ALL) //For caching diff versions of image.
                     .placeholder(R.drawable.logo48x48) //To show image before loading an original image.
                     //.error(R.drawable.blocked) //To show error image if problem in loading.
-                    .into(holder.imgProfile);
+                    .into(yoHolder.imgProfile);
         }
 
        /*Send Message*/
-        holder.btnsendmsg.setOnClickListener(new OnClickListener() {
+        yoHolder.btnsendmsg.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 Bundle b = new Bundle();
-                b.putString("sender", contactdata.get(holder.getAdapterPosition()).getContact());
-                b.putString("sendername", contactdata.get(holder.getAdapterPosition()).getUsername());
+                b.putString("sender", contactdata.get(yoHolder.getAdapterPosition()).getContact());
+                b.putString("sendername", contactdata.get(yoHolder.getAdapterPosition()).getUsername());
                 b.putInt("product_id", 0);
                 b.putInt("service_id", 0);
                 b.putInt("vehicle_id", 0);
@@ -189,14 +191,14 @@ public class AutokattaContactAdapter extends RecyclerView.Adapter<AutokattaConta
         });
 
         /*go to other profile*/
-        holder.mCardView.setOnClickListener(new View.OnClickListener() {
+        yoHolder.mCardView.setOnClickListener(new View.OnClickListener() {
             Bundle bundle = new Bundle();
 
             @Override
             public void onClick(View v) {
-                bundle.putString("contactOtherProfile", contactdata.get(holder.getAdapterPosition()).getContact());
+                bundle.putString("contactOtherProfile", contactdata.get(yoHolder.getAdapterPosition()).getContact());
 
-                if (myContact.equalsIgnoreCase(contactdata.get(holder.getAdapterPosition()).getContact())) {
+                if (myContact.equalsIgnoreCase(contactdata.get(yoHolder.getAdapterPosition()).getContact())) {
                     ActivityOptions options = ActivityOptions.makeCustomAnimation(mActivity, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
                     Intent i = new Intent(mActivity, UserProfile.class);
                     i.putExtras(bundle);
@@ -212,51 +214,61 @@ public class AutokattaContactAdapter extends RecyclerView.Adapter<AutokattaConta
             }
         });
 
-        holder.btnFollow.setOnClickListener(new View.OnClickListener() {
+        yoHolder.btnFollow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                /*holder.btnUnfollow.setVisibility(VISIBLE);
-                holder.btnFollow.setVisibility(GONE);*/
-                Rcontact = contactdata.get(holder.getAdapterPosition()).getContact();
-                sendFollowerUnfollower(Rcontact, "follow");
+                /*yoHolder.btnUnfollow.setVisibility(VISIBLE);
+                yoHolder.btnFollow.setVisibility(GONE);*/
+                Rcontact = contactdata.get(yoHolder.getAdapterPosition()).getContact();
+
+                if (yoHolder.btnFollow.getText().toString().equalsIgnoreCase(mActivity.getString(R.string.follow))) {
+                    sendFollowerUnfollower(Rcontact, "follow");
+
+                    yoHolder.btnFollow.setText(mActivity.getString(R.string.unfollow));
+                    contactdata.get(yoHolder.getAdapterPosition()).setFollowstatus("yes");
+                } else {
+                    sendFollowerUnfollower(Rcontact, "unfollow");
+                    yoHolder.btnFollow.setText(mActivity.getString(R.string.follow));
+                    contactdata.get(yoHolder.getAdapterPosition()).setFollowstatus("no");
+                }
 
             }
         });
 
-        holder.btnUnfollow.setOnClickListener(new View.OnClickListener() {
+        /*yoHolder.btnUnfollow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                /*holder.btnUnfollow.setVisibility(GONE);
-                holder.btnFollow.setVisibility(VISIBLE);*/
-                Rcontact = contactdata.get(holder.getAdapterPosition()).getContact();
+                *//*yoHolder.btnUnfollow.setVisibility(GONE);
+                yoHolder.btnFollow.setVisibility(VISIBLE);*//*
+                Rcontact = contactdata.get(yoHolder.getAdapterPosition()).getContact();
                 sendFollowerUnfollower(Rcontact, "unfollow");
 
             }
-        });
+        });*/
 
 
-        holder.btnGroups.setOnClickListener(new OnClickListener() {
+        yoHolder.btnGroups.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 strGroupIds = new String[]{""};
                 groupTitleArray = new String[]{""};
-                /*if (contactdata.get(holder.getAdapterPosition()).getGroupIds().isEmpty()) {
-                    //holder.btnGroups.setVisibility(GONE);
+                /*if (contactdata.get(yoHolder.getAdapterPosition()).getGroupIds().isEmpty()) {
+                    //yoHolder.btnGroups.setVisibility(GONE);
                 } else */
-                if (contactdata.get(holder.getAdapterPosition()).getGroupIds().contains(",")) {
-                    strGroupIds = contactdata.get(holder.getAdapterPosition()).getGroupIds().split(", ");
-                    groupTitleArray = contactdata.get(holder.getAdapterPosition()).getGroupNames().trim().split(", ");
-                } else if (!contactdata.get(holder.getAdapterPosition()).getGroupIds().contains(",") &&
-                        !contactdata.get(holder.getAdapterPosition()).getGroupIds().isEmpty()) {
+                if (contactdata.get(yoHolder.getAdapterPosition()).getGroupIds().contains(",")) {
+                    strGroupIds = contactdata.get(yoHolder.getAdapterPosition()).getGroupIds().split(", ");
+                    groupTitleArray = contactdata.get(yoHolder.getAdapterPosition()).getGroupNames().trim().split(", ");
+                } else if (!contactdata.get(yoHolder.getAdapterPosition()).getGroupIds().contains(",") &&
+                        !contactdata.get(yoHolder.getAdapterPosition()).getGroupIds().isEmpty()) {
                     strGroupIds = new String[1];
                     groupTitleArray = new String[1];
-                    strGroupIds[0] = contactdata.get(holder.getAdapterPosition()).getGroupIds();
-                    groupTitleArray[0] = contactdata.get(holder.getAdapterPosition()).getGroupNames().trim();
+                    strGroupIds[0] = contactdata.get(yoHolder.getAdapterPosition()).getGroupIds();
+                    groupTitleArray[0] = contactdata.get(yoHolder.getAdapterPosition()).getGroupNames().trim();
                 }
 
-                if (!contactdata.get(holder.getAdapterPosition()).getGroupIds().isEmpty()) {
+                if (!contactdata.get(yoHolder.getAdapterPosition()).getGroupIds().isEmpty()) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
                     builder.setTitle("Select Group To View");
                     builder.setItems(groupTitleArray, new DialogInterface.OnClickListener() {
@@ -269,7 +281,7 @@ public class AutokattaContactAdapter extends RecyclerView.Adapter<AutokattaConta
 
                             i.putExtra("bundle_GroupId", Integer.parseInt(strGroupIds[item]));
                             i.putExtra("bundle_GroupName", groupTitleArray[item]);
-                            i.putExtra("bundle_Contact", contactdata.get(holder.getAdapterPosition()).getContact());
+                            i.putExtra("bundle_Contact", contactdata.get(yoHolder.getAdapterPosition()).getContact());
                             mActivity.startActivity(i);
                             dialog.dismiss();
 
@@ -327,25 +339,25 @@ public class AutokattaContactAdapter extends RecyclerView.Adapter<AutokattaConta
         if (str != null) {
             if (str.equalsIgnoreCase("success_follow")) {
                 CustomToast.customToast(mActivity, "Follow profile");
+                notifyDataSetChanged();
                 DbOperation dbAdpter = new DbOperation(mActivity);
                 dbAdpter.OPEN();
                 dbAdpter.updateAutoContacts(Rcontact, "yes");
                 dbAdpter.CLOSE();
-                yoHolder.btnUnfollow.setVisibility(VISIBLE);
-                yoHolder.btnFollow.setVisibility(GONE);
-                contactdata.get(yoHolder.getAdapterPosition()).setFollowstatus("yes");
-                notifyDataSetChanged();
+                /*yoHolder.btnUnfollow.setVisibility(VISIBLE);
+                yoHolder.btnFollow.setVisibility(GONE);*/
+
 
             } else if (str.equalsIgnoreCase("success_unfollow")) {
                 CustomToast.customToast(mActivity, "Un follow profile");
+                notifyDataSetChanged();
                 DbOperation dbAdpter = new DbOperation(mActivity);
                 dbAdpter.OPEN();
                 dbAdpter.updateAutoContacts(Rcontact, "no");
                 dbAdpter.CLOSE();
-                yoHolder.btnUnfollow.setVisibility(GONE);
-                yoHolder.btnFollow.setVisibility(VISIBLE);
-                contactdata.get(yoHolder.getAdapterPosition()).setFollowstatus("no");
-                notifyDataSetChanged();
+                /*yoHolder.btnUnfollow.setVisibility(GONE);
+                yoHolder.btnFollow.setVisibility(VISIBLE);*/
+
 
             }
         } else

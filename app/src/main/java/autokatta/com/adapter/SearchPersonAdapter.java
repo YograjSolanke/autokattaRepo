@@ -1,14 +1,10 @@
 package autokatta.com.adapter;
 
-import android.Manifest.permission;
 import android.app.Activity;
 import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -49,7 +45,7 @@ import static android.view.View.VISIBLE;
  * Created by ak-001 on 19/4/17.
  */
 
-public class SearchPersonAdapter extends RecyclerView.Adapter<SearchPersonAdapter.YoHolder> implements Filterable, RequestNotifier {
+public class SearchPersonAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements Filterable, RequestNotifier {
 
     private Activity mActivity;
     private List<SearchPersonResponse.Success> contactdata = new ArrayList<>();
@@ -59,7 +55,7 @@ public class SearchPersonAdapter extends RecyclerView.Adapter<SearchPersonAdapte
     private ApiCall apicall;
     private String Rcontact = "";
 
-    static class YoHolder extends RecyclerView.ViewHolder {
+    class YoHolder extends RecyclerView.ViewHolder {
 
         CardView mCardView;
         ImageView imgProfile;
@@ -90,91 +86,82 @@ public class SearchPersonAdapter extends RecyclerView.Adapter<SearchPersonAdapte
             contactdata_copy = contactdata;
             myContact = mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).getString("loginContact", "");
             apicall = new ApiCall(this.mActivity, this);
+            setHasStableIds(true);
         } catch (ClassCastException e) {
             e.printStackTrace();
         }
     }
 
     @Override
-    public SearchPersonAdapter.YoHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.adapter_autokatta_contact, parent, false);
         return new YoHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(final SearchPersonAdapter.YoHolder holder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        final YoHolder yoHolder = (YoHolder) holder;
         myContact = mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).getString("loginContact", "");
-        holder.setIsRecyclable(false);
-        holder.mTextName.setText(contactdata.get(position).getUsername());
-        holder.mTextNumber.setText(contactdata.get(position).getContact());
-        holder.mCity.setVisibility(VISIBLE);
-        holder.mCompany.setVisibility(VISIBLE);
-        holder.mCity.setText(contactdata.get(position).getCity());
-        holder.mCompany.setText(contactdata.get(position).getCompany());
+        yoHolder.setIsRecyclable(false);
+        yoHolder.mTextName.setText(contactdata.get(yoHolder.getAdapterPosition()).getUsername());
+        yoHolder.mTextNumber.setText(contactdata.get(yoHolder.getAdapterPosition()).getContact());
+        yoHolder.mCity.setVisibility(VISIBLE);
+        yoHolder.mCompany.setVisibility(VISIBLE);
+        yoHolder.mCity.setText(contactdata.get(yoHolder.getAdapterPosition()).getCity());
+        yoHolder.mCompany.setText(contactdata.get(yoHolder.getAdapterPosition()).getCompany());
 
 
-        if (contactdata.get(position).getMystatus() != null &&
-                !contactdata.get(position).getMystatus().equals("null")) {
+        if (contactdata.get(yoHolder.getAdapterPosition()).getMystatus() != null &&
+                !contactdata.get(yoHolder.getAdapterPosition()).getMystatus().equals("null")) {
 
             /*decode string code (Getting)*/
             String decodedString = null;
             byte[] data = new byte[0];
             try {
-                data = Base64.decode(contactdata.get(position).getMystatus());
+                data = Base64.decode(contactdata.get(yoHolder.getAdapterPosition()).getMystatus());
                 decodedString = new String(data, "UTF-8");
             } catch (IOException e) {
                 e.printStackTrace();
             }
 
-            holder.mTextStatus.setText(decodedString);
+            yoHolder.mTextStatus.setText(decodedString);
 
         } else
-            holder.mTextStatus.setText("No Status");
+            yoHolder.mTextStatus.setText("No Status");
 
-        if (contactdata.get(position).getStatus().equals("yes")) {
-            holder.btnUnfollow.setVisibility(VISIBLE);
-            holder.btnFollow.setVisibility(GONE);
-        }
-        if (contactdata.get(position).getStatus().equals("no")) {
-            holder.btnUnfollow.setVisibility(GONE);
-            holder.btnFollow.setVisibility(VISIBLE);
+        if (contactdata.get(yoHolder.getAdapterPosition()).getStatus().equalsIgnoreCase("yes")) {
+            yoHolder.btnUnfollow.setVisibility(VISIBLE);
+            yoHolder.btnFollow.setVisibility(GONE);
+        } else if (contactdata.get(yoHolder.getAdapterPosition()).getStatus().equalsIgnoreCase("no")) {
+            yoHolder.btnUnfollow.setVisibility(GONE);
+            yoHolder.btnFollow.setVisibility(VISIBLE);
         }
 
-        if (contactdata.get(holder.getAdapterPosition()).getProfilePhoto() == null || contactdata.get(holder.getAdapterPosition()).getProfilePhoto().equalsIgnoreCase("") ||
-                contactdata.get(holder.getAdapterPosition()).getProfilePhoto().equalsIgnoreCase("null"))
-            holder.imgProfile.setBackgroundResource(R.drawable.profile);
+        if (contactdata.get(yoHolder.getAdapterPosition()).getProfilePhoto() == null || contactdata.get(yoHolder.getAdapterPosition()).getProfilePhoto().equalsIgnoreCase("") ||
+                contactdata.get(yoHolder.getAdapterPosition()).getProfilePhoto().equalsIgnoreCase("null"))
+            yoHolder.imgProfile.setBackgroundResource(R.drawable.profile);
         else {
             /*
              Glide code for image uploading
 
              */
             Glide.with(mActivity)
-                    .load(mActivity.getString(R.string.base_image_url) + contactdata.get(holder.getAdapterPosition()).getProfilePhoto())
+                    .load(mActivity.getString(R.string.base_image_url) + contactdata.get(yoHolder.getAdapterPosition()).getProfilePhoto())
                     .bitmapTransform(new CropCircleTransformation(mActivity)) //To display image in Circular form.
                     .diskCacheStrategy(DiskCacheStrategy.ALL) //For caching diff versions of image.
                     .placeholder(R.drawable.logo) //To show image before loading an original image.
-                    //.error(R.drawable.blocked) //To show error image if problem in loading.
-                    .into(holder.imgProfile);
+                    .into(yoHolder.imgProfile);
         }
 
-       /* //calling Functionality
-        holder.imgCall.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                call(contactdata.get(holder.getAdapterPosition()).getContact());
-
-            }
-        });*/
 
         /*Send Message*/
-        holder.btnsendmsg.setOnClickListener(new View.OnClickListener() {
+        yoHolder.btnsendmsg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 Bundle b = new Bundle();
-                b.putString("sender", contactdata.get(holder.getAdapterPosition()).getContact());
-                b.putString("sendername", contactdata.get(holder.getAdapterPosition()).getUsername());
+                b.putString("sender", contactdata.get(yoHolder.getAdapterPosition()).getContact());
+                b.putString("sendername", contactdata.get(yoHolder.getAdapterPosition()).getUsername());
                 b.putInt("product_id", 0);
                 b.putInt("service_id", 0);
                 b.putInt("vehicle_id", 0);
@@ -185,13 +172,13 @@ public class SearchPersonAdapter extends RecyclerView.Adapter<SearchPersonAdapte
             }
         });
 
-        holder.mCardView.setOnClickListener(new View.OnClickListener() {
+        yoHolder.mCardView.setOnClickListener(new View.OnClickListener() {
             Bundle bundle = new Bundle();
 
             @Override
             public void onClick(View v) {
-                bundle.putString("contactOtherProfile", contactdata.get(holder.getAdapterPosition()).getContact());
-                if (myContact.equalsIgnoreCase(contactdata.get(holder.getAdapterPosition()).getContact())) {
+                bundle.putString("contactOtherProfile", contactdata.get(yoHolder.getAdapterPosition()).getContact());
+                if (myContact.equalsIgnoreCase(contactdata.get(yoHolder.getAdapterPosition()).getContact())) {
                     ActivityOptions options = ActivityOptions.makeCustomAnimation(mActivity, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
                     Intent i = new Intent(mActivity, UserProfile.class);
                     i.putExtras(bundle);
@@ -202,29 +189,31 @@ public class SearchPersonAdapter extends RecyclerView.Adapter<SearchPersonAdapte
                     Intent i = new Intent(mActivity, OtherProfile.class);
                     i.putExtras(bundle);
                     mActivity.startActivity(i, options.toBundle());
-
-
                 }
             }
         });
 
-        holder.btnFollow.setOnClickListener(new View.OnClickListener() {
+        yoHolder.btnFollow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                holder.btnUnfollow.setVisibility(VISIBLE);
-                holder.btnFollow.setVisibility(GONE);
-                Rcontact = contactdata.get(holder.getAdapterPosition()).getContact();
+                yoHolder.btnUnfollow.setVisibility(VISIBLE);
+                yoHolder.btnFollow.setVisibility(GONE);
+                Rcontact = contactdata.get(yoHolder.getAdapterPosition()).getContact();
                 sendFollowerUnfollower(Rcontact, "follow");
+                contactdata.get(yoHolder.getAdapterPosition()).setStatus("yes");
+                notifyDataSetChanged();
             }
         });
 
-        holder.btnUnfollow.setOnClickListener(new View.OnClickListener() {
+        yoHolder.btnUnfollow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                holder.btnUnfollow.setVisibility(GONE);
-                holder.btnFollow.setVisibility(VISIBLE);
-                Rcontact = contactdata.get(holder.getAdapterPosition()).getContact();
+                yoHolder.btnUnfollow.setVisibility(GONE);
+                yoHolder.btnFollow.setVisibility(VISIBLE);
+                Rcontact = contactdata.get(yoHolder.getAdapterPosition()).getContact();
                 sendFollowerUnfollower(Rcontact, "unfollow");
+                contactdata.get(yoHolder.getAdapterPosition()).setStatus("no");
+                notifyDataSetChanged();
             }
         });
 
@@ -279,25 +268,6 @@ public class SearchPersonAdapter extends RecyclerView.Adapter<SearchPersonAdapte
             CustomToast.customToast(mActivity, mActivity.getString(R.string.no_response));
     }
 
-    //Calling Functionality
-    private void call(String rcontact) {
-        Intent in = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + rcontact));
-        try {
-            if (ActivityCompat.checkSelfPermission(mActivity, permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-                // TODO: Consider calling
-                //    ActivityCompat#requestPermissions
-                // here to request the missing permissions, and then overriding
-                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                //                                          int[] grantResults)
-                // to handle the case where the user grants the permission. See the documentation
-                // for ActivityCompat#requestPermissions for more details.
-                return;
-            }
-            mActivity.startActivity(in);
-        } catch (android.content.ActivityNotFoundException ex) {
-            ex.printStackTrace();
-        }
-    }
 
     @Override
     public int getItemCount() {
@@ -326,9 +296,6 @@ public class SearchPersonAdapter extends RecyclerView.Adapter<SearchPersonAdapte
 
                 for (int i = 0; i < count; i++) {
                     filterableString = list.get(i);
-                    /*if (filterableString.getUsername().toLowerCase().contains(filterString)) {
-                        nlist.add(filterableString);
-                    }*/
 
                     if (filterableString.getUsername().contains(" ")) {
                         String[] arr = filterableString.getUsername().split(" ");

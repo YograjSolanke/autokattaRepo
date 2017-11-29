@@ -47,20 +47,17 @@ import retrofit2.Response;
 public class SearchPerson extends Fragment implements RequestNotifier {
     View mSearchPerson;
     private RecyclerView searchList;
-
-    String searchString;
+    String searchString, myContact;
     private List<SearchPersonResponse.Success> allSearchDataArrayList = new ArrayList<>();
     private List<SearchPersonResponse.Success> allSearchDataArrayList_new;
     boolean[] checkedValues;
     boolean hasViewCreated = false;
     TextView mNoData;
-    String myContact;
     ImageView filterImg;
-    ArrayList<String> cityList = new ArrayList<>();
+    List<String> cityList = new ArrayList<>();
     HashSet<String> citySet;
     SearchPersonAdapter adapter;
     ConnectionDetector mConnectionDetector;
-    //private ProgressDialog dialog;
 
     @Nullable
     @Override
@@ -94,14 +91,11 @@ public class SearchPerson extends Fragment implements RequestNotifier {
             @Override
             public void run() {
                 try {
-                    /*dialog = new ProgressDialog(getActivity());
-                    dialog.setMessage("Loading...");*/
 
                     mConnectionDetector = new ConnectionDetector(getActivity());
                     Bundle bundle = getArguments();
                     if (bundle != null) {
                         searchString = bundle.getString("searchText1");
-                        System.out.println("Person" + searchString);
                         getSearchResults(searchString);
                     }
                     filterImg.setOnClickListener(new View.OnClickListener() {
@@ -119,7 +113,6 @@ public class SearchPerson extends Fragment implements RequestNotifier {
 
     private void getSearchResults(String searchString) {
         if (mConnectionDetector.isConnectedToInternet()) {
-            //dialog.show();
             ApiCall mApiCall = new ApiCall(getActivity(), this);
             mApiCall.getPersonSearchData(searchString, myContact);
         } else {
@@ -130,9 +123,7 @@ public class SearchPerson extends Fragment implements RequestNotifier {
 
     @Override
     public void notifySuccess(Response<?> response) {
-        /*if (dialog.isShowing()) {
-            dialog.dismiss();
-        }*/
+
         if (response != null) {
             if (response.isSuccessful()) {
                 SearchPersonResponse contactResponse = (SearchPersonResponse) response.body();
@@ -182,9 +173,7 @@ public class SearchPerson extends Fragment implements RequestNotifier {
 
     @Override
     public void notifyError(Throwable error) {
-        /*if (dialog.isShowing()) {
-            dialog.dismiss();
-        }*/
+
         if (error instanceof SocketTimeoutException) {
             if (isAdded())
             CustomToast.customToast(getActivity(), getString(R.string._404));
@@ -284,7 +273,6 @@ public class SearchPerson extends Fragment implements RequestNotifier {
                 Bundle bundle = getArguments();
                 if (bundle != null) {
                     searchString = bundle.getString("searchText1");
-                    System.out.println("Person" + searchString);
                     getSearchResults(searchString);
                 }
                 hasViewCreated = true;
