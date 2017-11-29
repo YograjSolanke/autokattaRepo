@@ -73,6 +73,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
                 android:text="@string/ok"
+                android:background="@color/background"
                 android:visibility="gone" />
 
             <Button
@@ -80,6 +81,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
                 android:layout_toEndOf="@+id/ok"
+                android:background="@color/background"
                 android:text="@string/skip" />
         </RelativeLayout>
     </RelativeLayout>

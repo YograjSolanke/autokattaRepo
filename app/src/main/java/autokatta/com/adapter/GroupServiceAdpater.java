@@ -29,7 +29,7 @@ import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.StoreInventoryResponse;
-import autokatta.com.view.ProductViewActivity;
+import autokatta.com.view.ServiceViewActivity;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import retrofit2.Response;
 
@@ -148,8 +148,8 @@ public class GroupServiceAdpater extends RecyclerView.Adapter<RecyclerView.ViewH
                 public void onClick(View view) {
                     ActivityOptions options = ActivityOptions.makeCustomAnimation(activity, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
                     int proId = service.getServiceId();
-                    Intent intent = new Intent(activity, ProductViewActivity.class);
-                    intent.putExtra("product_id", proId);
+                    Intent intent = new Intent(activity, ServiceViewActivity.class);
+                    intent.putExtra("service_id", proId);
                     activity.startActivity(intent, options.toBundle());
                 }
             });
@@ -159,8 +159,8 @@ public class GroupServiceAdpater extends RecyclerView.Adapter<RecyclerView.ViewH
                 public void onClick(View view) {
                     ActivityOptions options = ActivityOptions.makeCustomAnimation(activity, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
                     int proId = service.getServiceId();
-                    Intent intent = new Intent(activity, ProductViewActivity.class);
-                    intent.putExtra("product_id", proId);
+                    Intent intent = new Intent(activity, ServiceViewActivity.class);
+                    intent.putExtra("service_id", proId);
                     intent.putExtra("editmode", "yes");
                     activity.startActivity(intent, options.toBundle());
                 }

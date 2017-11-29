@@ -890,8 +890,12 @@ Get Admin data...
                                 sliderLayout.setPresetTransformer(SliderLayout.Transformer.Accordion);
                                 sliderLayout.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
                                 //sliderLayout.setCustomAnimation(new DescriptionAnimation());
-                                sliderLayout.setDuration(3000);
+                                sliderLayout.setDuration(5000);
                                 sliderLayout.addOnPageChangeListener(this);
+
+                                if (!simages.contains(",")) {
+                                    sliderLayout.stopAutoCycle();
+                                }
                             }
 
                             //***************************setting previous rating*******************************

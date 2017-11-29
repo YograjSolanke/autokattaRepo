@@ -109,7 +109,7 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
     String pimages;
     String plikestatus;
     String action;
-    String singleimage;
+    String singleimage="";
     String pcategory;
     Integer prating;
     String receiver_contact;
@@ -731,8 +731,12 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                             sliderLayout.setPresetTransformer(SliderLayout.Transformer.Accordion);
                             sliderLayout.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
                             //sliderLayout.setCustomAnimation(new DescriptionAnimation());
-                            sliderLayout.setDuration(3000);
+                            sliderLayout.setDuration(5000);
                             sliderLayout.addOnPageChangeListener(this);
+
+                            if (!pimages.contains(",")) {
+                                sliderLayout.stopAutoCycle();
+                            }
 
 
                         }

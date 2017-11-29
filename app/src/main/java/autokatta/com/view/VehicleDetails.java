@@ -60,7 +60,7 @@ public class VehicleDetails extends AppCompatActivity implements RequestNotifier
     FloatingActionButton mLike, mCall, mShare, mChat, mReview, mNote;
     String Title, mPrice, mBrand, mModel, mYear, mRTO_City, mAddress, mRegistration, mSendImage, imgUrl;
     Double mKms;
-    String contact, mLikestr, prefcontact, allDetails,singleimage;
+    String contact, mLikestr, prefcontact, allDetails,singleimage,dp;
     ApiCall mApiCall;
     int mVehicle_Id;
     SliderLayout sliderLayout;
@@ -154,7 +154,7 @@ public class VehicleDetails extends AppCompatActivity implements RequestNotifier
             if (response.isSuccessful()) {
                 GetVehicleByIdResponse mVehicleByIdResponse = (GetVehicleByIdResponse) response.body();
                 for (GetVehicleByIdResponse.VehicleDatum datum : mVehicleByIdResponse.getSuccess().getVehicleData()) {
-                    String dp = datum.getImage();
+                     dp = datum.getImage();
                     name = datum.getUsername();
                     contact = datum.getContact();
                     if (datum.getStatus() == null) {
@@ -250,8 +250,12 @@ public class VehicleDetails extends AppCompatActivity implements RequestNotifier
                 }
                 sliderLayout.setPresetTransformer(SliderLayout.Transformer.Accordion);
                 sliderLayout.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
-                sliderLayout.setDuration(4000);
+                sliderLayout.setDuration(5000);
                 sliderLayout.addOnPageChangeListener(this);
+
+                if (!dp.contains(",")) {
+                    sliderLayout.stopAutoCycle();
+                }
                 collapsingToolbar.setTitle(Title);
 
                 if (!contact.equals(prefcontact))

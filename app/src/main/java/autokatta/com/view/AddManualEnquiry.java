@@ -303,10 +303,6 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
                                 edtContact.requestFocus();
                                 edtContact.setError("admin not allowed");
                             }
-                        }else
-                        {
-                            edtContact.requestFocus();
-                            edtContact.setError("Enter Valid Number");
                         }
                     }
 
@@ -445,6 +441,9 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
                                 edtName.requestFocus();
                             } else if (custContact.isEmpty() || custContact.startsWith(" ") && custContact.startsWith(" ")) {
                                 edtContact.setError("Please provide customer contact");
+                                edtContact.requestFocus();
+                            } else if (custContact.length()<10) {
+                                edtContact.setError("Please provide valid customer contact");
                                 edtContact.requestFocus();
                             } else if (custAddress.equals("") || custAddress.startsWith(" ") && custAddress.startsWith(" ")) {
                                 autoAddress.setError("Enter Address");

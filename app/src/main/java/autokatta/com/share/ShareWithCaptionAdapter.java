@@ -463,7 +463,7 @@ public class ShareWithCaptionAdapter extends BaseAdapter {
                                 .into(holder.imgservice);
                     }
                     if (data2[2] != null && !data2[2].equals("null")) {
-                        holder.productRating.setRating(Float.parseFloat(data2[2]));
+                        holder.serviceRating.setRating(Float.parseFloat(data2[2]));
                     }
 
                 }
