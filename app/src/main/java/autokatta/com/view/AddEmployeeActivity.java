@@ -190,6 +190,9 @@ public class AddEmployeeActivity extends AppCompatActivity implements RequestNot
                     empName.setError("Please Enter Name");
                 } else if (empContact.getText().toString().isEmpty()) {
                     empContact.setError("Please Enter Contact");
+                } else if (empContact.getText().toString().length() < 10) {
+                    empContact.setError("Please provide valid employee contact");
+                    empContact.requestFocus();
                 } else if (empContact.getText().toString().equals(myContact)) {
                     empContact.setError("Admin Not Allowed");
                     empContact.requestFocus();
