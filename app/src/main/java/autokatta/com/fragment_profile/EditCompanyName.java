@@ -29,14 +29,12 @@ import autokatta.com.response.GetCompaniesResponse;
 import retrofit2.Response;
 
 public class EditCompanyName extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener, RequestNotifier {
-
     SwipeRefreshLayout mSwipeRefreshLayout;
     RecyclerView mRecyclerView;
     final List<GetCompaniesResponse.Success> mCompanyList = new ArrayList<>();
     Button mAddNewCompany;
     EditCompanyNameAdapter mAdapter;
     ApiCall mApiCall;
-
     Menu menu;
 
     @Override
@@ -51,7 +49,7 @@ public class EditCompanyName extends AppCompatActivity implements SwipeRefreshLa
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
-        mAddNewCompany= (Button) findViewById(R.id.add);
+        mAddNewCompany = (Button) findViewById(R.id.add);
         mApiCall = new ApiCall(EditCompanyName.this, this);
         mApiCall.getCompany();
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayoutBGroup);
@@ -94,7 +92,7 @@ public class EditCompanyName extends AppCompatActivity implements SwipeRefreshLa
                         companyResponse.setCompanyName(companyResponse.getCompanyName());
                         mCompanyList.add(companyResponse);
                     }
-                    mAdapter = new EditCompanyNameAdapter(EditCompanyName.this, mCompanyList,mAddNewCompany);
+                    mAdapter = new EditCompanyNameAdapter(EditCompanyName.this, mCompanyList, mAddNewCompany);
                     mRecyclerView.setAdapter(mAdapter);
                 }
             }
@@ -107,9 +105,9 @@ public class EditCompanyName extends AppCompatActivity implements SwipeRefreshLa
         if (error instanceof SocketTimeoutException) {
             CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
         } else if (error instanceof NullPointerException) {
-//                CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-//                CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
             CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
@@ -156,11 +154,14 @@ public class EditCompanyName extends AppCompatActivity implements SwipeRefreshLa
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 Log.i("Strings", "-->" + s.toString());
                 mAdapter.getFilter().filter(s.toString());
+                if (s.toString().isEmpty()) {
+                    mApiCall.getCompany();
+                }
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-             //   mAdapter.getFilter().filter(s.toString());
+                //   mAdapter.getFilter().filter(s.toString());
             }
         });
         return true;

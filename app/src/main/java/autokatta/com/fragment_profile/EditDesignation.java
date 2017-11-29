@@ -55,10 +55,7 @@ public class EditDesignation extends AppCompatActivity implements SwipeRefreshLa
 
         mRecyclerView.setHasFixedSize(true);
         LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(this);
-        //  mLinearLayoutManager.setReverseLayout(true);
-        //   mLinearLayoutManager.setStackFromEnd(true);
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
-
         mSwipeRefreshLayout.setOnRefreshListener(EditDesignation.this);
         mSwipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
                 android.R.color.holo_green_light,
@@ -68,7 +65,6 @@ public class EditDesignation extends AppCompatActivity implements SwipeRefreshLa
             @Override
             public void run() {
                 mSwipeRefreshLayout.setRefreshing(true);
-
                 mApiCall.getDesignation();
             }
         });
@@ -97,7 +93,6 @@ public class EditDesignation extends AppCompatActivity implements SwipeRefreshLa
                     mRecyclerView.setAdapter(mAdapter);
                 }
             }
-
         }
     }
 
@@ -106,9 +101,9 @@ public class EditDesignation extends AppCompatActivity implements SwipeRefreshLa
         if (error instanceof SocketTimeoutException) {
             CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
         } else if (error instanceof NullPointerException) {
-//                CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-//                CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
             CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
@@ -122,8 +117,6 @@ public class EditDesignation extends AppCompatActivity implements SwipeRefreshLa
     public void notifyString(String str) {
 
     }
-
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -155,22 +148,17 @@ public class EditDesignation extends AppCompatActivity implements SwipeRefreshLa
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                //fillter(s.toString());
-                //getSearchResults(s.toString());
-                Log.i("Strings", "-->" + s.toString());
                 mAdapter.getFilter().filter(s.toString());
+                if (s.toString().isEmpty()) {
+                    mApiCall.getDesignation();
+                }
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-                //fillter(s.toString());
-                Log.i("Strings", "-->" + s.toString());
-                //  getSearchAuction(s.toString());
-               // mAdapter.getFilter().filter(s.toString());
+
             }
         });
-
-
         return true;
     }
 }

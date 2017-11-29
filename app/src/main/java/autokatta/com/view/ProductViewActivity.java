@@ -178,14 +178,12 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         setTitle("View Products");
-
         mApiCall = new ApiCall(ProductViewActivity.this, this);
         contact = getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
                 .getString("loginContact", "");
 
         dialog = new ProgressDialog(this);
         dialog.setMessage("Loading...");
-
         mConnectionDetector = new ConnectionDetector(this);
         storename = (TextView) findViewById(R.id.txtstorename);
         website = (TextView) findViewById(R.id.txtstorewebsite);
@@ -196,7 +194,6 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
         producttype = (EditText) findViewById(R.id.txtptype);
         edit = (ImageView) findViewById(R.id.editproduct);
         check = (ImageView) findViewById(R.id.checkproduct);
-
         txtlike = (TextView) findViewById(R.id.txtlike);
         txtshare = (TextView) findViewById(R.id.txtshare);
         txtreview = (TextView) findViewById(R.id.txtreview);
@@ -209,11 +206,8 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
         linearunlike = (Button) findViewById(R.id.linearunlike);
         linearshare = (Button) findViewById(R.id.linearshare);
         linearReview = (Button) findViewById(R.id.linearReview);
-
-
         spinCategory = (Spinner) findViewById(R.id.spincategory);
         spinnerlayout = (RelativeLayout) findViewById(R.id.linearcategory);
-
         deleteproduct = (ImageView) findViewById(R.id.deleteproduct);
         relativerate = (RelativeLayout) findViewById(R.id.relativerateproduct);
         lineartxts = (LinearLayout) findViewById(R.id.lineartxts);
@@ -237,22 +231,6 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
         overallbar.setEnabled(false);
         //storerating.setEnabled(false);
         productrating.setEnabled(false);
-
-
-        /*LayerDrawable layerDrawable = (LayerDrawable) storerating.getProgressDrawable();
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            DrawableCompat.setTint(DrawableCompat.wrap(layerDrawable.getDrawable(1)), ContextCompat.getColor(ProductViewActivity.this, R.color.medium_sea_green)); // Partial star
-            DrawableCompat.setTint(DrawableCompat.wrap(layerDrawable.getDrawable(2)), ContextCompat.getColor(ProductViewActivity.this, R.color.medium_sea_green));
-            DrawableCompat.setTint(DrawableCompat.wrap(layerDrawable.getDrawable(0)), ContextCompat.getColor(ProductViewActivity.this, R.color.mid_gray));
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            layerDrawable.getDrawable(1).setTint(ContextCompat.getColor(ProductViewActivity.this, R.color.medium_sea_green));
-            layerDrawable.getDrawable(2).setTint(ContextCompat.getColor(ProductViewActivity.this, R.color.medium_sea_green));
-            layerDrawable.getDrawable(0).setTint(ContextCompat.getColor(ProductViewActivity.this, R.color.mid_gray));
-        } else {
-            layerDrawable.getDrawable(2).setColorFilter(ContextCompat.getColor(ProductViewActivity.this, R.color.medium_sea_green), PorterDuff.Mode.SRC);
-        }*/
-
         edit.setOnClickListener(this);
         check.setOnClickListener(this);
         callme.setOnClickListener(this);
@@ -268,8 +246,6 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
         mUploadGroup.setOnClickListener(this);
         mNote.setOnClickListener(this);
 
-
-
         if (getIntent().getExtras() != null) {
             product_id = getIntent().getExtras().getInt("product_id");
             editMode = getIntent().getExtras().getString("editmode", "");
@@ -278,12 +254,10 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-
                 if (getSupportActionBar() != null) {
                     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
                     getSupportActionBar().setDisplayShowHomeEnabled(true);
                 }
-
 
                 if (!mConnectionDetector.isConnectedToInternet()) {
                     Toast.makeText(ProductViewActivity.this, "Please check your internet connection", Toast.LENGTH_SHORT).show();
@@ -298,11 +272,8 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
             }
         });
 
-
         producttags.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
         multiautobrand.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
-
-
         producttags.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View view, int i, KeyEvent keyEvent) {
