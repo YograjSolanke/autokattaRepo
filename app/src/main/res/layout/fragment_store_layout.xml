@@ -6,7 +6,10 @@
     <ListView
         android:id="@+id/store_list"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:paddingBottom="80dp"
+        android:clipToPadding="false"
+        />
 
     <!--<android.support.design.widget.FloatingActionButton
         android:id="@+id/create_store"

@@ -333,6 +333,7 @@ public class MemberListFragment extends Fragment implements SwipeRefreshLayout.O
                 //For Other Profile
                 if (mCallfrom.equalsIgnoreCase("OtherGroup") || mCallfrom.equalsIgnoreCase("JoinedGroups")) {
                  //   floatCreateGroup.setVisibility(View.GONE);
+                    floatCreateGroup.setLabelText("Request To Add Member");
 
                     floatCreateGroup.setOnClickListener(new View.OnClickListener() {
                         @Override

@@ -254,12 +254,12 @@ public class MyGroupsFragment extends Fragment implements SwipeRefreshLayout.OnR
                         if (dy > 0) {
                             // Scroll Down
                             if (mFab.isShown()) {
-                                mFab.hide(true);
+                             //   mFab.hide(true);
                             }
                         } else if (dy < 0) {
                             // Scroll Up
                             if (!mFab.isShown()) {
-                                mFab.show(true);
+                             //   mFab.show(true);
                             }
                         }
                     }

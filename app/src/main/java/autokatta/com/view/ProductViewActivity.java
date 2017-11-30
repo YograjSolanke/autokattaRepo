@@ -494,7 +494,7 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                 } else if (response.body() instanceof StoreOldAdminResponse) {
                     StoreOldAdminResponse adminResponse = (StoreOldAdminResponse) response.body();
                     if (!adminResponse.getSuccess().isEmpty()) {
-                        storeAdmins.add(contact + "-" + "Owner" + "-" + "Owner");
+                        storeAdmins.add( storecontact+ "-" + "Owner" + "-" + "Owner");
                         for (StoreOldAdminResponse.Success success : adminResponse.getSuccess()) {
                             storeAdmins.add(success.getAdmin());
                         }

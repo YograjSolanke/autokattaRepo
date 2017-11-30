@@ -736,7 +736,7 @@ Get Admin data...
                     StoreOldAdminResponse adminResponse = (StoreOldAdminResponse) response.body();
                     if (!adminResponse.getSuccess().isEmpty()) {
                         //8007855589-dealer-RUTU
-                        storeAdmins.add(contact + "-" + "Owner" + "-" + "Owner");
+                        storeAdmins.add(storecontact + "-" + "Owner" + "-" + "Owner");
                         for (StoreOldAdminResponse.Success success : adminResponse.getSuccess()) {
                             storeAdmins.add(success.getAdmin());
                         }

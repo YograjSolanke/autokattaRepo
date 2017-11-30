@@ -315,7 +315,14 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
                 mediaPath = cursor.getString(columnIndex);
                 // Set the Image in ImageView for Previewing the Media
                 //  mProfilePicture.setImageBitmap(BitmapFactory.decodeFile(mediaPath));
-                img.setImageBitmap(BitmapFactory.decodeFile(mediaPath));
+          //      img.setImageBitmap(BitmapFactory.decodeFile(mediaPath));
+
+                Glide.with(UserProfile.this)
+                        .load(mediaPath)
+                        .centerCrop()
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .into(img);
+
                 cursor.close();
                 ///storage/emulated/0/DCIM/Camera/20170411_124425.jpg
                 lastWord = mediaPath.substring(mediaPath.lastIndexOf("/") + 1);
@@ -339,6 +346,14 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
                         // mProfilePicture.setImageBitmap(bitmapRotate);
                         img.setImageBitmap(BitmapFactory.decodeFile(mediaPath));
                         img.setImageBitmap(bitmapRotate);
+
+                        Glide.with(UserProfile.this)
+                                .load(bitmapRotate)
+                                .centerCrop()
+                                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                .into(img);
+
+
 //                            Saving image to mobile internal memory for sometime
                         String root = getApplicationContext().getFilesDir().toString();
                         File myDir = new File(root + "/androidlift");

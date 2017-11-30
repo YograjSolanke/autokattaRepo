@@ -15,7 +15,9 @@
             android:id="@+id/rv_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scrollbars="vertical" />
+            android:scrollbars="vertical"
+            android:paddingBottom="80dp"
+            android:clipToPadding="false"/>
     </android.support.v4.widget.SwipeRefreshLayout>
 
     <include layout="@layout/error_view" />
