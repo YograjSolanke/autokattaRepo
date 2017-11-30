@@ -1,13 +1,16 @@
 package autokatta.com.adapter;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
@@ -44,15 +47,14 @@ import static android.content.Context.MODE_PRIVATE;
  * Created by ak-004 on 7/4/17.
  */
 
-public class ViewSearchedStoreAdapter extends RecyclerView.Adapter<ViewSearchedStoreAdapter.StoreHolder> implements RequestNotifier {
+public class ViewSearchedStoreAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements RequestNotifier {
 
     List<SearchStoreResponse.Success> mMainList;
     Activity activity;
     private String StoreContact;
     private int likecountint, followcountint, StoreId;
-    private String imagename = "", allDetails;
+    private String allDetails;
     ApiCall mApiCall;
-    private String callText;
 
     public ViewSearchedStoreAdapter(Activity activity, List<SearchStoreResponse.Success> successList) {
         this.activity = activity;
@@ -60,35 +62,34 @@ public class ViewSearchedStoreAdapter extends RecyclerView.Adapter<ViewSearchedS
     }
 
     @Override
-    public ViewSearchedStoreAdapter.StoreHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_searched_store_adapter, parent, false);
-        StoreHolder holder = new StoreHolder(view);
-        return holder;
+        return new StoreHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(final ViewSearchedStoreAdapter.StoreHolder holder, final int position) {
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder1, int position) {
+
+        final StoreHolder holder = (StoreHolder) holder1;
+
         mApiCall = new ApiCall(activity, this);
         Typeface tf = Typeface.createFromAsset(activity.getAssets(), "font/Roboto-Light.ttf");
-        final SearchStoreResponse.Success object = mMainList.get(position);
+
+        final SearchStoreResponse.Success object = mMainList.get(holder.getAdapterPosition());
         final String image;
 
-        callText = object.getContact();
-        if (object.getLikestatus().equals("yes")) {
+        if (object.getLikestatus().equalsIgnoreCase("yes")) {
             holder.linearunlike.setVisibility(View.VISIBLE);
             holder.linearlike.setVisibility(View.GONE);
-        }
-        if (object.getLikecount().equals("no")) {
+        } else if (object.getLikestatus().equalsIgnoreCase("no")) {
             holder.linearunlike.setVisibility(View.GONE);
             holder.linearlike.setVisibility(View.VISIBLE);
         }
 
-        if (object.getFollowstatus().equals("yes")) {
+        if (object.getFollowstatus().equalsIgnoreCase("yes")) {
             holder.linearfollow.setVisibility(View.GONE);
             holder.linearunfollow.setVisibility(View.VISIBLE);
-        }
-
-        if (object.getFollowstatus().equals("no")) {
+        } else if (object.getFollowstatus().equalsIgnoreCase("no")) {
             holder.linearfollow.setVisibility(View.VISIBLE);
             holder.linearunfollow.setVisibility(View.GONE);
 
@@ -164,8 +165,7 @@ public class ViewSearchedStoreAdapter extends RecyclerView.Adapter<ViewSearchedS
         holder.linearlike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int likecountstr = object.getLikecount();
-                likecountint = likecountstr;
+                likecountint = object.getLikecount();
                 StoreContact = object.getContact();//holder.callText.getText().toString();
                 StoreId = object.getStoreId();
                 mApiCall.Like(activity.getSharedPreferences(activity.getString(R.string.my_preference), MODE_PRIVATE)
@@ -184,8 +184,7 @@ public class ViewSearchedStoreAdapter extends RecyclerView.Adapter<ViewSearchedS
         holder.linearunlike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int likecountstr = object.getLikecount();
-                likecountint = likecountstr;
+                likecountint = object.getLikecount();
                 StoreContact = object.getContact();//holder.callText.getText().toString();
                 StoreId = object.getStoreId();
 
@@ -205,8 +204,7 @@ public class ViewSearchedStoreAdapter extends RecyclerView.Adapter<ViewSearchedS
         holder.linearfollow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int followcountstr = object.getFollowcount();
-                followcountint = followcountstr;
+                followcountint = object.getFollowcount();
                 StoreContact = object.getContact();//holder.callText.getText().toString();
                 StoreId = object.getStoreId();
                 mApiCall.Follow(activity.getSharedPreferences(activity.getString(R.string.my_preference), MODE_PRIVATE)
@@ -224,8 +222,7 @@ public class ViewSearchedStoreAdapter extends RecyclerView.Adapter<ViewSearchedS
         holder.linearunfollow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int followcountstr = object.getFollowcount();
-                followcountint = followcountstr;
+                followcountint = object.getFollowcount();
                 StoreContact = object.getContact();//holder.callText.getText().toString();
                 StoreId = object.getStoreId();
                 mApiCall.UnFollow(activity.getSharedPreferences(activity.getString(R.string.my_preference), MODE_PRIVATE)
@@ -278,7 +275,8 @@ public class ViewSearchedStoreAdapter extends RecyclerView.Adapter<ViewSearchedS
                                 break;
 
                             case R.id.other:
-                                if (object.getStoreImage().equalsIgnoreCase("") || object.getStoreImage().equalsIgnoreCase(null) ||
+                                if (object.getStoreImage().equalsIgnoreCase(null) ||
+                                        object.getStoreImage().equalsIgnoreCase("") ||
                                         object.getStoreImage().equalsIgnoreCase("null")) {
                                     imagename = activity.getString(R.string.base_image_url) + "logo48x48.png";
                                 } else {
@@ -299,13 +297,14 @@ public class ViewSearchedStoreAdapter extends RecyclerView.Adapter<ViewSearchedS
 
                                 Log.e("TAG", "img URL: " + imagename);
 
+                                assert manager != null;
                                 manager.enqueue(request);
 
                                 imageFilePath = "/storage/emulated/0/Download/" + filename;
                                 System.out.println("ImageFilePath:" + imageFilePath);
 
-                                String allStoreDetailss = "Store name : " + object.getStoreName().toString() + "\n" +
-                                        "Store type : " + object.getStoreType().toString() + "\n" +
+                                String allStoreDetailss = "Store name : " + object.getStoreName() + "\n" +
+                                        "Store type : " + object.getStoreType() + "\n" +
                                         "Ratings : " + object.getRating() + "\n" +
                                         "Likes : " + object.getLikecount() + "\n" +
                                         "Website : " + object.getWebsite() + "\n" +
@@ -339,9 +338,19 @@ public class ViewSearchedStoreAdapter extends RecyclerView.Adapter<ViewSearchedS
     private void call(String contact) {
         Intent in = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + contact));
         try {
+            if (ActivityCompat.checkSelfPermission(activity, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
+                return;
+            }
             activity.startActivity(in);
         } catch (android.content.ActivityNotFoundException ex) {
-            System.out.println("No Activity Found For Call in Car Details Fragment\n");
+            ex.printStackTrace();
         }
     }
 
@@ -375,7 +384,7 @@ public class ViewSearchedStoreAdapter extends RecyclerView.Adapter<ViewSearchedS
         //RelativeLayout detailrel;
         RatingBar ratingBar;
 
-        public StoreHolder(View itemView) {
+        StoreHolder(View itemView) {
             super(itemView);
 
             storename = (TextView) itemView.findViewById(R.id.storename);

@@ -16,12 +16,17 @@ import android.widget.TextView;
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.List;
 
 import autokatta.com.R;
+import autokatta.com.adapter.FcmNotificationAdapter;
+import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.other.CustomToast;
 import autokatta.com.other.VerticalLineDecorator;
+import autokatta.com.response.GetFCMNotificationResponse;
 import retrofit2.Response;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -30,7 +35,7 @@ import static android.content.Context.MODE_PRIVATE;
  * Created by ak-001 on 20/11/17.
  */
 
-public class NotificationFragment extends Fragment implements RequestNotifier, View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
+public class NotificationFragment extends Fragment implements RequestNotifier, SwipeRefreshLayout.OnRefreshListener {
     View mNotificationView;
     RecyclerView mRecyclerView;
     SwipeRefreshLayout mSwipeRefreshLayout;
@@ -39,6 +44,7 @@ public class NotificationFragment extends Fragment implements RequestNotifier, V
     boolean _hasLoadedOnce = false;
     private String mLoginContact = "";
     ConnectionDetector mConnectionDetector;
+    List<GetFCMNotificationResponse.Success.FCMNotification> mFcmNotiList = new ArrayList<>();
 
     public NotificationFragment() {
 
@@ -87,7 +93,7 @@ public class NotificationFragment extends Fragment implements RequestNotifier, V
                     @Override
                     public void run() {
                         mSwipeRefreshLayout.setRefreshing(true);
-                        // getData(1, 10);
+                        getNotificationData();
                     }
                 });
 
@@ -95,19 +101,65 @@ public class NotificationFragment extends Fragment implements RequestNotifier, V
         });
     }
 
+    private void getNotificationData() {
+        ApiCall mApiCall = new ApiCall(getActivity(), this);
+        mApiCall.GetFCMNotificationOnUserBased(mLoginContact);
+    }
+
 
     @Override
     public void onRefresh() {
-
-    }
-
-    @Override
-    public void onClick(View view) {
-
+        getNotificationData();
     }
 
     @Override
     public void notifySuccess(Response<?> response) {
+
+        if (response != null) {
+            if (response.isSuccessful()) {
+                GetFCMNotificationResponse notificationResponse = (GetFCMNotificationResponse) response.body();
+                if (!notificationResponse.getSuccess().getFCMNotification().isEmpty()) {
+                    mSwipeRefreshLayout.setRefreshing(false);
+                    mNoData.setVisibility(View.GONE);
+
+                    for (GetFCMNotificationResponse.Success.FCMNotification fcmNotification : notificationResponse.getSuccess().getFCMNotification()) {
+                        fcmNotification.setFCMNotificationID(fcmNotification.getFCMNotificationID());
+                        fcmNotification.setReceiverContact(fcmNotification.getReceiverContact());
+                        fcmNotification.setMessage(fcmNotification.getMessage());
+                        fcmNotification.setDeviceToken(fcmNotification.getDeviceToken());
+                        fcmNotification.setContactNo(fcmNotification.getContactNo());
+                        fcmNotification.setUserName(fcmNotification.getUserName());
+                        fcmNotification.setStoreID(fcmNotification.getStoreID());
+                        fcmNotification.setGroupID(fcmNotification.getGroupID());
+                        fcmNotification.setVehicleID(fcmNotification.getVehicleID());
+                        fcmNotification.setProductID(fcmNotification.getProductID());
+                        fcmNotification.setServiceID(fcmNotification.getServiceID());
+                        fcmNotification.setStatusID(fcmNotification.getStatusID());
+                        fcmNotification.setSearchID(fcmNotification.getSearchID());
+                        mFcmNotiList.add(fcmNotification);
+
+                    }
+
+                    FcmNotificationAdapter mAdapter = new FcmNotificationAdapter(getActivity(), mFcmNotiList);
+                    mRecyclerView.setAdapter(mAdapter);
+                    mAdapter.notifyDataSetChanged();
+
+                } else {
+                    mSwipeRefreshLayout.setRefreshing(false);
+                    mNoData.setVisibility(View.VISIBLE);
+                }
+
+            } else {
+                mSwipeRefreshLayout.setRefreshing(false);
+                if (isAdded())
+                    CustomToast.customToast(getActivity(), getActivity().getString(R.string.no_data));
+            }
+
+        } else {
+            mSwipeRefreshLayout.setRefreshing(false);
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getActivity().getString(R.string.no_internet));
+        }
 
     }
 

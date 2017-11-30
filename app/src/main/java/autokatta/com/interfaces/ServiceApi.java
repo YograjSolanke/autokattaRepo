@@ -1625,6 +1625,6 @@ public interface ServiceApi {
     Call<SuggestionsResponse> _autokattaGetSuggestionData(@Query("MyContact") String mLoginContact);
 
     // get fcm notifications
-    @GET("GetFCMNotificationResponse")
+    @GET("GetFCMNotificationOnUserBased")
     Call<GetFCMNotificationResponse> _autokattaGetFCMNotificationOnUserBased(@Query("Usercontact") String mLoginContact);
 }
