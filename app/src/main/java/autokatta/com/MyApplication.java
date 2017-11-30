@@ -51,15 +51,15 @@ public class MyApplication extends android.support.multidex.MultiDexApplication 
             getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
         }
 
-        //adsf
+        //FirebaseRemoteConfig
         final FirebaseRemoteConfig firebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
 
         // set in-app defaults
         Map<String, Object> remoteConfigDefaults = new HashMap();
         remoteConfigDefaults.put(ForceUpdateChecker.KEY_UPDATE_REQUIRED, false);
-        remoteConfigDefaults.put(ForceUpdateChecker.KEY_CURRENT_VERSION, "1.0.0");
+        remoteConfigDefaults.put(ForceUpdateChecker.KEY_CURRENT_VERSION, "1.4.3");
         remoteConfigDefaults.put(ForceUpdateChecker.KEY_UPDATE_URL,
-                "https://play.google.com/store/apps/details?id=com.sembozdemir.renstagram");
+                "https://play.google.com/store/apps/details?id=autokatta.com");
 
         firebaseRemoteConfig.setDefaults(remoteConfigDefaults);
         firebaseRemoteConfig.fetch(60) // fetch every minutes
