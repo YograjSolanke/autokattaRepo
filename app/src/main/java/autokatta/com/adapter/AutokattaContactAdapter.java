@@ -96,7 +96,6 @@ public class AutokattaContactAdapter extends RecyclerView.Adapter<RecyclerView.V
             this.contactdata = contactdata;
             contactdata_copy = contactdata;
             apicall = new ApiCall(this.mActivity, this);
-            setHasStableIds(true);
         } catch (ClassCastException e) {
             e.printStackTrace();
         }

@@ -41,7 +41,6 @@ public class SuggestionProfileAdapter extends RecyclerView.Adapter<RecyclerView.
         mSuggestionList = storeResponseArrayList1;
         mSuggestionAbout = txtSuggestion;
         this.mLoginContact = mLoginContact;
-        setHasStableIds(true);
     }
 
     @Override

@@ -86,7 +86,6 @@ public class SearchPersonAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             contactdata_copy = contactdata;
             myContact = mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE).getString("loginContact", "");
             apicall = new ApiCall(this.mActivity, this);
-            setHasStableIds(true);
         } catch (ClassCastException e) {
             e.printStackTrace();
         }

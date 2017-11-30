@@ -9,7 +9,7 @@
         android:id="@+id/group_image"
         android:layout_width="match_parent"
         android:layout_height="@dimen/detail_backdrop_height"
-        android:background="@drawable/profile"
+        android:background="@drawable/logo48x48"
         android:contentDescription="@string/app_name"
         android:fitsSystemWindows="true"
         android:layout_margin="5dp"

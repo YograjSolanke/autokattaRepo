@@ -111,9 +111,9 @@ public class GroupContactListAdapter extends BaseAdapter {
                 //For Button visible/invisible
 
                 if (positionArray.contains(true))
-                    mBtnAddContacts.setEnabled(true);
+                    mBtnAddContacts.setVisibility(View.VISIBLE);
                 else
-                    mBtnAddContacts.setEnabled(false);
+                    mBtnAddContacts.setVisibility(View.GONE);
 
             }
 

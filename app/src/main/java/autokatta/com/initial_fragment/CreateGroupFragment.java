@@ -4,7 +4,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Bundle;
@@ -22,6 +21,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -172,7 +174,15 @@ public class CreateGroupFragment extends Fragment implements View.OnClickListene
                 int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
                 mediaPath = cursor.getString(columnIndex);
                 // Set the Image in ImageView for Previewing the Media
-                mGroupImg.setImageBitmap(BitmapFactory.decodeFile(mediaPath));
+
+              //  mGroupImg.setImageBitmap(BitmapFactory.decodeFile(mediaPath));//This code was used to set image
+
+                Glide.with(CreateGroupFragment.this)
+                        .load(mediaPath)
+                        .centerCrop()
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .into(mGroupImg);
+
                 cursor.close();
                 ///storage/emulated/0/DCIM/Camera/20170411_124425.jpg
                 lastWord = mediaPath.substring(mediaPath.lastIndexOf("/") + 1);
@@ -194,7 +204,13 @@ public class CreateGroupFragment extends Fragment implements View.OnClickListene
                             bitmapRotate = bitmap;
                             bitmap.recycle();
                         }
-                        mGroupImg.setImageBitmap(bitmapRotate);
+                   //     mGroupImg.setImageBitmap(bitmapRotate);
+
+                        Glide.with(CreateGroupFragment.this)
+                                .load(bitmapRotate)
+                                .centerCrop()
+                                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                .into(mGroupImg);
 
 //                            Saving image to mobile internal memory for sometime
                         String root = getActivity().getApplicationContext().getFilesDir().toString();

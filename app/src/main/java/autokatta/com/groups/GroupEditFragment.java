@@ -4,7 +4,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Bundle;
@@ -48,7 +47,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static android.app.Activity.RESULT_OK;
-import static autokatta.com.R.id.group_image;
 
 /**
  * Created by ak-005 on 3/4/17.
@@ -76,7 +74,7 @@ public class GroupEditFragment extends Fragment implements RequestNotifier {
         getActivity().setTitle("Edit Group");
 
         group_name = (EditText) view.findViewById(R.id.group_name);
-        mGroup_image = (ImageView) view.findViewById(group_image);
+        mGroup_image = (ImageView) view.findViewById(R.id.group_image);
         BtnUpdateGroup = (Button) view.findViewById(R.id.BtnUpdateGroup);
         rdbPublic = (RadioButton) view.findViewById(R.id.radioPublic);
         rdbPrivate = (RadioButton) view.findViewById(R.id.radioPrivate);
@@ -191,7 +189,13 @@ public class GroupEditFragment extends Fragment implements RequestNotifier {
                 int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
                 mediaPath = cursor.getString(columnIndex);
                 // Set the Image in ImageView for Previewing the Media
-                mGroup_image.setImageBitmap(BitmapFactory.decodeFile(mediaPath));
+            //    mGroup_image.setImageBitmap(BitmapFactory.decodeFile(mediaPath));
+
+                Glide.with(getActivity())
+                        .load(mediaPath)
+                        .centerCrop()
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .into(mGroup_image);
                 cursor.close();
                 ///storage/emulated/0/DCIM/Camera/20170411_124425.jpg
                 lastWord = mediaPath.substring(mediaPath.lastIndexOf("/") + 1);
@@ -213,7 +217,13 @@ public class GroupEditFragment extends Fragment implements RequestNotifier {
                             bitmapRotate = bitmap;
                             bitmap.recycle();
                         }
-                        mGroup_image.setImageBitmap(bitmapRotate);
+                        //mGroup_image.setImageBitmap(bitmapRotate);
+
+                        Glide.with(getActivity())
+                                .load(bitmapRotate)
+                                .centerCrop()
+                                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                .into(mGroup_image);
 
 //                            Saving image to mobile internal memory for sometime
                         String root = getActivity().getApplicationContext().getFilesDir().toString();
