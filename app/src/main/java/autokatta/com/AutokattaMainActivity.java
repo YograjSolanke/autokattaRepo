@@ -2,15 +2,12 @@ package autokatta.com;
 
 import android.app.ActivityManager;
 import android.app.ActivityOptions;
-import android.content.ActivityNotFoundException;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.net.Uri;
@@ -39,8 +36,6 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
-import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
@@ -94,7 +89,7 @@ import retrofit2.Response;
 
 import static autokatta.com.broadcastreceiver.Receiver.IS_NETWORK_AVAILABLE;
 
-public class AutokattaMainActivity extends AppCompatActivity implements RequestNotifier {
+public class AutokattaMainActivity extends AppCompatActivity implements RequestNotifier, ForceUpdateChecker.OnUpdateNeededListener {
     private DrawerLayout mDrawerLayout;
     boolean isNetworkAvailable;
     SessionManagement session;
@@ -108,9 +103,9 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
     Locale myLocale;
     String mLanguage;
     AlertDialog alertDialog;
-    private static final String VERSION_KEY = "android_latest_version_code";
+   /* private static final String VERSION_KEY = "android_latest_version_code";
     private static final String NAME_KEY = "android_latest_version_name";
-    FirebaseRemoteConfig mFirebaseRemoteConfig;
+    FirebaseRemoteConfig mFirebaseRemoteConfig;*/
 
     private boolean isBackgroundServiceRunning(Class<?> serviceClass) {
         ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
@@ -131,8 +126,7 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
         setContentView(R.layout.activity_autokatta_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        //for checking is application update available or not...
-        initializeFirebase();
+        ForceUpdateChecker.with(this).onUpdateNeeded(this).check();
         if (getSupportActionBar() != null) {
             getSupportActionBar().setElevation(0);
             getSupportActionBar().setHomeButtonEnabled(true);
@@ -550,63 +544,6 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
         });
     }
 
-    public void initializeFirebase() {
-        // Get Remote Config instance.
-        // [START get_remote_config_instance]
-        mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
-        // [END get_remote_config_instance]
-        // Create a Remote Config Setting to enable developer mode, which you can use to increase
-        // the number of fetches available per hour during development. See Best Practices in the
-        // README for more information.
-        // [START enable_dev_mode]
-        FirebaseRemoteConfigSettings configSettings = new FirebaseRemoteConfigSettings.Builder()
-                .setDeveloperModeEnabled(BuildConfig.DEBUG)
-                .build();
-        mFirebaseRemoteConfig.setConfigSettings(configSettings);
-        // [END enable_dev_mode]
-
-        // Set default Remote Config parameter values. An app uses the in-app default values, and
-        // when you need to adjust those defaults, you set an updated value for only the values you
-        // want to change in the Firebase console. See Best Practices in the README for more
-        // information.
-        // [START set_default_values]
-        mFirebaseRemoteConfig.setDefaults(R.xml.remote_config_defaults);
-        // [END set_default_values]
-        try {
-            PackageInfo pInfo = this.getPackageManager().getPackageInfo(getPackageName(), 0);
-            int currentAppVersionCode = pInfo.versionCode;
-            int playStoreVersionCode = Integer.parseInt(mFirebaseRemoteConfig.getString(VERSION_KEY));
-            if (playStoreVersionCode > currentAppVersionCode) {
-                Log.i("Version,", "->" + playStoreVersionCode);
-                Log.i("cVersion", "->" + currentAppVersionCode);
-                new AlertDialog.Builder(AutokattaMainActivity.this)
-                        .setTitle("New version is available!!!")
-                        .setMessage("Update" + " " + mFirebaseRemoteConfig.getString(NAME_KEY) + " " + getString(R.string.app_update))
-                        .setPositiveButton("UPDATE", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                final String appPackageName = getPackageName(); // getPackageName() from Context or Activity object
-                                try {
-                                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
-                                } catch (ActivityNotFoundException anfe) {
-                                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
-                                }
-                                finish();
-                            }
-                        })
-                        .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                                System.exit(0);
-                            }
-                        }).setIcon(R.drawable.logo48x48).show();
-            }
-        } catch (PackageManager.NameNotFoundException nm) {
-            nm.printStackTrace();
-        }
-    }
-
     /*
     change language
      */
@@ -1007,5 +944,32 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
         } else {
             super.onActivityResult(requestCode, resultCode, data);
         }
+    }
+
+    @Override
+    public void onUpdateNeeded(final String updateUrl) {
+        AlertDialog dialog = new AlertDialog.Builder(this)
+                .setTitle("New version available")
+                .setMessage(getString(R.string.app_update))
+                .setPositiveButton("Update",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                redirectStore(updateUrl);
+                            }
+                        }).setNegativeButton("No, thanks",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                finish();
+                            }
+                        }).create();
+        dialog.show();
+    }
+
+    private void redirectStore(String updateUrl) {
+        final Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(updateUrl));
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
     }
 }

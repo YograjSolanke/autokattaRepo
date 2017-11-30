@@ -2,10 +2,10 @@
 <defaultsMap>
     <entry>
         <key>android_latest_version_code</key>
-        <value>4</value>
+        <value>6</value>
     </entry>
     <entry>
         <key>android_latest_version_name</key>
-        <value>1.3</value>
+        <value>1.4.2</value>
     </entry>
 </defaultsMap>
