@@ -1,6 +1,5 @@
 package autokatta.com.groups;
 
-import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -31,7 +30,6 @@ import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.GetRegisteredContactsResponse;
-import autokatta.com.view.GroupsActivity;
 import retrofit2.Response;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -115,72 +113,7 @@ public class GroupContactFragment extends Fragment implements RequestNotifier {
 
                     }
                 }
-
-                if (allcontacts.equalsIgnoreCase("")) {
-                    //  showMessage(getActivity(), "Please add atleast one contact");
-                    CustomToast.customToast(getActivity(), "Please add atleast one contact");
-                    flag = false;
-
-                } else if (allcontacts.contains(mContact)) {
-                    CustomToast.customToast(getActivity(), "Please check the number");
-                    // showMessage(getActivity(), "Please check the number");
-                    flag = false;
-                }
-
-                //Existing Group
-               /* else if (call.equalsIgnoreCase("existGroup")) {
-                    //For Group Which Doesn't Have Any Contact No In WebService
-                    if (cntlist.size() == 0) {
-                        flag = true;
-                    }
-
-                    //If Group Already Contains Selected Contact
-                    else {
-                        for (int i = 0; i < GetList.size(); i++) {
-                            String no = GetList.get(i);
-                            String[] parts = allcontacts.split(",");
-                            for (int j = 0; j < parts.length; j++) {
-                                if (parts[j].contains(no)) {
-                                    CustomToast.customToast(getActivity(), "Sorry..Number Is Already added in Group");
-                                    // showMessage(getActivity(),  "Sorry..No Is Already added in Group");
-
-                                    flag = false;
-                                }
-                            }
-                        }
-                    }
-                }else if(call.equalsIgnoreCase("request"))
-                    {
-                        //For Group Which Doesn't Have Any Contact No In WebService
-                        if (cntlist.size() == 0) {
-                            flag = true;
-                        }
-
-                        //If Group Already Contains Selected Contact
-                        else {
-                            for (int i = 0; i < GetList.size(); i++) {
-                                String no = GetList.get(i);
-                                String[] parts = allcontacts.split(",");
-                                for (int j = 0; j < parts.length; j++) {
-                                    if (parts[j].contains(no)) {
-                                        CustomToast.customToast(getActivity(), "Sorry..Number Is Already added in Group");
-                                        // showMessage(getActivity(),  "Sorry..No Is Already added in Group");
-
-                                        flag = false;
-                                    }
-                                }
-                            }
-                        }
-                }*/
-                if (!flag) {
-                    Intent intent = new Intent(getActivity(), GroupsActivity.class);
-                    intent.putExtra("grouptype", "MyGroup");
-                    intent.putExtra("className", "GroupContactFragment");
-                    intent.putExtra("bundle_GroupId", mGroup_id);
-                    intent.putExtra("bundle_GroupName", bundle_GroupName);
-                    getActivity().startActivity(intent);
-
-                } else if (flag && !call.equalsIgnoreCase("request")) {
+                if (!call.equalsIgnoreCase("request")) {
                     if (call.equalsIgnoreCase("newGroup")) {
                         allcontacts = allcontacts + "," + mContact;
                     }
@@ -193,7 +126,7 @@ public class GroupContactFragment extends Fragment implements RequestNotifier {
                             mApiCall.Like(mContact, receiver_contact, "3", 0, mGroup_id, 0, 0, 0, 0, 0);
                         }
                     }
-                }else if (flag && call.equalsIgnoreCase("request"))
+                } else if (call.equalsIgnoreCase("request"))
                 {
                     /*Request to add contact*/
                     mApiCall.requestToAddMember(mGroup_id, allcontacts);
@@ -242,8 +175,8 @@ public class GroupContactFragment extends Fragment implements RequestNotifier {
 
             GetRegisteredContactsResponse mGetRegisteredContactsResponse = (GetRegisteredContactsResponse) response.body();
             for (GetRegisteredContactsResponse.Success contactRegistered : mGetRegisteredContactsResponse.getSuccess()) {
-                contactRegistered.setContact(contactRegistered.getContact());
-                contactRegistered.setUsername(contactRegistered.getUsername());
+//                contactRegistered.setContact(contactRegistered.getContact());
+//                contactRegistered.setUsername(contactRegistered.getUsername());
                 String contact = contactRegistered.getContact();
                 if (contact.length() > 10)
                     contact = contact.substring(contact.length() - 10);

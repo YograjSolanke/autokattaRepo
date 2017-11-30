@@ -35,6 +35,7 @@
             android:background="@color/background"
             android:padding="5dp"
             android:selectAllOnFocus="true"
+            android:visibility="gone"
             android:text="Add"
             android:textColor="@android:color/white"
             android:textSize="15sp" />

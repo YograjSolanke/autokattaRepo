@@ -139,6 +139,7 @@ public class MemberListFragment extends Fragment implements SwipeRefreshLayout.O
                             if (getActivity() != null) {
                                 people = getActivity().getContentResolver().query(uri, projection, null, null, null);
                             }
+                            assert people != null;
                             int indexName = people.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME);
                             int indexNumber = people.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
 
@@ -168,6 +169,7 @@ public class MemberListFragment extends Fragment implements SwipeRefreshLayout.O
                                 success.setUsername("Unknown");
                                 ContactNoList.add(success.getContact());
                             }
+                            people.close();
                         } catch (Exception e) {
                             e.printStackTrace();
                         }

@@ -51,7 +51,6 @@ import retrofit2.Response;
 public class MemberListRefreshAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements RequestNotifier {
     private Activity mActivity;
     private List<GetGroupContactsResponse.Success> mItemList = new ArrayList<>();
-    private List<Boolean> mCheckList = new ArrayList<>();
     private String mCallFrom;
     private String bundle_GroupName;
     private String myContact;
@@ -69,7 +68,9 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<RecyclerView.
             super(itemView);
             mName = (TextView) itemView.findViewById(R.id.names);
             mContact = (TextView) itemView.findViewById(R.id.contact);
+            mContact.setVisibility(View.GONE);
             mAdmin = (TextView) itemView.findViewById(R.id.txtadmin);
+            mAdmin.setVisibility(View.GONE);
             mVehicleCount = (TextView) itemView.findViewById(R.id.vehicle_cnt);
             mCall = (ImageView) itemView.findViewById(R.id.cal_cnt);
             mProfilePic = (ImageView) itemView.findViewById(R.id.pro_pic);
@@ -89,8 +90,8 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<RecyclerView.
         this.bundle_GroupName = bundle_GroupName;
         mApiCall = new ApiCall(mActivity, this);
         mTestConnection = new ConnectionDetector(mActivity);
-        setHasStableIds(true);
-        mCheckList.clear();
+
+
     }
 
     @Override
@@ -109,8 +110,15 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<RecyclerView.
         myContact = mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference),
                 Context.MODE_PRIVATE).getString("loginContact", "");
         holder.mName.setText(mItemList.get(holder.getAdapterPosition()).getUsername());
-        holder.mContact.setText(mItemList.get(holder.getAdapterPosition()).getContact());
+        if (mItemList.get(holder.getAdapterPosition()).getUsername().equalsIgnoreCase("Unknown")) {
+            holder.mContact.setText(mItemList.get(holder.getAdapterPosition()).getContact());
+            holder.mContact.setVisibility(View.VISIBLE);
+        }
         holder.mAdmin.setText(mItemList.get(holder.getAdapterPosition()).getMember());
+        if (mItemList.get(holder.getAdapterPosition()).getMember().equalsIgnoreCase("Admin")) {
+
+            holder.mAdmin.setVisibility(View.VISIBLE);
+        }
         holder.mVehicleCount.setText(String.valueOf(mItemList.get(holder.getAdapterPosition()).getVehiclecount()));
         holder.mproductcnt.setText(String.valueOf(mItemList.get(holder.getAdapterPosition()).getProductcount()));
         holder.mServicecnt.setText(String.valueOf(mItemList.get(holder.getAdapterPosition()).getServicecount()));
@@ -130,94 +138,23 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<RecyclerView.
                     .into(holder.mProfilePic);
         }
 
-        if (holder.mAdmin.getText().toString().equals("member")) {
-            holder.mAdmin.setVisibility(View.GONE);
-        }
-        if (holder.mContact.getText().toString().equals(mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference),
+        if (mItemList.get(holder.getAdapterPosition()).getContact().equals(mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference),
                 Context.MODE_PRIVATE).getString("loginContact", ""))) {
             holder.mCall.setVisibility(View.GONE);
+            holder.mName.setText(mActivity.getString(R.string.You));
+            holder.mOption.setText(mActivity.getString(R.string.Leave));
         }
 
-        /*String groupName = mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE)
-                .getString("group_type", "");*/
-        if (!mItemList.get(holder.getAdapterPosition()).getUsername().equals("Unknown")) {
-            //If no is in mobile contact, number is invisible
-            holder.mContact.setVisibility(View.GONE);
-            //If type is admin
-            if (mItemList.get(holder.getAdapterPosition()).getMember().equals("Admin")) {
-                //if MyGroups
-                if (mCallFrom.equalsIgnoreCase("MyGroups") && mItemList.get(holder.getAdapterPosition()).getContact()
-                        .equalsIgnoreCase(myContact)) {
-                    holder.mName.setText(mActivity.getString(R.string.You));
-                    holder.mContact.setVisibility(View.GONE);
-                    holder.mOption.setVisibility(View.VISIBLE);
-                }
-                //if Other Groups
-                else if (!mCallFrom.equalsIgnoreCase("MyGroups")) {
-                    if (mItemList.get(holder.getAdapterPosition()).getContact()
-                            .equalsIgnoreCase(myContact)) {
-                        holder.mName.setText(mActivity.getString(R.string.You));
-                        holder.mContact.setVisibility(View.GONE);
-                    } else
-                        holder.mName.setText(mItemList.get(holder.getAdapterPosition()).getUsername());
-                }
-            }
-            if (mItemList.get(holder.getAdapterPosition()).getContact().equalsIgnoreCase(myContact)) {
-                holder.mName.setText(mActivity.getString(R.string.You));
-                holder.mContact.setVisibility(View.GONE);
+        if (!mCallFrom.equalsIgnoreCase("MyGroups") && !mItemList.get(holder.getAdapterPosition()).getContact().equalsIgnoreCase(myContact)) {
 
-            }
-        } else if (mItemList.get(holder.getAdapterPosition()).getUsername().equals("Unknown")) {
-            if (mItemList.get(holder.getAdapterPosition()).getMember().equals("Admin")) {
-                //If MyGroups
-                if (mCallFrom.equalsIgnoreCase("MyGroups") && mItemList.get(holder.getAdapterPosition()).getContact()
-                        .equalsIgnoreCase(myContact)) {
-                    holder.mName.setText(mActivity.getString(R.string.You));
-                    holder.mContact.setVisibility(View.GONE);
-                    holder.mOption.setVisibility(View.VISIBLE);
-                }
-                //If OtherGroup
-                else if (!mCallFrom.equalsIgnoreCase("MyGroups")) {
-                    if (mItemList.get(holder.getAdapterPosition()).getContact().equalsIgnoreCase(myContact)) {
-                        holder.mName.setText(mActivity.getString(R.string.You));
-                        holder.mContact.setVisibility(View.GONE);
-                    } else
-                        holder.mName.setText(mItemList.get(holder.getAdapterPosition()).getUsername());
-                }
-            } else
-                holder.mAdmin.setVisibility(View.GONE);
+            holder.mOption.setVisibility(View.GONE);
+        } else if (mCallFrom.equalsIgnoreCase("MyGroups") &&
+                mItemList.get(holder.getAdapterPosition()).getMember().equals("Admin")
+                && !mItemList.get(holder.getAdapterPosition()).getContact().equalsIgnoreCase(myContact)) {
+            holder.mOption.setVisibility(View.GONE);
 
-            if (mItemList.get(holder.getAdapterPosition()).getContact().equalsIgnoreCase(myContact)) {
-                holder.mName.setText(mActivity.getString(R.string.You));
-                holder.mContact.setVisibility(View.GONE);
-            }
         }
 
-        if (mCallFrom != null) {
-            if (!mCallFrom.equals("MyGroups")) {
-                if (holder.mName.getText().toString().equals("You") && mItemList.get(holder.getAdapterPosition()).getMember().equals("member")) {
-                    holder.mOption.setText(mActivity.getString(R.string.Leave));
-                } else {
-                    holder.mOption.setVisibility(View.GONE);
-                }
-            }
-            if (mCallFrom.equals("MyGroups")) {
-                if (holder.mName.getText().toString().equals("You")) {
-                    holder.mOption.setText(mActivity.getString(R.string.Leave));
-                } else if (!holder.mName.getText().toString().equals("You") && mItemList.get(holder.getAdapterPosition()).getMember().equals("Admin")) {
-                    holder.mOption.setVisibility(View.GONE);
-                } else {
-                    holder.mOption.setText(mActivity.getString(R.string.Options));
-                }
-            }
-        }
-        /*Requested Member check if admin*/
-        if (mItemList.get(holder.getAdapterPosition()).getContact().equalsIgnoreCase(myContact) &&
-                mItemList.get(holder.getAdapterPosition()).getMember().equalsIgnoreCase("Admin")) {
-            mCheckList.add(true);
-        } else {
-            mCheckList.add(false);
-        }
 
         holder.mCall.setOnClickListener(new OnClickListener() {
             @Override
@@ -231,7 +168,7 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<RecyclerView.
             public void onClick(View v) {
                 /*member details tabs*/
                 Bundle bundle = new Bundle();
-                bundle.putString("Rcontact", holder.mContact.getText().toString());
+                bundle.putString("Rcontact", mItemList.get(holder.getAdapterPosition()).getContact());
                 bundle.putString("grouptype", mCallFrom);
                 bundle.putString("className", "MemberListRefreshAdapter");
                 bundle.putInt("bundle_GroupId", mGroupId);
@@ -253,15 +190,15 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<RecyclerView.
         holder.mProfilePic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (holder.mContact.getText().toString().equals(myContact)) {
+                if (mItemList.get(holder.getAdapterPosition()).getContact().equals(myContact)) {
                     Intent i = new Intent(mActivity, UserProfile.class);
                     mActivity.startActivity(i);
                     Log.e("You", "->");
                 } else {
                     Bundle bundle = new Bundle();
-                    bundle.putString("contactOtherProfile", holder.mContact.getText().toString());
+                    bundle.putString("contactOtherProfile", mItemList.get(holder.getAdapterPosition()).getContact());
                     bundle.putString("action", "otherProfile");
-                    Log.i("Contact", "->" + holder.mContact.getText().toString());
+                    Log.i("Contact", "->" + mItemList.get(holder.getAdapterPosition()).getContact());
                     Intent mOtherProfile = new Intent(mActivity, OtherProfile.class);
                     mOtherProfile.putExtras(bundle);
                     mActivity.startActivity(mOtherProfile);
@@ -304,7 +241,7 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<RecyclerView.
                                     .setMessage("Are you sure ?")
                                     .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int which) {
-                                            rmContact = holder.mContact.getText().toString();
+                                            rmContact = mItemList.get(holder.getAdapterPosition()).getContact();
                                             if (mCallFrom.equals("MyGroups")) {
                                                 if (rmContact.equals(myContact)) {
                                                     if (mItemList.size() > 1) {
@@ -324,10 +261,10 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<RecyclerView.
                                             // if(!nextContact.equals("")||!nextContact.equals("null")||!nextContact.equals(null))
                                             //new DeleteMembers().execute();
                                             DeleteMembers(holder.getAdapterPosition(), nextContact, rmContact);
-//                                            mItemList.remove(holder.getAdapterPosition());
-//                                            notifyItemRemoved(holder.getAdapterPosition());
-//                                            notifyItemRangeChanged(holder.getAdapterPosition(), mItemList.size());
-//                                            notifyDataSetChanged();
+                                            mItemList.remove(holder.getAdapterPosition());
+                                            notifyItemRemoved(holder.getAdapterPosition());
+                                            notifyItemRangeChanged(holder.getAdapterPosition(), mItemList.size());
+                                            //  notifyDataSetChanged();
 
                                         }
                                     })
@@ -346,7 +283,7 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<RecyclerView.
                                     .setMessage("Are you sure want to make admin?")
                                     .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int which) {
-                                            rmContact = holder.mContact.getText().toString();
+                                            rmContact = mItemList.get(holder.getAdapterPosition()).getContact();
                                             makeAdmin(rmContact, finalAction);
                                             holder.mOption.setVisibility(View.GONE);
                                             holder.mAdmin.setText(mActivity.getString(R.string.admin));
@@ -375,8 +312,8 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<RecyclerView.
         if (mTestConnection.isConnectedToInternet()) {
             Log.i("next", "->" + nextContact);
             mApiCall.DeleteGroupMembers(mGroupId, mCallFrom, rmContact, myContact, nextContact, String.valueOf(mItemList.size()));
-            mItemList.remove(position);
-            notifyDataSetChanged();
+//            mItemList.remove(position);
+//            notifyDataSetChanged();
 
         } else {
             CustomToast.customToast(mActivity, mActivity.getString(R.string.no_internet));

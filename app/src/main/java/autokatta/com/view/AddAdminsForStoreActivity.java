@@ -175,7 +175,7 @@ public class AddAdminsForStoreActivity extends AppCompatActivity implements Requ
                     }
                 }
 
-                if (flag == false) {
+                if (!flag) {
 
                     if (!finaladmins.equals("")) {
 
