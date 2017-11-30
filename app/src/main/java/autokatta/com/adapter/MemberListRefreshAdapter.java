@@ -108,20 +108,22 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<RecyclerView.
 
         myContact = mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference),
                 Context.MODE_PRIVATE).getString("loginContact", "");
-        holder.mName.setText(mItemList.get(position).getUsername());
-        holder.mContact.setText(mItemList.get(position).getContact());
-        holder.mAdmin.setText(mItemList.get(position).getMember());
-        holder.mVehicleCount.setText(String.valueOf(mItemList.get(position).getVehiclecount()));
-        holder.mproductcnt.setText(String.valueOf(mItemList.get(position).getProductcount()));
-        holder.mServicecnt.setText(String.valueOf(mItemList.get(position).getServicecount()));
+        holder.mName.setText(mItemList.get(holder.getAdapterPosition()).getUsername());
+        holder.mContact.setText(mItemList.get(holder.getAdapterPosition()).getContact());
+        holder.mAdmin.setText(mItemList.get(holder.getAdapterPosition()).getMember());
+        holder.mVehicleCount.setText(String.valueOf(mItemList.get(holder.getAdapterPosition()).getVehiclecount()));
+        holder.mproductcnt.setText(String.valueOf(mItemList.get(holder.getAdapterPosition()).getProductcount()));
+        holder.mServicecnt.setText(String.valueOf(mItemList.get(holder.getAdapterPosition()).getServicecount()));
 
         //Set Profile Photo
-        if (mItemList.get(position).getDp() == null || mItemList.get(position).getDp().equalsIgnoreCase("") || mItemList.get(position).getDp().equalsIgnoreCase(null)
-                || mItemList.get(position).getDp().equalsIgnoreCase("null")) {
+        if (mItemList.get(holder.getAdapterPosition()).getDp() == null ||
+                mItemList.get(holder.getAdapterPosition()).getDp().equalsIgnoreCase("") ||
+                mItemList.get(holder.getAdapterPosition()).getDp().equalsIgnoreCase(null)
+                || mItemList.get(holder.getAdapterPosition()).getDp().equalsIgnoreCase("null")) {
             holder.mProfilePic.setBackgroundResource(R.drawable.logo48x48);
         } else {
             Glide.with(mActivity)
-                    .load(mActivity.getString(R.string.base_image_url) + mItemList.get(position).getDp())
+                    .load(mActivity.getString(R.string.base_image_url) + mItemList.get(holder.getAdapterPosition()).getDp())
                     .bitmapTransform(new CropCircleTransformation(mActivity)) //To display image in Circular form.
                     .diskCacheStrategy(DiskCacheStrategy.ALL) //For caching diff versions of image.
                     .override(110, 100)
@@ -138,13 +140,13 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<RecyclerView.
 
         /*String groupName = mActivity.getSharedPreferences(mActivity.getString(R.string.my_preference), Context.MODE_PRIVATE)
                 .getString("group_type", "");*/
-        if (!mItemList.get(position).getUsername().equals("Unknown")) {
+        if (!mItemList.get(holder.getAdapterPosition()).getUsername().equals("Unknown")) {
             //If no is in mobile contact, number is invisible
             holder.mContact.setVisibility(View.GONE);
             //If type is admin
-            if (mItemList.get(position).getMember().equals("Admin")) {
+            if (mItemList.get(holder.getAdapterPosition()).getMember().equals("Admin")) {
                 //if MyGroups
-                if (mCallFrom.equalsIgnoreCase("MyGroups") && mItemList.get(position).getContact()
+                if (mCallFrom.equalsIgnoreCase("MyGroups") && mItemList.get(holder.getAdapterPosition()).getContact()
                         .equalsIgnoreCase(myContact)) {
                     holder.mName.setText(mActivity.getString(R.string.You));
                     holder.mContact.setVisibility(View.GONE);
@@ -152,23 +154,23 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<RecyclerView.
                 }
                 //if Other Groups
                 else if (!mCallFrom.equalsIgnoreCase("MyGroups")) {
-                    if (mItemList.get(position).getContact()
+                    if (mItemList.get(holder.getAdapterPosition()).getContact()
                             .equalsIgnoreCase(myContact)) {
                         holder.mName.setText(mActivity.getString(R.string.You));
                         holder.mContact.setVisibility(View.GONE);
                     } else
-                        holder.mName.setText(mItemList.get(position).getUsername());
+                        holder.mName.setText(mItemList.get(holder.getAdapterPosition()).getUsername());
                 }
             }
-            if (mItemList.get(position).getContact().equalsIgnoreCase(myContact)) {
+            if (mItemList.get(holder.getAdapterPosition()).getContact().equalsIgnoreCase(myContact)) {
                 holder.mName.setText(mActivity.getString(R.string.You));
                 holder.mContact.setVisibility(View.GONE);
 
             }
-        } else if (mItemList.get(position).getUsername().equals("Unknown")) {
-            if (mItemList.get(position).getMember().equals("Admin")) {
+        } else if (mItemList.get(holder.getAdapterPosition()).getUsername().equals("Unknown")) {
+            if (mItemList.get(holder.getAdapterPosition()).getMember().equals("Admin")) {
                 //If MyGroups
-                if (mCallFrom.equalsIgnoreCase("MyGroups") && mItemList.get(position).getContact()
+                if (mCallFrom.equalsIgnoreCase("MyGroups") && mItemList.get(holder.getAdapterPosition()).getContact()
                         .equalsIgnoreCase(myContact)) {
                     holder.mName.setText(mActivity.getString(R.string.You));
                     holder.mContact.setVisibility(View.GONE);
@@ -176,16 +178,16 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<RecyclerView.
                 }
                 //If OtherGroup
                 else if (!mCallFrom.equalsIgnoreCase("MyGroups")) {
-                    if (mItemList.get(position).getContact().equalsIgnoreCase(myContact)) {
+                    if (mItemList.get(holder.getAdapterPosition()).getContact().equalsIgnoreCase(myContact)) {
                         holder.mName.setText(mActivity.getString(R.string.You));
                         holder.mContact.setVisibility(View.GONE);
                     } else
-                        holder.mName.setText(mItemList.get(position).getUsername());
+                        holder.mName.setText(mItemList.get(holder.getAdapterPosition()).getUsername());
                 }
             } else
                 holder.mAdmin.setVisibility(View.GONE);
 
-            if (mItemList.get(position).getContact().equalsIgnoreCase(myContact)) {
+            if (mItemList.get(holder.getAdapterPosition()).getContact().equalsIgnoreCase(myContact)) {
                 holder.mName.setText(mActivity.getString(R.string.You));
                 holder.mContact.setVisibility(View.GONE);
             }
@@ -193,7 +195,7 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<RecyclerView.
 
         if (mCallFrom != null) {
             if (!mCallFrom.equals("MyGroups")) {
-                if (holder.mName.getText().toString().equals("You") && mItemList.get(position).getMember().equals("member")) {
+                if (holder.mName.getText().toString().equals("You") && mItemList.get(holder.getAdapterPosition()).getMember().equals("member")) {
                     holder.mOption.setText(mActivity.getString(R.string.Leave));
                 } else {
                     holder.mOption.setVisibility(View.GONE);
@@ -202,7 +204,7 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<RecyclerView.
             if (mCallFrom.equals("MyGroups")) {
                 if (holder.mName.getText().toString().equals("You")) {
                     holder.mOption.setText(mActivity.getString(R.string.Leave));
-                } else if (!holder.mName.getText().toString().equals("You") && mItemList.get(position).getMember().equals("Admin")) {
+                } else if (!holder.mName.getText().toString().equals("You") && mItemList.get(holder.getAdapterPosition()).getMember().equals("Admin")) {
                     holder.mOption.setVisibility(View.GONE);
                 } else {
                     holder.mOption.setText(mActivity.getString(R.string.Options));
@@ -210,7 +212,8 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<RecyclerView.
             }
         }
         /*Requested Member check if admin*/
-        if (mItemList.get(position).getContact().equalsIgnoreCase(myContact) && mItemList.get(position).getMember().equalsIgnoreCase("Admin")) {
+        if (mItemList.get(holder.getAdapterPosition()).getContact().equalsIgnoreCase(myContact) &&
+                mItemList.get(holder.getAdapterPosition()).getMember().equalsIgnoreCase("Admin")) {
             mCheckList.add(true);
         } else {
             mCheckList.add(false);
@@ -315,7 +318,6 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<RecyclerView.
                                                     }
 
 
-
                                                 }
                                             }
 
@@ -326,8 +328,6 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<RecyclerView.
 //                                            notifyItemRemoved(holder.getAdapterPosition());
 //                                            notifyItemRangeChanged(holder.getAdapterPosition(), mItemList.size());
 //                                            notifyDataSetChanged();
-//                                else
-//                                    Snackbar.make(v,"please delete group",Snackbar.LENGTH_SHORT).show();
 
                                         }
                                     })
