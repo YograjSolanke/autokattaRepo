@@ -49,7 +49,7 @@ import static android.app.Activity.RESULT_OK;
 import static android.content.Context.MODE_PRIVATE;
 
 /**
- * Created by ak-005 on 20/4/17.
+ * Created by ak-005 on 20/4/17
  */
 
 public class CreateGroupFragment extends Fragment implements View.OnClickListener, RequestNotifier {
@@ -76,7 +76,6 @@ public class CreateGroupFragment extends Fragment implements View.OnClickListene
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mCreateGroup = inflater.inflate(R.layout.create_group_fragment, container, false);
-
         getActivity().setTitle("Create Group");
         mGroupTitle = (EditText) mCreateGroup.findViewById(R.id.group_title);
         mAddmember = (Button) mCreateGroup.findViewById(R.id.BtnAddMember);
@@ -84,7 +83,6 @@ public class CreateGroupFragment extends Fragment implements View.OnClickListene
         rdbPublic = (RadioButton) mCreateGroup.findViewById(R.id.radioPublic);
         rdbPrivate = (RadioButton) mCreateGroup.findViewById(R.id.radioPrivate);
         mContact = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "");
-
         mApiCall = new ApiCall(getActivity(), this);
         mGroupImg.setOnClickListener(this);
         mAddmember.setOnClickListener(this);
@@ -93,7 +91,7 @@ public class CreateGroupFragment extends Fragment implements View.OnClickListene
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 if (mGroupTitle.getText().toString().trim().length() > 0 && mGroupTitle.getText().toString().trim().startsWith(" ")) {
-                    //Toast.makeText(getActivity(), " Space ", Toast.LENGTH_SHORT).show();
+
                 }
             }
 
@@ -174,21 +172,15 @@ public class CreateGroupFragment extends Fragment implements View.OnClickListene
                 int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
                 mediaPath = cursor.getString(columnIndex);
                 // Set the Image in ImageView for Previewing the Media
-
               //  mGroupImg.setImageBitmap(BitmapFactory.decodeFile(mediaPath));//This code was used to set image
-
                 Glide.with(CreateGroupFragment.this)
                         .load(mediaPath)
                         .centerCrop()
                         .diskCacheStrategy(DiskCacheStrategy.ALL)
                         .into(mGroupImg);
-
                 cursor.close();
-                ///storage/emulated/0/DCIM/Camera/20170411_124425.jpg
                 lastWord = mediaPath.substring(mediaPath.lastIndexOf("/") + 1);
                 Log.i("Media", "path" + lastWord);
-                //uploadImage(mediaPath);
-
             } else if (requestCode == 101) {
                 if (resultCode == RESULT_OK) {
                     if (data != null) {
@@ -204,23 +196,17 @@ public class CreateGroupFragment extends Fragment implements View.OnClickListene
                             bitmapRotate = bitmap;
                             bitmap.recycle();
                         }
-                   //     mGroupImg.setImageBitmap(bitmapRotate);
-
                         Glide.with(CreateGroupFragment.this)
                                 .load(bitmapRotate)
                                 .centerCrop()
                                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                                 .into(mGroupImg);
-
-//                            Saving image to mobile internal memory for sometime
                         String root = getActivity().getApplicationContext().getFilesDir().toString();
                         File myDir = new File(root + "/androidlift");
                         myDir.mkdirs();
-
                         Random generator = new Random();
                         int n = 10000;
                         n = generator.nextInt(n);
-
 //                            Give the file name that u want
                         fname = "Autokatta" + n + ".jpg";
 
@@ -243,14 +229,8 @@ public class CreateGroupFragment extends Fragment implements View.OnClickListene
             sourceUri.compress(Bitmap.CompressFormat.JPEG, 60, out);
             out.flush();
             out.close();
-            /*if (cd.isConnectingToInternet()) {*/
             lastWord = mediaPath.substring(mediaPath.lastIndexOf("/") + 1);
-            //uploadImage(mediaPath);
             Log.i("image", "path" + lastWord);
-            //      /data/data/autokatta.com/files/androidlift/Autokatta9460.jpg
-            /*} else {
-                Toast.makeText(MainActivity.this, "No Internet Connection..", Toast.LENGTH_LONG).show();
-            }*/
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -265,9 +245,6 @@ public class CreateGroupFragment extends Fragment implements View.OnClickListene
     }
 
     private void uploadImage(String picturePath) {
-        Log.i("PAth", "->" + picturePath);
-        //    /storage/emulated/0/DCIM/Camera/20170411_124425.jpg
-        //    /data/data/autokatta.com/files/androidlift/Autokatta9460.jpg
         File file = new File(picturePath);
         // Parsing any Media type file
         RequestBody requestBody = RequestBody.create(MediaType.parse("*/*"), file);
@@ -337,7 +314,6 @@ public class CreateGroupFragment extends Fragment implements View.OnClickListene
             if (!mediaPath.equals("")) {
                 uploadImage(mediaPath);
             }
-
             Bundle b1 = getArguments();
             if (b1 != null) {
                 classname = b1.getString("classname");
@@ -347,7 +323,6 @@ public class CreateGroupFragment extends Fragment implements View.OnClickListene
             mGroupTitle.getText().clear();
             GroupContactFragment fragment2 = new GroupContactFragment();    // Call Another Fragment
             fragment2.setArguments(b);   // send values to another fragment
-
             if (classname.equalsIgnoreCase("uploadvehicle")) {
                 getActivity().getSupportFragmentManager().beginTransaction()
                         .replace(R.id.vehicle_upload_container, fragment2, "groupContactFragment")
@@ -359,7 +334,6 @@ public class CreateGroupFragment extends Fragment implements View.OnClickListene
                         .addToBackStack("groupContactFragment")
                         .commit();
             }
-
         } else {
             CustomToast.customToast(getActivity(), getString(R.string._404_));
         }

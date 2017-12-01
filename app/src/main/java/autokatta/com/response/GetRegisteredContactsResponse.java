@@ -1,9 +1,6 @@
 package autokatta.com.response;
 
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
-
-import java.util.List;
+import java.util.Comparator;
 
 /**
  * Created by ak-005 on 31/3/17.
@@ -11,7 +8,41 @@ import java.util.List;
 
 public class GetRegisteredContactsResponse {
 
-    @SerializedName("Success")
+    private String contact;
+    private String username;
+
+    public String getContact() {
+        return contact;
+    }
+
+    public void setContact(String contact) {
+        this.contact = contact;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    /*Comparator for sorting the list by Student Name*/
+    public static Comparator<GetRegisteredContactsResponse> StuNameComparator = new Comparator<GetRegisteredContactsResponse>() {
+
+        public int compare(GetRegisteredContactsResponse s1, GetRegisteredContactsResponse s2) {
+            String StudentName1 = s1.username.toUpperCase();
+            String StudentName2 = s2.username.toUpperCase();
+
+            //ascending order
+            // return StudentName1.compareTo(StudentName2);
+
+            //descending order
+            return StudentName2.compareTo(StudentName1);
+        }
+    };
+
+    /*@SerializedName("Success")
     @Expose
     private List<Success> success = null;
 
@@ -71,6 +102,6 @@ public class GetRegisteredContactsResponse {
             this.mystatus = mystatus;
         }
 
-    }
+    }*/
 
 }

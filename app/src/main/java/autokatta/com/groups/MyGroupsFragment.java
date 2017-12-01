@@ -68,7 +68,7 @@ public class MyGroupsFragment extends Fragment implements SwipeRefreshLayout.OnR
      */
     private void getData(String loginContact) {
         if (mTestConnection.isConnectedToInternet()) {
-            mApiCall.Groups(loginContact, 1, 10);
+            mApiCall.Groups(loginContact, 1, 500);
         } else {
             if (isAdded())
                 CustomToast.customToast(getActivity(), getString(R.string.no_internet));

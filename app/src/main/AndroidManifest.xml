@@ -582,12 +582,6 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".enquiries.AllEnquiryTabActivity"
-            android:configChanges="locale|keyboardHidden|orientation|layoutDirection|screenSize"
-            android:label="@string/title_activity_all_enquiry_tab"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize" />
-        <activity
             android:name=".other.AddTags"
             android:screenOrientation="portrait" />
         <activity

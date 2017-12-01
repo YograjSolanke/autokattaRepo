@@ -80,13 +80,10 @@ public class AutokattaContactFragment extends Fragment {
                     obj.setGroupNames(cursor.getString(cursor.getColumnIndex(DbConstants.groupNames)));
                     contactdata.add(obj);
                 }
-
-
             } while (cursor.moveToNext());
         }
         dbAdpter.CLOSE();
         Collections.sort(contactdata, Db_AutokattaContactResponse.StuNameComparator);
-
         autokattaContactAdapter = new AutokattaContactAdapter(getActivity(), contactdata);
         mRecyclerView.setAdapter(autokattaContactAdapter);
         autokattaContactAdapter.notifyDataSetChanged();
@@ -99,13 +96,11 @@ public class AutokattaContactFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
                 autokattaContactAdapter.getFilter().filter(s.toString());
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-
 
             }
         });

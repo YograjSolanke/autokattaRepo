@@ -21,10 +21,10 @@ import java.net.UnknownHostException;
 
 import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
-import autokatta.com.enquiries.AllEnquiryTabActivity;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.other.CustomToast;
+import autokatta.com.other.EnquiryActivity;
 import autokatta.com.response.StoreOldAdminResponse;
 import autokatta.com.response.StoreResponse;
 import retrofit2.Response;
@@ -95,29 +95,6 @@ public class StoreInfoActivity extends AppCompatActivity implements RequestNotif
                     Store_id = getIntent().getExtras().getInt("store_id");
                     getStoredata(myContact, Store_id);
                 }
-//
-//                scrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
-//                    @Override
-//                    public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-//
-//                        if (scrollY > oldScrollY) {
-//                            ((StoreViewActivity) getApplicationContext()).hideFloatingButton();
-//                            Log.e("Hide", "->");
-//                        }
-//                        if (scrollY < oldScrollY) {
-//                            ((StoreViewActivity) getApplicationContext()).showFloatingButton();
-//                            Log.e("show1", "->");
-//                        }
-//                        if (scrollY == 0) {
-//                            ((StoreViewActivity) getApplicationContext()).showFloatingButton();
-//                            Log.e("show2", "->");
-//                        }
-//                        if (scrollY == (v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight())) {
-//                            ((StoreViewActivity) getApplicationContext()).hideFloatingButton();
-//                            Log.e("show3", "->");
-//                        }
-//                    }
-//                });
             }
         });
         editStore.setOnClickListener(this);
@@ -130,10 +107,8 @@ public class StoreInfoActivity extends AppCompatActivity implements RequestNotif
             ApiCall mApiCall = new ApiCall(this, this);
             mApiCall.getStoreData(myContact, store_id);
             mApiCall.StoreAdmin(store_id);
-
         } else {
             CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
-            //errorMessage(mActivity, getString(R.string.no_internet));
         }
     }
 
@@ -174,11 +149,8 @@ public class StoreInfoActivity extends AppCompatActivity implements RequestNotif
                                 editStore.setVisibility(View.VISIBLE);
                                 addEnquiry.setVisibility(View.VISIBLE);
                                 ownerLayout.setVisibility(View.GONE);
-
                             } else {
                                 adminContactLayout.setVisibility(View.GONE);
-
-
                             }
                         }
                     } else {
@@ -191,20 +163,14 @@ public class StoreInfoActivity extends AppCompatActivity implements RequestNotif
                         for (StoreOldAdminResponse.Success success : adminResponse.getSuccess()) {
                             String admin = success.getAdmin();
                             String[] arr = admin.split(",");
-
                             for (int i = 0; i < arr.length; i++) {
                                 String[] join = arr[i].split("-");
                                 if (storeAdmins.equals(""))
                                     storeAdmins = join[2] + "-" + join[1];
                                 else
                                     storeAdmins = storeAdmins + "," + join[2] + "-" + join[1];
-
                             }
-
                         }
-
-
-                        System.out.println("alreadyadmin=" + storeAdmins);
                         adminContacts.setText(storeAdmins);
                     } else {
                         adminContacts.setText("No Data");
@@ -212,35 +178,25 @@ public class StoreInfoActivity extends AppCompatActivity implements RequestNotif
                 }
             } else {
                 dialog.dismiss();
-                //     CustomToast.customToast(getActivity(),getString(R.string._404));
             }
         } else {
             dialog.dismiss();
             CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
         }
-
     }
 
     @Override
     public void notifyError(Throwable error) {
         if (error instanceof SocketTimeoutException) {
-
             CustomToast.customToast(getApplicationContext(), getString(R.string._404_));
-            //   showMessage(getActivity(), getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
-            //  CustomToast.customToast(getActivity(),getString(R.string.no_response));
-            // showMessage(getActivity(), getString(R.string.no_response));
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            //CustomToast.customToast(getActivity(),getString(R.string.no_response));
-            //   showMessage(getActivity(), getString(R.string.no_response));
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
-
             CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
-            //   errorMessage(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
-
             CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
-            //   errorMessage(getActivity(), getString(R.string.no_internet));
         } else {
             Log.i("Check Class-"
                     , "StoreInfo");
@@ -269,7 +225,7 @@ public class StoreInfoActivity extends AppCompatActivity implements RequestNotif
 
             case R.id.enquiry:
                 ActivityOptions option = ActivityOptions.makeCustomAnimation(this, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
-                startActivity(new Intent(StoreInfoActivity.this, AllEnquiryTabActivity.class), option.toBundle());
+                startActivity(new Intent(StoreInfoActivity.this, EnquiryActivity.class), option.toBundle());
                 break;
         }
     }

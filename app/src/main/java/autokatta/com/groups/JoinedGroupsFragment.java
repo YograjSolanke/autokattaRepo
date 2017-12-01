@@ -69,7 +69,7 @@ public class JoinedGroupsFragment extends Fragment implements SwipeRefreshLayout
     private void getData(String loginContact) {
         if (mTestConnection.isConnectedToInternet()) {
             ApiCall mApiCall = new ApiCall(getActivity(), this);
-            mApiCall.profileGroup(loginContact, 1, 10);
+            mApiCall.profileGroup(loginContact, 1, 500);
         } else {
             CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         }
