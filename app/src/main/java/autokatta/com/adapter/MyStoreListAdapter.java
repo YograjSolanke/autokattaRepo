@@ -139,15 +139,13 @@ public class MyStoreListAdapter extends RecyclerView.Adapter<MyStoreListAdapter.
         holder.stworkdays.setText(mStoreList.get(position).getWorkingDays());
         holder.userRole.setText("Role :" + mStoreList.get(position).getRole());
         holder.storerating.setEnabled(false);
-        if (mStoreList.get(position).getRating() != 0)
-            holder.storerating.setRating(mStoreList.get(position).getRating());
+        if (mStoreList.get(position).getAverageRate() != 0)
+            holder.storerating.setRating(mStoreList.get(position).getAverageRate());
 
         LayerDrawable stars = (LayerDrawable) holder.storerating.getProgressDrawable();
         stars.getDrawable(2).setColorFilter(ContextCompat.getColor(mActivity,R.color.medium_sea_green), PorterDuff.Mode.SRC_ATOP);//After filled
         stars.getDrawable(0).setColorFilter(ContextCompat.getColor(mActivity,R.color.black), PorterDuff.Mode.SRC_ATOP);//empty
-        stars.getDrawable(1).setColorFilter(ContextCompat.getColor(mActivity,R.color.textColor), PorterDuff.Mode.SRC_ATOP);//
-
-
+        stars.getDrawable(1).setColorFilter(ContextCompat.getColor(mActivity,R.color.red), PorterDuff.Mode.SRC_ATOP);//
 
         if (mStoreList.get(position).getWebsite() == null || mStoreList.get(position).getWebsite().isEmpty() ||
                 mStoreList.get(position).getWebsite().equals("null")) {

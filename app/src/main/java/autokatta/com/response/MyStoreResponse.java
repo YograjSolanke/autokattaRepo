@@ -94,7 +94,7 @@ public class MyStoreResponse {
         private String workingDays;
         @SerializedName("AverageRate")
         @Expose
-        private String averageRate;
+        private int averageRate;
         @SerializedName("likecount")
         @Expose
         private Integer likecount;
@@ -297,11 +297,11 @@ public class MyStoreResponse {
             this.workingDays = workingDays;
         }
 
-        public String getAverageRate() {
+        public int getAverageRate() {
             return averageRate;
         }
 
-        public void setAverageRate(String averageRate) {
+        public void setAverageRate(int averageRate) {
             this.averageRate = averageRate;
         }
 

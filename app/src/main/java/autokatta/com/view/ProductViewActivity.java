@@ -333,6 +333,11 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
         stars.getDrawable(0).setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.common_google_signin_btn_text_light_default), PorterDuff.Mode.SRC_ATOP);//empty
         stars.getDrawable(1).setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.textColor), PorterDuff.Mode.SRC_ATOP);//
 
+        LayerDrawable stars1 = (LayerDrawable) productrating.getProgressDrawable();
+        stars1.getDrawable(2).setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.medium_sea_green), PorterDuff.Mode.SRC_ATOP);//After filled
+        stars1.getDrawable(0).setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.common_google_signin_btn_text_light_default), PorterDuff.Mode.SRC_ATOP);//empty
+        stars1.getDrawable(1).setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.textColor), PorterDuff.Mode.SRC_ATOP);//
+
     }
 
     private void getNoOfEnquiryCount(int product_id, String contact) {

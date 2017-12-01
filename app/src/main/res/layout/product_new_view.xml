@@ -214,12 +214,15 @@
 
                         <RatingBar
                             android:id="@+id/productrating"
-                            style="?android:attr/ratingBarStyleSmall"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:numStars="5"
                             android:stepSize="1"
-                            android:theme="@style/RatingBar" />
+                            style="?android:attr/ratingBarStyleSmall"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:isIndicator="false"
+                            android:theme="@style/RatingBar"/>
                     </LinearLayout>
 
                     <View

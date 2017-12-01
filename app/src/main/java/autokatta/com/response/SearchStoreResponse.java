@@ -78,7 +78,7 @@ public class SearchStoreResponse {
         private String storeType;
         @SerializedName("working_days")
         @Expose
-        private Integer workingDays;
+        private String workingDays;
         @SerializedName("likestatus")
         @Expose
         private String likestatus;
@@ -202,11 +202,11 @@ public class SearchStoreResponse {
             this.storeType = storeType;
         }
 
-        public Integer getWorkingDays() {
+        public String getWorkingDays() {
             return workingDays;
         }
 
-        public void setWorkingDays(Integer workingDays) {
+        public void setWorkingDays(String workingDays) {
             this.workingDays = workingDays;
         }
 
