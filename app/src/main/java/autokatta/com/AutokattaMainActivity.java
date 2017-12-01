@@ -55,7 +55,6 @@ import autokatta.com.fragment.WallMoreFragment;
 import autokatta.com.fragment.WallNotificationFragment;
 import autokatta.com.generic.Base64;
 import autokatta.com.interfaces.RequestNotifier;
-import autokatta.com.notifications.NotificationAddEmployeeActivity;
 import autokatta.com.other.CustomToast;
 import autokatta.com.other.EnquiryActivity;
 import autokatta.com.other.InventoryDashboard;
@@ -168,58 +167,6 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
         ab.setHomeAsUpIndicator(R.mipmap.ic_menu);
         ab.setDisplayHomeAsUpEnabled(true);*/
 
-        /*
-            for push notifications
-         */
-
-        if (getIntent().getExtras() != null) {
-            String status = getIntent().getExtras().getString("Like", "");
-            String contact = getIntent().getExtras().getString("contact", "");
-            String name = getIntent().getExtras().getString("name", "");
-            String body = getIntent().getExtras().getString("body", "");
-
-            switch (status) {
-                case "Profile": {
-                    Bundle mBundle = new Bundle();
-                    mBundle.putString("like", status);
-                    mBundle.putString("firebaseContact", contact);
-                    Intent intent = new Intent(getApplicationContext(), OtherProfile.class);
-                    intent.putExtras(mBundle);
-                    startActivity(intent);
-                    break;
-                }
-                case "Group": {
-                    break;
-
-                }
-                case "Store": {
-                    break;
-
-                }
-                case "UploadVehicle": {
-                    break;
-
-                }
-                case "New": {
-                    break;
-
-                }
-
-                case "AddEmployee": {
-                    Bundle mBundle = new Bundle();
-                    mBundle.putString("like", status);
-                    mBundle.putString("firebaseContact", contact);
-                    mBundle.putString("name", name);
-                    mBundle.putString("body", body);
-                    Intent intent = new Intent(getApplicationContext(), NotificationAddEmployeeActivity.class);
-                    intent.putExtras(mBundle);
-                    startActivity(intent);
-                    break;
-                }
-
-            }
-
-        }
         /*
         For share contents...
          */
@@ -490,6 +437,66 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        /*
+            for push notifications
+         */
+
+        if (getIntent().getExtras() != null) {
+            String status = getIntent().getExtras().getString("Like", "");
+            String contact = getIntent().getExtras().getString("contact", "");
+            String name = getIntent().getExtras().getString("name", "");
+            String body = getIntent().getExtras().getString("body", "");
+
+            TabLayout.Tab tab = tabLayout.getTabAt(1).setIcon(R.mipmap.ic_bell);
+            assert tab != null;
+            tab.select();
+
+            /*switch (status) {
+                case "Profile": {
+                    Bundle mBundle = new Bundle();
+                    mBundle.putString("like", status);
+                    mBundle.putString("firebaseContact", contact);
+                    Intent intent = new Intent(getApplicationContext(), OtherProfile.class);
+                    intent.putExtras(mBundle);
+                    startActivity(intent);
+                    break;
+                }
+                case "Group": {
+                    break;
+
+                }
+                case "Store": {
+                    break;
+
+                }
+                case "UploadVehicle": {
+                    break;
+
+                }
+                case "New": {
+                    break;
+
+                }
+
+                case "AddEmployee": {
+                    Bundle mBundle = new Bundle();
+                    mBundle.putString("like", status);
+                    mBundle.putString("firebaseContact", contact);
+                    mBundle.putString("name", name);
+                    mBundle.putString("body", body);
+                    Intent intent = new Intent(getApplicationContext(), NotificationAddEmployeeActivity.class);
+                    intent.putExtras(mBundle);
+                    startActivity(intent);
+                    break;
+                }
+
+            }*/
+        } /*else {
+            TabLayout.Tab tab = tabLayout.getTabAt(0);
+            assert tab != null;
+            tab.select();
+        }*/
 
         mDrawerLayout.addDrawerListener(new DrawerLayout.DrawerListener() {
             @Override

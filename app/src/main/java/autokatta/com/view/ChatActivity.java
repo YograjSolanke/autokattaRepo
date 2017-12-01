@@ -38,6 +38,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 
@@ -67,7 +68,6 @@ public class ChatActivity extends AppCompatActivity implements RequestNotifier, 
     ImageView uploadImage;
     TextView addimagetext;
     AlertDialog alert;
-    TextView msgFrom;
     int service_id = 0, product_id = 0, vehicle_id = 0;
     Uri selectedImage = null;
     Bitmap bitmapRotate;
@@ -75,8 +75,7 @@ public class ChatActivity extends AppCompatActivity implements RequestNotifier, 
     File file;
     String mediaPath = "";
     ApiCall apiCall;
-    ArrayList<BroadcastMessageResponse.Success> chatlist = new ArrayList<>();
-    //  MultipartEntity entity;
+    List<BroadcastMessageResponse.Success> chatlist = new ArrayList<>();
     String lastWord = "";
     String Sendercontact, sendername, senderLocation;
     ChatAdapter adapter;
@@ -85,9 +84,6 @@ public class ChatActivity extends AppCompatActivity implements RequestNotifier, 
     TextView Title, Category, Brand, Model, Keyword, price, chatwithtext, chatWithLocation;
     ImageView Image;
     RelativeLayout relCategory, relBrand, relModel, relPrice, MainRel, relativeprofile;
-   /* String vehi_img_url = getString(R.string.base_image_url);
-    String prduct_img_url = getString(R.string.base_image_url);
-    String service_img_url = getString(R.string.base_image_url);*/
     String fullpath = "";
 
     @Override
@@ -105,7 +101,6 @@ public class ChatActivity extends AppCompatActivity implements RequestNotifier, 
 
         Button buttonRep = (Button) findViewById(R.id.replay);
         listView = (ListView) findViewById(R.id.msgview);
-        //msgFrom = (TextView) findViewById(R.id.msgFrom);
         chatwithtext = (TextView) findViewById(R.id.chatwithtext);
         chatWithLocation = (TextView) findViewById(R.id.chatwithLocation);
         apiCall = new ApiCall(this, this);
@@ -129,17 +124,18 @@ public class ChatActivity extends AppCompatActivity implements RequestNotifier, 
 
         try {
 
+            assert getIntent().getExtras() != null;
             Sendercontact = getIntent().getExtras().getString("sender");
             sendername = getIntent().getExtras().getString("sendername");
             product_id = getIntent().getExtras().getInt("product_id");
             service_id = getIntent().getExtras().getInt("service_id");
             vehicle_id = getIntent().getExtras().getInt("vehicle_id");
-            // senderLocation = getIntent().getExtras().getString("senderLocation");
+
 
             setTitle(sendername);
             chatwithtext.setText(sendername);
             apiCall.getChatMessageData(Sendercontact, myContact, product_id, service_id, vehicle_id);
-            if (product_id==0 && service_id==0 && vehicle_id==0)
+            if (product_id == 0 && service_id == 0 && vehicle_id == 0)
                 MainRel.setVisibility(View.GONE);
             else {
                 apiCall.getChatElementData(product_id, service_id, vehicle_id);
@@ -171,17 +167,15 @@ public class ChatActivity extends AppCompatActivity implements RequestNotifier, 
                     Intent intent1 = new Intent(this, VehicleDetails.class);
                     intent1.putExtra("vehicle_id", vehicle_id);
                     startActivity(intent1);
-                }else if (Keyword.getText().toString().equalsIgnoreCase("Product"))
-            {
-                Intent intent2 = new Intent(this, ProductViewActivity.class);
-                intent2.putExtra("product_id", product_id);
-                startActivity(intent2);
-            }else
-            {
-                Intent intent3 = new Intent(this, ServiceViewActivity.class);
-                intent3.putExtra("service_id", service_id);
-                startActivity(intent3);
-            }
+                } else if (Keyword.getText().toString().equalsIgnoreCase("Product")) {
+                    Intent intent2 = new Intent(this, ProductViewActivity.class);
+                    intent2.putExtra("product_id", product_id);
+                    startActivity(intent2);
+                } else {
+                    Intent intent3 = new Intent(this, ServiceViewActivity.class);
+                    intent3.putExtra("service_id", service_id);
+                    startActivity(intent3);
+                }
                 break;
         }
 
@@ -236,7 +230,7 @@ public class ChatActivity extends AppCompatActivity implements RequestNotifier, 
                                 Keyword.setText(product.getKeyword());
                                 Title.setText(product.getProductName());
                                 price.setText(product.getPrice());
-                                fullpath =  getString(R.string.base_image_url) + product.getImages();
+                                fullpath = getString(R.string.base_image_url) + product.getImages();
                                 fullpath = fullpath.replaceAll(" ", "%20");
                                 Glide.with(ChatActivity.this)
                                         .load(fullpath)
@@ -253,7 +247,7 @@ public class ChatActivity extends AppCompatActivity implements RequestNotifier, 
                                 Keyword.setText(service.getKeyword());
                                 Title.setText(service.getName());
                                 price.setText(service.getPrice());
-                                fullpath =  getString(R.string.base_image_url) + service.getImages();
+                                fullpath = getString(R.string.base_image_url) + service.getImages();
                                 fullpath = fullpath.replaceAll(" ", "%20");
                                 Glide.with(ChatActivity.this)
                                         .load(fullpath)
@@ -273,7 +267,7 @@ public class ChatActivity extends AppCompatActivity implements RequestNotifier, 
                                 Category.setText(vehicle.getCategory());
                                 Brand.setText(vehicle.getManufacturer());
                                 Model.setText(vehicle.getModel());
-                                fullpath =  getString(R.string.base_image_url) + vehicle.getImage();
+                                fullpath = getString(R.string.base_image_url) + vehicle.getImage();
                                 fullpath = fullpath.replaceAll(" ", "%20");
                                 Glide.with(ChatActivity.this)
                                         .load(fullpath)
@@ -323,7 +317,7 @@ public class ChatActivity extends AppCompatActivity implements RequestNotifier, 
             CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
         }
     }
-    //alert dialog box method to show pop up to send message and image in broadcast group
+
 
     public void sendmessage() {
         lastWord = "";
@@ -415,6 +409,7 @@ public class ChatActivity extends AppCompatActivity implements RequestNotifier, 
                 // Get the Image from data
                 Uri selectedImage = data.getData();
                 String[] filePathColumn = {MediaStore.Images.Media.DATA};
+                assert selectedImage != null;
                 Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
                 assert cursor != null;
                 cursor.moveToFirst();
@@ -430,13 +425,14 @@ public class ChatActivity extends AppCompatActivity implements RequestNotifier, 
                 if (resultCode == RESULT_OK) {
                     if (data != null) {
                         selectedImage = data.getData(); // the uri of the image taken
+                        assert data.getExtras() != null;
                         if (String.valueOf((Bitmap) data.getExtras().get("data")).equals("null")) {
                             bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), selectedImage);
                         } else {
                             bitmap = (Bitmap) data.getExtras().get("data");
                         }
-                        if (Float.valueOf(getImageOrientation()) >= 0) {
-                            bitmapRotate = rotateImage(bitmap, Float.valueOf(getImageOrientation()));
+                        if ((float) getImageOrientation() >= 0) {
+                            bitmapRotate = rotateImage(bitmap, (float) getImageOrientation());
                         } else {
                             bitmapRotate = bitmap;
                             bitmap.recycle();
@@ -528,6 +524,7 @@ public class ChatActivity extends AppCompatActivity implements RequestNotifier, 
         Cursor cursor = getContentResolver().query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
                 imageColumns, null, null, imageOrderBy);
 
+        assert cursor != null;
         if (cursor.moveToFirst()) {
             int orientation = cursor.getInt(cursor.getColumnIndex(MediaStore.Images.ImageColumns.ORIENTATION));
             System.out.println("orientation===" + orientation);

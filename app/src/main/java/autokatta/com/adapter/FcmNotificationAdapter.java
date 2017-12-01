@@ -15,10 +15,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import autokatta.com.R;
+import autokatta.com.my_inventory_container.TransferStock;
+import autokatta.com.notifications.NotificationAddEmployeeActivity;
 import autokatta.com.response.GetFCMNotificationResponse;
+import autokatta.com.view.BussinessChatActivity;
+import autokatta.com.view.ChatActivity;
 import autokatta.com.view.GroupsActivity;
 import autokatta.com.view.OtherProfile;
+import autokatta.com.view.ProductViewActivity;
+import autokatta.com.view.ServiceViewActivity;
 import autokatta.com.view.StoreViewActivity;
+import autokatta.com.view.VehicleDetails;
 
 /**
  * Created by ak-003 on 30/11/17.
@@ -27,11 +34,13 @@ import autokatta.com.view.StoreViewActivity;
 public class FcmNotificationAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     Activity mActivity;
+    String mLoginContact;
     private List<GetFCMNotificationResponse.Success.FCMNotification> mFcmNotiList = new ArrayList<>();
 
-    public FcmNotificationAdapter(Activity activity, List<GetFCMNotificationResponse.Success.FCMNotification> mFcmNotiList1) {
+    public FcmNotificationAdapter(Activity activity, List<GetFCMNotificationResponse.Success.FCMNotification> mFcmNotiList1, String mLoginContact1) {
         mActivity = activity;
         mFcmNotiList = mFcmNotiList1;
+        mLoginContact = mLoginContact1;
     }
 
     private class FcmViewHolder extends RecyclerView.ViewHolder {
@@ -86,7 +95,7 @@ public class FcmNotificationAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                             mActivity.startActivity(i);
 
                         } else {
-                            Log.i("FcmAdapter", "-> Please check service group id is not present");
+                            Log.i("FcmAdapter", "-> Please check service, group id is not present");
 
                         }
                         break;
@@ -103,9 +112,84 @@ public class FcmNotificationAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                             mActivity.startActivity(intent, options.toBundle());
 
                         } else {
-                            Log.i("FcmAdapter", "-> Please check service store id is not present");
+                            Log.i("FcmAdapter", "-> Please check service, store id is not present");
 
                         }
+                        break;
+
+                    case "Vehicle":
+
+                        /*For Offer*/
+                        if (mFcmNotiList.get(holder.getAdapterPosition()).getVehicleID() != 0 &&
+                                mFcmNotiList.get(holder.getAdapterPosition()).getMessage().equalsIgnoreCase("sent offer for your vehicle")) {
+                            Intent i = new Intent(mActivity, BussinessChatActivity.class);
+                            i.putExtra("callfrom", "myuploadedvehicle");
+                            mActivity.startActivity(i);
+
+                        } else if (mFcmNotiList.get(holder.getAdapterPosition()).getVehicleID() != 0) {
+                            Intent intent = new Intent(mActivity, VehicleDetails.class);
+                            intent.putExtra("vehicle_id", mFcmNotiList.get(holder.getAdapterPosition()).getVehicleID());
+                            mActivity.startActivity(intent);
+
+                        } else {
+                            Log.i("FcmAdapter", "-> Please check service, vehicle id is not present");
+
+                        }
+                        break;
+
+                    case "Product":
+                        if (mFcmNotiList.get(holder.getAdapterPosition()).getProductID() != 0) {
+                            Intent intent = new Intent(mActivity, ProductViewActivity.class);
+                            intent.putExtra("product_id", mFcmNotiList.get(holder.getAdapterPosition()).getProductID());
+                            mActivity.startActivity(intent);
+
+                        } else {
+                            Log.i("FcmAdapter", "-> Please check service, product id is not present");
+
+                        }
+                        break;
+
+                    case "Service":
+                        if (mFcmNotiList.get(holder.getAdapterPosition()).getServiceID() != 0) {
+                            Intent intent = new Intent(mActivity, ServiceViewActivity.class);
+                            intent.putExtra("service_id", mFcmNotiList.get(holder.getAdapterPosition()).getServiceID());
+                            mActivity.startActivity(intent);
+
+                        } else {
+                            Log.i("FcmAdapter", "-> Please check service, service id is not present");
+
+                        }
+                        break;
+
+                    case "TransferStock":
+                        Bundle mBundle = new Bundle();
+                        mBundle.putInt("bundle_storeId", 0);
+                        mBundle.putString("bundle_contact", mLoginContact);
+                        mActivity.startActivity(new Intent(mActivity, TransferStock.class).putExtras(mBundle));
+                        break;
+
+                        /*Simple chatting*/
+                    case "ChatMessage":
+                        Bundle b = new Bundle();
+                        b.putString("sender", mFcmNotiList.get(holder.getAdapterPosition()).getContactNo());
+                        b.putString("sendername", mFcmNotiList.get(holder.getAdapterPosition()).getUserName());
+                        b.putInt("product_id", mFcmNotiList.get(holder.getAdapterPosition()).getProductID());
+                        b.putInt("service_id", mFcmNotiList.get(holder.getAdapterPosition()).getServiceID());
+                        b.putInt("vehicle_id", mFcmNotiList.get(holder.getAdapterPosition()).getVehicleID());
+                        Intent intent = new Intent(mActivity, ChatActivity.class);
+                        intent.putExtras(b);
+                        mActivity.startActivity(intent);
+                        break;
+
+                /*Add Employee Request*/
+                    case "AddEmployee":
+                        Bundle mBundle1 = new Bundle();
+                        mBundle1.putString("senderContact", mFcmNotiList.get(holder.getAdapterPosition()).getContactNo());
+                        mBundle1.putString("senderName", mFcmNotiList.get(holder.getAdapterPosition()).getUserName());
+                        mBundle1.putString("message", mFcmNotiList.get(holder.getAdapterPosition()).getMessage());
+                        Intent intent1 = new Intent(mActivity, NotificationAddEmployeeActivity.class);
+                        intent1.putExtras(mBundle1);
+                        mActivity.startActivity(intent1);
                         break;
 
                 }

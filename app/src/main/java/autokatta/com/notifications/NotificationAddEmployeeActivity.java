@@ -22,7 +22,7 @@ import retrofit2.Response;
 public class NotificationAddEmployeeActivity extends AppCompatActivity implements View.OnClickListener, RequestNotifier {
 
     String mBundleContact;
-    String strMessage, strName, strBody;
+    String strName, strMessage;
     Button mBtnApprove, mBtnReject;
     private String mLoginContact;
     TextView mMessage;
@@ -53,12 +53,11 @@ public class NotificationAddEmployeeActivity extends AppCompatActivity implement
         }
 
         if (getIntent().getExtras() != null) {
-            strMessage = getIntent().getExtras().getString("like", "");
-            strName = getIntent().getExtras().getString("name", "");
-            strBody = getIntent().getExtras().getString("body", "");
-            mBundleContact = getIntent().getExtras().getString("firebaseContact", "");
+            strName = getIntent().getExtras().getString("senderName", "");
+            strMessage = getIntent().getExtras().getString("message", "");
+            mBundleContact = getIntent().getExtras().getString("senderContact", "");
 
-            mMessage.setText(strName + " " + strBody);
+            mMessage.setText(strName + " " + strMessage);
         }
     }
 
@@ -84,7 +83,7 @@ public class NotificationAddEmployeeActivity extends AppCompatActivity implement
         }
     }
 
-    private void acceptOrReject(String reject) {
+    private void acceptOrReject(String action) {
         ApiCall mApiCall = new ApiCall(this, this);
         //mApiCall.AddContactForPublicGroup(mGroupID, mLoginContact);
     }

@@ -147,7 +147,7 @@ public class NotificationFragment extends Fragment implements RequestNotifier, S
 
                     }
 
-                    FcmNotificationAdapter mAdapter = new FcmNotificationAdapter(getActivity(), mFcmNotiList);
+                    FcmNotificationAdapter mAdapter = new FcmNotificationAdapter(getActivity(), mFcmNotiList, mLoginContact);
                     mRecyclerView.setAdapter(mAdapter);
                     mAdapter.notifyDataSetChanged();
 
