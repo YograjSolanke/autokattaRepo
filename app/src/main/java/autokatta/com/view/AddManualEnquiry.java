@@ -810,8 +810,7 @@ public class AddManualEnquiry extends AppCompatActivity implements RequestNotifi
                     } else
                         CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
                 }
-            }
-            {
+            } else {
                 Snackbar.make(mRelative, getString(R.string._404_), Snackbar.LENGTH_SHORT).show();
             }
         } else {

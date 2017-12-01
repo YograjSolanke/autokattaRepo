@@ -33,20 +33,14 @@ public class ManualEnquiryTabs extends android.support.v4.app.Fragment {
         }
         TabLayout tabLayout = (TabLayout) manualenquirytabs.findViewById(R.id.manualenquiry_tabs);
         tabLayout.setupWithViewPager(mviewPager);
-
         Bundle bundle = getArguments();
         Bundle putBundle = new Bundle();
         putBundle.putInt("bundle_storeId", bundle.getInt("bundle_storeId", 0));
         putBundle.putString("bundle_contact", bundle.getString("bundle_contact", ""));
-
         manualEnquiry.setArguments(putBundle);
         transferEnquiriesFragment.setArguments(putBundle);
-
-
-        //showMessage();
         return manualenquirytabs;
     }
-
 
     private void setupViewPager(ViewPager viewPager) {
         TabAdapterName tabAdapterName = new TabAdapterName(getChildFragmentManager());
