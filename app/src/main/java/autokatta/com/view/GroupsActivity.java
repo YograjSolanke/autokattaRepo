@@ -37,11 +37,12 @@ import retrofit2.Response;
 
 public class GroupsActivity extends AppCompatActivity implements RequestNotifier {
     Bundle b = new Bundle();
-    String groupPrivacy, groupType;
+    String groupPrivacy, groupType, groupName;
     GridView androidGridView;
     ImageView mImageView;
     Button mShare;
     int mGroupID;
+    Intent i;
     private String mLoginContact;
     private ProgressDialog pDialog;
     String[] gridViewString = {
@@ -72,26 +73,13 @@ public class GroupsActivity extends AppCompatActivity implements RequestNotifier
         mImageView = (ImageView) findViewById(R.id.groupImage);
         mShare = (Button) findViewById(R.id.shares);
 
-        Intent i = getIntent();
+        i = getIntent();
         if (i.getExtras() != null) {
-            b.putString("grouptype", i.getStringExtra("grouptype"));
-            b.putString("className", i.getStringExtra("className"));
-            b.putInt("bundle_GroupId", i.getIntExtra("bundle_GroupId", 0));
-            b.putString("bundle_GroupName", i.getStringExtra("bundle_GroupName"));
-            b.putString("tabIndex", i.getStringExtra("tabIndex"));
-            b.putString("bundle_Contact", i.getStringExtra("bundle_Contact"));
-            b.putString("bundle_groupPrivacy", i.getStringExtra("bundle_groupPrivacy"));
-            setTitle(i.getStringExtra("bundle_GroupName"));
 
             groupPrivacy = i.getStringExtra("bundle_groupPrivacy");
             mGroupID = i.getIntExtra("bundle_GroupId", 0);
             groupType = i.getStringExtra("grouptype");
-
             getGroupData(mGroupID);
-
-
-            /*Glide.with(getApplicationContext())
-                    .load(getString(R.string.base_image_url)+)*/
         }
 
         GroupsActivity.CustomGridViewActivity adapterViewAndroid = new GroupsActivity.CustomGridViewActivity(GroupsActivity.this, gridViewString, gridViewImageId);
@@ -295,7 +283,18 @@ public class GroupsActivity extends AppCompatActivity implements RequestNotifier
                         success.setProductcount(success.getProductcount());
                         success.setServicecount(success.getServicecount());
                         groupPrivacy = success.getPrivacyStatus();
+                        groupName = success.getTitle();
                     }
+
+                    b.putString("grouptype", i.getStringExtra("grouptype"));
+                    b.putString("className", i.getStringExtra("className"));
+                    b.putInt("bundle_GroupId", i.getIntExtra("bundle_GroupId", 0));
+                    b.putString("bundle_GroupName", groupName);
+                    b.putString("tabIndex", i.getStringExtra("tabIndex"));
+                    b.putString("bundle_Contact", i.getStringExtra("bundle_Contact"));
+                    b.putString("bundle_groupPrivacy", i.getStringExtra("bundle_groupPrivacy"));
+                    //setTitle(i.getStringExtra("bundle_GroupName"));
+                    setTitle(groupName);
                     if (groupPrivacy.equalsIgnoreCase("private"))
                         mShare.setVisibility(View.GONE);
                 }

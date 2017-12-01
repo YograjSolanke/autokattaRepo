@@ -39,15 +39,14 @@ public class NotificationFragment extends Fragment implements RequestNotifier, S
     View mNotificationView;
     RecyclerView mRecyclerView;
     SwipeRefreshLayout mSwipeRefreshLayout;
-    View mWallNotify;
     TextView mNoData;
     boolean _hasLoadedOnce = false;
+    boolean hasViewCreated = false;
     private String mLoginContact = "";
     ConnectionDetector mConnectionDetector;
     List<GetFCMNotificationResponse.Success.FCMNotification> mFcmNotiList = new ArrayList<>();
 
     public NotificationFragment() {
-
         //Empty Constuctor
     }
 
@@ -65,26 +64,22 @@ public class NotificationFragment extends Fragment implements RequestNotifier, S
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                    /*dialog = new ProgressDialog(getActivity());
-                dialog.setMessage("Loading...");*/
                 mLoginContact = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).
                         getString("loginContact", "");
                 mNoData = (TextView) mNotificationView.findViewById(R.id.no_category);
-                // layout = (LinearLayout) mNotificationView.findViewById(R.id.no_connection);
 
                 mRecyclerView = (RecyclerView) mNotificationView.findViewById(R.id.recycler_view);
                 mSwipeRefreshLayout = (SwipeRefreshLayout) mNotificationView.findViewById(R.id.swipeRefreshLayout);
 
                 mRecyclerView.setHasFixedSize(true);
                 LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
-                //mLayoutManager.setReverseLayout(true);
-                //mLayoutManager.setStackFromEnd(true);
+                /*code to ascending or descending list*/
+                mLayoutManager.setReverseLayout(true);
+                mLayoutManager.setStackFromEnd(true);
                 mRecyclerView.setLayoutManager(mLayoutManager);
                 mRecyclerView.addItemDecoration(new VerticalLineDecorator(2));
                 mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-                // mRecyclerView.setAdapter(adapter);
 
-                //getData();//Get Api...
                 mSwipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
                         android.R.color.holo_green_light,
                         android.R.color.holo_orange_light,
@@ -99,6 +94,17 @@ public class NotificationFragment extends Fragment implements RequestNotifier, S
 
             }
         });
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (this.isVisible()) {
+            if (isVisibleToUser && !hasViewCreated) {
+                getNotificationData();
+                hasViewCreated = true;
+            }
+        }
     }
 
     private void getNotificationData() {
@@ -121,6 +127,7 @@ public class NotificationFragment extends Fragment implements RequestNotifier, S
                 if (!notificationResponse.getSuccess().getFCMNotification().isEmpty()) {
                     mSwipeRefreshLayout.setRefreshing(false);
                     mNoData.setVisibility(View.GONE);
+                    mFcmNotiList.clear();
 
                     for (GetFCMNotificationResponse.Success.FCMNotification fcmNotification : notificationResponse.getSuccess().getFCMNotification()) {
                         fcmNotification.setFCMNotificationID(fcmNotification.getFCMNotificationID());
@@ -179,13 +186,11 @@ public class NotificationFragment extends Fragment implements RequestNotifier, S
         } else if (error instanceof ConnectException) {
             if (isAdded())
                 CustomToast.customToast(getActivity(), getString(R.string.no_internet));
-            //layout.setVisibility(View.VISIBLE);
         } else if (error instanceof UnknownHostException) {
             if (isAdded())
                 CustomToast.customToast(getActivity(), getString(R.string.no_internet));
-            // layout.setVisibility(View.VISIBLE);
         } else {
-            Log.i("Check Class-", "Wall Notification Fragment");
+            Log.i("Check Class-", "Notification Fragment");
             error.printStackTrace();
         }
 
