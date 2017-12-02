@@ -957,6 +957,7 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
         AlertDialog dialog = new AlertDialog.Builder(this)
                 .setTitle("New version available")
                 .setMessage(getString(R.string.app_update))
+                .setCancelable(false)
                 .setPositiveButton("Update",
                         new DialogInterface.OnClickListener() {
                             @Override
