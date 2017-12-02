@@ -96,6 +96,8 @@ public class EditAllAbout extends AppCompatActivity implements RequestNotifier, 
                 getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""));
         mEmail = (EditText) findViewById(R.id.email);
         mWebsite = (EditText) findViewById(R.id.website);
+        otherCategory = (EditText) findViewById(R.id.editOtherTypeCategory);
+        otherIndustry = (EditText) findViewById(R.id.editOtherTypeIndustry);
         mCity = (AutoCompleteTextView) findViewById(R.id.address);
         mCompany = (TextView) findViewById(R.id.company_name);
         mDesignation = (TextView) findViewById(R.id.designation);
@@ -416,13 +418,18 @@ public class EditAllAbout extends AppCompatActivity implements RequestNotifier, 
                 CustomToast.customToast(getApplicationContext(), "User Type Updated");
                 mApiCall.profileAbout(getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""),
                         getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""));
-
-               // usertypeSpinner.setAdapter(null);
-             //   industrySpinner.setAdapter(null);
-              //  moduleSpinner.setAdapter(null);
-               // brandSpinner.setAdapter(null);
+            } else if (str.equals("success")) {
+                CustomToast.customToast(getApplicationContext(), "category added");
+                otherCategoryLayout.setVisibility(View.GONE);
+                mApiCall.profileAbout(getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""),
+                        getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""));
+            } else if (str.equals("success_industry")) {
+                CustomToast.customToast(getApplicationContext(), "industry added");
+                otherIndustryLayout.setVisibility(View.GONE);
+                mApiCall.profileAbout(getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""),
+                        getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", ""));
             }
-        }else {
+        } else {
             CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
         }
     }
@@ -439,13 +446,13 @@ public class EditAllAbout extends AppCompatActivity implements RequestNotifier, 
                     mIndustrylay.setVisibility(View.GONE);
                     mCategorylay.setVisibility(View.GONE);
                     mBrandlay.setVisibility(View.GONE);
-                }else {
+                } else {
                     mIndustrylay.setVisibility(View.VISIBLE);
                 }
 
                 if (brand.equalsIgnoreCase("")) {
                     mBrandlay.setVisibility(View.GONE);
-                }else {
+                } else {
                     mBrandlay.setVisibility(View.VISIBLE);
                 }
                 break;
@@ -663,15 +670,6 @@ public class EditAllAbout extends AppCompatActivity implements RequestNotifier, 
                     otherbrand.setError("Enter Brand");
                 } else if (brand.equalsIgnoreCase("other") && !otherbrand.getText().toString().matches("[a-zA-Z ]*")) {
                     otherbrand.setError("Enter  Valid Brand");
-                } else if (subProfession.equalsIgnoreCase("Other")) {
-                    subProfession = otherCategory.getText().toString().trim();
-                    mApiCall.addOtheruserCategory(subProfession);
-                } else if (brand.equalsIgnoreCase("Other")) {
-                    brand = otherbrand.getText().toString().trim();
-                    mApiCall.addOtherBrandTags(brand, "both");
-                } else if (strIndustry.equalsIgnoreCase("Other")) {
-                    strIndustry = otherIndustry.getText().toString().trim();
-                    mApiCall.addOtherIndustry(strIndustry);
                 } else if (subProfession.equalsIgnoreCase("Select Category")) {
                     subProfession = "";
                 } else if (brand.equalsIgnoreCase("-Select Brand")) {
@@ -679,6 +677,18 @@ public class EditAllAbout extends AppCompatActivity implements RequestNotifier, 
                 } else if (strIndustry.equalsIgnoreCase("Select Industry")) {
                     strIndustry = "";
                 } else {
+                    if (subProfession.equalsIgnoreCase("Other")) {
+                        subProfession = otherCategory.getText().toString().trim();
+                        mApiCall.addOtheruserCategory(subProfession);
+                    }
+                    if (brand.equalsIgnoreCase("Other")) {
+                        brand = otherbrand.getText().toString().trim();
+                        mApiCall.addOtherBrandTags(brand, "both");
+                    }
+                    if (strIndustry.equalsIgnoreCase("Other")) {
+                        strIndustry = otherIndustry.getText().toString().trim();
+                        mApiCall.addOtherIndustry(strIndustry);
+                    }
                     mApiCall.updateProfile(RegId, "", "", strprofession, subProfession, "", "", "", "", strIndustry, brand, "", "", "UserType");
                     mDoneworkat.setVisibility(View.GONE);
                     mEdtWorkedat.setVisibility(View.VISIBLE);
