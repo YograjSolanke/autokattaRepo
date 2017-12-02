@@ -42,7 +42,7 @@ import retrofit2.Response;
 import static android.content.Context.MODE_PRIVATE;
 
 /**
- * Created by ak-001 on 23/3/17.
+ * Created by ak-001 on 23/3/17
  */
 
 public class SelectedImagesFragment extends Fragment implements View.OnClickListener {
@@ -152,7 +152,6 @@ public class SelectedImagesFragment extends Fragment implements View.OnClickList
     }
 
     private class MyPagerAdapter extends PagerAdapter {
-
         String[] mStrings;
         ImageLoader imageLoader;
 
@@ -174,15 +173,12 @@ public class SelectedImagesFragment extends Fragment implements View.OnClickList
 
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
-
             TextView textView = new TextView(getActivity());
             textView.setTextColor(Color.WHITE);
             textView.setTextSize(30);
             textView.setTypeface(Typeface.DEFAULT_BOLD);
             textView.setText(String.valueOf(position));
-
             ImageView imageView = new ImageView(getActivity());
-
             try {
                 Glide.with(getActivity())
                         .load(mStrings[position]).override(320, 240)
@@ -212,8 +208,6 @@ public class SelectedImagesFragment extends Fragment implements View.OnClickList
                     Toast.makeText(getActivity(),
                             "Page " + page + " clicked",
                             Toast.LENGTH_LONG).show();
-
-
                     Bundle b = new Bundle();
                     try {
                         b.putString("path", image.get(page));

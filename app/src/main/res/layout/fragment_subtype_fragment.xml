@@ -49,7 +49,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/layout_padding"
             android:layout_marginStart="@dimen/layout_padding"
-            android:layout_marginTop="@dimen/layout_top"
+            android:layout_marginTop="@dimen/card_margin"
             android:background="@drawable/layout_background">
 
             <TextView
@@ -58,6 +58,8 @@
                 android:layout_height="wrap_content"
                 android:background="@color/background"
                 android:gravity="start|center"
+                android:paddingStart="@dimen/card_margin"
+                android:paddingEnd="@dimen/card_margin"
                 android:text="@string/location_details"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_layout"
@@ -126,7 +128,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/layout_padding"
             android:layout_marginStart="@dimen/layout_padding"
-            android:layout_marginTop="@dimen/layout_top"
+            android:layout_marginTop="@dimen/card_margin"
             android:background="@drawable/layout_background">
 
             <TextView
@@ -136,6 +138,8 @@
                 android:background="@color/background"
                 android:gravity="start|center"
                 android:text="@string/owner"
+                android:paddingStart="@dimen/card_margin"
+                android:paddingEnd="@dimen/card_margin"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_layout"
                 android:textStyle="bold" />
@@ -201,7 +205,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/layout_padding"
             android:layout_marginStart="@dimen/layout_padding"
-            android:layout_marginTop="@dimen/layout_top"
+            android:layout_marginTop="@dimen/card_margin"
             android:background="@drawable/layout_background">
 
             <TextView
@@ -210,6 +214,8 @@
                 android:layout_height="wrap_content"
                 android:background="@color/background"
                 android:gravity="start|center"
+                android:paddingStart="@dimen/card_margin"
+                android:paddingEnd="@dimen/card_margin"
                 android:text="@string/document"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_layout"
@@ -409,7 +415,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/layout_padding"
             android:layout_marginStart="@dimen/layout_padding"
-            android:layout_marginTop="@dimen/layout_top"
+            android:layout_marginTop="@dimen/card_margin"
             android:background="@drawable/layout_background">
 
             <TextView
@@ -419,6 +425,8 @@
                 android:background="@color/background"
                 android:gravity="start|center"
                 android:text="@string/title_activity_vehicle_details"
+                android:paddingStart="@dimen/card_margin"
+                android:paddingEnd="@dimen/card_margin"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_layout"
                 android:textStyle="bold" />
@@ -684,8 +692,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginStart="10dp"
             android:layout_marginTop="@dimen/text_about"
             android:background="@color/background"
             android:text="Upload Vehicle"

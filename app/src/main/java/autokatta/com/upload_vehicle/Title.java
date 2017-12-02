@@ -153,22 +153,18 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
         radioButton2 = (RadioButton) mTitle.findViewById(R.id.radioButton2);
         storeradioyes = (RadioButton) mTitle.findViewById(R.id.storeradio1);
         storeradiono = (RadioButton) mTitle.findViewById(R.id.storeradio2);
-
         financeyes = (RadioButton) mTitle.findViewById(R.id.financeYes);
         financeno = (RadioButton) mTitle.findViewById(R.id.financeNo);
         exchangeyes = (RadioButton) mTitle.findViewById(R.id.exchangeYes);
         exchangeno = (RadioButton) mTitle.findViewById(R.id.exchangeNo);
-
         mExchangeradio = (RadioGroup) mTitle.findViewById(R.id.exchangeradio);
 
-/*Exchange vehicle customer info*/
+        /*Exchange vehicle customer info*/
         mExchangeradio.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
                 if (checkedId == R.id.exchangeYes) {
-
                     View view = getActivity().getLayoutInflater().inflate(R.layout.custom_upload_exchange, null);
-
                     final ImageView[] mClose = {(ImageView) view.findViewById(R.id.close)};
                     Button mAdd = (Button) view.findViewById(R.id.submit);
                     final EditText excustomername = (EditText) view.findViewById(R.id.cust_name);
@@ -183,7 +179,6 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                     final int strPos = excuststatus.getSelectedItemPosition();
                     final int strPos1 = inventory.getSelectedItemPosition();
                     excustautoAddress.setAdapter(new GooglePlacesAdapter(getActivity(), R.layout.registration_spinner));
-
                     mBottomSheetDialog = new Dialog(getActivity(), R.style.MaterialDialogSheet);
                     mBottomSheetDialog.setContentView(view);
                     mBottomSheetDialog.setCancelable(true);
@@ -233,7 +228,6 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
 
                             if (strPos1 != 0)
                                 custEnquiryStatus = inventory.getSelectedItem().toString();
-
 
                             String discussion = excustdescription.getText().toString();
                             String custName = excustomername.getText().toString();
@@ -301,7 +295,6 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                                 Intent intent = new Intent(getActivity(), ManualEnquiryVehicleList.class);
                                 intent.putExtras(bundle);
                                 startActivity(intent, options.toBundle());
-
                                 getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("ex_cust_name", custName).apply();
                                 getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("ex_cust_contact", custContact).apply();
                                 getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("ex_cust_address", custAddress).apply();
@@ -311,7 +304,6 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                                 getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("discussion", discussion).apply();
                                 getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("nextFollowupDate", nextFollowupDate).apply();
                                 getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("exchange", "yes").apply();
-
                             }
                         }
                     });
@@ -330,28 +322,23 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
         linearPermit = (LinearLayout) mTitle.findViewById(R.id.linearPermit);
         mTouristPassing = (RadioButton) mTitle.findViewById(R.id.tourist_passing);
         mPrivatePassing = (RadioButton) mTitle.findViewById(R.id.private_passing);
-
         /*
         Brand Fragment...
          */
         mBrandSpinner = (Spinner) mTitle.findViewById(R.id.brandspinner);
         mModelSpinner = (Spinner) mTitle.findViewById(R.id.modelspinner);
         mVersionSpinner = (Spinner) mTitle.findViewById(R.id.versionspinner);
-
         /*
         Year Fragment...
          */
-
         mMakePick = (ImageView) mTitle.findViewById(R.id.make_pick);
         mRegisterPick = (ImageView) mTitle.findViewById(R.id.register_pick);
         mMakeMonth = (EditText) mTitle.findViewById(R.id.make_month);
         mMakeYear = (EditText) mTitle.findViewById(R.id.make_year);
         mRegisterMonth = (EditText) mTitle.findViewById(R.id.register_month);
         mRegisterYear = (EditText) mTitle.findViewById(R.id.register_year);
-
         mMakeMonth.setInputType(InputType.TYPE_NULL);
         mRegisterMonth.setInputType(InputType.TYPE_NULL);
-
         mMakePick.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -365,14 +352,12 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                 mMakeMonth.setText("       " + myp.getSelectedMonthName() + "          " + myp.getSelectedYear());
             }
         }, null);
-
         mRegisterPick.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 myp1.show();
             }
         });
-
         myp1 = new MonthYearPicker(getActivity());
         myp1.build(new DialogInterface.OnClickListener() {
             @Override
@@ -380,7 +365,6 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                 mRegisterMonth.setText("       " + myp1.getSelectedMonthName() + "          " + myp1.getSelectedYear());
             }
         }, null);
-
         /*
         kms fragment
          */
@@ -389,17 +373,12 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
         mStaringSpinner = (Spinner) mTitle.findViewById(R.id.stearingspinner);
         mHrs = (EditText) mTitle.findViewById(R.id.hrstext1);
         mKms = (EditText) mTitle.findViewById(R.id.kmstext1);
-
         category = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("upload_categoryName", null);
         categoryId = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getInt("upload_categoryId", 0);
         uploadauctioncat = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("upload_auction_categoryName", null);
-
         mCategory.setText(category + "->" + uploadauctioncat);
-
-
         mSubmit = (Button) mTitle.findViewById(R.id.title_next);
         mSubmit.setOnClickListener(this);
-
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -409,7 +388,6 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                     getSubCategoryTask();
                     getBreaks();
                     getPumps();
-
                     radioButton1.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -424,13 +402,10 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                                         Bundle b = new Bundle();
                                         b.putString("classname", "uploadvehicle");
                                         createGroupFragment.setArguments(b);
-
                                         getActivity().getSupportFragmentManager().beginTransaction()
                                                 .replace(R.id.vehicle_upload_container, createGroupFragment, "Title")
                                                 .addToBackStack("Title")
                                                 .commit();
-
-
                                     }
                                 });
                                 alertDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
@@ -471,21 +446,17 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                     if (financeyes.isChecked()) {
                         financests = "Yes";
                     } else if (financeno.isChecked()) {
-
                         financests = "No";
                     }
 
                     if (exchangeyes.isChecked()) {
                         exchangests = "Yes";
                     } else if (exchangeno.isChecked()) {
-
                         exchangests = "No";
                     }
 
-
                     String permit = "";
                     if (category.equalsIgnoreCase("Car")) {
-
                         if (mTouristPassing.isChecked())
                             permit = "Tourist Passing";
                         if (mPrivatePassing.isChecked())
@@ -504,7 +475,6 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                         mBreakSpinner.setVisibility(View.GONE);
                         mStaringSpinner.setVisibility(View.GONE);
                         linearPermit.setVisibility(View.GONE);
-
                     }
 
                     /*23-8-17*/
@@ -534,7 +504,6 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                         mStaringSpinner.setVisibility(View.GONE);
                         linearPermit.setVisibility(View.GONE);
                         //note.setText("In Kms");
-
                     }
 
                     /*
@@ -551,12 +520,8 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                             if (position != 0) {
-
                                 String stearingname = mStaringList.get(position);
-
                                 getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_stearingName", stearingname).apply();
-
-                                System.out.println("Stearing name is::" + stearingname);
                             }
                         }
 
@@ -571,7 +536,6 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                 }
             }
         });
-
         return mTitle;
     }
 
@@ -583,18 +547,13 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
         mApiCall.Groups(getActivity().getSharedPreferences(getString(R.string.my_preference),
                 MODE_PRIVATE).getString("loginContact", null), 1, 10);
     }
-
-
-
     /*
     Get store Data...
      */
-
     private void getStore() {
         ApiCall mApiCall = new ApiCall(getActivity(), this);
         mApiCall.MyStoreList(getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", null), 1, 10);
     }
-
     /*
     Sub Category...
      */
@@ -692,9 +651,7 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
         mSelectedItems.clear();
         stringgroupids = "";
         stringgroupname = "";
-
         android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(getActivity());
-
         // set the dialog title
         builder.setTitle("Select Groups From Following")
                 .setCancelable(true)
@@ -729,7 +686,6 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                             }
                         }
 
-
                         if (mSelectedItems.size() == 0) {
                             if (isAdded())
                                 CustomToast.customToast(getActivity(), "No Group Was Selected");
@@ -752,11 +708,9 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                 })
                 .show();
     }
-
     /*
     Store
      */
-
     private void alertBoxToSelectStore(final String[] choices) {
         final List<String> mSelectedItems = new ArrayList<>();
         mSelectedItems.clear();
@@ -784,7 +738,6 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                     public void onClick(DialogInterface dialog, int id) {
                         stringstoreids = "";
                         stringstorename = "";
-
                         for (int i = 0; i < mSelectedItems.size(); i++) {
                             for (int j = 0; j < storeTitleArray.length; j++) {
                                 if (mSelectedItems.get(i).equals(storeTitleArray[j])) {
@@ -807,7 +760,6 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                             storeradiono.setChecked(true);
                             stringstoreids = "";
                             stringstorename = "";
-
                         }
                     }
                 })
@@ -824,7 +776,6 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                 })
                 .show();
     }
-
 
     /*
     Response from Retrofit
@@ -845,22 +796,18 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                         groupIdList.add(String.valueOf(success.getId()));
                         groupTitleList.add(success.getTitle());
                     }
-
                     groupTitleArray = groupTitleList.toArray(new String[groupTitleList.size()]);
                     groupIdArray = groupIdList.toArray(new String[groupIdList.size()]);
                 } else if (response.body() instanceof MyStoreResponse) {
-                    Log.e("MyStoreResponse", "->");
                     storeIdList.clear();
                     MyStoreResponse myStoreResponse = (MyStoreResponse) response.body();
                     for (MyStoreResponse.Success success : myStoreResponse.getSuccess()) {
                         storeIdList.add(String.valueOf(success.getId()));
                         storeTitleList.add(success.getName());
                     }
-                    Log.i("Data", "storIds -" + storeIdList);
                     storeTitleArray = storeTitleList.toArray(new String[storeTitleList.size()]);
                     storeIdArray = storeIdList.toArray(new String[storeIdList.size()]);
                 } else if (response.body() instanceof GetVehicleSubTypeResponse) {
-                    Log.e("GetVehicleTypes", "->");
                     mSubTypeList.clear();
                     mSubTypeList1.clear();
                     parsedData.clear();
@@ -875,7 +822,6 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                     parsedData.addAll(mSubTypeList);
                     if (getActivity() != null) {
                         ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, parsedData);
-                        // adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                         mSubType.setAdapter(adapter);
                     }
                     mSubType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -884,10 +830,6 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                             if (position != 0) {
                                 subcategoryId = mSubTypeList1.get(parsedData.get(position));
                                 subcategoryName = parsedData.get(position);
-
-                                System.out.println("Sub cat is::" + subcategoryId);
-                                System.out.println("Sub cat name::" + subcategoryName);
-
                                 getBrand(categoryId, subcategoryId);
                             }
                         }
@@ -898,11 +840,9 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                         }
                     });
                 } else if (response.body() instanceof GetVehicleBrandResponse) {
-                    Log.e("GetVehicleBrands", "->");
                     mBrandIdList.clear();
                     mBrandList1.clear();
                     brandData.clear();
-
                     mBrandIdList.add("Select Brands");
                     GetVehicleBrandResponse getVehicleBrandResponse = (GetVehicleBrandResponse) response.body();
                     for (GetVehicleBrandResponse.Success brandResponse : getVehicleBrandResponse.getSuccess()) {
@@ -913,7 +853,6 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                     }
                     mBrandIdList.add("other");
                     brandData.addAll(mBrandIdList);
-                    Log.i("ListBrand", "->" + mBrandIdList);
                     if (getActivity() != null) {
                         ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, brandData);
                         // adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -926,16 +865,11 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                             if (position != 0 && !brandData.get(position).equalsIgnoreCase("other")) {
                                 brandId = mBrandList1.get(brandData.get(position));
                                 brandName = brandData.get(position);
-
-                                System.out.println("Brand id is::" + brandId);
-                                System.out.println("Brand name::" + brandName);
                             }
-
                             if (brandData.get(position).equalsIgnoreCase("other")) {
                                 android.app.AlertDialog.Builder alertDialog = new android.app.AlertDialog.Builder(getActivity());
                                 alertDialog.setTitle("Add Brand");
                                 alertDialog.setMessage("Enter brand name");
-
                                 final EditText input = new EditText(getActivity());
                                 LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
                                         LinearLayout.LayoutParams.MATCH_PARENT,
@@ -943,21 +877,16 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                                 input.setLayoutParams(lp);
                                 input.setTextColor(Color.BLACK);
                                 alertDialog.setView(input);
-                                // alertDialog.setIcon(R.drawable.key);
-
                                 alertDialog.setPositiveButton("Add Brand",
                                         new DialogInterface.OnClickListener() {
                                             public void onClick(DialogInterface dialog, int which) {
-
                                                 String edbrand = input.getText().toString();
-
                                                 if (edbrand.equals("")) {
                                                     if (isAdded())
                                                         CustomToast.customToast(getActivity(), "Please enter brand");
                                                 } else {
                                                     AddBrand("Brand", edbrand, categoryId, subcategoryId);
                                                 }
-
                                                 dialog.dismiss();
                                             }
                                         });
@@ -968,11 +897,9 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                                                 dialog.dismiss();
                                             }
                                         });
-
                                 alertDialog.show();
                             } else
                                 getModel(categoryId, subcategoryId, brandId);
-
                         }
 
                         @Override
@@ -981,11 +908,9 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                         }
                     });
                 } else if (response.body() instanceof GetVehicleModelResponse) {
-                    Log.e("GetVehicleModel", "->");
                     mModelIdList.clear();
                     mModelList1.clear();
                     modelData.clear();
-
                     mModelIdList.add("Select Model");
                     GetVehicleModelResponse getVehicleModelResponse = (GetVehicleModelResponse) response.body();
                     for (GetVehicleModelResponse.Success modelResponse : getVehicleModelResponse.getSuccess()) {
@@ -996,10 +921,8 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                     }
                     mModelIdList.add("other");
                     modelData.addAll(mModelIdList);
-                    Log.i("ListModel", "->" + mModelIdList);
                     if (getActivity() != null) {
                         ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, modelData);
-                        //  adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                         mModelSpinner.setAdapter(adapter);
                         mVersionSpinner.setAdapter(null);
                     }
@@ -1009,16 +932,12 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                             if (position != 0 && !modelData.get(position).equalsIgnoreCase("other")) {
                                 modelId = mModelList1.get(modelData.get(position));
                                 modelName = modelData.get(position);
-
-                                System.out.println("Model id is::" + modelId);
-                                System.out.println("Model name::" + modelName);
                             }
 
                             if (modelData.get(position).equalsIgnoreCase("other")) {
                                 android.app.AlertDialog.Builder alertDialog = new android.app.AlertDialog.Builder(getActivity());
                                 alertDialog.setTitle("Add Model");
                                 alertDialog.setMessage("Enter model name");
-
                                 final EditText input = new EditText(getActivity());
                                 LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
                                         LinearLayout.LayoutParams.MATCH_PARENT,
@@ -1026,21 +945,17 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                                 input.setLayoutParams(lp);
                                 input.setTextColor(Color.BLACK);
                                 alertDialog.setView(input);
-                                // alertDialog.setIcon(R.drawable.key);
 
                                 alertDialog.setPositiveButton("Add Model",
                                         new DialogInterface.OnClickListener() {
                                             public void onClick(DialogInterface dialog, int which) {
-
                                                 String edmodel = input.getText().toString();
-
                                                 if (edmodel.equals("")) {
                                                     if (isAdded())
                                                         CustomToast.customToast(getActivity(), "Please enter model");
                                                 } else {
                                                     AddModel("Model", edmodel, categoryId, subcategoryId, brandId);
                                                 }
-
                                                 dialog.dismiss();
                                             }
                                         });
@@ -1051,11 +966,9 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                                                 dialog.dismiss();
                                             }
                                         });
-
                                 alertDialog.show();
                             } else
                                 getVersion(categoryId, subcategoryId, brandId, modelId);
-
                         }
 
                         @Override
@@ -1064,11 +977,9 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                         }
                     });
                 } else if (response.body() instanceof GetVehicleVersionResponse) {
-                    Log.e("GetVehicleVersion", "->");
                     mVersionIdList.clear();
                     mVersionList1.clear();
                     versionData.clear();
-
                     mVersionIdList.add("Select Version");
                     GetVehicleVersionResponse getVehicleVersionResponse = (GetVehicleVersionResponse) response.body();
                     for (GetVehicleVersionResponse.Success versionResponse : getVehicleVersionResponse.getSuccess()) {
@@ -1079,7 +990,6 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                     }
                     mVersionIdList.add("other");
                     versionData.addAll(mVersionIdList);
-                    Log.i("ListVersion", "->" + mVersionIdList);
                     if (getActivity() != null) {
                         ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, versionData);
                         //   adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -1091,16 +1001,12 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                             if (position != 0 && !versionData.get(position).equalsIgnoreCase("other")) {
                                 versionId = mVersionList1.get(versionData.get(position));
                                 versionName = versionData.get(position);
-
-                                System.out.println("Version id is::" + versionId);
-                                System.out.println("Version name::" + versionName);
                             }
 
                             if (versionData.get(position).equalsIgnoreCase("other")) {
                                 android.app.AlertDialog.Builder alertDialog = new android.app.AlertDialog.Builder(getActivity());
                                 alertDialog.setTitle("Add Version");
                                 alertDialog.setMessage("Enter version name");
-
                                 final EditText input = new EditText(getActivity());
                                 LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
                                         LinearLayout.LayoutParams.MATCH_PARENT,
@@ -1108,19 +1014,14 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                                 input.setLayoutParams(lp);
                                 input.setTextColor(Color.BLACK);
                                 alertDialog.setView(input);
-                                // alertDialog.setIcon(R.drawable.key);
-
                                 alertDialog.setPositiveButton("Add Version",
                                         new DialogInterface.OnClickListener() {
                                             public void onClick(DialogInterface dialog, int which) {
-
                                                 String edversion = input.getText().toString();
-
                                                 if (edversion.equals(""))
                                                     Toast.makeText(getActivity(), "Please enter version", Toast.LENGTH_LONG).show();
                                                 else
                                                     AddVersion("Version", edversion, categoryId, subcategoryId, brandId, modelId);
-
                                                 dialog.dismiss();
                                             }
                                         });
@@ -1129,14 +1030,10 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                                             public void onClick(DialogInterface dialog, int which) {
                                                 mVersionSpinner.setSelection(0);
                                                 dialog.dismiss();
-
                                             }
                                         });
-
                                 alertDialog.show();
                             }
-
-
                         }
 
                         @Override
@@ -1145,7 +1042,6 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                         }
                     });
                 } else if (response.body() instanceof GetBreaks) {
-                    Log.e("Get", "Breaks");
                     GetBreaks mGetBreaks = (GetBreaks) response.body();
                     mBreakList.clear();
                     mBreakList1.clear();
@@ -1169,39 +1065,27 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                             if (position != 0) {
                                 brakeId = mBreakList1.get(breakListData.get(position));
                                 brakeName = breakListData.get(position);
-
-                                System.out.println("Brake id:" + brakeId);
-                                System.out.println("Brake name::" + brakeName);
                             }
-
                             if (breakListData.get(position).equalsIgnoreCase("Other")) {
-
                                 android.app.AlertDialog.Builder alertDialog = new android.app.AlertDialog.Builder(getActivity());
                                 alertDialog.setTitle("Add Brakes");
                                 alertDialog.setMessage("Enter Brake name");
-
                                 final EditText input = new EditText(getActivity());
                                 LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
                                         LinearLayout.LayoutParams.MATCH_PARENT,
                                         LinearLayout.LayoutParams.MATCH_PARENT);
                                 input.setLayoutParams(lp);
                                 alertDialog.setView(input);
-                                // alertDialog.setIcon(R.drawable.key);
-
                                 alertDialog.setPositiveButton("Add Brake",
                                         new DialogInterface.OnClickListener() {
                                             public void onClick(DialogInterface dialog, int which) {
-
                                                 String otherBreak = input.getText().toString();
-
                                                 if (otherBreak.equals("")) {
                                                     if (isAdded())
                                                         CustomToast.customToast(getActivity(), "Please enter Brake type");
                                                 } else {
                                                     addOtherBreak(otherBreak);
                                                 }
-
-
                                                 dialog.dismiss();
                                             }
                                         });
@@ -1214,7 +1098,6 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                                         });
 
                                 alertDialog.show();
-
                             }
                         }
 
@@ -1225,7 +1108,6 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                     });
 
                 } else if (response.body() instanceof GetPumpResponse) {
-                    Log.e("Get", "Pumps");
                     GetPumpResponse mGetPumpResponse = (GetPumpResponse) response.body();
                     mPumpList.clear();
                     mPumpList1.clear();
@@ -1249,12 +1131,8 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                             if (position != 0) {
                                 pumpId = mPumpList1.get(pumpListData.get(position));
                                 pumpName = pumpListData.get(position);
-
-                                System.out.println("pump id::" + pumpId);
-                                System.out.println("pump name::" + pumpName);
                             }
                             if (pumpListData.get(position).equalsIgnoreCase("Other")) {
-
                                 android.app.AlertDialog.Builder alertDialog = new android.app.AlertDialog.Builder(getActivity());
                                 alertDialog.setTitle("Add Pump");
                                 alertDialog.setMessage("Enter Pump name");
@@ -1265,36 +1143,27 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                                         LinearLayout.LayoutParams.MATCH_PARENT);
                                 input.setLayoutParams(lp);
                                 alertDialog.setView(input);
-                                // alertDialog.setIcon(R.drawable.key);
-
                                 alertDialog.setPositiveButton("Add Pump",
                                         new DialogInterface.OnClickListener() {
                                             public void onClick(DialogInterface dialog, int which) {
-
                                                 String otherPump = input.getText().toString();
-
                                                 if (otherPump.equals("")) {
                                                     if (isAdded())
                                                         CustomToast.customToast(getActivity(), "Please enter Brake type");
                                                 } else {
                                                     addOtherPump(otherPump);
                                                 }
-
-
                                                 dialog.dismiss();
                                             }
                                         });
                                 alertDialog.setNegativeButton("No",
                                         new DialogInterface.OnClickListener() {
                                             public void onClick(DialogInterface dialog, int which) {
-
                                                 dialog.dismiss();
                                                 mPumpSpinner.setSelection(0);
                                             }
                                         });
-
                                 alertDialog.show();
-
                             }
                         }
 
@@ -1323,11 +1192,11 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
             if (isAdded())
                 CustomToast.customToast(getActivity(), getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
-//            if (isAdded())
-//                CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-//            if (isAdded())
-//                CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
             if (isAdded())
                 CustomToast.customToast(getActivity(), getString(R.string.no_internet));
@@ -1348,8 +1217,6 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                     if (isAdded())
                         CustomToast.customToast(getActivity(), "Brand added successfully");
                     getBrand(categoryId, subcategoryId);
-                    Log.i("msg", "Brand added successfully");
-
                     break;
                 case "success_model_add":
                     if (isAdded())
@@ -1372,7 +1239,6 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                     getPumps();
                     break;
             }
-
         } else {
             if (isAdded())
                 CustomToast.customToast(getActivity(), getString(R.string.no_response));
@@ -1386,7 +1252,6 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.title_next:
-
                 String strTitle = "", strGroupPriavcy = "", strStorePrivacy = "", strFinanceStatus = "", strExchangeStatus = "",
                         permit = "", strMakemonth = "", strMakeyear = "", strRegisterMonth = "", strRegisterYear = "",
                         strHrs = "", brandstr = "", modelstr = "", versionstr = "";
@@ -1396,7 +1261,6 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                 strMakeyear = String.valueOf(myp.getSelectedYear());
                 strRegisterMonth = myp1.getSelectedMonthName();
                 strRegisterYear = String.valueOf(myp1.getSelectedYear());
-
                 int man_monthposition = myp.getSelectedMonthPosition();
                 int reg_monthposition = myp1.getSelectedMonthPosition();
 
@@ -1420,29 +1284,22 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                 if (storeradioyes.isChecked()) {
                     strStorePrivacy = "Yes";
                 } else if (storeradiono.isChecked()) {
-
                     strStorePrivacy = "No";
                 }
-
 
                 if (financeyes.isChecked()) {
                     strFinanceStatus = "Yes";
                 } else if (financeno.isChecked()) {
-
                     strFinanceStatus = "No";
                 }
-
 
                 if (exchangeyes.isChecked()) {
                     strExchangeStatus = "Yes";
                 } else if (exchangeno.isChecked()) {
-
                     strExchangeStatus = "No";
                 }
 
-
                 if (category.equalsIgnoreCase("Car")) {
-
                     if (mTouristPassing.isChecked())
                         permit = "Tourist Passing";
                     if (mPrivatePassing.isChecked())
@@ -1463,7 +1320,6 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                 } else if (category.equalsIgnoreCase("Car") && !mTouristPassing.isChecked() && !mPrivatePassing.isChecked()) {
                     Toast.makeText(getActivity(), "Please select permit type", Toast.LENGTH_SHORT).show();
                 } else if (brandstr.startsWith("Select") || modelstr.startsWith("Select") || brandstr.equals("") || modelstr.equals("")) {
-
                     if (brandstr.startsWith("Select")) {
                         Toast.makeText(getActivity(), "Please select Brand", Toast.LENGTH_SHORT).show();
                     } else if (modelstr.startsWith("Select")) {
@@ -1475,13 +1331,7 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                     Toast.makeText(getActivity(), "Sorry Registration year not valid", Toast.LENGTH_LONG).show();
                 } else if (reg_yearposition == man_yearposition && reg_monthposition > man_monthposition) {
                     Toast.makeText(getActivity(), "Sorry Registration Month not valid", Toast.LENGTH_LONG).show();
-                }else {
-
-                    Log.i("Data", "GroupIds" + stringgroupids);
-                    Log.i("Data", "GroupNames" + stringgroupname);
-                    Log.i("Data", "StoreIds" + stringstoreids);
-                    Log.i("Data", "StoreNames" + stringstorename);
-
+                } else {
                     getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putInt("upload_brandId", brandId).apply();
                     getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_brandName", brandstr).apply();
                     getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putInt("upload_modelId", modelId).apply();
@@ -1494,7 +1344,6 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                     getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_brakeName", brakeName).apply();
                     getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_pumpId", pumpId).apply();
                     getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_pumpName", pumpName).apply();
-
 
                     getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_Title", strTitle).apply();
 
@@ -1518,7 +1367,6 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
 
                     getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_Hrs", strHrs).apply();
                     getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putLong("upload_Kms", strKms).apply();
-
 
                     FragmentManager manager = getFragmentManager();
                     FragmentTransaction mTransaction = manager.beginTransaction();

@@ -54,11 +54,10 @@ import static android.app.Activity.RESULT_OK;
 import static android.content.Context.MODE_PRIVATE;
 
 /**
- * Created by ak-001 on 21/3/17.
+ * Created by ak-001 on 21/3/17
  */
 
 public class SubTypeFragment extends Fragment implements View.OnClickListener, RequestNotifier, View.OnTouchListener {
-
     View mSubtype;
     Button mUploadVehicle;
     String allimgpath = "";
@@ -102,8 +101,6 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
         mLocation = (AutoCompleteTextView) mSubtype.findViewById(R.id.autolocation);
         registernumber = (EditText) mSubtype.findViewById(R.id.registernumber);
         mBodyTypeSpinner = (Spinner) mSubtype.findViewById(R.id.bodytypespinner);
-
-
         mHypoSpinner = (Spinner) mSubtype.findViewById(R.id.hypospinner1);
         mRcSpinner = (Spinner) mSubtype.findViewById(R.id.rcspinner1);
         mInsuranceSpinner = (Spinner) mSubtype.findViewById(R.id.insurancespinner1);
@@ -151,7 +148,6 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
         edtSetJib = (EditText) mSubtype.findViewById(R.id.setjib);
         edtSetBoon = (EditText) mSubtype.findViewById(R.id.setBoon);
 
-
         mUploadVehicle.setOnClickListener(this);
         btnBody.setOnClickListener(this);
         btnRefreshBody.setOnClickListener(this);
@@ -176,19 +172,15 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
                     getVehicleColor();
                     getImplements();
                     getBodyTypes();
-
                     if (subCategory.equals("Excavator") || subCategory.equals("Skid Steers") || subCategory.equals("Crawlers")
                             || subCategory.equals("Dozer") || subCategory.equals("Concrete Mixers") || subCategory.equals("Road Rollers")
                             || subCategory.equals("Milling Equipment") || subCategory.equals("Trenches")) {
                         mRTOcity.setVisibility(View.GONE);
                         registernumber.setVisibility(View.GONE);
                         checkBox1.setVisibility(View.GONE);
-
-
                     }
 
                     mLocation.setAdapter(new GooglePlacesAdapter(getActivity(), R.layout.addproductspinner_color));
-
                     checkBox1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                         @Override
                         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -207,7 +199,6 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
                     });
 
                     if (Category.equalsIgnoreCase("Bus")) {
-
                         autoBodymanufacturer.setVisibility(View.VISIBLE);
                         autoSeatmanufacturer.setVisibility(View.VISIBLE);
                         getBodyAndSeatManufacturer();
@@ -254,7 +245,6 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
                             mFitnessSpinner.setVisibility(View.GONE);
                         }
                     } else if (Category.equalsIgnoreCase("Construction Equipment")) {
-
                         String RCInvoiceText;
                         edtTyreContext.setVisibility(View.GONE);
                         mInvoiceSpinner.setVisibility(View.VISIBLE);
@@ -324,10 +314,7 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
                                 if (position != 0) {
                                     String invoice = mInvoiceSpinner.getSelectedItem().toString();
                                     int invoiceid = mInvoiceSpinner.getSelectedItemPosition();
-
                                     getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_invoice", invoice).apply();
-
-                                    System.out.println("Invoice  is::" + invoice);
                                 }
                             }
 
@@ -356,7 +343,6 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
                         edtTyreContext.setVisibility(View.VISIBLE);
                         mBodyTypeSpinner.setVisibility(View.VISIBLE);
                     } else if (Category.equalsIgnoreCase("Tractor")) {
-
                         fuelType();
                         mSetFuel.setVisibility(View.GONE);
                         edtTyreContext.setVisibility(View.VISIBLE);
@@ -381,7 +367,6 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
                         mBodyTypeSpinner.setVisibility(View.GONE);
 
                     } else if (Category.equalsIgnoreCase("2 Wheeler")) {
-                        //edtTyreContext.setVisibility(View.GONE);
                         mFuel.clear();
                         mFuel.add("-Select Fuel Type-");
                         mFuel.add("Petrol");
@@ -415,9 +400,6 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
                         edtSeatCap.setVisibility(View.GONE);
 
                     } else if (Category.equalsIgnoreCase("3 Wheeler")) {
-                        /*edtTyreContext.setVisibility(View.VISIBLE);
-                        edtApptext.setVisibility(View.VISIBLE);*/
-
                     /*23-8-17*/
                         mBustypeSpinner.setVisibility(View.GONE);
                         edtSetBoon.setVisibility(View.GONE);
@@ -429,14 +411,11 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
                         mEmissionSpinner.setVisibility(View.VISIBLE);
                         edtApptext.setVisibility(View.VISIBLE);
                         mAircondSpinner.setVisibility(View.GONE);
-
-                        // seatrow.setVisibility(View.VISIBLE);
                         fuelType();
                         mTaxValidSpinner.setVisibility(View.GONE);
                         mPermitSpinner.setVisibility(View.GONE);
                         mFitnessSpinner.setVisibility(View.GONE);
                         mBodyTypeSpinner.setVisibility(View.GONE);
-
                     } else if (Category.equalsIgnoreCase("Cranes")) {
                         fuelType();
                         edtTyreContext.setVisibility(View.VISIBLE);
@@ -454,7 +433,6 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
                     mTaxValidSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
                             if (mTaxValidSpinner.getSelectedItem().toString().equalsIgnoreCase("Yes"))
                                 relTaxdate.setVisibility(View.VISIBLE);
                             else
@@ -470,7 +448,6 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
                     mPermitSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
                             if (mPermitSpinner.getSelectedItem().toString().equalsIgnoreCase("Yes"))
                                 relPermit.setVisibility(View.VISIBLE);
                             else
@@ -486,7 +463,6 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
                     mFitnessSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
                             if (mFitnessSpinner.getSelectedItem().toString().equalsIgnoreCase("Yes"))
                                 relFitness.setVisibility(View.VISIBLE);
                             else
@@ -502,17 +478,12 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
                     mInsuranceSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                         @Override
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
                             if (mInsuranceSpinner.getSelectedItem().toString().equalsIgnoreCase("Yes")) {
                                 relInsurance.setVisibility(View.VISIBLE);
                                 edtInsuranceIdv.setVisibility(View.VISIBLE);
                             } else {
                                 relInsurance.setVisibility(View.GONE);
-
-//                                if (insOtherRow.getVisibility() == View.VISIBLE)
-//                                    insOtherRow.setVisibility(View.GONE);
                             }
-
                         }
 
                         @Override
@@ -526,7 +497,6 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
                 }
             }
         });
-
         return mSubtype;
     }
 
@@ -625,15 +595,12 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
     }
 
     private void upload() {
-
         Boolean flag = false;
-
         String rtostr = "", registernumberstr = "", locationstr = "", hypostr = "", bodymanufacturerstr = "", seatmanufacturerstr = "", rcStr = "", insuranceStr = "", taxStr = "", permitStr = "", fitnessStr = "", insuranceDate = "", taxDate = "", fitnessDate = "",
                 permitDate = "", insuranceIdv = "", chasisstr = "", enginestr = "", emissionstr = "", drivestr = "", transstr = "",
                 bustypestr = "", airstr = "", appstr = "", implementstr = "", seatcapstr = "", tyrecontextstr = "", fuelstr = "", hpcapstr = "",
                 jibstr = "", boonstr = "";
         int ownerstr = 0;
-
         bodymanufacturerstr = autoBodymanufacturer.getText().toString();
         seatmanufacturerstr = autoSeatmanufacturer.getText().toString();
         insuranceIdv = edtInsuranceIdv.getText().toString();
@@ -717,16 +684,12 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
 
         locationstr = mLocation.getText().toString();
         if (!locationstr.isEmpty()) {
-
             List<String> locationList = GooglePlacesAdapter.getResultList();
             for (int i = 0; i < locationList.size(); i++) {
-
                 if (locationstr.equalsIgnoreCase(locationList.get(i))) {
                     flag = true;
                     break;
-
                 } else {
-
                     flag = false;
                 }
             }
@@ -793,8 +756,6 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
             alertDialog = builder1.create();
             alertDialog.show();
         }
-
-
     }
 
     private void start() {
@@ -865,13 +826,9 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
                 Toast.makeText(getActivity(),
                         "You've selected Total " + cnt + " image(s).",
                         Toast.LENGTH_LONG).show();
-                Log.d("SelectedImages", selectImages);
 
                 getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("images", allimgpath).apply();
-
-
                 alertDialog.dismiss();
-
                 Bundle b = new Bundle();
                 b.putStringArrayList("IMAGE", (ArrayList<String>) mPath1);
                 b.putInt("call", 1);
@@ -882,7 +839,6 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
                         .replace(R.id.vehicle_upload_container, mSelectedImagesFragment, "selectedimagefragment")
                         .addToBackStack("selectedimagefragment")
                         .commit();
-
             }
             System.out.println(selectedimg);
         }
@@ -892,16 +848,11 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
     public void notifySuccess(Response<?> response) {
         if (response != null) {
             if (response.isSuccessful()) {
-
                 //Rto city
                 if (response.body() instanceof GetRTOCityResponse) {
                     mRtoCity.clear();
                     GetRTOCityResponse mGetRTOCityResponse = (GetRTOCityResponse) response.body();
                     for (GetRTOCityResponse.Success success : mGetRTOCityResponse.getSuccess()) {
-                        /*success.setRtoCityId(success.getRtoCityId());
-                        success.setRtoCityName(success.getRtoCityName());
-                        success.setRtoCode(success.getRtoCode());
-                        mRtoCity.add(success.getRtoCode());*/
                         mRtoCity.add(success.getRtoCode() + " " +
                                 success.getRtoCityName());
                     }
@@ -932,11 +883,7 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                             if (position != 0) {
                                 String color = mSetColorSpinner.getSelectedItem().toString();
-                                int colorid = mSetColorSpinner.getSelectedItemPosition();
-
                                 getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_color", color).apply();
-
-                                System.out.println("Color is::" + color);
                             }
                         }
 
@@ -966,11 +913,7 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                             if (position != 0) {
                                 String bodyType = mBodyTypeSpinner.getSelectedItem().toString();
-                                int bodyTypeid = mBodyTypeSpinner.getSelectedItemPosition();
-
                                 getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_bodyType", bodyType).apply();
-
-                                System.out.println("Body Type is::" + bodyType);
                             }
                         }
 
@@ -1001,11 +944,7 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
                         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                             if (position != 0) {
                                 String implement = mImplementSpinner.getSelectedItem().toString();
-                                int implementid = mImplementSpinner.getSelectedItemPosition();
-
                                 getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_implement", implement).apply();
-
-                                System.out.println("Implement is::" + implement);
                             }
                         }
 
@@ -1080,9 +1019,7 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
 
     @Override
     public void notifyString(String str) {
-
         if (str != null) {
-
             if (str.equals("success_body")) {
                 if (isAdded())
                     CustomToast.customToast(getActivity(), "Data added successfully");
@@ -1103,7 +1040,6 @@ public class SubTypeFragment extends Fragment implements View.OnClickListener, R
     public boolean onTouch(View v, MotionEvent event) {
         int action = event.getAction();
         switch (v.getId()) {
-
             case R.id.editinsurancedate:
                 if (action == MotionEvent.ACTION_DOWN) {
                     //whichclick = "enddate";
