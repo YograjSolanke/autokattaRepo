@@ -78,7 +78,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginEnd="@dimen/text_margin_top"
                         android:contentDescription="@string/app_name"
-                        android:src="@mipmap/heart_liked"
+                        android:src="@mipmap/new_favourite_clk"
                         android:visibility="gone" />
 
                     <ImageButton
@@ -90,7 +90,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginEnd="@dimen/text_margin_top"
                         android:contentDescription="@string/app_name"
-                        android:src="@mipmap/ic_heart_like"
+                        android:src="@mipmap/new_favourite"
                         android:visibility="visible" />
 
                 </RelativeLayout>

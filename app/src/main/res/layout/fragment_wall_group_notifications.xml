@@ -220,7 +220,7 @@
                     android:layout_marginEnd="@dimen/text_margin_top"
                     android:contentDescription="@string/app_name"
                     android:visibility="gone"
-                    android:src="@mipmap/heart_liked" />
+                    android:src="@mipmap/new_favourite_clk" />
 
                 <ImageButton
                     android:id="@+id/group_unfavourite"
@@ -230,7 +230,7 @@
                     android:layout_marginEnd="@dimen/text_margin_top"
                     android:contentDescription="@string/app_name"
                     android:visibility="visible"
-                    android:src="@mipmap/ic_heart_like" />
+                    android:src="@mipmap/new_favourite" />
 
 
             </RelativeLayout>

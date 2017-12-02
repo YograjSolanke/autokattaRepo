@@ -46,15 +46,15 @@ import autokatta.com.view.ShareWithinAppActivity;
  * Created by ak-004 on 30/3/17.
  */
 
-public class ActiveAuctionAdapter extends RecyclerView.Adapter<ActiveAuctionAdapter.AuctionHolder> {
+public class ActiveAuctionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private HashMap<TextView, CountDownTimer> counters;
     Activity activity;
     private Handler handler;
     Runnable runnable;
     String[] st;
-    private String special_clause, spcl, allDetails;
-    private static LayoutInflater inflater = null;
+    private String spcl;
+    private String allDetails;
     private List<MyActiveAuctionResponse.Success.Auction> auctionDetailsArrayList;
 
     public ActiveAuctionAdapter(Activity activity, List<MyActiveAuctionResponse.Success.Auction> itemist) {
@@ -64,7 +64,7 @@ public class ActiveAuctionAdapter extends RecyclerView.Adapter<ActiveAuctionAdap
     }
 
     @Override
-    public ActiveAuctionAdapter.AuctionHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.active_auction_adapter, parent, false);
@@ -74,16 +74,17 @@ public class ActiveAuctionAdapter extends RecyclerView.Adapter<ActiveAuctionAdap
     }
 
     @Override
-    public void onBindViewHolder(final ActiveAuctionAdapter.AuctionHolder holder, int position) {
+    public void onBindViewHolder(RecyclerView.ViewHolder holder1, int position) {
 
-        holder.action_title.setText(auctionDetailsArrayList.get(position).getActionTitle());
-        holder.auction_vehicle.setText(auctionDetailsArrayList.get(position).getNoOfVehicle());
-        holder.auction_enddate.setText(auctionDetailsArrayList.get(position).getEndDate());
-        holder.auction_endtime.setText(auctionDetailsArrayList.get(position).getEndTime());
-        holder.auction_startdate.setText(auctionDetailsArrayList.get(position).getStartDate());
-        holder.auction_starttime.setText(auctionDetailsArrayList.get(position).getStartTime());
-        holder.mAuction_category.setText(auctionDetailsArrayList.get(position).getAuctioncategory());
-        holder.mStockLocation.setText(auctionDetailsArrayList.get(position).getStockLocation());
+        final AuctionHolder holder = (AuctionHolder) holder1;
+        holder.action_title.setText(auctionDetailsArrayList.get(holder.getAdapterPosition()).getActionTitle());
+        holder.auction_vehicle.setText(auctionDetailsArrayList.get(holder.getAdapterPosition()).getNoOfVehicle());
+        holder.auction_enddate.setText(auctionDetailsArrayList.get(holder.getAdapterPosition()).getEndDate());
+        holder.auction_endtime.setText(auctionDetailsArrayList.get(holder.getAdapterPosition()).getEndTime());
+        holder.auction_startdate.setText(auctionDetailsArrayList.get(holder.getAdapterPosition()).getStartDate());
+        holder.auction_starttime.setText(auctionDetailsArrayList.get(holder.getAdapterPosition()).getStartTime());
+        holder.mAuction_category.setText(auctionDetailsArrayList.get(holder.getAdapterPosition()).getAuctioncategory());
+        holder.mStockLocation.setText(auctionDetailsArrayList.get(holder.getAdapterPosition()).getStockLocation());
 
         final TextView tv = holder.timer;
         CountDownTimer cdt = counters.get(holder.timer);
@@ -94,8 +95,8 @@ public class ActiveAuctionAdapter extends RecyclerView.Adapter<ActiveAuctionAdap
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
         try {
-            Date futureDate = dateFormat.parse(auctionDetailsArrayList.get(position).getEndDateTime().replace("T"," "));
-            Date currentDate = dateFormat.parse(auctionDetailsArrayList.get(position).getStartDateTime().replace("T"," "));
+            Date futureDate = dateFormat.parse(auctionDetailsArrayList.get(holder.getAdapterPosition()).getEndDateTime().replace("T", " "));
+            Date currentDate = dateFormat.parse(auctionDetailsArrayList.get(holder.getAdapterPosition()).getStartDateTime().replace("T", " "));
             Date now = new Date();
             long difference = futureDate.getTime() - now.getTime();
             cdt = new CountDownTimer(difference, 1000) {
@@ -152,7 +153,7 @@ public class ActiveAuctionAdapter extends RecyclerView.Adapter<ActiveAuctionAdap
             e.printStackTrace();
         }
 
-        special_clause = auctionDetailsArrayList.get(position).getSpecialClauses();
+        String special_clause = auctionDetailsArrayList.get(holder.getAdapterPosition()).getSpecialClauses();
         spcl = special_clause.replaceAll(",", "\n");
 
         holder.btnclause.setOnClickListener(new View.OnClickListener() {
@@ -285,6 +286,7 @@ public class ActiveAuctionAdapter extends RecyclerView.Adapter<ActiveAuctionAdap
 
                                 Log.e("TAG", "img URL: " + imagename);
 
+                                assert manager != null;
                                 manager.enqueue(request);
 
                                 imageFilePath = "/storage/emulated/0/Download/" + filename;
@@ -313,7 +315,7 @@ public class ActiveAuctionAdapter extends RecyclerView.Adapter<ActiveAuctionAdap
         return auctionDetailsArrayList.size();
     }
 
-    static class AuctionHolder extends RecyclerView.ViewHolder {
+    private class AuctionHolder extends RecyclerView.ViewHolder {
 
         TextView action_title, auction_vehicle, auction_enddate, auction_endtime, auction_startdate,
                 auction_starttime, mAuction_category, mStockLocation;

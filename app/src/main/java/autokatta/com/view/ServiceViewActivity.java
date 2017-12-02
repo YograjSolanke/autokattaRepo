@@ -48,6 +48,9 @@ import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.daimajia.slider.library.Tricks.ViewPagerEx;
 
 import java.io.File;
+import java.net.ConnectException;
+import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -114,7 +117,7 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
     int srate2;
     int srate3;
     int store_id;
-    String storecontact,singleimage;
+    String storecontact, singleimage;
     private String[] groupIdArray = new String[0];
     String brandtags_list;
     TextView storename, website, textlike, textshare;
@@ -250,38 +253,37 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
     /*set color to rating bar*/
 
         LayerDrawable stars = (LayerDrawable) pricebar.getProgressDrawable();
-        stars.getDrawable(2).setColorFilter(ContextCompat.getColor(getApplicationContext(),R.color.medium_sea_green), PorterDuff.Mode.SRC_ATOP);//After filled
-        stars.getDrawable(0).setColorFilter(ContextCompat.getColor(getApplicationContext(),R.color.grey), PorterDuff.Mode.SRC_ATOP);//empty
-        stars.getDrawable(1).setColorFilter(ContextCompat.getColor(getApplicationContext(),R.color.textColor), PorterDuff.Mode.SRC_ATOP);//
+        stars.getDrawable(2).setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.medium_sea_green), PorterDuff.Mode.SRC_ATOP);//After filled
+        stars.getDrawable(0).setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.grey), PorterDuff.Mode.SRC_ATOP);//empty
+        stars.getDrawable(1).setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.textColor), PorterDuff.Mode.SRC_ATOP);//
 
 
         LayerDrawable stars1 = (LayerDrawable) qualitybar.getProgressDrawable();
-        stars1.getDrawable(2).setColorFilter(ContextCompat.getColor(getApplicationContext(),R.color.medium_sea_green), PorterDuff.Mode.SRC_ATOP);//After filled
-        stars1.getDrawable(0).setColorFilter(ContextCompat.getColor(getApplicationContext(),R.color.grey), PorterDuff.Mode.SRC_ATOP);//empty
-        stars1.getDrawable(1).setColorFilter(ContextCompat.getColor(getApplicationContext(),R.color.textColor), PorterDuff.Mode.SRC_ATOP);//
-
+        stars1.getDrawable(2).setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.medium_sea_green), PorterDuff.Mode.SRC_ATOP);//After filled
+        stars1.getDrawable(0).setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.grey), PorterDuff.Mode.SRC_ATOP);//empty
+        stars1.getDrawable(1).setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.textColor), PorterDuff.Mode.SRC_ATOP);//
 
 
         LayerDrawable stars2 = (LayerDrawable) tmbar.getProgressDrawable();
-        stars2.getDrawable(2).setColorFilter(ContextCompat.getColor(getApplicationContext(),R.color.medium_sea_green), PorterDuff.Mode.SRC_ATOP);//After filled
-        stars2.getDrawable(0).setColorFilter(ContextCompat.getColor(getApplicationContext(),R.color.grey), PorterDuff.Mode.SRC_ATOP);//empty
-        stars2.getDrawable(1).setColorFilter(ContextCompat.getColor(getApplicationContext(),R.color.textColor), PorterDuff.Mode.SRC_ATOP);//
+        stars2.getDrawable(2).setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.medium_sea_green), PorterDuff.Mode.SRC_ATOP);//After filled
+        stars2.getDrawable(0).setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.grey), PorterDuff.Mode.SRC_ATOP);//empty
+        stars2.getDrawable(1).setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.textColor), PorterDuff.Mode.SRC_ATOP);//
 
 
         LayerDrawable stars3 = (LayerDrawable) servicerating.getProgressDrawable();
-        stars3.getDrawable(2).setColorFilter(ContextCompat.getColor(getApplicationContext(),R.color.medium_sea_green), PorterDuff.Mode.SRC_ATOP);//After filled
-        stars3.getDrawable(0).setColorFilter(ContextCompat.getColor(getApplicationContext(),R.color.grey), PorterDuff.Mode.SRC_ATOP);//empty
-        stars3.getDrawable(1).setColorFilter(ContextCompat.getColor(getApplicationContext(),R.color.textColor), PorterDuff.Mode.SRC_ATOP);//
+        stars3.getDrawable(2).setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.medium_sea_green), PorterDuff.Mode.SRC_ATOP);//After filled
+        stars3.getDrawable(0).setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.grey), PorterDuff.Mode.SRC_ATOP);//empty
+        stars3.getDrawable(1).setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.textColor), PorterDuff.Mode.SRC_ATOP);//
 
         LayerDrawable stars4 = (LayerDrawable) storerating.getProgressDrawable();
-        stars4.getDrawable(2).setColorFilter(ContextCompat.getColor(getApplicationContext(),R.color.medium_sea_green), PorterDuff.Mode.SRC_ATOP);//After filled
-        stars4.getDrawable(0).setColorFilter(ContextCompat.getColor(getApplicationContext(),R.color.grey), PorterDuff.Mode.SRC_ATOP);//empty
-        stars4.getDrawable(1).setColorFilter(ContextCompat.getColor(getApplicationContext(),R.color.textColor), PorterDuff.Mode.SRC_ATOP);//
+        stars4.getDrawable(2).setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.medium_sea_green), PorterDuff.Mode.SRC_ATOP);//After filled
+        stars4.getDrawable(0).setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.grey), PorterDuff.Mode.SRC_ATOP);//empty
+        stars4.getDrawable(1).setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.textColor), PorterDuff.Mode.SRC_ATOP);//
 
         LayerDrawable stars5 = (LayerDrawable) overallbar.getProgressDrawable();
-        stars5.getDrawable(2).setColorFilter(ContextCompat.getColor(getApplicationContext(),R.color.medium_sea_green), PorterDuff.Mode.SRC_ATOP);//After filled
-        stars5.getDrawable(0).setColorFilter(ContextCompat.getColor(getApplicationContext(),R.color.grey), PorterDuff.Mode.SRC_ATOP);//empty
-        stars5.getDrawable(1).setColorFilter(ContextCompat.getColor(getApplicationContext(),R.color.textColor), PorterDuff.Mode.SRC_ATOP);//
+        stars5.getDrawable(2).setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.medium_sea_green), PorterDuff.Mode.SRC_ATOP);//After filled
+        stars5.getDrawable(0).setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.grey), PorterDuff.Mode.SRC_ATOP);//empty
+        stars5.getDrawable(1).setColorFilter(ContextCompat.getColor(getApplicationContext(), R.color.textColor), PorterDuff.Mode.SRC_ATOP);//
 
 
         //service_id="115";
@@ -856,7 +858,7 @@ Get Admin data...
                                 if (simages.contains(",")) {
                                     String[] items = simages.split(",");
                                     photocount.setText(items.length + " photos");
-                                    singleimage=items[0];
+                                    singleimage = items[0];
                                     imageslist.add(items[0].substring(items[0].length()));
                                     for (String item : items) {
                                         Hash_file_maps.put("Image-" + item, dp_path + item.replaceAll(" ", ""));
@@ -951,7 +953,23 @@ Get Admin data...
 
     @Override
     public void notifyError(Throwable error) {
-
+        if (dialog.isShowing())
+            dialog.dismiss();
+        if (error instanceof SocketTimeoutException) {
+            CustomToast.customToast(ServiceViewActivity.this, getString(R.string._404_));
+        } else if (error instanceof NullPointerException) {
+            CustomToast.customToast(ServiceViewActivity.this, getString(R.string.no_response));
+        } else if (error instanceof ClassCastException) {
+            CustomToast.customToast(ServiceViewActivity.this, getString(R.string.no_response));
+        } else if (error instanceof ConnectException) {
+            CustomToast.customToast(ServiceViewActivity.this, getString(R.string.no_internet));
+        } else if (error instanceof UnknownHostException) {
+            CustomToast.customToast(ServiceViewActivity.this, getString(R.string.no_internet));
+        } else {
+            Log.i("Check Class-"
+                    , "ServiceViewActivity");
+            error.printStackTrace();
+        }
     }
 
     @Override
@@ -1165,10 +1183,6 @@ Get Admin data...
                 }
                 break;
 
-            /*case R.id.linearreview:
-                relativewritereview.setVisibility(View.VISIBLE);
-                break;*/
-
             case R.id.call:
 
                 if (storeAdmins.size() == 0)
@@ -1271,7 +1285,7 @@ Get Admin data...
                         switch (item.getItemId()) {
                             case R.id.autokatta:
 
-                                allDetails = sname + "=" + stype + "=" + srating + "=" + slikecnt + "=" + imageslist;
+                                allDetails = sname + "=" + stype + "=" + srating + "=" + slikecnt + "=" + singleimage;
                                 getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
                                         putString("Share_sharedata", allDetails).apply();
                                 getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
@@ -1289,23 +1303,12 @@ Get Admin data...
 
                                 Intent intent = new Intent(Intent.ACTION_SEND);
                                 String imageFilePath;
-                                String singleImage;
-                                if (simages.contains(",")) {
-                                    String[] items = simages.split(",");
-                                    singleImage = items[0];
-                            /*for (String item : items) {
-                                notification.setUpVehicleImage(item);
-                            }*/
-                                } else {
-                                    singleImage = simages;
-                                }
-
 
                                 if (simages.equalsIgnoreCase("") || simages.equalsIgnoreCase(null) ||
                                         simages.equalsIgnoreCase("null")) {
                                     imagename = getString(R.string.base_image_url) + "logo48x48.png";
                                 } else {
-                                    imagename = getString(R.string.base_image_url) + singleImage;
+                                    imagename = getString(R.string.base_image_url) + singleimage;
                                 }
 
                                 Log.e("TAG", "img : " + imagename);
@@ -1378,7 +1381,6 @@ Get Admin data...
                 intent.putExtra("service_id", service_id);
                 intent.putExtra("contact", receiver_contact);
                 startActivity(intent);
-
                 break;
 
             case R.id.note:
@@ -1389,7 +1391,6 @@ Get Admin data...
                 intent1.putExtra("service_id", service_id);
                 intent1.putExtra("contact", contact);
                 intent1.putExtra("image", singleimage);
-
                 startActivity(intent1);
                 break;
         }
@@ -1444,7 +1445,6 @@ Get Admin data...
     private void getCallContactList() {
 
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(ServiceViewActivity.this);
-// ...Irrelevant code for customizing the buttons and title
         LayoutInflater inflater = getLayoutInflater();
         View dialogView = inflater.inflate(R.layout.admin_contact_call_layout, null);
         dialogBuilder.setView(dialogView);

@@ -96,7 +96,6 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
     TextView storename, website, txtlike, txtshare, txtreview;
     EditText productname, productprice, productdetails, producttype, writereview;
     Bundle b = new Bundle();
-    //variables for getting data through bundle form adapter
     String name;
     String web;
     Integer rating;
@@ -109,7 +108,7 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
     String pimages;
     String plikestatus;
     String action;
-    String singleimage="";
+    String singleimage = "";
     String pcategory;
     Integer prating;
     String receiver_contact;
@@ -129,7 +128,6 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
     Button linearlike, linearshare, linearunlike, linearReview;
     final List<String> brandTags = new ArrayList<>();
 
-    // SharedPreferences settings;
     String contact;
     Float pricerate = 0.0f;
     Float qualityrate = 0.0f;
@@ -229,7 +227,6 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
 
         mainlayout.setVisibility(View.GONE);
         overallbar.setEnabled(false);
-        //storerating.setEnabled(false);
         productrating.setEnabled(false);
         edit.setOnClickListener(this);
         check.setOnClickListener(this);
@@ -355,7 +352,6 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
     private void getProductData(int id, String contact) {
         ApiCall mApicall = new ApiCall(this, this);
         mApicall.getProductDetails(id, contact);
-        //mApicall.getProductDetails(15, "2020202020");
     }
 
     /*
@@ -499,7 +495,7 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                 } else if (response.body() instanceof StoreOldAdminResponse) {
                     StoreOldAdminResponse adminResponse = (StoreOldAdminResponse) response.body();
                     if (!adminResponse.getSuccess().isEmpty()) {
-                        storeAdmins.add( storecontact+ "-" + "Owner" + "-" + "Owner");
+                        storeAdmins.add(storecontact + "-" + "Owner" + "-" + "Owner");
                         for (StoreOldAdminResponse.Success success : adminResponse.getSuccess()) {
                             storeAdmins.add(success.getAdmin());
                         }
@@ -548,7 +544,6 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
 
                             getStoreAdmins(store_id);
                             storecontact = success.getAddedBy();
-                            //  storecontact = "3030303030";
                             storeowner = success.getStoreOwner();
                             brandtags_list = success.getBrandtags();
 
@@ -670,7 +665,7 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
 
                                 String[] items = pimages.split(",");
                                 photocount.setText("" + items.length + " photos");
-                                singleimage=items[0];
+                                singleimage = items[0];
                                 imageslist.add(items[0].substring(items[0].length()));
                                 for (String item : items) {
                                     Hash_file_maps.put("Image-" + item, dp_path + item.replaceAll(" ", ""));
@@ -985,7 +980,6 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                     multiautobrand.setEnabled(false);
                     spinnerlayout.setVisibility(View.GONE);
                     mLinearLayout.setVisibility(View.GONE);
-                    // spinCategory.setEnabled(false);
 
                     check.setVisibility(View.GONE);
                     edit.setVisibility(View.VISIBLE);
@@ -1004,9 +998,6 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                 }
                 break;
 
-            /*case R.id.linearreview:
-                relativewritereview.setVisibility(View.VISIBLE);
-                break;*/
             case R.id.call:
 
 
@@ -1014,21 +1005,7 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                     call(storecontact);
                 else
                     getCallContactList();
-//                // @Here are the list of items to be shown in the list
-//                if (storecontact.contains(",")) {
-//                    final String[] items = storecontact.split(",");
-//                    AlertDialog.Builder builder = new AlertDialog.Builder(ProductViewActivity.this);
-//                    builder.setTitle("Make your selection");
-//                    builder.setItems(items, new DialogInterface.OnClickListener() {
-//                        public void onClick(DialogInterface dialog, int item) {
-//                            call(items[item]);
-//                            dialog.dismiss();
-//
-//                        }
-//                    }).show();
-//                } else {
-//                    call(storecontact);
-//                }
+
                 break;
 
             case R.id.btnpost:
@@ -1061,15 +1038,6 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
 
                 break;
             case R.id.profile:
-//                b.putString("images", simages);
-//                ServiceImageSlider fragment = new ServiceImageSlider();
-//                fragment.setArguments(b);
-//
-//                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-//                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//                fragmentTransaction.replace(R.id.containerView, fragment);
-//                fragmentTransaction.addToBackStack("serviceimageslider");
-//                fragmentTransaction.commit();
                 break;
             case R.id.deleteproduct:
 
@@ -1136,7 +1104,7 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                         switch (item.getItemId()) {
                             case R.id.autokatta:
 
-                                allDetails = pname + "=" + ptype + "=" + prating + "=" + plikecnt + "=" + imageslist;
+                                allDetails = pname + "=" + ptype + "=" + prating + "=" + plikecnt + "=" + singleimage;
 
                                 getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).edit().
                                         putString("Share_sharedata", allDetails).apply();
@@ -1154,24 +1122,13 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
 
 
                                 Intent intent = new Intent(Intent.ACTION_SEND);
-                                String imageFilePath, singleImage;
-
-                                if (pimages.contains(",")) {
-                                    String[] items = pimages.split(",");
-                                    singleImage = items[0];
-                            /*for (String item : items) {
-                                notification.setUpVehicleImage(item);
-                            }*/
-                                } else {
-                                    singleImage = pimages;
-                                }
-
+                                String imageFilePath;
 
                                 if (pimages.equalsIgnoreCase("") || pimages.equalsIgnoreCase(null) ||
                                         pimages.equalsIgnoreCase("null")) {
                                     imagename = getString(R.string.base_image_url) + "logo48x48.png";
                                 } else {
-                                    imagename = getString(R.string.base_image_url) + singleImage;
+                                    imagename = getString(R.string.base_image_url) + singleimage;
                                 }
                                 Log.e("TAG", "img : " + imagename);
                                 DownloadManager.Request request = new DownloadManager.Request(
@@ -1259,7 +1216,7 @@ public class ProductViewActivity extends AppCompatActivity implements RequestNot
                 intent1.putExtra("product_id", product_id);
                 intent1.putExtra("service_id", 0);
                 intent1.putExtra("contact", contact);
-                intent1.putExtra("image",singleimage);
+                intent1.putExtra("image", singleimage);
 
                 startActivity(intent1);
 
