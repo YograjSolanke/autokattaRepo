@@ -54,6 +54,13 @@
                 android:orientation="vertical"
                 android:visibility="visible">
 
+                <ImageView
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:src="@drawable/logo48x48"
+                    android:id="@+id/imgaddphoto"
+                    />
+
                 <Button
                     android:id="@+id/btnaddphoto"
                     android:layout_width="100dp"
@@ -61,7 +68,9 @@
                     android:background="@drawable/buttonback"
                     android:text="@string/add_photo"
                     android:textColor="#ffffff"
+                    android:layout_marginTop="5dp"
                     android:textSize="16sp" />
+
             </LinearLayout>
 
             <LinearLayout
@@ -72,6 +81,13 @@
                 android:orientation="vertical"
                 android:visibility="visible">
 
+                <ImageView
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:src="@drawable/logo48x48"
+                    android:id="@+id/imgaddcover"
+                    />
+
                 <Button
                     android:id="@+id/btnaddcover"
                     android:layout_width="100dp"
@@ -79,6 +95,7 @@
                     android:background="@drawable/buttonback"
                     android:text="@string/add_cover_photo"
                     android:textColor="#ffffff"
+                    android:layout_marginTop="5dp"
                     android:textSize="16sp" />
             </LinearLayout>
 

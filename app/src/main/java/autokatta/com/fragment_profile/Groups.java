@@ -198,4 +198,10 @@ public class Groups extends Fragment implements RequestNotifier, View.OnClickLis
             }
         });
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getGroups();
+    }
 }

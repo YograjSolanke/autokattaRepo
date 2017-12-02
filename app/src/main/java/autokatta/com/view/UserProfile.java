@@ -347,12 +347,12 @@ public class UserProfile extends AppCompatActivity implements RequestNotifier, V
                         img.setImageBitmap(BitmapFactory.decodeFile(mediaPath));
                         img.setImageBitmap(bitmapRotate);
 
-                        Glide.with(UserProfile.this)
+                       /* Glide.with(UserProfile.this)
                                 .load(bitmapRotate)
                                 .centerCrop()
                                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                                 .into(img);
-
+*/
 
 //                            Saving image to mobile internal memory for sometime
                         String root = getApplicationContext().getFilesDir().toString();

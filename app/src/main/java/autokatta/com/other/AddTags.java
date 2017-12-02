@@ -31,6 +31,7 @@ public class AddTags extends AppCompatActivity implements RequestNotifier {
     List<String> mInterestResponse = new ArrayList<>();
     List<String> lst1 = new ArrayList<>();
     String numberString = "";
+    String action = "", interest = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +44,19 @@ public class AddTags extends AppCompatActivity implements RequestNotifier {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
         Button mOk = (Button) findViewById(R.id.ok);
+        FlexboxLayout flexbox = (FlexboxLayout) findViewById(R.id.flexbox);
+
+        if (getIntent().getExtras() != null) {
+            interest = getIntent().getExtras().getString("interest", "");
+            action = getIntent().getExtras().getString("action", "");
+
+            if (action != null) {
+                if (action.equalsIgnoreCase("other")) {
+                    mOk.setVisibility(View.GONE);
+                    flexbox.setEnabled(false);
+                }
+            }
+        }
         mOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -61,16 +75,29 @@ public class AddTags extends AppCompatActivity implements RequestNotifier {
                 finish();
             }
         });
-        FlexboxLayout flexbox = (FlexboxLayout) findViewById(R.id.flexbox);
 
-        ChipCloudConfig config = new ChipCloudConfig()
-                .selectMode(ChipCloud.SelectMode.multi)
-                .checkedChipColor(Color.parseColor("#ddaa00"))
-                .checkedTextColor(Color.parseColor("#ffffff"))
-                .uncheckedChipColor(Color.parseColor("#efefef"))
-                .uncheckedTextColor(Color.parseColor("#666666"));
+        ChipCloudConfig config;
+        if (action.equalsIgnoreCase("other")) {
+            config = new ChipCloudConfig()
+                    .selectMode(ChipCloud.SelectMode.none)
+                    .checkedChipColor(Color.parseColor("#ddaa00"))
+                    .checkedTextColor(Color.parseColor("#ffffff"))
+                    .uncheckedChipColor(Color.parseColor("#efefef"))
+                    .uncheckedTextColor(Color.parseColor("#666666"));
 
-        chipCloud = new ChipCloud(getApplicationContext(), flexbox, config);
+            chipCloud = new ChipCloud(getApplicationContext(), flexbox, config);
+        } else {
+            config = new ChipCloudConfig()
+                    .selectMode(ChipCloud.SelectMode.multi)
+                    .checkedChipColor(Color.parseColor("#ddaa00"))
+                    .checkedTextColor(Color.parseColor("#ffffff"))
+                    .uncheckedChipColor(Color.parseColor("#efefef"))
+                    .uncheckedTextColor(Color.parseColor("#666666"));
+
+            chipCloud = new ChipCloud(getApplicationContext(), flexbox, config);
+
+        }
+
 
         //chipCloud.addChip("HelloWorld!");
 
@@ -79,16 +106,8 @@ public class AddTags extends AppCompatActivity implements RequestNotifier {
         chipCloud.addChips(demoArray);
         chipCloud.deselectIndex(0);
 
-        if (getIntent().getExtras() != null) {
-            String interest = getIntent().getExtras().getString("interest", "");
-            String action = getIntent().getExtras().getString("action");
+        if (!interest.equalsIgnoreCase("")) {
 
-            if (action != null) {
-                if (action.equalsIgnoreCase("other")) {
-                    mOk.setVisibility(View.GONE);
-                    flexbox.setEnabled(false);
-                }
-            }
             Log.i("inter", "->" + interest);
             String[] commaSplit = new String[0];
             if (!interest.equalsIgnoreCase("")) {
@@ -100,8 +119,6 @@ public class AddTags extends AppCompatActivity implements RequestNotifier {
                     lst.add(commaSplit[i]);
                 }
             }
-        } else {
-
         }
 
         //chipCloud.setChecked(2);
@@ -139,7 +156,7 @@ public class AddTags extends AppCompatActivity implements RequestNotifier {
 
     private void Addintresttoprofile(String intrests) {
         ApiCall apiCall = new ApiCall(this, this);
-        apiCall.updateProfile(getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getInt("loginregistrationid",0),"","","","","","","","","","","",intrests,"Interest");
+        apiCall.updateProfile(getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getInt("loginregistrationid", 0), "", "", "", "", "", "", "", "", "", "", "", intrests, "Interest");
     }
 
     @Override
@@ -213,7 +230,7 @@ public class AddTags extends AppCompatActivity implements RequestNotifier {
     public void notifyString(String str) {
         if (!str.equals("")) {
             if (str.equals("success_update_Interest")) {
-CustomToast.customToast(getApplicationContext(),"Interest Added");
+                CustomToast.customToast(getApplicationContext(), "Interest Added");
             }
         }
     }

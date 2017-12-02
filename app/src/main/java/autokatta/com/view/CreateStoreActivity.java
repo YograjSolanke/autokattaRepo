@@ -33,11 +33,15 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.MultiAutoCompleteTextView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -81,6 +85,7 @@ public class CreateStoreActivity extends AppCompatActivity implements Multispinn
         RequestNotifier, MultiSelectionSpinnerForBrands.MultiSpinnerListener {
 
     TextView storetypetext;
+    ImageView mCoverImage,mPhoto;
     Button btnaddprofile, create, btnaddcover;
     CheckBox rbtstoreproduct, rbtstoreservice, rbtstorevehicle;
     String myContact, callFrom, lastWord = "", coverlastWord = "",
@@ -150,6 +155,8 @@ public class CreateStoreActivity extends AppCompatActivity implements Multispinn
         mLinearautobrand = (LinearLayout) findViewById(R.id.linearautobrand);
         mRelativeBrand = (RelativeLayout) findViewById(R.id.rell);
         mParent = (RelativeLayout) findViewById(R.id.relativeparent);
+        mCoverImage = (ImageView) findViewById(R.id.imgaddcover);
+        mPhoto = (ImageView) findViewById(R.id.imgaddphoto);
         //  brandSpinner = (MultiSelectionSpinnerForBrands) mCreateStore.findViewById(R.id.brandSpinner);
         btnaddprofile.setOnClickListener(this);
         btnaddcover.setOnClickListener(this);
@@ -468,7 +475,14 @@ public class CreateStoreActivity extends AppCompatActivity implements Multispinn
                     int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
                     mediaPath = cursor.getString(columnIndex);
                     // Set the Image in ImageView for Previewing the Media
-                    //mProfilePic.setImageBitmap(BitmapFactory.decodeFile(mediaPath));
+                 //   mPhoto.setImageBitmap(BitmapFactory.decodeFile(mediaPath));
+
+                    Glide.with(CreateStoreActivity.this)
+                            .load(mediaPath)
+                            .centerCrop()
+                            .diskCacheStrategy(DiskCacheStrategy.ALL)
+                            .into(mPhoto);
+
                     cursor.close();
                     ///storage/emulated/0/DCIM/Camera/20170411_124425.jpg
                     lastWord = mediaPath.substring(mediaPath.lastIndexOf("/") + 1);
@@ -491,7 +505,13 @@ public class CreateStoreActivity extends AppCompatActivity implements Multispinn
                                 bitmapRotate = bitmap;
                                 bitmap.recycle();
                             }
-                            //mProfilePic.setImageBitmap(bitmapRotate);
+                            mPhoto.setImageBitmap(bitmapRotate);
+
+                            /*Glide.with(CreateStoreActivity.this)
+                                    .load(bitmapRotate)
+                                    .centerCrop()
+                                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                    .into(mPhoto);*/
 //                            Saving image to mobile internal memory for sometime
                             String root = getFilesDir().toString();
                             File myDir = new File(root + "/androidlift");
@@ -520,6 +540,12 @@ public class CreateStoreActivity extends AppCompatActivity implements Multispinn
                     mediaPath1 = cursor.getString(columnIndex);
                     // Set the Image in ImageView for Previewing the Media
                     //mProfilePic.setImageBitmap(BitmapFactory.decodeFile(mediaPath));
+                    Glide.with(CreateStoreActivity.this)
+                            .load(mediaPath1)
+                            .centerCrop()
+                            .diskCacheStrategy(DiskCacheStrategy.ALL)
+                            .into(mCoverImage);
+
                     cursor.close();
                     ///storage/emulated/0/DCIM/Camera/20170411_124425.jpg
                     coverlastWord = mediaPath1.substring(mediaPath1.lastIndexOf("/") + 1);
@@ -542,8 +568,14 @@ public class CreateStoreActivity extends AppCompatActivity implements Multispinn
                                 bitmapRotate = bitmap;
                                 bitmap.recycle();
                             }
-                            //mProfilePic.setImageBitmap(bitmapRotate);
+                            mCoverImage.setImageBitmap(bitmapRotate);
 //                            Saving image to mobile internal memory for sometime
+                        /*    Glide.with(CreateStoreActivity.this)
+                                    .load(bitmapRotate)
+                                    .centerCrop()
+                                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                    .into(mCoverImage);*/
+
                             String root = getFilesDir().toString();
                             File myDir = new File(root + "/androidlift");
                             myDir.mkdirs();
