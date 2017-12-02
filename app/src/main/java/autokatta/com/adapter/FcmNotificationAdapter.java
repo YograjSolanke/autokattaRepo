@@ -60,7 +60,7 @@ public class FcmNotificationAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
     private class FcmViewHolder extends RecyclerView.ViewHolder {
 
-        TextView mUserName, mMessage;
+        TextView mUserName, mMessage, mDateTime;
         ImageView mUserPic;
 
         FcmViewHolder(View itemView) {
@@ -68,6 +68,7 @@ public class FcmNotificationAdapter extends RecyclerView.Adapter<RecyclerView.Vi
             mUserName = (TextView) itemView.findViewById(R.id.username);
             mMessage = (TextView) itemView.findViewById(R.id.message);
             mUserPic = (ImageView) itemView.findViewById(R.id.profilePic);
+            mDateTime = (TextView) itemView.findViewById(R.id.dateTime);
         }
     }
 
@@ -83,6 +84,7 @@ public class FcmNotificationAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
         holder.mUserName.setText(mFcmNotiList.get(holder.getAdapterPosition()).getUserName());
         holder.mMessage.setText(mFcmNotiList.get(holder.getAdapterPosition()).getMessage());
+        holder.mDateTime.setText("02 Dec 2017 12:45 pm");
 
        /* if (mFcmNotiList.get(holder.getAdapterPosition()).getImage()!=null ||
                 !mFcmNotiList.get(holder.getAdapterPosition()).getImage().equals("")){
@@ -95,6 +97,7 @@ public class FcmNotificationAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                     .into(holder.mUserPic);
         }else
             holder.mUserPic.setBackgroundResource(R.mipmap.profile);*/
+
 
         holder.mUserName.setOnClickListener(new View.OnClickListener() {
             @Override
