@@ -5,4 +5,4 @@
     android:paddingEnd="10sp"
     android:paddingStart="10sp"
     android:textColor="@color/textColor"
-    android:textSize="15sp" />
+    android:textSize="20sp" />

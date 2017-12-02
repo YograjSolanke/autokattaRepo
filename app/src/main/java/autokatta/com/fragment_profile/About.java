@@ -264,11 +264,13 @@ public class About extends Fragment implements RequestNotifier, MaterialIntroLis
                             Industry.add(message.getIndusName());
                         }
                         Industry.add("Other");
-                        INDUSTRY = new String[Industry.size()];
-                        INDUSTRY = (String[]) Industry.toArray(INDUSTRY);
-                        ArrayAdapter<String> dataadapter = new ArrayAdapter<>(getActivity(), R.layout.registration_spinner, INDUSTRY);
-                        industrySpinner.setAdapter(dataadapter);
-                    } else
+                        if (getActivity() != null) {
+                            INDUSTRY = new String[Industry.size()];
+                            INDUSTRY = (String[]) Industry.toArray(INDUSTRY);
+                            ArrayAdapter<String> dataadapter = new ArrayAdapter<>(getActivity(), R.layout.registration_spinner, INDUSTRY);
+                            industrySpinner.setAdapter(dataadapter);
+                        }
+                    } else if (isAdded())
                         CustomToast.customToast(getActivity(), getString(R.string.no_response));
                 } else if (response.body() instanceof BrandsTagResponse) {
                     BrandsTagResponse brandsTagResponse = (BrandsTagResponse) response.body();
@@ -279,11 +281,13 @@ public class About extends Fragment implements RequestNotifier, MaterialIntroLis
                             brand.add(message.getTagName());
                         }
                         brand.add("Other");
-                        BRAND = new String[brand.size()];
-                        BRAND = (String[]) brand.toArray(BRAND);
-                        ArrayAdapter<String> dataadapter = new ArrayAdapter<>(getActivity(), R.layout.registration_spinner, BRAND);
-                        brandSpinner.setAdapter(dataadapter);
-                    } else
+                        if (getActivity() != null) {
+                            BRAND = new String[brand.size()];
+                            BRAND = (String[]) brand.toArray(BRAND);
+                            ArrayAdapter<String> dataadapter = new ArrayAdapter<>(getActivity(), R.layout.registration_spinner, BRAND);
+                            brandSpinner.setAdapter(dataadapter);
+                        }
+                    } else if (isAdded())
                         CustomToast.customToast(getActivity(), getString(R.string.no_response));
                 } else if (response.body() instanceof GetUserCategoryResponse) {
                     GetUserCategoryResponse moduleResponse = (GetUserCategoryResponse) response.body();
@@ -294,10 +298,12 @@ public class About extends Fragment implements RequestNotifier, MaterialIntroLis
                             Category.add(message.getName());
                         }
                         Category.add("Other");
-                        MODULE = new String[Category.size()];
-                        MODULE = (String[]) Category.toArray(MODULE);
-                        ArrayAdapter<String> dataadapter = new ArrayAdapter<>(getActivity(), R.layout.registration_spinner, MODULE);
-                        moduleSpinner.setAdapter(dataadapter);
+                        if (getActivity() != null) {
+                            MODULE = new String[Category.size()];
+                            MODULE = (String[]) Category.toArray(MODULE);
+                            ArrayAdapter<String> dataadapter = new ArrayAdapter<>(getActivity(), R.layout.registration_spinner, MODULE);
+                            moduleSpinner.setAdapter(dataadapter);
+                        }
                     } else {
                         if (isAdded())
                             CustomToast.customToast(getActivity(), getString(R.string.no_response));
@@ -329,11 +335,11 @@ public class About extends Fragment implements RequestNotifier, MaterialIntroLis
             if (isAdded())
                 CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         } else if (error instanceof NullPointerException) {
-//            if (isAdded())
-//                CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-//            if (isAdded())
-//                CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            if (isAdded())
+                CustomToast.customToast(getActivity(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
             if (isAdded())
                 CustomToast.customToast(getActivity(), getString(R.string.no_internet));
