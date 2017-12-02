@@ -39,6 +39,7 @@ import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.GetGroupContactsResponse;
+import autokatta.com.view.GroupTabs;
 import autokatta.com.view.OtherProfile;
 import autokatta.com.view.UserProfile;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
@@ -253,8 +254,6 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<RecyclerView.
                                                             System.out.println("nextcontact+" + nextContact);
                                                         }
                                                     }
-
-
                                                 }
                                             }
 
@@ -396,10 +395,11 @@ public class MemberListRefreshAdapter extends RecyclerView.Adapter<RecyclerView.
             } else if (str.startsWith("success_1")) {
                 CustomToast.customToast(mActivity, "Removed");
             } else {
-                CustomToast.customToast(mActivity, "Left");
-                /*Intent intent = new Intent(mActivity, GroupTabs.class);
-                mActivity.startActivity(intent);*/
+                CustomToast.customToast(mActivity, "You left the group");
                 mActivity.finish();
+                Intent intent = new Intent(mActivity, GroupTabs.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                mActivity.startActivity(intent);
             }
         } else
             CustomToast.customToast(mActivity, mActivity.getString(R.string.no_internet));

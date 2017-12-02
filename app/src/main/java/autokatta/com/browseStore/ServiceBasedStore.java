@@ -187,22 +187,16 @@ public class ServiceBasedStore extends Fragment implements RequestNotifier, Swip
         if (error instanceof SocketTimeoutException) {
             if (isAdded())
                 CustomToast.customToast(mActivity, getString(R.string._404_));
-            // showMessage(mActivity, getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
             //CustomToast.customToast(mActivity,getString(R.string.no_response));
-            //  showMessage(mActivity, getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-
             //CustomToast.customToast(mActivity,getString(R.string.no_response));
-            //  showMessage(mActivity, getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
             if (isAdded())
                 CustomToast.customToast(mActivity, getString(R.string.no_internet));
-            // errorMessage(mActivity, getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
             if (isAdded())
                 CustomToast.customToast(mActivity, getString(R.string.no_internet));
-            //  errorMessage(mActivity, getString(R.string.no_internet));
         } else {
             Log.i("Check Class-", "ServiceBasedStore Fragment");
         }
@@ -304,14 +298,10 @@ public class ServiceBasedStore extends Fragment implements RequestNotifier, Swip
                     if (counter == 0) {
                         if (isAdded())
                             CustomToast.customToast(getActivity(), "Please Select Atleast One Category");
-//                        AlertDialog alert = alertDialog.create();
-//                        alert.show();
                     }
                     if (counter > 5) {
                         if (isAdded())
                             CustomToast.customToast(getActivity(), "Please Select Only 5 Category");
-//                        AlertDialog alert = alertDialog.create();
-//                        alert.show();
                     }
 
                 }
