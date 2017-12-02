@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -23,6 +24,7 @@ import autokatta.com.view.ChatActivity;
 import autokatta.com.view.GroupsActivity;
 import autokatta.com.view.OtherProfile;
 import autokatta.com.view.ProductViewActivity;
+import autokatta.com.view.ReviewActivity;
 import autokatta.com.view.ServiceViewActivity;
 import autokatta.com.view.StoreViewActivity;
 import autokatta.com.view.VehicleDetails;
@@ -43,14 +45,29 @@ public class FcmNotificationAdapter extends RecyclerView.Adapter<RecyclerView.Vi
         mLoginContact = mLoginContact1;
     }
 
+
+    @Override
+    public int getItemCount() {
+        return mFcmNotiList.size();
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return super.getItemViewType(position);
+    }
+
+    /* View Holder class */
+
     private class FcmViewHolder extends RecyclerView.ViewHolder {
 
         TextView mUserName, mMessage;
+        ImageView mUserPic;
 
         FcmViewHolder(View itemView) {
             super(itemView);
             mUserName = (TextView) itemView.findViewById(R.id.username);
             mMessage = (TextView) itemView.findViewById(R.id.message);
+            mUserPic = (ImageView) itemView.findViewById(R.id.profilePic);
         }
     }
 
@@ -66,6 +83,18 @@ public class FcmNotificationAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
         holder.mUserName.setText(mFcmNotiList.get(holder.getAdapterPosition()).getUserName());
         holder.mMessage.setText(mFcmNotiList.get(holder.getAdapterPosition()).getMessage());
+
+       /* if (mFcmNotiList.get(holder.getAdapterPosition()).getImage()!=null ||
+                !mFcmNotiList.get(holder.getAdapterPosition()).getImage().equals("")){
+
+            Glide.with(mActivity)
+                    .load(mActivity.getString(R.string.base_image_url)+
+                            mFcmNotiList.get(holder.getAdapterPosition()).getImage())
+                    .bitmapTransform(new CropCircleTransformation(mActivity))
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .into(holder.mUserPic);
+        }else
+            holder.mUserPic.setBackgroundResource(R.mipmap.profile);*/
 
         holder.mUserName.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,6 +130,7 @@ public class FcmNotificationAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                         break;
 
                     case "Store":
+
                         if (mFcmNotiList.get(holder.getAdapterPosition()).getStoreID() != 0) {
                             Bundle b = new Bundle();
 
@@ -192,19 +222,21 @@ public class FcmNotificationAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                         mActivity.startActivity(intent1);
                         break;
 
+                /*Review & Reply */
+                    case "Review":
+
+                        Intent intent2 = new Intent(mActivity, ReviewActivity.class);
+                        intent2.putExtra("contact", mFcmNotiList.get(holder.getAdapterPosition()).getContactNo());
+                        intent2.putExtra("store_id", mFcmNotiList.get(holder.getAdapterPosition()).getStoreID());
+                        intent2.putExtra("product_id", mFcmNotiList.get(holder.getAdapterPosition()).getProductID());
+                        intent2.putExtra("service_id", mFcmNotiList.get(holder.getAdapterPosition()).getServiceID());
+                        intent2.putExtra("vehicle_id", mFcmNotiList.get(holder.getAdapterPosition()).getVehicleID());
+                        mActivity.startActivity(intent2);
+
                 }
             }
         });
 
     }
 
-    @Override
-    public int getItemCount() {
-        return mFcmNotiList.size();
-    }
-
-    @Override
-    public int getItemViewType(int position) {
-        return super.getItemViewType(position);
-    }
 }

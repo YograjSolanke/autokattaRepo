@@ -78,7 +78,6 @@ public class ReviewActivity extends AppCompatActivity implements RequestNotifier
 
         mConnectionDetector = new ConnectionDetector(this);
         fab = (FloatingActionButton) findViewById(R.id.fab);
-        // listView = (ListView) findViewById(R.id.msgview);
         mLinearListView = (LinearLayout) findViewById(R.id.linear_ListView);
         fab.setOnClickListener(this);
 
@@ -95,7 +94,7 @@ public class ReviewActivity extends AppCompatActivity implements RequestNotifier
                         product_id = getIntent().getExtras().getInt("product_id", 0);
                         service_id = getIntent().getExtras().getInt("service_id", 0);
                         vehicle_id = getIntent().getExtras().getInt("vehicle_id", 0);
-                        inComingContact = getIntent().getExtras().getString("contact");
+                        inComingContact = getIntent().getExtras().getString("contact", "");
 
                     }
                     if (inComingContact.equals(myContact))
@@ -112,7 +111,6 @@ public class ReviewActivity extends AppCompatActivity implements RequestNotifier
                 }
             }
         });
-
 
 
     }
@@ -167,11 +165,10 @@ public class ReviewActivity extends AppCompatActivity implements RequestNotifier
         send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (message.getText().toString().equalsIgnoreCase("")||(message.getText().toString().startsWith(" ")&&message.getText().toString().endsWith(" ")))
-                {
+                if (message.getText().toString().equalsIgnoreCase("") || (message.getText().toString().startsWith(" ") && message.getText().toString().endsWith(" "))) {
                     message.setError("Please Enter Message");
                     message.setFocusable(true);
-                }else {
+                } else {
                     mApiCall.postReviewOrReply(review_id, keyword, myContact, message.getText().toString(), store_id, product_id, service_id, vehicle_id);
                     alert.dismiss();
                 }
@@ -248,6 +245,7 @@ public class ReviewActivity extends AppCompatActivity implements RequestNotifier
                         LayoutInflater inflater = null;
                         // int mFlippingsell = 0;
                         inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                        assert inflater != null;
                         View mLinearView = inflater.inflate(R.layout.review_layout, null);
                         final TextView msg = (TextView) mLinearView.findViewById(R.id.msgr);
                         final TextView dateNtime = (TextView) mLinearView.findViewById(R.id.dateNtime);
@@ -260,6 +258,7 @@ public class ReviewActivity extends AppCompatActivity implements RequestNotifier
                         final int finalI2 = i;
                         profile.setOnClickListener(new View.OnClickListener() {
                             Bundle bundle = new Bundle();
+
                             @Override
                             public void onClick(View view) {
                                 bundle.putString("contactOtherProfile", mainList.get(finalI2).getContact());
@@ -292,20 +291,14 @@ public class ReviewActivity extends AppCompatActivity implements RequestNotifier
                             TimeZone utc = TimeZone.getTimeZone("etc/UTC");
                             //format of date coming from services
                             DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.getDefault());
-                        /*DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",
-                                Locale.getDefault());*/
                             inputFormat.setTimeZone(utc);
 
                             //format of date which we want to show
                             DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy hh:mm a", Locale.getDefault());
-                        /*DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy hh:mm aa",
-                                Locale.getDefault());*/
                             outputFormat.setTimeZone(utc);
 
                             Date date = inputFormat.parse(mainList.get(i).getCreatedDate());
-                            //System.out.println("jjj"+date);
                             String output = outputFormat.format(date);
-                            //System.out.println(mainList.get(i).getDate()+" jjj " + output);
                             dateNtime.setText(mainList.get(i).getUsername() + " " + output);
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -324,6 +317,7 @@ public class ReviewActivity extends AppCompatActivity implements RequestNotifier
                             LayoutInflater inflater2 = null;
                             int showcheckboc = 0;
                             inflater2 = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                            assert inflater2 != null;
                             View mLinearView2 = inflater2.inflate(R.layout.reply_layout, null);
 
                             TextView reply = (TextView) mLinearView2.findViewById(R.id.msgr);
@@ -371,20 +365,14 @@ public class ReviewActivity extends AppCompatActivity implements RequestNotifier
                                 TimeZone utc = TimeZone.getTimeZone("etc/UTC");
                                 //format of date coming from services
                                 DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.getDefault());
-                        /*DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",
-                                Locale.getDefault());*/
                                 inputFormat.setTimeZone(utc);
 
                                 //format of date which we want to show
                                 DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy hh:mm a", Locale.getDefault());
-                        /*DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy hh:mm aa",
-                                Locale.getDefault());*/
                                 outputFormat.setTimeZone(utc);
 
                                 Date date = inputFormat.parse(mainList.get(i).getReplayMessage().get(j).getCreatedDate());
-                                //System.out.println("jjj"+date);
                                 String output = outputFormat.format(date);
-                                //System.out.println(mainList.get(i).getDate()+" jjj " + output);
                                 repdateNtime.setText(mainList.get(i).getReplayMessage().get(j).getUsername() + " replied " + output);
                             } catch (Exception e) {
                                 e.printStackTrace();

@@ -449,7 +449,6 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
             String body = getIntent().getExtras().getString("body", "");
 
             TabLayout.Tab tab = tabLayout.getTabAt(1).setIcon(R.mipmap.ic_bell);
-            assert tab != null;
             tab.select();
 
             /*switch (status) {
