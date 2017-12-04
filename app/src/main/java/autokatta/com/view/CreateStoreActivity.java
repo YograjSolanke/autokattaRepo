@@ -415,17 +415,80 @@ public class CreateStoreActivity extends AppCompatActivity implements Multispinn
                 }
                 else {
                     if (!callFrom.equals("StoreViewActivity")) {
-                        dialog.show();
-                        createStore(name, contact, location, website, storetype, lastWord, workdays, stropen, strclose, category, address, coverlastWord, storeDescription
-                                , finalbrandtags, "");
+                       // dialog.show();
+
+                     /*   createStore(name, contact, location, website, storetype, lastWord, workdays,
+                                stropen, strclose, category, address, coverlastWord, storeDescription
+                                , finalbrandtags, "");*/
+
+                        Bundle b=new Bundle();
+                        b.putString("storename",name);
+                        b.putString("contact",contact);
+                        b.putString("location",location);
+                        b.putString("website",website);
+                        b.putString("storetype",storetype);
+                        b.putString("lastWord",lastWord);
+                        b.putString("workdays",workdays);
+                        b.putString("stropen",stropen);
+                        b.putString("strclose",strclose);
+                        b.putString("category",category);
+                        b.putString("address",address);
+                        b.putString("coverlastWord",coverlastWord);
+                        b.putString("storeDescription",storeDescription);
+                        b.putString("finalbrandtags",finalbrandtags);
+                        b.putInt("store_id",store_id);
+                        b.putString("callFrom","createnewstore");
+
+
+                        ActivityOptions options = ActivityOptions.makeCustomAnimation(this, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
+                        Intent intent = new Intent(CreateStoreActivity.this, AddAdminsForStoreActivity.class);
+                        intent.putExtras(b);
+                        startActivity(intent, options.toBundle());
+
+                        if (!lastWord.equals(""))
+                            uploadImage(mediaPath);
+                        if (!coverlastWord.equals(""))
+                            uploadImage(mediaPath1);
+
                     } else {
                         if (lastWord.equals(""))
                             lastWord = preLastWord;
                         if (coverlastWord.equals(""))
                             coverlastWord = preCoverLastWord;
-                        dialog.show();
-                        updateStore(name, store_id, location, website, stropen, strclose, lastWord, category, workdays, storeDescription, storetype, address,
-                                coverlastWord, finalbrandtags, "");
+                     //   dialog.show();
+                     /*   updateStore(name, store_id, location, website, stropen, strclose, lastWord, category, workdays, storeDescription, storetype, address,
+                                coverlastWord, finalbrandtags, "");*/
+
+
+                        Bundle b=new Bundle();
+                        b.putString("storename",name);
+                        b.putString("contact",contact);
+                        b.putString("location",location);
+                        b.putString("website",website);
+                        b.putString("storetype",storetype);
+                        b.putString("lastWord",lastWord);
+                        b.putString("workdays",workdays);
+                        b.putString("stropen",stropen);
+                        b.putString("strclose",strclose);
+                        b.putString("category",category);
+                        b.putString("address",address);
+                        b.putString("coverlastWord",coverlastWord);
+                        b.putString("storeDescription",storeDescription);
+                        b.putString("finalbrandtags",finalbrandtags);
+                        b.putInt("store_id",store_id);
+                        b.putString("callFrom",callFrom);
+                        b.putString("mediapath",mediaPath);
+                        b.putString("mediaPath1",mediaPath1);
+
+                        ActivityOptions options = ActivityOptions.makeCustomAnimation(this, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
+                        Intent intent = new Intent(CreateStoreActivity.this, AddAdminsForStoreActivity.class);
+                        intent.putExtras(b);
+                        startActivity(intent, options.toBundle());
+
+                        if (!lastWord.equals(""))
+                            uploadImage(mediaPath);
+                        if (!coverlastWord.equals(""))
+                            uploadImage(mediaPath1);
                     }
                 }
                 break;

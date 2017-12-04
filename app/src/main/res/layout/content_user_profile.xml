@@ -137,6 +137,7 @@
                             android:drawablePadding="@dimen/fab_margin"
                             android:drawableStart="@mipmap/ic_account"
                             android:gravity="center"
+                            android:layout_marginStart="@dimen/indicator_size"
                             android:text="@string/about"
                             android:textStyle="bold" />
 
