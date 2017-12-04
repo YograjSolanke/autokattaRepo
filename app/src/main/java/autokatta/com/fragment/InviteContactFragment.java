@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -28,11 +30,10 @@ import autokatta.com.database.DbConstants;
 import autokatta.com.database.DbOperation;
 
 /**
- * Created by ak-003 on 19/3/17.
+ * Created by ak-003 on 19/3/17
  */
 
 public class InviteContactFragment extends Fragment {
-
     RecyclerView mRecyclerView;
     EditText edtSearchContact;
     View mInviteContact;
@@ -44,7 +45,6 @@ public class InviteContactFragment extends Fragment {
     InviteContactAdapter inviteContactAdapter;
     String myContact;
 
-
     public InviteContactFragment() {
         //empty constructor
     }
@@ -53,111 +53,92 @@ public class InviteContactFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mInviteContact = inflater.inflate(R.layout.fragment_invite_contacts, container, false);
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
 
-        edtSearchContact = (EditText) mInviteContact.findViewById(R.id.inputSearch);
-        mNext = (Button) mInviteContact.findViewById(R.id.next);
-        mNext.setVisibility(View.GONE);
-        mRecyclerView = (RecyclerView) mInviteContact.findViewById(R.id.rv_recycler_view);
+                edtSearchContact = (EditText) mInviteContact.findViewById(R.id.inputSearch);
+                mNext = (Button) mInviteContact.findViewById(R.id.next);
+                mNext.setVisibility(View.GONE);
+                mRecyclerView = (RecyclerView) mInviteContact.findViewById(R.id.rv_recycler_view);
+                mRecyclerView.setHasFixedSize(true);
+                LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(getActivity());
+                mLinearLayoutManager.setReverseLayout(true);
+                mLinearLayoutManager.setStackFromEnd(true);
+                mRecyclerView.setLayoutManager(mLinearLayoutManager);
+                mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+                mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL));
 
+                myContact = getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).getString("loginContact", "");
+                Uri uri = ContactsContract.CommonDataKinds.Phone.CONTENT_URI;
+                String[] projection = new String[]{ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME,
+                        ContactsContract.CommonDataKinds.Phone.NUMBER};
 
-        mRecyclerView.setHasFixedSize(true);
-        LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(getActivity());
-        mLinearLayoutManager.setReverseLayout(true);
-        mLinearLayoutManager.setStackFromEnd(true);
-        mRecyclerView.setLayoutManager(mLinearLayoutManager);
-
-        myContact = getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).getString("loginContact", "");
-        Uri uri = ContactsContract.CommonDataKinds.Phone.CONTENT_URI;
-        String[] projection = new String[]{ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME,
-                ContactsContract.CommonDataKinds.Phone.NUMBER};
-
-        Cursor people = getActivity().getContentResolver().query(uri, projection, null, null, null);
-
-        int indexName, indexNumber;
-        if (people != null) {
-            indexName = people.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME);
-            indexNumber = people.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
-
-            people.moveToFirst();
-            do {
-                Log.i("cursor", "countInviteContact- " + people.getCount());
-                if (people.getCount() != 0) {
-                    String name = people.getString(indexName);
-                    String number = people.getString(indexNumber);
-
-                    number = number.replaceAll("-", "");
-                    number = number.replace("(", "").replace(")", "").replaceAll(" ", "");
-
-                    if (number.length() > 10)
-                        number = number.substring(number.length() - 10);
-
-                    names.add(name + "=" + number);
-                    numbers.add(number);
+                Cursor people = getActivity().getContentResolver().query(uri, projection, null, null, null);
+                int indexName, indexNumber;
+                if (people != null) {
+                    indexName = people.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME);
+                    indexNumber = people.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
+                    people.moveToFirst();
+                    do {
+                        Log.i("cursor", "countInviteContact- " + people.getCount());
+                        if (people.getCount() != 0) {
+                            String name = people.getString(indexName);
+                            String number = people.getString(indexNumber);
+                            number = number.replaceAll("-", "");
+                            number = number.replace("(", "").replace(")", "").replaceAll(" ", "");
+                            if (number.length() > 10)
+                                number = number.substring(number.length() - 10);
+                            names.add(name + "=" + number);
+                            numbers.add(number);
+                        }
+                    } while (people.moveToNext());
+                    people.close();
                 }
 
-            } while (people.moveToNext());
-            people.close();
-        }
 
+                DbOperation dbAdpter = new DbOperation(getActivity());
+                dbAdpter.OPEN();
+                Cursor cursor = dbAdpter.getAutokattaContact();
+                if (cursor.getCount() > 0) {
+                    contactdata.clear();
+                    cursor.moveToFirst();
+                    do {
+                        Log.i(DbConstants.TAG, cursor.getString(cursor.getColumnIndex(DbConstants.userName)) + " = " + cursor.getString(cursor.getColumnIndex(DbConstants.contact)));
+                        contactdata.add(cursor.getString(cursor.getColumnIndex(DbConstants.contact)));
+                    } while (cursor.moveToNext());
+                }
+                dbAdpter.CLOSE();
 
-        DbOperation dbAdpter = new DbOperation(getActivity());
-        dbAdpter.OPEN();
-        Cursor cursor = dbAdpter.getAutokattaContact();
-        if (cursor.getCount() > 0) {
-            contactdata.clear();
-            cursor.moveToFirst();
-            do {
-                Log.i(DbConstants.TAG, cursor.getString(cursor.getColumnIndex(DbConstants.userName)) + " = " + cursor.getString(cursor.getColumnIndex(DbConstants.contact)));
-//                Db_AutokattaContactResponse obj = new Db_AutokattaContactResponse();
-//
-//                obj.setContact(cursor.getString(cursor.getColumnIndex(DbConstants.contact)));
-//                obj.setUsername(cursor.getString(cursor.getColumnIndex(DbConstants.userName)));
-//                obj.setMystatus(cursor.getString(cursor.getColumnIndex(DbConstants.myStatus)));
-//                obj.setFollowstatus(cursor.getString(cursor.getColumnIndex(DbConstants.followStatus)));
-//                obj.setUserprofile(cursor.getString(cursor.getColumnIndex(DbConstants.profilePic)));
+                finalContacts = new ArrayList<>();
+                finalContacts.clear();
+                for (int i = 0; i < numbers.size(); i++) {
+                    if (!contactdata.contains(numbers.get(i)) && !myContact.equals(numbers.get(i))) {
+                        finalContacts.add(names.get(i));
+                    }
+                }
+                Collections.sort(finalContacts, Collections.<String>reverseOrder());
+                inviteContactAdapter = new InviteContactAdapter(getActivity(), finalContacts);
+                mRecyclerView.setAdapter(inviteContactAdapter);
+                inviteContactAdapter.notifyDataSetChanged();
+                edtSearchContact.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-                contactdata.add(cursor.getString(cursor.getColumnIndex(DbConstants.contact)));
-            } while (cursor.moveToNext());
-        }
-        dbAdpter.CLOSE();
+                    }
 
-        finalContacts = new ArrayList<>();
-        finalContacts.clear();
-        for (int i = 0; i < numbers.size(); i++) {
-            if (!contactdata.contains(numbers.get(i)) && !myContact.equals(numbers.get(i))) {
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                        inviteContactAdapter.getFilter().filter(s.toString());
+                    }
 
-                finalContacts.add(names.get(i));
-            }
-        }
-        Log.i("contact b4", "->" + finalContacts);
+                    @Override
+                    public void afterTextChanged(Editable s) {
 
-
-        /*products = new String[finalContacts.size()];
-        products = finalContacts.toArray(products);*/
-
-        Collections.sort(finalContacts, Collections.<String>reverseOrder());
-        inviteContactAdapter = new InviteContactAdapter(getActivity(), finalContacts);
-        mRecyclerView.setAdapter(inviteContactAdapter);
-        inviteContactAdapter.notifyDataSetChanged();
-
-
-        edtSearchContact.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                inviteContactAdapter.getFilter().filter(s.toString());
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
+                    }
+                });
             }
         });
-
         return mInviteContact;
     }
 }

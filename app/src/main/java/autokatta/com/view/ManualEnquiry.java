@@ -2,7 +2,6 @@ package autokatta.com.view;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -50,10 +49,7 @@ import autokatta.com.request.ManualEnquiryRequest;
 import autokatta.com.response.ManualEnquiryResponse;
 import retrofit2.Response;
 
-import static android.content.Context.MODE_PRIVATE;
-
 public class ManualEnquiry extends Fragment implements SwipeRefreshLayout.OnRefreshListener, RequestNotifier, ItemClickListener {
-
     SwipeRefreshLayout mSwipeRefreshLayout;
     RecyclerView mRecyclerView;
     List<ManualEnquiryRequest> mMyGroupsList = new ArrayList<>();
@@ -61,29 +57,22 @@ public class ManualEnquiry extends Fragment implements SwipeRefreshLayout.OnRefr
     LinearLayout filterLayout;
     RelativeLayout mRelStatus, mRelDate;
     DatePickerDialog datePickerDialog;
-    SharedPreferences sharedPreferences = null;
-    SharedPreferences.Editor editor;
     ManualEnquiryAdapter adapter;
     Bundle bundle;
     int store_id;
     String bundle_contact;
-
     View mManualEnquiry;
+    boolean _hasLoadedOnce = false;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mManualEnquiry = inflater.inflate(R.layout.activity_manual_enquiry, container, false);
         getActivity().setTitle("Enquiry's");
-
         showDatePicker();
-        //   getActivity().startActivity(new Intent(getActivity(), ManualAppIntro.class));
-        sharedPreferences = getActivity().getSharedPreferences(getString(R.string.firstRun), MODE_PRIVATE);
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                getManualData();
-
                 bundle = getArguments();
                 store_id = bundle.getInt("bundle_storeId", 0);
                 bundle_contact = bundle.getString("bundle_contact", "");
@@ -91,11 +80,8 @@ public class ManualEnquiry extends Fragment implements SwipeRefreshLayout.OnRefr
                 System.out.println("bundle contact=" + bundle_contact);
 
                 mSwipeRefreshLayout = (SwipeRefreshLayout) mManualEnquiry.findViewById(R.id.manual_swipeRefreshLayout);
-                //mPersonSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.person_swipeRefreshLayout);
-
                 mRecyclerView = (RecyclerView) mManualEnquiry.findViewById(R.id.manual_recycler_view);
                 mFrameLayout = (FrameLayout) mManualEnquiry.findViewById(R.id.manual_enquiry);
-                mRecyclerView.setHasFixedSize(true);
                 filterLayout = (LinearLayout) mManualEnquiry.findViewById(R.id.below);
                 mRelStatus = (RelativeLayout) mManualEnquiry.findViewById(R.id.rel_status);
                 mRelDate = (RelativeLayout) mManualEnquiry.findViewById(R.id.rel_date);
@@ -169,26 +155,19 @@ public class ManualEnquiry extends Fragment implements SwipeRefreshLayout.OnRefr
                     }
                 });
 
+                mRecyclerView.setHasFixedSize(true);
                 LinearLayoutManager mLinearLayout = new LinearLayoutManager(getActivity());
                 mLinearLayout.setReverseLayout(true);
                 mLinearLayout.setStackFromEnd(true);
-
                 mRecyclerView.setLayoutManager(mLinearLayout);
                 mRecyclerView.setItemAnimator(new DefaultItemAnimator());
                 mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL));
 
                 mSwipeRefreshLayout.setOnRefreshListener(ManualEnquiry.this);
-                //mPersonSwipeRefreshLayout.setOnRefreshListener(ManualEnquiry.this);
-
                 mSwipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
                         android.R.color.holo_green_light,
                         android.R.color.holo_orange_light,
                         android.R.color.holo_red_light);
-
-                /*mPersonSwipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
-                        android.R.color.holo_green_light,
-                        android.R.color.holo_orange_light,
-                        android.R.color.holo_red_light);*/
 
                 mSwipeRefreshLayout.post(new Runnable() {
                     @Override
@@ -197,13 +176,6 @@ public class ManualEnquiry extends Fragment implements SwipeRefreshLayout.OnRefr
                         getManualData();
                     }
                 });
-                /*mPersonSwipeRefreshLayout.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        mPersonSwipeRefreshLayout.setRefreshing(true);
-                        //getPersonData();
-                    }
-                });*/
             }
         });
 
@@ -213,8 +185,20 @@ public class ManualEnquiry extends Fragment implements SwipeRefreshLayout.OnRefr
                 CustomToast.customToast(getActivity(), "Coming soon....");
             }
         });
-
         return mManualEnquiry;
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        // Make sure that we are currently visible
+        if (this.isVisible()) {
+            // If we are becoming invisible, then...
+            if (isVisibleToUser && !_hasLoadedOnce) {
+                getManualData();
+                _hasLoadedOnce = true;
+            }
+        }
     }
 
     /*
@@ -225,54 +209,8 @@ public class ManualEnquiry extends Fragment implements SwipeRefreshLayout.OnRefr
         mApiCall.getManualEnquiry(bundle_contact, store_id);
     }
 
-/*
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.manual_add, menu);
-     //   getActivity().getMenuInflater().inflate(R.menu.manual_add, menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                if (mRecyclerView.getVisibility() == View.GONE) {
-                    mRecyclerView.setVisibility(View.VISIBLE);
-                    getManualData();
-                } else {
-                    onBackPressed();
-                }
-                return true;
-
-            case R.id.add_manual:
-                ActivityOptions options = ActivityOptions.makeCustomAnimation(getActivity(), R.anim.ok_left_to_right, R.anim.ok_right_to_left);
-                startActivity(new Intent(getActivity(), AddManualEnquiry.class), options.toBundle());
-                return true;
-
-            case R.id.today_follow_up:
-                startActivity(new Intent(getActivity(), TodaysFollowUp.class));
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-*/
-
-
-    //@Override
-    public void onBackPressed() {
-        super.getActivity().onBackPressed();
-        getActivity().finish();
-        getActivity().overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
-    }
-
     @Override
     public void onRefresh() {
-        //mMyGroupsList.clear();
         getManualData();
     }
 
@@ -285,7 +223,6 @@ public class ManualEnquiry extends Fragment implements SwipeRefreshLayout.OnRefr
                 if (response.body() instanceof ManualEnquiryResponse) {
                     ManualEnquiryResponse manualEnquiry = (ManualEnquiryResponse) response.body();
                     if (manualEnquiry.getSuccess() != null) {
-
                         /*Used Vehicle*/
                         for (ManualEnquiryResponse.Success.UsedVehicle success : manualEnquiry.getSuccess().getUsedVehicle()) {
                             ManualEnquiryRequest request = new ManualEnquiryRequest();
@@ -301,12 +238,8 @@ public class ManualEnquiry extends Fragment implements SwipeRefreshLayout.OnRefr
                             request.setFinancerstatus(success.getFinancerStatus());
                             request.setEnquiryID(success.getId());
                             request.setTransferContact(success.getTransferContact());
-
-
                             request.setCustomerName("name");
                             request.setCustomerContact("contact");
-                            //request.setCreatedDate(success.getCreatedDate());
-                            //  request.setFollowupDate(success.getNextFollowupDate());
                             request.setEnquiryStatus(success.getCustEnquiryStatus());
 
                             /*Date format*/
@@ -336,7 +269,6 @@ public class ManualEnquiry extends Fragment implements SwipeRefreshLayout.OnRefr
                                 e.printStackTrace();
                             }
 
-
                             if (success.getPrice().equals("") || success.getPrice().isEmpty())
                                 request.setVehiclePrice("NA");
                             else
@@ -358,23 +290,17 @@ public class ManualEnquiry extends Fragment implements SwipeRefreshLayout.OnRefr
                             request.setProductName(success.getProductName());
                             request.setProductCategory(success.getCategory());
                             request.setProductType(success.getProductType());
-
                             request.setFinancerName(success.getFinancerName());
                             request.setLoanamount(success.getLoanAmount());
                             request.setLoanpercent(success.getLoanPercent());
                             request.setFinancerstatus(success.getFinancerStatus());
                             request.setEnquiryID(success.getId());
                             request.setTransferContact(success.getTransferContact());
-
-
-
                             request.setCustomerName("name");
                             request.setCustomerContact("contact");
                             request.setCreatedDate(success.getCreatedDate());
                             request.setFollowupDate(success.getNextFollowupDate());
                             request.setEnquiryStatus(success.getCustEnquiryStatus());
-
-
                               /*Date format*/
                             try {
                                 TimeZone utc = TimeZone.getTimeZone("etc/UTC");
@@ -406,10 +332,8 @@ public class ManualEnquiry extends Fragment implements SwipeRefreshLayout.OnRefr
                             else
                                 request.setProductPrice(success.getPrice());
 
-
                             request.setEnquiryCount(success.getEnquiryCount());
                             request.setVehicleInventory(success.getCustInventoryType());
-
                             String[] imageSplit = success.getImages().split(",");
                             request.setProductImage(imageSplit[0].substring(0, imageSplit[0].length()));
                             mMyGroupsList.add(request);
@@ -423,16 +347,12 @@ public class ManualEnquiry extends Fragment implements SwipeRefreshLayout.OnRefr
                             request.setServiceName(service.getName());
                             request.setServiceCategory(service.getCategory());
                             request.setServiceType(service.getType());
-
                             request.setFinancerName(service.getFinancerName());
                             request.setLoanamount(service.getLoanAmount());
                             request.setLoanpercent(service.getLoanPercent());
                             request.setFinancerstatus(service.getFinancerStatus());
                             request.setEnquiryID(service.getId());
                             request.setTransferContact(service.getTransferContact());
-
-
-
                             request.setCustomerName("name");
                             request.setCustomerContact("contact");
                             request.setCreatedDate(service.getCreatedDate());
@@ -469,15 +389,12 @@ public class ManualEnquiry extends Fragment implements SwipeRefreshLayout.OnRefr
                             else
                                 request.setServicePrice(service.getPrice());
 
-
                             request.setEnquiryCount(service.getEnquiryCount());
                             request.setVehicleInventory(service.getCustInventoryType());
-
                             String[] imageSplit = service.getImages().split(",");
                             request.setServiceImage(imageSplit[0].substring(0, imageSplit[0].length()));
                             mMyGroupsList.add(request);
                         }
-
 
                         /*New Vehicle*/
                         for (ManualEnquiryResponse.Success.NewVehicle success : manualEnquiry.getSuccess().getNewVehicle()) {
@@ -488,20 +405,14 @@ public class ManualEnquiry extends Fragment implements SwipeRefreshLayout.OnRefr
                             request.setVehicleCategory(success.getCategoryName());
                             request.setVehicleSubCategory(success.getSubCategoryName());
                             request.setVehicleModel(success.getModelName());
-
                             request.setFinancerName(success.getFinancerName());
                             request.setLoanamount(success.getLoanAmount());
                             request.setLoanpercent(success.getLoanPercent());
                             request.setFinancerstatus(success.getFinancerStatus());
                             request.setEnquiryID(success.getId());
                             request.setTransferContact(success.getTransferContact());
-
-
-
                             request.setCustomerName("name");
                             request.setCustomerContact("contact");
-                            //request.setCreatedDate(success.getCreatedDate());
-                            //  request.setFollowupDate(success.getNextFollowupDate());
                             request.setEnquiryStatus(success.getCustEnquiryStatus());
 
                             /*Date format*/
@@ -509,32 +420,20 @@ public class ManualEnquiry extends Fragment implements SwipeRefreshLayout.OnRefr
                                 TimeZone utc = TimeZone.getTimeZone("etc/UTC");
                                 //format of date coming from services
                                 DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-
                                 inputFormat.setTimeZone(utc);
-
                                 //format of date which we want to show
                                 DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
-
                                 outputFormat.setTimeZone(utc);
-
                                 Date date = inputFormat.parse(success.getNextFollowupDate());
                                 Date date1 = inputFormat.parse(success.getCreatedDate());
-
                                 String output = outputFormat.format(date);
                                 String output1 = outputFormat.format(date1);
-
                                 request.setFollowupDate(output);
                                 request.setCreatedDate(output1);
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
-
-
-                            /*if (success.getPrice().equals("") || success.getPrice().isEmpty())
-                                request.setVehiclePrice("NA");
-                            else*/
                             request.setVehiclePrice("NA");
-
                             request.setEnquiryCount(success.getEnquiryCount());
                             request.setVehicleInventory(success.getCustInventoryType());
 
@@ -560,7 +459,6 @@ public class ManualEnquiry extends Fragment implements SwipeRefreshLayout.OnRefr
                                 .setDuration(4000).show();
                     }
                 }
-
             } else {
                 mSwipeRefreshLayout.setRefreshing(false);
                 Snackbar.make(mFrameLayout, getString(R.string.no_response), Snackbar.LENGTH_SHORT).show();
@@ -628,10 +526,7 @@ public class ManualEnquiry extends Fragment implements SwipeRefreshLayout.OnRefr
     @Override
     public void onClick(View view, int position) {
         ManualEnquiryRequest request = mMyGroupsList.get(position);
-        //getPersonData(request.getVehicleId(), request.getVehicleInventory());
-
         Intent intent = new Intent(getActivity(), EnquiredPersonsActivity.class);
-
         intent.putExtra("keyword", request.getVehicleInventory());
         switch (request.getVehicleInventory()) {
             case "Products":
@@ -830,27 +725,4 @@ public class ManualEnquiry extends Fragment implements SwipeRefreshLayout.OnRefr
 
         }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
     }
-
-
-    /*@Override
-    protected void onResume() {
-        super.onResume();
-        if (sharedPreferences.getBoolean("manualFirstRun", true)) {
-            startActivity(new Intent(getApplicationContext(), ManualAppIntro.class));
-            editor = sharedPreferences.edit();
-            editor.putBoolean("manualFirstRun", false);
-            editor.apply();
-        }
-    }*/
-    /*public static boolean isValidPhone(String phone){
-        String expression = "^([0-9\\+]|\\(\\d{1,3}\\))[0-9\\-\\. ]{3,15}$";
-        CharSequence inputString = phone;
-        Pattern pattern = Pattern.compile(expression);
-        Matcher matcher = pattern.matcher(inputString);
-        if (matcher.matches()){
-            return true;
-        }else{
-            return false;
-        }
-    }*/
 }

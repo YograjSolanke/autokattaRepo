@@ -101,7 +101,7 @@ public class WallNotificationFragment extends Fragment implements SwipeRefreshLa
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                /*dialog = new ProgressDialog(getActivity());
+               /* dialog = new ProgressDialog(getActivity());
                 dialog.setMessage("Loading...");*/
                 mLoginContact = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).
                         getString("loginContact", "");
@@ -113,7 +113,6 @@ public class WallNotificationFragment extends Fragment implements SwipeRefreshLa
                 mRetry = (Button) mWallNotify.findViewById(R.id.retry);
                 mRecyclerView = (RecyclerView) mWallNotify.findViewById(R.id.wall_recycler_view);
                 mSwipeRefreshLayout = (SwipeRefreshLayout) mWallNotify.findViewById(R.id.wall_swipe_refresh_layout);
-
                 adapter = new WallNotificationAdapter(getActivity(), notificationList, mLoginContact);
                 adapter.setLoadMoreListener(new OnLoadMoreListener() {
                     @Override
@@ -163,13 +162,6 @@ public class WallNotificationFragment extends Fragment implements SwipeRefreshLa
         });
         mConnectionDetector = new ConnectionDetector(getActivity());
         mSwipeRefreshLayout.setOnRefreshListener(this);
-        /*adapter = new WallNotificationAdapter();
-        adapter.setOnLoadMoreListener(new OnLoadMoreListener() {
-            @Override
-            public void onLoadMore() {
-                Log.i("Loaded", "->");
-            }
-        });*/
     }
 
     private void loadMore(int index) {
@@ -218,7 +210,6 @@ public class WallNotificationFragment extends Fragment implements SwipeRefreshLa
     public void notifySuccess(Response<?> response) {
         if (response != null) {
             if (response.isSuccessful()) {
-
                 WallResponse wallResponse = (WallResponse) response.body();
                 if (wallResponse.getSuccess() != null) {
                     if (wallResponse.getSuccess().getWallNotifications().size() > 0) {
