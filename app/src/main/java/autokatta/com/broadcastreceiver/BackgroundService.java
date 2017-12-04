@@ -144,7 +144,7 @@ public class BackgroundService extends Service {
                         try {
                             //getAutokattaContacts();
                             //getEnquiryCount();
-                            //sendFcmNotification();
+                            sendFcmNotification();
                             Log.i("Background", "call webservice");
                         } catch (Exception e) {
                             Log.e("background", e.getMessage());
