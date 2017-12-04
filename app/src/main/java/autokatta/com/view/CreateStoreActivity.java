@@ -1,5 +1,6 @@
 package autokatta.com.view;
 
+import android.app.Activity;
 import android.app.ActivityOptions;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -84,6 +85,8 @@ import retrofit2.Retrofit;
 public class CreateStoreActivity extends AppCompatActivity implements Multispinner.MultiSpinnerListener, View.OnClickListener, View.OnTouchListener, MultiSelectionSpinner.MultiSpinnerListener,
         RequestNotifier, MultiSelectionSpinnerForBrands.MultiSpinnerListener {
 
+
+    Activity mActivity;
     TextView storetypetext;
     ImageView mCoverImage,mPhoto;
     Button btnaddprofile, create, btnaddcover;
@@ -443,7 +446,7 @@ public class CreateStoreActivity extends AppCompatActivity implements Multispinn
                         ActivityOptions options = ActivityOptions.makeCustomAnimation(this, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
                         Intent intent = new Intent(CreateStoreActivity.this, AddAdminsForStoreActivity.class);
                         intent.putExtras(b);
-                        startActivity(intent, options.toBundle());
+                        startActivityForResult(intent, 1);
 
                         if (!lastWord.equals(""))
                             uploadImage(mediaPath);
@@ -483,7 +486,7 @@ public class CreateStoreActivity extends AppCompatActivity implements Multispinn
                         ActivityOptions options = ActivityOptions.makeCustomAnimation(this, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
                         Intent intent = new Intent(CreateStoreActivity.this, AddAdminsForStoreActivity.class);
                         intent.putExtras(b);
-                        startActivity(intent, options.toBundle());
+                        startActivityForResult(intent, 1);
 
                         if (!lastWord.equals(""))
                             uploadImage(mediaPath);
@@ -1151,7 +1154,6 @@ public class CreateStoreActivity extends AppCompatActivity implements Multispinn
         }
         return super.onOptionsItemSelected(item);
     }
-
 
     @Override
     public void onBackPressed() {
