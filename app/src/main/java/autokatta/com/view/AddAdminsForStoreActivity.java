@@ -1,6 +1,7 @@
 package autokatta.com.view;
 
 import android.app.ActivityOptions;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -67,6 +68,8 @@ public class AddAdminsForStoreActivity extends AppCompatActivity implements Requ
     ArrayList<String> alreadyAdmin = new ArrayList<>();
     ApiCall apiCall;
     ConnectionDetector mTestConnection;
+    private ProgressDialog dialog;
+
 
 
     String bundlestorename, bundlecontact, bundlelocation, bundlewebsite, bundlestoretype, bundlelastword,
@@ -84,7 +87,8 @@ public class AddAdminsForStoreActivity extends AppCompatActivity implements Requ
             getSupportActionBar().setHomeButtonEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
-
+        dialog = new ProgressDialog(this);
+        dialog.setMessage("Loading...");
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setVisibility(View.GONE);
 
@@ -175,6 +179,7 @@ public class AddAdminsForStoreActivity extends AppCompatActivity implements Requ
                 //  b.putString("action", "main");
                 b.putInt("store_id", store_id);
                 b.putString("flow_tab_name", "adminMore");
+                dialog.show();
             //    if (!callFrom.equalsIgnoreCase("interestbased")) {
                     if (callFrom.equalsIgnoreCase("StoreViewActivity"))
                     {
@@ -202,10 +207,12 @@ public class AddAdminsForStoreActivity extends AppCompatActivity implements Requ
             @Override
             public void onClick(View v) {
                 boolean flag = false;
+                dialog.show();
 
                 for (int i = 0; i < StoreAdminAdapter.boxdata.size(); i++) {
                     if (!StoreAdminAdapter.boxdata.get(i).equalsIgnoreCase("0")) {
                         if (StoreAdminAdapter.isSave.get(i).equals(false)) {
+                            dialog.dismiss();
                             CustomToast.customToast(getApplicationContext(), "Save Role First");
                             flag = true;
                             break;
@@ -345,6 +352,7 @@ public class AddAdminsForStoreActivity extends AppCompatActivity implements Requ
         if (str != null) {
             if (str.startsWith("success")) {
                 Bundle b = new Bundle();
+                dialog.dismiss();
                 //  b.putString("action", "main");
                 b.putInt("store_id", store_id);
                 b.putString("flow_tab_name", "adminMore");
@@ -352,6 +360,8 @@ public class AddAdminsForStoreActivity extends AppCompatActivity implements Requ
                     finish();
                     Intent intent = new Intent(this, StoreViewActivity.class);
                     intent.putExtras(b);
+                    //intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
 
                 } else {
@@ -378,15 +388,29 @@ public class AddAdminsForStoreActivity extends AppCompatActivity implements Requ
     private void createStore(String name, String contact, String location, String website, String storetype, String lastWord,
                              String workdays, String open, String close, String category, String address,
                              String coverlastWord, String storeDescription, String textbrand, String strBrandSpinner) {
-        apiCall.CreateStore(name, contact, location, website, storetype, lastWord, workdays, open, close, category, address, coverlastWord,
-                storeDescription, textbrand, strBrandSpinner);
+        if (mTestConnection.isConnectedToInternet()) {
+            apiCall.CreateStore(name, contact, location, website, storetype, lastWord, workdays, open, close, category, address, coverlastWord,
+                    storeDescription, textbrand, strBrandSpinner);
+        }else
+        {
+            dialog.dismiss();
+            CustomToast.customToast(getApplicationContext(),getString(R.string.no_internet));
+        }
     }
 
     private void updateStore(String name, int store_id, String location, String website, String stropen, String strclose,
                              String lastWord, String category, String workdays, String storeDescription, String storetype,
                              String address, String coverlastWord, String finalbrandtags, String strBrandSpinner) {
-        apiCall.updateStore(name, store_id, location, website, stropen, strclose, lastWord, category, workdays, storeDescription,
-                storetype, address, coverlastWord, finalbrandtags, strBrandSpinner);
+       if (mTestConnection.isConnectedToInternet())
+       {
+           apiCall.updateStore(name, store_id, location, website, stropen, strclose, lastWord, category, workdays, storeDescription,
+                   storetype, address, coverlastWord, finalbrandtags, strBrandSpinner);
+       }else
+       {
+           dialog.dismiss();
+           CustomToast.customToast(getApplicationContext(),getString(R.string.no_internet));
+       }
+
     }
 
 
