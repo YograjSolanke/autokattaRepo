@@ -20,22 +20,17 @@ public class MyAutokattaContactsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_my_autokatta_contacts);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         setTitle("My Autokatta Contacts");
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayShowHomeEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            //getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
         }
-
         ViewPager mViewPager = (ViewPager) findViewById(R.id.autokatta_contact_viewpager);
         if (mViewPager != null) {
             setupViewPager(mViewPager);
         }
-
         TabLayout tabLayout = (TabLayout) findViewById(R.id.autokatta_contact_tabs);
         tabLayout.setupWithViewPager(mViewPager);
-
     }
 
     private void setupViewPager(ViewPager mViewPager) {
@@ -55,12 +50,10 @@ public class MyAutokattaContactsActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-
     @Override
     public void onBackPressed() {
         super.onBackPressed();
         finish();
         overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
     }
-
 }

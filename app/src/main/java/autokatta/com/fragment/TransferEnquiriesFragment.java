@@ -2,7 +2,6 @@ package autokatta.com.fragment;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -54,12 +53,10 @@ import retrofit2.Response;
 import static android.content.Context.MODE_PRIVATE;
 
 /**
- * Created by ak-005 on 16/11/17.
+ * Created by ak-005 on 16/11/17
  */
 
 public class TransferEnquiriesFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, RequestNotifier, ItemClickListener {
-
-
     SwipeRefreshLayout mSwipeRefreshLayout;
     RecyclerView mRecyclerView;
     List<ManualEnquiryRequest> mMyGroupsList = new ArrayList<>();
@@ -67,31 +64,22 @@ public class TransferEnquiriesFragment extends Fragment implements SwipeRefreshL
     LinearLayout filterLayout;
     RelativeLayout mRelStatus, mRelDate;
     DatePickerDialog datePickerDialog;
-    SharedPreferences sharedPreferences = null;
-    SharedPreferences.Editor editor;
+    boolean _hasLoadedOnce = false;
     TransferEnquiriesAdapter adapter;
-
     View mManualEnquiry;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mManualEnquiry = inflater.inflate(R.layout.activity_manual_enquiry, container, false);
-        getActivity().setTitle("Recived Transfer Enquiry's");
-
+        getActivity().setTitle("Received Transfer Enquiry's");
         showDatePicker();
-        //   getActivity().startActivity(new Intent(getActivity(), ManualAppIntro.class));
-        sharedPreferences = getActivity().getSharedPreferences(getString(R.string.firstRun), MODE_PRIVATE);
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                getManualData();
                 mSwipeRefreshLayout = (SwipeRefreshLayout) mManualEnquiry.findViewById(R.id.manual_swipeRefreshLayout);
-                //mPersonSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.person_swipeRefreshLayout);
-
                 mRecyclerView = (RecyclerView) mManualEnquiry.findViewById(R.id.manual_recycler_view);
                 mFrameLayout = (FrameLayout) mManualEnquiry.findViewById(R.id.manual_enquiry);
-                mRecyclerView.setHasFixedSize(true);
                 filterLayout = (LinearLayout) mManualEnquiry.findViewById(R.id.below);
                 mRelStatus = (RelativeLayout) mManualEnquiry.findViewById(R.id.rel_status);
                 mRelDate = (RelativeLayout) mManualEnquiry.findViewById(R.id.rel_date);
@@ -165,26 +153,18 @@ public class TransferEnquiriesFragment extends Fragment implements SwipeRefreshL
                     }
                 });
 
+                mRecyclerView.setHasFixedSize(true);
                 LinearLayoutManager mLinearLayout = new LinearLayoutManager(getActivity());
                 mLinearLayout.setReverseLayout(true);
                 mLinearLayout.setStackFromEnd(true);
-
                 mRecyclerView.setLayoutManager(mLinearLayout);
                 mRecyclerView.setItemAnimator(new DefaultItemAnimator());
                 mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL));
-
                 mSwipeRefreshLayout.setOnRefreshListener(TransferEnquiriesFragment.this);
-                //mPersonSwipeRefreshLayout.setOnRefreshListener(ManualEnquiry.this);
-
                 mSwipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
                         android.R.color.holo_green_light,
                         android.R.color.holo_orange_light,
                         android.R.color.holo_red_light);
-
-                /*mPersonSwipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
-                        android.R.color.holo_green_light,
-                        android.R.color.holo_orange_light,
-                        android.R.color.holo_red_light);*/
 
                 mSwipeRefreshLayout.post(new Runnable() {
                     @Override
@@ -193,13 +173,6 @@ public class TransferEnquiriesFragment extends Fragment implements SwipeRefreshL
                         getManualData();
                     }
                 });
-                /*mPersonSwipeRefreshLayout.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        mPersonSwipeRefreshLayout.setRefreshing(true);
-                        //getPersonData();
-                    }
-                });*/
             }
         });
 
@@ -209,8 +182,20 @@ public class TransferEnquiriesFragment extends Fragment implements SwipeRefreshL
                 CustomToast.customToast(getActivity(), "Coming soon....");
             }
         });
-
         return mManualEnquiry;
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        // Make sure that we are currently visible
+        if (this.isVisible()) {
+            // If we are becoming invisible, then...
+            if (isVisibleToUser && !_hasLoadedOnce) {
+                getManualData();
+                _hasLoadedOnce = true;
+            }
+        }
     }
 
     /*
@@ -222,17 +207,8 @@ public class TransferEnquiriesFragment extends Fragment implements SwipeRefreshL
                 .getString("loginContact", ""));
     }
 
-
-    //@Override
-    public void onBackPressed() {
-        super.getActivity().onBackPressed();
-        getActivity().finish();
-        getActivity().overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
-    }
-
     @Override
     public void onRefresh() {
-        //mMyGroupsList.clear();
         getManualData();
     }
 
@@ -245,7 +221,6 @@ public class TransferEnquiriesFragment extends Fragment implements SwipeRefreshL
                 if (response.body() instanceof ManualEnquiryResponse) {
                     ManualEnquiryResponse manualEnquiry = (ManualEnquiryResponse) response.body();
                     if (manualEnquiry.getSuccess() != null) {
-
                         /*Used Vehicle*/
                         for (ManualEnquiryResponse.Success.UsedVehicle success : manualEnquiry.getSuccess().getUsedVehicle()) {
                             ManualEnquiryRequest request = new ManualEnquiryRequest();
@@ -262,14 +237,9 @@ public class TransferEnquiriesFragment extends Fragment implements SwipeRefreshL
                             request.setEnquiryID(success.getId());
                             request.setOwnerContact(success.getMyContact());
                             request.setOwnerName(success.getOwnerName());
-
-
                             request.setCustomerName("name");
                             request.setCustomerContact("contact");
-                            //request.setCreatedDate(success.getCreatedDate());
-                            //  request.setFollowupDate(success.getNextFollowupDate());
                             request.setEnquiryStatus(success.getCustEnquiryStatus());
-
                             /*Date format*/
                             try {
                                 TimeZone utc = TimeZone.getTimeZone("etc/UTC");
@@ -297,7 +267,6 @@ public class TransferEnquiriesFragment extends Fragment implements SwipeRefreshL
                                 e.printStackTrace();
                             }
 
-
                             if (success.getPrice().equals("") || success.getPrice().isEmpty())
                                 request.setVehiclePrice("NA");
                             else
@@ -305,7 +274,6 @@ public class TransferEnquiriesFragment extends Fragment implements SwipeRefreshL
 
                             request.setEnquiryCount(success.getEnquiryCount());
                             request.setVehicleInventory(success.getCustInventoryType());
-
                             String[] imageSplit = success.getImage().split(",");
                             request.setVehicleImage(imageSplit[0].substring(0, imageSplit[0].length()));
                             mMyGroupsList.add(request);
@@ -319,7 +287,6 @@ public class TransferEnquiriesFragment extends Fragment implements SwipeRefreshL
                             request.setProductName(success.getProductName());
                             request.setProductCategory(success.getCategory());
                             request.setProductType(success.getProductType());
-
                             request.setFinancerName(success.getFinancerName());
                             request.setLoanamount(success.getLoanAmount());
                             request.setLoanpercent(success.getLoanPercent());
@@ -327,18 +294,11 @@ public class TransferEnquiriesFragment extends Fragment implements SwipeRefreshL
                             request.setEnquiryID(success.getId());
                             request.setOwnerContact(success.getMyContact());
                             request.setOwnerName(success.getOwnerName());
-
-
-
-
-
                             request.setCustomerName("name");
                             request.setCustomerContact("contact");
                             request.setCreatedDate(success.getCreatedDate());
                             request.setFollowupDate(success.getNextFollowupDate());
                             request.setEnquiryStatus(success.getCustEnquiryStatus());
-
-
                               /*Date format*/
                             try {
                                 TimeZone utc = TimeZone.getTimeZone("etc/UTC");
@@ -353,7 +313,6 @@ public class TransferEnquiriesFragment extends Fragment implements SwipeRefreshL
                         /*DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy hh:mm aa",
                                 Locale.getDefault());*/
                                 outputFormat.setTimeZone(utc);
-
                                 Date date = inputFormat.parse(success.getNextFollowupDate());
                                 Date date1 = inputFormat.parse(success.getCreatedDate());
                                 //System.out.println("jjj"+date);
@@ -370,10 +329,8 @@ public class TransferEnquiriesFragment extends Fragment implements SwipeRefreshL
                             else
                                 request.setProductPrice(success.getPrice());
 
-
                             request.setEnquiryCount(success.getEnquiryCount());
                             request.setVehicleInventory(success.getCustInventoryType());
-
                             String[] imageSplit = success.getImages().split(",");
                             request.setProductImage(imageSplit[0].substring(0, imageSplit[0].length()));
                             mMyGroupsList.add(request);
@@ -387,18 +344,13 @@ public class TransferEnquiriesFragment extends Fragment implements SwipeRefreshL
                             request.setServiceName(service.getName());
                             request.setServiceCategory(service.getCategory());
                             request.setServiceType(service.getType());
-
                             request.setFinancerName(service.getFinancerName());
                             request.setLoanamount(service.getLoanAmount());
                             request.setLoanpercent(service.getLoanPercent());
                             request.setFinancerstatus(service.getFinancerStatus());
                             request.setEnquiryID(service.getId());
                             request.setOwnerContact(service.getMyContact());
-
                             request.setOwnerName(service.getOwnerName());
-
-
-
                             request.setCustomerName("name");
                             request.setCustomerContact("contact");
                             request.setCreatedDate(service.getCreatedDate());
@@ -418,7 +370,6 @@ public class TransferEnquiriesFragment extends Fragment implements SwipeRefreshL
                         /*DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy hh:mm aa",
                                 Locale.getDefault());*/
                                 outputFormat.setTimeZone(utc);
-
                                 Date date = inputFormat.parse(service.getNextFollowupDate());
                                 Date date1 = inputFormat.parse(service.getCreatedDate());
                                 //System.out.println("jjj"+date);
@@ -435,15 +386,12 @@ public class TransferEnquiriesFragment extends Fragment implements SwipeRefreshL
                             else
                                 request.setServicePrice(service.getPrice());
 
-
                             request.setEnquiryCount(service.getEnquiryCount());
                             request.setVehicleInventory(service.getCustInventoryType());
-
                             String[] imageSplit = service.getImages().split(",");
                             request.setServiceImage(imageSplit[0].substring(0, imageSplit[0].length()));
                             mMyGroupsList.add(request);
                         }
-
 
                         /*New Vehicle*/
                         for (ManualEnquiryResponse.Success.NewVehicle success : manualEnquiry.getSuccess().getNewVehicle()) {
@@ -454,21 +402,15 @@ public class TransferEnquiriesFragment extends Fragment implements SwipeRefreshL
                             request.setVehicleCategory(success.getCategoryName());
                             request.setVehicleSubCategory(success.getSubCategoryName());
                             request.setVehicleModel(success.getModelName());
-
                             request.setFinancerName(success.getFinancerName());
                             request.setLoanamount(success.getLoanAmount());
                             request.setLoanpercent(success.getLoanPercent());
                             request.setFinancerstatus(success.getFinancerStatus());
                             request.setEnquiryID(success.getId());
                             request.setOwnerContact(success.getMyContact());
-
-
                             request.setOwnerName(success.getOwnerName());
-
                             request.setCustomerName("name");
                             request.setCustomerContact("contact");
-                            //request.setCreatedDate(success.getCreatedDate());
-                            //  request.setFollowupDate(success.getNextFollowupDate());
                             request.setEnquiryStatus(success.getCustEnquiryStatus());
 
                             /*Date format*/
@@ -476,40 +418,27 @@ public class TransferEnquiriesFragment extends Fragment implements SwipeRefreshL
                                 TimeZone utc = TimeZone.getTimeZone("etc/UTC");
                                 //format of date coming from services
                                 DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-
                                 inputFormat.setTimeZone(utc);
-
                                 //format of date which we want to show
                                 DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
-
                                 outputFormat.setTimeZone(utc);
-
                                 Date date = inputFormat.parse(success.getNextFollowupDate());
                                 Date date1 = inputFormat.parse(success.getCreatedDate());
-
                                 String output = outputFormat.format(date);
                                 String output1 = outputFormat.format(date1);
-
                                 request.setFollowupDate(output);
                                 request.setCreatedDate(output1);
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
 
-
-                            /*if (success.getPrice().equals("") || success.getPrice().isEmpty())
-                                request.setVehiclePrice("NA");
-                            else*/
                             request.setVehiclePrice("NA");
-
                             request.setEnquiryCount(success.getEnquiryCount());
                             request.setVehicleInventory(success.getCustInventoryType());
-
                             String[] imageSplit = success.getImage().split(",");
                             request.setVehicleImage(imageSplit[0].substring(0, imageSplit[0].length()));
                             mMyGroupsList.add(request);
                         }
-
                         adapter = new TransferEnquiriesAdapter(getActivity(), mMyGroupsList);
                         mRecyclerView.setAdapter(adapter);
                         adapter.setClickListener(this);
@@ -595,10 +524,7 @@ public class TransferEnquiriesFragment extends Fragment implements SwipeRefreshL
     @Override
     public void onClick(View view, int position) {
         ManualEnquiryRequest request = mMyGroupsList.get(position);
-        //getPersonData(request.getVehicleId(), request.getVehicleInventory());
-
         Intent intent = new Intent(getActivity(), EnquiredPersonsActivity.class);
-
         intent.putExtra("keyword", request.getVehicleInventory());
         switch (request.getVehicleInventory()) {
             case "Products":
@@ -623,8 +549,6 @@ public class TransferEnquiriesFragment extends Fragment implements SwipeRefreshL
                 intent.putExtra("enquiryid", request.getEnquiryID());
                 intent.putExtra("callfrom", "transferenquiry");
                 intent.putExtra("ownercontact", request.getOwnerContact());
-
-
                 break;
             case "Used Vehicle":
                 intent.putExtra("id", request.getVehicleId());
@@ -636,7 +560,6 @@ public class TransferEnquiriesFragment extends Fragment implements SwipeRefreshL
                 intent.putExtra("enquiryid", request.getEnquiryID());
                 intent.putExtra("callfrom", "transferenquiry");
                 intent.putExtra("ownercontact", request.getOwnerContact());
-
                 break;
             case "New Vehicle":
                 intent.putExtra("id", request.getVehicleId());
@@ -648,13 +571,9 @@ public class TransferEnquiriesFragment extends Fragment implements SwipeRefreshL
                 intent.putExtra("enquiryid", request.getEnquiryID());
                 intent.putExtra("callfrom", "transferenquiry");
                 intent.putExtra("ownercontact", request.getOwnerContact());
-
                 break;
         }
         startActivity(intent);
-
-        Log.i("dsfasd", "->" + request.getVehicleInventory());
-        Log.i("dsfaascssd", "->" + request.getVehicleId());
     }
 
     /*
@@ -671,7 +590,6 @@ public class TransferEnquiriesFragment extends Fragment implements SwipeRefreshL
                     if ((monthOfYear + 1) < 11) {
                         if ((monthOfYear + 1) == 10) {
                             String abc = "0" + dayOfMonth + "-" + (monthOfYear + 1) + "-" + year;
-
                             TimeZone utc = TimeZone.getTimeZone("etc/UTC");
                             //format of date coming from services
                             DateFormat inputFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
@@ -800,27 +718,4 @@ public class TransferEnquiriesFragment extends Fragment implements SwipeRefreshL
 
         }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
     }
-
-
-    /*@Override
-    protected void onResume() {
-        super.onResume();
-        if (sharedPreferences.getBoolean("manualFirstRun", true)) {
-            startActivity(new Intent(getApplicationContext(), ManualAppIntro.class));
-            editor = sharedPreferences.edit();
-            editor.putBoolean("manualFirstRun", false);
-            editor.apply();
-        }
-    }*/
-    /*public static boolean isValidPhone(String phone){
-        String expression = "^([0-9\\+]|\\(\\d{1,3}\\))[0-9\\-\\. ]{3,15}$";
-        CharSequence inputString = phone;
-        Pattern pattern = Pattern.compile(expression);
-        Matcher matcher = pattern.matcher(inputString);
-        if (matcher.matches()){
-            return true;
-        }else{
-            return false;
-        }
-    }*/
 }

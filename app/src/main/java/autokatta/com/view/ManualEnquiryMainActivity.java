@@ -16,9 +16,8 @@ import autokatta.com.fragment.TransferEnquiriesFragment;
 public class ManualEnquiryMainActivity extends AppCompatActivity {
     Bundle mBundle;
     String Sharedcontact;
-    ManualEnquiryTabs manualEnquiryTabs = new ManualEnquiryTabs();
-    ManualEnquiry manualEnquiry = new ManualEnquiry();
-    TransferEnquiriesFragment transferEnquiriesFragment = new TransferEnquiriesFragment();
+    ManualEnquiry manualEnquiry;
+    TransferEnquiriesFragment transferEnquiriesFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,17 +34,9 @@ public class ManualEnquiryMainActivity extends AppCompatActivity {
                 }
 
                 try {
+                    manualEnquiry = new ManualEnquiry();
+                    transferEnquiriesFragment = new TransferEnquiriesFragment();
                     Sharedcontact = getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "");
-                    /*if (getIntent().getExtras() != null) {
-                        mBundle = new Bundle();
-                        mBundle.putInt("bundle_storeId", getIntent().getExtras().getInt("bundle_storeId", 0));
-                        mBundle.putString("bundle_contact", getIntent().getExtras().getString("bundle_contact", Sharedcontact));
-                        manualEnquiryTabs.setArguments(mBundle);
-                    }
-                    getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.manual_enquiry_container, manualEnquiryTabs, "manualenquiry")
-                            .addToBackStack("manualenquiry")
-                            .commit();*/
                     ViewPager mviewPager = (ViewPager) findViewById(R.id.manual_enquiry_viewpager);
                     if (mviewPager != null) {
                         setupViewPager(mviewPager);
@@ -92,12 +83,6 @@ public class ManualEnquiryMainActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case android.R.id.home:
                 onBackPressed();
-              /*  if (mRecyclerView.getVisibility() == View.GONE) {
-                    mRecyclerView.setVisibility(View.VISIBLE);
-                    getManualData();
-                } else {
-                    onBackPressed();
-                }*/
                 return true;
 
             case R.id.add_manual:
@@ -114,7 +99,6 @@ public class ManualEnquiryMainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        //super.onBackPressed();
         int fragments = getSupportFragmentManager().getBackStackEntryCount();
         if (fragments == 1) {
             finish();

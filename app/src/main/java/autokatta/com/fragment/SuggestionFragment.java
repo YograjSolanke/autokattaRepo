@@ -1,6 +1,5 @@
 package autokatta.com.fragment;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -36,11 +35,10 @@ import autokatta.com.response.SuggestionsResponse;
 import retrofit2.Response;
 
 /**
- * Created by ak-003 on 20/11/17.
+ * Created by ak-003 on 20/11/17
  */
 
 public class SuggestionFragment extends Fragment implements RequestNotifier {
-
     View mSuggestionView;
     RecyclerView mProfileView, mStoreView, mVehicleView, mProductView, mServiceView, mNewVehicleView;
     boolean hasViewCreated = false;
@@ -55,7 +53,6 @@ public class SuggestionFragment extends Fragment implements RequestNotifier {
     private List<SuggestionsResponse.Success.Profile> profileResponseList = new ArrayList<>();
     LinearLayout mProfileLinear, mStoreLinear, mVehicleLinear, mProductLinear, mServiceLinear,
             mNwVehicleLinear;
-    private ProgressDialog dialog;
 
     public SuggestionFragment() {
         // empty fragment
@@ -71,13 +68,8 @@ public class SuggestionFragment extends Fragment implements RequestNotifier {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        dialog = new ProgressDialog(getActivity());
-        dialog.setMessage("Loading Suggestions...");
-
         mNoData = (TextView) view.findViewById(R.id.no_category);
         mNoData.setVisibility(View.GONE);
-
         mProfileView = (RecyclerView) view.findViewById(R.id.profileRecyclerView);
         mStoreView = (RecyclerView) view.findViewById(R.id.storeRecyclerView);
         mVehicleView = (RecyclerView) view.findViewById(R.id.vehicleRecyclerView);
@@ -96,7 +88,6 @@ public class SuggestionFragment extends Fragment implements RequestNotifier {
         mProductLinear = (LinearLayout) view.findViewById(R.id.linearProduct);
         mServiceLinear = (LinearLayout) view.findViewById(R.id.linearService);
         mNwVehicleLinear = (LinearLayout) view.findViewById(R.id.linearNewVehicle);
-
         mProfileView.setHasFixedSize(true);
         mProfileView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false));
         //mSuggestions.mSuggestionRecycler.addItemDecoration(new VerticalLineDecorator(2));
@@ -145,7 +136,6 @@ public class SuggestionFragment extends Fragment implements RequestNotifier {
 
     private void getSuggestionData() {
         ApiCall mApiCall = new ApiCall(getActivity(), this);
-        dialog.show();
         mApiCall.getSuggestionData(mLoginContact);
     }
 
@@ -167,26 +157,17 @@ public class SuggestionFragment extends Fragment implements RequestNotifier {
             if (response.isSuccessful()) {
                 SuggestionsResponse suggestionsResponse = (SuggestionsResponse) response.body();
                 mNoData.setVisibility(View.GONE);
-
-
-                if (dialog.isShowing()) {
-                    dialog.dismiss();
-                }
             /*Profile Array*/
                 if (!suggestionsResponse.getSuccess().getProfile().isEmpty()) {
                     profileResponseList.clear();
                     mProfileLinear.setVisibility(View.VISIBLE);
                     for (SuggestionsResponse.Success.Profile notification : suggestionsResponse.getSuccess().getProfile()) {
-
                         notification.setUserName(notification.getUserName());
                         notification.setProfilePicture(notification.getProfilePicture());
                         notification.setContactNo(notification.getContactNo());
                         notification.setCity(notification.getCity());
-
                         profileResponseList.add(notification);
-
                     }
-
                     SuggestionProfileAdapter adapter = new SuggestionProfileAdapter(getActivity(), profileResponseList, txtProfile, mLoginContact);
                     mProfileView.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
@@ -197,8 +178,6 @@ public class SuggestionFragment extends Fragment implements RequestNotifier {
                     vehicleResponseList.clear();
                     mVehicleLinear.setVisibility(View.VISIBLE);
                     for (SuggestionsResponse.Success.UsedVehicle notification : suggestionsResponse.getSuccess().getUsedVehicle()) {
-
-
                         notification.setTitile(notification.getTitile());
                         //modelsuggestionsResponse.setImage(notification.getImage());
                         notification.setContactNo(notification.getContactNo());
@@ -208,7 +187,6 @@ public class SuggestionFragment extends Fragment implements RequestNotifier {
                         notification.setModel(notification.getModel());
                         notification.setYearOfManufaturer(notification.getYearOfManufaturer());
                         notification.setCategory(notification.getCategory());
-
                         String vehicleImage = notification.getImage();
                         if (vehicleImage.contains(",")) {
                             String[] items = vehicleImage.split(",");
@@ -216,11 +194,8 @@ public class SuggestionFragment extends Fragment implements RequestNotifier {
                         } else {
                             notification.setImage(vehicleImage);
                         }
-
                         vehicleResponseList.add(notification);
-
                     }
-
                     SuggestionVehicleAdapter adapter = new SuggestionVehicleAdapter(getActivity(), vehicleResponseList, txtVehicle, mLoginContact);
                     mVehicleView.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
@@ -230,61 +205,41 @@ public class SuggestionFragment extends Fragment implements RequestNotifier {
                     newVehicleResponseList.clear();
                     mNwVehicleLinear.setVisibility(View.VISIBLE);
                     for (SuggestionsResponse.Success.Newvehicle notification : suggestionsResponse.getSuccess().getNewvehicle()) {
-
                         notification.setName(notification.getName());
                         notification.setStoreImage(notification.getStoreImage());
                         notification.setContactNo(notification.getContactNo());
-
                         notification.setStoreID(notification.getStoreID());
                         notification.setLocation(notification.getLocation());
-
                         newVehicleResponseList.add(notification);
                     }
-
-
                     SuggestionNewVehicleAdapter adapter = new SuggestionNewVehicleAdapter(getActivity(), newVehicleResponseList, txtNwVehicle, mLoginContact);
                     mNewVehicleView.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
-
                 }
-
                 /*Store Array*/
                 if (!suggestionsResponse.getSuccess().getStore().isEmpty()) {
                     mStoreLinear.setVisibility(View.VISIBLE);
                     storeResponseList.clear();
                     for (SuggestionsResponse.Success.Store notification : suggestionsResponse.getSuccess().getStore()) {
-
-                        /*ModelSuggestionsResponse modelsuggestionsResponse = new ModelSuggestionsResponse();
-                        modelsuggestionsResponse.setLayoutId(-2);*/
                         notification.setName(notification.getName());
                         notification.setStoreImage(notification.getStoreImage());
                         notification.setContactNo(notification.getContactNo());
-
                         notification.setStoreID(notification.getStoreID());
                         notification.setLocation(notification.getLocation());
-
                         storeResponseList.add(notification);
                     }
-
                     SuggestionStoreAdapter adapter = new SuggestionStoreAdapter(getActivity(), storeResponseList, txtStore, mLoginContact);
                     mStoreView.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
                 }
-
                 /*Product Array*/
                 if (!suggestionsResponse.getSuccess().getProduct().isEmpty()) {
                     mProductLinear.setVisibility(View.VISIBLE);
                     productResponseList.clear();
                     for (SuggestionsResponse.Success.Product notification : suggestionsResponse.getSuccess().getProduct()) {
-
-                        /*ModelSuggestionsResponse modelsuggestionsResponse = new ModelSuggestionsResponse();
-                        modelsuggestionsResponse.setLayoutId(-5);*/
                         notification.setName(notification.getName());
                         notification.setAddedBy(notification.getAddedBy());
-
                         notification.setProductID(notification.getProductID());
-                        //notification.setLocation("");
-
                         String productImage = notification.getImage();
                         if (productImage.contains(",")) {
                             String[] items = productImage.split(",");
@@ -292,10 +247,8 @@ public class SuggestionFragment extends Fragment implements RequestNotifier {
                         } else {
                             notification.setImage(productImage);
                         }
-
                         productResponseList.add(notification);
                     }
-
                     SuggestionProductAdapter adapter = new SuggestionProductAdapter(getActivity(), productResponseList, txtProduct, mLoginContact);
                     mProductView.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
@@ -306,16 +259,9 @@ public class SuggestionFragment extends Fragment implements RequestNotifier {
                     mServiceLinear.setVisibility(View.VISIBLE);
                     serviceResponseList.clear();
                     for (SuggestionsResponse.Success.Service notification : suggestionsResponse.getSuccess().getService()) {
-
-                       /* ModelSuggestionsResponse modelsuggestionsResponse = new ModelSuggestionsResponse();
-                        modelsuggestionsResponse.setLayoutId(-6);*/
                         notification.setName(notification.getName());
-                        //modelsuggestionsResponse.setImage(notification.getImage());
                         notification.setAddedBy(notification.getAddedBy());
-
                         notification.setStoreServiceID(notification.getStoreServiceID());
-                        //notification.setLocation("");
-
                         String serviceImage = notification.getImage();
                         if (serviceImage.contains(",")) {
                             String[] items = serviceImage.split(",");
@@ -323,35 +269,23 @@ public class SuggestionFragment extends Fragment implements RequestNotifier {
                         } else {
                             notification.setImage(serviceImage);
                         }
-
                         serviceResponseList.add(notification);
                     }
-
                     SuggestionServiceAdapter adapter = new SuggestionServiceAdapter(getActivity(), serviceResponseList, txtService, mLoginContact);
                     mServiceView.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
                 }
 
             } else {
-                if (dialog.isShowing()) {
-                    dialog.dismiss();
-                }
                 mNoData.setVisibility(View.VISIBLE);
             }
         } else {
-            if (dialog.isShowing()) {
-                dialog.dismiss();
-            }
             mNoData.setVisibility(View.VISIBLE);
         }
     }
 
     @Override
     public void notifyError(Throwable error) {
-        if (dialog.isShowing()) {
-            dialog.dismiss();
-        }
-        mNoData.setVisibility(View.VISIBLE);
         if (error instanceof SocketTimeoutException) {
             if (isAdded())
                 CustomToast.customToast(getActivity(), getString(R.string._404_));
