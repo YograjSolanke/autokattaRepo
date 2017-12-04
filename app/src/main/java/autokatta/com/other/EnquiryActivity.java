@@ -1,10 +1,8 @@
 package autokatta.com.other;
 
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -12,8 +10,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import autokatta.com.R;
-import autokatta.com.database.DbConstants;
-import autokatta.com.database.DbOperation;
 import autokatta.com.view.BussinessChatActivity;
 import autokatta.com.view.ManualEnquiryMainActivity;
 
@@ -52,7 +48,7 @@ public class EnquiryActivity extends AppCompatActivity implements View.OnClickLi
         relativeNewDealer.setOnClickListener(this);
         relativeManualEnquiry.setOnClickListener(this);
 
-        DbOperation operation;
+        /*DbOperation operation;
         operation = new DbOperation(getApplicationContext());
         operation.OPEN();
         Cursor cursor = operation.getEnquiryCount();
@@ -61,7 +57,7 @@ public class EnquiryActivity extends AppCompatActivity implements View.OnClickLi
             mManualCount.setText(cursor.getString(cursor.getColumnIndex(DbConstants.enq_val)));
             Log.i("dsafdsfads", "->" + cursor.getString(cursor.getColumnIndex(DbConstants.enq_val)));
         }
-        operation.CLOSE();
+        operation.CLOSE();*/
     }
 
     @Override
@@ -111,5 +107,10 @@ public class EnquiryActivity extends AppCompatActivity implements View.OnClickLi
                 Toast.makeText(getApplicationContext(), "Coming Soon", Toast.LENGTH_SHORT).show();
                 break;
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 }

@@ -2,25 +2,30 @@ package autokatta.com.view;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import autokatta.com.R;
-import autokatta.com.app_info.ManualAppIntro;
+import autokatta.com.adapter.TabAdapterName;
 import autokatta.com.enquiries.TodaysFollowUp;
+import autokatta.com.fragment.TransferEnquiriesFragment;
 
 public class ManualEnquiryMainActivity extends AppCompatActivity {
     Bundle mBundle;
     String Sharedcontact;
     ManualEnquiryTabs manualEnquiryTabs = new ManualEnquiryTabs();
+    ManualEnquiry manualEnquiry = new ManualEnquiry();
+    TransferEnquiriesFragment transferEnquiriesFragment = new TransferEnquiriesFragment();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manual_enquiry_main);
         setTitle("Manual Enquiry");
-        startActivity(new Intent(getApplicationContext(), ManualAppIntro.class));
+        //startActivity(new Intent(getApplicationContext(), ManualAppIntro.class));
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -31,7 +36,7 @@ public class ManualEnquiryMainActivity extends AppCompatActivity {
 
                 try {
                     Sharedcontact = getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "");
-                    if (getIntent().getExtras() != null) {
+                    /*if (getIntent().getExtras() != null) {
                         mBundle = new Bundle();
                         mBundle.putInt("bundle_storeId", getIntent().getExtras().getInt("bundle_storeId", 0));
                         mBundle.putString("bundle_contact", getIntent().getExtras().getString("bundle_contact", Sharedcontact));
@@ -40,12 +45,32 @@ public class ManualEnquiryMainActivity extends AppCompatActivity {
                     getSupportFragmentManager().beginTransaction()
                             .replace(R.id.manual_enquiry_container, manualEnquiryTabs, "manualenquiry")
                             .addToBackStack("manualenquiry")
-                            .commit();
+                            .commit();*/
+                    ViewPager mviewPager = (ViewPager) findViewById(R.id.manual_enquiry_viewpager);
+                    if (mviewPager != null) {
+                        setupViewPager(mviewPager);
+                    }
+                    TabLayout tabLayout = (TabLayout) findViewById(R.id.manualenquiry_tabs);
+                    tabLayout.setupWithViewPager(mviewPager);
+                    if (getIntent().getExtras() != null) {
+                        mBundle = new Bundle();
+                        mBundle.putInt("bundle_storeId", getIntent().getExtras().getInt("bundle_storeId", 0));
+                        mBundle.putString("bundle_contact", getIntent().getExtras().getString("bundle_contact", Sharedcontact));
+                        manualEnquiry.setArguments(mBundle);
+                        transferEnquiriesFragment.setArguments(mBundle);
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         });
+    }
+
+    private void setupViewPager(ViewPager viewPager) {
+        TabAdapterName tabAdapterName = new TabAdapterName(getSupportFragmentManager());
+        tabAdapterName.addFragment(manualEnquiry, "Manual Enquiry");
+        tabAdapterName.addFragment(transferEnquiriesFragment, "Transfered Enquiries");
+        viewPager.setAdapter(tabAdapterName);
     }
 
     @Override

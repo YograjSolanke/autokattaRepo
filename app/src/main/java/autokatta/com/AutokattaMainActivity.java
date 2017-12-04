@@ -1,7 +1,6 @@
 package autokatta.com;
 
 import android.app.ActivityManager;
-import android.app.ActivityOptions;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -325,12 +324,6 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.getTabAt(0).setIcon(R.mipmap.ic_web);
-        //tabLayout.getTabAt(1).setIcon(R.mipmap.ic_calendar_check);
-        /*tabLayout.getTabAt(2).setIcon(R.mipmap.ic_launcher);*/
-        //tabLayout.getTabAt(2).setIcon(R.mipmap.ic_calendar_check);
-        //tabLayout.getTabAt(1).setIcon(R.mipmap.ic_cart);
-        //tabLayout.getTabAt(2).setIcon(R.mipmap.ic_account_multiple);
-        //tabLayout.getTabAt(3).setIcon(R.mipmap.ic_heart);
         tabLayout.getTabAt(1).setIcon(R.mipmap.ic_bell);
         tabLayout.getTabAt(2).setIcon(R.mipmap.suggestion_white_icon);
         tabLayout.getTabAt(3).setIcon(R.mipmap.view_more);
@@ -362,9 +355,6 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
             tabLayout.getTabAt(1).getIcon().setAlpha(128);
             tabLayout.getTabAt(2).getIcon().setAlpha(128);
             tabLayout.getTabAt(3).getIcon().setAlpha(128);
-            /*tabLayout.getTabAt(3).getIcon().setAlpha(128);
-            tabLayout.getTabAt(4).getIcon().setAlpha(128);
-            tabLayout.getTabAt(5).getIcon().setAlpha(128);*/
 
             viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
                 @Override
@@ -380,52 +370,25 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
                             tabLayout.getTabAt(1).getIcon().setAlpha(128);
                             tabLayout.getTabAt(2).getIcon().setAlpha(128);
                             tabLayout.getTabAt(3).getIcon().setAlpha(128);
-                            /*tabLayout.getTabAt(3).getIcon().setAlpha(128);
-                            tabLayout.getTabAt(4).getIcon().setAlpha(128);
-                            tabLayout.getTabAt(5).getIcon().setAlpha(128);*/
                             break;
                         case 1:
                             tabLayout.getTabAt(0).getIcon().setAlpha(128);
                             tabLayout.getTabAt(1).getIcon().setAlpha(255);
                             tabLayout.getTabAt(2).getIcon().setAlpha(128);
                             tabLayout.getTabAt(3).getIcon().setAlpha(128);
-                            /*tabLayout.getTabAt(3).getIcon().setAlpha(128);
-                            tabLayout.getTabAt(4).getIcon().setAlpha(128);
-                            tabLayout.getTabAt(5).getIcon().setAlpha(128);*/
                             break;
                         case 2:
                             tabLayout.getTabAt(0).getIcon().setAlpha(128);
                             tabLayout.getTabAt(1).getIcon().setAlpha(128);
                             tabLayout.getTabAt(2).getIcon().setAlpha(255);
                             tabLayout.getTabAt(3).getIcon().setAlpha(128);
-                            /*tabLayout.getTabAt(3).getIcon().setAlpha(128);
-                            tabLayout.getTabAt(4).getIcon().setAlpha(128);
-                            tabLayout.getTabAt(5).getIcon().setAlpha(128);*/
                             break;
                         case 3:
                             tabLayout.getTabAt(0).getIcon().setAlpha(128);
                             tabLayout.getTabAt(1).getIcon().setAlpha(128);
                             tabLayout.getTabAt(2).getIcon().setAlpha(128);
                             tabLayout.getTabAt(3).getIcon().setAlpha(255);
-                            /*tabLayout.getTabAt(4).getIcon().setAlpha(128);
-                            tabLayout.getTabAt(5).getIcon().setAlpha(128);*/
                             break;
-//                       /* case 4:
-//                            tabLayout.getTabAt(0).getIcon().setAlpha(128);
-//                            tabLayout.getTabAt(1).getIcon().setAlpha(128);
-//                            tabLayout.getTabAt(2).getIcon().setAlpha(128);
-//                            tabLayout.getTabAt(3).getIcon().setAlpha(128);
-//                            tabLayout.getTabAt(4).getIcon().setAlpha(255);
-//                            tabLayout.getTabAt(5).getIcon().setAlpha(128);
-//                            break;
-//                        case 5:
-//                            tabLayout.getTabAt(0).getIcon().setAlpha(128);
-//                            tabLayout.getTabAt(1).getIcon().setAlpha(128);
-//                            tabLayout.getTabAt(2).getIcon().setAlpha(128);
-//                            tabLayout.getTabAt(3).getIcon().setAlpha(128);
-//                            tabLayout.getTabAt(4).getIcon().setAlpha(128);
-//                            tabLayout.getTabAt(5).getIcon().setAlpha(255);
-//                            break;*/
                     }
                 }
 
@@ -587,7 +550,6 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
                     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                         menuItem.setChecked(true);
                         mDrawerLayout.closeDrawers();
-                        ActivityOptions options = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.ok_left_to_right, R.anim.ok_left_to_right);
                         if (menuItem.getItemId() == R.id.home) {
                             startActivity(new Intent(AutokattaMainActivity.this, AutokattaMainActivity.class));
                             finish();
@@ -869,7 +831,6 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
     }
 
     private void setupSearchView() {
-        ActivityOptions options = ActivityOptions.makeCustomAnimation(AutokattaMainActivity.this, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
         startActivity(new Intent(getApplicationContext(), SearchActivity.class));
     }
 
