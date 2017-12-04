@@ -114,5 +114,9 @@ public class VehicleUpload extends AppCompatActivity implements RequestNotifier 
 
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
 }
 

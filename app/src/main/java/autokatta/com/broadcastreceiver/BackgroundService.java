@@ -18,11 +18,13 @@ import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 
 import autokatta.com.R;
+import autokatta.com.database.DbConstants;
 import autokatta.com.database.DbOperation;
 import autokatta.com.interfaces.ServiceApi;
 import autokatta.com.request.AutokattaContactRequest;
 import autokatta.com.request.ManualEnquiryRequestCount;
 import autokatta.com.response.GetAutokattaContactResponse;
+import autokatta.com.response.ManualEnquiryResponse;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
@@ -32,7 +34,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
- * Created by ak-001 on 30/3/17.
+ * Created by ak-001 on 30/3/17
  */
 
 public class BackgroundService extends Service {
@@ -140,9 +142,9 @@ public class BackgroundService extends Service {
                 handler.post(new Runnable() {
                     public void run() {
                         try {
-                            getAutokattaContacts();
+                            //getAutokattaContacts();
                             //getEnquiryCount();
-                            sendFcmNotification();
+                            //sendFcmNotification();
                             Log.i("Background", "call webservice");
                         } catch (Exception e) {
                             Log.e("background", e.getMessage());
@@ -307,7 +309,7 @@ public class BackgroundService extends Service {
     /*
     Get Autokatta Contacts...
      */
-    /*private void getEnquiryCount() {
+    private void getEnquiryCount() {
         try {
 
             Retrofit retrofit = new Retrofit.Builder()
@@ -330,21 +332,21 @@ public class BackgroundService extends Service {
                         mMyGroupsList.clear();
                         ManualEnquiryResponse manualEnquiry = (ManualEnquiryResponse) response.body();
                         if (manualEnquiry.getSuccess() != null) {
-                        *//*Used Vehicle*//*
+                            //Used Vehicle
                             for (ManualEnquiryResponse.Success.UsedVehicle success : manualEnquiry.getSuccess().getUsedVehicle()) {
                                 ManualEnquiryRequestCount request = new ManualEnquiryRequestCount();
                                 request.setVehicleId(success.getVehicleId());
                                 mMyGroupsList.add(request);
                             }
 
-                        *//*Products*//*
+                            //Products
                             for (ManualEnquiryResponse.Success.Product success : manualEnquiry.getSuccess().getProducts()) {
                                 ManualEnquiryRequestCount request = new ManualEnquiryRequestCount();
                                 request.setProductId(success.getProductId());
                                 mMyGroupsList.add(request);
                             }
 
-                        *//*Services*//*
+                            //Services
                             for (ManualEnquiryResponse.Success.Service service : manualEnquiry.getSuccess().getServices()) {
                                 ManualEnquiryRequestCount request = new ManualEnquiryRequestCount();
                                 request.setServiceId(String.valueOf(service.getService_id()));
@@ -367,7 +369,7 @@ public class BackgroundService extends Service {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }*/
+    }
 
     public int onStartCommand(Intent intent, int flags, int startId) {
         return START_STICKY;

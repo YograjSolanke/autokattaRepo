@@ -105,19 +105,6 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
     private static final String NAME_KEY = "android_latest_version_name";
     FirebaseRemoteConfig mFirebaseRemoteConfig;*/
 
-    private boolean isBackgroundServiceRunning(Class<?> serviceClass) {
-        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
-        assert manager != null;
-        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
-            if (serviceClass.getName().equals(service.service.getClassName())) {
-                System.out.println("class" + serviceClass.getName());
-                System.out.println("class1" + service.service.getClassName());
-                return true;
-            }
-        }
-        return false;
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -148,9 +135,7 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
         //intializing scan object
         qrScan = new IntentIntegrator(this);
 
-        if (!isBackgroundServiceRunning(BackgroundService.class)) {
-            startService(new Intent(AutokattaMainActivity.this, BackgroundService.class));
-        }
+
 
        /* DbOperation dbAdpter = new DbOperation(getApplicationContext());
         dbAdpter.OPEN();
@@ -513,9 +498,35 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
         });
     }
 
+    private boolean isBackgroundServiceRunning(Class<?> serviceClass) {
+        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        assert manager != null;
+        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+            if (serviceClass.getName().equals(service.service.getClassName())) {
+                System.out.println("class" + serviceClass.getName());
+                System.out.println("class1" + service.service.getClassName());
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (!isBackgroundServiceRunning(BackgroundService.class)) {
+            startService(new Intent(AutokattaMainActivity.this, BackgroundService.class));
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+    }
+
     /*
-    change language
-     */
+            change language
+             */
     public void changeLanguageClicked() {
         String locale = (getResources().getConfiguration().locale.toString().toLowerCase().equals(Locale.US.toString().toLowerCase())) ? "mr" : Locale.US.toString();
         Locale myLocale = new Locale(locale);
