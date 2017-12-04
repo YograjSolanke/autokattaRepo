@@ -12,6 +12,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,6 +31,7 @@ import autokatta.com.view.ReviewActivity;
 import autokatta.com.view.ServiceViewActivity;
 import autokatta.com.view.StoreViewActivity;
 import autokatta.com.view.VehicleDetails;
+import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
 /**
  * Created by ak-003 on 30/11/17.
@@ -84,19 +88,19 @@ public class FcmNotificationAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
         holder.mUserName.setText(mFcmNotiList.get(holder.getAdapterPosition()).getUserName());
         holder.mMessage.setText(mFcmNotiList.get(holder.getAdapterPosition()).getMessage());
-        holder.mDateTime.setText("02 Dec 2017 12:45 pm");
+        holder.mDateTime.setText(mFcmNotiList.get(holder.getAdapterPosition()).getDateTime());
 
-       /* if (mFcmNotiList.get(holder.getAdapterPosition()).getImage()!=null ||
-                !mFcmNotiList.get(holder.getAdapterPosition()).getImage().equals("")){
+        if (mFcmNotiList.get(holder.getAdapterPosition()).getProfilePicture() != null ||
+                !mFcmNotiList.get(holder.getAdapterPosition()).getProfilePicture().equals("")) {
 
             Glide.with(mActivity)
                     .load(mActivity.getString(R.string.base_image_url)+
-                            mFcmNotiList.get(holder.getAdapterPosition()).getImage())
+                            mFcmNotiList.get(holder.getAdapterPosition()).getProfilePicture())
                     .bitmapTransform(new CropCircleTransformation(mActivity))
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(holder.mUserPic);
         }else
-            holder.mUserPic.setBackgroundResource(R.mipmap.profile);*/
+            holder.mUserPic.setBackgroundResource(R.mipmap.profile);
 
 
         holder.mUserName.setOnClickListener(new View.OnClickListener() {
@@ -194,7 +198,7 @@ public class FcmNotificationAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                         }
                         break;
 
-                    case "TransferStock":
+                    case "TransferStockRequest":
                         Bundle mBundle = new Bundle();
                         mBundle.putInt("bundle_storeId", 0);
                         mBundle.putString("bundle_contact", mLoginContact);
@@ -215,7 +219,7 @@ public class FcmNotificationAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                         break;
 
                 /*Add Employee Request*/
-                    case "AddEmployee":
+                    case "EmployeeRequest":
                         Bundle mBundle1 = new Bundle();
                         mBundle1.putString("senderContact", mFcmNotiList.get(holder.getAdapterPosition()).getContactNo());
                         mBundle1.putString("senderName", mFcmNotiList.get(holder.getAdapterPosition()).getUserName());

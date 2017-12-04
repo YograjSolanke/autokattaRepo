@@ -97,6 +97,12 @@ public class GetFCMNotificationResponse {
             @SerializedName("SearchID")
             @Expose
             private Integer searchID;
+            @SerializedName("ProfilePicture")
+            @Expose
+            private String profilePicture;
+            @SerializedName("Date")
+            @Expose
+            private String dateTime;
 
             public Integer getFCMNotificationID() {
                 return fCMNotificationID;
@@ -216,6 +222,22 @@ public class GetFCMNotificationResponse {
 
             public void setSearchID(Integer searchID) {
                 this.searchID = searchID;
+            }
+
+            public String getProfilePicture() {
+                return profilePicture;
+            }
+
+            public void setProfilePicture(String profilePicture) {
+                this.profilePicture = profilePicture;
+            }
+
+            public String getDateTime() {
+                return dateTime;
+            }
+
+            public void setDateTime(String dateTime) {
+                this.dateTime = dateTime;
             }
         }
     }

@@ -16,8 +16,13 @@ import android.widget.TextView;
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 
 import autokatta.com.R;
 import autokatta.com.adapter.FcmNotificationAdapter;
@@ -74,8 +79,8 @@ public class NotificationFragment extends Fragment implements RequestNotifier, S
                 mRecyclerView.setHasFixedSize(true);
                 LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
                 /*code to ascending or descending list*/
-                mLayoutManager.setReverseLayout(true);
-                mLayoutManager.setStackFromEnd(true);
+                mLayoutManager.setReverseLayout(false);
+                mLayoutManager.setStackFromEnd(false);
                 mRecyclerView.setLayoutManager(mLayoutManager);
                 mRecyclerView.addItemDecoration(new VerticalLineDecorator(2));
                 mRecyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -143,6 +148,24 @@ public class NotificationFragment extends Fragment implements RequestNotifier, S
                         fcmNotification.setServiceID(fcmNotification.getServiceID());
                         fcmNotification.setStatusID(fcmNotification.getStatusID());
                         fcmNotification.setSearchID(fcmNotification.getSearchID());
+
+                        try {
+                            TimeZone utc = TimeZone.getTimeZone("etc/UTC");
+                            //format of date coming from services
+                            DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.getDefault());
+                            inputFormat.setTimeZone(utc);
+
+                            //format of date which we want to show
+                            DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy hh:mm a", Locale.getDefault());
+                            outputFormat.setTimeZone(utc);
+
+                            Date date = inputFormat.parse(fcmNotification.getDateTime());
+                            String output = outputFormat.format(date);
+                            fcmNotification.setDateTime(output);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
                         mFcmNotiList.add(fcmNotification);
 
                     }
