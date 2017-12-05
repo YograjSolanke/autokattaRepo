@@ -1617,7 +1617,7 @@ public interface ServiceApi {
     Call<String> updateDeleteEmployee(@Query("StoreEmplyeeID") int StoreEmplyeeID, @Query("Name") String Name,
                                       @Query("ContactNo") String ContactNo, @Query("Designation") String Designation,
                                       @Query("Description") String Description, @Query("Permission") String Permission,
-                                      @Query("Keyword") String Keyword);
+                                      @Query("Keyword") String Keyword, @Query("Status") String Status);
 
 
     // get Suggestion based data
@@ -1627,4 +1627,8 @@ public interface ServiceApi {
     // get fcm notifications
     @GET("GetFCMNotificationOnUserBased")
     Call<GetFCMNotificationResponse> _autokattaGetFCMNotificationOnUserBased(@Query("Usercontact") String mLoginContact);
+
+    // get all requests as employee
+    @GET("GetMyRequestsForEmployee")
+    Call<GetMyRequestsForEmployeeResponse> _autokattaGetMyRequestsForEmployee(@Query("MyContact") String mLoginContact);
 }

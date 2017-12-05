@@ -220,13 +220,9 @@ public class FcmNotificationAdapter extends RecyclerView.Adapter<RecyclerView.Vi
 
                 /*Add Employee Request*/
                     case "EmployeeRequest":
-                        Bundle mBundle1 = new Bundle();
-                        mBundle1.putString("senderContact", mFcmNotiList.get(holder.getAdapterPosition()).getContactNo());
-                        mBundle1.putString("senderName", mFcmNotiList.get(holder.getAdapterPosition()).getUserName());
-                        mBundle1.putString("message", mFcmNotiList.get(holder.getAdapterPosition()).getMessage());
-                        Intent intent1 = new Intent(mActivity, NotificationAddEmployeeActivity.class);
-                        intent1.putExtras(mBundle1);
-                        mActivity.startActivity(intent1);
+                        mActivity.startActivity(new Intent(mActivity, NotificationAddEmployeeActivity.class));
+                        /*Intent intent1 = new Intent(mActivity, NotificationAddEmployeeActivity.class);
+                        mActivity.startActivity(intent1);*/
                         break;
 
                 /*Review & Reply */

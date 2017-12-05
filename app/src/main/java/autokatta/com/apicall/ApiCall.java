@@ -8255,7 +8255,7 @@ get ExchangeMela Analytics Data
                         .client(initLog().build())
                         .build();
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<String> mServiceMelaResponse = serviceApi._autokattaUpdateManualEnquiry(myContact, "null", "null", "null", "null", keyword, "null", "null", "null", ids, "null", Financername, loanamount, loanpercent, "null", ManualEnquiryID,0);
+                Call<String> mServiceMelaResponse = serviceApi._autokattaUpdateManualEnquiry(myContact, "null", "null", "null", "null", keyword, "null", "null", "null", ids, "null", Financername, loanamount, loanpercent, "null", ManualEnquiryID, 0);
                 mServiceMelaResponse.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
@@ -8387,7 +8387,7 @@ get ExchangeMela Analytics Data
                 //      AddManualEnquiryRequest addManualEnquiryRequest = new AddManualEnquiryRequest();
 
                 Call<AddManualEnquiryResponse> mServiceMelaResponse = serviceApi._autokattaAddManualEnquiry(myContact, custName, custContact, custAddress,
-                        custFullAddress, custInventoryType, custEnquiryStatus, discussion, nextFollowupDate, idsList, source, financername, loanamt, loanper, financerstatus, 0,0);
+                        custFullAddress, custInventoryType, custEnquiryStatus, discussion, nextFollowupDate, idsList, source, financername, loanamt, loanper, financerstatus, 0, 0);
                 mServiceMelaResponse.enqueue(new Callback<AddManualEnquiryResponse>() {
                     @Override
                     public void onResponse(Call<AddManualEnquiryResponse> call, Response<AddManualEnquiryResponse> response) {
@@ -8656,7 +8656,7 @@ get ExchangeMela Analytics Data
       Add Manual Enquiry person Details...
     */
 
-    public void addManualEnquiryPersonData(String contact, String enquiry_status, String mycontact, String keyword, String discussion, String nextfollowupdate, String ids,String TransferContact) {
+    public void addManualEnquiryPersonData(String contact, String enquiry_status, String mycontact, String keyword, String discussion, String nextfollowupdate, String ids, String TransferContact) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 //JSON to Gson conversion
@@ -8672,7 +8672,7 @@ get ExchangeMela Analytics Data
 
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<String> mServiceMelaResponse = serviceApi.AddManualEnquiryPersonData(contact, enquiry_status, mycontact, keyword, discussion, nextfollowupdate, ids,TransferContact);
+                Call<String> mServiceMelaResponse = serviceApi.AddManualEnquiryPersonData(contact, enquiry_status, mycontact, keyword, discussion, nextfollowupdate, ids, TransferContact);
                 mServiceMelaResponse.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
@@ -10007,7 +10007,8 @@ get ExchangeMela Analytics Data
                                      String Designation,
                                      String Description,
                                      String Permission,
-                                     String Keyword) {
+                                     String Keyword,
+                                     String Status) {
 
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
@@ -10025,7 +10026,7 @@ get ExchangeMela Analytics Data
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
                 Call<String> deleteStore = serviceApi.updateDeleteEmployee(StoreEmplyeeID, Name, ContactNo,
-                        Designation, Description, Permission, Keyword);
+                        Designation, Description, Permission, Keyword, Status);
                 deleteStore.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
@@ -10105,6 +10106,37 @@ get ExchangeMela Analytics Data
         }
     }
 
+    /*get store employee requests*/
+    public void GetMyRequestsForEmployee(String mLoginContact) {
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<GetMyRequestsForEmployeeResponse> responseCall = serviceApi._autokattaGetMyRequestsForEmployee(mLoginContact);
+                responseCall.enqueue(new Callback<GetMyRequestsForEmployeeResponse>() {
+                    @Override
+                    public void onResponse(Call<GetMyRequestsForEmployeeResponse> call, Response<GetMyRequestsForEmployeeResponse> response) {
+                        mNotifier.notifySuccess(response);
+                    }
+
+                    @Override
+                    public void onFailure(Call<GetMyRequestsForEmployeeResponse> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+            } else
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     /***
      * Retrofit Logs
      ***/
@@ -10135,4 +10167,5 @@ get ExchangeMela Analytics Data
         httpClient.addInterceptor(logging).build();
         return httpClient;
     }
+
 }

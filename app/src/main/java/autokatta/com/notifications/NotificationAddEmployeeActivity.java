@@ -1,12 +1,14 @@
 package autokatta.com.notifications;
 
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
 import java.net.ConnectException;
@@ -17,15 +19,15 @@ import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
+import autokatta.com.other.VerticalLineDecorator;
 import retrofit2.Response;
 
-public class NotificationAddEmployeeActivity extends AppCompatActivity implements View.OnClickListener, RequestNotifier {
+public class NotificationAddEmployeeActivity extends AppCompatActivity implements RequestNotifier, SwipeRefreshLayout.OnRefreshListener {
 
-    String mBundleContact;
-    String strName, strMessage;
-    Button mBtnApprove, mBtnReject;
     private String mLoginContact;
-    TextView mMessage;
+    RecyclerView mRecyclerView;
+    SwipeRefreshLayout mSwipeRefreshLayout;
+    TextView mNoData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,27 +40,44 @@ public class NotificationAddEmployeeActivity extends AppCompatActivity implement
 
         mLoginContact = getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
                 .getString("loginContact", "");
+        mNoData = (TextView) findViewById(R.id.no_category);
 
-        mBtnApprove = (Button) findViewById(R.id.btnApprove);
-        mBtnReject = (Button) findViewById(R.id.btnReject);
-        mMessage = (TextView) findViewById(R.id.message);
+        mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);
 
-        mBtnApprove.setOnClickListener(this);
-        mBtnReject.setOnClickListener(this);
+        mRecyclerView.setHasFixedSize(true);
+        LinearLayoutManager mLayoutManager = new LinearLayoutManager(NotificationAddEmployeeActivity.this);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.addItemDecoration(new VerticalLineDecorator(2));
+        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+
+        mSwipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
+        mSwipeRefreshLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                mSwipeRefreshLayout.setRefreshing(true);
+                getMyRequests();
+            }
+        });
 
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().setHomeButtonEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
+    }
 
-        if (getIntent().getExtras() != null) {
-            strName = getIntent().getExtras().getString("senderName", "");
-            strMessage = getIntent().getExtras().getString("message", "");
-            mBundleContact = getIntent().getExtras().getString("senderContact", "");
+    private void getMyRequests() {
+        ApiCall mApiCall = new ApiCall(this, this);
+        mApiCall.GetMyRequestsForEmployee(mLoginContact);
+    }
 
-            mMessage.setText(strName + " " + strMessage);
-        }
+    @Override
+    public void onRefresh() {
+        getMyRequests();
     }
 
     @Override
@@ -72,25 +91,39 @@ public class NotificationAddEmployeeActivity extends AppCompatActivity implement
     }
 
     @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.btnApprove:
-                acceptOrReject("Accept");
-                break;
-            case R.id.btnReject:
-                acceptOrReject("Reject");
-                break;
-        }
-    }
-
-    private void acceptOrReject(String action) {
-        ApiCall mApiCall = new ApiCall(this, this);
-        //mApiCall.AddContactForPublicGroup(mGroupID, mLoginContact);
-    }
-
-    @Override
     public void notifySuccess(Response<?> response) {
+        if (response != null) {
+            if (response.isSuccessful()) {
+                /*GetFCMNotificationResponse notificationResponse = (GetFCMNotificationResponse) response.body();
+                if (!notificationResponse.getSuccess().getFCMNotification().isEmpty()) {
+                    mSwipeRefreshLayout.setRefreshing(false);
+                    mNoData.setVisibility(View.GONE);
+                    mFcmNotiList.clear();
 
+                    for (GetFCMNotificationResponse.Success.FCMNotification fcmNotification : notificationResponse.getSuccess().getFCMNotification()) {
+                        fcmNotification.setFCMNotificationID(fcmNotification.getFCMNotificationID());
+
+                        mFcmNotiList.add(fcmNotification);
+                    }
+
+                    AdapterNotificationAddEmployee mAdapter = new AdapterNotificationAddEmployee(NotificationAddEmployeeActivity.this, mFcmNotiList);
+                    mRecyclerView.setAdapter(mAdapter);
+                    mAdapter.notifyDataSetChanged();
+
+                } else {
+                    mSwipeRefreshLayout.setRefreshing(false);
+                    mNoData.setVisibility(View.VISIBLE);
+                }*/
+
+            } else {
+                mSwipeRefreshLayout.setRefreshing(false);
+                CustomToast.customToast(getApplicationContext(), getString(R.string.no_data));
+            }
+
+        } else {
+            mSwipeRefreshLayout.setRefreshing(false);
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
+        }
     }
 
     @Override
@@ -107,23 +140,13 @@ public class NotificationAddEmployeeActivity extends AppCompatActivity implement
             CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
         } else {
             Log.i("Check Class-"
-                    , "NotificationAddEmployeeActivity");
+                    , "AdapterNotificationAddEmployee");
             error.printStackTrace();
         }
     }
 
     @Override
     public void notifyString(String str) {
-        if (str != null) {
-            if (str.equalsIgnoreCase("you are added")) {
-                CustomToast.customToast(this, "you joined the group");
-                finish();
-            } else if (str.equalsIgnoreCase("you are already in group")) {
-                CustomToast.customToast(this, "you are already in group");
-                finish();
-            }
-
-        } else
-            CustomToast.customToast(this, getString(R.string.no_response));
     }
+
 }

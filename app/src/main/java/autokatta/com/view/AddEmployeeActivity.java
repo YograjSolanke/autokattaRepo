@@ -294,7 +294,7 @@ public class AddEmployeeActivity extends AppCompatActivity implements RequestNot
                             emp_id = getIntent().getExtras().getInt("id", 0);
 
                             mApiCall.updateDeleteEmployee(emp_id, name, contact, designation, description,
-                                    permission, "Edit");
+                                    permission, "Edit", "");
                         }
                     }
                 }

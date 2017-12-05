@@ -167,7 +167,7 @@ public class MyStoreEmployeeAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     private void deleteEmployee(int empId) {
         ApiCall apiCall = new ApiCall(mActivity, this);
         apiCall.updateDeleteEmployee(empId, "", "", "", "", "",
-                "Delete");
+                "Delete", "");
     }
 
     @Override
