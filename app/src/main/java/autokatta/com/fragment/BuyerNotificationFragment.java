@@ -45,11 +45,10 @@ import autokatta.com.view.OtherProfile;
 import retrofit2.Response;
 
 /**
- * Created by ak-003 on 21/4/17.
+ * Created by ak-003 on 21/4/17
  */
 
 public class BuyerNotificationFragment extends Fragment implements RequestNotifier {
-
     public List<BuyerResponse.Success.Vehicle> mainList = new ArrayList<>();
     public List<BuyerResponse.Success.Found> childlist;
     private LinearLayout mLinearListView;
@@ -77,7 +76,6 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         mApiCall = new ApiCall(getActivity(), this);
         getActivity().runOnUiThread(new Runnable() {
             @Override
@@ -85,21 +83,17 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
                 dialog = new ProgressDialog(getActivity());
                 dialog.setMessage("Loading Buyer...");
                 dialog.show();
-
                 mLinearListView = (LinearLayout) mBuyerView.findViewById(R.id.linear_ListView);
                 myContact = getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).
                         getString("loginContact", "");
                 mNoData = (TextView) mBuyerView.findViewById(R.id.no_category);
                 mNoData.setVisibility(View.GONE);
-
-
                 getUploadedVehicleBuyerlist(myContact);
             }
         });
     }
 
     private void getUploadedVehicleBuyerlist(String myContact) {
-
         mApiCall.getUploadedVehicleBuyerlist(myContact);
     }
 
@@ -117,12 +111,10 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
         }
     }
 
-
     @Override
     public void notifySuccess(Response<?> response) {
         DateFormat f = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.getDefault());
         if (response != null) {
-
             if (response.isSuccessful()) {
                 dialog.dismiss();
                 mNoData.setVisibility(View.GONE);
@@ -132,7 +124,6 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
                 //mainList.clear();
                 for (BuyerResponse.Success.Vehicle obj : objsuccess.getVehicles()) {
                     childlist = new ArrayList<>();
-
                     obj.setVehicleId(obj.getVehicleId());
                     obj.setCategory(obj.getCategory());
                     obj.setManufacturer(obj.getManufacturer());
@@ -158,15 +149,12 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
                     if (!obj.getDate().equalsIgnoreCase("")) {
                         try {
                             TimeZone utc = TimeZone.getTimeZone("etc/UTC");
-
                             DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd",
                                     Locale.getDefault());
                             inputFormat.setTimeZone(utc);
-
                             DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy",
                                     Locale.getDefault());
                             outputFormat.setTimeZone(utc);
-
                             Date date = inputFormat.parse(obj.getDate());
                             String output = outputFormat.format(date);
                             obj.setDate(output);
@@ -177,9 +165,7 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
                         obj.setDate("");
 
                     for (BuyerResponse.Success.Found objectmatch : objsuccess.getFound()) {
-
                         if (obj.getVehicleId() == objectmatch.getVehicleId()) {
-
                             objectmatch.setReceivername(objectmatch.getReceivername());
                             objectmatch.setReceiverPic(objectmatch.getReceiverPic());
                             objectmatch.setContactNo(objectmatch.getContactNo());
@@ -202,15 +188,12 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
                             if (!objectmatch.getLastcall().equalsIgnoreCase("")) {
                                 try {
                                     TimeZone utc = TimeZone.getTimeZone("etc/UTC");
-
                                     DateFormat inputFormat = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss a",
                                             Locale.getDefault());
                                     inputFormat.setTimeZone(utc);
-
                                     DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy hh:mm a",
                                             Locale.getDefault());
                                     outputFormat.setTimeZone(utc);
-
                                     Date date = inputFormat.parse(objectmatch.getLastcall());
                                     String output = outputFormat.format(date);
                                     objectmatch.setLastcall(output);
@@ -223,21 +206,17 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
                             childlist.add(objectmatch);
                         }
                     }
-
                     obj.setFound(childlist);
                     mainList.add(obj);
                 }
 
                 mLinearScrollSecond = new LinearLayout[mainList.size()];
                 isFirstViewClick = new boolean[mainList.size()];
-
                 //Adds data into first row
                 for (int i = 0; i < mainList.size(); i++) {
-
                     LayoutInflater inflater = null;
                     inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                     View mLinearView = inflater.inflate(R.layout.buyer_row, null);
-
                     final TextView mCategoryName = (TextView) mLinearView.findViewById(R.id.settitle);
                     final TextView mBrandName = (TextView) mLinearView.findViewById(R.id.setbrand);
                     final TextView mModelName = (TextView) mLinearView.findViewById(R.id.setmodel);
@@ -267,7 +246,6 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
                         muparrow.setVisibility(View.VISIBLE);
                         mdownarrow.setVisibility(View.GONE);
                     }
-
                     final int finalI = i;
                     String count = String.valueOf(mainList.get(i).getFound().size());
 
@@ -292,7 +270,6 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
                     mPriceName.setText(mainList.get(i).getPrice());
                     mYearName.setText(mainList.get(i).getYearOfManufacture());
                     mRto_city.setText(mainList.get(i).getRtoCity());
-
                     if (mainList.get(i).getRtoCity().equalsIgnoreCase("Unregistered") || mainList.get(i).getRtoCity().equalsIgnoreCase("") || mainList.get(i).getRtoCity().isEmpty()) {
                         mLinearRegNo.setVisibility(View.GONE);
                     } else {
@@ -301,23 +278,16 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
                     }
                     mKms.setText(String.valueOf(mainList.get(i).getKmsRunning()));
                     mmatchCount.setText(String.valueOf(mainList.get(i).getFound().size()));
-
                     mUploadedDate.setText(mainList.get(i).getDate());
-
                     final String imagenames = mainList.get(i).getImage().replaceAll(" ", "");
-
                     List<String> iname = new ArrayList<>();
-
                     if (!imagenames.equalsIgnoreCase("")) {
                         String[] imagenamecame = imagenames.split(",");
-
                         if (imagenamecame.length != 0 && !imagenamecame[0].equals("")) {
                             for (String anImagenamecame : imagenamecame) {
                                 iname.add(anImagenamecame);
                             }
-
                             ImageView[] imageView = new ImageView[iname.size()];
-
                             for (int l = 0; l < imageView.length; l++) {
                                 imageView[l] = new ImageView(getActivity());
                                 Glide.with(getActivity())
@@ -341,14 +311,12 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
                         LayoutInflater inflater2 = null;
                         inflater2 = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                         View mLinearView2 = inflater2.inflate(R.layout.buyer_list_adapter, null);
-
                         TextView mBuyerUserName = (TextView) mLinearView2.findViewById(R.id.buyerusername);
                         TextView mBuyerLocation = (TextView) mLinearView2.findViewById(R.id.buyerlocation);
                         final ImageView buyer_lead_image = (ImageView) mLinearView2.findViewById(R.id.buyer_lead_image);
                         final ImageView callbuyer = (ImageView) mLinearView2.findViewById(R.id.callbuyer);
                         final ImageView favouritebuyer = (ImageView) mLinearView2.findViewById(R.id.favouritebuyer);
                         final ImageView unfavouritebuyer = (ImageView) mLinearView2.findViewById(R.id.unfavouritebuyer);
-
                         TextView mItemNameCity = (TextView) mLinearView2.findViewById(R.id.namecity);
                         CheckBox checkBox1 = (CheckBox) mLinearView2.findViewById(R.id.checkBox1);
                         CheckBox checkBox2 = (CheckBox) mLinearView2.findViewById(R.id.checkBox2);
@@ -358,7 +326,6 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
                         CheckBox checkBoxRc = (CheckBox) mLinearView2.findViewById(R.id.checkBoxRc);
                         CheckBox checkBoxIns = (CheckBox) mLinearView2.findViewById(R.id.checkBoxINS);
                         CheckBox checkBoxHpcap = (CheckBox) mLinearView2.findViewById(R.id.checkBoxHPcap);
-
                         CheckBox checkBox6 = (CheckBox) mLinearView2.findViewById(R.id.checkBox6);
                         CheckBox checkBox7 = (CheckBox) mLinearView2.findViewById(R.id.checkBox7);
                         CheckBox checkBox8 = (CheckBox) mLinearView2.findViewById(R.id.checkBox8);
@@ -367,18 +334,15 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
                         CheckBox checkBoxRcRight = (CheckBox) mLinearView2.findViewById(R.id.checkBoxRcRight);
                         CheckBox checkBoxINSRight = (CheckBox) mLinearView2.findViewById(R.id.checkBoxINSRight);
                         CheckBox checkBoxHPcapRight = (CheckBox) mLinearView2.findViewById(R.id.checkBoxHPcapRight);
-
                         mBuyerUserName.setTextColor(Color.BLUE);
                         mBuyerUserName.setText(mainList.get(i).getFound().get(j).getReceivername());
                         mBuyerLocation.setText(mainList.get(i).getFound().get(j).getLocationCity());
 
                         String image_buyer = mainList.get(i).getFound().get(j).getReceiverPic();
-
                         if (image_buyer.equals("")) {
                             buyer_lead_image.setBackgroundResource(R.drawable.profile);
                         } else {
                             try {
-
                                 Glide.with(getActivity())
                                         .load(getString(R.string.base_image_url) + image_buyer)
                                         //.bitmapTransform(new CropCircleTransformation(getActivity()))
@@ -402,7 +366,6 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
                         }
 
                         mItemNameCity.setText("" + "Last call On:" + mainList.get(i).getFound().get(j).getLastcall());
-
                         checkBox1.setText(mainList.get(i).getCategory());
                         checkBox2.setText(mainList.get(i).getManufacturer());
                         checkBox3.setText(mainList.get(i).getModel());
@@ -447,7 +410,6 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
                             checkBoxHPcapRight.setText("" + "Hp-" + itemHp);
 
                         try {
-
                             if (checkBox1.getText().toString().equalsIgnoreCase(checkBox6.getText().toString())) {
                                 checkBox1.setChecked(true);
                                 checkBox6.setChecked(true);
@@ -487,11 +449,9 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
                                 checkBoxHpcap.setChecked(true);
                                 checkBoxHPcapRight.setChecked(true);
                             }
-
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
-
 
                         checkBox1.setEnabled(false);
                         checkBox2.setEnabled(false);
@@ -501,7 +461,6 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
                         checkBoxRc.setEnabled(false);
                         checkBoxIns.setEnabled(false);
                         checkBoxHpcap.setEnabled(false);
-
                         checkBox6.setEnabled(false);
                         checkBox7.setEnabled(false);
                         checkBox8.setEnabled(false);
@@ -510,15 +469,12 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
                         checkBoxRcRight.setEnabled(false);
                         checkBoxINSRight.setEnabled(false);
                         checkBoxHPcapRight.setEnabled(false);
-
                         final int finalJ = j;
                         mBuyerUserName.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-
                                 recieverContact = mainList.get(finalI).getFound().get(finalJ).getContactNo();
                                 if (!recieverContact.equalsIgnoreCase(myContact)) {
-
                                     Bundle bundle = new Bundle();
                                     bundle.putString("contactOtherProfile", recieverContact);
                                     bundle.putString("action", "otherProfile");
@@ -526,7 +482,6 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
                                     intent.putExtras(bundle);
                                     getActivity().startActivity(intent);
                                 }
-
                             }
                         });
 
@@ -553,15 +508,12 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
                                 Calendar c = Calendar.getInstance();
                                 SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
                                 String calldate = df.format(c.getTime());
-
                                 if (!recieverContact.equals(myContact)) {
                                     call(recieverContact);
-
                                     mApiCall.sendLastCallDate(myContact, recieverContact, calldate, "1");
                                 }
                             }
                         });
-
 
                         if (mainList.get(finalI).getFound().get(finalJ).getFavstatus().equalsIgnoreCase("yes")) {
                             unfavouritebuyer.setVisibility(View.VISIBLE);
@@ -576,42 +528,33 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
                             public void onClick(View v) {
                                 int buyerSearchid = mainList.get(finalI).getFound().get(finalJ).getSearchId();
                                 int buyerVehicleid = mainList.get(finalI).getFound().get(finalJ).getVehicleId();
-
                                 mApiCall.addToFavorite(myContact, 0, 0, buyerSearchid,
                                         buyerVehicleid, 0, 0);
-
                                 unfavouritebuyer.setVisibility(View.VISIBLE);
                                 favouritebuyer.setVisibility(View.GONE);
-
                                 mainList.get(finalI).getFound().get(finalJ).setFavstatus("yes");
                             }
 
 
                         });
 
-
                         unfavouritebuyer.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 int buyerSearchid = mainList.get(finalI).getFound().get(finalJ).getSearchId();
                                 int buyerVehicleid = mainList.get(finalI).getFound().get(finalJ).getVehicleId();
-
                                 mApiCall.removeFromFavorite(myContact, 0, 0, buyerSearchid,
                                         buyerVehicleid, 0, 0);
-
                                 favouritebuyer.setVisibility(View.VISIBLE);
                                 unfavouritebuyer.setVisibility(View.GONE);
-
                                 mainList.get(finalI).getFound().get(finalJ).setFavstatus("no");
                             }
 
 
                         });
-
                         mLinearScrollSecond[i].addView(mLinearView2);
                     }
                     mLinearListView.addView(mLinearView);
-
                 }
                 if (dialog.isShowing()) {
                     dialog.dismiss();
@@ -632,6 +575,9 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
 
     @Override
     public void notifyError(Throwable error) {
+        if (dialog.isShowing()) {
+            dialog.dismiss();
+        }
         mNoData.setVisibility(View.VISIBLE);
         if (error instanceof SocketTimeoutException) {
             if (isAdded())
@@ -656,7 +602,6 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
 
     @Override
     public void notifyString(String str) {
-
         if (str != null) {
             switch (str) {
                 case "success_favourite":
@@ -698,7 +643,6 @@ public class BuyerNotificationFragment extends Fragment implements RequestNotifi
                 isFirstViewClick[i] = false;
                 mLinearScrollSecond[i].setVisibility(View.GONE);
             }
-
         }
     }
 }

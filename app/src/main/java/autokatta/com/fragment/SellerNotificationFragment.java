@@ -1,12 +1,15 @@
 package autokatta.com.fragment;
 
+import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -45,10 +48,9 @@ import autokatta.com.view.OtherProfile;
 import retrofit2.Response;
 
 /**
- * Created by ak-003 on 21/4/17.
+ * Created by ak-003 on 21/4/17
  */
 public class SellerNotificationFragment extends Fragment implements RequestNotifier {
-
     View mSellerView;
     public List<SellerResponse.Success.SavedSearch> mainList = new ArrayList<>();
     public List<SellerResponse.Success.MatchedResult> childlist;
@@ -87,12 +89,10 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
                 mLinearListView = (LinearLayout) mSellerView.findViewById(R.id.linear_ListView);
                 relativeLayout = (RelativeLayout) mSellerView.findViewById(R.id.tablerow1);
                 compare = (Button) mSellerView.findViewById(R.id.conpare);
-
                 myContact = getActivity().getSharedPreferences(getString(R.string.my_preference), Context.MODE_PRIVATE).
                         getString("loginContact", "");
                 mNoData = (TextView) mSellerView.findViewById(R.id.no_category);
                 mNoData.setVisibility(View.GONE);
-
                 getSavedSearchSellerList(myContact);
             }
         });
@@ -134,19 +134,15 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
                 isFirstViewClick[i] = false;
                 mLinearScrollSecond[i].setVisibility(View.GONE);
             }
-
         }
     }
 
     @Override
     public void notifySuccess(Response<?> response) {
-        DateFormat f = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.getDefault());
         if (response != null) {
-
             if (response.isSuccessful()) {
                 mNoData.setVisibility(View.GONE);
                 //mainList.clear();
-                Log.i("seller Response", "" + response);
                 SellerResponse object = (SellerResponse) response.body();
                 SellerResponse.Success objsuccess = object.getSuccess();
                 for (SellerResponse.Success.SavedSearch obj : objsuccess.getSavedSearch()) {
@@ -220,14 +216,11 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
                                     //format of date coming from services
                                     DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
                                     inputFormat.setTimeZone(utc);
-
                                     //format of date which we want to show
                                     DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
                                     outputFormat.setTimeZone(utc);
-
                                     Date date = inputFormat.parse(objectmatch.getLastcall());
                                     String output = outputFormat.format(date);
-
                                     objectmatch.setLastcall(output);
                                 } catch (Exception e) {
                                     e.printStackTrace();
@@ -242,21 +235,17 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
                                     //format of date coming from services
                                     DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
                                     inputFormat.setTimeZone(utc);
-
                                     //format of date which we want to show
                                     DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
                                     outputFormat.setTimeZone(utc);
-
                                     Date date = inputFormat.parse(objectmatch.getDate());
                                     String output = outputFormat.format(date);
-
                                     objectmatch.setDate(output);
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
                             } else
                                 objectmatch.setDate("");
-
                             childlist.add(objectmatch);
                         }
                     }
@@ -268,10 +257,8 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
 
                 //Adds data into first row
                 for (int i = 0; i < mainList.size(); i++) {
-                    LayoutInflater inflater = null;
-                    inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                    LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                     View mLinearView = inflater.inflate(R.layout.seller_row, null);
-
                     final TextView mTitleName = (TextView) mLinearView.findViewById(R.id.settitle);
                     final TextView mModelName = (TextView) mLinearView.findViewById(R.id.setmodel);
                     final TextView mBrandName = (TextView) mLinearView.findViewById(R.id.setbrand);
@@ -351,16 +338,12 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
                     for (int j = 0; j < mainList.get(i).getMatchedResult().size(); j++) {
                         checkedvehicle_ids.add(0);
                     }
-
                     CheckBox checkBox[] = new CheckBox[mainList.get(i).getMatchedResult().size()];
 
                     //Adds data into second row
                     for (int j = 0; j < mainList.get(i).getMatchedResult().size(); j++) {
-                        LayoutInflater inflater2 = null;
-                        int showcheckboc = 0;
-                        inflater2 = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                        LayoutInflater inflater2 = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                         View mLinearView2 = inflater2.inflate(R.layout.seller_list_adapter, null);
-
                         TextView mtitle = (TextView) mLinearView2.findViewById(R.id.title);
                         checkBox[j] = (CheckBox) mLinearView2.findViewById(R.id.checkauc);
                         ViewFlipper mViewFlippersell = (ViewFlipper) mLinearView2.findViewById(R.id.sellvehicalimgflicker);
@@ -371,7 +354,6 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
                         ImageView mCallimg = (ImageView) mLinearView2.findViewById(R.id.sellcallimg);
                         final ImageView mFavimg = (ImageView) mLinearView2.findViewById(R.id.sellfevimg);
                         final ImageView unmFavimg = (ImageView) mLinearView2.findViewById(R.id.sellunfevimg);
-
                         CheckBox checkBox1 = (CheckBox) mLinearView2.findViewById(R.id.sellcheckBox1);
                         CheckBox checkBox2 = (CheckBox) mLinearView2.findViewById(R.id.sellcheckBox2);
                         CheckBox checkBox3 = (CheckBox) mLinearView2.findViewById(R.id.sellcheckBox3);
@@ -380,7 +362,6 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
                         CheckBox checkBoxRc = (CheckBox) mLinearView2.findViewById(R.id.sellcheckBoxRc);
                         CheckBox checkBoxIns = (CheckBox) mLinearView2.findViewById(R.id.sellcheckBoxIns);
                         CheckBox checkBoxHp = (CheckBox) mLinearView2.findViewById(R.id.sellcheckBoxHp);
-
                         CheckBox checkBox6 = (CheckBox) mLinearView2.findViewById(R.id.sellcheckBox6);
                         CheckBox checkBox7 = (CheckBox) mLinearView2.findViewById(R.id.sellcheckBox7);
                         CheckBox checkBox8 = (CheckBox) mLinearView2.findViewById(R.id.sellcheckBox8);
@@ -414,14 +395,11 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
                             checkBoxHpRight.setVisibility(View.VISIBLE);
                         }
 
-
                         lastcall.setText("" + "Last call On :" + mainList.get(i).getMatchedResult().get(j).getLastcall());
                         mDateTime.setText("" + "Uploaded On :" + mainList.get(i).getMatchedResult().get(j).getDate());
-
                         mtitle.setText(mainList.get(i).getMatchedResult().get(j).getTitle());
                         mUserName.setTextColor(Color.BLUE);
                         mUserName.setText(itemUserName);
-
                         checkBox1.setText(mainList.get(i).getCategory());
                         checkBox2.setText(mainList.get(i).getManufacturer());
                         checkBox3.setText(mainList.get(i).getModel());
@@ -446,7 +424,6 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
                             checkBoxHp.setText("Hp-NA");
                         else
                             checkBoxHp.setText("" + "Hp-" + mainList.get(i).getHpcapacity());
-
 
                         checkBox6.setText(itemCaterogy);
                         checkBox7.setText(itemBrand);
@@ -522,8 +499,6 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
                         checkBox8.setEnabled(false);
                         checkBox9.setEnabled(false);
                         checkBox10.setEnabled(false);
-
-
                         mVehicleCount.setVisibility(View.GONE);
                         final String imagenames = mainList.get(i).getMatchedResult().get(j).getImage();
                         List<String> iname = new ArrayList<String>();
@@ -534,7 +509,6 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
                                 iname.add(anImagenamecame);
                             }
                             ImageView[] imageView = new ImageView[iname.size()];
-
                             for (int l = 0; l < imageView.length; l++) {
                                 imageView[l] = new ImageView(getActivity());
                                 Glide.with(getActivity())
@@ -549,17 +523,11 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
                                 imageView[l].setBackgroundResource(R.drawable.vehiimg);
                                 mViewFlippersell.addView(imageView[l]);
                             }
-
                         }
-
-
                         int mFlippingsell = 0;
-
-                        /** Start Flipping */
+                        /* Start Flipping */
                         mViewFlippersell.startFlipping();
                         mFlippingsell = 1;
-
-
                         final int finalJ = j;
 
                         final int v_ids = mainList.get(i).getMatchedResult().get(j).getVehicleId();
@@ -575,7 +543,6 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
                                 }
                             }
                         });
-
 
                         mUserName.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -606,7 +573,6 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
                             }
                         });
 
-
                         if (mainList.get(finalI).getMatchedResult().get(finalJ).getFavstatus().equalsIgnoreCase("yes")) {
                             mFavimg.setVisibility(View.GONE);
                             unmFavimg.setVisibility(View.VISIBLE);
@@ -620,24 +586,20 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
                             public void onClick(View v) {
                                 int sellerVehicleId = mainList.get(finalI).getMatchedResult().get(finalJ).getVehicleId();
                                 int sellerSearchId = mainList.get(finalI).getMatchedResult().get(finalJ).getSearchId();
-
                                 mApiCall.addToFavorite(myContact, sellerSearchId, sellerVehicleId, 0, 0, 0, 0);
                                 mFavimg.setVisibility(View.GONE);
                                 unmFavimg.setVisibility(View.VISIBLE);
-
                                 mainList.get(finalI).getMatchedResult().get(finalJ).setFavstatus("yes");
                             }
 
 
                         });
 
-
                         unmFavimg.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 int sellerVehicleId = mainList.get(finalI).getMatchedResult().get(finalJ).getVehicleId();
                                 int sellerSearchId = mainList.get(finalI).getMatchedResult().get(finalJ).getSearchId();
-
                                 mApiCall.removeFromFavorite(myContact, sellerSearchId, sellerVehicleId, 0, 0, 0, 0);
                                 mFavimg.setVisibility(View.VISIBLE);
                                 unmFavimg.setVisibility(View.GONE);
@@ -649,7 +611,6 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
                         mLinearScrollSecond[i].addView(mLinearView2);
                     }
                     mLinearListView.addView(mLinearView);
-
                 }
                 if (dialog.isShowing()) {
                     dialog.dismiss();
@@ -680,7 +641,6 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
                     getBundle_vehicle_id = getBundle_vehicle_id + "," + vehicleids.get(i).toString();
             }
         }
-
         if (flag > 1)
             relativeLayout.setVisibility(View.VISIBLE);
         else
@@ -720,6 +680,16 @@ public class SellerNotificationFragment extends Fragment implements RequestNotif
     private void call(String recieverContact) {
         Intent in = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + recieverContact));
         try {
+            if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                // TODO: Consider calling
+                //    ActivityCompat#requestPermissions
+                // here to request the missing permissions, and then overriding
+                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                //                                          int[] grantResults)
+                // to handle the case where the user grants the permission. See the documentation
+                // for ActivityCompat#requestPermissions for more details.
+                return;
+            }
             getActivity().startActivity(in);
         } catch (android.content.ActivityNotFoundException ex) {
             ex.printStackTrace();

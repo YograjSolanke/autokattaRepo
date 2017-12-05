@@ -373,6 +373,7 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
             case R.id.submit_otp:
                 String otpstr1 = edtotp1.getText().toString();
                 if (otpstr1.equals(otpstr2)) {
+                    mOtpLayout.setVisibility(View.GONE);
                     mButton.setVisibility(View.VISIBLE);
                     mScrollView.setVisibility(View.VISIBLE);
                 }
@@ -555,9 +556,9 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
                 startActivity(i);
                 finish();
             } else if (str.equalsIgnoreCase("Fail")) {
+                sendOtp(contactstr);
                 mOtpLayout.setVisibility(View.VISIBLE);
                 mLinear.setVisibility(View.GONE);
-                sendOtp(contactstr);
                 //mButton.setVisibility(View.VISIBLE);
                 //mScrollView.setVisibility(View.VISIBLE);
             } else {

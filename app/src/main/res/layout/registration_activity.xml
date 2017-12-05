@@ -110,7 +110,7 @@
         android:layout_above="@+id/button"
         android:layout_below="@+id/linear"
         android:layout_marginBottom="10dp"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <LinearLayout
             android:id="@+id/form"
