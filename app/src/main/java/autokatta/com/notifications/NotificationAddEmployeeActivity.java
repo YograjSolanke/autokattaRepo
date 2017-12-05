@@ -9,17 +9,27 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 
 import autokatta.com.R;
+import autokatta.com.adapter.NotificationAddEmployeeAdapter;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
 import autokatta.com.other.VerticalLineDecorator;
+import autokatta.com.response.GetMyRequestsForEmployeeResponse;
 import retrofit2.Response;
 
 public class NotificationAddEmployeeActivity extends AppCompatActivity implements RequestNotifier, SwipeRefreshLayout.OnRefreshListener {
@@ -28,6 +38,7 @@ public class NotificationAddEmployeeActivity extends AppCompatActivity implement
     RecyclerView mRecyclerView;
     SwipeRefreshLayout mSwipeRefreshLayout;
     TextView mNoData;
+    private List<GetMyRequestsForEmployeeResponse.Success> mMyRequestsList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,9 +52,12 @@ public class NotificationAddEmployeeActivity extends AppCompatActivity implement
         mLoginContact = getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE)
                 .getString("loginContact", "");
         mNoData = (TextView) findViewById(R.id.no_category);
+        mNoData.setVisibility(View.GONE);
+        mNoData.setText("No More Requests Found");
 
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);
+        mSwipeRefreshLayout.setOnRefreshListener(this);
 
         mRecyclerView.setHasFixedSize(true);
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(NotificationAddEmployeeActivity.this);
@@ -94,30 +108,59 @@ public class NotificationAddEmployeeActivity extends AppCompatActivity implement
     public void notifySuccess(Response<?> response) {
         if (response != null) {
             if (response.isSuccessful()) {
-                /*GetFCMNotificationResponse notificationResponse = (GetFCMNotificationResponse) response.body();
-                if (!notificationResponse.getSuccess().getFCMNotification().isEmpty()) {
+                GetMyRequestsForEmployeeResponse response1 = (GetMyRequestsForEmployeeResponse) response.body();
+                if (!response1.getSuccess().isEmpty()) {
                     mSwipeRefreshLayout.setRefreshing(false);
                     mNoData.setVisibility(View.GONE);
-                    mFcmNotiList.clear();
+                    mMyRequestsList.clear();
 
-                    for (GetFCMNotificationResponse.Success.FCMNotification fcmNotification : notificationResponse.getSuccess().getFCMNotification()) {
-                        fcmNotification.setFCMNotificationID(fcmNotification.getFCMNotificationID());
+                    for (GetMyRequestsForEmployeeResponse.Success requests : response1.getSuccess()) {
+                        requests.setStoreEmplyeeID(requests.getStoreEmplyeeID());
+                        requests.setName(requests.getName());
+                        requests.setContactNo(requests.getContactNo());
+                        requests.setDesignation(requests.getDesignation());
+                        requests.setStoreID(requests.getStoreID());
+                        requests.setDescription(requests.getDescription());
+                        requests.setStatus(requests.getStatus());
+                        requests.setPermission(requests.getPermission());
+                        requests.setStoreContactNo(requests.getStoreContactNo());
+                        requests.setDeleteStatus(requests.getDeleteStatus());
+                        requests.setSenderName(requests.getSenderName());
+                        requests.setSenderPicture(requests.getSenderPicture());
+                        requests.setStoreName(requests.getStoreName());
 
-                        mFcmNotiList.add(fcmNotification);
+                        try {
+                            TimeZone utc = TimeZone.getTimeZone("etc/UTC");
+                            //format of date coming from services
+                            DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.getDefault());
+                            inputFormat.setTimeZone(utc);
+
+                            //format of date which we want to show
+                            DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
+                            //DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy hh:mm a", Locale.getDefault());
+                            outputFormat.setTimeZone(utc);
+
+                            Date date = inputFormat.parse(requests.getDate());
+                            String output = outputFormat.format(date);
+                            requests.setDate(output);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        mMyRequestsList.add(requests);
                     }
 
-                    AdapterNotificationAddEmployee mAdapter = new AdapterNotificationAddEmployee(NotificationAddEmployeeActivity.this, mFcmNotiList);
+                    NotificationAddEmployeeAdapter mAdapter = new NotificationAddEmployeeAdapter(NotificationAddEmployeeActivity.this, mMyRequestsList);
                     mRecyclerView.setAdapter(mAdapter);
                     mAdapter.notifyDataSetChanged();
 
                 } else {
                     mSwipeRefreshLayout.setRefreshing(false);
                     mNoData.setVisibility(View.VISIBLE);
-                }*/
+                }
 
             } else {
                 mSwipeRefreshLayout.setRefreshing(false);
-                CustomToast.customToast(getApplicationContext(), getString(R.string.no_data));
+                mNoData.setVisibility(View.VISIBLE);
             }
 
         } else {
@@ -128,6 +171,8 @@ public class NotificationAddEmployeeActivity extends AppCompatActivity implement
 
     @Override
     public void notifyError(Throwable error) {
+        mSwipeRefreshLayout.setRefreshing(false);
+        mNoData.setVisibility(View.VISIBLE);
         if (error instanceof SocketTimeoutException) {
             CustomToast.customToast(getApplicationContext(), getString(R.string._404));
         } else if (error instanceof NullPointerException) {
@@ -140,7 +185,7 @@ public class NotificationAddEmployeeActivity extends AppCompatActivity implement
             CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
         } else {
             Log.i("Check Class-"
-                    , "AdapterNotificationAddEmployee");
+                    , "NotificationAddEmployeeActivity");
             error.printStackTrace();
         }
     }

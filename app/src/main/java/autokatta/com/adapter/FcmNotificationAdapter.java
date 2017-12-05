@@ -94,12 +94,12 @@ public class FcmNotificationAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                 !mFcmNotiList.get(holder.getAdapterPosition()).getProfilePicture().equals("")) {
 
             Glide.with(mActivity)
-                    .load(mActivity.getString(R.string.base_image_url)+
+                    .load(mActivity.getString(R.string.base_image_url) +
                             mFcmNotiList.get(holder.getAdapterPosition()).getProfilePicture())
                     .bitmapTransform(new CropCircleTransformation(mActivity))
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .into(holder.mUserPic);
-        }else
+        } else
             holder.mUserPic.setBackgroundResource(R.mipmap.profile);
 
 
@@ -223,6 +223,18 @@ public class FcmNotificationAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                         mActivity.startActivity(new Intent(mActivity, NotificationAddEmployeeActivity.class));
                         /*Intent intent1 = new Intent(mActivity, NotificationAddEmployeeActivity.class);
                         mActivity.startActivity(intent1);*/
+                        break;
+
+                        /*Add Employee Request*/
+                    case "EmployeeResponse":
+                        Bundle bt = new Bundle();
+
+                        bt.putInt("store_id", mFcmNotiList.get(holder.getAdapterPosition()).getStoreID());
+                        //b.putString("StoreContact", mFcmNotiList.get(holder.getAdapterPosition()).getContactNo());
+                        ActivityOptions options = ActivityOptions.makeCustomAnimation(mActivity, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
+                        Intent intentt = new Intent(mActivity, StoreViewActivity.class);
+                        intentt.putExtras(bt);
+                        mActivity.startActivity(intentt, options.toBundle());
                         break;
 
                 /*Review & Reply */

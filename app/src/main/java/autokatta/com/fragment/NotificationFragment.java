@@ -99,6 +99,8 @@ public class NotificationFragment extends Fragment implements RequestNotifier, S
 
             }
         });
+        mSwipeRefreshLayout.setOnRefreshListener(this);
+
     }
 
     @Override
@@ -181,8 +183,7 @@ public class NotificationFragment extends Fragment implements RequestNotifier, S
 
             } else {
                 mSwipeRefreshLayout.setRefreshing(false);
-                if (isAdded())
-                    CustomToast.customToast(getActivity(), getActivity().getString(R.string.no_data));
+                mNoData.setVisibility(View.VISIBLE);
             }
 
         } else {

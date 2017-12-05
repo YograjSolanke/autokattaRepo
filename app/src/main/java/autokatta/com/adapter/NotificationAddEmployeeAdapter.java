@@ -1,6 +1,9 @@
 package autokatta.com.adapter;
 
 import android.app.Activity;
+import android.app.ActivityOptions;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,6 +12,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
@@ -19,24 +25,29 @@ import autokatta.com.R;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
-import autokatta.com.response.GetFCMNotificationResponse;
+import autokatta.com.response.GetMyRequestsForEmployeeResponse;
+import autokatta.com.view.OtherProfile;
+import autokatta.com.view.StoreViewActivity;
+import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import retrofit2.Response;
 
 /**
  * Created by ak-003 on 4/12/17.
  */
 
-public class AdapterNotificationAddEmployee extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements RequestNotifier {
+public class NotificationAddEmployeeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements RequestNotifier {
 
     Activity mActivity;
+    private List<GetMyRequestsForEmployeeResponse.Success> mMyRequestsList;
 
-    public AdapterNotificationAddEmployee(Activity activity, List<GetFCMNotificationResponse.Success.FCMNotification> mFcmNotiList1) {
+    public NotificationAddEmployeeAdapter(Activity activity, List<GetMyRequestsForEmployeeResponse.Success> myRequests) {
         mActivity = activity;
+        mMyRequestsList = myRequests;
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return mMyRequestsList.size();
     }
 
     @Override
@@ -47,10 +58,9 @@ public class AdapterNotificationAddEmployee extends RecyclerView.Adapter<Recycle
 
     private class EmployeeHolder extends RecyclerView.ViewHolder {
 
-        String strSenderName, strMessage;
         Button mBtnApprove, mBtnReject;
         TextView mSenderName, mMessage, mStoreName;
-        ImageView mUserPic;
+        ImageView mSenderPic;
 
         EmployeeHolder(View itemView) {
             super(itemView);
@@ -58,7 +68,7 @@ public class AdapterNotificationAddEmployee extends RecyclerView.Adapter<Recycle
             mBtnReject = (Button) itemView.findViewById(R.id.btnReject);
             mSenderName = (TextView) itemView.findViewById(R.id.username);
             mMessage = (TextView) itemView.findViewById(R.id.message);
-            mUserPic = (ImageView) itemView.findViewById(R.id.profilePic);
+            mSenderPic = (ImageView) itemView.findViewById(R.id.profilePic);
             mStoreName = (TextView) itemView.findViewById(R.id.storename);
         }
     }
@@ -73,41 +83,69 @@ public class AdapterNotificationAddEmployee extends RecyclerView.Adapter<Recycle
     public void onBindViewHolder(RecyclerView.ViewHolder holder1, int position) {
         final EmployeeHolder holder = (EmployeeHolder) holder1;
 
-            /*holder.mSenderName.setText(mFcmNotiList.get(holder.getAdapterPosition()).getUserName());
-            holder.mMessage.setText(mFcmNotiList.get(holder.getAdapterPosition()).getMessage());
-            holder.mDateTime.setText(mFcmNotiList.get(holder.getAdapterPosition()).getDateTime());
+        holder.mSenderName.setText(mMyRequestsList.get(holder.getAdapterPosition()).getSenderName());
+        holder.mStoreName.setText(mMyRequestsList.get(holder.getAdapterPosition()).getStoreName());
 
-            if (mFcmNotiList.get(holder.getAdapterPosition()).getProfilePicture() != null ||
-                    !mFcmNotiList.get(holder.getAdapterPosition()).getProfilePicture().equals("")) {
 
-                Glide.with(mActivity)
-                        .load(mActivity.getString(R.string.base_image_url)+
-                                mFcmNotiList.get(holder.getAdapterPosition()).getProfilePicture())
-                        .bitmapTransform(new CropCircleTransformation(mActivity))
-                        .diskCacheStrategy(DiskCacheStrategy.ALL)
-                        .into(holder.mUserPic);
-            }else
-                holder.mUserPic.setBackgroundResource(R.mipmap.profile);*/
+        if (mMyRequestsList.get(holder.getAdapterPosition()).getSenderPicture() != null ||
+                !mMyRequestsList.get(holder.getAdapterPosition()).getSenderPicture().equals("")) {
+
+            Glide.with(mActivity)
+                    .load(mActivity.getString(R.string.base_image_url) +
+                            mMyRequestsList.get(holder.getAdapterPosition()).getSenderPicture())
+                    .bitmapTransform(new CropCircleTransformation(mActivity))
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .into(holder.mSenderPic);
+        } else
+            holder.mSenderPic.setBackgroundResource(R.mipmap.profile);
 
         holder.mBtnApprove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                acceptOrReject("Accepted");
+                acceptOrReject(mMyRequestsList.get(holder.getAdapterPosition()).getStoreEmplyeeID(), "Accepted");
+                mMyRequestsList.remove(mMyRequestsList.get(holder.getAdapterPosition()));
+                notifyDataSetChanged();
             }
         });
 
         holder.mBtnReject.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                acceptOrReject("Rejected");
+                acceptOrReject(mMyRequestsList.get(holder.getAdapterPosition()).getStoreEmplyeeID(), "Rejected");
+                mMyRequestsList.remove(mMyRequestsList.get(holder.getAdapterPosition()));
+                notifyDataSetChanged();
+            }
+        });
+
+        holder.mSenderName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                ActivityOptions options = ActivityOptions.makeCustomAnimation(mActivity, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
+                Intent intent = new Intent(mActivity, OtherProfile.class);
+                bundle.putString("contactOtherProfile", mMyRequestsList.get(holder.getAdapterPosition()).getStoreContactNo());
+                intent.putExtras(bundle);
+                mActivity.startActivity(intent, options.toBundle());
+            }
+        });
+
+        holder.mStoreName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle b = new Bundle();
+                b.putInt("store_id", mMyRequestsList.get(holder.getAdapterPosition()).getStoreID());
+                ActivityOptions options = ActivityOptions.makeCustomAnimation(mActivity, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
+                Intent intent = new Intent(mActivity, StoreViewActivity.class);
+                intent.putExtras(b);
+                mActivity.startActivity(intent, options.toBundle());
             }
         });
     }
 
 
-    private void acceptOrReject(String status) {
+    private void acceptOrReject(Integer storeEmplyeeID, String status) {
         ApiCall mApiCall = new ApiCall(mActivity, this);
-        mApiCall.updateDeleteEmployee(0, "", "", "", "",
+        mApiCall.updateDeleteEmployee(storeEmplyeeID, "", "", "", "",
                 "", "Request", status);
     }
 
@@ -130,7 +168,7 @@ public class AdapterNotificationAddEmployee extends RecyclerView.Adapter<Recycle
             CustomToast.customToast(mActivity, mActivity.getString(R.string.no_internet));
         } else {
             Log.i("Check Class-"
-                    , "AdapterNotificationAddEmployee");
+                    , "NotificationAddEmployeeAdapter");
             error.printStackTrace();
         }
     }

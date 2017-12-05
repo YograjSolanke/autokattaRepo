@@ -156,36 +156,40 @@
         android:layout_marginTop="5dp"
         android:background="@color/grey" />
 
+
     <LinearLayout
         android:id="@+id/rel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/vieww"
+        android:gravity="center_horizontal"
         android:weightSum="2">
 
         <Button
             android:id="@+id/accept"
             style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
             android:layout_weight="1"
-            android:background="@color/background"
+            android:background="@drawable/buttonback"
             android:padding="5dp"
             android:text="Accept"
+            android:textAllCaps="false"
             android:textColor="@color/white" />
 
         <Button
             android:id="@+id/reject"
             style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginStart="3dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
             android:layout_weight="1"
-            android:background="@color/background"
+            android:background="@drawable/buttonback"
             android:padding="5dp"
             android:text="Reject"
+            android:textAllCaps="false"
             android:textColor="@color/white" />
-
     </LinearLayout>
 
     <View
