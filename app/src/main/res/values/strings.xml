@@ -250,7 +250,7 @@
     <string name="title_activity_all_enquiry_tab">Enquiry</string>
 
     <!-- Registration -->
-    <string name="next_registration_continue">Vehicle Details</string>
+    <string name="next_registration_continue">My Own Vehicle</string>
     <string name="registration_company_based">Professional Details</string>
     <string name="company_based_invitation">Company Based Invitation</string>
     <string name="skill_based_invitation">Skill Based Invitation</string>

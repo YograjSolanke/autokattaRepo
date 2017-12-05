@@ -26,7 +26,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawablePadding="@dimen/card_margin"
-                android:drawableStart="@mipmap/ic_contacts"
+                android:drawableStart="@mipmap/ic_contact_mail"
                 android:hint="@string/enter_register"
                 android:inputType="number"
                 android:maxLength="10"
@@ -110,7 +110,7 @@
         android:layout_above="@+id/button"
         android:layout_below="@+id/linear"
         android:layout_marginBottom="10dp"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <LinearLayout
             android:id="@+id/form"

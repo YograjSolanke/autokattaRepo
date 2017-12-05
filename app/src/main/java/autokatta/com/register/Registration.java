@@ -51,6 +51,7 @@ import autokatta.com.generic.GenericFunctions;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.other.CustomToast;
 import autokatta.com.response.BrandsTagResponse;
+import autokatta.com.response.GenerateOtpResponse;
 import autokatta.com.response.GetUserCategoryResponse;
 import autokatta.com.response.IndustryResponse;
 import autokatta.com.view.LoginActivity;
@@ -511,6 +512,11 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
                         brandSpinner.setAdapter(dataadapter);
                     } else
                         CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
+                } else if (response.body() instanceof GenerateOtpResponse) {
+                    GenerateOtpResponse otpResponse = (GenerateOtpResponse) response.body();
+                    if (otpResponse.getSuccess().getMsg().equals("OTP Gernated")) {
+                        otpstr2 = "" + otpResponse.getSuccess().getOTP();
+                    }
                 } else {
                     CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
                 }
@@ -554,8 +560,6 @@ public class Registration extends AppCompatActivity implements View.OnClickListe
                 sendOtp(contactstr);
                 //mButton.setVisibility(View.VISIBLE);
                 //mScrollView.setVisibility(View.VISIBLE);
-            } else if (str.length() == 6) {
-                otpstr2 = "" + str;
             } else {
                 getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putInt("loginregistrationid", Integer.parseInt(str)).apply();
                 CustomToast.customToast(getApplicationContext(), " Registered Successfully");

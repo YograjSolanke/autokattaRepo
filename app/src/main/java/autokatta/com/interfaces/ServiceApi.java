@@ -103,7 +103,7 @@ public interface ServiceApi {
 
     // get OTP
     @POST("GenerateOTP")
-    Call<String> _autokattagetOTP(@Query("MobileNo") String contact);
+    Call<GenerateOtpResponse> _autokattagetOTP(@Query("MobileNo") String contact);
 
 
     // After OTP Registration

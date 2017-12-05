@@ -823,11 +823,10 @@ public class RegistrationCompanyBased extends AppCompatActivity implements Reque
                 } else if (strSkill.equals("") || strSkill.equals("null") || strSkill.equals(null)) {
                     autoSkills.setError("Enter Skills Name");
                     autoSkills.requestFocus();
-                } else if (strDeal.equals("") || strDeal.equals("null") || strDeal.equals(null)) {
+                } /*else if (strDeal.equals("") || strDeal.equals("null") || strDeal.equals(null)) {
                     autoDeals.setError("Enter Deals Name");
                     autoDeals.requestFocus();
-                } else {
-
+                } */ else {
                     nextTask(RegiId, page, strArea, strKms, strDistrict, strState,
                             autoCompany.getText().toString(), autoDesignation.getText().toString(), strSkill,
                             strDeal, categoryName, subCategoryName, brandName);

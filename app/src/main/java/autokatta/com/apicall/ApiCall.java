@@ -569,29 +569,23 @@ public class ApiCall {
 
     public void getOTP(String contact) {
         try {
-
-            //JSON to Gson conversion
-            Gson gson = new GsonBuilder()
-                    .setLenient()
-                    .create();
             if (mConnectionDetector.isConnectedToInternet()) {
                 Retrofit retrofit = new Retrofit.Builder()
                         .baseUrl(mContext.getString(R.string.base_url))
-                        .addConverterFactory(GsonConverterFactory.create(gson))
+                        .addConverterFactory(GsonConverterFactory.create())
                         .client(initLog().build())
                         .build();
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<String> otpResponseCall = serviceApi._autokattagetOTP(contact);
-                otpResponseCall.enqueue(new Callback<String>() {
+                Call<GenerateOtpResponse> otpResponseCall = serviceApi._autokattagetOTP(contact);
+                otpResponseCall.enqueue(new Callback<GenerateOtpResponse>() {
                     @Override
-                    public void onResponse(Call<String> call, Response<String> response) {
-                        Log.i("Response", "OTP->" + response);
-                        mNotifier.notifyString(response.body());
+                    public void onResponse(Call<GenerateOtpResponse> call, Response<GenerateOtpResponse> response) {
+                        mNotifier.notifySuccess(response);
                     }
 
                     @Override
-                    public void onFailure(Call<String> call, Throwable t) {
+                    public void onFailure(Call<GenerateOtpResponse> call, Throwable t) {
                         mNotifier.notifyError(t);
                     }
                 });
@@ -2848,8 +2842,6 @@ Upload Vehicle
  /*get New Deals */
 
     public void getDeals() {
-
-
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 Retrofit retrofit = new Retrofit.Builder()
@@ -2871,7 +2863,6 @@ Upload Vehicle
                         mNotifier.notifyError(t);
                     }
                 });
-
             } else
                 CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
         } catch (Exception e) {
@@ -2883,8 +2874,6 @@ Upload Vehicle
  /*get  Skills */
 
     public void getSkills() {
-
-
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 Retrofit retrofit = new Retrofit.Builder()
@@ -2918,8 +2907,6 @@ Upload Vehicle
  /*get  Designation */
 
     public void getCompany() {
-
-
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 Retrofit retrofit = new Retrofit.Builder()
@@ -2953,8 +2940,6 @@ Upload Vehicle
  /*get  Company */
 
     public void getDesignation() {
-
-
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 Retrofit retrofit = new Retrofit.Builder()
@@ -2990,7 +2975,6 @@ Upload Vehicle
      */
 
     public void getMyEndedAuction(String myContact) {
-
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 Retrofit retrofit = new Retrofit.Builder()
@@ -3025,7 +3009,6 @@ Upload Vehicle
      */
 
     public void VehiclePrivacy(String myContact, int vehicleId, String groupIds, String storeIds) {
-
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
 
@@ -3098,7 +3081,6 @@ Upload Vehicle
      */
 
     public void DeleteStore(int storeId, String keyword) {
-
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
 
@@ -3140,7 +3122,6 @@ Upload Vehicle
     public void CreateStore(String name, String contact, String location, String website, String storetype, String lastWord,
                             String workdays, String open, String close, String category, String address,
                             String coverlastWord, String storeDescription, String textbrand, String strBrandSpinner) {
-
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
 
@@ -3176,7 +3157,6 @@ Upload Vehicle
      */
 
     public void StoreAdmin(int store_id) {
-
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
 
@@ -3211,7 +3191,6 @@ Upload Vehicle
      */
 
     public void newStoreAdmin(int storeId, String adminNos) {
-
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
 
@@ -3317,7 +3296,6 @@ Upload Vehicle
      */
 
     public void getRegisteredContacts(String contact) {
-
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
 
@@ -3353,7 +3331,6 @@ Upload Vehicle
      */
 
     public void createUser(String username, String contact) {
-
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
 
@@ -3388,7 +3365,6 @@ Upload Vehicle
      */
 
     public void Follow(String mycontact, String otherContact, String layout, int storeid, int vehicleid, int pid, int servid) {
-
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
 
@@ -3428,7 +3404,6 @@ Upload Vehicle
      */
 
     public void UnFollow(String senderContact, String receiverContact, String layout, int storeid, int vid, int pid, int sid) {
-
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
 
@@ -3504,7 +3479,6 @@ remove contact from blacklist contact
 get Admin Excel file Names for auction
 */
     public void ExcelSheetName(String myContact) {
-
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 Retrofit retrofit = new Retrofit.Builder()
@@ -3575,7 +3549,6 @@ delete uploaded vehicle
 get Admin Vehicles for auction
 */
     public void AdminVehicles(String myContact, String fileName, String userId) {
-
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 Retrofit retrofit = new Retrofit.Builder()
@@ -3610,7 +3583,6 @@ get Admin Vehicles for auction
 get All Vehicles for auction
 */
     public void AllAuctionVehicle(String myContact) {
-
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 Retrofit retrofit = new Retrofit.Builder()
@@ -3644,7 +3616,6 @@ get All Vehicles for auction
      get Reauctioned Vehicles for auction
     */
     public void ReauctionedVehicles(String myContact, int AuctionId) {
-
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 Retrofit retrofit = new Retrofit.Builder()
@@ -4008,13 +3979,11 @@ get All Vehicles for auction
         }
     }
 
-
       /*
        Follow
      */
 
     public void deleteMySearch(int search_id, String keyword) {
-
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
 
