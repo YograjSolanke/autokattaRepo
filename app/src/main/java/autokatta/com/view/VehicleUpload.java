@@ -23,6 +23,7 @@ import retrofit2.Response;
 public class VehicleUpload extends AppCompatActivity implements RequestNotifier {
 
     SharedPreferences sharedPreferences = null;
+    VehicleList mVehiclelist=new VehicleList();
 
     @Override
     @CallSuper
@@ -33,6 +34,7 @@ public class VehicleUpload extends AppCompatActivity implements RequestNotifier 
         setSupportActionBar(toolbar);
         setTitle("Upload Vehicle");
         getStore();
+
         sharedPreferences = getSharedPreferences(getString(R.string.firstRun), MODE_PRIVATE);
         startActivity(new Intent(getApplicationContext(), UploadVehicleAppIntro.class));
         if (getSupportActionBar() != null) {
@@ -40,8 +42,17 @@ public class VehicleUpload extends AppCompatActivity implements RequestNotifier 
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
+
+
+        if (getIntent().getExtras() != null)
+        {
+            Bundle b=new Bundle();
+            b.putInt("store_id", getIntent().getExtras().getInt("store_id", 0));
+            b.putString("callFrom",getIntent().getExtras().getString("callFrom",""));
+            mVehiclelist.setArguments(b);
+        }
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.vehicle_upload_container, new VehicleList(), "VehicleUpload")
+                .replace(R.id.vehicle_upload_container,mVehiclelist , "VehicleUpload")
                 .addToBackStack("VehicleUpload")
                 .commit();
     }

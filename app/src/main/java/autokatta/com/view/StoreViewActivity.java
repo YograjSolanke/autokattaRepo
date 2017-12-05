@@ -849,6 +849,9 @@ Call Intent...
                         case "Add Used Vehicle":
                             if (isDealing.equalsIgnoreCase("false")) {
                                 Intent intent = new Intent(StoreViewActivity.this, VehicleUpload.class);
+                                bundle.putInt("store_id", store_id);
+                                bundle.putString("callFrom", "StoreViewActivity");
+                                intent.putExtras(bundle);
                                 startActivity(intent);
                                 finish();
                             } else {

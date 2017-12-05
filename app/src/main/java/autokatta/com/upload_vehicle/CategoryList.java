@@ -26,6 +26,8 @@ public class CategoryList extends Fragment {
     List<String> mList = new ArrayList<>();
     ListView mListView;
 
+    Title mTitle= new Title();
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -38,6 +40,15 @@ public class CategoryList extends Fragment {
         mList.add("Scrap");
         mList.add("Inventory");
         mList.add("Market Place");
+
+        Bundle b1=getArguments();
+        if (b1!=null)
+        {
+            Bundle b=new Bundle();
+            b.putInt("store_id", b1.getInt("store_id", 0));
+            b.putString("callFrom",b1.getString("callFrom",""));
+            mTitle.setArguments(b);
+        }
 
         ArrayAdapter adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, mList);
         mListView.setAdapter(adapter);
@@ -61,7 +72,7 @@ public class CategoryList extends Fragment {
                                 .commit();
                     } else {
                         getActivity().getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.vehicle_upload_container, new Title(), "Category_list")
+                                .replace(R.id.vehicle_upload_container,mTitle, "Category_list")
                                 .addToBackStack("Category_list")
                                 .commit();
                     }

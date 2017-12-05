@@ -41,6 +41,8 @@ public class VehicleList extends Fragment implements RequestNotifier {
     String yesNo;
     boolean hasViewCreated = false;
     private ProgressDialog dialog;
+    CategoryList mCategoryList=new CategoryList();
+
 
     @Nullable
     @Override
@@ -67,8 +69,17 @@ public class VehicleList extends Fragment implements RequestNotifier {
                     getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_categoryName", s).apply();
                     getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putInt("upload_categoryId", subTypeId).apply();
 
+                    Bundle b1=getArguments();
+                    if (b1!=null)
+                    {
+                        Bundle b=new Bundle();
+                        b.putInt("store_id", b1.getInt("store_id", 0));
+                        b.putString("callFrom",b1.getString("callFrom",""));
+                        mCategoryList.setArguments(b);
+                    }
+
                     getActivity().getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.vehicle_upload_container, new CategoryList(), "vehicle_list")
+                            .replace(R.id.vehicle_upload_container, mCategoryList, "vehicle_list")
                             .addToBackStack("vehicle_list")
                             .commit();
                 }

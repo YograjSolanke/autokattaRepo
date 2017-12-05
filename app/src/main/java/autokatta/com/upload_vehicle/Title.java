@@ -87,6 +87,9 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
     String[] groupIdArray = new String[0];
     String[] storeTitleArray = new String[0];
     String[] storeIdArray = new String[0];
+
+    private boolean[] itemsCheckedStores;
+
     String stringgroupids = "", stringstoreids = "", stringstorename = "", stringgroupname = "";
     String financests = null, exchangests = null;
     Spinner mSubType;
@@ -136,6 +139,8 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
      */
     EditText mHrs, mKms;
     ImageView mMakePick, mRegisterPick;
+int mBundleStoreid;
+String mBundleCallFrom;
 
     public Title() {
         //empty constructor...
@@ -158,6 +163,14 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
         exchangeyes = (RadioButton) mTitle.findViewById(R.id.exchangeYes);
         exchangeno = (RadioButton) mTitle.findViewById(R.id.exchangeNo);
         mExchangeradio = (RadioGroup) mTitle.findViewById(R.id.exchangeradio);
+
+        Bundle b1=getArguments();
+        if (b1!=null)
+        {
+           mBundleStoreid= b1.getInt("store_id", 0);
+           mBundleCallFrom=b1.getString("callFrom","");
+        }
+
 
         /*Exchange vehicle customer info*/
         mExchangeradio.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -431,10 +444,17 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                     storeradiono.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            stringstoreids = "";
-                            stringstorename = "";
+                                stringstoreids = "";
+                                stringstorename = "";
+
                         }
                     });
+
+                    if (mBundleCallFrom != null && mBundleCallFrom.equalsIgnoreCase("StoreViewActivity"))
+                    {
+                        storeradioyes.setChecked(true);
+                        stringstoreids=String.valueOf(mBundleStoreid);
+                    }
 
                     storeradioyes.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -716,11 +736,22 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
         mSelectedItems.clear();
         stringstoreids = "";
         stringstorename = "";
+        if (mBundleCallFrom != null && mBundleCallFrom.equalsIgnoreCase("StoreViewActivity")) {
+            for (int i = 0; i < storeIdList.size(); i++) {
+                if (storeIdList.get(i).equalsIgnoreCase(String.valueOf(mBundleStoreid))) {
+                    itemsCheckedStores[i] = true;
+                    mSelectedItems.add(storeIdList.get(i));
+                } else
+                    itemsCheckedStores[i] = false;
+            }
+        }
+
         android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(getActivity());
+
         // set the dialog title
         builder.setTitle("Select Stores From Following")
                 .setCancelable(true)
-                .setMultiChoiceItems(choices, null, new DialogInterface.OnMultiChoiceClickListener() {
+                .setMultiChoiceItems(choices, itemsCheckedStores, new DialogInterface.OnMultiChoiceClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which, boolean isChecked) {
                         if (isChecked) {
@@ -807,6 +838,8 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
                     }
                     storeTitleArray = storeTitleList.toArray(new String[storeTitleList.size()]);
                     storeIdArray = storeIdList.toArray(new String[storeIdList.size()]);
+                    itemsCheckedStores = new boolean[storeTitleArray.length];
+
                 } else if (response.body() instanceof GetVehicleSubTypeResponse) {
                     mSubTypeList.clear();
                     mSubTypeList1.clear();
