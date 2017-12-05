@@ -179,7 +179,6 @@ public class AddAdminsForStoreActivity extends AppCompatActivity implements Requ
                 //  b.putString("action", "main");
                 b.putInt("store_id", store_id);
                 b.putString("flow_tab_name", "adminMore");
-                dialog.show();
             //    if (!callFrom.equalsIgnoreCase("interestbased")) {
                     if (callFrom.equalsIgnoreCase("StoreViewActivity"))
                     {
@@ -361,7 +360,7 @@ public class AddAdminsForStoreActivity extends AppCompatActivity implements Requ
                     Intent intent = new Intent(this, StoreViewActivity.class);
                     intent.putExtras(b);
                     //intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                   intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
 
                 } else {
@@ -379,8 +378,33 @@ public class AddAdminsForStoreActivity extends AppCompatActivity implements Requ
                 addStoreAdmins(store_id, finaladmins);
                 finish();
             }
-        } else {
+            else if (str.equals(""))
+            {
+                //this is called when there is no admin added means skippped from admin page
 
+                Bundle b = new Bundle();
+                dialog.dismiss();
+                //  b.putString("action", "main");
+                b.putInt("store_id", store_id);
+                b.putString("flow_tab_name", "adminMore");
+                if (!callFrom.equalsIgnoreCase("interestbased")) {
+                    finish();
+                    Intent intent = new Intent(this, StoreViewActivity.class);
+                    intent.putExtras(b);
+                    //intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+
+                } else {
+                    finish();
+                    ActivityOptions options = ActivityOptions.makeCustomAnimation(this, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
+                    Intent i = new Intent(this, InvitationCompanyBased.class);
+                    startActivity(i, options.toBundle());
+
+                }
+            }
+        } else {
+            CustomToast.customToast(getApplicationContext(),getString(R.string.no_response));
         }
 
     }

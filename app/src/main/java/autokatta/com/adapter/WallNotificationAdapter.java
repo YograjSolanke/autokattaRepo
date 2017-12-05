@@ -1624,7 +1624,7 @@ public class WallNotificationAdapter extends RecyclerView.Adapter<RecyclerView.V
                 if (notificationList.get(position).getGroupImage() == null ||
                         notificationList.get(position).getGroupImage().equals("") ||
                         notificationList.get(position).getGroupImage().equals("null")) {
-                    mGroupHolder.mGroupImage.setBackgroundResource(R.drawable.group);
+                    mGroupHolder.mGroupImage.setBackgroundResource(R.drawable.logo48x48);
                 } else {
                     Glide.with(mActivity)
                             .load(mActivity.getString(R.string.base_image_url) + notificationList.get(position).getGroupImage())

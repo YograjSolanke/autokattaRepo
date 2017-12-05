@@ -133,6 +133,10 @@ public class MyStoreListFragment extends Fragment implements View.OnClickListene
     @Override
     public void onResume() {
         super.onResume();
+        apiCall.MyStoreList(myContact, 1, 10);
+      //  mRecyclerView.getRecycledViewPool().clear();
+//        adapter.notifyDataSetChanged();
+
     }
 
     @Override

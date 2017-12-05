@@ -900,6 +900,7 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<RecyclerView.
                         b.putString("id", String.valueOf(mMainList.get(holder.getAdapterPosition()).getVehicleId()));
                         b.putString("keyword", "Used Vehicle");
                         b.putString("name", mMainList.get(position).getTitle());
+                        b.putString("ownercontact", mMainList.get(position).getContactVehicle());
                         i.putExtras(b);
                         activity.startActivity(i);
                     }

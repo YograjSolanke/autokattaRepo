@@ -209,6 +209,7 @@ public class WallNotificationFragment extends Fragment implements SwipeRefreshLa
     @Override
     public void notifySuccess(Response<?> response) {
         if (response != null) {
+            mNoData.setVisibility(View.GONE);
             if (response.isSuccessful()) {
                 WallResponse wallResponse = (WallResponse) response.body();
                 if (wallResponse.getSuccess() != null) {

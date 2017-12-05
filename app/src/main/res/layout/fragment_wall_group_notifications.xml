@@ -35,7 +35,7 @@
                         android:layout_marginStart="5dp"
                         android:layout_marginTop="7dp"
                         android:contentDescription="@string/app_name"
-                        android:src="@mipmap/profile" />
+                        android:src="@drawable/logo48x48" />
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -84,7 +84,7 @@
                 android:layout_marginTop="5dp"
                 android:contentDescription="@string/app_name"
                 android:scaleType="centerCrop"
-                tools:src="@mipmap/demo" />
+                tools:src="@drawable/logo48x48" />
 
             <TextView
                 android:id="@+id/group_name"
