@@ -448,8 +448,16 @@ public class AddServiceActivity extends AppCompatActivity implements RequestNoti
                     startActivity(intent);
                     finish();
                 } else if (response.body() instanceof ProfileGroupResponse) {
+                    groupId.clear();
+                    groupTitle.clear();
+
                     ProfileGroupResponse profileGroupResponse = (ProfileGroupResponse) response.body();
                     for (ProfileGroupResponse.MyGroup success : profileGroupResponse.getSuccess().getMyGroups()) {
+                        groupId.add(success.getId());
+                        groupTitle.add(success.getTitle());
+                    }
+
+                    for (ProfileGroupResponse.JoinedGroup success : profileGroupResponse.getSuccess().getJoinedGroups()) {
                         groupId.add(success.getId());
                         groupTitle.add(success.getTitle());
                     }
