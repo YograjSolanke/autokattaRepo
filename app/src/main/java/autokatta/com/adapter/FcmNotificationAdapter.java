@@ -25,6 +25,7 @@ import autokatta.com.response.GetFCMNotificationResponse;
 import autokatta.com.view.BussinessChatActivity;
 import autokatta.com.view.ChatActivity;
 import autokatta.com.view.GroupsActivity;
+import autokatta.com.view.MyStoreEmployeeActivity;
 import autokatta.com.view.OtherProfile;
 import autokatta.com.view.ProductViewActivity;
 import autokatta.com.view.ReviewActivity;
@@ -228,13 +229,11 @@ public class FcmNotificationAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                         /*Add Employee Request*/
                     case "EmployeeResponse":
                         Bundle bt = new Bundle();
-
-                        bt.putInt("store_id", mFcmNotiList.get(holder.getAdapterPosition()).getStoreID());
-                        //b.putString("StoreContact", mFcmNotiList.get(holder.getAdapterPosition()).getContactNo());
                         ActivityOptions options = ActivityOptions.makeCustomAnimation(mActivity, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
-                        Intent intentt = new Intent(mActivity, StoreViewActivity.class);
-                        intentt.putExtras(bt);
-                        mActivity.startActivity(intentt, options.toBundle());
+                        bt.putInt("store_id", mFcmNotiList.get(holder.getAdapterPosition()).getStoreID());
+                        Intent intentEmployee = new Intent(mActivity, MyStoreEmployeeActivity.class);
+                        intentEmployee.putExtras(bt);
+                        mActivity.startActivity(intentEmployee, options.toBundle());
                         break;
 
                 /*Review & Reply */
