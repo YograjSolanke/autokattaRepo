@@ -1372,9 +1372,9 @@ public interface ServiceApi {
     //Add Quotation
     @POST("AddQuotation")
     Call<String> _autokattaAddQuotation(@Query("vehicleid") int vehicleId, @Query("groupid") int groupId,
-                                        @Query("custcontact") String custContact, @Query("price") double price,
+                                        @Query("CustContact") String custContact, @Query("ReservePrice") double price,
                                         @Query("type") String type,
-                                        @Query("query") String query);
+                                        @Query("Query") String query);
 
     //Quotation Reply
     @POST("ReviewQuot")
