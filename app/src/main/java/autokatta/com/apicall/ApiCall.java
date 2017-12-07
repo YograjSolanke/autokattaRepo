@@ -8729,7 +8729,7 @@ get ExchangeMela Analytics Data
 
 
     //get vehicle's quotation List
-    public void GetVehicleQuotationList(int mGrpId, int vehicle_id, String type, int Quotationid) {
+    public void GetQuotationByOthers(int Quotationid) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 Retrofit retrofit = new Retrofit.Builder()
@@ -8739,8 +8739,7 @@ get ExchangeMela Analytics Data
                         .build();
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<MyVehicleQuotationListResponse> mQuotationResponseCall = serviceApi._autokattaGetVehicleQuotationList(vehicle_id,
-                        mGrpId, type, Quotationid);
+                Call<MyVehicleQuotationListResponse> mQuotationResponseCall = serviceApi._autokattaGetQuotationByOthers(Quotationid);
                 mQuotationResponseCall.enqueue(new Callback<MyVehicleQuotationListResponse>() {
                     @Override
                     public void onResponse(Call<MyVehicleQuotationListResponse> call, Response<MyVehicleQuotationListResponse> response) {
@@ -8760,7 +8759,7 @@ get ExchangeMela Analytics Data
     }
 
     //get quotation review & reply List
-    public void QuotReviewReply(int VehicleID) {
+    public void GetReviewQuot(int mQuotationOtherID) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 Retrofit retrofit = new Retrofit.Builder()
@@ -8770,15 +8769,15 @@ get ExchangeMela Analytics Data
                         .build();
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<QuotReviewReply> mQuotationCall = serviceApi.quotReviewReply(VehicleID);
-                mQuotationCall.enqueue(new Callback<QuotReviewReply>() {
+                Call<GetReviewQuotResponse> mQuotationCall = serviceApi._autokattaGetReviewQuot(mQuotationOtherID);
+                mQuotationCall.enqueue(new Callback<GetReviewQuotResponse>() {
                     @Override
-                    public void onResponse(Call<QuotReviewReply> call, Response<QuotReviewReply> response) {
+                    public void onResponse(Call<GetReviewQuotResponse> call, Response<GetReviewQuotResponse> response) {
                         mNotifier.notifySuccess(response);
                     }
 
                     @Override
-                    public void onFailure(Call<QuotReviewReply> call, Throwable t) {
+                    public void onFailure(Call<GetReviewQuotResponse> call, Throwable t) {
                         mNotifier.notifyError(t);
                     }
                 });
@@ -8792,7 +8791,7 @@ get ExchangeMela Analytics Data
 
     //get vehicle quotation price list of login user
 
-    public void GetMyQuotationList(int groupId, int vehicleId, String type, String contact) {
+    public void GetPersonalPriceQuotation(String contact, int QuotationId) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 Retrofit retrofit = new Retrofit.Builder()
@@ -8802,8 +8801,7 @@ get ExchangeMela Analytics Data
                         .build();
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<MyVehicleQuotationListResponse> mQuotationResponseCall = serviceApi._autokattaMyQuotationList(vehicleId,
-                        groupId, contact, type);
+                Call<MyVehicleQuotationListResponse> mQuotationResponseCall = serviceApi._autokattaGetPersonalPriceQuotation(contact, QuotationId);
                 mQuotationResponseCall.enqueue(new Callback<MyVehicleQuotationListResponse>() {
                     @Override
                     public void onResponse(Call<MyVehicleQuotationListResponse> call, Response<MyVehicleQuotationListResponse> response) {
@@ -8822,51 +8820,12 @@ get ExchangeMela Analytics Data
         }
     }
 
-    /*
-      Add quotation
-    */
-    public void addQuotation(int vehicleId, int groupId, String custContact,
-                             double price, String type, String query) {
-        try {
-            if (mConnectionDetector.isConnectedToInternet()) {
-                //JSON to Gson conversion
-                Gson gson = new GsonBuilder()
-                        .setLenient()
-                        .create();
-
-                Retrofit retrofit = new Retrofit.Builder()
-                        .baseUrl(mContext.getString(R.string.base_url))
-                        .addConverterFactory(GsonConverterFactory.create(gson))
-                        .client(initLog().build())
-                        .build();
-
-
-                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<String> mServiceMelaResponse = serviceApi._autokattaAddQuotation(vehicleId, groupId, custContact,
-                        price, type, query);
-                mServiceMelaResponse.enqueue(new Callback<String>() {
-                    @Override
-                    public void onResponse(Call<String> call, Response<String> response) {
-                        mNotifier.notifyString(response.body());
-                    }
-
-                    @Override
-                    public void onFailure(Call<String> call, Throwable t) {
-                        mNotifier.notifyError(t);
-                    }
-                });
-            } else
-                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
     /*
       Quotation Reply
     */
-    public void quotationReply(int QuotationID, String keyword, String Contact, String Message, int VehicleID,
-                               int GroupID, String type) {
+    public void quotationReply(int QuotationOthersID, String keyword, String Contact, String Message,
+                               int ReviewQuoteID) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 //JSON to Gson conversion
@@ -8881,8 +8840,8 @@ get ExchangeMela Analytics Data
                         .build();
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<String> mServiceMelaResponse = serviceApi.quotationReply(QuotationID, keyword, Contact, Message,
-                        VehicleID, GroupID, type);
+                Call<String> mServiceMelaResponse = serviceApi.quotationReply(QuotationOthersID, keyword, Contact, Message,
+                        ReviewQuoteID);
                 mServiceMelaResponse.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {

@@ -1351,38 +1351,29 @@ public interface ServiceApi {
 
 
     //Get vehicle qoutation list
-    @GET("GetViewQuotation")
-    Call<MyVehicleQuotationListResponse> _autokattaGetVehicleQuotationList(@Query("vehicleid") int vehicleid,
-                                                                           @Query("groupid") int groupid,
-                                                                           @Query("type") String type,
-                                                                           @Query("Quotationid") int Quotationid);
+    @GET("GetQuotationByOthers")
+    Call<MyVehicleQuotationListResponse> _autokattaGetQuotationByOthers(@Query("Quotationid") int Quotationid);
 
     //Get review quot
     @GET("GetReviewQuot")
-    Call<QuotReviewReply> quotReviewReply(@Query("VehicleID") int VehicleID);
+    Call<GetReviewQuotResponse> _autokattaGetReviewQuot(@Query("QuotationOtherID") int mQuotationOtherID);
 
 
     //Get vehicle qoutation list
-    @GET("GetPersonPriceQuotation")
-    Call<MyVehicleQuotationListResponse> _autokattaMyQuotationList(@Query("vehicleid") int vehicleid,
-                                                                   @Query("groupid") int groupid,
-                                                                   @Query("custcontact") String custcontact,
-                                                                   @Query("type") String type);
+    @GET("GetPersonalPriceQuotation")
+    Call<MyVehicleQuotationListResponse> _autokattaGetPersonalPriceQuotation(@Query("CustContact") String CustContact,
+                                                                             @Query("Quotationid") int Quotationid);
 
     //Add Quotation
     @POST("AddQuotation")
-    Call<String> _autokattaAddQuotation(@Query("vehicleid") int vehicleId, @Query("groupid") int groupId,
-                                        @Query("CustContact") String custContact, @Query("ReservePrice") double price,
-                                        @Query("type") String type,
-                                        @Query("Query") String query);
+    Call<String> _autokattaAddQuotation(@Query("Quotationid") int vehicleId, @Query("CustContact") String custContact,
+                                        @Query("ReservePrice") double price, @Query("Query") String query);
 
     //Quotation Reply
-    @POST("ReviewQuot")
-    Call<String> quotationReply(@Query("QuotationID") int QuotationID, @Query("keyword") String keyword,
+    @POST("AddReplyReviewToQuot")
+    Call<String> quotationReply(@Query("QuotationOthersID") int QuotationOtherID, @Query("keyword") String keyword,
                                 @Query("Contact") String Contact, @Query("Message") String Message,
-                                @Query("VehicleID") int VehicleID,
-                                @Query("GroupID") int GroupID, @Query("type") String type
-    );
+                                @Query("ReviewQuoteID") int ReviewQuoteID);
 
     ///enquiry accept reject...data...
     @POST("TransferEnquiry")
