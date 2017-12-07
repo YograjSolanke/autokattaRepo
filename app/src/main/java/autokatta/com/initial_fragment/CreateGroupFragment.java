@@ -1,5 +1,6 @@
 package autokatta.com.initial_fragment;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -67,6 +68,7 @@ public class CreateGroupFragment extends Fragment implements View.OnClickListene
     ApiCall mApiCall;
     String classname;
     RadioButton rdbPublic, rdbPrivate;
+    ProgressDialog mProgressDialog;
 
     public CreateGroupFragment() {
         //empty fragment...
@@ -86,6 +88,8 @@ public class CreateGroupFragment extends Fragment implements View.OnClickListene
         mApiCall = new ApiCall(getActivity(), this);
         mGroupImg.setOnClickListener(this);
         mAddmember.setOnClickListener(this);
+        mProgressDialog=new ProgressDialog(getActivity());
+        mProgressDialog.setMessage("Loading...");
 
         mGroupTitle.addTextChangedListener(new TextWatcher() {
             @Override
@@ -123,6 +127,7 @@ public class CreateGroupFragment extends Fragment implements View.OnClickListene
                     } else if (rdbPrivate.isChecked()) {
                         strGroupPriavcy = "private";
                     }
+                    mProgressDialog.show();
                     mApiCall.createGroups(mGroupTitle.getText().toString(), lastWord, mContact, strGroupPriavcy);
                 }
                 break;
@@ -310,6 +315,7 @@ public class CreateGroupFragment extends Fragment implements View.OnClickListene
     public void notifyString(String str) {
         int id = Integer.parseInt(str);
         if (str != null) {
+            mProgressDialog.dismiss();
             getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putInt("group_id", id).apply();
             if (!mediaPath.equals("")) {
                 uploadImage(mediaPath);

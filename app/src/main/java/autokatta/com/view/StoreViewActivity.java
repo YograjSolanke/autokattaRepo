@@ -942,7 +942,7 @@ Call Intent...
                                 "Images", "My Employees",};
 
                         gridViewImageId = new int[]{
-                                R.mipmap.communication, R.mipmap.store_product, R.mipmap.store_service, R.mipmap.store_used_vehicle, R.mipmap.new_vehicle, R.mipmap.videos, R.mipmap.images,
+                                R.mipmap.communication, R.mipmap.product, R.mipmap.services, R.mipmap.used_vehicle, R.mipmap.new_vehicle, R.mipmap.videos, R.mipmap.images,
                                 R.mipmap.members
                         };
 
@@ -962,7 +962,7 @@ Call Intent...
                                 "Images"};
 
                         gridViewImageId = new int[]{
-                                R.mipmap.communication, R.mipmap.store_product, R.mipmap.store_service, R.mipmap.store_used_vehicle, R.mipmap.new_vehicle, R.mipmap.videos, R.mipmap.images
+                                R.mipmap.communication, R.mipmap.product, R.mipmap.services, R.mipmap.used_vehicle, R.mipmap.new_vehicle, R.mipmap.videos, R.mipmap.images
                         };
 
                         CustomGridViewActivity adapterViewAndroid = new CustomGridViewActivity(this, gridViewString, gridViewImageId);
@@ -980,7 +980,7 @@ Call Intent...
                                 "Images"};
 
                         gridViewImageId = new int[]{
-                                R.mipmap.communication, R.mipmap.store_product, R.mipmap.store_service, R.mipmap.store_used_vehicle, R.mipmap.new_vehicle, R.mipmap.videos, R.mipmap.images
+                                R.mipmap.communication, R.mipmap.product, R.mipmap.services, R.mipmap.used_vehicle, R.mipmap.new_vehicle, R.mipmap.videos, R.mipmap.images
                         };
 
                         CustomGridViewActivity adapterViewAndroid = new CustomGridViewActivity(this, gridViewString, gridViewImageId);

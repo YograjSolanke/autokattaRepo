@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:paddingEnd="@dimen/card_margin"
@@ -30,6 +31,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
+            android:layout_toStartOf="@+id/imageView"
             android:layout_toEndOf="@+id/vehicle_icon"
             android:text="@string/vehicle_title"
             android:textSize="14sp"
@@ -111,6 +113,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignTop="@+id/category"
                 android:layout_marginStart="10dp"
+                android:layout_toStartOf="@+id/count"
                 android:layout_toEndOf="@+id/category"
                 android:text="@string/app_name"
                 android:textSize="14sp" />
@@ -122,9 +125,11 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentTop="true"
+            android:layout_toEndOf="@+id/category_str"
             android:layout_marginEnd="@dimen/card_margin"
             android:contentDescription="@string/app_name"
-            android:src="@mipmap/ic_view" />
+            android:src="@mipmap/ic_view"
+            tools:ignore="NotSibling,UnknownIdInLayout"/>
 
         <TextView
             android:id="@+id/count"
@@ -132,10 +137,12 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_below="@+id/imageView"
+            android:layout_toEndOf="@+id/category_str"
             android:layout_marginEnd="@dimen/text_about"
             android:text="0"
             android:textSize="14sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            tools:ignore="NotSibling"/>
 
         <RelativeLayout
             android:id="@+id/relSubCategory"

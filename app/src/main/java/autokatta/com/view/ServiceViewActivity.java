@@ -530,8 +530,8 @@ public class ServiceViewActivity extends AppCompatActivity implements RequestNot
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
-                        stringgroupids = "";
-                        stringgroupname = "";
+                      //  stringgroupids = "";
+                      //  stringgroupname = "";
                     }
 
                 })

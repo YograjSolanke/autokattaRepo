@@ -161,19 +161,19 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<RecyclerView.
             holder.editmodels.setText(mMainList.get(position).getModel());
             holder.editleads.setText(mMainList.get(position).getBuyerLeads());
             holder.mLinear.setVisibility(View.VISIBLE);
-            holder.editmfgyr.setText(mMainList.get(position).getYearOfManufacture());
-            holder.editrto.setText(mMainList.get(position).getRtoCity());
-            holder.editlocation.setText(mMainList.get(position).getLocationCity());
-            holder.editregNo.setText(mMainList.get(position).getRegistrationNumber());
+            holder.editmfgyr.setText("-"+mMainList.get(position).getYearOfManufacture());
+            holder.editrto.setText("-"+mMainList.get(position).getRtoCity());
+            holder.editlocation.setText("-"+mMainList.get(position).getLocationCity());
+            holder.editregNo.setText("-"+mMainList.get(position).getRegistrationNumber());
             holder.stock_type.setText(mMainList.get(position).getStockType());
             holder.mChatcount.setText(mMainList.get(position).getChatCount());
             holder.mEnquiryCount.setText(mMainList.get(position).getEnquiryCount());
             myContact = activity.getSharedPreferences(activity.getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "");
 
             if (mMainList.get(position).getKmsRunning().equals(""))
-                holder.editkms.setText(mMainList.get(position).getHrsRunning());
+                holder.editkms.setText("-"+mMainList.get(position).getHrsRunning());
             else
-                holder.editkms.setText(mMainList.get(position).getKmsRunning());
+                holder.editkms.setText("-"+mMainList.get(position).getKmsRunning());
 
 
             //To set Date

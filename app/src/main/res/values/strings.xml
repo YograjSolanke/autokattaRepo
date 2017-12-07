@@ -641,10 +641,10 @@
     <string name="no_of_leads">No of leads</string>
     <string name="leads">Leads</string>
     <string name="enquiries">Enquiries</string>
-    <string name="view_details">View  Details</string>
+    <string name="view_details">VIEW  DETAILS</string>
     <string name="start_notifications">Start Notification</string>
     <string name="stop_notifications">Stop Notification</string>
-    <string name="edit_details">Edit Details</string>
+    <string name="edit_details">EDIT DETAILS</string>
     <string name="admin_contact">Admin Contact</string>
     <string name="seller_leads">Seller Leads</string>
     <string name="compare">Compare</string>

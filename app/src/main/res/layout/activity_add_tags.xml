@@ -35,8 +35,11 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerInParent="true"
-        android:background="@color/background"
+        android:background="@drawable/buttonback"
         android:textColor="@color/white"
         android:textStyle="bold"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="15dp"
         android:text="@string/done" />
 </RelativeLayout>
