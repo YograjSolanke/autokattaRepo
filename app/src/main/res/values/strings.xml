@@ -455,7 +455,7 @@
     <string name="permit_private">Permit/Private </string>
     <string name="enter_city">Enter city</string>
     <string name="un_registered">Un registered</string>
-    <string name="enter_rto_city">Enter Rto city</string>
+    <string name="enter_rto_city">Enter RTO city</string>
     <string name="manufacture_year">Manufacture Year</string>
     <string name="kms_running">Kms Running</string>
     <string name="hrs_running">Hours Running</string>

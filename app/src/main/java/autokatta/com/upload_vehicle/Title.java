@@ -40,7 +40,9 @@ import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 
 import autokatta.com.R;
@@ -83,15 +85,19 @@ public class Title extends Fragment implements View.OnClickListener, RequestNoti
     List<String> groupTitleList = new ArrayList<>();
     List<String> storeIdList = new ArrayList<>();
     List<String> storeTitleList = new ArrayList<>();
+    List<String> storeidsduplicate = new ArrayList<>();
+    List<String> groupidsduplicate = new ArrayList<>();
     String[] groupTitleArray = new String[0];
     String[] groupIdArray = new String[0];
     String[] storeTitleArray = new String[0];
     String[] storeIdArray = new String[0];
 
     private boolean[] itemsCheckedStores;
+    private boolean[] itemsCheckedGroups;
 
-    String stringgroupids = "", stringstoreids = "", stringstorename = "", stringgroupname = "";
+    String stringgroupids = "", stringstoreids = "", stringstorename = "", stringgroupname = "",prevGroupIds = "", prevStoreIds = "",prevgroupnames="",prevstorenames="";
     String financests = null, exchangests = null;
+    String mFinalGroupids="",mFinalStoreId="",mFinalgroupnames="",mFinalstorenames="";
     Spinner mSubType;
     Spinner mBrandSpinner, mModelSpinner, mVersionSpinner;
     Spinner mPumpSpinner, mBreakSpinner, mStaringSpinner;
@@ -671,11 +677,26 @@ String mBundleCallFrom;
         mSelectedItems.clear();
         stringgroupids = "";
         stringgroupname = "";
+        mFinalGroupids="";
+        mFinalgroupnames="";
+
+        /*This is to check previously checked*/
+        String[] prearra = prevGroupIds.split(",");
+
+
+        for (int i = 0; i < groupIdList.size(); i++) {
+            if (Arrays.asList(prearra).contains(groupIdList.get(i))) {
+                itemsCheckedGroups[i] = true;
+                mSelectedItems.add(groupIdList.get(i));
+            } else
+                itemsCheckedGroups[i] = false;
+        }
+
         android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(getActivity());
         // set the dialog title
         builder.setTitle("Select Groups From Following")
                 .setCancelable(true)
-                .setMultiChoiceItems(groupTitleArray, null, new DialogInterface.OnMultiChoiceClickListener() {
+                .setMultiChoiceItems(groupTitleArray, itemsCheckedGroups, new DialogInterface.OnMultiChoiceClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which, boolean isChecked) {
                         if (isChecked) {
@@ -692,37 +713,67 @@ String mBundleCallFrom;
                     public void onClick(DialogInterface dialog, int id) {
                         stringgroupids = "";
                         stringgroupname = "";
+                        //  prevGroupIds="";
                         for (int i = 0; i < mSelectedItems.size(); i++) {
                             for (int j = 0; j < groupTitleArray.length; j++) {
                                 if (mSelectedItems.get(i).equals(groupTitleArray[j])) {
-                                    if (stringgroupids.equals("")) {
+                                    if (stringgroupids.equals("") && prevGroupIds.equals("")) {
                                         stringgroupids = groupIdList.get(j);
                                         stringgroupname = groupTitleArray[j];
+                                        prevGroupIds = stringgroupids;
+                                        prevgroupnames=stringgroupname;
                                     } else {
                                         stringgroupids = stringgroupids + "," + groupIdList.get(j);
                                         stringgroupname = stringgroupname + "," + groupTitleArray[j];
+                                        prevGroupIds = prevGroupIds + "," + stringgroupids;
+                                        prevgroupnames = prevgroupnames + "," + stringgroupname;
                                     }
                                 }
                             }
                         }
+                        HashSet<String> test=new HashSet<String>(Arrays.asList(prevGroupIds.split(",")));
+                        HashSet<String> test1=new HashSet<String>(Arrays.asList(prevgroupnames.split(",")));
 
-                        if (mSelectedItems.size() == 0) {
-                            if (isAdded())
-                                CustomToast.customToast(getActivity(), "No Group Was Selected");
+                        for (String temp : test)
+                        {
+                            if (!temp.equals("")) {
+                                if (mFinalGroupids.equals("")) {
+                                    mFinalGroupids = temp;
+                                } else {
+                                    mFinalGroupids = mFinalGroupids + "," + temp;
+                                }
+                            }
+                        }
+                        for (String temp : test1)
+                        {
+                            if (!temp.equals("")) {
+                                if (mFinalgroupnames.equals("")) {
+                                    mFinalgroupnames = temp;
+                                } else {
+                                    mFinalgroupnames = mFinalgroupnames + "," + temp;
+                                }
+                            }
+                        }
+
+                        if (mFinalGroupids.equalsIgnoreCase("")) {
+                                if (isAdded())
+                                    CustomToast.customToast(getActivity(), "No Group Was Selected");
+                                radioButton1.setChecked(false);
+                                radioButton2.setChecked(true);
+                                stringgroupids = "";
+                                stringgroupname = "";
+                            }
+                        }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        if ( mSelectedItems.size() == 0) {
                             radioButton1.setChecked(false);
                             radioButton2.setChecked(true);
                             stringgroupids = "";
                             stringgroupname = "";
                         }
-                    }
-                })
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int id) {
-                        radioButton1.setChecked(false);
-                        radioButton2.setChecked(true);
-                        stringgroupids = "";
-                        stringgroupname = "";
                     }
 
                 })
@@ -736,6 +787,9 @@ String mBundleCallFrom;
         mSelectedItems.clear();
         stringstoreids = "";
         stringstorename = "";
+        mFinalStoreId = "";
+        mFinalstorenames = "";
+
         if (mBundleCallFrom != null && mBundleCallFrom.equalsIgnoreCase("StoreViewActivity")) {
             for (int i = 0; i < storeIdList.size(); i++) {
                 if (storeIdList.get(i).equalsIgnoreCase(String.valueOf(mBundleStoreid))) {
@@ -746,6 +800,16 @@ String mBundleCallFrom;
             }
         }
 
+            /*This is to check previously checked*/
+        String[] prearra = prevStoreIds.split(",");
+
+        for (int i = 0; i < storeIdList.size(); i++) {
+            if (Arrays.asList(prearra).contains(storeIdList.get(i))) {
+                itemsCheckedStores[i] = true;
+                mSelectedItems.add(storeIdList.get(i));
+            } else
+                itemsCheckedStores[i] = false;
+        }
         android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(getActivity());
 
         // set the dialog title
@@ -769,22 +833,57 @@ String mBundleCallFrom;
                     public void onClick(DialogInterface dialog, int id) {
                         stringstoreids = "";
                         stringstorename = "";
+                     //   prevStoreIds = "";
                         for (int i = 0; i < mSelectedItems.size(); i++) {
                             for (int j = 0; j < storeTitleArray.length; j++) {
                                 if (mSelectedItems.get(i).equals(storeTitleArray[j])) {
-                                    if (stringstoreids.equals("")) {
+                                    if (stringstoreids.equals("") && prevStoreIds.equals("")) {
                                         stringstoreids = storeIdList.get(j);
                                         Log.i("IF-stringstoreids", "->" + stringstoreids);
                                         stringstorename = storeTitleArray[j];
+                                        prevStoreIds = stringstoreids;
+                                        prevstorenames=stringstorename;
+                                        Log.i("IF-prevStoreIds", "->" + prevStoreIds);
                                     } else {
                                         stringstoreids = stringstoreids + "," + storeIdList.get(j);
                                         Log.i("ELSE-stringstoreids", "->" + stringstoreids);
                                         stringstorename = stringstorename + "," + storeTitleArray[j];
+                                        prevStoreIds = prevStoreIds + "," +stringstoreids;
+                                        prevstorenames = prevstorenames + "," +stringstorename;
+                                        Log.i("ELSE-prevStoreIds", "->" + prevStoreIds);
                                     }
                                 }
                             }
                         }
-                        if (mSelectedItems.size() == 0) {
+
+                        //this is used to get distinct records
+                        HashSet<String> test=new HashSet<String>(Arrays.asList(prevGroupIds.split(",")));
+                        HashSet<String> test1=new HashSet<String>(Arrays.asList(prevstorenames.split(",")));
+
+                        for (String temp : test)
+                        {
+                            if (!temp.equals("")) {
+                                if (mFinalStoreId.equals("")) {
+                                    mFinalStoreId = temp;
+                                } else {
+                                    mFinalStoreId = mFinalStoreId + "," + temp;
+                                }
+                            }
+                        }
+
+                        for (String temp : test1)
+                        {
+                            if (!temp.equals("")) {
+                                if (mFinalstorenames.equals("")) {
+                                    mFinalstorenames = temp;
+                                } else {
+                                    mFinalstorenames = mFinalstorenames + "," + temp;
+                                }
+                            }
+                        }
+
+
+                        if (mFinalStoreId.equalsIgnoreCase("")) {
                             if (isAdded())
                                 CustomToast.customToast(getActivity(), "No Store Was Selected");
                             storeradioyes.setChecked(false);
@@ -798,10 +897,12 @@ String mBundleCallFrom;
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
                         // removes the AlertDialog in the screen
-                        storeradioyes.setChecked(false);
-                        storeradiono.setChecked(true);
-                        stringstoreids = "";
-                        stringstorename = "";
+                        if (mSelectedItems.size() == 0) {
+                            storeradioyes.setChecked(false);
+                            storeradiono.setChecked(true);
+                            stringstoreids = "";
+                            stringstorename = "";
+                        }
                     }
 
                 })
@@ -829,6 +930,8 @@ String mBundleCallFrom;
                     }
                     groupTitleArray = groupTitleList.toArray(new String[groupTitleList.size()]);
                     groupIdArray = groupIdList.toArray(new String[groupIdList.size()]);
+                    itemsCheckedGroups = new boolean[groupTitleArray.length];
+
                 } else if (response.body() instanceof MyStoreResponse) {
                     storeIdList.clear();
                     MyStoreResponse myStoreResponse = (MyStoreResponse) response.body();
@@ -1381,12 +1484,14 @@ String mBundleCallFrom;
                     getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_Title", strTitle).apply();
 
                     getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_groupPrivacy", strGroupPriavcy).apply();
-                    getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_GroupIds", stringgroupids).apply();
-                    getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_GroupNames", stringgroupname).apply();
+                    getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_GroupIds", mFinalGroupids).apply();
+                 //   getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_GroupIds", stringgroupids).apply();//old code
+                    getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_GroupNames", mFinalgroupnames).apply();
 
                     getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_storePrivacy", strStorePrivacy).apply();
-                    getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_StoreIds", stringstoreids).apply();
-                    getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_StoreNames", stringstorename).apply();
+                    getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_StoreIds", mFinalStoreId).apply();
+                //    getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_StoreIds", stringstoreids).apply();//old code
+                    getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_StoreNames", mFinalstorenames).apply();
 
                     getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_financeStatus", strFinanceStatus).apply();
                     getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).edit().putString("upload_exchangeStatus", strExchangeStatus).apply();
