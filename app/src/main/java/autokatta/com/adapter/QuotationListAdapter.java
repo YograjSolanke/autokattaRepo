@@ -19,7 +19,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import autokatta.com.R;
-import autokatta.com.groups.ReplyGroupQuot;
+import autokatta.com.groups.ReviewGroupQuotActivity;
 import autokatta.com.response.MyVehicleQuotationListResponse;
 import autokatta.com.view.OtherProfile;
 
@@ -88,7 +88,7 @@ public class QuotationListAdapter extends RecyclerView.Adapter<RecyclerView.View
         holder.reply.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(mActivity, ReplyGroupQuot.class);
+                Intent i = new Intent(mActivity, ReviewGroupQuotActivity.class);
                 i.putExtra("QuotationOtherid", QuotationList.get(holder.getAdapterPosition()).getQuotationOthersID());
                 mActivity.startActivity(i);
             }
