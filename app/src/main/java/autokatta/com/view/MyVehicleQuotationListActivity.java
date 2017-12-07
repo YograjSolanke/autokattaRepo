@@ -60,7 +60,6 @@ public class MyVehicleQuotationListActivity extends AppCompatActivity implements
     String myContact;
     ConnectionDetector mTestConnection;
     LinearLayoutManager mLinearLayoutManager;
-    private static int firstVisibleInListview;
     TextView Title, Category, Brand, Model, Keyword, Price;
     RelativeLayout relCategory, relBrand, relModel, relPrice, MainRel;
     ImageView Image;
@@ -97,8 +96,6 @@ public class MyVehicleQuotationListActivity extends AppCompatActivity implements
         mLinearLayoutManager.setReverseLayout(true);
         mLinearLayoutManager.setStackFromEnd(true);
         quotationRecycler.setLayoutManager(mLinearLayoutManager);
-        firstVisibleInListview = mLinearLayoutManager.findFirstVisibleItemPosition();
-
         Keyword = (TextView) findViewById(R.id.keyword);
         Title = (TextView) findViewById(R.id.settitle);
         Category = (TextView) findViewById(R.id.setcategory);
@@ -144,28 +141,29 @@ public class MyVehicleQuotationListActivity extends AppCompatActivity implements
                             .bitmapTransform(new CropCircleTransformation(MyVehicleQuotationListActivity.this))
                             .diskCacheStrategy(DiskCacheStrategy.ALL) //For caching diff versions of image.
                             .into(Image);
-
-                    mTestConnection = new ConnectionDetector(MyVehicleQuotationListActivity.this);
-                    mSwipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
-                            android.R.color.holo_green_light,
-                            android.R.color.holo_orange_light,
-                            android.R.color.holo_red_light);
-                    mSwipeRefreshLayout.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            mSwipeRefreshLayout.setRefreshing(true);
-                            if (bundle_Contact.equals(myContact)) {
-                                fab.setVisibility(View.GONE);
-                                getOtherQuotationList(bundle_GroupId, bundle_VehicleId, bundle_Type);
-                            } else {
-                                headText.setText("Your Quotation List");
-                                getMyQuotationList(bundle_GroupId, bundle_VehicleId, bundle_Type);
-                            }
-                        }
-
-
-                    });
                 }
+
+                mTestConnection = new ConnectionDetector(MyVehicleQuotationListActivity.this);
+                mSwipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_bright,
+                        android.R.color.holo_green_light,
+                        android.R.color.holo_orange_light,
+                        android.R.color.holo_red_light);
+                mSwipeRefreshLayout.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        mSwipeRefreshLayout.setRefreshing(true);
+                        if (bundle_Contact.equals(myContact)) {
+                            fab.setVisibility(View.GONE);
+                            getOtherQuotationList();
+                        } else {
+                            headText.setText("Your Quotation List");
+                            getMyQuotationList();
+                        }
+                    }
+
+
+                });
+
             }
         });
 
@@ -188,22 +186,20 @@ public class MyVehicleQuotationListActivity extends AppCompatActivity implements
         });
     }
 
-    private void getMyQuotationList(int bundle_groupId, int bundle_vehicleId, String bundle_type) {
-        //here user will see list of Quotation which belongs him
-
+    //here user will see list of Quotation which belongs him
+    private void getMyQuotationList() {
         if (mTestConnection.isConnectedToInternet()) {
             ApiCall mApiCall = new ApiCall(this, this);
-            mApiCall.GetMyQuotationList(bundle_groupId, bundle_vehicleId, bundle_type, myContact);
+            mApiCall.GetPersonalPriceQuotation(myContact, quotationID);
         } else
             CustomToast.customToast(this, getString(R.string.no_internet));
     }
 
-    private void getOtherQuotationList(int bundle_groupId, int bundle_vehicleId, String bundle_type) {
-        //here user will see list of Quotation send by other user for that particular vehicle
-
+    //here user will see list of Quotation send by other user for that particular vehicle
+    private void getOtherQuotationList() {
         if (mTestConnection.isConnectedToInternet()) {
             ApiCall mApiCall = new ApiCall(this, this);
-            mApiCall.GetVehicleQuotationList(bundle_groupId, bundle_vehicleId, bundle_type, quotationID);
+            mApiCall.GetQuotationByOthers(quotationID);
         } else
             CustomToast.customToast(this, getString(R.string.no_internet));
     }
@@ -212,9 +208,9 @@ public class MyVehicleQuotationListActivity extends AppCompatActivity implements
     public void onRefresh() {
         if (bundle_Contact.equals(myContact)) {
             fab.setVisibility(View.GONE);
-            getOtherQuotationList(bundle_GroupId, bundle_VehicleId, bundle_Type);
+            getOtherQuotationList();
         } else {
-            getMyQuotationList(bundle_GroupId, bundle_VehicleId, bundle_Type);
+            getMyQuotationList();
         }
     }
 
@@ -232,6 +228,7 @@ public class MyVehicleQuotationListActivity extends AppCompatActivity implements
                         success.setCustomerName(success.getCustomerName());
                         success.setReservePrice(success.getReservePrice());
                         success.setQuery(success.getQuery());
+                        success.setQuotationOthersID(success.getQuotationOthersID());
                         success.setVehicleID(bundle_VehicleId);
                         success.setGroupID(bundle_GroupId);
                         success.setType(bundle_Type);
@@ -239,27 +236,21 @@ public class MyVehicleQuotationListActivity extends AppCompatActivity implements
                             TimeZone utc = TimeZone.getTimeZone("etc/UTC");
                             //format of date coming from services
                             DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-                        /*DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",
-                                Locale.getDefault());*/
                             inputFormat.setTimeZone(utc);
 
                             //format of date which we want to show
                             DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
-                        /*DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy hh:mm aa",
-                                Locale.getDefault());*/
                             outputFormat.setTimeZone(utc);
 
                             Date date = inputFormat.parse(success.getCreatedDate());
-                            //System.out.println("jjj"+date);
                             String output = outputFormat.format(date);
-                            //System.out.println(mainList.get(i).getDate()+" jjj " + output);
                             success.setCreatedDate(output);
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
                         quotationList.add(success);
                     }
-                    QuotationListAdapter mAdapter = new QuotationListAdapter(this, quotationList, myContact);
+                    QuotationListAdapter mAdapter = new QuotationListAdapter(this, quotationList, myContact, quotationID);
                     quotationRecycler.setAdapter(mAdapter);
                     mAdapter.notifyDataSetChanged();
                 } else {
@@ -324,17 +315,17 @@ public class MyVehicleQuotationListActivity extends AppCompatActivity implements
                                                 .build();
 
                                         ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                                        Call<String> addBid = serviceApi._autokattaAddQuotation(bundle_VehicleId, bundle_GroupId,
-                                                myContact, Double.parseDouble(Amount), bundle_Type, query);
+                                        Call<String> addBid = serviceApi._autokattaAddQuotation(quotationID,
+                                                myContact, Double.parseDouble(Amount), query);
                                         addBid.enqueue(new Callback<String>() {
                                             @Override
                                             public void onResponse(Call<String> call, Response<String> response) {
                                                 if (response.isSuccessful()) {
                                                     String result;
                                                     result = response.body();
-                                                    if (result.equals("success")) {
-                                                        CustomToast.customToast(MyVehicleQuotationListActivity.this, "Price Sent");
-                                                        getMyQuotationList(bundle_GroupId, bundle_VehicleId, bundle_Type);
+                                                    if (result.equals("success_quote")) {
+                                                        CustomToast.customToast(MyVehicleQuotationListActivity.this, "Quote Sent");
+                                                        getMyQuotationList();
                                                     }
                                                 } else {
                                                     Log.e("No", "Response");

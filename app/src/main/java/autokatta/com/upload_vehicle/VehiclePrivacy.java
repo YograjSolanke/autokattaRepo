@@ -2,10 +2,13 @@ package autokatta.com.upload_vehicle;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AlertDialog.Builder;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -270,9 +273,25 @@ public class VehiclePrivacy extends Fragment implements View.OnClickListener, Re
             holder.remove.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    titles.remove(position);
-                    id.remove(position);
-                    adpgroupAdapter.notifyDataSetChanged();
+                    AlertDialog.Builder alertDialog = new Builder(getActivity());
+                    alertDialog.setTitle("Confirm To Remove from Group");
+                    alertDialog.setIcon(android.R.drawable.ic_dialog_alert);
+                    alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            titles.remove(position);
+                            id.remove(position);
+                            adpgroupAdapter.notifyDataSetChanged();
+                            CustomToast.customToast(getContext(), "Removed Successfully");
+                        }
+                    });
+                    alertDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                        }
+                    });
+                    alertDialog.show();
+
+
+
 
 
                 }
@@ -352,11 +371,22 @@ public class VehiclePrivacy extends Fragment implements View.OnClickListener, Re
             holder.remove.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    titles.remove(position);
-                    id.remove(position);
-                    adpstoreAdapter.notifyDataSetChanged();
-
-
+                    AlertDialog.Builder alertDialog = new Builder(getActivity());
+                    alertDialog.setTitle("Confirm To Remove from Store");
+                    alertDialog.setIcon(android.R.drawable.ic_dialog_alert);
+                    alertDialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            titles.remove(position);
+                            id.remove(position);
+                            adpstoreAdapter.notifyDataSetChanged();
+                            CustomToast.customToast(getContext(), "Removed Successfully");
+                        }
+                    });
+                    alertDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                        }
+                    });
+                    alertDialog.show();
                 }
             });
 

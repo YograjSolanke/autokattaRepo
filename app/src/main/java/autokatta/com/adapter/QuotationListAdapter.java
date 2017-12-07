@@ -19,7 +19,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import autokatta.com.R;
-import autokatta.com.groups.ReplyGroupQuot;
+import autokatta.com.groups.ReviewGroupQuotActivity;
 import autokatta.com.response.MyVehicleQuotationListResponse;
 import autokatta.com.view.OtherProfile;
 
@@ -32,12 +32,14 @@ public class QuotationListAdapter extends RecyclerView.Adapter<RecyclerView.View
     private Activity mActivity;
     private List<MyVehicleQuotationListResponse.Success> QuotationList;
     private String mLoginContact;
+    private int mQuotationID;
 
     public QuotationListAdapter(Activity activity1, List<MyVehicleQuotationListResponse.Success> QuotationList1,
-                                String mLoginContact1) {
+                                String mLoginContact1, int quotationID) {
         mActivity = activity1;
         QuotationList = QuotationList1;
         mLoginContact = mLoginContact1;
+        mQuotationID = quotationID;
     }
 
 
@@ -86,10 +88,8 @@ public class QuotationListAdapter extends RecyclerView.Adapter<RecyclerView.View
         holder.reply.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(mActivity, ReplyGroupQuot.class);
-                i.putExtra("VehicleId", QuotationList.get(holder.getAdapterPosition()).getVehicleID());
-                i.putExtra("GroupId", QuotationList.get(holder.getAdapterPosition()).getGroupID());
-                i.putExtra("type", QuotationList.get(holder.getAdapterPosition()).getType());
+                Intent i = new Intent(mActivity, ReviewGroupQuotActivity.class);
+                i.putExtra("QuotationOtherid", QuotationList.get(holder.getAdapterPosition()).getQuotationOthersID());
                 mActivity.startActivity(i);
             }
         });
@@ -97,7 +97,6 @@ public class QuotationListAdapter extends RecyclerView.Adapter<RecyclerView.View
 
     private void call(String custContact) {
         Intent in = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + custContact));
-        System.out.println("calling started");
         try {
             if (ActivityCompat.checkSelfPermission(mActivity, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
                 // TODO: Consider calling
@@ -111,7 +110,7 @@ public class QuotationListAdapter extends RecyclerView.Adapter<RecyclerView.View
             }
             mActivity.startActivity(in);
         } catch (android.content.ActivityNotFoundException ex) {
-            System.out.println("No Activity Found For Call in Other Profile\n");
+            ex.printStackTrace();
         }
     }
 
@@ -121,7 +120,7 @@ public class QuotationListAdapter extends RecyclerView.Adapter<RecyclerView.View
     }
 
 
-    private static class QuotationHolder extends RecyclerView.ViewHolder {
+    private class QuotationHolder extends RecyclerView.ViewHolder {
 
         TextView name, contact, reservedPrice, date, priceText, query;
         ImageView callMe, reply;

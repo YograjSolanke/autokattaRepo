@@ -9,7 +9,7 @@ import java.util.List;
  * Created by ak-001 on 22/11/17.
  */
 
-public class QuotReviewReply {
+public class GetReviewQuotResponse {
     @SerializedName("Success")
     @Expose
     private Success success;
@@ -76,15 +76,21 @@ public class QuotReviewReply {
             @SerializedName("ReviewString")
             @Expose
             private String reviewString;
-            @SerializedName("ReviewId")
+            @SerializedName("ReviewQuoteID")
             @Expose
-            private Integer reviewId;
+            private Integer reviewQuoteId;
             @SerializedName("SenderContact")
             @Expose
             private String senderContact;
-            @SerializedName("CreatedDate_1")
+            @SerializedName("CreatedDate")
             @Expose
-            private String createdDate1;
+            private String createdDate;
+            @SerializedName("CustomerName")
+            @Expose
+            private String customerName;
+            @SerializedName("CustomerPic")
+            @Expose
+            private String customerPic;
 
             public String getReviewString() {
                 return reviewString;
@@ -94,12 +100,12 @@ public class QuotReviewReply {
                 this.reviewString = reviewString;
             }
 
-            public Integer getReviewId() {
-                return reviewId;
+            public Integer getReviewQuoteId() {
+                return reviewQuoteId;
             }
 
-            public void setReviewId(Integer reviewId) {
-                this.reviewId = reviewId;
+            public void setReviewQuoteId(Integer reviewId) {
+                this.reviewQuoteId = reviewId;
             }
 
             public String getSenderContact() {
@@ -110,14 +116,29 @@ public class QuotReviewReply {
                 this.senderContact = senderContact;
             }
 
-            public String getCreatedDate1() {
-                return createdDate1;
+            public String getCreatedDate() {
+                return createdDate;
             }
 
-            public void setCreatedDate1(String createdDate1) {
-                this.createdDate1 = createdDate1;
+            public void setCreatedDate(String createdDate1) {
+                this.createdDate = createdDate;
             }
 
+            public String getCustomerName() {
+                return customerName;
+            }
+
+            public void setCustomerName(String customerName) {
+                this.customerName = customerName;
+            }
+
+            public String getCustomerPic() {
+                return customerPic;
+            }
+
+            public void setCustomerPic(String customerPic) {
+                this.customerPic = customerPic;
+            }
         }
 
         public class ReplayMessage {
@@ -125,18 +146,24 @@ public class QuotReviewReply {
             @SerializedName("ReplayString")
             @Expose
             private String replayString;
-            @SerializedName("ReplayId")
+            @SerializedName("ReplyQuoteId")
             @Expose
-            private Integer replayId;
-            @SerializedName("ReviewId")
+            private Integer replyQuoteId;
+            @SerializedName("ReviewQuoteId")
             @Expose
-            private Integer reviewId;
+            private Integer reviewQuoteId;
             @SerializedName("SenderContact")
             @Expose
             private String senderContact;
-            @SerializedName("CreatedDate_1")
+            @SerializedName("CreatedDate")
             @Expose
-            private String createdDate1;
+            private String createdDate;
+            @SerializedName("CustomerName")
+            @Expose
+            private String customerName;
+            @SerializedName("CustomerPic")
+            @Expose
+            private String customerPic;
 
             public String getReplayString() {
                 return replayString;
@@ -146,20 +173,20 @@ public class QuotReviewReply {
                 this.replayString = replayString;
             }
 
-            public Integer getReplayId() {
-                return replayId;
+            public Integer getReplyQuoteId() {
+                return replyQuoteId;
             }
 
-            public void setReplayId(Integer replayId) {
-                this.replayId = replayId;
+            public void setReplyQuoteId(Integer replayId) {
+                this.replyQuoteId = replayId;
             }
 
-            public Integer getReviewId() {
-                return reviewId;
+            public Integer getReviewQuoteId() {
+                return reviewQuoteId;
             }
 
-            public void setReviewId(Integer reviewId) {
-                this.reviewId = reviewId;
+            public void setReviewQuoteId(Integer reviewId) {
+                this.reviewQuoteId = reviewId;
             }
 
             public String getSenderContact() {
@@ -170,14 +197,29 @@ public class QuotReviewReply {
                 this.senderContact = senderContact;
             }
 
-            public String getCreatedDate1() {
-                return createdDate1;
+            public String getCreatedDate() {
+                return createdDate;
             }
 
-            public void setCreatedDate1(String createdDate1) {
-                this.createdDate1 = createdDate1;
+            public void setCreatedDate(String createdDate1) {
+                this.createdDate = createdDate1;
             }
 
+            public String getCustomerName() {
+                return customerName;
+            }
+
+            public void setCustomerName(String customerName) {
+                this.customerName = customerName;
+            }
+
+            public String getCustomerPic() {
+                return customerPic;
+            }
+
+            public void setCustomerPic(String customerPic) {
+                this.customerPic = customerPic;
+            }
         }
     }
 }

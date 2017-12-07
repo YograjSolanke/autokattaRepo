@@ -37,21 +37,20 @@ import retrofit2.Response;
 import static android.content.Context.MODE_PRIVATE;
 
 /**
- * Created by ak-001 on 20/11/17.
+ * Created by ak-003 on 7/12/17.
  */
 
-public class NotificationFragment extends Fragment implements RequestNotifier, SwipeRefreshLayout.OnRefreshListener {
+public class RecentVisitsFragment extends Fragment implements RequestNotifier, SwipeRefreshLayout.OnRefreshListener {
     View mNotificationView;
     RecyclerView mRecyclerView;
     SwipeRefreshLayout mSwipeRefreshLayout;
     TextView mNoData;
-    boolean _hasLoadedOnce = false;
     boolean hasViewCreated = false;
     private String mLoginContact = "";
     ConnectionDetector mConnectionDetector;
     List<GetFCMNotificationResponse.Success.FCMNotification> mFcmNotiList = new ArrayList<>();
 
-    public NotificationFragment() {
+    public RecentVisitsFragment() {
         //Empty Constuctor
     }
 
@@ -214,7 +213,7 @@ public class NotificationFragment extends Fragment implements RequestNotifier, S
             if (isAdded())
                 CustomToast.customToast(getActivity(), getString(R.string.no_internet));
         } else {
-            Log.i("Check Class-", "Notification Fragment");
+            Log.i("Check Class-", "RecentVisitsFragment");
             error.printStackTrace();
         }
 

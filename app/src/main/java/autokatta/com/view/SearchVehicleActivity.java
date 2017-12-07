@@ -115,6 +115,10 @@ public class SearchVehicleActivity extends AppCompatActivity implements MultiSel
         final TextView messageText1 = (TextView) findViewById(R.id.messageText1);
         final TextView brandtxt = (TextView) findViewById(R.id.brandtxt);
         final TextView modeltxt = (TextView) findViewById(R.id.modeltxt);
+        final TextView versiontxt = (TextView) findViewById(R.id.versiontxt);
+        final TextView rtotext = (TextView) findViewById(R.id.RTOText);
+        final TextView locationtxt = (TextView) findViewById(R.id.textView);
+        final TextView stocktypetxt = (TextView) findViewById(R.id.stocktypetxt);
         TextView ownertxt = (TextView) findViewById(R.id.ownertxt);
 
 
@@ -164,9 +168,9 @@ public class SearchVehicleActivity extends AppCompatActivity implements MultiSel
 
         stocktypespinner = (Spinner) findViewById(R.id.stocktypespnr);
         financeSpinner = (Spinner) findViewById(R.id.finacialEdit1);
-        financeSpinner.setFocusable(true);
-        financeSpinner.setFocusableInTouchMode(true);
-        financeSpinner.requestFocus();
+       // financeSpinner.setFocusable(true);
+       // financeSpinner.setFocusableInTouchMode(true);
+       // financeSpinner.requestFocus();
         allcategorySpinner = (Spinner) findViewById(R.id.allCategory1);
         subcategorySpinner = (Spinner) findViewById(R.id.subCategory);
         brandSpinner = (Spinner) findViewById(R.id.BrandEdit1);
@@ -222,6 +226,7 @@ public class SearchVehicleActivity extends AppCompatActivity implements MultiSel
         maxhpcapcity = (TextView) findViewById(R.id.maxhpcapcity);
 
 
+
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -239,6 +244,11 @@ public class SearchVehicleActivity extends AppCompatActivity implements MultiSel
                     messageText1.setText(Html.fromHtml("Sub category:" + text));
                     brandtxt.setText(Html.fromHtml("Brand:" + text));
                     modeltxt.setText(Html.fromHtml("Model:" + text));
+                    rtotext.setText(Html.fromHtml("RTO City" + text));
+                    locationtxt.setText(Html.fromHtml("Location" + text));
+                    stocktypetxt.setText(Html.fromHtml("Stock Type:" + text));
+                    versiontxt.setText(Html.fromHtml("Version:" + text));
+
 
 
                     action = getIntent().getExtras().getString("className");

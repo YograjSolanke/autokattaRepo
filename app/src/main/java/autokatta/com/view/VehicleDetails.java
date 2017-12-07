@@ -113,7 +113,9 @@ public class VehicleDetails extends AppCompatActivity implements RequestNotifier
 
                     prefcontact = getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).getString("loginContact", "");
                     getVehicleData(mVehicle_Id);
-                    mApiCall.callingVehicleDetails(mVehicle_Id, "View");
+                    if (!prefcontact.equals(contact)) {
+                        mApiCall.callingVehicleDetails(mVehicle_Id, "View");
+                    }
                     collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
 
                     mVehiclePicture = (ImageView) findViewById(R.id.vehicle_image);
@@ -258,7 +260,7 @@ public class VehicleDetails extends AppCompatActivity implements RequestNotifier
                 }
                 collapsingToolbar.setTitle(Title);
 
-                if (!contact.equals(prefcontact))
+                if (!prefcontact.equals(contact))
                     AddSuggestionData(mVehicle_Id);
             } else {
                 CustomToast.customToast(getApplicationContext(), getString(R.string._404));

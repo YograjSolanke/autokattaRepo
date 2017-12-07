@@ -49,7 +49,6 @@ import autokatta.com.apicall.ApiCall;
 import autokatta.com.broadcastreceiver.BackgroundService;
 import autokatta.com.broadcastreceiver.Receiver;
 import autokatta.com.fragment.NotificationFragment;
-import autokatta.com.fragment.RssFeeds;
 import autokatta.com.fragment.SuggestionFragment;
 import autokatta.com.fragment.WallMoreFragment;
 import autokatta.com.fragment.WallNotificationFragment;
@@ -312,8 +311,7 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
         tabLayout.getTabAt(0).setIcon(R.mipmap.ic_web);
         tabLayout.getTabAt(1).setIcon(R.mipmap.ic_bell);
         tabLayout.getTabAt(2).setIcon(R.mipmap.suggestion_white_icon);
-        tabLayout.getTabAt(3).setIcon(R.mipmap.ic_rss_box);
-        tabLayout.getTabAt(4).setIcon(R.mipmap.view_more);
+        tabLayout.getTabAt(3).setIcon(R.mipmap.view_more);
 
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -342,7 +340,6 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
             tabLayout.getTabAt(1).getIcon().setAlpha(128);
             tabLayout.getTabAt(2).getIcon().setAlpha(128);
             tabLayout.getTabAt(3).getIcon().setAlpha(128);
-            tabLayout.getTabAt(4).getIcon().setAlpha(128);
 
             viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
                 @Override
@@ -358,36 +355,24 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
                             tabLayout.getTabAt(1).getIcon().setAlpha(128);
                             tabLayout.getTabAt(2).getIcon().setAlpha(128);
                             tabLayout.getTabAt(3).getIcon().setAlpha(128);
-                            tabLayout.getTabAt(4).getIcon().setAlpha(128);
                             break;
                         case 1:
                             tabLayout.getTabAt(0).getIcon().setAlpha(128);
                             tabLayout.getTabAt(1).getIcon().setAlpha(255);
                             tabLayout.getTabAt(2).getIcon().setAlpha(128);
                             tabLayout.getTabAt(3).getIcon().setAlpha(128);
-                            tabLayout.getTabAt(4).getIcon().setAlpha(128);
                             break;
                         case 2:
                             tabLayout.getTabAt(0).getIcon().setAlpha(128);
                             tabLayout.getTabAt(1).getIcon().setAlpha(128);
                             tabLayout.getTabAt(2).getIcon().setAlpha(255);
                             tabLayout.getTabAt(3).getIcon().setAlpha(128);
-                            tabLayout.getTabAt(4).getIcon().setAlpha(128);
                             break;
                         case 3:
                             tabLayout.getTabAt(0).getIcon().setAlpha(128);
                             tabLayout.getTabAt(1).getIcon().setAlpha(128);
                             tabLayout.getTabAt(2).getIcon().setAlpha(128);
                             tabLayout.getTabAt(3).getIcon().setAlpha(255);
-                            tabLayout.getTabAt(4).getIcon().setAlpha(128);
-                            break;
-
-                        case 4:
-                            tabLayout.getTabAt(0).getIcon().setAlpha(128);
-                            tabLayout.getTabAt(1).getIcon().setAlpha(128);
-                            tabLayout.getTabAt(2).getIcon().setAlpha(128);
-                            tabLayout.getTabAt(3).getIcon().setAlpha(128);
-                            tabLayout.getTabAt(4).getIcon().setAlpha(255);
                             break;
                     }
                 }
@@ -565,7 +550,6 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
         //adapter.addFragment(new GroupNotification());
         adapter.addFragment(new NotificationFragment());
         adapter.addFragment(new SuggestionFragment());
-        adapter.addFragment(new RssFeeds());
         adapter.addFragment(new WallMoreFragment());
         viewPager.setAdapter(adapter);
     }

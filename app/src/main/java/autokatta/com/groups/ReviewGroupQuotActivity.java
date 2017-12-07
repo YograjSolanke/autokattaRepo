@@ -19,7 +19,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import java.net.SocketTimeoutException;
 import java.text.DateFormat;
@@ -35,27 +37,27 @@ import autokatta.com.apicall.ApiCall;
 import autokatta.com.interfaces.RequestNotifier;
 import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.other.CustomToast;
-import autokatta.com.response.QuotReviewReply;
+import autokatta.com.response.GetReviewQuotResponse;
 import autokatta.com.view.OtherProfile;
 import autokatta.com.view.UserProfile;
 import retrofit2.Response;
 
-public class ReplyGroupQuot extends AppCompatActivity implements RequestNotifier {
+public class ReviewGroupQuotActivity extends AppCompatActivity implements RequestNotifier {
 
     ConnectionDetector mConnectionDetector;
-    public List<QuotReviewReply.Success.ReviewMessage> mainList = new ArrayList<>();
-    public List<QuotReviewReply.Success.ReplayMessage> childlist;
+    public List<GetReviewQuotResponse.Success.ReviewMessage> reviewList = new ArrayList<>();
+    public List<GetReviewQuotResponse.Success.ReplayMessage> replyList;
     private ProgressDialog dialog;
-    int vehicleId, groupId, sendQuotID;
+    int sendQuotID;
     private LinearLayout mLinearListView;
-    boolean isFirstViewClick[];
     LinearLayout mLinearScrollSecond[];
-    String myContact, mType;
+    String myContact;
     AlertDialog alert;
     TextView addimagetext;
     ImageView uploadImage;
     EditText mReviewEnter;
     Button mSend;
+    private int mQuotationOtherID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,10 +71,8 @@ public class ReplyGroupQuot extends AppCompatActivity implements RequestNotifier
         }
         mConnectionDetector = new ConnectionDetector(this);
         if (getIntent().getExtras() != null) {
-            vehicleId = getIntent().getExtras().getInt("VehicleId");
-            groupId = getIntent().getExtras().getInt("GroupId");
-            mType = getIntent().getExtras().getString("type");
-            getQuotReviewReply(vehicleId);
+            mQuotationOtherID = getIntent().getExtras().getInt("QuotationOtherid");
+            getQuotReviewReply(mQuotationOtherID);
         }
         mLinearListView = (LinearLayout) findViewById(R.id.linear_ListView);
         mReviewEnter = (EditText) findViewById(R.id.review_enter);
@@ -82,19 +82,19 @@ public class ReplyGroupQuot extends AppCompatActivity implements RequestNotifier
         mSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                postQuotReview(0, "Review", myContact, mReviewEnter.getText().toString(), vehicleId, groupId, mType);
+                postQuotReview(mQuotationOtherID, "Review", myContact, mReviewEnter.getText().toString(), 0);
             }
         });
 
     }
 
-    public void getQuotReviewReply(int vehicleId) {
+    public void getQuotReviewReply(int mQuotationOtherID) {
         if (mConnectionDetector.isConnectedToInternet()) {
             dialog.show();
             ApiCall apiCall = new ApiCall(this, this);
-            apiCall.QuotReviewReply(vehicleId);
+            apiCall.GetReviewReplyQuot(mQuotationOtherID);
         } else {
-            Toast.makeText(getApplicationContext(), "No Internet connection", Toast.LENGTH_SHORT).show();
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
         }
     }
 
@@ -121,34 +121,39 @@ public class ReplyGroupQuot extends AppCompatActivity implements RequestNotifier
                 if (dialog.isShowing()) {
                     dialog.dismiss();
                 }
-                if (response.body() instanceof QuotReviewReply) {
-                    QuotReviewReply quotReviewReply = (QuotReviewReply) response.body();
-                    mainList.clear();
-                    QuotReviewReply.Success object = quotReviewReply.getSuccess();
-                    for (QuotReviewReply.Success.ReviewMessage message : object.getReviewMessage()) {
-                        childlist = new ArrayList<>();
-                        message.setReviewId(message.getReviewId());
+                if (response.body() instanceof GetReviewQuotResponse) {
+                    GetReviewQuotResponse quotReviewReply = (GetReviewQuotResponse) response.body();
+                    reviewList.clear();
+                    GetReviewQuotResponse.Success object = quotReviewReply.getSuccess();
+                    for (GetReviewQuotResponse.Success.ReviewMessage message : object.getReviewMessage()) {
+                        replyList = new ArrayList<>();
+                        message.setReviewQuoteId(message.getReviewQuoteId());
                         message.setReviewString(message.getReviewString());
                         message.setSenderContact(message.getSenderContact());
-                        message.setCreatedDate1(message.getCreatedDate1());
+                        message.setCreatedDate(message.getCreatedDate());
+                        message.setCustomerName(message.getCustomerName());
+                        message.setCustomerPic(message.getCustomerPic());
 
-                        for (QuotReviewReply.Success.ReplayMessage objectmatch : object.getReplayMessage()) {
-                            if (message.getReviewId().equals(objectmatch.getReviewId())) {
-                                objectmatch.setCreatedDate1(objectmatch.getCreatedDate1());
-                                objectmatch.setReplayId(objectmatch.getReplayId());
+                        for (GetReviewQuotResponse.Success.ReplayMessage objectmatch : object.getReplayMessage()) {
+                            if (message.getReviewQuoteId().equals(objectmatch.getReviewQuoteId())) {
+                                objectmatch.setCreatedDate(objectmatch.getCreatedDate());
+                                objectmatch.setReplyQuoteId(objectmatch.getReviewQuoteId());
                                 objectmatch.setSenderContact(objectmatch.getSenderContact());
                                 objectmatch.setReplayString(objectmatch.getReplayString());
-                                childlist.add(objectmatch);
+                                objectmatch.setCustomerName(objectmatch.getCustomerName());
+                                objectmatch.setCustomerPic(objectmatch.getCustomerPic());
+                                replyList.add(objectmatch);
                             }
                         }
-                        message.setReplayMessage(childlist);
-                        mainList.add(message);
+                        message.setReplayMessage(replyList);
+                        reviewList.add(message);
                     }
 
-                    System.out.println("main list size=" + mainList.size());
-                    mLinearScrollSecond = new LinearLayout[mainList.size()];
-                    for (int i = 0; i < mainList.size(); i++) {
+                    System.out.println("main list size=" + reviewList.size());
+                    mLinearScrollSecond = new LinearLayout[reviewList.size()];
+                    for (int i = 0; i < reviewList.size(); i++) {
                         LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                        assert inflater != null;
                         View mLinearView = inflater.inflate(R.layout.review_layout, null);
                         final TextView msg = (TextView) mLinearView.findViewById(R.id.msgr);
                         final TextView dateNtime = (TextView) mLinearView.findViewById(R.id.dateNtime);
@@ -157,15 +162,15 @@ public class ReplyGroupQuot extends AppCompatActivity implements RequestNotifier
                         final ImageView profile = (ImageView) mLinearView.findViewById(R.id.profile);
                         mLinearScrollSecond[i] = (LinearLayout) mLinearView.findViewById(R.id.linear_scroll);
 
-                        msg.setText(mainList.get(i).getReviewString());
+                        msg.setText(reviewList.get(i).getReviewString());
                         final int finalI2 = i;
                         profile.setOnClickListener(new View.OnClickListener() {
                             Bundle bundle = new Bundle();
 
                             @Override
                             public void onClick(View view) {
-                                bundle.putString("contactOtherProfile", mainList.get(finalI2).getSenderContact());
-                                if (myContact.equalsIgnoreCase(mainList.get(finalI2).getSenderContact())) {
+                                bundle.putString("contactOtherProfile", reviewList.get(finalI2).getSenderContact());
+                                if (myContact.equalsIgnoreCase(reviewList.get(finalI2).getSenderContact())) {
                                     ActivityOptions options = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.ok_left_to_right, R.anim.ok_right_to_left);
                                     Intent i = new Intent(getApplicationContext(), UserProfile.class);
                                     i.putExtras(bundle);
@@ -179,49 +184,63 @@ public class ReplyGroupQuot extends AppCompatActivity implements RequestNotifier
                                 }
                             }
                         });
+                        if (!reviewList.get(i).getCustomerPic().equals("")) {
+                            String dp_path = getString(R.string.base_image_url) + reviewList.get(i).getCustomerPic();
+                            Glide.with(getApplicationContext())
+                                    .load(dp_path)
+                                    .centerCrop()
+                                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                    .placeholder(R.drawable.logo)
+                                    .into(profile);
+                        }
 
                         try {
                             TimeZone utc = TimeZone.getTimeZone("etc/UTC");
                             //format of date coming from services
                             DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.getDefault());
-                        /*DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",
-                                Locale.getDefault());*/
                             inputFormat.setTimeZone(utc);
 
                             //format of date which we want to show
                             DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy hh:mm a", Locale.getDefault());
-                        /*DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy hh:mm aa",
-                                Locale.getDefault());*/
                             outputFormat.setTimeZone(utc);
 
-                            Date date = inputFormat.parse(mainList.get(i).getCreatedDate1());
-                            //System.out.println("jjj"+date);
+                            Date date = inputFormat.parse(reviewList.get(i).getCreatedDate());
                             String output = outputFormat.format(date);
-                            //System.out.println(mainList.get(i).getDate()+" jjj " + output);
-                            dateNtime.setText(mainList.get(i).getSenderContact() + " " + output);
+                            dateNtime.setText(reviewList.get(i).getCustomerName() + " " + output);
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
 
                         final int finalI = i;
-                        sendQuotID = mainList.get(finalI).getReviewId();
+                        sendQuotID = reviewList.get(finalI).getReviewQuoteId();
                         replyImage.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                sendmessage(mainList.get(finalI).getReviewId(), "Reply");
+                                sendmessage("Reply", reviewList.get(finalI).getReviewQuoteId());
                             }
                         });
 
                         //Adds data into second row
-                        for (int j = 0; j < mainList.get(i).getReplayMessage().size(); j++) {
+                        for (int j = 0; j < reviewList.get(i).getReplayMessage().size(); j++) {
                             LayoutInflater inflater2 = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                            assert inflater2 != null;
                             View mLinearView2 = inflater2.inflate(R.layout.reply_layout, null);
 
                             TextView reply = (TextView) mLinearView2.findViewById(R.id.msgr);
                             ImageView profilePic = (ImageView) mLinearView2.findViewById(R.id.profile);
 
                             TextView repdateNtime = (TextView) mLinearView2.findViewById(R.id.dateNtime);
-                            reply.setText(mainList.get(i).getReplayMessage().get(j).getReplayString());
+                            reply.setText(reviewList.get(i).getReplayMessage().get(j).getReplayString());
+
+                            if (!reviewList.get(i).getReplayMessage().get(j).getCustomerPic().equals("")) {
+                                String dp_path = getString(R.string.base_image_url) + reviewList.get(i).getReplayMessage().get(j).getCustomerPic();
+                                Glide.with(getApplicationContext())
+                                        .load(dp_path)
+                                        .centerCrop()
+                                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                                        .placeholder(R.drawable.logo)
+                                        .into(profilePic);
+                            }
 
                             final int finalI1 = i;
                             final int finalJ = j;
@@ -231,8 +250,8 @@ public class ReplyGroupQuot extends AppCompatActivity implements RequestNotifier
                                 @Override
                                 public void onClick(View view) {
 
-                                    bundle.putString("contactOtherProfile", mainList.get(finalI1).getReplayMessage().get(finalJ).getSenderContact());
-                                    if (myContact.equalsIgnoreCase(mainList.get(finalI1).getReplayMessage().get(finalJ).getSenderContact())) {
+                                    bundle.putString("contactOtherProfile", reviewList.get(finalI1).getReplayMessage().get(finalJ).getSenderContact());
+                                    if (myContact.equalsIgnoreCase(reviewList.get(finalI1).getReplayMessage().get(finalJ).getSenderContact())) {
                                         ActivityOptions options = ActivityOptions.makeCustomAnimation(getApplicationContext(), R.anim.ok_left_to_right, R.anim.ok_right_to_left);
                                         Intent i = new Intent(getApplicationContext(), UserProfile.class);
                                         i.putExtras(bundle);
@@ -252,21 +271,15 @@ public class ReplyGroupQuot extends AppCompatActivity implements RequestNotifier
                                 TimeZone utc = TimeZone.getTimeZone("etc/UTC");
                                 //format of date coming from services
                                 DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.getDefault());
-                        /*DateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss",
-                                Locale.getDefault());*/
                                 inputFormat.setTimeZone(utc);
 
                                 //format of date which we want to show
                                 DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy hh:mm a", Locale.getDefault());
-                        /*DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy hh:mm aa",
-                                Locale.getDefault());*/
                                 outputFormat.setTimeZone(utc);
 
-                                Date date = inputFormat.parse(mainList.get(i).getReplayMessage().get(j).getCreatedDate1());
-                                //System.out.println("jjj"+date);
+                                Date date = inputFormat.parse(reviewList.get(i).getReplayMessage().get(j).getCreatedDate());
                                 String output = outputFormat.format(date);
-                                //System.out.println(mainList.get(i).getDate()+" jjj " + output);
-                                repdateNtime.setText(mainList.get(i).getReplayMessage().get(j).getSenderContact() + " replied " + output);
+                                repdateNtime.setText(reviewList.get(i).getReplayMessage().get(j).getCustomerName() + " replied " + output);
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
@@ -293,8 +306,8 @@ public class ReplyGroupQuot extends AppCompatActivity implements RequestNotifier
     send message
      */
 
-    public void sendmessage(final int QuotationID, final String keyword) {
-        final AlertDialog.Builder alertDialog = new AlertDialog.Builder(ReplyGroupQuot.this);
+    public void sendmessage(final String keyword, final int ReviewQuoteID) {
+        final AlertDialog.Builder alertDialog = new AlertDialog.Builder(ReviewGroupQuotActivity.this);
         LayoutInflater inflater = getLayoutInflater();
         View convertView = inflater.inflate(R.layout.custom_broadmessage_layout, null);
         final EditText message = (EditText) convertView.findViewById(R.id.statustext);
@@ -328,7 +341,7 @@ public class ReplyGroupQuot extends AppCompatActivity implements RequestNotifier
         send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                postQuotReview(QuotationID, keyword, myContact, message.getText().toString(), vehicleId, groupId, mType);
+                postQuotReview(0, keyword, myContact, message.getText().toString(), ReviewQuoteID);
                 alert.dismiss();
             }
         });
@@ -340,15 +353,14 @@ public class ReplyGroupQuot extends AppCompatActivity implements RequestNotifier
         });
     }
 
-    private void postQuotReview(int quotationID, String keyword, String myContact, String message, int vehicleId, int groupId,
-                                String type) {
+    private void postQuotReview(int quotationID, String keyword, String myContact, String message, int ReviewQuoteID) {
         if (mConnectionDetector.isConnectedToInternet()) {
             dialog.show();
             // quotationReply
-            ApiCall apiCall = new ApiCall(ReplyGroupQuot.this, this);
-            apiCall.quotationReply(quotationID, keyword, myContact, message, vehicleId, groupId, type);
+            ApiCall apiCall = new ApiCall(ReviewGroupQuotActivity.this, this);
+            apiCall.quotationReply(quotationID, keyword, myContact, message, ReviewQuoteID);
         } else {
-            Toast.makeText(getApplicationContext(), "No Internet connection", Toast.LENGTH_SHORT).show();
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
         }
     }
 
@@ -364,7 +376,7 @@ public class ReplyGroupQuot extends AppCompatActivity implements RequestNotifier
         } else if (error instanceof ClassCastException) {
             CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
         } else {
-            Log.i("Check Class-", "ReplyGroupQuot");
+            Log.i("Check Class-", "ReviewGroupQuotActivity");
             error.printStackTrace();
         }
     }
@@ -375,9 +387,25 @@ public class ReplyGroupQuot extends AppCompatActivity implements RequestNotifier
             dialog.dismiss();
         }
         if (str != null) {
-            if (str.equals("sent_reply")) {
+            if (str.equals("sent_review")) {
+                if (dialog.isShowing()) {
+                    dialog.dismiss();
+                }
                 Log.i("str", "->" + str);
+                CustomToast.customToast(ReviewGroupQuotActivity.this, "Review sent");
+            } else if (str.equals("sent_reply")) {
+                if (dialog.isShowing()) {
+                    dialog.dismiss();
+                }
+                Log.i("str", "->" + str);
+                CustomToast.customToast(ReviewGroupQuotActivity.this, "Reply sent");
+                getQuotReviewReply(mQuotationOtherID);
             }
+
+            finish();
+            Intent intent = new Intent(ReviewGroupQuotActivity.this, ReviewGroupQuotActivity.class);
+            intent.putExtra("QuotationOtherid", mQuotationOtherID);
+            startActivity(intent);
         }
     }
 }

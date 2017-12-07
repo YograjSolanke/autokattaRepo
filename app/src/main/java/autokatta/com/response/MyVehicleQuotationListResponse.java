@@ -53,6 +53,9 @@ public class MyVehicleQuotationListResponse {
         @SerializedName("Query")
         @Expose
         private String query;
+        @SerializedName("QuotationOthersID")
+        @Expose
+        private int quotationOthersID;
         private int vehicleID;
         private int groupID;
         private String type;
@@ -127,6 +130,14 @@ public class MyVehicleQuotationListResponse {
 
         public void setType(String type) {
             this.type = type;
+        }
+
+        public int getQuotationOthersID() {
+            return quotationOthersID;
+        }
+
+        public void setQuotationOthersID(int quotationOthersID) {
+            this.quotationOthersID = quotationOthersID;
         }
     }
 }

@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="autokatta.com.groups.ReplyGroupQuot">
+    tools:context="autokatta.com.groups.ReviewGroupQuotActivity">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -21,7 +21,8 @@
         android:id="@+id/edit_reply"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true">
+        android:layout_alignParentBottom="true"
+        android:layout_margin="5dp">
 
         <EditText
             android:id="@+id/review_enter"
@@ -29,15 +30,15 @@
             android:layout_height="wrap_content"
             android:layout_toStartOf="@id/send"
             android:background="@android:color/transparent"
-            android:hint="Add text here" />
+            android:hint="@string/send_message" />
 
         <Button
             android:id="@+id/send"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:text="Send"
             android:background="@color/background"
+            android:text="Send"
             android:textColor="@color/white"
             android:textStyle="bold" />
     </RelativeLayout>
