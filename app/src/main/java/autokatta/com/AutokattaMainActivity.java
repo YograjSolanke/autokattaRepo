@@ -48,7 +48,7 @@ import autokatta.com.adapter.TabAdapter;
 import autokatta.com.apicall.ApiCall;
 import autokatta.com.broadcastreceiver.BackgroundService;
 import autokatta.com.broadcastreceiver.Receiver;
-import autokatta.com.fragment.NotificationFragment;
+import autokatta.com.fragment.FcmNotificationFragment;
 import autokatta.com.fragment.SuggestionFragment;
 import autokatta.com.fragment.WallMoreFragment;
 import autokatta.com.fragment.WallNotificationFragment;
@@ -548,7 +548,7 @@ public class AutokattaMainActivity extends AppCompatActivity implements RequestN
         /*adapter.addFragment(new AuctionNotification());*/
         //adapter.addFragment(new StoreNotification());
         //adapter.addFragment(new GroupNotification());
-        adapter.addFragment(new NotificationFragment());
+        adapter.addFragment(new FcmNotificationFragment());
         adapter.addFragment(new SuggestionFragment());
         adapter.addFragment(new WallMoreFragment());
         viewPager.setAdapter(adapter);

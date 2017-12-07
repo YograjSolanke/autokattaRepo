@@ -82,9 +82,9 @@ public class GetReviewQuotResponse {
             @SerializedName("SenderContact")
             @Expose
             private String senderContact;
-            @SerializedName("CreatedDate_1")
+            @SerializedName("CreatedDate")
             @Expose
-            private String createdDate1;
+            private String createdDate;
             @SerializedName("CustomerName")
             @Expose
             private String customerName;
@@ -116,12 +116,12 @@ public class GetReviewQuotResponse {
                 this.senderContact = senderContact;
             }
 
-            public String getCreatedDate1() {
-                return createdDate1;
+            public String getCreatedDate() {
+                return createdDate;
             }
 
-            public void setCreatedDate1(String createdDate1) {
-                this.createdDate1 = createdDate1;
+            public void setCreatedDate(String createdDate1) {
+                this.createdDate = createdDate;
             }
 
             public String getCustomerName() {
@@ -155,9 +155,9 @@ public class GetReviewQuotResponse {
             @SerializedName("SenderContact")
             @Expose
             private String senderContact;
-            @SerializedName("CreatedDate_1")
+            @SerializedName("CreatedDate")
             @Expose
-            private String createdDate1;
+            private String createdDate;
             @SerializedName("CustomerName")
             @Expose
             private String customerName;
@@ -197,12 +197,12 @@ public class GetReviewQuotResponse {
                 this.senderContact = senderContact;
             }
 
-            public String getCreatedDate1() {
-                return createdDate1;
+            public String getCreatedDate() {
+                return createdDate;
             }
 
-            public void setCreatedDate1(String createdDate1) {
-                this.createdDate1 = createdDate1;
+            public void setCreatedDate(String createdDate1) {
+                this.createdDate = createdDate1;
             }
 
             public String getCustomerName() {

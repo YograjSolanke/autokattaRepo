@@ -50,7 +50,6 @@ public class ReviewGroupQuotActivity extends AppCompatActivity implements Reques
     private ProgressDialog dialog;
     int sendQuotID;
     private LinearLayout mLinearListView;
-    boolean isFirstViewClick[];
     LinearLayout mLinearScrollSecond[];
     String myContact;
     AlertDialog alert;
@@ -93,7 +92,7 @@ public class ReviewGroupQuotActivity extends AppCompatActivity implements Reques
         if (mConnectionDetector.isConnectedToInternet()) {
             dialog.show();
             ApiCall apiCall = new ApiCall(this, this);
-            apiCall.GetReviewQuot(mQuotationOtherID);
+            apiCall.GetReviewReplyQuot(mQuotationOtherID);
         } else {
             CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
         }
@@ -131,13 +130,13 @@ public class ReviewGroupQuotActivity extends AppCompatActivity implements Reques
                         message.setReviewQuoteId(message.getReviewQuoteId());
                         message.setReviewString(message.getReviewString());
                         message.setSenderContact(message.getSenderContact());
-                        message.setCreatedDate1(message.getCreatedDate1());
+                        message.setCreatedDate(message.getCreatedDate());
                         message.setCustomerName(message.getCustomerName());
                         message.setCustomerPic(message.getCustomerPic());
 
                         for (GetReviewQuotResponse.Success.ReplayMessage objectmatch : object.getReplayMessage()) {
                             if (message.getReviewQuoteId().equals(objectmatch.getReviewQuoteId())) {
-                                objectmatch.setCreatedDate1(objectmatch.getCreatedDate1());
+                                objectmatch.setCreatedDate(objectmatch.getCreatedDate());
                                 objectmatch.setReplyQuoteId(objectmatch.getReviewQuoteId());
                                 objectmatch.setSenderContact(objectmatch.getSenderContact());
                                 objectmatch.setReplayString(objectmatch.getReplayString());
@@ -205,7 +204,7 @@ public class ReviewGroupQuotActivity extends AppCompatActivity implements Reques
                             DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy hh:mm a", Locale.getDefault());
                             outputFormat.setTimeZone(utc);
 
-                            Date date = inputFormat.parse(reviewList.get(i).getCreatedDate1());
+                            Date date = inputFormat.parse(reviewList.get(i).getCreatedDate());
                             String output = outputFormat.format(date);
                             dateNtime.setText(reviewList.get(i).getCustomerName() + " " + output);
                         } catch (Exception e) {
@@ -278,7 +277,7 @@ public class ReviewGroupQuotActivity extends AppCompatActivity implements Reques
                                 DateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy hh:mm a", Locale.getDefault());
                                 outputFormat.setTimeZone(utc);
 
-                                Date date = inputFormat.parse(reviewList.get(i).getReplayMessage().get(j).getCreatedDate1());
+                                Date date = inputFormat.parse(reviewList.get(i).getReplayMessage().get(j).getCreatedDate());
                                 String output = outputFormat.format(date);
                                 repdateNtime.setText(reviewList.get(i).getReplayMessage().get(j).getCustomerName() + " replied " + output);
                             } catch (Exception e) {
@@ -388,9 +387,25 @@ public class ReviewGroupQuotActivity extends AppCompatActivity implements Reques
             dialog.dismiss();
         }
         if (str != null) {
-            if (str.equals("sent_reply")) {
+            if (str.equals("sent_review")) {
+                if (dialog.isShowing()) {
+                    dialog.dismiss();
+                }
                 Log.i("str", "->" + str);
+                CustomToast.customToast(ReviewGroupQuotActivity.this, "Review sent");
+            } else if (str.equals("sent_reply")) {
+                if (dialog.isShowing()) {
+                    dialog.dismiss();
+                }
+                Log.i("str", "->" + str);
+                CustomToast.customToast(ReviewGroupQuotActivity.this, "Reply sent");
+                getQuotReviewReply(mQuotationOtherID);
             }
+
+            finish();
+            Intent intent = new Intent(ReviewGroupQuotActivity.this, ReviewGroupQuotActivity.class);
+            intent.putExtra("QuotationOtherid", mQuotationOtherID);
+            startActivity(intent);
         }
     }
 }

@@ -8759,7 +8759,7 @@ get ExchangeMela Analytics Data
     }
 
     //get quotation review & reply List
-    public void GetReviewQuot(int mQuotationOtherID) {
+    public void GetReviewReplyQuot(int mQuotationOtherID) {
         try {
             if (mConnectionDetector.isConnectedToInternet()) {
                 Retrofit retrofit = new Retrofit.Builder()
@@ -8769,7 +8769,7 @@ get ExchangeMela Analytics Data
                         .build();
 
                 ServiceApi serviceApi = retrofit.create(ServiceApi.class);
-                Call<GetReviewQuotResponse> mQuotationCall = serviceApi._autokattaGetReviewQuot(mQuotationOtherID);
+                Call<GetReviewQuotResponse> mQuotationCall = serviceApi._autokattaGetReviewReplyQuot(mQuotationOtherID);
                 mQuotationCall.enqueue(new Callback<GetReviewQuotResponse>() {
                     @Override
                     public void onResponse(Call<GetReviewQuotResponse> call, Response<GetReviewQuotResponse> response) {

@@ -65,24 +65,27 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/upadateimg"
-            android:layout_centerHorizontal="true">
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="5dp">
 
             <Button
                 android:id="@+id/btnsend"
-                android:layout_width="50dp"
-                android:layout_height="40dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:background="@drawable/buttonback"
+                android:padding="5dp"
                 android:text="Send"
                 android:textAllCaps="false"
                 android:textColor="@color/white" />
 
             <Button
                 android:id="@+id/btncancel"
-                android:layout_width="50dp"
-                android:layout_height="40dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_toEndOf="@+id/btnsend"
                 android:background="@drawable/buttonback"
+                android:padding="5dp"
                 android:text="@string/cancel"
                 android:textAllCaps="false"
                 android:textColor="@color/white" />

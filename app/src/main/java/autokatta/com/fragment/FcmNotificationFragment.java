@@ -40,7 +40,7 @@ import static android.content.Context.MODE_PRIVATE;
  * Created by ak-001 on 20/11/17.
  */
 
-public class NotificationFragment extends Fragment implements RequestNotifier, SwipeRefreshLayout.OnRefreshListener {
+public class FcmNotificationFragment extends Fragment implements RequestNotifier, SwipeRefreshLayout.OnRefreshListener {
     View mNotificationView;
     RecyclerView mRecyclerView;
     SwipeRefreshLayout mSwipeRefreshLayout;
@@ -51,7 +51,7 @@ public class NotificationFragment extends Fragment implements RequestNotifier, S
     ConnectionDetector mConnectionDetector;
     List<GetFCMNotificationResponse.Success.FCMNotification> mFcmNotiList = new ArrayList<>();
 
-    public NotificationFragment() {
+    public FcmNotificationFragment() {
         //Empty Constuctor
     }
 

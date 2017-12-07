@@ -1355,8 +1355,8 @@ public interface ServiceApi {
     Call<MyVehicleQuotationListResponse> _autokattaGetQuotationByOthers(@Query("Quotationid") int Quotationid);
 
     //Get review quot
-    @GET("GetReviewQuot")
-    Call<GetReviewQuotResponse> _autokattaGetReviewQuot(@Query("QuotationOtherID") int mQuotationOtherID);
+    @GET("GetReviewReplyQuot")
+    Call<GetReviewQuotResponse> _autokattaGetReviewReplyQuot(@Query("QuotationOtherID") int mQuotationOtherID);
 
 
     //Get vehicle qoutation list
