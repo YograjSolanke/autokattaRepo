@@ -1479,6 +1479,8 @@ public class MyUploadedVehicleAdapter extends RecyclerView.Adapter<RecyclerView.
                 mMainList = (List<MyUploadedVehiclesResponse.Success>) filterResults.values;
                 MyUploadedVehicleAdapter.this.notifyDataSetChanged();
             } else {
+                mMainList = (List<MyUploadedVehiclesResponse.Success>) filterResults.values;
+                MyUploadedVehicleAdapter.this.notifyDataSetChanged();
                 Toast.makeText(activity, "No record found", Toast.LENGTH_SHORT).show();
                 Log.i("Error", "->");
             }

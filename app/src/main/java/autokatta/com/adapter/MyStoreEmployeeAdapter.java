@@ -4,11 +4,15 @@ import android.Manifest;
 import android.app.Activity;
 import android.app.ActivityOptions;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AlertDialog.Builder;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -131,12 +135,28 @@ public class MyStoreEmployeeAdapter extends RecyclerView.Adapter<RecyclerView.Vi
                 if (yoHolder.mRemove.getText().equals("Removed"))
                     CustomToast.customToast(mActivity, "Already Deleted");
                 else {
-                    int emp_id = mEmpList.get(holder.getAdapterPosition()).getStoreEmplyeeID();
-                    deleteEmployee(emp_id);
 
-                    yoHolder.mRemove.setText("Removed");
-                    mEmpList.get(yoHolder.getAdapterPosition()).setDeleteStatus("Yes");
-                    notifyDataSetChanged();
+                    final AlertDialog.Builder alertDialog=new Builder(mActivity);
+                    alertDialog.setTitle("Confirm Delete");
+                    alertDialog.setNegativeButton("No", new OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+
+                        }
+                    });
+
+                    alertDialog.setPositiveButton("Yes", new OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            int emp_id = mEmpList.get(holder.getAdapterPosition()).getStoreEmplyeeID();
+                            deleteEmployee(emp_id);
+
+                            yoHolder.mRemove.setText("Removed");
+                            mEmpList.get(yoHolder.getAdapterPosition()).setDeleteStatus("Yes");
+                            notifyDataSetChanged();
+                        }
+                    });
+
                 }
             }
         });

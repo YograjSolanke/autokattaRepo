@@ -8,7 +8,7 @@
     tools:context="autokatta.com.view.StoreNewVehicleActiviy"
     tools:showIn="@layout/activity_store_new_vehicle_activiy">
 
-    <TextView
+  <!--  <TextView
         android:id="@+id/titleText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -18,7 +18,7 @@
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="15sp"
-        android:textStyle="bold" />
+        android:textStyle="bold" />-->
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefreshLayout"

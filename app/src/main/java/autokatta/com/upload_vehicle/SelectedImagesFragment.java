@@ -72,7 +72,7 @@ public class SelectedImagesFragment extends Fragment implements View.OnClickList
         Log.i("call in image", String.valueOf(call));
 
         if (call == 3) {
-
+            allimg="";
             int a = b.getInt("number", 0);
             String newpath = b.getString("newpath");
             Log.i("path on back", newpath);
