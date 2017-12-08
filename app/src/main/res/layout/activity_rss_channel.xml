@@ -7,6 +7,13 @@
     <ListView
         android:id="@+id/rssChannelListView"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"></ListView>
+        android:layout_height="wrap_content" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/wall_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#E6E6E6"
+        android:scrollbars="vertical" />
 
 </LinearLayout>
