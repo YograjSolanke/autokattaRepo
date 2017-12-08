@@ -51,13 +51,6 @@
       <sourceFolder url="file://$MODULE_DIR$/src/debug/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/debug/rs" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/debug/shaders" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/androidTestDebug/res" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/androidTestDebug/resources" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/androidTestDebug/assets" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/androidTestDebug/aidl" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/androidTestDebug/java" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/androidTestDebug/rs" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/androidTestDebug/shaders" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/testDebug/res" type="java-test-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/testDebug/resources" type="java-test-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/testDebug/assets" type="java-test-resource" />
@@ -65,6 +58,13 @@
       <sourceFolder url="file://$MODULE_DIR$/src/testDebug/java" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/testDebug/rs" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/testDebug/shaders" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/androidTestDebug/res" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/androidTestDebug/resources" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/androidTestDebug/assets" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/androidTestDebug/aidl" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/androidTestDebug/java" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/androidTestDebug/rs" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/androidTestDebug/shaders" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/main/res" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/main/resources" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/main/assets" type="java-resource" />
@@ -93,7 +93,6 @@
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/incremental" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/javaPrecompile" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/jniLibs" />
-      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/lint" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/manifests" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/multi-dex" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/prebuild" />
@@ -107,86 +106,86 @@
       <excludeFolder url="file://$MODULE_DIR$/build/outputs" />
       <excludeFolder url="file://$MODULE_DIR$/build/tmp" />
     </content>
-    <orderEntry type="jdk" jdkName="Android API 25 Platform (2)" jdkType="Android SDK" />
+    <orderEntry type="jdk" jdkName="Android API 25 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="com.android.support:multidex-1.0.2" level="project" />
     <orderEntry type="library" name="com.crashlytics.sdk.android:answers-1.3.12" level="project" />
     <orderEntry type="library" scope="TEST" name="com.android.support.test:exposed-instrumentation-api-publish-0.5" level="project" />
-    <orderEntry type="library" scope="TEST" name="com.android.support:multidex-1.0.1" level="project" />
     <orderEntry type="library" name="com.heinrichreimersoftware:material-intro-1.6" level="project" />
     <orderEntry type="library" name="com.google.android.gms:play-services-base-9.6.1" level="project" />
-    <orderEntry type="library" name="com.squareup.okio:okio:1.8.0@jar" level="project" />
     <orderEntry type="library" name="com.daimajia.slider:library-1.1.5" level="project" />
     <orderEntry type="library" name="com.crashlytics.sdk.android:beta-1.2.4" level="project" />
     <orderEntry type="library" name="com.github.iammert:MaterialIntroView-1.6.0" level="project" />
-    <orderEntry type="library" name="com.squareup.okhttp:okhttp:2.5.0@jar" level="project" />
-    <orderEntry type="library" name="com.android.support:cardview-v7-25.3.0" level="project" />
-    <orderEntry type="library" name="com.android.support:support-compat-25.3.0" level="project" />
     <orderEntry type="library" scope="TEST" name="com.squareup:javawriter:2.1.1@jar" level="project" />
-    <orderEntry type="library" name="com.android.support:support-core-ui-25.3.0" level="project" />
     <orderEntry type="library" name="com.google.android.gms:play-services-basement-9.6.1" level="project" />
     <orderEntry type="library" name="com.nineoldandroids:library:2.4.0@jar" level="project" />
     <orderEntry type="library" name="io.fabric.sdk.android:fabric-1.3.16" level="project" />
-    <orderEntry type="library" name="com.android.support:support-media-compat-25.3.0" level="project" />
     <orderEntry type="library" name="com.google.firebase:firebase-core-9.6.1" level="project" />
     <orderEntry type="library" name="com.google.firebase:firebase-iid-9.6.1" level="project" />
     <orderEntry type="library" name="com.android.support.constraint:constraint-layout-1.0.1" level="project" />
     <orderEntry type="library" name="jp.wasabeef:glide-transformations-2.0.1" level="project" />
-    <orderEntry type="library" name="com.android.support:support-v4-25.3.0" level="project" />
     <orderEntry type="library" name="com.github.paolorotolo:appintro-3.3.0" level="project" />
-    <orderEntry type="library" name="com.squareup.okhttp3:logging-interceptor:3.3.1@jar" level="project" />
-    <orderEntry type="library" name="com.squareup.okhttp3:okhttp:3.3.1@jar" level="project" />
+    <orderEntry type="library" name="com.android.support:support-fragment-25.4.0" level="project" />
     <orderEntry type="library" scope="TEST" name="com.google.code.findbugs:jsr305:2.0.1@jar" level="project" />
     <orderEntry type="library" name="me.gujun.android.taggroup:library-1.4" level="project" />
     <orderEntry type="library" scope="TEST" name="org.hamcrest:hamcrest-core:1.3@jar" level="project" />
     <orderEntry type="library" scope="TEST" name="com.android.support.test.espresso:espresso-core-2.2.2" level="project" />
-    <orderEntry type="library" name="com.android.support:design-25.3.0" level="project" />
+    <orderEntry type="library" name="com.squareup.retrofit2:converter-gson:2.2.0@jar" level="project" />
+    <orderEntry type="library" name="com.android.support:animated-vector-drawable-25.4.0" level="project" />
     <orderEntry type="library" scope="TEST" name="com.android.support.test:rules-0.5" level="project" />
     <orderEntry type="library" name="com.google.android.gms:play-services-tasks-9.6.1" level="project" />
     <orderEntry type="library" scope="TEST" name="org.hamcrest:hamcrest-integration:1.3@jar" level="project" />
     <orderEntry type="library" name="com.google.firebase:firebase-common-9.6.1" level="project" />
-    <orderEntry type="library" name="com.android.support:transition-25.3.0" level="project" />
+    <orderEntry type="library" name="com.android.support:appcompat-v7-25.4.0" level="project" />
     <orderEntry type="library" name="com.android.support.constraint:constraint-layout-solver:1.0.1@jar" level="project" />
     <orderEntry type="library" name="com.google.firebase:firebase-analytics-9.6.1" level="project" />
     <orderEntry type="library" scope="TEST" name="com.android.support:multidex-instrumentation-1.0.2" level="project" />
     <orderEntry type="library" scope="TEST" name="com.android.support.test.espresso:espresso-idling-resource-2.2.2" level="project" />
     <orderEntry type="library" name="com.squareup.picasso:picasso:2.5.2@jar" level="project" />
     <orderEntry type="library" scope="TEST" name="javax.annotation:javax.annotation-api:1.2@jar" level="project" />
-    <orderEntry type="library" name="com.android.support:support-vector-drawable-25.3.0" level="project" />
-    <orderEntry type="library" name="com.android.support:recyclerview-v7-25.3.0" level="project" />
+    <orderEntry type="library" name="com.squareup.retrofit2:retrofit:2.2.0@jar" level="project" />
     <orderEntry type="library" name="com.google.firebase:firebase-config-9.6.1" level="project" />
     <orderEntry type="library" name="com.github.clans:fab-1.6.4" level="project" />
     <orderEntry type="library" name="com.github.nguyenhoanglam:ImagePicker-1.1.3" level="project" />
     <orderEntry type="library" name="com.google.android:flexbox-0.2.5" level="project" />
     <orderEntry type="library" scope="TEST" name="junit:junit:4.12@jar" level="project" />
+    <orderEntry type="library" name="com.squareup.okhttp3:logging-interceptor:3.6.0@jar" level="project" />
     <orderEntry type="library" name="com.journeyapps:zxing-android-embedded-3.4.0" level="project" />
     <orderEntry type="library" name="com.google.zxing:core:3.2.1@jar" level="project" />
+    <orderEntry type="library" name="com.android.support:cardview-v7-25.4.0" level="project" />
     <orderEntry type="library" name="com.allattentionhere:autoplayvideos-0.1.6" level="project" />
     <orderEntry type="library" scope="TEST" name="javax.inject:javax.inject:1@jar" level="project" />
+    <orderEntry type="library" name="com.android.support:support-core-ui-25.4.0" level="project" />
     <orderEntry type="library" name="com.codemybrainsout.onboarding:onboarder-1.0.3" level="project" />
+    <orderEntry type="library" name="com.android.support:support-compat-25.4.0" level="project" />
+    <orderEntry type="library" name="com.squareup.okhttp3:okhttp:3.8.1@jar" level="project" />
     <orderEntry type="library" name="com.google.firebase:firebase-analytics-impl-9.6.1" level="project" />
     <orderEntry type="library" name="com.android.volley:volley-1.0.0" level="project" />
-    <orderEntry type="library" name="com.squareup.retrofit2:converter-gson:2.0.2@jar" level="project" />
     <orderEntry type="library" name="com.google.android.gms:play-services-appindexing-9.6.1" level="project" />
+    <orderEntry type="library" name="com.android.support:support-annotations:25.4.0@jar" level="project" />
+    <orderEntry type="library" name="com.android.support:support-core-utils-25.4.0" level="project" />
+    <orderEntry type="library" name="com.google.code.gson:gson:2.7@jar" level="project" />
+    <orderEntry type="library" name="com.squareup.okio:okio:1.13.0@jar" level="project" />
     <orderEntry type="library" name="com.github.fiskurgit:ChipCloud-3.0.3" level="project" />
-    <orderEntry type="library" name="com.android.support:support-fragment-25.3.0" level="project" />
+    <orderEntry type="library" name="com.android.support:support-v4-25.4.0" level="project" />
     <orderEntry type="library" name="com.mcxiaoke.photoview:library:1.2.3@jar" level="project" />
+    <orderEntry type="library" name="com.android.support:support-media-compat-25.4.0" level="project" />
     <orderEntry type="library" name="com.google.android.gms:play-services-location-9.6.1" level="project" />
-    <orderEntry type="library" name="com.android.support:animated-vector-drawable-25.3.0" level="project" />
-    <orderEntry type="library" name="com.android.support:support-core-utils-25.3.0" level="project" />
+    <orderEntry type="library" name="com.squareup.okhttp:okhttp:2.6.0@jar" level="project" />
     <orderEntry type="library" name="com.kaopiz:kprogresshud-1.0.5" level="project" />
-    <orderEntry type="library" name="com.squareup.retrofit2:retrofit:2.0.2@jar" level="project" />
+    <orderEntry type="library" name="com.android.support:design-25.4.0" level="project" />
+    <orderEntry type="library" name="com.android.support:transition-25.4.0" level="project" />
     <orderEntry type="library" scope="TEST" name="org.hamcrest:hamcrest-library:1.3@jar" level="project" />
-    <orderEntry type="library" name="com.android.support:appcompat-v7-25.3.0" level="project" />
     <orderEntry type="library" scope="TEST" name="com.android.support.test:runner-0.5" level="project" />
     <orderEntry type="library" name="com.crashlytics.sdk.android:crashlytics-2.6.7" level="project" />
     <orderEntry type="library" name="com.patryk1007:zoomviewpager-1.0" level="project" />
-    <orderEntry type="library" name="com.android.support:support-annotations:25.3.0@jar" level="project" />
     <orderEntry type="library" name="com.squareup.okhttp3:okhttp-urlconnection:3.2.0@jar" level="project" />
     <orderEntry type="library" name="com.google.android.gms:play-services-maps-9.6.1" level="project" />
     <orderEntry type="library" name="com.crashlytics.sdk.android:crashlytics-core-2.3.16" level="project" />
-    <orderEntry type="library" name="com.google.code.gson:gson:2.6.1@jar" level="project" />
+    <orderEntry type="library" name="com.android.support:support-vector-drawable-25.4.0" level="project" />
     <orderEntry type="library" name="com.google.firebase:firebase-messaging-9.6.1" level="project" />
+    <orderEntry type="library" name="com.android.support:recyclerview-v7-25.4.0" level="project" />
     <orderEntry type="library" name="com.github.bumptech.glide:glide:3.7.0@jar" level="project" />
+    <orderEntry type="library" name="org.apache.http.legacy-android-25" level="project" />
   </component>
 </module>
