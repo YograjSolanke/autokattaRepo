@@ -880,11 +880,14 @@
         <activity
             android:name=".fragment.GroupNotification"
             android:label="@string/title_activity_my_store_employee" />
-        <activity android:name=".view.ManualEnquiryMainActivity"></activity>
-        <activity android:name=".view.ShareEnquiryActivity"></activity>
-        <activity android:name=".groups.ReviewGroupQuotActivity"></activity>
-        <activity android:name=".view.TransferEnquiryRequestActivity">
-        </activity>
+        <activity android:name=".view.ManualEnquiryMainActivity" />
+        <activity android:name=".view.ShareEnquiryActivity" />
+        <activity android:name=".groups.ReviewGroupQuotActivity" />
+        <activity android:name=".view.TransferEnquiryRequestActivity"></activity>
+        <activity
+            android:name=".view.RecentVisitsActivity"
+            android:label="@string/title_activity_recent_visits"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

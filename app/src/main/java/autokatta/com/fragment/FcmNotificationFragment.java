@@ -200,19 +200,19 @@ public class FcmNotificationFragment extends Fragment implements RequestNotifier
         mSwipeRefreshLayout.setRefreshing(false);
         if (error instanceof SocketTimeoutException) {
             if (isAdded())
-                CustomToast.customToast(getActivity(), getString(R.string._404_));
+                CustomToast.customToast(getActivity(), getActivity().getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
             if (isAdded())
-                CustomToast.customToast(getActivity(), getString(R.string.no_response));
+                CustomToast.customToast(getActivity(), getActivity().getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
             if (isAdded())
-                CustomToast.customToast(getActivity(), getString(R.string.no_response));
+                CustomToast.customToast(getActivity(), getActivity().getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
             if (isAdded())
-                CustomToast.customToast(getActivity(), getString(R.string.no_internet));
+                CustomToast.customToast(getActivity(), getActivity().getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
             if (isAdded())
-                CustomToast.customToast(getActivity(), getString(R.string.no_internet));
+                CustomToast.customToast(getActivity(), getActivity().getString(R.string.no_internet));
         } else {
             Log.i("Check Class-", "Notification Fragment");
             error.printStackTrace();

@@ -1,16 +1,15 @@
-package autokatta.com.fragment;
+package autokatta.com.view;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.net.ConnectException;
@@ -34,49 +33,39 @@ import autokatta.com.other.VerticalLineDecorator;
 import autokatta.com.response.GetMyRecentVisitsResponse;
 import retrofit2.Response;
 
-import static android.content.Context.MODE_PRIVATE;
+public class RecentVisitsActivity extends AppCompatActivity implements RequestNotifier, SwipeRefreshLayout.OnRefreshListener {
 
-/**
- * Created by ak-003 on 7/12/17.
- */
-
-public class RecentVisitsFragment extends Fragment implements RequestNotifier, SwipeRefreshLayout.OnRefreshListener {
-    View mRecentView;
     RecyclerView mRecyclerView;
     SwipeRefreshLayout mSwipeRefreshLayout;
     TextView mNoData;
-    boolean hasViewCreated = false;
     private String mLoginContact = "";
     ConnectionDetector mConnectionDetector;
     List<GetMyRecentVisitsResponse.Success.MyRecentVisit> mRecentVisitList = new ArrayList<>();
 
-    public RecentVisitsFragment() {
-        //Empty Constuctor
-    }
-
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mRecentView = inflater.inflate(R.layout.fragment_notification, container, false);
-        return mRecentView;
-    }
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_recent_visits);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+        setTitle("My Recent Visits");
 
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-        getActivity().runOnUiThread(new Runnable() {
+        this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                mLoginContact = getActivity().getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).
+                mLoginContact = getSharedPreferences(getString(R.string.my_preference), MODE_PRIVATE).
                         getString("loginContact", "");
-                mNoData = (TextView) mRecentView.findViewById(R.id.no_category);
+                mNoData = (TextView) findViewById(R.id.no_category);
 
-                mRecyclerView = (RecyclerView) mRecentView.findViewById(R.id.recycler_view);
-                mSwipeRefreshLayout = (SwipeRefreshLayout) mRecentView.findViewById(R.id.swipeRefreshLayout);
+                mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+                mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);
 
                 mRecyclerView.setHasFixedSize(true);
-                LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
+                LinearLayoutManager mLayoutManager = new LinearLayoutManager(RecentVisitsActivity.this);
                 /*code to ascending or descending list*/
                 mLayoutManager.setReverseLayout(false);
                 mLayoutManager.setStackFromEnd(false);
@@ -102,19 +91,8 @@ public class RecentVisitsFragment extends Fragment implements RequestNotifier, S
 
     }
 
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        if (this.isVisible()) {
-            if (isVisibleToUser && !hasViewCreated) {
-                getRecentVisitsData();
-                hasViewCreated = true;
-            }
-        }
-    }
-
     private void getRecentVisitsData() {
-        ApiCall mApiCall = new ApiCall(getActivity(), this);
+        ApiCall mApiCall = new ApiCall(this, this);
         mApiCall.GetMyRecentVisits(mLoginContact);
     }
 
@@ -203,7 +181,7 @@ public class RecentVisitsFragment extends Fragment implements RequestNotifier, S
 
                     }
 
-                    RecentVisitsAdapter mAdapter = new RecentVisitsAdapter(getActivity(), mRecentVisitList, mLoginContact);
+                    RecentVisitsAdapter mAdapter = new RecentVisitsAdapter(RecentVisitsActivity.this, mRecentVisitList, mLoginContact);
                     mRecyclerView.setAdapter(mAdapter);
                     mAdapter.notifyDataSetChanged();
 
@@ -219,8 +197,7 @@ public class RecentVisitsFragment extends Fragment implements RequestNotifier, S
 
         } else {
             mSwipeRefreshLayout.setRefreshing(false);
-            if (isAdded())
-                CustomToast.customToast(getActivity(), getActivity().getString(R.string.no_internet));
+            CustomToast.customToast(RecentVisitsActivity.this, getString(R.string.no_internet));
         }
 
     }
@@ -230,22 +207,17 @@ public class RecentVisitsFragment extends Fragment implements RequestNotifier, S
 
         mSwipeRefreshLayout.setRefreshing(false);
         if (error instanceof SocketTimeoutException) {
-            if (isAdded())
-                CustomToast.customToast(getActivity(), getString(R.string._404_));
+            CustomToast.customToast(RecentVisitsActivity.this, getString(R.string._404_));
         } else if (error instanceof NullPointerException) {
-            if (isAdded())
-                CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            CustomToast.customToast(RecentVisitsActivity.this, getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            if (isAdded())
-                CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            CustomToast.customToast(RecentVisitsActivity.this, getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
-            if (isAdded())
-                CustomToast.customToast(getActivity(), getString(R.string.no_internet));
+            CustomToast.customToast(RecentVisitsActivity.this, getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
-            if (isAdded())
-                CustomToast.customToast(getActivity(), getString(R.string.no_internet));
+            CustomToast.customToast(RecentVisitsActivity.this, getString(R.string.no_internet));
         } else {
-            Log.i("Check Class-", "RecentVisitsFragment");
+            Log.i("Check Class-", "RecentVisitsActivity");
             error.printStackTrace();
         }
 
@@ -255,4 +227,23 @@ public class RecentVisitsFragment extends Fragment implements RequestNotifier, S
     public void notifyString(String str) {
 
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+        overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
+    }
+
 }

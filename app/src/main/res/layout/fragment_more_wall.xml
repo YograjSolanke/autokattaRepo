@@ -83,5 +83,30 @@
 
         </RelativeLayout>
 
+        <RelativeLayout
+            android:id="@+id/relative4"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/image4"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:contentDescription="@string/app_name"
+                android:padding="@dimen/margin_small"
+                android:scaleType="fitXY"
+                android:src="@drawable/demo_group" />
+
+            <TextView
+                android:id="@+id/name4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/image4"
+                android:padding="@dimen/text_layout"
+                android:text="My Recent Visits"
+                android:textStyle="bold" />
+
+        </RelativeLayout>
+
     </LinearLayout>
 </android.support.v4.widget.NestedScrollView>
