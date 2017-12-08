@@ -58,6 +58,7 @@
             android:layout_alignTop="@+id/category"
             android:layout_marginStart="10dp"
             android:layout_toEndOf="@+id/category"
+            android:layout_toStartOf="@+id/count"
             android:text="@string/app_name"
             android:textSize="14sp" />
 

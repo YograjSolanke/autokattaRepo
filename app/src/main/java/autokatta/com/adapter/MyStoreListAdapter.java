@@ -154,6 +154,14 @@ public class MyStoreListAdapter extends RecyclerView.Adapter<MyStoreListAdapter.
             holder.stwebsite.setText(mStoreList.get(position).getWebsite());
         }
 
+        if (mStoreList.get(holder.getAdapterPosition()).getRole().equalsIgnoreCase("Owner"))
+        {
+            holder.storedelete.setVisibility(View.VISIBLE);
+        }else
+        {
+            holder.storedelete.setVisibility(View.GONE);
+        }
+
       //  holder.stname.setTypeface(tf);
         holder.stlocation.setTypeface(tf);
         holder.stwebsite.setTypeface(tf);

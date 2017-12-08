@@ -11,7 +11,6 @@ import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -21,6 +20,7 @@ import java.util.List;
 
 import autokatta.com.R;
 import autokatta.com.interfaces.ItemClickListener;
+import autokatta.com.other.CustomToast;
 import autokatta.com.request.ManualEnquiryRequest;
 
 /**
@@ -388,7 +388,9 @@ public class ManualEnquiryAdapter extends RecyclerView.Adapter<RecyclerView.View
                 mItemList = (List<ManualEnquiryRequest>) filterResults.values;
                 ManualEnquiryAdapter.this.notifyDataSetChanged();
             } else {
-                Toast.makeText(mActivity, "No record found", Toast.LENGTH_SHORT).show();
+                mItemList = (List<ManualEnquiryRequest>) filterResults.values;
+                ManualEnquiryAdapter.this.notifyDataSetChanged();
+                CustomToast.customToast(mActivity, "No record found");
                 Log.i("Error", "->");
             }
         }

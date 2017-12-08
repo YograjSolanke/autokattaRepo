@@ -303,7 +303,7 @@ public class SearchVehicleActivity extends AppCompatActivity implements MultiSel
 
             ArrayAdapter<String> adapter1 =
                     new ArrayAdapter<>(getApplicationContext(), R.layout.registration_spinner, mList1);
-            adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+               adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             brandSpinner.setAdapter(adapter1);
 
             ArrayAdapter<String> adapter2 =

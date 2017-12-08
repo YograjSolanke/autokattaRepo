@@ -467,6 +467,8 @@ public class AddProductActivity extends AppCompatActivity implements RequestNoti
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_CODE_PICKER && resultCode == RESULT_OK && data != null) {
+            allimg="";
+            allimgpath="";
             mImages = data.getParcelableArrayListExtra(ImagePickerActivity.INTENT_EXTRA_SELECTED_IMAGES);
             StringBuilder sb = new StringBuilder();
             List<String> addData = new ArrayList<>();
