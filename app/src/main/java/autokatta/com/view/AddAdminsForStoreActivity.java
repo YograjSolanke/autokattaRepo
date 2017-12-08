@@ -22,7 +22,6 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import java.io.File;
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
@@ -34,18 +33,12 @@ import autokatta.com.apicall.ApiCall;
 import autokatta.com.database.DbConstants;
 import autokatta.com.database.DbOperation;
 import autokatta.com.interfaces.RequestNotifier;
-import autokatta.com.interfaces.ServiceApi;
 import autokatta.com.networkreceiver.ConnectionDetector;
 import autokatta.com.other.CustomToast;
 import autokatta.com.register.InvitationCompanyBased;
 import autokatta.com.response.CreateStoreResponse;
 import autokatta.com.response.Db_AutokattaContactResponse;
 import autokatta.com.response.StoreOldAdminResponse;
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
-import retrofit2.Call;
-import retrofit2.Callback;
 import retrofit2.Response;
 
 import static autokatta.com.database.DbConstants.userName;
@@ -62,19 +55,15 @@ public class AddAdminsForStoreActivity extends AppCompatActivity implements Requ
 
     RelativeLayout btnlayout;
     EditText inputSearch;
-    String callFrom, storetype;
+    String callFrom;
     int store_id;
-    String finaladmins = "",bundlemediapath,bundlecovermediapath;
+    String finaladmins = "", bundlemediapath, bundlecovermediapath;
     ArrayList<String> alreadyAdmin = new ArrayList<>();
     ApiCall apiCall;
     ConnectionDetector mTestConnection;
     private ProgressDialog dialog;
-
-
-
     String bundlestorename, bundlecontact, bundlelocation, bundlewebsite, bundlestoretype, bundlelastword,
             bundleworkdays, bundleopen, bundleclose, bundlecategory, bundleaddress, bundlecoverlastword, bundlestoredesc, bundlebrandtags;
-
     DbOperation dbOperation;
 
     @Override
@@ -87,12 +76,11 @@ public class AddAdminsForStoreActivity extends AppCompatActivity implements Requ
             getSupportActionBar().setHomeButtonEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
+        setTitle("Add Admin");
         dialog = new ProgressDialog(this);
         dialog.setMessage("Loading...");
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setVisibility(View.GONE);
-
-
         mRecyclerView = (RecyclerView) findViewById(R.id.l1);
         btnlayout = (RelativeLayout) findViewById(R.id.btnrelative);
         ok = (Button) findViewById(R.id.ok);
@@ -102,7 +90,6 @@ public class AddAdminsForStoreActivity extends AppCompatActivity implements Requ
         noContacts = (TextView) findViewById(R.id.textview);
         inputSearch.setVisibility(View.GONE);
         mTestConnection = new ConnectionDetector(this);
-
         mRecyclerView.setHasFixedSize(true);
         LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(this);
         mLinearLayoutManager.setReverseLayout(true);
@@ -111,15 +98,11 @@ public class AddAdminsForStoreActivity extends AppCompatActivity implements Requ
         //Set animation attribute to each item
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
-
         apiCall = new ApiCall(this, this);
         dbOperation = new DbOperation(this);
 
         try {
             if (getIntent().getExtras() != null) {
-                //     store_id = getIntent().getExtras().getInt("store_id");
-                //     callFrom = getIntent().getExtras().getString("call");
-
                 bundlestorename = getIntent().getExtras().getString("storename", "");
                 bundlecontact = getIntent().getExtras().getString("contact", "");
                 bundlelocation = getIntent().getExtras().getString("location", "");
@@ -138,8 +121,6 @@ public class AddAdminsForStoreActivity extends AppCompatActivity implements Requ
                 callFrom = getIntent().getExtras().getString("callFrom", "");
                 bundlemediapath = getIntent().getExtras().getString("mediapath", "");
                 bundlecovermediapath = getIntent().getExtras().getString("mediaPath1", "");
-
-
                 if (callFrom.equalsIgnoreCase("StoreViewActivity")) {
                     store_id = getIntent().getExtras().getInt("store_id");
                 }
@@ -176,29 +157,17 @@ public class AddAdminsForStoreActivity extends AppCompatActivity implements Requ
             @Override
             public void onClick(View v) {
                 Bundle b = new Bundle();
-                //  b.putString("action", "main");
                 b.putInt("store_id", store_id);
                 b.putString("flow_tab_name", "adminMore");
-            //    if (!callFrom.equalsIgnoreCase("interestbased")) {
-                    if (callFrom.equalsIgnoreCase("StoreViewActivity"))
-                    {
-                        updateStore(bundlestorename, store_id, bundlelocation, bundlewebsite,
-                                bundleopen, bundleclose, bundlelastword, bundlecategory, bundleworkdays, bundlestoredesc, bundlestoretype, bundleaddress,
-                                bundlecoverlastword, bundlebrandtags, "");
-                    }else if (callFrom.equalsIgnoreCase("createnewstore"))
-                    {
-                        createStore(bundlestorename, bundlecontact, bundlelocation, bundlewebsite, bundlestoretype, bundlelastword, bundleworkdays,
-                                bundleopen, bundleclose, bundlecategory, bundleaddress, bundlecoverlastword, bundlestoredesc
-                                , bundlebrandtags, "");
-                    }
-
-                  /*  ActivityOptions options = ActivityOptions.makeCustomAnimation(AddAdminsForStoreActivity.this, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
-                    Intent intent = new Intent(AddAdminsForStoreActivity.this, StoreViewActivity.class);
-                    intent.putExtras(b);
-                    startActivity(intent, options.toBundle());
-                    finish();*/
-
-           //     }
+                if (callFrom.equalsIgnoreCase("StoreViewActivity")) {
+                    updateStore(bundlestorename, store_id, bundlelocation, bundlewebsite,
+                            bundleopen, bundleclose, bundlelastword, bundlecategory, bundleworkdays, bundlestoredesc, bundlestoretype, bundleaddress,
+                            bundlecoverlastword, bundlebrandtags, "");
+                } else if (callFrom.equalsIgnoreCase("createnewstore")) {
+                    createStore(bundlestorename, bundlecontact, bundlelocation, bundlewebsite, bundlestoretype, bundlelastword, bundleworkdays,
+                            bundleopen, bundleclose, bundlecategory, bundleaddress, bundlecoverlastword, bundlestoredesc
+                            , bundlebrandtags, "");
+                }
             }
         });
 
@@ -207,7 +176,6 @@ public class AddAdminsForStoreActivity extends AppCompatActivity implements Requ
             public void onClick(View v) {
                 boolean flag = false;
                 dialog.show();
-
                 for (int i = 0; i < StoreAdminAdapter.boxdata.size(); i++) {
                     if (!StoreAdminAdapter.boxdata.get(i).equalsIgnoreCase("0")) {
                         if (StoreAdminAdapter.isSave.get(i).equals(false)) {
@@ -222,31 +190,22 @@ public class AddAdminsForStoreActivity extends AppCompatActivity implements Requ
                             else
                                 finaladmins = finaladmins + "," + StoreAdminAdapter.boxdata.get(i);
                         }
-
                     }
                 }
 
                 if (!flag) {
-
                     if (!finaladmins.equals("")) {
-
-                        System.out.println("finalAdmins=====" + finaladmins);
-                       if (callFrom.equalsIgnoreCase("StoreViewActivity"))
-                       {
-                           updateStore(bundlestorename, store_id, bundlelocation, bundlewebsite,
-                                   bundleopen, bundleclose, bundlelastword, bundlecategory, bundleworkdays, bundlestoredesc, bundlestoretype, bundleaddress,
-                                   bundlecoverlastword, bundlebrandtags, "");
-                       }else if (callFrom.equalsIgnoreCase("createnewstore"))
-                       {
-                           createStore(bundlestorename, bundlecontact, bundlelocation, bundlewebsite, bundlestoretype, bundlelastword, bundleworkdays,
-                                   bundleopen, bundleclose, bundlecategory, bundleaddress, bundlecoverlastword, bundlestoredesc
-                                   , bundlebrandtags, "");
-                       }
-
-                      //  addStoreAdmins(store_id, finaladmins);
+                        if (callFrom.equalsIgnoreCase("StoreViewActivity")) {
+                            updateStore(bundlestorename, store_id, bundlelocation, bundlewebsite,
+                                    bundleopen, bundleclose, bundlelastword, bundlecategory, bundleworkdays, bundlestoredesc, bundlestoretype, bundleaddress,
+                                    bundlecoverlastword, bundlebrandtags, "");
+                        } else if (callFrom.equalsIgnoreCase("createnewstore")) {
+                            createStore(bundlestorename, bundlecontact, bundlelocation, bundlewebsite, bundlestoretype, bundlelastword, bundleworkdays,
+                                    bundleopen, bundleclose, bundlecategory, bundleaddress, bundlecoverlastword, bundlestoredesc
+                                    , bundlebrandtags, "");
+                        }
                     } else {
                         CustomToast.customToast(getApplicationContext(), "Please Select Atleast Single contact");
-
                     }
                 }
             }
@@ -283,22 +242,13 @@ public class AddAdminsForStoreActivity extends AppCompatActivity implements Requ
     public void notifySuccess(Response<?> response) {
         if (response != null) {
             if (response.isSuccessful()) {
-                /*
-                        Response to get store admins
-                 */
                 if (response.body() instanceof StoreOldAdminResponse) {
                     StoreOldAdminResponse adminResponse = (StoreOldAdminResponse) response.body();
                     if (!adminResponse.getSuccess().isEmpty()) {
                         for (StoreOldAdminResponse.Success success : adminResponse.getSuccess()) {
-                            // if(alreadyAdmin.equals(""))
                             alreadyAdmin.add(success.getAdmin());
-//                            else
-//                                alreadyAdmin=alreadyAdmin+","+success.getAdmin();
                         }
-
-                        System.out.println("alreadyadmin=" + alreadyAdmin);
-                    } /*else
-                        CustomToast.customToast(getActivity(), getString(R.string.no_response));*/
+                    }
                     if (alreadyAdmin.size() != 0)
                         adapter = new StoreAdminAdapter(this, contactdata, alreadyAdmin);
                     else {
@@ -311,17 +261,12 @@ public class AddAdminsForStoreActivity extends AppCompatActivity implements Requ
                     if (createStoreResponse.getSuccess() != null) {
                         store_id = createStoreResponse.getSuccess().getStoreID();
                         CustomToast.customToast(getApplicationContext(), "Store created");
-                        //uploadImage(bundlemediapath);
                         addStoreAdmins(store_id, finaladmins);
-                       // uploadImage1(bundlecovermediapath);
                         finish();
-
                     } else {
                         CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
                     }
                 }
-            } else {
-                //  CustomToast.customToast(getActivity(), getString(R.string._404_));
             }
         } else {
             CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
@@ -333,9 +278,9 @@ public class AddAdminsForStoreActivity extends AppCompatActivity implements Requ
         if (error instanceof SocketTimeoutException) {
             CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
         } else if (error instanceof NullPointerException) {
-            //  CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
         } else if (error instanceof ClassCastException) {
-            // CustomToast.customToast(getActivity(), getString(R.string.no_response));
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
         } else if (error instanceof ConnectException) {
             CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
         } else if (error instanceof UnknownHostException) {
@@ -352,61 +297,46 @@ public class AddAdminsForStoreActivity extends AppCompatActivity implements Requ
             if (str.startsWith("success")) {
                 Bundle b = new Bundle();
                 dialog.dismiss();
-                //  b.putString("action", "main");
                 b.putInt("store_id", store_id);
                 b.putString("flow_tab_name", "adminMore");
                 if (!callFrom.equalsIgnoreCase("interestbased")) {
                     finish();
                     Intent intent = new Intent(this, StoreViewActivity.class);
                     intent.putExtras(b);
-                    //intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                   intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intent);
-
-                } else {
-                    finish();
-                    ActivityOptions options = ActivityOptions.makeCustomAnimation(this, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
-                    Intent i = new Intent(this, InvitationCompanyBased.class);
-                    startActivity(i, options.toBundle());
-
-                }
-            }else if (str.equals("store_updated"))
-            {
-                CustomToast.customToast(getApplicationContext(),"store updated");
-             //   uploadImage(bundlemediapath);
-              //  uploadImage1(bundlecovermediapath);
-                addStoreAdmins(store_id, finaladmins);
-                finish();
-            }
-            else if (str.equals(""))
-            {
-                //this is called when there is no admin added means skippped from admin page
-
-                Bundle b = new Bundle();
-                dialog.dismiss();
-                //  b.putString("action", "main");
-                b.putInt("store_id", store_id);
-                b.putString("flow_tab_name", "adminMore");
-                if (!callFrom.equalsIgnoreCase("interestbased")) {
-                    finish();
-                    Intent intent = new Intent(this, StoreViewActivity.class);
-                    intent.putExtras(b);
-                    //intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
-
                 } else {
                     finish();
                     ActivityOptions options = ActivityOptions.makeCustomAnimation(this, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
                     Intent i = new Intent(this, InvitationCompanyBased.class);
                     startActivity(i, options.toBundle());
-
+                }
+            } else if (str.equals("store_updated")) {
+                CustomToast.customToast(getApplicationContext(), "store updated");
+                addStoreAdmins(store_id, finaladmins);
+                finish();
+            } else if (str.equals("")) {
+                //this is called when there is no admin added means skippped from admin page
+                Bundle b = new Bundle();
+                dialog.dismiss();
+                b.putInt("store_id", store_id);
+                b.putString("flow_tab_name", "adminMore");
+                if (!callFrom.equalsIgnoreCase("interestbased")) {
+                    finish();
+                    Intent intent = new Intent(this, StoreViewActivity.class);
+                    intent.putExtras(b);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                } else {
+                    finish();
+                    ActivityOptions options = ActivityOptions.makeCustomAnimation(this, R.anim.ok_left_to_right, R.anim.ok_right_to_left);
+                    Intent i = new Intent(this, InvitationCompanyBased.class);
+                    startActivity(i, options.toBundle());
                 }
             }
         } else {
-            CustomToast.customToast(getApplicationContext(),getString(R.string.no_response));
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_response));
         }
-
     }
 
     private void createStore(String name, String contact, String location, String website, String storetype, String lastWord,
@@ -415,26 +345,22 @@ public class AddAdminsForStoreActivity extends AppCompatActivity implements Requ
         if (mTestConnection.isConnectedToInternet()) {
             apiCall.CreateStore(name, contact, location, website, storetype, lastWord, workdays, open, close, category, address, coverlastWord,
                     storeDescription, textbrand, strBrandSpinner);
-        }else
-        {
+        } else {
             dialog.dismiss();
-            CustomToast.customToast(getApplicationContext(),getString(R.string.no_internet));
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
         }
     }
 
     private void updateStore(String name, int store_id, String location, String website, String stropen, String strclose,
                              String lastWord, String category, String workdays, String storeDescription, String storetype,
                              String address, String coverlastWord, String finalbrandtags, String strBrandSpinner) {
-       if (mTestConnection.isConnectedToInternet())
-       {
-           apiCall.updateStore(name, store_id, location, website, stropen, strclose, lastWord, category, workdays, storeDescription,
-                   storetype, address, coverlastWord, finalbrandtags, strBrandSpinner);
-       }else
-       {
-           dialog.dismiss();
-           CustomToast.customToast(getApplicationContext(),getString(R.string.no_internet));
-       }
-
+        if (mTestConnection.isConnectedToInternet()) {
+            apiCall.updateStore(name, store_id, location, website, stropen, strclose, lastWord, category, workdays, storeDescription,
+                    storetype, address, coverlastWord, finalbrandtags, strBrandSpinner);
+        } else {
+            dialog.dismiss();
+            CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
+        }
     }
 
 
@@ -455,35 +381,4 @@ public class AddAdminsForStoreActivity extends AppCompatActivity implements Requ
         finish();
         overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
     }
-
-    private void uploadImage(String picturePath) {
-        Log.i("PAth", "->" + picturePath);
-        //    /storage/emulated/0/DCIM/Camera/20170411_124425.jpg
-        //    /data/data/autokatta.com/files/androidlift/Autokatta9460.jpg
-        File file = new File(picturePath);
-        // Parsing any Media type file
-        RequestBody requestBody = RequestBody.create(MediaType.parse("*/*"), file);
-        MultipartBody.Part fileToUpload = MultipartBody.Part.createFormData("file", file.getName(), requestBody);
-        RequestBody filename = RequestBody.create(MediaType.parse("text/plain"), file.getName());
-
-        ServiceApi getResponse = ApiCall.getRetrofit().create(ServiceApi.class);
-        if (mTestConnection.isConnectedToInternet()) {
-            Call<String> call = getResponse.uploadStorePic(fileToUpload, filename);
-            call.enqueue(new Callback<String>() {
-                @Override
-                public void onResponse(Call<String> call, Response<String> response) {
-                    Log.i("image", "->" + response.body());
-                }
-
-                @Override
-                public void onFailure(Call<String> call, Throwable t) {
-
-                }
-            });
-        } else {
-            CustomToast.customToast(getApplicationContext(), getString(R.string.no_internet));
-        }
-    }
-
-
 }
