@@ -1032,5 +1032,7 @@
     <string name="title_activity_my_store_employee" translatable="false">MyStoreEmployeeActivity</string>
     <string name="app_update" translatable="false">New version is available to download. Downloading the latest update you will get the latest feature, improvements and bug fixes.</string>
 
+    <string name="recent_visit_message" translatable="false">Recently Visited the </string>
+
 
 </resources>

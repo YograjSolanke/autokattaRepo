@@ -1622,4 +1622,8 @@ public interface ServiceApi {
     // get all requests as employee
     @GET("GetMyRequestsForEmployee")
     Call<GetMyRequestsForEmployeeResponse> _autokattaGetMyRequestsForEmployee(@Query("MyContact") String mLoginContact);
+
+    // get my recent visits data
+    @GET("GetMyRecentVisits")
+    Call<GetMyRecentVisitsResponse> _autokattaGetMyRecentVisits(@Query("MyContact") String mLoginContact);
 }

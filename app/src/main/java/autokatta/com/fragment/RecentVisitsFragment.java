@@ -92,7 +92,7 @@ public class RecentVisitsFragment extends Fragment implements RequestNotifier, S
                     @Override
                     public void run() {
                         mSwipeRefreshLayout.setRefreshing(true);
-                        getNotificationData();
+                        getRecentVisitsData();
                     }
                 });
 
@@ -107,21 +107,21 @@ public class RecentVisitsFragment extends Fragment implements RequestNotifier, S
         super.setUserVisibleHint(isVisibleToUser);
         if (this.isVisible()) {
             if (isVisibleToUser && !hasViewCreated) {
-                getNotificationData();
+                getRecentVisitsData();
                 hasViewCreated = true;
             }
         }
     }
 
-    private void getNotificationData() {
+    private void getRecentVisitsData() {
         ApiCall mApiCall = new ApiCall(getActivity(), this);
-        mApiCall.GetFCMNotificationOnUserBased(mLoginContact);
+        mApiCall.GetMyRecentVisits(mLoginContact);
     }
 
 
     @Override
     public void onRefresh() {
-        getNotificationData();
+        getRecentVisitsData();
     }
 
     @Override

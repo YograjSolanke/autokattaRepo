@@ -10065,6 +10065,37 @@ get ExchangeMela Analytics Data
         }
     }
 
+    /*get my recently visited data*/
+    public void GetMyRecentVisits(String mLoginContact) {
+        try {
+            if (mConnectionDetector.isConnectedToInternet()) {
+
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(mContext.getString(R.string.base_url))
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .client(initLog().build())
+                        .build();
+
+                ServiceApi serviceApi = retrofit.create(ServiceApi.class);
+                Call<GetMyRecentVisitsResponse> responseCall = serviceApi._autokattaGetMyRecentVisits(mLoginContact);
+                responseCall.enqueue(new Callback<GetMyRecentVisitsResponse>() {
+                    @Override
+                    public void onResponse(Call<GetMyRecentVisitsResponse> call, Response<GetMyRecentVisitsResponse> response) {
+                        mNotifier.notifySuccess(response);
+                    }
+
+                    @Override
+                    public void onFailure(Call<GetMyRecentVisitsResponse> call, Throwable t) {
+                        mNotifier.notifyError(t);
+                    }
+                });
+            } else
+                CustomToast.customToast(mContext, mContext.getString(R.string.no_internet));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     /***
      * Retrofit Logs
      ***/
@@ -10095,5 +10126,6 @@ get ExchangeMela Analytics Data
         httpClient.addInterceptor(logging).build();
         return httpClient;
     }
+
 
 }
